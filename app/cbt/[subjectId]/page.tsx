@@ -34,8 +34,8 @@ export default function CBTPage() {
   const [loading, setLoading] = useState(true);
 
   const subjectNames: Record<number, string> = {
-    1: '교통안전관리론', 2: '교통안전법', 3: '열차운전',
-    4: '철도공학', 5: '철도산업기본법', 6: '철도신호', 7: '철도안전법'
+    1: 'êµíµìì ê´ë¦¬ë¡ ', 2: 'êµíµìì ë²', 3: 'ì´ì°¨ì´ì ',
+    4: 'ì² ëê³µí', 5: 'ì² ëì°ìê¸°ë³¸ë²', 6: 'ì² ëì í¸', 7: 'ì² ëìì ë²'
   };
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function CBTPage() {
         .limit(100);
       if (!error && data) {
         const filtered = (data as Question[]).filter(q =>
-          Array.isArray(q.options) && q.options.length >= 2
+          Array.isArray(q.options) && q.options.length >= 4 && q.correct_option <= q.options.length
         );
         setQuestions(filtered.slice(0, 20));
       }
@@ -81,16 +81,16 @@ export default function CBTPage() {
 
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center bg-purple-50">
-      <div className="text-purple-700 text-lg">문제 불러오는 중...</div>
+      <div className="text-purple-700 text-lg">ë¬¸ì  ë¶ë¬ì¤ë ì¤...</div>
     </div>
   );
 
   if (questions.length === 0) return (
     <div className="min-h-screen flex items-center justify-center bg-purple-50">
       <div className="text-center">
-        <div className="text-4xl mb-4">🚧</div>
-        <p className="text-gray-600 mb-4">아직 준비 중인 과목이에요.</p>
-        <button onClick={() => router.push('/dashboard')} className="text-purple-700 underline">대시보드로 돌아가기</button>
+        <div className="text-4xl mb-4">ð§</div>
+        <p className="text-gray-600 mb-4">ìì§ ì¤ë¹ ì¤ì¸ ê³¼ëª©ì´ìì.</p>
+        <button onClick={() => router.push('/dashboard')} className="text-purple-700 underline">ëìë³´ëë¡ ëìê°ê¸°</button>
       </div>
     </div>
   );
@@ -100,16 +100,16 @@ export default function CBTPage() {
     return (
       <div className="min-h-screen bg-purple-50 flex items-center justify-center">
         <div className="bg-white rounded-2xl shadow-sm p-8 max-w-sm w-full text-center mx-4">
-          <div className="text-5xl mb-4">{percent >= 70 ? '🎉' : '💪'}</div>
-          <h2 className="text-xl font-bold text-gray-800 mb-2">결과</h2>
+          <div className="text-5xl mb-4">{percent >= 70 ? 'ð' : 'ðª'}</div>
+          <h2 className="text-xl font-bold text-gray-800 mb-2">ê²°ê³¼</h2>
           <p className="text-4xl font-bold text-purple-700 mb-1">{score} / {questions.length}</p>
-          <p className="text-gray-500 text-sm mb-6">정답률 {percent}%</p>
+          <p className="text-gray-500 text-sm mb-6">ì ëµë¥  {percent}%</p>
           <div className="w-full bg-gray-100 rounded-full h-3 mb-6">
             <div className="bg-purple-700 h-3 rounded-full transition-all" style={{width: `${percent}%`}}></div>
           </div>
           <div className="flex gap-3">
-            <button onClick={() => router.push('/dashboard')} className="flex-1 py-3 rounded-xl border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-50 transition">대시보드</button>
-            <button onClick={() => { setCurrent(0); setSelected(null); setConfirmed(false); setScore(0); setFinished(false); }} className="flex-1 py-3 rounded-xl bg-purple-700 text-white text-sm font-medium hover:bg-purple-800 transition">다시풀기</button>
+            <button onClick={() => router.push('/dashboard')} className="flex-1 py-3 rounded-xl border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-50 transition">ëìë³´ë</button>
+            <button onClick={() => { setCurrent(0); setSelected(null); setConfirmed(false); setScore(0); setFinished(false); }} className="flex-1 py-3 rounded-xl bg-purple-700 text-white text-sm font-medium hover:bg-purple-800 transition">ë¤ìíê¸°</button>
           </div>
         </div>
       </div>
@@ -117,12 +117,12 @@ export default function CBTPage() {
   }
 
   const q = questions[current];
-  const optionLabels = ['①', '②', '③', '④'];
+  const optionLabels = ['â ', 'â¡', 'â¢', 'â£'];
 
   return (
     <div className="min-h-screen bg-purple-50">
       <header className="bg-purple-800 text-white px-6 py-3 flex items-center gap-3">
-        <button onClick={() => router.push('/dashboard')} className="text-purple-300 hover:text-white transition text-sm">← 대시보드</button>
+        <button onClick={() => router.push('/dashboard')} className="text-purple-300 hover:text-white transition text-sm">â ëìë³´ë</button>
         <span className="text-purple-400">|</span>
         <span className="text-sm font-medium">{subjectNames[subjectId]} CBT</span>
       </header>
@@ -138,7 +138,7 @@ export default function CBTPage() {
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm p-6 mb-4">
-          {q.source_year && <span className="text-xs text-purple-500 font-medium bg-purple-50 px-2 py-0.5 rounded mb-3 inline-block">{q.source_year}년 기출</span>}
+          {q.source_year && <span className="text-xs text-purple-500 font-medium bg-purple-50 px-2 py-0.5 rounded mb-3 inline-block">{q.source_year}ë ê¸°ì¶</span>}
           <p className="text-base font-semibold text-gray-800 leading-relaxed">{q.question_text}</p>
         </div>
 
@@ -165,7 +165,7 @@ export default function CBTPage() {
 
         {confirmed && q.explanation && (
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
-            <p className="text-xs font-bold text-blue-700 mb-1">💡 해설</p>
+            <p className="text-xs font-bold text-blue-700 mb-1">ð¡ í´ì¤</p>
             <p className="text-sm text-blue-800 leading-relaxed">{q.explanation}</p>
           </div>
         )}
@@ -176,12 +176,12 @@ export default function CBTPage() {
               onClick={handleConfirm}
               disabled={selected === null}
               className="px-6 py-3 rounded-xl bg-purple-700 text-white text-sm font-medium disabled:opacity-30 hover:bg-purple-800 transition"
-            >확인</button>
+            >íì¸</button>
           ) : (
             <button
               onClick={handleNext}
               className="px-6 py-3 rounded-xl bg-purple-700 text-white text-sm font-medium hover:bg-purple-800 transition"
-            >{current + 1 >= questions.length ? '결과 보기' : '다음 문제 →'}</button>
+            >{current + 1 >= questions.length ? 'ê²°ê³¼ ë³´ê¸°' : 'ë¤ì ë¬¸ì  â'}</button>
           )}
         </div>
       </main>
