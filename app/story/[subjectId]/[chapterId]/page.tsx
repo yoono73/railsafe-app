@@ -124,7 +124,7 @@ export default function StoryPage() {
               {page.summary_box.items.map((item, i) => (
                 <li key={i} className="text-sm leading-relaxed flex gap-2">
                   <span className="text-purple-300 flex-shrink-0 mt-0.5">•</span>
-                  <span>{item}</span>
+                  <span className="font-bold">{item}</span>
                 </li>
               ))}
             </ul>
