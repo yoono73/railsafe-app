@@ -90,24 +90,24 @@ export default function StoryPage() {
 
       <main className="max-w-2xl mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-4">
-          <span className="text-xs text-purple-600 font-medium bg-purple-100 px-3 py-1 rounded-full">
+          <span className="text-sm text-purple-600 font-medium bg-purple-100 px-3 py-1 rounded-full">
             {currentPage + 1} / {story.pages.length} 페이지
           </span>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm p-5 mb-4">
-          <p className="text-xs text-gray-400 italic mb-4 leading-relaxed">{page.scene}</p>
-          <div className="space-y-4">
+        <div className="bg-white rounded-2xl shadow-sm p-6 mb-4">
+          <p className="text-sm text-gray-700 italic mb-5 leading-relaxed border-l-4 border-purple-200 pl-4">{page.scene}</p>
+          <div className="space-y-5">
             {page.dialogues.map((d, i) => {
               const isPark = d.character.includes('과장');
               return (
                 <div key={i} className={`flex gap-3 ${isPark ? '' : 'flex-row-reverse'}`}>
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-lg">
+                  <div className="flex-shrink-0 w-11 h-11 rounded-full bg-purple-100 flex items-center justify-center text-xl">
                     {isPark ? '👨‍💼' : '🧑'}
                   </div>
-                  <div className={`max-w-xs ${isPark ? '' : 'items-end'} flex flex-col`}>
-                    <span className="text-xs text-gray-400 mb-1 ${isPark ? '' : 'text-right'}">{d.character}</span>
-                    <div className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${isPark ? 'bg-gray-100 text-gray-800 rounded-tl-sm' : 'bg-purple-700 text-white rounded-tr-sm'}`}>
+                  <div className={`max-w-xs flex flex-col ${isPark ? 'items-start' : 'items-end'}`}>
+                    <span className="text-xs text-gray-500 mb-1">{d.character}</span>
+                    <div className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${isPark ? 'bg-gray-100 text-gray-800 rounded-tl-sm' : 'bg-purple-700 text-white rounded-tr-sm'}`}>
                       {d.text}
                     </div>
                   </div>
@@ -118,12 +118,12 @@ export default function StoryPage() {
         </div>
 
         {page.summary_box && (
-          <div className="bg-purple-700 text-white rounded-2xl p-5 mb-4">
-            <h3 className="font-bold mb-3 text-sm">📌 {page.summary_box.title}</h3>
-            <ul className="space-y-1.5">
+          <div className="bg-purple-700 text-white rounded-2xl p-6 mb-4">
+            <h3 className="font-bold mb-3 text-base">📌 {page.summary_box.title}</h3>
+            <ul className="space-y-2">
               {page.summary_box.items.map((item, i) => (
-                <li key={i} className="text-xs leading-relaxed flex gap-2">
-                  <span className="text-purple-300 flex-shrink-0">•</span>
+                <li key={i} className="text-sm leading-relaxed flex gap-2">
+                  <span className="text-purple-300 flex-shrink-0 mt-0.5">•</span>
                   <span>{item}</span>
                 </li>
               ))}
@@ -131,21 +131,21 @@ export default function StoryPage() {
           </div>
         )}
 
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center mt-2">
           <button
             onClick={() => setCurrentPage(p => p - 1)}
             disabled={isFirst}
-            className="px-5 py-2.5 rounded-xl bg-white shadow-sm text-gray-600 text-sm disabled:opacity-30 hover:bg-gray-50 transition"
+            className="px-6 py-3 rounded-xl bg-white shadow-sm text-gray-600 text-sm font-medium disabled:opacity-30 hover:bg-gray-50 transition"
           >← 이전</button>
           {isLast ? (
             <button
               onClick={() => router.push('/dashboard')}
-              className="px-5 py-2.5 rounded-xl bg-purple-700 text-white text-sm hover:bg-purple-800 transition"
+              className="px-6 py-3 rounded-xl bg-purple-700 text-white text-sm font-medium hover:bg-purple-800 transition"
             >완료 ✓</button>
           ) : (
             <button
               onClick={() => setCurrentPage(p => p + 1)}
-              className="px-5 py-2.5 rounded-xl bg-purple-700 text-white text-sm hover:bg-purple-800 transition"
+              className="px-6 py-3 rounded-xl bg-purple-700 text-white text-sm font-medium hover:bg-purple-800 transition"
             >다음 →</button>
           )}
         </div>
