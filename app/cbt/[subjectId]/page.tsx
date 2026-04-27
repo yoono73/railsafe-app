@@ -37,11 +37,10 @@ export default function CBTPage() {
         .from('questions')
         .select('id, question_text, options, correct_option, explanation, source_year')
         .eq('subject_id', subjectId)
-        .not('options', 'eq', '[]')
-        .limit(20);
+        .limit(100);
       if (!error && data) {
-        const filtered = data.filter((q: Question) => q.options && q.options.length >= 2);
-        setQuestions(filtered);
+        const filtered = (data as Question[]).filter(q => Array.isArray(q.options) && q.options.length >= 2);
+        setQuestions(filtered.slice(0, 20));
       }
       setLoading(false);
     }
