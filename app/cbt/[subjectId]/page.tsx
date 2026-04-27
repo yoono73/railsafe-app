@@ -3,13 +3,20 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
+type OptionItem = string | { no: number; text: string };
+
 interface Question {
   id: number;
   question_text: string;
-  options: string[];
+  options: OptionItem[];
   correct_option: number;
   explanation: string;
   source_year: number | null;
+}
+
+function getOptionText(opt: OptionItem): string {
+  if (typeof opt === 'string') return opt;
+  return opt.text;
 }
 
 export default function CBTPage() {
@@ -39,7 +46,9 @@ export default function CBTPage() {
         .eq('subject_id', subjectId)
         .limit(100);
       if (!error && data) {
-        const filtered = (data as Question[]).filter(q => Array.isArray(q.options) && q.options.length >= 2);
+        const filtered = (data as Question[]).filter(q =>
+          Array.isArray(q.options) && q.options.length >= 2
+        );
         setQuestions(filtered.slice(0, 20));
       }
       setLoading(false);
@@ -148,7 +157,7 @@ export default function CBTPage() {
                 onClick={() => handleSelect(i)}
                 className={`w-full text-left border-2 rounded-xl px-4 py-3 text-sm leading-relaxed transition ${style} ${confirmed ? 'cursor-default' : 'hover:border-purple-300'}`}
               >
-                <span className="font-bold mr-2">{optionLabels[i]}</span>{opt}
+                <span className="font-bold mr-2">{optionLabels[i]}</span>{getOptionText(opt)}
               </button>
             );
           })}
