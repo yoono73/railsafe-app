@@ -1,49 +1,86 @@
-import { createClient } from '@/lib/supabase/server';
+'use client';
+import { useRouter } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
+import { useEffect, useState } from 'react';
 
-const SUBJECTS = [
-  { id: 1, name: '교통안전관리론', color: 'bg-purple-100 text-purple-900', icon: '📊' },
-  { id: 2, name: '교통안전법', color: 'bg-blue-100 text-blue-900', icon: '⚖️' },
-  { id: 3, name: '열차운전', color: 'bg-amber-100 text-amber-900', icon: '🚆' },
-  { id: 4, name: '철도공학', color: 'bg-green-100 text-green-900', icon: '🔧' },
-  { id: 5, name: '철도산업기본법', color: 'bg-teal-100 text-teal-900', icon: '📋' },
-  { id: 6, name: '철도신호', color: 'bg-red-100 text-red-900', icon: '🚦' },
-  { id: 7, name: '철도안전법', color: 'bg-slate-100 text-slate-900', icon: '🛡️' },
+const subjects = [
+  { id: 1, name: '교통안전관리론', icon: '📊', color: 'bg-purple-100' },
+  { id: 2, name: '교통안전법', icon: '⚖️', color: 'bg-blue-100' },
+  { id: 3, name: '열차운전', icon: '🚇', color: 'bg-amber-100' },
+  { id: 4, name: '철도공학', icon: '🔧', color: 'bg-green-100' },
+  { id: 5, name: '철도산업기본법', icon: '📋', color: 'bg-teal-100' },
+  { id: 6, name: '철도신호', icon: '🚦', color: 'bg-red-100' },
+  { id: 7, name: '철도안전법', icon: '🛡️', color: 'bg-slate-100' },
 ];
 
-export default async function DashboardPage() {
-  const supabase = await createClient();
-  const { data: progress } = await supabase
-    .from('progress_tracking')
-    .select('subject_id, chapter_number, status');
+function getDday() {
+  const exam = new Date('2026-06-21');
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const diff = Math.ceil((exam.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+  return diff;
+}
 
-  const doneSet = new Set(
-    (progress || []).filter(p => p.status === 'completed').map(p => p.subject_id)
-  );
+export default function DashboardPage() {
+  const router = useRouter();
+  const supabase = createClient();
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      if (data.user?.email) setEmail(data.user.email);
+    });
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push('/login');
+  };
+
+  const dday = getDday();
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-zinc-800 mb-2">학습 현황</h1>
-      <p className="text-zinc-500 text-sm mb-6">시험일 D-56 · 2026.06.21</p>
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-purple-800 text-white px-6 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="text-xl">🚉</span>
+          <span className="font-bold text-lg">철도안전관리자</span>
+          <span className="bg-purple-600 text-xs px-2 py-0.5 rounded-full">베타</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="text-sm text-purple-200">{email}</span>
+          <button onClick={handleLogout} className="text-xs text-purple-300 hover:text-white transition">로그아웃</button>
+        </div>
+      </header>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {SUBJECTS.map(s => (
-          <div key={s.id} className={`bg-white rounded-2xl shadow-sm border border-zinc-100 p-5 hover:shadow-md transition cursor-pointer`}>
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-2xl">{s.icon}</span>
-              {doneSet.has(s.id) && <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full">완료</span>}
+      <main className="max-w-5xl mx-auto px-6 py-8">
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-gray-800">학습 현황</h1>
+          <p className="text-gray-500 text-sm mt-1">시험일 D-{dday} · 2026.06.21</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {subjects.map((subject) => (
+            <div key={subject.id} className="bg-white rounded-2xl shadow-sm p-5 hover:shadow-md transition">
+              <div className={`w-10 h-10 ${subject.color} rounded-xl flex items-center justify-center text-xl mb-3`}>
+                {subject.icon}
+              </div>
+              <h2 className="font-semibold text-gray-800 mb-3">{subject.name}</h2>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => router.push(`/story/${subject.id}/1`)}
+                  className="bg-purple-700 text-white text-sm px-4 py-1.5 rounded-lg hover:bg-purple-800 transition"
+                >
+                  스토리
+                </button>
+                <button className="bg-gray-100 text-gray-600 text-sm px-4 py-1.5 rounded-lg hover:bg-gray-200 transition">
+                  CBT
+                </button>
+              </div>
             </div>
-            <p className="font-semibold text-zinc-800">{s.name}</p>
-            <div className="mt-3 flex gap-2">
-              <button className="text-xs bg-purple-900 text-white px-3 py-1.5 rounded-lg hover:bg-purple-800 transition">
-                스토리
-              </button>
-              <button className="text-xs bg-zinc-100 text-zinc-700 px-3 py-1.5 rounded-lg hover:bg-zinc-200 transition">
-                CBT
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </main>
     </div>
   );
 }
