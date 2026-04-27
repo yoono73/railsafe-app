@@ -73,7 +73,10 @@ export default function DashboardPage() {
                 >
                   스토리
                 </button>
-                <button className="bg-gray-100 text-gray-600 text-sm px-4 py-1.5 rounded-lg hover:bg-gray-200 transition">
+                <button
+                  onClick={() => router.push(`/cbt/${subject.id}`)}
+                  className="bg-gray-100 text-gray-600 text-sm px-4 py-1.5 rounded-lg hover:bg-gray-200 transition"
+                >
                   CBT
                 </button>
               </div>
