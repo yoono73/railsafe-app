@@ -186,7 +186,7 @@ export default function CbtPage() {
 
         {/* 보기 */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
-          {q.options.map((opt, idx) => {
+         {q.options.map((opt, idx) => {
             const optNum = idx + 1;
             const isSelected = selected === optNum;
             const isCorrect = q.correct_option === optNum;
