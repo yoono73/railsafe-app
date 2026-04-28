@@ -195,8 +195,6 @@ export default function CbtPage() {
             let bgColor = 'white';
             let circleColor = '#6b7280';
             let circleBg = '#f3f4f6';
-            let showO = false;
-            let showX = false;
 
             if (confirmed) {
               if (isCorrect) {
@@ -204,13 +202,11 @@ export default function CbtPage() {
                 bgColor = '#f0fdf4';
                 circleColor = 'white';
                 circleBg = '#16a34a';
-                showO = true;
               } else if (isSelected && !isCorrect) {
                 borderColor = '#dc2626';
                 bgColor = '#fff1f2';
                 circleColor = 'white';
                 circleBg = '#dc2626';
-                showX = true;
               }
             } else if (isSelected) {
               borderColor = '#7c3aed';
@@ -220,53 +216,55 @@ export default function CbtPage() {
             }
 
             return (
-              <button
-                key={idx}
-                onClick={() => handleSelect(idx)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '1rem',
-                  background: bgColor,
-                  border: '2px solid ' + borderColor,
-                  borderRadius: '0.75rem',
-                  cursor: confirmed ? 'default' : 'pointer',
-                  textAlign: 'left',
-                  width: '100%',
-                  transition: 'all 0.2s ease',
-                }}
-              >
-                {/* 번호 원 */}
-                <span style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '2rem',
-                  height: '2rem',
-                  borderRadius: '50%',
-                  background: circleBg,
-                  color: circleColor,
-                  fontWeight: 'bold',
-                  fontSize: '0.9rem',
-                  flexShrink: 0,
-                  marginRight: '0.75rem',
-                }}>
-                  {optNum}
-                </span>
+              <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <button
+                  onClick={() => handleSelect(idx)}
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '1rem',
+                    background: bgColor,
+                    border: '2px solid ' + borderColor,
+                    borderRadius: '0.75rem',
+                    cursor: confirmed ? 'default' : 'pointer',
+                    textAlign: 'left',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  {/* 번호 원 */}
+                  <span style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '2rem',
+                    height: '2rem',
+                    borderRadius: '50%',
+                    background: circleBg,
+                    color: circleColor,
+                    fontWeight: 'bold',
+                    fontSize: '0.9rem',
+                    flexShrink: 0,
+                    marginRight: '0.75rem',
+                  }}>
+                    {optNum}
+                  </span>
+                  {/* 보기 텍스트 */}
+                  <span style={{ color: '#1f2937', fontSize: '0.95rem', lineHeight: '1.5' }}>
+                    {getOptionText(opt)}
+                  </span>
+                </button>
 
-                {/* 보기 텍스트 */}
-                <span style={{ flex: 1, color: '#1f2937', fontSize: '0.95rem', lineHeight: '1.5' }}>
-                  {getOptionText(opt)}
-                </span>
-
-                {/* O/X 표시 */}
-                {confirmed && isCorrect && (
-                  <span style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '1.3rem', marginLeft: '0.5rem', flexShrink: 0 }}>O</span>
-                )}
-                {confirmed && isSelected && !isCorrect && (
-                  <span style={{ color: '#dc2626', fontWeight: 'bold', fontSize: '1.3rem', marginLeft: '0.5rem', flexShrink: 0 }}>X</span>
-                )}
-              </button>
+                {/* O/X 표시 - 버튼 밖에 배치 */}
+                <div style={{ width: '2rem', textAlign: 'center', flexShrink: 0 }}>
+                  {confirmed && isCorrect && (
+                    <span style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '1.5rem' }}>O</span>
+                  )}
+                  {confirmed && isSelected && !isCorrect && (
+                    <span style={{ color: '#dc2626', fontWeight: 'bold', fontSize: '1.5rem' }}>X</span>
+                  )}
+                </div>
+              </div>
             );
           })}
         </div>
