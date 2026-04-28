@@ -137,8 +137,16 @@ export default function CbtPage() {
 
   if (questions.length === 0) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#f5f3ff' }}>
-        <p style={{ color: '#7c3aed', fontSize: '1.1rem' }}>문제가 없습니다.</p>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#f5f3ff', gap: '1rem', padding: '2rem' }}>
+        <div style={{ fontSize: '3rem' }}>📭</div>
+        <p style={{ color: '#7c3aed', fontSize: '1.1rem', fontWeight: '600' }}>아직 CBT 문제가 없습니다</p>
+        <p style={{ color: '#9ca3af', fontSize: '0.9rem', textAlign: 'center' }}>이 과목의 문제가 준비 중입니다.<br/>다른 과목을 먼저 풀어보세요!</p>
+        <button
+          onClick={() => router.push('/dashboard')}
+          style={{ marginTop: '0.5rem', padding: '0.75rem 1.5rem', background: '#7c3aed', color: 'white', border: 'none', borderRadius: '0.5rem', fontSize: '1rem', cursor: 'pointer', fontWeight: '600' }}
+        >
+          대시보드로 돌아가기
+        </button>
       </div>
     );
   }
