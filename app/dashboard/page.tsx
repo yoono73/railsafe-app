@@ -40,18 +40,7 @@ export default function DashboardPage() {
   const dday = getDday();
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-purple-800 text-white px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <span className="text-xl">🚉</span>
-          <span className="font-bold text-lg">철도안전관리자</span>
-          <span className="bg-purple-600 text-xs px-2 py-0.5 rounded-full">베타</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-purple-200">{email}</span>
-          <button onClick={handleLogout} className="text-xs text-purple-300 hover:text-white transition">로그아웃</button>
-        </div>
-      </header>
+    
 
       <main className="max-w-5xl mx-auto px-6 py-8">
         <div className="mb-8">
@@ -84,6 +73,6 @@ export default function DashboardPage() {
           ))}
         </div>
       </main>
-    </div>
+ 
   );
 }
