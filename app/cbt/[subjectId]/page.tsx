@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client'; 
+import { createClient } from '@/lib/supabase/client';
+
+const APP_VERSION = 'v0.2';
 
 interface Option {
   no?: number;
@@ -16,6 +18,11 @@ interface Question {
   options: (string | Option)[];
   correct_option: number;
   explanation?: string;
+}
+
+interface WrongAnswer {
+  question: Question;
+  selectedOption: number;
 }
 
 function getOptionText(opt: string | Option): string {
@@ -36,6 +43,8 @@ export default function CbtPage() {
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
+  const [reviewing, setReviewing] = useState(false);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -74,8 +83,11 @@ export default function CbtPage() {
   const handleConfirm = () => {
     if (selected === null) return;
     setConfirmed(true);
-    if (selected === questions[current].correct_option) {
+    const isCorrect = selected === questions[current].correct_option;
+    if (isCorrect) {
       setScore((s) => s + 1);
+    } else {
+      setWrongAnswers((prev) => [...prev, { question: questions[current], selectedOption: selected }]);
     }
   };
 
@@ -95,7 +107,25 @@ export default function CbtPage() {
     setConfirmed(false);
     setScore(0);
     setFinished(false);
+    setWrongAnswers([]);
+    setReviewing(false);
   };
+
+  // 진도 저장 (localStorage)
+  useEffect(() => {
+    if (finished && questions.length > 0) {
+      const pct = Math.round((score / questions.length) * 100);
+      const key = 'cbt_progress_' + subjectId;
+      const prev = JSON.parse(localStorage.getItem(key) || '{}');
+      localStorage.setItem(key, JSON.stringify({
+        lastScore: score,
+        lastTotal: questions.length,
+        lastPct: pct,
+        bestPct: Math.max(pct, prev.bestPct || 0),
+        lastDate: new Date().toLocaleDateString('ko-KR'),
+      }));
+    }
+  }, [finished, score, questions.length, subjectId]);
 
   if (loading) {
     return (
@@ -113,6 +143,95 @@ export default function CbtPage() {
     );
   }
 
+  // 오답 복습 화면
+  if (reviewing) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#f5f3ff', padding: '1.5rem' }}>
+        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+            <button
+              onClick={() => setReviewing(false)}
+              style={{ background: 'none', border: 'none', color: '#7c3aed', fontSize: '0.9rem', cursor: 'pointer' }}
+            >
+              &larr; 결과로
+            </button>
+            <span style={{ color: '#dc2626', fontWeight: '700', fontSize: '0.95rem' }}>
+              오답 {wrongAnswers.length}개
+            </span>
+          </div>
+
+          {wrongAnswers.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '3rem', background: 'white', borderRadius: '1rem' }}>
+              <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>🎯</div>
+              <p style={{ color: '#16a34a', fontWeight: '700', fontSize: '1.1rem' }}>오답이 없어요! 완벽해요!</p>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              {wrongAnswers.map((wa, i) => (
+                <div key={i} style={{ background: 'white', borderRadius: '1rem', padding: '1.25rem', boxShadow: '0 2px 12px rgba(124,58,237,0.08)' }}>
+                  <div style={{ display: 'inline-block', background: '#fee2e2', color: '#dc2626', borderRadius: '0.375rem', padding: '0.2rem 0.6rem', fontSize: '0.75rem', fontWeight: '600', marginBottom: '0.6rem' }}>
+                    오답 {i + 1}
+                  </div>
+                  <p style={{ fontSize: '0.95rem', fontWeight: '600', color: '#1f2937', lineHeight: '1.6', marginBottom: '0.75rem' }}>
+                    {wa.question.question_text}
+                  </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginBottom: '0.75rem' }}>
+                    {wa.question.options.map((opt, idx) => {
+                      const optNum = idx + 1;
+                      const isCorrect = wa.question.correct_option === optNum;
+                      const isWrong = wa.selectedOption === optNum;
+                      return (
+                        <div key={idx} style={{
+                          display: 'flex', alignItems: 'center', gap: '0.5rem',
+                          padding: '0.5rem 0.75rem', borderRadius: '0.5rem',
+                          background: isCorrect ? '#f0fdf4' : isWrong ? '#fff1f2' : '#f9fafb',
+                          border: '1.5px solid ' + (isCorrect ? '#16a34a' : isWrong ? '#dc2626' : '#e5e7eb'),
+                        }}>
+                          <span style={{
+                            width: '1.5rem', height: '1.5rem', borderRadius: '50%', flexShrink: 0,
+                            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                            background: isCorrect ? '#16a34a' : isWrong ? '#dc2626' : '#e5e7eb',
+                            color: (isCorrect || isWrong) ? 'white' : '#6b7280',
+                            fontSize: '0.75rem', fontWeight: 'bold',
+                          }}>{optNum}</span>
+                          <span style={{ fontSize: '0.85rem', color: '#1f2937', flex: 1 }}>{getOptionText(opt)}</span>
+                          {isCorrect && <span style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '1rem' }}>O</span>}
+                          {isWrong && <span style={{ color: '#dc2626', fontWeight: 'bold', fontSize: '1rem' }}>X</span>}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {wa.question.explanation && (
+                    <div style={{ background: '#ede9fe', borderRadius: '0.5rem', padding: '0.75rem', borderLeft: '4px solid #7c3aed' }}>
+                      <p style={{ fontSize: '0.75rem', fontWeight: '600', color: '#7c3aed', marginBottom: '0.2rem' }}>해설</p>
+                      <p style={{ fontSize: '0.85rem', color: '#374151', lineHeight: '1.6' }}>{wa.question.explanation}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
+            <button
+              onClick={() => router.push('/dashboard')}
+              style={{ padding: '0.75rem 1.5rem', background: '#f3f4f6', color: '#374151', border: 'none', borderRadius: '0.5rem', fontSize: '1rem', cursor: 'pointer', fontWeight: '600' }}
+            >
+              대시보드
+            </button>
+            <button
+              onClick={handleRestart}
+              style={{ padding: '0.75rem 1.5rem', background: '#7c3aed', color: 'white', border: 'none', borderRadius: '0.5rem', fontSize: '1rem', cursor: 'pointer', fontWeight: '600' }}
+            >
+              다시 풀기
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 결과 화면
   if (finished) {
     const pct = Math.round((score / questions.length) * 100);
     return (
@@ -128,9 +247,19 @@ export default function CbtPage() {
             {score} / {questions.length}
           </p>
           <p style={{ color: '#6b7280', marginBottom: '1.5rem' }}>정답률 {pct}%</p>
-          <div style={{ background: '#f3f4f6', borderRadius: '9999px', height: '12px', marginBottom: '2rem', overflow: 'hidden' }}>
+          <div style={{ background: '#f3f4f6', borderRadius: '9999px', height: '12px', marginBottom: '1.5rem', overflow: 'hidden' }}>
             <div style={{ background: pct >= 60 ? '#16a34a' : '#dc2626', height: '100%', width: pct + '%', borderRadius: '9999px', transition: 'width 0.5s ease' }} />
           </div>
+
+          {wrongAnswers.length > 0 && (
+            <button
+              onClick={() => setReviewing(true)}
+              style={{ width: '100%', padding: '0.75rem', background: '#fff1f2', color: '#dc2626', border: '1.5px solid #fecaca', borderRadius: '0.5rem', fontSize: '0.95rem', cursor: 'pointer', fontWeight: '600', marginBottom: '0.75rem' }}
+            >
+              오답 복습 ({wrongAnswers.length}개)
+            </button>
+          )}
+
           <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
             <button
               onClick={() => router.push('/dashboard')}
@@ -145,6 +274,7 @@ export default function CbtPage() {
               다시 풀기
             </button>
           </div>
+          <p style={{ marginTop: '1.25rem', fontSize: '0.7rem', color: '#d1d5db' }}>{APP_VERSION}</p>
         </div>
       </div>
     );
@@ -232,7 +362,6 @@ export default function CbtPage() {
                     transition: 'all 0.2s ease',
                   }}
                 >
-                  {/* 번호 원 */}
                   <span style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -249,13 +378,12 @@ export default function CbtPage() {
                   }}>
                     {optNum}
                   </span>
-                  {/* 보기 텍스트 */}
                   <span style={{ color: '#1f2937', fontSize: '0.95rem', lineHeight: '1.5' }}>
                     {getOptionText(opt)}
                   </span>
                 </button>
 
-                {/* O/X 표시 - 버튼 밖에 배치 */}
+                {/* O/X 표시 */}
                 <div style={{ width: '2rem', textAlign: 'center', flexShrink: 0 }}>
                   {confirmed && isCorrect && (
                     <span style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '1.5rem' }}>O</span>
