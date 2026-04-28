@@ -195,6 +195,8 @@ export default function CbtPage() {
             let bgColor = 'white';
             let circleColor = '#6b7280';
             let circleBg = '#f3f4f6';
+            let showO = false;
+            let showX = false;
 
             if (confirmed) {
               if (isCorrect) {
@@ -202,11 +204,13 @@ export default function CbtPage() {
                 bgColor = '#f0fdf4';
                 circleColor = 'white';
                 circleBg = '#16a34a';
+                showO = true;
               } else if (isSelected && !isCorrect) {
                 borderColor = '#dc2626';
                 bgColor = '#fff1f2';
                 circleColor = 'white';
                 circleBg = '#dc2626';
+                showX = true;
               }
             } else if (isSelected) {
               borderColor = '#7c3aed';
@@ -232,6 +236,7 @@ export default function CbtPage() {
                   transition: 'all 0.2s ease',
                 }}
               >
+                {/* 번호 원 */}
                 <span style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -248,9 +253,13 @@ export default function CbtPage() {
                 }}>
                   {optNum}
                 </span>
+
+                {/* 보기 텍스트 */}
                 <span style={{ flex: 1, color: '#1f2937', fontSize: '0.95rem', lineHeight: '1.5' }}>
                   {getOptionText(opt)}
                 </span>
+
+                {/* O/X 표시 */}
                 {confirmed && isCorrect && (
                   <span style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '1.3rem', marginLeft: '0.5rem', flexShrink: 0 }}>O</span>
                 )}
@@ -262,6 +271,7 @@ export default function CbtPage() {
           })}
         </div>
 
+        {/* 버튼 영역 */}
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           {!confirmed ? (
             <button
@@ -300,6 +310,7 @@ export default function CbtPage() {
           )}
         </div>
 
+        {/* 해설 */}
         {confirmed && q.explanation && (
           <div style={{ marginTop: '1rem', background: '#ede9fe', borderRadius: '0.75rem', padding: '1rem', borderLeft: '4px solid #7c3aed' }}>
             <p style={{ fontSize: '0.85rem', fontWeight: '600', color: '#7c3aed', marginBottom: '0.25rem' }}>해설</p>
