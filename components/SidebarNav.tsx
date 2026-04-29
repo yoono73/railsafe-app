@@ -22,6 +22,8 @@ export default function SidebarNav() {
     setOpenSection(prev => prev === section ? null : section);
   };
 
+  const isWrongAnswers = pathname.startsWith('/wronganswers');
+
   return (
     <aside className="w-56 shrink-0 bg-white border-r border-gray-200 flex flex-col overflow-y-auto">
       <nav className="flex flex-col py-4 gap-1 px-3">
@@ -133,6 +135,19 @@ export default function SidebarNav() {
             ))}
           </div>
         )}
+
+        {/* 오답노트 */}
+        <Link
+          href="/wronganswers"
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+            isWrongAnswers
+              ? 'bg-red-100 text-red-800'
+              : 'text-gray-600 hover:bg-gray-100'
+          }`}
+        >
+          <span className="text-base">📒</span>
+          오답노트
+        </Link>
 
         <div className="h-px bg-gray-100 my-2" />
 
