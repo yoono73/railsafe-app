@@ -34,13 +34,13 @@ export default function StartPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
 
-      // 망각임박 (review_schedule에서 오늘 이전 날짜)
+      // 망각임박 (topic_learning_history에서 오늘 이전 날짜 — /retrieval과 동일 소스)
       const today = new Date().toISOString().split('T')[0];
       const { data: overdue } = await supabase
-        .from('review_schedule')
+        .from('topic_learning_history')
         .select('id')
         .eq('user_id', user.id)
-        .lte('next_review_date', today);
+        .lte('next_retrieval_due', today);
       setOverdueCount(overdue?.length ?? 0);
 
       // 오답 수
