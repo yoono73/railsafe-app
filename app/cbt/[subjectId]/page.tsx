@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
-const APP_VERSION = 'v0.2';
+const APP_VERSION = 'v0.3';
 
 interface Option {
   no?: number;
@@ -45,10 +45,18 @@ export default function CbtPage() {
   const [loading, setLoading] = useState(true);
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
   const [reviewing, setReviewing] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  const sessionId = useRef<string>(crypto.randomUUID());
+  const questionStartTime = useRef<number>(Date.now());
 
   useEffect(() => {
-    const fetchQuestions = async () => {
+    const fetchAll = async () => {
       const supabase = createClient();
+
+      // 유저 확인
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) setUserId(user.id);
+
       const { data, error } = await supabase
         .from('questions')
         .select('*')
@@ -70,9 +78,10 @@ export default function CbtPage() {
 
       setQuestions(filtered);
       setLoading(false);
+      questionStartTime.current = Date.now();
     };
 
-    fetchQuestions();
+    fetchAll();
   }, [subjectId]);
 
   const handleSelect = (idx: number) => {
@@ -80,14 +89,30 @@ export default function CbtPage() {
     setSelected(idx + 1);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (selected === null) return;
     setConfirmed(true);
     const isCorrect = selected === questions[current].correct_option;
+    const timeSpent = Date.now() - questionStartTime.current;
+
     if (isCorrect) {
       setScore((s) => s + 1);
     } else {
       setWrongAnswers((prev) => [...prev, { question: questions[current], selectedOption: selected }]);
+    }
+
+    // DB 저장
+    if (userId) {
+      const supabase = createClient();
+      await supabase.from('attempts').insert({
+        user_id: userId,
+        question_id: questions[current].id,
+        selected_option: selected,
+        is_correct: isCorrect,
+        time_spent_ms: timeSpent,
+        session_mode: 'cbt',
+        session_id: sessionId.current,
+      });
     }
   };
 
@@ -98,6 +123,7 @@ export default function CbtPage() {
       setCurrent((c) => c + 1);
       setSelected(null);
       setConfirmed(false);
+      questionStartTime.current = Date.now();
     }
   };
 
