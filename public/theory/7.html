@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>철도안전법 핵심정리</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#fdf5f5; color:#1a1a2e; font-size:15px; line-height:1.7; }
+.site-header { background:linear-gradient(135deg,#7f1d1d,#dc2626); color:#fff; padding:18px 24px 14px; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.3); }
+.site-header h1 { font-size:1.3em; }
+.site-header .meta { font-size:.8em; opacity:.8; margin-top:3px; }
+.search-bar { display:flex; gap:8px; margin-top:10px; }
+.search-bar input { flex:1; padding:6px 10px; border-radius:6px; border:none; font-size:.9em; font-family:inherit; }
+.search-bar button { padding:6px 12px; background:#fff; color:#7f1d1d; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
+.container { display:flex; max-width:1200px; margin:0 auto; }
+.toc { width:220px; flex-shrink:0; padding:20px 12px; position:sticky; top:88px; height:calc(100vh - 88px); overflow-y:auto; font-size:.82em; }
+.toc h2 { font-size:.95em; color:#555; margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid #ddd; }
+.toc ul { list-style:none; }
+.toc li { margin:3px 0; }
+.toc a { color:#444; text-decoration:none; display:block; padding:3px 6px; border-radius:4px; transition:background .15s; }
+.toc a:hover { background:#fee2e2; color:#7f1d1d; }
+.toc .toc-part { font-weight:bold; color:#7f1d1d; margin-top:10px; font-size:.88em; }
+.content { flex:1; padding:20px 20px 60px; min-width:0; }
+.part { margin-bottom:10px; }
+.part-title { background:#7f1d1d; color:#fff; padding:10px 16px; border-radius:8px 8px 0 0; font-size:1.05em; font-weight:bold; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+.part-title:hover { background:#dc2626; }
+.part-body { border:1px solid #fca5a5; border-top:none; border-radius:0 0 8px 8px; background:#fff; padding:0 16px 10px; }
+.concept { margin:14px 0 6px; padding-bottom:14px; border-bottom:1px solid #fef2f2; }
+.concept:last-child { border-bottom:none; }
+.concept-title { font-size:1em; font-weight:bold; color:#dc2626; margin-bottom:8px; padding:4px 0; }
+.concept-title .cnum { background:#fecaca; color:#7f1d1d; border-radius:4px; padding:1px 7px; font-size:.85em; margin-right:6px; }
+table { width:100%; border-collapse:collapse; margin:8px 0; font-size:.9em; }
+th { background:#7f1d1d; color:#fff; padding:7px 10px; text-align:left; font-size:.88em; }
+td { padding:6px 10px; border-bottom:1px solid #fee2e2; vertical-align:top; }
+tr:nth-child(even) td { background:#fff5f5; }
+tr.hl td { background:#fff3e0; font-weight:bold; }
+.trap { background:#fff3e0; border-left:4px solid #e65100; padding:8px 12px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#bf360c; }
+.tip { background:#e8f5e9; border-left:4px solid #2e7d32; padding:8px 12px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#1b5e20; }
+.step-box { background:#fee2e2; border:1px solid #fca5a5; padding:8px 14px; border-radius:6px; margin:8px 0; font-size:.9em; }
+.vis-wrap { margin:12px 0; background:#fff5f5; border:1px solid #fca5a5; border-radius:8px; padding:10px; text-align:center; }
+.vis-wrap img { max-width:100%; height:auto; border-radius:4px; }
+.vis-cap { font-size:.8em; color:#777; margin-top:6px; }
+.summary-bar { background:#7f1d1d; color:#fff; text-align:center; padding:10px; font-size:.85em; margin-bottom:16px; border-radius:8px; }
+.highlight { background:#fff176; border-radius:2px; }
+@media(max-width:768px){ .toc{display:none;} .content{padding:12px 10px 40px;} table{font-size:.82em;} }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <h1>🚆 철도안전법 핵심정리</h1>
+  <div class="meta">철도교통안전관리자 | 철도안전법 6편 완전정리</div>
+  <div class="search-bar">
+    <input id="q" type="text" placeholder="키워드 검색 (예: 90일, 필요적, 청문...)">
+    <button onclick="search()">검색</button>
+  </div>
+</header>
+<div class="container">
+  <nav class="toc"><h2>목차</h2><ul><li class="toc-part">PART 1 · 기본개념·종</li><li><a href="#C-01">C-01 철도안전법 목적·용어</a></li><li><a href="#C-02">C-02 철도종사자 7종</a></li><li><a href="#C-03">C-03 철도안전 종합계획 핵심 수치</a></li><li class="toc-part">PART 2 · 안전관리체계</li><li><a href="#C-04">C-04 안전관리체계 승인 절차</a></li><li><a href="#C-05">C-05 안전관리체계 취소 — 필요적 vs 임의적</a></li><li><a href="#C-06">C-06 과징금·우수운영자</a></li><li class="toc-part">PART 3 · 운전면허·관</li><li><a href="#C-07">C-07 운전면허 6종</a></li><li><a href="#C-08">C-08 운전면허 핵심 수치</a></li><li><a href="#C-09">C-09 운전적성검사·관제자격증명</a></li><li class="toc-part">PART 4 · 형식승인·정</li><li><a href="#C-10">C-10 형식승인 검사방법 3종</a></li><li><a href="#C-11">C-11 형식승인 경미한 사항·면제</a></li><li><a href="#C-12">C-12 정비조직·철도기술자·이력·영상</a></li><li class="toc-part">PART 5 · 음주·금지행</li><li><a href="#C-13">C-13 음주기준 — 1~4호 vs 5~7호</a></li><li><a href="#C-14">C-14 철도보호지구·직무장비</a></li><li><a href="#C-15">C-15 관제업무·철도운행안전관리자</a></li><li class="toc-part">PART 6 · 사고보고·청</li><li><a href="#C-16">C-16 즉시보고 기준·청문대상</a></li><li><a href="#C-17">C-17 벌칙 5단계 체계</a></li><li><a href="#C-18">C-18 핵심수치 통합 암기</a></li></ul></nav>
+  <main class="content">
+    <div class="summary-bar">철도안전법 18개 개념 | PART 1~6</div>
+    <div class="part">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 1 · 기본개념·종합계획 (1편) <span class="arrow">▼</span>
+  </div>
+  <div class="part-body" style="display:block">
+    <div class="concept" id="C-01">
+  <div class="concept-title"><span class="cnum">C-01</span>철도안전법 목적·용어</div>
+  <p>목적: 철도사고 예방과 피해 경감, 공공복리 증진, 국민의 생명·신체·재산 보호</p>
+<div class='trap'>❌ "철도산업 발전"은 이 법의 목적이 아님 (철도산업발전기본법)</div>
+<table><tr><th>용어</th><th>정의</th><th>함정</th></tr>
+<tr><td>철도사고</td><td>사망·부상 또는 물건 파손을 일으킨 사고</td><td></td></tr>
+<tr class='hl'><td>준사고</td><td>사고는 아니나 사고로 이어질 수 있었던 것</td><td>사고≠준사고</td></tr>
+<tr><td>운행장애</td><td>열차운행을 방해하는 상황</td><td></td></tr>
+<tr class='hl'><td>중대한 운행장애</td><td>사망자 발생 + 5억원 이상 재산피해</td><td>둘 다 충족 필요</td></tr>
+</table>
+</div><div class="concept" id="C-02">
+  <div class="concept-title"><span class="cnum">C-02</span>철도종사자 7종</div>
+  <div class='vis-wrap'><img src='images/VIS-049_철도종사자7종분류도.png'><p class='vis-cap'>철도종사자 7종 분류도</p></div>
+<div class='step-box'>암기키워드: <b>운관여여작철대</b><br>
+운전 → 관제 → 여객승무원 → 여객역무원 → 작업책임자 → 철도운행안전관리자 → 대통령령</div>
+<div class='trap'>❌ "철도경영에 관한 조언업무 수행자" → 철도종사자 아님</div>
+</div><div class="concept" id="C-03">
+  <div class="concept-title"><span class="cnum">C-03</span>철도안전 종합계획 핵심 수치</div>
+  <div class='vis-wrap'><img src='images/VIS-050_종합계획수립절차타임라인.png'><p class='vis-cap'>종합계획 수립절차 타임라인</p></div>
+<table><tr><th>항목</th><th>수치</th><th>함정</th></tr>
+<tr><td>수립 주기</td><td><b>5년</b>마다</td><td>3년 ❌</td></tr>
+<tr class='hl'><td>수립 주체</td><td><b>국토교통부장관</b></td><td></td></tr>
+<tr><td>시행계획 제출 기한</td><td>전년도 <b>10월 말</b></td><td>11월 말 ❌</td></tr>
+<tr class='hl'><td>추진실적 제출 기한</td><td><b>2월 말</b></td><td>3월 말 ❌</td></tr>
+<tr><td>안전예산 공시 기한</td><td><b>5월 말</b></td><td></td></tr>
+<tr class='hl'><td>안전예산 공시 주체</td><td><b>국토교통부장관 또는 시·도지사</b></td><td>국토부장관만 ❌</td></tr>
+</table>
+</div>
+  </div>
+</div><div class="part">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 2 · 안전관리체계·과징금·우수운영자 (2편) <span class="arrow">▼</span>
+  </div>
+  <div class="part-body" style="display:block">
+    <div class="concept" id="C-04">
+  <div class="concept-title"><span class="cnum">C-04</span>안전관리체계 승인 절차</div>
+  <div class='vis-wrap'><img src='images/VIS-051_안전관리체계승인절차.png'><p class='vis-cap'>안전관리체계 승인절차</p></div>
+<div class='step-box'>신청 기한: 철도운영 개시 <b>90일 전</b>까지 → 국토교통부장관에게 승인 신청</div>
+<div class='trap'>❌ 60일 전, 30일 전 → 반드시 <b>90일 전</b></div>
+<p style='margin-top:8px'>검사 유예 불가 사유: 민·형사 소송 계속 중 (기출 함정!)</p>
+</div><div class="concept" id="C-05">
+  <div class="concept-title"><span class="cnum">C-05</span>안전관리체계 취소 — 필요적 vs 임의적</div>
+  <div class='vis-wrap'><img src='images/VIS-052_필요적임의적취소비교.png'><p class='vis-cap'>필요적·임의적 취소 비교</p></div>
+<table><tr><th>구분</th><th>사유</th><th>법 표현</th></tr>
+<tr class='hl'><td><b>필요적 취소</b></td><td>거짓·부정한 방법으로 승인</td><td>취소하여야 한다</td></tr>
+<tr><td>임의적 취소</td><td>변경승인 미이행</td><td>취소할 수 있다</td></tr>
+<tr><td>임의적 취소</td><td>안전관리체계 지속 미유지</td><td>취소할 수 있다</td></tr>
+<tr><td>임의적 취소</td><td>시정조치 미이행</td><td>취소할 수 있다</td></tr>
+</table>
+<div class='trap'>❌ "부정한 방법으로 승인 = 임의적 취소" → 반드시 <b>필요적 취소</b></div>
+</div><div class="concept" id="C-06">
+  <div class="concept-title"><span class="cnum">C-06</span>과징금·우수운영자</div>
+  <table><tr><th>항목</th><th>내용</th><th>함정</th></tr>
+<tr class='hl'><td>과징금 최대 한도</td><td><b>30억원</b></td><td>50억원 ❌</td></tr>
+<tr><td>사망자 10명 이상</td><td><b>20억원</b></td><td>30억원 ❌</td></tr>
+<tr class='hl'><td>우수운영자 지정 주체</td><td><b>국토교통부장관</b></td><td>지방자치단체장 ❌</td></tr>
+<tr><td>안전관리수준평가</td><td>실시할 수 있다 (<b>임의</b>)</td><td>의무(하여야) ❌</td></tr>
+</table>
+<div class='trap'>❌ 안전관리수준평가 = 의무 → <b>임의(할 수 있다)</b></div>
+</div>
+  </div>
+</div><div class="part">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 3 · 운전면허·관제자격·적성검사 (3편) <span class="arrow">▼</span>
+  </div>
+  <div class="part-body" style="display:block">
+    <div class="concept" id="C-07">
+  <div class="concept-title"><span class="cnum">C-07</span>운전면허 6종</div>
+  <div class='vis-wrap'><img src='images/VIS-053_운전면허6종분류표.png'><p class='vis-cap'>운전면허 6종 분류표</p></div>
+<table><tr><th>면허 종류</th><th>대상 차량</th><th>특이사항</th></tr>
+<tr><td>고속철도</td><td>고속철도차량</td><td></td></tr>
+<tr><td>일반철도</td><td>일반철도 동력차</td><td></td></tr>
+<tr><td>도시철도</td><td>도시철도차량</td><td></td></tr>
+<tr><td>철도장비</td><td>선로보수 등 장비</td><td></td></tr>
+<tr class='hl'><td>노면전차</td><td>노면전차</td><td>⚠️ 도로교통법 운전면허도 필요</td></tr>
+<tr><td>고무바퀴</td><td>경전철 고무차륜</td><td></td></tr>
+</table>
+<div class='trap'>❌ "노면전차 운전면허만 있으면 운전 가능" → 도로교통법 면허도 있어야</div>
+</div><div class="concept" id="C-08">
+  <div class="concept-title"><span class="cnum">C-08</span>운전면허 핵심 수치</div>
+  <table><tr><th>항목</th><th>수치</th><th>함정</th></tr>
+<tr class='hl'><td>면허 유효기간</td><td><b>10년</b></td><td>5년 ❌</td></tr>
+<tr><td>필기시험 합격 유효기간</td><td><b>2년</b></td><td>1년 ❌</td></tr>
+<tr class='hl'><td>취소 후 면허증 반납 기한</td><td><b>15일</b> 이내</td><td>30일 ❌</td></tr>
+<tr><td>결격: 취소 후 경과 기간</td><td><b>2년</b> 미경과</td><td>5년 ❌</td></tr>
+<tr class='hl'><td>결격: 최저 나이</td><td><b>19세 미만</b></td><td></td></tr>
+</table>
+<div class='tip'>★ 암기법: 유효기간 10년 / 나머지 핵심 = 2년(결격·합격유효) + 15일(반납)</div>
+</div><div class="concept" id="C-09">
+  <div class="concept-title"><span class="cnum">C-09</span>운전적성검사·관제자격증명</div>
+  <div class='vis-wrap'><img src='images/VIS-054_운전적성검사3종주기.png'><p class='vis-cap'>운전적성검사 3종 주기</p></div>
+<table><tr><th>종류</th><th>시기</th><th>함정</th></tr>
+<tr><td>최초</td><td>면허 취득 전</td><td></td></tr>
+<tr class='hl'><td>정기</td><td><b>10년</b>마다 (50세 이상 <b>5년</b>마다)</td><td>모두 5년 ❌</td></tr>
+<tr><td>특별</td><td>철도사고 발생 후 / 업무적합성 의심 시</td><td></td></tr>
+</table>
+<table><tr><th>항목</th><th>내용</th></tr>
+<tr><td>검사인력 기준</td><td><b>3명 이상</b></td></tr>
+<tr class='hl'><td>지정취소 후 결격</td><td><b>2년</b></td></tr>
+<tr><td>관제 실무수습</td><td><b>100시간</b></td></tr>
+</table>
+<div class='trap'>❌ 검사인력 1명 / 취소 후 결격 5년 / 관제 실무수습 50시간 → 모두 오답</div>
+</div>
+  </div>
+</div><div class="part">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 4 · 형식승인·정비조직·기술자·이력·영상 (4편) <span class="arrow">▼</span>
+  </div>
+  <div class="part-body" style="display:block">
+    <div class="concept" id="C-10">
+  <div class="concept-title"><span class="cnum">C-10</span>형식승인 검사방법 3종</div>
+  <div class='vis-wrap'><img src='images/VIS-055_형식승인검사방법3종.png'><p class='vis-cap'>형식승인 검사방법 3종</p></div>
+<table><tr><th>검사방법</th><th>내용</th></tr>
+<tr><td><b>설계적합성검사</b></td><td>설계가 기술기준에 적합한지 검사</td></tr>
+<tr><td><b>합치성검사</b></td><td>부품→구성품→완성품이 설계와 합치하는지</td></tr>
+<tr><td><b>용품형식시험</b></td><td>철도용품이 기준에 맞는지 시험</td></tr>
+</table>
+<div class='trap'>❌ "신뢰도 검사" → 형식승인 검사방법 아님. 선지에 나오면 무조건 오답</div>
+<div class='tip'>★ 완성검사: 판매하기 <b>전에</b> 받아야 함 (판매 후 ❌)</div>
+</div><div class="concept" id="C-11">
+  <div class="concept-title"><span class="cnum">C-11</span>형식승인 경미한 사항·면제</div>
+  <table><tr><th>구분</th><th>내용</th></tr>
+<tr><td>신고 충분 (경미)</td><td>차체형상 변경, 안전과 무관 설비, 입증<b>가능</b> 부품 규격 변경</td></tr>
+<tr class='hl'><td>변경승인 필요</td><td>동일성능으로 입증할 수 <b>없는</b> 부품 규격 변경</td></tr>
+</table>
+<div class='trap'>❌ "입증할 수 없는 부품 규격 변경 = 신고 충분" → <b>입증 가능할 때만</b> 신고 충분</div>
+<table><tr><th>면제 가능</th><th>면제 불가</th></tr>
+<tr><td>시험·연구·개발 목적</td><td>중량분포에 영향 안 미치는 장치·부품</td></tr>
+<tr><td>수출 목적</td><td></td></tr>
+</table>
+</div><div class="concept" id="C-12">
+  <div class="concept-title"><span class="cnum">C-12</span>정비조직·철도기술자·이력·영상</div>
+  <table><tr><th>항목</th><th>내용</th><th>함정</th></tr>
+<tr class='hl'><td>정비조직 인증취소 후 결격</td><td><b>2년</b></td><td>5년 ❌</td></tr>
+<tr><td>기술자 1등급 기준</td><td><b>80점 이상</b></td><td></td></tr>
+<tr class='hl'><td>기술자 보수훈련</td><td><b>5년</b>마다 <b>35시간</b></td><td>20·25·30시간 ❌</td></tr>
+<tr><td>이력 보고 주기</td><td><b>정기적으로</b></td><td>매월 ❌</td></tr>
+<tr class='hl'><td>지위 승계 신고</td><td>승계일부터 <b>1개월</b> 이내</td><td></td></tr>
+<tr><td>철도용품 계획서 통보</td><td><b>15일</b> 이내</td><td>7일 ❌</td></tr>
+</table>
+<div class='trap'>❌ 인증정비조직 준수사항에 "이력 효과적 관리" 포함 → 준수사항 아님</div>
+<div class='trap'>❌ 이력 금지행위: "너무 많은 내용 입력" → 금지행위 아님</div>
+</div>
+  </div>
+</div><div class="part">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 5 · 음주·금지행위·보호지구·보안·관제 (5편) <span class="arrow">▼</span>
+  </div>
+  <div class="part-body" style="display:block">
+    <div class="concept" id="C-13">
+  <div class="concept-title"><span class="cnum">C-13</span>음주기준 — 1~4호 vs 5~7호</div>
+  <div class='vis-wrap'><img src='images/VIS-056_음주기준철도보호지구수치.png'><p class='vis-cap'>음주기준·철도보호지구 수치 암기카드</p></div>
+<table><tr><th>종사자 구분</th><th>기준</th><th>해당 종사자</th></tr>
+<tr class='hl'><td>1~4호</td><td><b>0.02%</b> 이상</td><td>운전·관제·여객승무원·철도운행안전관리자</td></tr>
+<tr><td>5~7호</td><td><b>0.03%</b> 이상</td><td>현장감독·신호기취급·점검정비</td></tr>
+</table>
+<div class='trap'>❌ "여객승무원 = 0.03% 기준" → 여객승무원은 1~4호 = <b>0.02%</b></div>
+</div><div class="concept" id="C-14">
+  <div class="concept-title"><span class="cnum">C-14</span>철도보호지구·직무장비</div>
+  <table><tr><th>항목</th><th>수치</th><th>함정</th></tr>
+<tr class='hl'><td>일반철도 보호지구</td><td>경계선으로부터 <b>30m</b> 이내</td><td>50m ❌</td></tr>
+<tr><td>노면전차 보호지구</td><td>경계선으로부터 <b>10m</b> 이내</td><td>5m ❌</td></tr>
+<tr class='hl'><td>물건방치 금지 범위</td><td>궤도 중심 양측 <b>3m</b> 이내</td><td>2m·5m ❌</td></tr>
+</table>
+<div class='vis-wrap'><img src='images/VIS-057_직무장비목록권총제외.png'><p class='vis-cap'>직무장비 목록 (권총 제외)</p></div>
+<div class='step-box'><b>직무장비 5가지:</b> 수갑 / 포승 / 가스분사기 / 전자충격기 / 경비봉</div>
+<div class='trap'>❌ "직무장비 = 권총 포함" → 권총은 목록에 없음</div>
+</div><div class="concept" id="C-15">
+  <div class="concept-title"><span class="cnum">C-15</span>관제업무·철도운행안전관리자</div>
+  <table><tr><th>항목</th><th>내용</th></tr>
+<tr><td>관제 제외 대상</td><td>신설선 또는 개량선 (<b>정상운행 전</b>)</td></tr>
+<tr class='hl'><td>관제 업무 아닌 것</td><td>철도승객 유치를 위한 홍보</td></tr>
+<tr><td>운행안전관리자 고의·중과실 사고</td><td><b>임의적 취소</b> (할 수 있다)</td></tr>
+</table>
+<div class='trap'>❌ "정상운행 시작 후 개량선 = 관제 제외 대상" → <b>정상운행 후면 제외 불가</b></div>
+<div class='trap'>❌ "고의·중과실 사고 = 필요적 취소(하여야)" → <b>임의적 취소</b></div>
+</div>
+  </div>
+</div><div class="part">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 6 · 사고보고·청문·벌칙 (6편) <span class="arrow">▼</span>
+  </div>
+  <div class="part-body" style="display:block">
+    <div class="concept" id="C-16">
+  <div class="concept-title"><span class="cnum">C-16</span>즉시보고 기준·청문대상</div>
+  <div class='vis-wrap'><img src='images/VIS-058_즉시보고기준청문대상.png'><p class='vis-cap'>즉시보고 기준·청문대상</p></div>
+<table><tr><th>항목</th><th>기준</th><th>함정</th></tr>
+<tr class='hl'><td>사상자 즉시보고</td><td><b>3명 이상</b></td><td>1명 ❌</td></tr>
+<tr><td>재산피해 즉시보고</td><td><b>5천만원 이상</b></td><td>3천만원 ❌</td></tr>
+</table>
+<div class='tip'>★ 청문 대상 포함: 안전관리체계 취소, 운전면허 취소, 관제자격증명 취소, 형식승인 취소, 정비기술자 취소, 운행안전관리자 취소 등</div>
+<div class='trap'>❌ "품질인증의 취소 = 청문 대상" → <b>청문 대상 아님</b></div>
+<div class='trap'>❌ 재정지원 대상: "철도승객 권익보호단체" → <b>재정지원 불가</b></div>
+</div><div class="concept" id="C-17">
+  <div class="concept-title"><span class="cnum">C-17</span>벌칙 5단계 체계</div>
+  <div class='vis-wrap'><img src='images/VIS-059_벌칙5단계계층표.png'><p class='vis-cap'>벌칙 5단계 계층표</p></div>
+<table><tr><th>벌칙</th><th>행위</th></tr>
+<tr class='hl'><td><b>무기징역 또는 5년↑</b></td><td>탑승 운행 중 차량 소훼·탈선·충돌·파괴</td></tr>
+<tr><td><b>5년↓ / 5천만원↓</b></td><td>폭행·협박으로 종사자 직무집행 방해</td></tr>
+<tr class='hl'><td><b>3년↓ / 3천만원↓</b></td><td>무승인 운영 / 음주약물 업무 / 금지 위험물 탁송</td></tr>
+<tr><td><b>2년↓ / 2천만원↓</b></td><td>거짓·부정한 방법으로 안전관리체계 승인</td></tr>
+<tr class='hl'><td><b>500만원↓</b></td><td>성적 수치심을 일으키는 행위</td></tr>
+</table>
+<div class='tip'>★ 암기: 탑→종→무음위→부정→수치</div>
+<div class='trap'>❌ "부정한 방법 안전관리체계 = 3년 이하" → <b>2년 이하</b></div>
+<div class='trap'>❌ "탑승차량 파괴 = 5년 이하" → <b>5년 이상</b> (무기징역 or 5년↑)</div>
+</div><div class="concept" id="C-18">
+  <div class="concept-title"><span class="cnum">C-18</span>핵심수치 통합 암기</div>
+  <div class='vis-wrap'><img src='images/VIS-060_철도안전법핵심수치통합암기표.png'><p class='vis-cap'>철도안전법 핵심수치 통합 암기표</p></div>
+</div>
+  </div>
+</div>
+  </main>
+</div>
+<script>
+function togglePart(el){
+  const body=el.nextElementSibling;
+  const arrow=el.querySelector('.arrow');
+  if(body.style.display==='none'){body.style.display='block';arrow.textContent='▲';}
+  else{body.style.display='none';arrow.textContent='▼';}
+}
+function search(){
+  const q=document.getElementById('q').value.trim().toLowerCase();
+  document.querySelectorAll('.highlight').forEach(e=>{
+    const p=e.parentNode; p.replaceChild(document.createTextNode(e.textContent),e);
+    p.normalize();
+  });
+  if(!q) return;
+  function walk(node){
+    if(node.nodeType===3){
+      const idx=node.textContent.toLowerCase().indexOf(q);
+      if(idx>=0){
+        const span=document.createElement('span'); span.className='highlight';
+        const after=node.splitText(idx);
+        after.splitText(q.length);
+        span.appendChild(after.cloneNode(true));
+        after.parentNode.replaceChild(span,after);
+        let p=span.closest('.part-body');
+        if(p)p.style.display='block';
+      }
+    } else if(node.nodeType===1 && node.tagName!=='SCRIPT'){
+      Array.from(node.childNodes).forEach(walk);
+    }
+  }
+  walk(document.body);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.activeElement.id==='q')search();});
+</script>
+</body></html>

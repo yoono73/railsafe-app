@@ -16,13 +16,11 @@ const subjects = [
 
 export default function SidebarNav() {
   const pathname = usePathname();
-  const [openSection, setOpenSection] = useState<'story' | 'cbt' | null>(null);
+  const [openSection, setOpenSection] = useState<'theory' | 'story' | 'cbt' | null>(null);
 
-  const toggle = (section: 'story' | 'cbt') => {
+  const toggle = (section: 'theory' | 'story' | 'cbt') => {
     setOpenSection(prev => prev === section ? null : section);
   };
-
-  const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
   return (
     <aside className="w-56 shrink-0 bg-white border-r border-gray-200 flex flex-col overflow-y-auto">
@@ -42,6 +40,37 @@ export default function SidebarNav() {
         </Link>
 
         <div className="h-px bg-gray-100 my-2" />
+
+        {/* 핵심정리 */}
+        <button
+          onClick={() => toggle('theory')}
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors w-full text-left ${
+            openSection === 'theory' ? 'bg-purple-50 text-purple-800' : 'text-gray-600 hover:bg-gray-100'
+          }`}
+        >
+          <span className="text-base">📚</span>
+          <span className="flex-1">핵심정리</span>
+          <span className="text-xs text-gray-400">{openSection === 'theory' ? '▲' : '▼'}</span>
+        </button>
+
+        {openSection === 'theory' && (
+          <div className="ml-4 flex flex-col gap-0.5">
+            {subjects.map(s => (
+              <Link
+                key={s.id}
+                href={`/theory/${s.id}`}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
+                  pathname.startsWith(`/theory/${s.id}`)
+                    ? 'bg-purple-100 text-purple-800 font-semibold'
+                    : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
+                }`}
+              >
+                <span>{s.icon}</span>
+                <span className="truncate">{s.name}</span>
+              </Link>
+            ))}
+          </div>
+        )}
 
         {/* 스토리 학습 */}
         <button
