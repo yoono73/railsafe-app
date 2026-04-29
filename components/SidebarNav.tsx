@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const subjects = [
   { id: 1, name: '교통안전관리론', icon: '📊' },
@@ -17,6 +17,22 @@ const subjects = [
 export default function SidebarNav() {
   const pathname = usePathname();
   const [openSection, setOpenSection] = useState<'theory' | 'story' | 'cbt' | null>(null);
+  const [appVersion, setAppVersion] = useState<string>('');
+
+  useEffect(() => {
+    import('@/lib/supabase/client').then(({ createClient }) => {
+      const supabase = createClient();
+      supabase
+        .from('content_versions')
+        .select('version_string')
+        .eq('version_type', 'app')
+        .eq('is_current', true)
+        .single()
+        .then(({ data }) => {
+          if (data) setAppVersion(data.version_string);
+        });
+    });
+  }, []);
 
   const toggle = (section: 'theory' | 'story' | 'cbt') => {
     setOpenSection(prev => prev === section ? null : section);
@@ -151,11 +167,25 @@ export default function SidebarNav() {
 
         <div className="h-px bg-gray-100 my-2" />
 
+        {/* 오늘의 학습 시작 버튼 */}
+        <Link
+          href="/start"
+          className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-purple-700 text-white text-xs font-semibold hover:bg-purple-800 transition"
+        >
+          <span>🚀</span>
+          오늘의 학습 시작
+        </Link>
+
         {/* 시험일 D-day */}
         <div className="px-3 py-2 rounded-lg bg-amber-50 border border-amber-200">
           <p className="text-xs text-amber-700 font-semibold">📅 시험일까지</p>
           <p className="text-xs text-amber-600 mt-0.5">2026.06.21</p>
         </div>
+
+        {/* 버전 */}
+        {appVersion && (
+          <p className="text-center text-xs text-gray-300 pb-1">{appVersion}</p>
+        )}
 
       </nav>
     </aside>

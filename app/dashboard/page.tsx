@@ -19,6 +19,13 @@ interface SubjectProgress {
   correct: number;
 }
 
+interface Announcement {
+  id: string;
+  title: string;
+  content: string;
+  is_pinned: boolean;
+}
+
 function getDday() {
   const exam = new Date('2026-06-21');
   const today = new Date();
@@ -32,10 +39,30 @@ export default function DashboardPage() {
   const dday = getDday();
   const [progress, setProgress] = useState<Record<number, SubjectProgress>>({});
   const [loadingProgress, setLoadingProgress] = useState(true);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [dismissedIds, setDismissedIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    const fetchProgress = async () => {
+    // localStorage에서 이미 닫은 공지 ID 불러오기
+    try {
+      const saved = JSON.parse(localStorage.getItem('dismissed_announcements') || '[]');
+      setDismissedIds(new Set(saved));
+    } catch {
+      // ignore
+    }
+
+    const fetchAll = async () => {
       const supabase = createClient();
+
+      // 공지 불러오기
+      const { data: ann } = await supabase
+        .from('announcements')
+        .select('id, title, content, is_pinned')
+        .is('expires_at', null)
+        .order('is_pinned', { ascending: false })
+        .order('created_at', { ascending: false })
+        .limit(3);
+      if (ann) setAnnouncements(ann as Announcement[]);
 
       // 각 과목별 전체 문제 수
       const { data: qCounts } = await supabase
@@ -43,20 +70,18 @@ export default function DashboardPage() {
         .select('subject_id')
         .in('subject_id', subjects.map(s => s.id));
 
-      // 내 attempts (question_id + is_correct + subject_id 조인)
+      // 내 attempts
       const { data: attempts } = await supabase
         .from('attempts')
         .select('question_id, is_correct, questions(subject_id)');
 
       const result: Record<number, SubjectProgress> = {};
 
-      // 전체 문제 수 집계
       (qCounts || []).forEach((q: { subject_id: number }) => {
         if (!result[q.subject_id]) result[q.subject_id] = { total: 0, attempted: 0, correct: 0 };
         result[q.subject_id].total += 1;
       });
 
-      // 풀이 기록 집계 (distinct question_id 기준)
       const attemptedMap: Record<number, Set<number>> = {};
       const correctMap: Record<number, Set<number>> = {};
 
@@ -79,14 +104,58 @@ export default function DashboardPage() {
       setLoadingProgress(false);
     };
 
-    fetchProgress();
+    fetchAll();
   }, []);
+
+  const dismissAnnouncement = (id: string) => {
+    const next = new Set(dismissedIds);
+    next.add(id);
+    setDismissedIds(next);
+    try {
+      localStorage.setItem('dismissed_announcements', JSON.stringify([...next]));
+    } catch {
+      // ignore
+    }
+  };
+
+  const visibleAnnouncements = announcements.filter(a => !dismissedIds.has(a.id));
 
   return (
     <>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-800">학습 현황</h1>
-        <p className="text-gray-500 text-sm mt-1">시험일 D-{dday} · 2026.06.21</p>
+      {/* 공지 배너 */}
+      {visibleAnnouncements.map(ann => (
+        <div
+          key={ann.id}
+          className="mb-4 flex items-start gap-3 bg-purple-50 border border-purple-200 rounded-2xl px-5 py-4"
+        >
+          <span className="text-xl shrink-0 mt-0.5">📢</span>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-bold text-purple-800">{ann.title}</p>
+            <p className="text-xs text-purple-600 mt-0.5 leading-relaxed">{ann.content}</p>
+          </div>
+          <button
+            onClick={() => dismissAnnouncement(ann.id)}
+            className="text-purple-300 hover:text-purple-500 transition text-lg leading-none shrink-0"
+            aria-label="닫기"
+          >
+            ×
+          </button>
+        </div>
+      ))}
+
+      {/* 헤더 + 오늘의 학습 시작 버튼 */}
+      <div className="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">학습 현황</h1>
+          <p className="text-gray-500 text-sm mt-1">시험일 D-{dday} · 2026.06.21</p>
+        </div>
+        <button
+          onClick={() => router.push('/start')}
+          className="shrink-0 flex items-center gap-2 bg-purple-700 hover:bg-purple-800 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition shadow-sm"
+        >
+          <span>🚀</span>
+          오늘의 학습 시작
+        </button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
