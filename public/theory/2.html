@@ -44,6 +44,12 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .summary-bar { background:#1E3A8A; color:#fff; text-align:center; padding:10px; font-size:.85em; margin-bottom:16px; border-radius:8px; }
 .highlight { background:#fff176; border-radius:2px; }
 @media(max-width:768px){ .toc{display:none;} .content{padding:12px 10px 40px;} table{font-size:.82em;} }
+
+/* 모바일 테이블 가로 스크롤 방지 */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
+@media(max-width:768px){
+  .content table { min-width: 480px; }
+}
 </style>
 </head>
 <body>
@@ -62,16 +68,16 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="part-title" onclick="togglePart(this)">PART 1. 총칙 — 용어 정의<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p1-01">
 <div class="concept-title"><span class="cnum">개념 01</span>기본 용어 8개</div>
-<table><thead><tr><th>용어</th><th>정의</th><th>시험 포인트</th></tr></thead><tbody><tr><td>교통수단</td><td>사람 이동·화물 운송에 이용되는 운송수단 (육상·수상·항공)</td><td><strong>교통안전표지 = 교통시설</strong> (교통수단 아님)</td></tr><tr><td>교통시설</td><td>도로·철도·궤도·항만·어항·수로·공항·비행장 + 교통안전표지·관제시설·항행안전시설</td><td>표지·관제시설도 포함</td></tr><tr><td>교통체계</td><td>교통수단 및 교통시설의 이용·관리·운영체계 또는 관련 산업·제도 등</td><td>빈칸 자주 출제</td></tr><tr><td>교통사업자</td><td>①교통수단운영자 ②교통시설설치·관리자 ③제조사업자·교육·연구·조사기관</td><td><strong>교통운전자는 비해당 ❌</strong></td></tr><tr><td>지정행정기관</td><td>정부조직법에 의한 중앙행정기관 (기재부·교육부·국토부 등)</td><td><strong>국회(입법부) 비해당 ❌</strong></td></tr><tr><td>교통행정기관</td><td>지정행정기관의 장 + 시·도지사 + 시장·군수·구청장</td><td><strong>특별행정기관 비해당 ❌</strong></td></tr><tr><td>교통사고</td><td>교통수단의 운행·항행·운항과 관련된 사람의 사상 또는 물건의 손괴</td><td></td></tr><tr><td>교통안전관리자</td><td>교통수단의 안전한 운행·운항 관련 기술적 사항을 점검·관리하는 자</td><td></td></tr></tbody></table><div class="trap">⚠️ 함정 주의: 교통안전표지 → 교통수단 아님, <strong>교통시설</strong>에 해당</div>
+<div class="table-wrap"><table><thead><tr><th>용어</th><th>정의</th><th>시험 포인트</th></tr></thead><tbody><tr><td>교통수단</td><td>사람 이동·화물 운송에 이용되는 운송수단 (육상·수상·항공)</td><td><strong>교통안전표지 = 교통시설</strong> (교통수단 아님)</td></tr><tr><td>교통시설</td><td>도로·철도·궤도·항만·어항·수로·공항·비행장 + 교통안전표지·관제시설·항행안전시설</td><td>표지·관제시설도 포함</td></tr><tr><td>교통체계</td><td>교통수단 및 교통시설의 이용·관리·운영체계 또는 관련 산업·제도 등</td><td>빈칸 자주 출제</td></tr><tr><td>교통사업자</td><td>①교통수단운영자 ②교통시설설치·관리자 ③제조사업자·교육·연구·조사기관</td><td><strong>교통운전자는 비해당 ❌</strong></td></tr><tr><td>지정행정기관</td><td>정부조직법에 의한 중앙행정기관 (기재부·교육부·국토부 등)</td><td><strong>국회(입법부) 비해당 ❌</strong></td></tr><tr><td>교통행정기관</td><td>지정행정기관의 장 + 시·도지사 + 시장·군수·구청장</td><td><strong>특별행정기관 비해당 ❌</strong></td></tr><tr><td>교통사고</td><td>교통수단의 운행·항행·운항과 관련된 사람의 사상 또는 물건의 손괴</td><td></td></tr><tr><td>교통안전관리자</td><td>교통수단의 안전한 운행·운항 관련 기술적 사항을 점검·관리하는 자</td><td></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 교통안전표지 → 교통수단 아님, <strong>교통시설</strong>에 해당</div>
 </div><div class="concept" id="p1-02">
 <div class="concept-title"><span class="cnum">개념 02</span>교통수단안전점검 vs 교통시설안전진단</div>
-<table><thead><tr><th>구분</th><th>주체</th><th>대상</th></tr></thead><tbody><tr><td><strong>교통수단안전점검</strong></td><td><strong>교통행정기관</strong></td><td>소관 교통수단에 대해 위험요인 조사·점검·평가</td></tr><tr><td><strong>교통시설안전진단</strong></td><td><strong>교통안전진단기관</strong></td><td>교통시설에 대해 위험요인 조사·측정·평가</td></tr></tbody></table><div class="trap">⚠️ 함정 주의: 두 용어의 주체·대상을 바꿔치기하여 출제 — 점검=행정기관, 진단=진단기관</div>
+<div class="table-wrap"><table><thead><tr><th>구분</th><th>주체</th><th>대상</th></tr></thead><tbody><tr><td><strong>교통수단안전점검</strong></td><td><strong>교통행정기관</strong></td><td>소관 교통수단에 대해 위험요인 조사·점검·평가</td></tr><tr><td><strong>교통시설안전진단</strong></td><td><strong>교통안전진단기관</strong></td><td>교통시설에 대해 위험요인 조사·측정·평가</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 두 용어의 주체·대상을 바꿔치기하여 출제 — 점검=행정기관, 진단=진단기관</div>
 </div></div>
 </div><div class="part" id="p2">
 <div class="part-title" onclick="togglePart(this)">PART 2. 관련자 의무<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p2-03">
 <div class="concept-title"><span class="cnum">개념 03</span>주체별 의무 매핑</div>
-<table><thead><tr><th>주체</th><th>의무</th></tr></thead><tbody><tr><td><strong>국가</strong></td><td>교통안전 종합시책 수립·시행 / <strong>국민</strong> 생명·신체·재산 보호 / 재정·금융 조치 <strong>강구하여야 한다</strong></td></tr><tr><td><strong>지방자치단체</strong></td><td>관할구역 내 시책 수립·시행 / <strong>주민</strong> 생명·신체·재산 보호</td></tr><tr><td><strong>차량운전자 등</strong></td><td>안전운행·운항 의무 (차량운전자·선박승무원·항공승무원)</td></tr><tr><td><strong>보행자</strong></td><td>법령 준수 + 육상교통에 위험·피해 주지 않도록 노력</td></tr></tbody></table><div class="trap">⚠️ 함정 주의: <strong>국가=국민 / 지자체=주민</strong> — 서로 바꾸면 오답</div><div class="trap">⚠️ 함정 주의: 재정·금융 조치: '<strong>강구하여야 한다</strong>' (강구할 수 있다 ❌ 의무임)</div><div class="trap">⚠️ 함정 주의: 교통안전 종합시책 = 국가 의무 (차량운전자 의무 ❌)</div>
+<div class="table-wrap"><table><thead><tr><th>주체</th><th>의무</th></tr></thead><tbody><tr><td><strong>국가</strong></td><td>교통안전 종합시책 수립·시행 / <strong>국민</strong> 생명·신체·재산 보호 / 재정·금융 조치 <strong>강구하여야 한다</strong></td></tr><tr><td><strong>지방자치단체</strong></td><td>관할구역 내 시책 수립·시행 / <strong>주민</strong> 생명·신체·재산 보호</td></tr><tr><td><strong>차량운전자 등</strong></td><td>안전운행·운항 의무 (차량운전자·선박승무원·항공승무원)</td></tr><tr><td><strong>보행자</strong></td><td>법령 준수 + 육상교통에 위험·피해 주지 않도록 노력</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>국가=국민 / 지자체=주민</strong> — 서로 바꾸면 오답</div><div class="trap">⚠️ 함정 주의: 재정·금융 조치: '<strong>강구하여야 한다</strong>' (강구할 수 있다 ❌ 의무임)</div><div class="trap">⚠️ 함정 주의: 교통안전 종합시책 = 국가 의무 (차량운전자 의무 ❌)</div>
 </div></div>
 </div><div class="part" id="p3">
 <div class="part-title" onclick="togglePart(this)">PART 3. 교통안전 계획 체계<span class="arrow">▲</span></div>
@@ -80,94 +86,94 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="vis-wrap"><img src="images/VIS-022_교통안전계획체계흐름도.jpg" alt="교통안전 계획 4종 체계 흐름도" loading="lazy"><p class="vis-cap">교통안전 계획 4종 체계 흐름도</p></div><div class="step-box">국가교통안전기본계획(5년, 국토교통부장관) → 심의: 국가교통위원회<br>→ 국가교통안전시행계획(매년, 지정행정기관의 장)<br><br>지역교통안전기본계획(5년, 시·도지사)<br>→ 지역교통안전시행계획(매년, 시·도지사 / 시장·군수·구청장)</div><div class="trap">⚠️ 함정 주의: 시행계획 수립의무자: <strong>지정행정기관의 장</strong> (국토교통부장관 ❌)</div>
 </div><div class="concept" id="p3-05">
 <div class="concept-title"><span class="cnum">개념 05</span>국가교통안전기본계획 핵심</div>
-<table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>수립의무자</td><td><strong>국토교통부장관</strong></td><td>시·도지사 교체</td></tr><tr><td>주기</td><td><strong>5년</strong></td><td>1년·10년 교체</td></tr><tr><td>심의기관</td><td><strong>국가교통위원회</strong></td><td>교통안전위원회 교체</td></tr><tr><td>경미한 변경</td><td>부문별 <strong>100분의 10</strong> 이내</td><td>100분의 30 교체</td></tr></tbody></table><table><thead><tr><th>포함사항 O</th><th>포함사항 X</th></tr></thead><tbody><tr><td>교통안전에 관한 <strong>중·장기</strong> 종합정책방향</td><td>단기 종합정책방향 ❌</td></tr><tr><td>교통안전정책의 추진성과 분석·평가</td><td></td></tr><tr><td><strong>연차별</strong> 추진계획</td><td>월별 추진계획 ❌</td></tr><tr><td></td><td>지역교통안전시행계획의 추진상 문제점 ❌</td></tr></tbody></table><div class="tip">★ 수립절차: 지침 통보 → 소관별 계획안 제출 → 기본계획안 작성·확정 → 확정계획 통보·공고</div>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>수립의무자</td><td><strong>국토교통부장관</strong></td><td>시·도지사 교체</td></tr><tr><td>주기</td><td><strong>5년</strong></td><td>1년·10년 교체</td></tr><tr><td>심의기관</td><td><strong>국가교통위원회</strong></td><td>교통안전위원회 교체</td></tr><tr><td>경미한 변경</td><td>부문별 <strong>100분의 10</strong> 이내</td><td>100분의 30 교체</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>포함사항 O</th><th>포함사항 X</th></tr></thead><tbody><tr><td>교통안전에 관한 <strong>중·장기</strong> 종합정책방향</td><td>단기 종합정책방향 ❌</td></tr><tr><td>교통안전정책의 추진성과 분석·평가</td><td></td></tr><tr><td><strong>연차별</strong> 추진계획</td><td>월별 추진계획 ❌</td></tr><tr><td></td><td>지역교통안전시행계획의 추진상 문제점 ❌</td></tr></tbody></table></div><div class="tip">★ 수립절차: 지침 통보 → 소관별 계획안 제출 → 기본계획안 작성·확정 → 확정계획 통보·공고</div>
 </div><div class="concept" id="p3-06">
 <div class="concept-title"><span class="cnum">개념 06</span>국가교통안전시행계획</div>
-<table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>수립의무자</td><td><strong>지정행정기관의 장</strong> (소관별 계획안 수립 → 국토교통부장관에 제출)</td></tr><tr><td>주기</td><td><strong>매년</strong></td></tr></tbody></table><div class="trap">⚠️ 함정 주의: '매년 12월 말까지' → 틀림. 시행계획은 단순히 <strong>매년</strong> 수립</div>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>수립의무자</td><td><strong>지정행정기관의 장</strong> (소관별 계획안 수립 → 국토교통부장관에 제출)</td></tr><tr><td>주기</td><td><strong>매년</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: '매년 12월 말까지' → 틀림. 시행계획은 단순히 <strong>매년</strong> 수립</div>
 </div></div>
 </div><div class="part" id="p4">
 <div class="part-title" onclick="togglePart(this)">PART 4. 교통안전관리규정<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p4-07">
 <div class="concept-title"><span class="cnum">개념 07</span>교통안전관리규정 핵심</div>
-<table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>제출의무자</td><td>교통시설설치·관리자 및 교통수단운영자</td><td>교통운전자 ❌</td></tr><tr><td>제출처</td><td><strong>관할 교통행정기관</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>변경 후 제출</td><td>변경한 날부터 <strong>1개월</strong> 이내</td><td>3개월 교체</td></tr><tr><td>확인·평가 주기</td><td>제출일부터 매 <strong>5년</strong> 전후 <strong>100일</strong> 이내</td><td>3년·60일 교체</td></tr><tr><td>확인·평가 주체</td><td><strong>교통행정기관</strong></td><td>교통안전공단 ❌</td></tr></tbody></table><div class="trap">⚠️ 함정 주의: 확인평가: 5년/100일 ← 3년/60일 함정 (가장 빈출)</div>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>제출의무자</td><td>교통시설설치·관리자 및 교통수단운영자</td><td>교통운전자 ❌</td></tr><tr><td>제출처</td><td><strong>관할 교통행정기관</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>변경 후 제출</td><td>변경한 날부터 <strong>1개월</strong> 이내</td><td>3개월 교체</td></tr><tr><td>확인·평가 주기</td><td>제출일부터 매 <strong>5년</strong> 전후 <strong>100일</strong> 이내</td><td>3년·60일 교체</td></tr><tr><td>확인·평가 주체</td><td><strong>교통행정기관</strong></td><td>교통안전공단 ❌</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 확인평가: 5년/100일 ← 3년/60일 함정 (가장 빈출)</div>
 </div><div class="concept" id="p4-08">
 <div class="concept-title"><span class="cnum">개념 08</span>검토 결과 3종</div>
-<table><thead><tr><th>결과</th><th>의미</th></tr></thead><tbody><tr><td>적합</td><td>교통안전 확보에 문제 없음</td></tr><tr><td><strong>조건부 적합</strong></td><td>교통안전 확보에 문제 없지만 <strong>부분 보완 필요</strong></td></tr><tr><td>부적합</td><td>교통안전 확보에 문제 있음</td></tr></tbody></table>
+<div class="table-wrap"><table><thead><tr><th>결과</th><th>의미</th></tr></thead><tbody><tr><td>적합</td><td>교통안전 확보에 문제 없음</td></tr><tr><td><strong>조건부 적합</strong></td><td>교통안전 확보에 문제 없지만 <strong>부분 보완 필요</strong></td></tr><tr><td>부적합</td><td>교통안전 확보에 문제 있음</td></tr></tbody></table></div>
 </div></div>
 </div><div class="part" id="p5">
 <div class="part-title" onclick="togglePart(this)">PART 5. 교통수단안전점검<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p5-09">
 <div class="concept-title"><span class="cnum">개념 09</span>교통수단안전점검 핵심</div>
-<table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>2개 이상 기관 소관</td><td><strong>공동으로 점검할 수 있다</strong> (공동점검 가능)</td></tr><tr><td>사전통지 기간</td><td>검사일 <strong>7일</strong> 전까지</td></tr><tr><td>점검 대상</td><td>중상자 <strong>2명 이상</strong> 사고</td></tr></tbody></table><div class="trap">⚠️ 함정 주의: 경상자 10명 이상 단독 → 비해당 (중상자 기준이 핵심)</div>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>2개 이상 기관 소관</td><td><strong>공동으로 점검할 수 있다</strong> (공동점검 가능)</td></tr><tr><td>사전통지 기간</td><td>검사일 <strong>7일</strong> 전까지</td></tr><tr><td>점검 대상</td><td>중상자 <strong>2명 이상</strong> 사고</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 경상자 10명 이상 단독 → 비해당 (중상자 기준이 핵심)</div>
 </div></div>
 </div><div class="part" id="p6">
 <div class="part-title" onclick="togglePart(this)">PART 6. 교통시설안전진단·진단기관<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p6-10">
 <div class="concept-title"><span class="cnum">개념 10</span>진단기관 등록·취소</div>
-<table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>등록처</td><td><strong>시·도지사</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>등록취소 후 재등록 제한</td><td><strong>2년</strong></td><td>3년 교체</td></tr><tr><td>비용 부담</td><td><strong>진단을 받는 자</strong></td><td>진단기관 ❌</td></tr><tr><td>의무대상자</td><td><strong>교통시설설치·관리자</strong></td><td>교통수단운영자 ❌</td></tr></tbody></table><div class="trap">⚠️ 함정 주의: 임의적 취소사유: 등록기준에의 미달 (필요적 취소 아님)</div><div class="tip">★ 취소·정지 처분 후에도 착수한 진단업무는 계속 수행 가능</div>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>등록처</td><td><strong>시·도지사</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>등록취소 후 재등록 제한</td><td><strong>2년</strong></td><td>3년 교체</td></tr><tr><td>비용 부담</td><td><strong>진단을 받는 자</strong></td><td>진단기관 ❌</td></tr><tr><td>의무대상자</td><td><strong>교통시설설치·관리자</strong></td><td>교통수단운영자 ❌</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 임의적 취소사유: 등록기준에의 미달 (필요적 취소 아님)</div><div class="tip">★ 취소·정지 처분 후에도 착수한 진단업무는 계속 수행 가능</div>
 </div><div class="concept" id="p6-11">
 <div class="concept-title"><span class="cnum">개념 11</span>결격사유 함정</div>
-<table><thead><tr><th>케이스</th><th>결격 여부</th></tr></thead><tbody><tr><td>등록취소 후 2년 <strong>미경과</strong>자</td><td><strong>결격 O</strong></td></tr><tr><td>등록취소 후 2년 <strong>경과</strong>한 자</td><td><strong>결격 아님</strong> (등록 가능)</td></tr></tbody></table><div class="trap">⚠️ 함정 주의: 2년 지나면 다시 등록 가능 — 2년이 경과하면 결격 아님</div>
+<div class="table-wrap"><table><thead><tr><th>케이스</th><th>결격 여부</th></tr></thead><tbody><tr><td>등록취소 후 2년 <strong>미경과</strong>자</td><td><strong>결격 O</strong></td></tr><tr><td>등록취소 후 2년 <strong>경과</strong>한 자</td><td><strong>결격 아님</strong> (등록 가능)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 2년 지나면 다시 등록 가능 — 2년이 경과하면 결격 아님</div>
 </div></div>
 </div><div class="part" id="p7">
 <div class="part-title" onclick="togglePart(this)">PART 7. 운행기록장치<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p7-12">
 <div class="concept-title"><span class="cnum">개념 12</span>운행기록 핵심 수치</div>
-<table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>보관기간</td><td><strong>6개월</strong></td><td>3개월·1년 교체</td></tr><tr><td>분석기관</td><td><strong>한국교통안전공단</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>주기적 제출</td><td><strong>노선 여객자동차운송사업자</strong></td><td>일반 사업자 교체</td></tr><tr><td>장착 불필요</td><td><strong>경형·소형 특수자동차</strong>운송사업자</td><td>대형 ❌</td></tr><tr><td>차로이탈경고 불필요</td><td><strong>피견인자동차</strong></td><td>일반차량 교체</td></tr></tbody></table>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>보관기간</td><td><strong>6개월</strong></td><td>3개월·1년 교체</td></tr><tr><td>분석기관</td><td><strong>한국교통안전공단</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>주기적 제출</td><td><strong>노선 여객자동차운송사업자</strong></td><td>일반 사업자 교체</td></tr><tr><td>장착 불필요</td><td><strong>경형·소형 특수자동차</strong>운송사업자</td><td>대형 ❌</td></tr><tr><td>차로이탈경고 불필요</td><td><strong>피견인자동차</strong></td><td>일반차량 교체</td></tr></tbody></table></div>
 </div><div class="concept" id="p7-13">
 <div class="concept-title"><span class="cnum">개념 13</span>운행기록 분석항목 6개</div>
-<table><thead><tr><th>분석항목 O (6개)</th><th>분석항목 X</th></tr></thead><tbody><tr><td>과속 / 급감속 / 급출발 / 회전 / 앞지르기 / 진로변경</td><td><strong>주차 ❌</strong> (가장 자주 출제)</td></tr></tbody></table><div class="trap">⚠️ 함정 주의: <strong>주차는 분석항목 아님</strong> ← 단골 출제</div>
+<div class="table-wrap"><table><thead><tr><th>분석항목 O (6개)</th><th>분석항목 X</th></tr></thead><tbody><tr><td>과속 / 급감속 / 급출발 / 회전 / 앞지르기 / 진로변경</td><td><strong>주차 ❌</strong> (가장 자주 출제)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>주차는 분석항목 아님</strong> ← 단골 출제</div>
 </div><div class="concept" id="p7-14">
 <div class="concept-title"><span class="cnum">개념 14</span>운행기록 분석결과 활용</div>
-<table><thead><tr><th>활용 O</th><th>활용 X (비해당)</th></tr></thead><tbody><tr><td>자동차의 운행관리</td><td><strong>과태료 부과 시 일반기준 ❌</strong></td></tr><tr><td>차량운전자 교육·훈련</td><td>제재·처벌에 사용 불가</td></tr><tr><td>운행계통·운행경로 개선</td><td></td></tr></tbody></table><div class="trap">⚠️ 함정 주의: 분석결과 조치: 교통수단운영체계 개선권고 / 연속근무·최소휴게시간 확인 — <strong>교통안전진단 실시 ❌</strong></div>
+<div class="table-wrap"><table><thead><tr><th>활용 O</th><th>활용 X (비해당)</th></tr></thead><tbody><tr><td>자동차의 운행관리</td><td><strong>과태료 부과 시 일반기준 ❌</strong></td></tr><tr><td>차량운전자 교육·훈련</td><td>제재·처벌에 사용 불가</td></tr><tr><td>운행계통·운행경로 개선</td><td></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 분석결과 조치: 교통수단운영체계 개선권고 / 연속근무·최소휴게시간 확인 — <strong>교통안전진단 실시 ❌</strong></div>
 </div></div>
 </div><div class="part" id="p8">
 <div class="part-title" onclick="togglePart(this)">PART 8. 교통안전관리자 제도<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p8-15">
 <div class="concept-title"><span class="cnum">개념 15</span>자격 종류 및 시험</div>
-<table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>자격 종류 5종</td><td>도로 / 철도 / 항공 / 항만 / 삭도</td><td><strong>해양 ❌</strong> (존재하지 않음)</td></tr><tr><td>시험 실시기관</td><td><strong>한국교통안전공단</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>부정행위자 응시제한</td><td>처분일부터 <strong>2년</strong></td><td>3년 교체</td></tr><tr><td>자격취소 후 응시제한</td><td><strong>2년</strong></td><td>3년 교체</td></tr></tbody></table><div class="trap">⚠️ 함정 주의: <strong>해양</strong>교통안전관리자 → 없음 (비해당)</div>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>자격 종류 5종</td><td>도로 / 철도 / 항공 / 항만 / 삭도</td><td><strong>해양 ❌</strong> (존재하지 않음)</td></tr><tr><td>시험 실시기관</td><td><strong>한국교통안전공단</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>부정행위자 응시제한</td><td>처분일부터 <strong>2년</strong></td><td>3년 교체</td></tr><tr><td>자격취소 후 응시제한</td><td><strong>2년</strong></td><td>3년 교체</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>해양</strong>교통안전관리자 → 없음 (비해당)</div>
 </div><div class="concept" id="p8-16">
 <div class="concept-title"><span class="cnum">개념 16</span>자격취소·정지</div>
-<table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>처분권자</td><td><strong>시·도지사</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>자격정지 최대기간</td><td><strong>1년</strong></td><td>2년 교체</td></tr><tr><td>청문 실시기관</td><td><strong>시·도지사</strong></td><td>국토교통부장관 ❌</td></tr></tbody></table><div class="trap">⚠️ 함정 주의: 결격사유: 집행유예 선고 후 <strong>유예기간 중</strong>인 자 = 결격 / <strong>유예기간 경과 후 2년이 되지 않은 자 = 결격 아님</strong></div>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>처분권자</td><td><strong>시·도지사</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>자격정지 최대기간</td><td><strong>1년</strong></td><td>2년 교체</td></tr><tr><td>청문 실시기관</td><td><strong>시·도지사</strong></td><td>국토교통부장관 ❌</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 결격사유: 집행유예 선고 후 <strong>유예기간 중</strong>인 자 = 결격 / <strong>유예기간 경과 후 2년이 되지 않은 자 = 결격 아님</strong></div>
 </div></div>
 </div><div class="part" id="p9">
 <div class="part-title" onclick="togglePart(this)">PART 9. 교통안전담당자<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p9-17">
 <div class="concept-title"><span class="cnum">개념 17</span>지정의무자 + 직무</div>
-<table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>지정의무자 O</td><td>교통시설설치자 / 교통시설관리자 / 교통수단운영자</td></tr><tr><td>지정의무자 X</td><td><strong>교통시설생산자 ❌</strong></td></tr></tbody></table><table><thead><tr><th>직무 O</th><th>직무 X (비해당)</th></tr></thead><tbody><tr><td>교통안전점검의 <strong>지도·감독</strong></td><td><strong>교통안전점검의 실시 ❌</strong> (지도·감독만)</td></tr><tr><td>교통사고원인 조사·분석 및 기록 유지</td><td></td></tr><tr><td>교통시설 시설·장비의 설치·보완 <strong>요청</strong></td><td><strong>직접 설치·보완 ❌</strong> (요청만)</td></tr></tbody></table><div class="trap">⚠️ 함정 주의: <strong>교통시설생산자</strong> → 지정의무자 비해당</div><div class="trap">⚠️ 함정 주의: 안전점검 직접 실시 ❌ → 지도·감독만</div>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>지정의무자 O</td><td>교통시설설치자 / 교통시설관리자 / 교통수단운영자</td></tr><tr><td>지정의무자 X</td><td><strong>교통시설생산자 ❌</strong></td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>직무 O</th><th>직무 X (비해당)</th></tr></thead><tbody><tr><td>교통안전점검의 <strong>지도·감독</strong></td><td><strong>교통안전점검의 실시 ❌</strong> (지도·감독만)</td></tr><tr><td>교통사고원인 조사·분석 및 기록 유지</td><td></td></tr><tr><td>교통시설 시설·장비의 설치·보완 <strong>요청</strong></td><td><strong>직접 설치·보완 ❌</strong> (요청만)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>교통시설생산자</strong> → 지정의무자 비해당</div><div class="trap">⚠️ 함정 주의: 안전점검 직접 실시 ❌ → 지도·감독만</div>
 </div><div class="concept" id="p9-18">
 <div class="concept-title"><span class="cnum">개념 18</span>교육 시간</div>
-<table><thead><tr><th>구분</th><th>시기</th><th>시간</th><th>함정</th></tr></thead><tbody><tr><td>신규교육</td><td>직무 시작 <strong>6개월</strong> 이내</td><td><strong>16시간</strong></td><td>3개월·8시간 교체</td></tr><tr><td>보수교육</td><td><strong>2년</strong>마다</td><td><strong>8시간</strong></td><td>1년·16시간 교체</td></tr></tbody></table><div class="trap">⚠️ 함정 주의: 신규: 6개월/16시간 ↔ 보수: 2년/8시간 — 숫자 바꾸기 함정</div>
+<div class="table-wrap"><table><thead><tr><th>구분</th><th>시기</th><th>시간</th><th>함정</th></tr></thead><tbody><tr><td>신규교육</td><td>직무 시작 <strong>6개월</strong> 이내</td><td><strong>16시간</strong></td><td>3개월·8시간 교체</td></tr><tr><td>보수교육</td><td><strong>2년</strong>마다</td><td><strong>8시간</strong></td><td>1년·16시간 교체</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 신규: 6개월/16시간 ↔ 보수: 2년/8시간 — 숫자 바꾸기 함정</div>
 </div></div>
 </div><div class="part" id="p10">
 <div class="part-title" onclick="togglePart(this)">PART 10. 교통안전도 평가지수<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p10-19">
 <div class="concept-title"><span class="cnum">개념 19</span>가중치 + 부상 기준</div>
-<div class="vis-wrap"><img src="images/VIS-025_교통안전도가중치표.jpg" alt="교통안전도 가중치 + 중상·사망 기준" loading="lazy"><p class="vis-cap">교통안전도 가중치 + 중상·사망 기준</p></div><table><thead><tr><th>구분</th><th>가중치</th><th>기준</th><th>함정</th></tr></thead><tbody><tr class="hl"><td><strong>사망</strong></td><td><strong>1.0</strong></td><td>사고 발생부터 <strong>30일</strong> 이내 사망</td><td>10일·20일 교체</td></tr><tr class="hl"><td><strong>중상</strong></td><td><strong>0.7</strong></td><td><strong>3주</strong> 이상 치료</td><td>0.5·1.0 / 2주·4주 교체</td></tr><tr><td><strong>경상</strong></td><td><strong>0.3</strong></td><td>3주 미만 치료</td><td>0.1·0.5 교체</td></tr></tbody></table>
+<div class="vis-wrap"><img src="images/VIS-025_교통안전도가중치표.jpg" alt="교통안전도 가중치 + 중상·사망 기준" loading="lazy"><p class="vis-cap">교통안전도 가중치 + 중상·사망 기준</p></div><div class="table-wrap"><table><thead><tr><th>구분</th><th>가중치</th><th>기준</th><th>함정</th></tr></thead><tbody><tr class="hl"><td><strong>사망</strong></td><td><strong>1.0</strong></td><td>사고 발생부터 <strong>30일</strong> 이내 사망</td><td>10일·20일 교체</td></tr><tr class="hl"><td><strong>중상</strong></td><td><strong>0.7</strong></td><td><strong>3주</strong> 이상 치료</td><td>0.5·1.0 / 2주·4주 교체</td></tr><tr><td><strong>경상</strong></td><td><strong>0.3</strong></td><td>3주 미만 치료</td><td>0.1·0.5 교체</td></tr></tbody></table></div>
 </div><div class="concept" id="p10-20">
 <div class="concept-title"><span class="cnum">개념 20</span>교통안전도 산정식</div>
 <p style='background:#f0f8ff;padding:10px;border-radius:6px;font-weight:bold;font-size:1em;margin:8px 0'>(교통사고 발생건수 × 0.6) + (교통사고 사상자 수 × 0.4) × 자동차등록(면허) 대수</p>
 </div><div class="concept" id="p10-21">
 <div class="concept-title"><span class="cnum">개념 21</span>중대교통사고</div>
-<table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>기준</td><td><strong>8주</strong> 이상 치료를 요하는 피해자 발생</td><td>4주·6주·10주 교체</td></tr><tr><td>체험교육 이수기한</td><td>통지 받은 날부터 <strong>60일</strong> 이내</td><td>30일·90일 교체</td></tr><tr><td>미이수 제재</td><td><strong>1천만원</strong> 이하 과태료</td><td>500만원 교체</td></tr><tr><td>누적지점 자료 보관</td><td><strong>3년</strong></td><td>5년으로 착각 (빈출)</td></tr></tbody></table><div class="trap">⚠️ 함정 주의: 중대교통사고 누적지점 자료 보관 = 3년 ← 교통사고 관련 자료(5년)와 혼동 금지</div>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>기준</td><td><strong>8주</strong> 이상 치료를 요하는 피해자 발생</td><td>4주·6주·10주 교체</td></tr><tr><td>체험교육 이수기한</td><td>통지 받은 날부터 <strong>60일</strong> 이내</td><td>30일·90일 교체</td></tr><tr><td>미이수 제재</td><td><strong>1천만원</strong> 이하 과태료</td><td>500만원 교체</td></tr><tr><td>누적지점 자료 보관</td><td><strong>3년</strong></td><td>5년으로 착각 (빈출)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 중대교통사고 누적지점 자료 보관 = 3년 ← 교통사고 관련 자료(5년)와 혼동 금지</div>
 </div></div>
 </div><div class="part" id="p11">
 <div class="part-title" onclick="togglePart(this)">PART 11. 교통문화지수<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p11-22">
 <div class="concept-title"><span class="cnum">개념 22</span>교통문화지수 핵심</div>
-<table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>정의</td><td>국민의 교통안전의식 수준을 객관적으로 측정하기 위한 지수</td><td></td></tr><tr><td>조사항목 3개</td><td><strong>운전행태 + 교통안전 + 보행행태</strong></td><td><strong>교통사고 ❌</strong></td></tr><tr><td>특별실태조사 대상</td><td>하위 <strong>100분의 20</strong> 이내</td><td>100분의 10 교체</td></tr><tr><td>조사방법 특례</td><td>도로교통 외 분야: 다르게 정하여 조사 <strong>할 수 있다</strong></td><td>하여야 한다 ❌</td></tr></tbody></table><div class="trap">⚠️ 함정 주의: <strong>교통사고는 교통문화지수 조사항목 아님</strong></div>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>정의</td><td>국민의 교통안전의식 수준을 객관적으로 측정하기 위한 지수</td><td></td></tr><tr><td>조사항목 3개</td><td><strong>운전행태 + 교통안전 + 보행행태</strong></td><td><strong>교통사고 ❌</strong></td></tr><tr><td>특별실태조사 대상</td><td>하위 <strong>100분의 20</strong> 이내</td><td>100분의 10 교체</td></tr><tr><td>조사방법 특례</td><td>도로교통 외 분야: 다르게 정하여 조사 <strong>할 수 있다</strong></td><td>하여야 한다 ❌</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>교통사고는 교통문화지수 조사항목 아님</strong></div>
 </div></div>
 </div><div class="part" id="p12">
 <div class="part-title" onclick="togglePart(this)">PART 12. 청문·과태료·벌칙<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p12-23">
 <div class="concept-title"><span class="cnum">개념 23</span>청문</div>
-<table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>실시기관</td><td><strong>시·도지사</strong></td></tr><tr><td>필수 실시 사유</td><td><strong>교통안전진단기관의 등록취소</strong> / <strong>교통안전관리자 자격의 취소</strong></td></tr></tbody></table><div class="trap">⚠️ 함정 주의: 청문 실시기관 = 시·도지사 ← 국토교통부장관 교체 함정</div>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>실시기관</td><td><strong>시·도지사</strong></td></tr><tr><td>필수 실시 사유</td><td><strong>교통안전진단기관의 등록취소</strong> / <strong>교통안전관리자 자격의 취소</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 청문 실시기관 = 시·도지사 ← 국토교통부장관 교체 함정</div>
 </div><div class="concept" id="p12-24">
 <div class="concept-title"><span class="cnum">개념 24</span>과태료 구조</div>
-<table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>부과권자</td><td>국토교통부장관 또는 교통행정기관</td><td>시·도지사 ❌</td></tr><tr><td>감액·증액 범위</td><td><strong>1/2</strong> 이내</td><td>1/3 교체</td></tr><tr><td>감액 불가</td><td><strong>과태료를 체납하고 있는 자</strong></td><td></td></tr></tbody></table><table><thead><tr><th>금액</th><th>위반 행위</th></tr></thead><tbody><tr><td>500만원 이하 과태료</td><td>교통안전관리규정 미제출·미준수</td></tr><tr><td>1천만원 이하 과태료</td><td>교통안전진단 미실시·허위 보고서 / 체험교육 미이수</td></tr><tr class="hl"><td><strong>2년 이하 징역·2천만원 이하 벌금</strong></td><td><strong>직무상 비밀 누설 (형사처벌, 과태료 아님!)</strong></td></tr></tbody></table><div class="trap">⚠️ 함정 주의: <strong>직무상 비밀 누설 = 형사처벌</strong> (과태료 아님 — 최빈출 함정)</div>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>부과권자</td><td>국토교통부장관 또는 교통행정기관</td><td>시·도지사 ❌</td></tr><tr><td>감액·증액 범위</td><td><strong>1/2</strong> 이내</td><td>1/3 교체</td></tr><tr><td>감액 불가</td><td><strong>과태료를 체납하고 있는 자</strong></td><td></td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>금액</th><th>위반 행위</th></tr></thead><tbody><tr><td>500만원 이하 과태료</td><td>교통안전관리규정 미제출·미준수</td></tr><tr><td>1천만원 이하 과태료</td><td>교통안전진단 미실시·허위 보고서 / 체험교육 미이수</td></tr><tr class="hl"><td><strong>2년 이하 징역·2천만원 이하 벌금</strong></td><td><strong>직무상 비밀 누설 (형사처벌, 과태료 아님!)</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>직무상 비밀 누설 = 형사처벌</strong> (과태료 아님 — 최빈출 함정)</div>
 </div><div class="concept" id="p12-25">
 <div class="concept-title"><span class="cnum">개념 25</span>수수료·비밀유지 비해당</div>
-<table><thead><tr><th>구분</th><th>비해당</th></tr></thead><tbody><tr><td>과태료 부과대상자</td><td><strong>교통안전체험 연구·교육시설 설치·운영자 ❌</strong></td></tr><tr><td>수수료 부과대상자</td><td><strong>교통안전체험 연구·교육시설 설치·운영자 ❌</strong></td></tr><tr><td>비밀유지의무 적용</td><td><strong>교통안전교육업무 ❌</strong></td></tr></tbody></table><div class="tip">★ 과태료·수수료·비밀유지 — 3가지 모두 체험시설 설치·운영자는 비해당</div>
+<div class="table-wrap"><table><thead><tr><th>구분</th><th>비해당</th></tr></thead><tbody><tr><td>과태료 부과대상자</td><td><strong>교통안전체험 연구·교육시설 설치·운영자 ❌</strong></td></tr><tr><td>수수료 부과대상자</td><td><strong>교통안전체험 연구·교육시설 설치·운영자 ❌</strong></td></tr><tr><td>비밀유지의무 적용</td><td><strong>교통안전교육업무 ❌</strong></td></tr></tbody></table></div><div class="tip">★ 과태료·수수료·비밀유지 — 3가지 모두 체험시설 설치·운영자는 비해당</div>
 </div></div>
 </div>
 </div>
