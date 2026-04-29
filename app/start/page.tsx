@@ -129,7 +129,7 @@ export default function StartPage() {
       {overdueCount > 0 && (
         <div
           className="w-full max-w-md mb-6 flex items-center gap-3 bg-orange-50 border border-orange-200 rounded-2xl px-5 py-3 cursor-pointer hover:bg-orange-100 transition"
-          onClick={() => router.push('/wronganswers')}
+          onClick={() => router.push('/retrieval')}
         >
           <span className="text-2xl">⚠️</span>
           <div>

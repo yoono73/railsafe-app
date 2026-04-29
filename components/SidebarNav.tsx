@@ -152,6 +152,19 @@ export default function SidebarNav() {
           </div>
         )}
 
+        {/* 인출훈련 */}
+        <Link
+          href="/retrieval"
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+            pathname.startsWith('/retrieval')
+              ? 'bg-orange-100 text-orange-800'
+              : 'text-gray-600 hover:bg-gray-100'
+          }`}
+        >
+          <span className="text-base">🧠</span>
+          인출훈련
+        </Link>
+
         {/* 오답노트 */}
         <Link
           href="/wronganswers"
