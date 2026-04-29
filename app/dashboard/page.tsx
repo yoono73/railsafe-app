@@ -60,8 +60,8 @@ export default function DashboardPage() {
       const attemptedMap: Record<number, Set<number>> = {};
       const correctMap: Record<number, Set<number>> = {};
 
-      (attempts || []).forEach((a: { question_id: number; is_correct: boolean; questions: { subject_id: number } | null }) => {
-        const sid = a.questions?.subject_id;
+      (attempts || []).forEach((a: { question_id: number; is_correct: boolean; questions: { subject_id: number }[] | null }) => {
+        const sid = Array.isArray(a.questions) ? a.questions[0]?.subject_id : (a.questions as { subject_id: number } | null)?.subject_id;
         if (!sid) return;
         if (!attemptedMap[sid]) attemptedMap[sid] = new Set();
         if (!correctMap[sid]) correctMap[sid] = new Set();

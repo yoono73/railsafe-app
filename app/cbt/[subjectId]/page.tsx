@@ -45,17 +45,12 @@ export default function CbtPage() {
   const [loading, setLoading] = useState(true);
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
   const [reviewing, setReviewing] = useState(false);
-  const [userId, setUserId] = useState<string | null>(null);
   const sessionId = useRef<string>(crypto.randomUUID());
   const questionStartTime = useRef<number>(Date.now());
 
   useEffect(() => {
     const fetchAll = async () => {
       const supabase = createClient();
-
-      // 유저 확인
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) setUserId(user.id);
 
       const { data, error } = await supabase
         .from('questions')
@@ -101,11 +96,12 @@ export default function CbtPage() {
       setWrongAnswers((prev) => [...prev, { question: questions[current], selectedOption: selected }]);
     }
 
-    // DB 저장
-    if (userId) {
-      const supabase = createClient();
+    // DB 저장 (매번 getUser로 최신 인증 상태 확인)
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
       await supabase.from('attempts').insert({
-        user_id: userId,
+        user_id: user.id,
         question_id: questions[current].id,
         selected_option: selected,
         is_correct: isCorrect,

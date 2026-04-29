@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
+import SidebarNav from '@/components/SidebarNav';
 
 export default async function DashboardLayout({
   children,
@@ -11,15 +12,16 @@ export default async function DashboardLayout({
   if (!user) redirect('/login');
 
   return (
-    <div className="min-h-screen bg-zinc-50">
-      <header className="bg-purple-900 text-white px-6 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-zinc-50 flex flex-col">
+      {/* 상단 헤더 */}
+      <header className="bg-purple-900 text-white px-6 py-3 flex items-center justify-between shrink-0 z-20">
         <div className="flex items-center gap-2">
           <span className="text-xl">🚇</span>
-          <span className="font-bold">철도안전관리자</span>
-          <span className="text-xs bg-purple-700 px-2 py-0.5 rounded-full ml-2">베타</span>
+          <span className="font-bold text-base">철도안전관리자</span>
+          <span className="text-xs bg-purple-700 px-2 py-0.5 rounded-full ml-1">베타</span>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-sm text-purple-300">{user.email}</span>
+          <span className="text-sm text-purple-300 hidden sm:block">{user.email}</span>
           <form action="/auth/signout" method="post">
             <button type="submit" className="text-sm text-purple-300 hover:text-white transition-colors">
               로그아웃
@@ -27,7 +29,16 @@ export default async function DashboardLayout({
           </form>
         </div>
       </header>
-      <main className="max-w-5xl mx-auto px-4 py-8">{children}</main>
+
+      {/* 사이드바 + 본문 */}
+      <div className="flex flex-1 overflow-hidden">
+        <SidebarNav />
+        <main className="flex-1 overflow-y-auto p-6 md:p-8">
+          <div className="max-w-4xl mx-auto">
+            {children}
+          </div>
+        </main>
+      </div>
     </div>
   );
 }
