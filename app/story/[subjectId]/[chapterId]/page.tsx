@@ -79,14 +79,15 @@ export default function StoryPage() {
   const isLast = currentPage === story.pages.length - 1;
 
   return (
-    <div className="min-h-screen bg-purple-50">
-      <header className="bg-purple-800 text-white px-6 py-3 flex items-center gap-3">
-        <button onClick={() => router.push('/dashboard')} className="text-purple-300 hover:text-white transition text-sm">← 대시보드</button>
-        <span className="text-purple-400">|</span>
-        <span className="text-sm">{subjectNames[subjectId]}</span>
-        <span className="text-purple-400">›</span>
-        <span className="text-sm font-medium">{story.chapter_title}</span>
-      </header>
+    <div className="bg-purple-50 min-h-full">
+      {/* 브레드크럼 */}
+      <div className="px-6 py-3 flex items-center gap-2 text-sm border-b border-purple-100 bg-white">
+        <button onClick={() => router.push('/dashboard')} className="text-purple-500 hover:text-purple-700 transition">← 대시보드</button>
+        <span className="text-gray-300">|</span>
+        <span className="text-gray-500">{subjectNames[subjectId]}</span>
+        <span className="text-gray-300">›</span>
+        <span className="font-medium text-gray-700">{story.chapter_title}</span>
+      </div>
 
       <main className="max-w-2xl mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-4">
