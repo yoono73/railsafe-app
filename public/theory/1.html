@@ -51,32 +51,73 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
   .content table { min-width: 480px; }
 }
 
-/* ===== mobile-toc-drawer ===== */
-#toc-toggle-btn{display:none}
-@media(max-width:900px){
-.toc{display:none!important}
-#toc-toggle-btn{display:flex;align-items:center;gap:6px;position:fixed;bottom:72px;left:14px;z-index:200;background:#4c1d95;color:#fff;border:none;border-radius:24px;padding:8px 16px 8px 12px;font-size:.85em;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(76,29,149,.45);font-family:inherit}
-#toc-toggle-btn:active{background:#6d28d9}
-#toc-drawer{position:fixed;top:0;left:0;bottom:0;width:80vw;max-width:300px;background:#fff;z-index:500;overflow-y:auto;padding:16px 12px 80px;box-shadow:4px 0 20px rgba(0,0,0,.25);transform:translateX(-110%);transition:transform .28s cubic-bezier(.4,0,.2,1);font-size:.85em}
-#toc-drawer.open{transform:translateX(0)}
-#toc-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:499}
-#toc-overlay.open{display:block}
-#toc-drawer-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #ede9fe}
-#toc-drawer-header span{font-weight:700;color:#4c1d95}
-#toc-drawer-header button{background:none;border:none;font-size:1.3em;cursor:pointer;color:#777;padding:2px 6px}
-#toc-drawer .toc{display:flex!important;flex-direction:column;position:static;height:auto;width:100%}
-#toc-drawer .toc ul li a{padding:5px 8px;display:block;border-radius:4px;color:#333;text-decoration:none}
-#toc-drawer .toc ul li a:active{background:#ede9fe}
-#toc-drawer .toc .toc-part a{color:#4c1d95;font-weight:700}
+/* ===== 모바일 목차 드로어 ===== */
+#toc-toggle-btn {
+  display: none;
 }
-
-/* ===== TTS 음성 읽기 ===== */
-#tts-bar{position:fixed;bottom:72px;right:14px;z-index:201;display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
-#tts-play-btn{display:flex;align-items:center;gap:6px;background:#7c3aed;color:#fff;border:none;border-radius:24px;padding:8px 16px 8px 12px;font-size:.82em;font-weight:bold;cursor:pointer;box-shadow:0 3px 10px rgba(76,29,149,.45);font-family:'Malgun Gothic','맑은 고딕',sans-serif;white-space:nowrap;}
-#tts-play-btn:active{background:#6d28d9;}
-#tts-stop-btn{display:none;align-items:center;gap:6px;background:#dc2626;color:#fff;border:none;border-radius:24px;padding:8px 16px 8px 12px;font-size:.82em;font-weight:bold;cursor:pointer;box-shadow:0 3px 10px rgba(220,38,38,.4);font-family:'Malgun Gothic','맑은 고딕',sans-serif;white-space:nowrap;}
-.part-tts-btn{font-size:.72em;background:rgba(255,255,255,0.22);border:none;color:#fff;border-radius:12px;padding:2px 9px;cursor:pointer;margin-left:8px;vertical-align:middle;font-family:'Malgun Gothic','맑은 고딕',sans-serif;}
-.part-tts-btn:active{background:rgba(255,255,255,0.4);}
+@media(max-width:900px) {
+  .toc { display: none !important; }
+  #toc-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: fixed;
+    bottom: 72px; /* MobileNav 위 */
+    left: 14px;
+    z-index: 200;
+    background: #4c1d95;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 8px 16px 8px 12px;
+    font-size: .85em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(76,29,149,.45);
+    font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
+  }
+  #toc-toggle-btn:active { background: #6d28d9; }
+  #toc-drawer {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 80vw;
+    max-width: 300px;
+    background: #fff;
+    z-index: 500;
+    overflow-y: auto;
+    padding: 16px 12px 80px;
+    box-shadow: 4px 0 20px rgba(0,0,0,.25);
+    transform: translateX(-110%);
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
+    font-size: .85em;
+  }
+  #toc-drawer.open { transform: translateX(0); }
+  #toc-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 499;
+  }
+  #toc-overlay.open { display: block; }
+  #toc-drawer-close {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ede9fe;
+  }
+  #toc-drawer-close span { font-weight: bold; color: #4c1d95; font-size: 1em; }
+  #toc-drawer-close button {
+    background: none; border: none; font-size: 1.3em;
+    cursor: pointer; color: #777; padding: 2px 6px;
+  }
+  #toc-drawer .toc { display: flex !important; flex-direction: column; position: static; height: auto; width: 100%; }
+  #toc-drawer .toc ul li a { padding: 5px 8px; display: block; border-radius: 4px; color: #333; text-decoration: none; }
+  #toc-drawer .toc ul li a:active { background: #ede9fe; }
+  #toc-drawer .toc .toc-part a { color: #4c1d95; font-weight: bold; }
+}
 </style>
 </head>
 <body>
@@ -336,27 +377,123 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')search();});
 });
 </script>
-
-<button id="toc-toggle-btn" onclick="openTocDrawer()" aria-label="목차 열기">📋 목차</button>
-<div id="toc-overlay" onclick="closeTocDrawer()"></div>
-<div id="toc-drawer"><div id="toc-drawer-header"><span>📋 목차</span><button onclick="closeTocDrawer()">✕</button></div><nav class="toc" id="toc-drawer-inner"></nav></div>
 <script>
-function openTocDrawer(){var s=document.querySelector('.container>.toc'),d=document.getElementById('toc-drawer-inner');if(s&&d){d.innerHTML=s.innerHTML;d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){closeTocDrawer();});})}document.getElementById('toc-drawer').classList.add('open');document.getElementById('toc-overlay').classList.add('open');document.body.style.overflow='hidden';}
-function closeTocDrawer(){document.getElementById('toc-drawer').classList.remove('open');document.getElementById('toc-overlay').classList.remove('open');document.body.style.overflow='';}
+// ElevenLabs TTS — 1과목 (Mr. K)
+(function(){
+  const VOICE_ID = 'sQ3a15DhENXU8pKTHlcc';
+  let currentAudio = null;
+  let isPlaying = false;
+  let activeBtn = null;
+
+  function extractText(el) {
+    return el.innerText.replace(/\s+/g, ' ').trim();
+  }
+
+  function splitText(text, maxLen) {
+    maxLen = maxLen || 2000;
+    var chunks = [];
+    var remaining = text;
+    while (remaining.length > 0) {
+      if (remaining.length <= maxLen) { chunks.push(remaining); break; }
+      var splitAt = remaining.lastIndexOf('다.', maxLen);
+      if (splitAt < maxLen / 2) splitAt = remaining.lastIndexOf(' ', maxLen);
+      if (splitAt < 0) splitAt = maxLen;
+      chunks.push(remaining.slice(0, splitAt + 1).trim());
+      remaining = remaining.slice(splitAt + 1).trim();
+    }
+    return chunks;
+  }
+
+  function stopAll() {
+    isPlaying = false;
+    if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+    if (activeBtn) { activeBtn.textContent = '🔊 읽기'; activeBtn.style.opacity = '1'; activeBtn = null; }
+  }
+
+  async function playChunks(chunks, btn) {
+    for (var i = 0; i < chunks.length; i++) {
+      if (!isPlaying) break;
+      btn.textContent = '⏹ ' + (i + 1) + '/' + chunks.length;
+      try {
+        var res = await fetch('/api/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: chunks[i], voiceId: VOICE_ID })
+        });
+        if (!res.ok) { console.error('TTS 오류'); break; }
+        var blob = await res.blob();
+        var url = URL.createObjectURL(blob);
+        await new Promise(function(resolve, reject) {
+          currentAudio = new Audio(url);
+          currentAudio.onended = resolve;
+          currentAudio.onerror = reject;
+          currentAudio.play();
+        });
+        URL.revokeObjectURL(url);
+      } catch(e) { console.error(e); break; }
+    }
+    isPlaying = false;
+    btn.textContent = '🔊 읽기';
+    btn.style.opacity = '1';
+    activeBtn = null;
+    currentAudio = null;
+  }
+
+  async function handleClick(btn, partBody) {
+    if (isPlaying) { stopAll(); return; }
+    stopAll();
+    isPlaying = true;
+    activeBtn = btn;
+    btn.textContent = '⏳ 로딩...';
+    btn.style.opacity = '0.7';
+    if (partBody.style.display === 'none') {
+      partBody.style.display = 'block';
+      var arrow = partBody.previousElementSibling.querySelector('.arrow');
+      if (arrow) arrow.textContent = '▲';
+    }
+    var text = extractText(partBody);
+    var chunks = splitText(text);
+    await playChunks(chunks, btn);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.part-title').forEach(function(title) {
+      var partBody = title.nextElementSibling;
+      if (!partBody) return;
+      var btn = document.createElement('button');
+      btn.textContent = '🔊 읽기';
+      btn.style.cssText = 'background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.5);color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75em;cursor:pointer;margin-left:8px;flex-shrink:0;vertical-align:middle;';
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        handleClick(btn, partBody);
+      });
+      var arrow = title.querySelector('.arrow');
+      title.insertBefore(btn, arrow);
+    });
+  });
+})();
 </script>
-
-<div id="tts-bar">
-  <button id="tts-play-btn" onclick="ttsPlayAll()">🔊 전체 읽기</button>
-  <button id="tts-stop-btn" onclick="ttsStop()">⏹ 멈추기</button>
-</div>
-
 <script>
-var _ttsParts=[],_ttsIdx=0;
-function ttsPlayAll(){speechSynthesis.cancel();_ttsParts=Array.from(document.querySelectorAll('.part-body'));_ttsIdx=0;if(!_ttsParts.length)return;document.getElementById('tts-play-btn').style.display='none';document.getElementById('tts-stop-btn').style.display='flex';_ttsNext();}
-function _ttsNext(){if(_ttsIdx>=_ttsParts.length){ttsStop();return;}var text=_ttsParts[_ttsIdx].innerText.replace(/\s+/g,' ').trim();var utt=new SpeechSynthesisUtterance(text);utt.lang='ko-KR';utt.rate=1.0;utt.onend=function(){_ttsIdx++;_ttsNext();};utt.onerror=function(){ttsStop();};speechSynthesis.speak(utt);_ttsIdx++;}
-function ttsStop(){speechSynthesis.cancel();_ttsParts=[];_ttsIdx=0;document.getElementById('tts-play-btn').style.display='flex';document.getElementById('tts-stop-btn').style.display='none';}
-function ttsSection(btn){speechSynthesis.cancel();var pb=btn.closest('.part').querySelector('.part-body');if(!pb)return;var utt=new SpeechSynthesisUtterance(pb.innerText.replace(/\s+/g,' ').trim());utt.lang='ko-KR';utt.rate=1.0;speechSynthesis.speak(utt);}
-document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.part-title').forEach(function(t){var b=document.createElement('button');b.className='part-tts-btn';b.textContent='🔊';b.title='이 파트 읽기';b.onclick=function(e){e.stopPropagation();ttsSection(this);};var a=t.querySelector('.arrow');if(a)t.insertBefore(b,a);else t.appendChild(b);});});
+// 모바일 목차 드로어
+function openTocDrawer() {
+  var mainToc = document.querySelector('.container .toc');
+  var drawerNav = document.getElementById('toc-drawer-nav');
+  if (mainToc && drawerNav) {
+    drawerNav.innerHTML = mainToc.innerHTML;
+    // 링크 클릭 시 드로어 닫기
+    drawerNav.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() { closeTocDrawer(); });
+    });
+  }
+  document.getElementById('toc-drawer').classList.add('open');
+  document.getElementById('toc-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeTocDrawer() {
+  document.getElementById('toc-drawer').classList.remove('open');
+  document.getElementById('toc-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
 </script>
 </body>
 </html>
