@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>교통안전법 핵심정리</title>
+<title>êµíµìì ë² íµì¬ì ë¦¬</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Malgun Gothic','맑은 고딕',sans-serif; background:#f5f7fa; color:#1a1a2e; font-size:15px; line-height:1.7; }
+body { font-family: 'Malgun Gothic','ë§ì ê³ ë',sans-serif; background:#f5f7fa; color:#1a1a2e; font-size:15px; line-height:1.7; }
 .site-header { background:linear-gradient(135deg,#1E3A8A,#1d4ed8); color:#fff; padding:5px 16px 4px; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.3); }
 .site-header h1 { font-size:1.05em; }
 .site-header .meta { font-size:.75em; opacity:.8; margin-top:1px; }
@@ -45,135 +45,167 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .highlight { background:#fff176; border-radius:2px; }
 @media(max-width:768px){ .toc{display:none;} .content{padding:12px 10px 40px;} table{font-size:.82em;} }
 
-/* 모바일 테이블 가로 스크롤 방지 */
+/* ëª¨ë°ì¼ íì´ë¸ ê°ë¡ ì¤í¬ë¡¤ ë°©ì§ */
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
 @media(max-width:768px){
   .content table { min-width: 480px; }
+}
+
+/* ===== 모바일 목차 드로어 ===== */
+#toc-toggle-btn { display: none; }
+@media(max-width:900px) {
+  .toc { display: none !important; }
+  #toc-toggle-btn {
+    display: flex; align-items: center; gap: 6px;
+    position: fixed; bottom: 72px; left: 14px; z-index: 200;
+    background: #4c1d95; color: #fff; border: none; border-radius: 24px;
+    padding: 8px 16px 8px 12px; font-size: .85em; font-weight: bold;
+    cursor: pointer; box-shadow: 0 3px 10px rgba(76,29,149,.45);
+    font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
+  }
+  #toc-toggle-btn:active { background: #6d28d9; }
+  #toc-drawer {
+    position: fixed; top: 0; left: 0; bottom: 0; width: 80vw; max-width: 300px;
+    background: #fff; z-index: 500; overflow-y: auto;
+    padding: 16px 12px 80px; box-shadow: 4px 0 20px rgba(0,0,0,.25);
+    transform: translateX(-110%); transition: transform .28s cubic-bezier(.4,0,.2,1);
+    font-size: .85em;
+  }
+  #toc-drawer.open { transform: translateX(0); }
+  #toc-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 499; }
+  #toc-overlay.open { display: block; }
+  #toc-drawer-close { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #ede9fe; }
+  #toc-drawer-close span { font-weight: bold; color: #4c1d95; font-size: 1em; }
+  #toc-drawer-close button { background: none; border: none; font-size: 1.3em; cursor: pointer; color: #777; padding: 2px 6px; }
+  #toc-drawer .toc { display: flex !important; flex-direction: column; position: static; height: auto; width: 100%; }
+  #toc-drawer .toc ul li a { padding: 5px 8px; display: block; border-radius: 4px; color: #333; text-decoration: none; }
+  #toc-drawer .toc ul li a:active { background: #ede9fe; }
+  #toc-drawer .toc .toc-part a { color: #4c1d95; font-weight: bold; }
 }
 </style>
 </head>
 <body>
 <header class="site-header">
-  <h1>🚦 교통안전법 핵심정리</h1>
-  <div class="meta">철도교통안전관리자 시험 대비 | VIS-022~025</div>
+  <h1>ð¦ êµíµìì ë² íµì¬ì ë¦¬</h1>
+  <div class="meta">ì² ëêµíµìì ê´ë¦¬ì ìí ëë¹ | VIS-022~025</div>
   <div class="search-bar">
-    <input id="q" type="text" placeholder="개념 검색... (Enter)">
-    <button onclick="search()">검색</button>
+    <input id="q" type="text" placeholder="ê°ë ê²ì... (Enter)">
+    <button onclick="search()">ê²ì</button>
   </div>
 </header>
 <div class="container">
-<nav class="toc"><h2>목차</h2><ul><li class="toc-part"><a href="#p1">PART 1. 총칙 — 용어 정의</a></li><li><a href="#p1-01">개념 01. 기본 용어 8개</a></li><li><a href="#p1-02">개념 02. 교통수단안전점검 vs 교통시설안전진단</a></li><li class="toc-part"><a href="#p2">PART 2. 관련자 의무</a></li><li><a href="#p2-03">개념 03. 주체별 의무 매핑</a></li><li class="toc-part"><a href="#p3">PART 3. 교통안전 계획 체계</a></li><li><a href="#p3-04">개념 04. 계획 4종 구조</a></li><li><a href="#p3-05">개념 05. 국가교통안전기본계획 핵심</a></li><li><a href="#p3-06">개념 06. 국가교통안전시행계획</a></li><li class="toc-part"><a href="#p4">PART 4. 교통안전관리규정</a></li><li><a href="#p4-07">개념 07. 교통안전관리규정 핵심</a></li><li><a href="#p4-08">개념 08. 검토 결과 3종</a></li><li class="toc-part"><a href="#p5">PART 5. 교통수단안전점검</a></li><li><a href="#p5-09">개념 09. 교통수단안전점검 핵심</a></li><li class="toc-part"><a href="#p6">PART 6. 교통시설안전진단·진단기관</a></li><li><a href="#p6-10">개념 10. 진단기관 등록·취소</a></li><li><a href="#p6-11">개념 11. 결격사유 함정</a></li><li class="toc-part"><a href="#p7">PART 7. 운행기록장치</a></li><li><a href="#p7-12">개념 12. 운행기록 핵심 수치</a></li><li><a href="#p7-13">개념 13. 운행기록 분석항목 6개</a></li><li><a href="#p7-14">개념 14. 운행기록 분석결과 활용</a></li><li class="toc-part"><a href="#p8">PART 8. 교통안전관리자 제도</a></li><li><a href="#p8-15">개념 15. 자격 종류 및 시험</a></li><li><a href="#p8-16">개념 16. 자격취소·정지</a></li><li class="toc-part"><a href="#p9">PART 9. 교통안전담당자</a></li><li><a href="#p9-17">개념 17. 지정의무자 + 직무</a></li><li><a href="#p9-18">개념 18. 교육 시간</a></li><li class="toc-part"><a href="#p10">PART 10. 교통안전도 평가지수</a></li><li><a href="#p10-19">개념 19. 가중치 + 부상 기준</a></li><li><a href="#p10-20">개념 20. 교통안전도 산정식</a></li><li><a href="#p10-21">개념 21. 중대교통사고</a></li><li class="toc-part"><a href="#p11">PART 11. 교통문화지수</a></li><li><a href="#p11-22">개념 22. 교통문화지수 핵심</a></li><li class="toc-part"><a href="#p12">PART 12. 청문·과태료·벌칙</a></li><li><a href="#p12-23">개념 23. 청문</a></li><li><a href="#p12-24">개념 24. 과태료 구조</a></li><li><a href="#p12-25">개념 25. 수수료·비밀유지 비해당</a></li></ul></nav>
+<nav class="toc"><h2>ëª©ì°¨</h2><ul><li class="toc-part"><a href="#p1">PART 1. ì´ì¹ â ì©ì´ ì ì</a></li><li><a href="#p1-01">ê°ë 01. ê¸°ë³¸ ì©ì´ 8ê°</a></li><li><a href="#p1-02">ê°ë 02. êµíµìë¨ìì ì ê² vs êµíµìì¤ìì ì§ë¨</a></li><li class="toc-part"><a href="#p2">PART 2. ê´ë ¨ì ìë¬´</a></li><li><a href="#p2-03">ê°ë 03. ì£¼ì²´ë³ ìë¬´ ë§¤í</a></li><li class="toc-part"><a href="#p3">PART 3. êµíµìì  ê³í ì²´ê³</a></li><li><a href="#p3-04">ê°ë 04. ê³í 4ì¢ êµ¬ì¡°</a></li><li><a href="#p3-05">ê°ë 05. êµ­ê°êµíµìì ê¸°ë³¸ê³í íµì¬</a></li><li><a href="#p3-06">ê°ë 06. êµ­ê°êµíµìì ìíê³í</a></li><li class="toc-part"><a href="#p4">PART 4. êµíµìì ê´ë¦¬ê·ì </a></li><li><a href="#p4-07">ê°ë 07. êµíµìì ê´ë¦¬ê·ì  íµì¬</a></li><li><a href="#p4-08">ê°ë 08. ê²í  ê²°ê³¼ 3ì¢</a></li><li class="toc-part"><a href="#p5">PART 5. êµíµìë¨ìì ì ê²</a></li><li><a href="#p5-09">ê°ë 09. êµíµìë¨ìì ì ê² íµì¬</a></li><li class="toc-part"><a href="#p6">PART 6. êµíµìì¤ìì ì§ë¨Â·ì§ë¨ê¸°ê´</a></li><li><a href="#p6-10">ê°ë 10. ì§ë¨ê¸°ê´ ë±ë¡Â·ì·¨ì</a></li><li><a href="#p6-11">ê°ë 11. ê²°ê²©ì¬ì  í¨ì </a></li><li class="toc-part"><a href="#p7">PART 7. ì´íê¸°ë¡ì¥ì¹</a></li><li><a href="#p7-12">ê°ë 12. ì´íê¸°ë¡ íµì¬ ìì¹</a></li><li><a href="#p7-13">ê°ë 13. ì´íê¸°ë¡ ë¶ìí­ëª© 6ê°</a></li><li><a href="#p7-14">ê°ë 14. ì´íê¸°ë¡ ë¶ìê²°ê³¼ íì©</a></li><li class="toc-part"><a href="#p8">PART 8. êµíµìì ê´ë¦¬ì ì ë</a></li><li><a href="#p8-15">ê°ë 15. ìê²© ì¢ë¥ ë° ìí</a></li><li><a href="#p8-16">ê°ë 16. ìê²©ì·¨ìÂ·ì ì§</a></li><li class="toc-part"><a href="#p9">PART 9. êµíµìì ë´ë¹ì</a></li><li><a href="#p9-17">ê°ë 17. ì§ì ìë¬´ì + ì§ë¬´</a></li><li><a href="#p9-18">ê°ë 18. êµì¡ ìê°</a></li><li class="toc-part"><a href="#p10">PART 10. êµíµìì ë íê°ì§ì</a></li><li><a href="#p10-19">ê°ë 19. ê°ì¤ì¹ + ë¶ì ê¸°ì¤</a></li><li><a href="#p10-20">ê°ë 20. êµíµìì ë ì°ì ì</a></li><li><a href="#p10-21">ê°ë 21. ì¤ëêµíµì¬ê³ </a></li><li class="toc-part"><a href="#p11">PART 11. êµíµë¬¸íì§ì</a></li><li><a href="#p11-22">ê°ë 22. êµíµë¬¸íì§ì íµì¬</a></li><li class="toc-part"><a href="#p12">PART 12. ì²­ë¬¸Â·ê³¼íë£Â·ë²ì¹</a></li><li><a href="#p12-23">ê°ë 23. ì²­ë¬¸</a></li><li><a href="#p12-24">ê°ë 24. ê³¼íë£ êµ¬ì¡°</a></li><li><a href="#p12-25">ê°ë 25. ììë£Â·ë¹ë°ì ì§ ë¹í´ë¹</a></li></ul></nav>
 <div class="content">
-<div class="summary-bar"><span>📖 과목: 교통안전법</span><span>📌 핵심 개념 25개</span><span>🖼️ VIS 4개 (022~025)</span></div><div class="part" id="p1">
-<div class="part-title" onclick="togglePart(this)">PART 1. 총칙 — 용어 정의<span class="arrow">▲</span></div>
+<div class="summary-bar"><span>ð ê³¼ëª©: êµíµìì ë²</span><span>ð íµì¬ ê°ë 25ê°</span><span>ð¼ï¸ VIS 4ê° (022~025)</span></div><div class="part" id="p1">
+<div class="part-title" onclick="togglePart(this)">PART 1. ì´ì¹ â ì©ì´ ì ì<span class="arrow">â²</span></div>
 <div class="part-body"><div class="concept" id="p1-01">
-<div class="concept-title"><span class="cnum">개념 01</span>기본 용어 8개</div>
-<div class="table-wrap"><table><thead><tr><th>용어</th><th>정의</th><th>시험 포인트</th></tr></thead><tbody><tr><td>교통수단</td><td>사람 이동·화물 운송에 이용되는 운송수단 (육상·수상·항공)</td><td><strong>교통안전표지 = 교통시설</strong> (교통수단 아님)</td></tr><tr><td>교통시설</td><td>도로·철도·궤도·항만·어항·수로·공항·비행장 + 교통안전표지·관제시설·항행안전시설</td><td>표지·관제시설도 포함</td></tr><tr><td>교통체계</td><td>교통수단 및 교통시설의 이용·관리·운영체계 또는 관련 산업·제도 등</td><td>빈칸 자주 출제</td></tr><tr><td>교통사업자</td><td>①교통수단운영자 ②교통시설설치·관리자 ③제조사업자·교육·연구·조사기관</td><td><strong>교통운전자는 비해당 ❌</strong></td></tr><tr><td>지정행정기관</td><td>정부조직법에 의한 중앙행정기관 (기재부·교육부·국토부 등)</td><td><strong>국회(입법부) 비해당 ❌</strong></td></tr><tr><td>교통행정기관</td><td>지정행정기관의 장 + 시·도지사 + 시장·군수·구청장</td><td><strong>특별행정기관 비해당 ❌</strong></td></tr><tr><td>교통사고</td><td>교통수단의 운행·항행·운항과 관련된 사람의 사상 또는 물건의 손괴</td><td></td></tr><tr><td>교통안전관리자</td><td>교통수단의 안전한 운행·운항 관련 기술적 사항을 점검·관리하는 자</td><td></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 교통안전표지 → 교통수단 아님, <strong>교통시설</strong>에 해당</div>
+<div class="concept-title"><span class="cnum">ê°ë 01</span>ê¸°ë³¸ ì©ì´ 8ê°</div>
+<div class="table-wrap"><table><thead><tr><th>ì©ì´</th><th>ì ì</th><th>ìí í¬ì¸í¸</th></tr></thead><tbody><tr><td>êµíµìë¨</td><td>ì¬ë ì´ëÂ·íë¬¼ ì´ì¡ì ì´ì©ëë ì´ì¡ìë¨ (ì¡ìÂ·ììÂ·í­ê³µ)</td><td><strong>êµíµìì íì§ = êµíµìì¤</strong> (êµíµìë¨ ìë)</td></tr><tr><td>êµíµìì¤</td><td>ëë¡Â·ì² ëÂ·ê¶¤ëÂ·í­ë§Â·ì´í­Â·ìë¡Â·ê³µí­Â·ë¹íì¥ + êµíµìì íì§Â·ê´ì ìì¤Â·í­íìì ìì¤</td><td>íì§Â·ê´ì ìì¤ë í¬í¨</td></tr><tr><td>êµíµì²´ê³</td><td>êµíµìë¨ ë° êµíµìì¤ì ì´ì©Â·ê´ë¦¬Â·ì´ìì²´ê³ ëë ê´ë ¨ ì°ìÂ·ì ë ë±</td><td>ë¹ì¹¸ ìì£¼ ì¶ì </td></tr><tr><td>êµíµì¬ìì</td><td>â êµíµìë¨ì´ìì â¡êµíµìì¤ì¤ì¹Â·ê´ë¦¬ì â¢ì ì¡°ì¬ììÂ·êµì¡Â·ì°êµ¬Â·ì¡°ì¬ê¸°ê´</td><td><strong>êµíµì´ì ìë ë¹í´ë¹ â</strong></td></tr><tr><td>ì§ì íì ê¸°ê´</td><td>ì ë¶ì¡°ì§ë²ì ìí ì¤ìíì ê¸°ê´ (ê¸°ì¬ë¶Â·êµì¡ë¶Â·êµ­í ë¶ ë±)</td><td><strong>êµ­í(ìë²ë¶) ë¹í´ë¹ â</strong></td></tr><tr><td>êµíµíì ê¸°ê´</td><td>ì§ì íì ê¸°ê´ì ì¥ + ìÂ·ëì§ì¬ + ìì¥Â·êµ°ìÂ·êµ¬ì²­ì¥</td><td><strong>í¹ë³íì ê¸°ê´ ë¹í´ë¹ â</strong></td></tr><tr><td>êµíµì¬ê³ </td><td>êµíµìë¨ì ì´íÂ·í­íÂ·ì´í­ê³¼ ê´ë ¨ë ì¬ëì ì¬ì ëë ë¬¼ê±´ì ìê´´</td><td></td></tr><tr><td>êµíµìì ê´ë¦¬ì</td><td>êµíµìë¨ì ìì í ì´íÂ·ì´í­ ê´ë ¨ ê¸°ì ì  ì¬í­ì ì ê²Â·ê´ë¦¬íë ì</td><td></td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: êµíµìì íì§ â êµíµìë¨ ìë, <strong>êµíµìì¤</strong>ì í´ë¹</div>
 </div><div class="concept" id="p1-02">
-<div class="concept-title"><span class="cnum">개념 02</span>교통수단안전점검 vs 교통시설안전진단</div>
-<div class="table-wrap"><table><thead><tr><th>구분</th><th>주체</th><th>대상</th></tr></thead><tbody><tr><td><strong>교통수단안전점검</strong></td><td><strong>교통행정기관</strong></td><td>소관 교통수단에 대해 위험요인 조사·점검·평가</td></tr><tr><td><strong>교통시설안전진단</strong></td><td><strong>교통안전진단기관</strong></td><td>교통시설에 대해 위험요인 조사·측정·평가</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 두 용어의 주체·대상을 바꿔치기하여 출제 — 점검=행정기관, 진단=진단기관</div>
+<div class="concept-title"><span class="cnum">ê°ë 02</span>êµíµìë¨ìì ì ê² vs êµíµìì¤ìì ì§ë¨</div>
+<div class="table-wrap"><table><thead><tr><th>êµ¬ë¶</th><th>ì£¼ì²´</th><th>ëì</th></tr></thead><tbody><tr><td><strong>êµíµìë¨ìì ì ê²</strong></td><td><strong>êµíµíì ê¸°ê´</strong></td><td>ìê´ êµíµìë¨ì ëí´ ìíìì¸ ì¡°ì¬Â·ì ê²Â·íê°</td></tr><tr><td><strong>êµíµìì¤ìì ì§ë¨</strong></td><td><strong>êµíµìì ì§ë¨ê¸°ê´</strong></td><td>êµíµìì¤ì ëí´ ìíìì¸ ì¡°ì¬Â·ì¸¡ì Â·íê°</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ë ì©ì´ì ì£¼ì²´Â·ëìì ë°ê¿ì¹ê¸°íì¬ ì¶ì  â ì ê²=íì ê¸°ê´, ì§ë¨=ì§ë¨ê¸°ê´</div>
 </div></div>
 </div><div class="part" id="p2">
-<div class="part-title" onclick="togglePart(this)">PART 2. 관련자 의무<span class="arrow">▲</span></div>
+<div class="part-title" onclick="togglePart(this)">PART 2. ê´ë ¨ì ìë¬´<span class="arrow">â²</span></div>
 <div class="part-body"><div class="concept" id="p2-03">
-<div class="concept-title"><span class="cnum">개념 03</span>주체별 의무 매핑</div>
-<div class="table-wrap"><table><thead><tr><th>주체</th><th>의무</th></tr></thead><tbody><tr><td><strong>국가</strong></td><td>교통안전 종합시책 수립·시행 / <strong>국민</strong> 생명·신체·재산 보호 / 재정·금융 조치 <strong>강구하여야 한다</strong></td></tr><tr><td><strong>지방자치단체</strong></td><td>관할구역 내 시책 수립·시행 / <strong>주민</strong> 생명·신체·재산 보호</td></tr><tr><td><strong>차량운전자 등</strong></td><td>안전운행·운항 의무 (차량운전자·선박승무원·항공승무원)</td></tr><tr><td><strong>보행자</strong></td><td>법령 준수 + 육상교통에 위험·피해 주지 않도록 노력</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>국가=국민 / 지자체=주민</strong> — 서로 바꾸면 오답</div><div class="trap">⚠️ 함정 주의: 재정·금융 조치: '<strong>강구하여야 한다</strong>' (강구할 수 있다 ❌ 의무임)</div><div class="trap">⚠️ 함정 주의: 교통안전 종합시책 = 국가 의무 (차량운전자 의무 ❌)</div>
+<div class="concept-title"><span class="cnum">ê°ë 03</span>ì£¼ì²´ë³ ìë¬´ ë§¤í</div>
+<div class="table-wrap"><table><thead><tr><th>ì£¼ì²´</th><th>ìë¬´</th></tr></thead><tbody><tr><td><strong>êµ­ê°</strong></td><td>êµíµìì  ì¢í©ìì± ìë¦½Â·ìí / <strong>êµ­ë¯¼</strong> ìëªÂ·ì ì²´Â·ì¬ì° ë³´í¸ / ì¬ì Â·ê¸ìµ ì¡°ì¹ <strong>ê°êµ¬íì¬ì¼ íë¤</strong></td></tr><tr><td><strong>ì§ë°©ìì¹ë¨ì²´</strong></td><td>ê´í êµ¬ì­ ë´ ìì± ìë¦½Â·ìí / <strong>ì£¼ë¯¼</strong> ìëªÂ·ì ì²´Â·ì¬ì° ë³´í¸</td></tr><tr><td><strong>ì°¨ëì´ì ì ë±</strong></td><td>ìì ì´íÂ·ì´í­ ìë¬´ (ì°¨ëì´ì ìÂ·ì ë°ì¹ë¬´ìÂ·í­ê³µì¹ë¬´ì)</td></tr><tr><td><strong>ë³´íì</strong></td><td>ë²ë ¹ ì¤ì + ì¡ìêµíµì ìíÂ·í¼í´ ì£¼ì§ ìëë¡ ë¸ë ¥</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>êµ­ê°=êµ­ë¯¼ / ì§ìì²´=ì£¼ë¯¼</strong> â ìë¡ ë°ê¾¸ë©´ ì¤ëµ</div><div class="trap">â ï¸ í¨ì  ì£¼ì: ì¬ì Â·ê¸ìµ ì¡°ì¹: '<strong>ê°êµ¬íì¬ì¼ íë¤</strong>' (ê°êµ¬í  ì ìë¤ â ìë¬´ì)</div><div class="trap">â ï¸ í¨ì  ì£¼ì: êµíµìì  ì¢í©ìì± = êµ­ê° ìë¬´ (ì°¨ëì´ì ì ìë¬´ â)</div>
 </div></div>
 </div><div class="part" id="p3">
-<div class="part-title" onclick="togglePart(this)">PART 3. 교통안전 계획 체계<span class="arrow">▲</span></div>
+<div class="part-title" onclick="togglePart(this)">PART 3. êµíµìì  ê³í ì²´ê³<span class="arrow">â²</span></div>
 <div class="part-body"><div class="concept" id="p3-04">
-<div class="concept-title"><span class="cnum">개념 04</span>계획 4종 구조</div>
-<div class="vis-wrap"><img src="images/VIS-022_교통안전계획체계흐름도.jpg" alt="교통안전 계획 4종 체계 흐름도" loading="lazy"><p class="vis-cap">교통안전 계획 4종 체계 흐름도</p></div><div class="step-box">국가교통안전기본계획(5년, 국토교통부장관) → 심의: 국가교통위원회<br>→ 국가교통안전시행계획(매년, 지정행정기관의 장)<br><br>지역교통안전기본계획(5년, 시·도지사)<br>→ 지역교통안전시행계획(매년, 시·도지사 / 시장·군수·구청장)</div><div class="trap">⚠️ 함정 주의: 시행계획 수립의무자: <strong>지정행정기관의 장</strong> (국토교통부장관 ❌)</div>
+<div class="concept-title"><span class="cnum">ê°ë 04</span>ê³í 4ì¢ êµ¬ì¡°</div>
+<div class="vis-wrap"><img src="images/VIS-022_êµíµìì ê³íì²´ê³íë¦ë.jpg" alt="êµíµìì  ê³í 4ì¢ ì²´ê³ íë¦ë" loading="lazy"><p class="vis-cap">êµíµìì  ê³í 4ì¢ ì²´ê³ íë¦ë</p></div><div class="step-box">êµ­ê°êµíµìì ê¸°ë³¸ê³í(5ë, êµ­í êµíµë¶ì¥ê´) â ì¬ì: êµ­ê°êµíµììí<br>â êµ­ê°êµíµìì ìíê³í(ë§¤ë, ì§ì íì ê¸°ê´ì ì¥)<br><br>ì§ì­êµíµìì ê¸°ë³¸ê³í(5ë, ìÂ·ëì§ì¬)<br>â ì§ì­êµíµìì ìíê³í(ë§¤ë, ìÂ·ëì§ì¬ / ìì¥Â·êµ°ìÂ·êµ¬ì²­ì¥)</div><div class="trap">â ï¸ í¨ì  ì£¼ì: ìíê³í ìë¦½ìë¬´ì: <strong>ì§ì íì ê¸°ê´ì ì¥</strong> (êµ­í êµíµë¶ì¥ê´ â)</div>
 </div><div class="concept" id="p3-05">
-<div class="concept-title"><span class="cnum">개념 05</span>국가교통안전기본계획 핵심</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>수립의무자</td><td><strong>국토교통부장관</strong></td><td>시·도지사 교체</td></tr><tr><td>주기</td><td><strong>5년</strong></td><td>1년·10년 교체</td></tr><tr><td>심의기관</td><td><strong>국가교통위원회</strong></td><td>교통안전위원회 교체</td></tr><tr><td>경미한 변경</td><td>부문별 <strong>100분의 10</strong> 이내</td><td>100분의 30 교체</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>포함사항 O</th><th>포함사항 X</th></tr></thead><tbody><tr><td>교통안전에 관한 <strong>중·장기</strong> 종합정책방향</td><td>단기 종합정책방향 ❌</td></tr><tr><td>교통안전정책의 추진성과 분석·평가</td><td></td></tr><tr><td><strong>연차별</strong> 추진계획</td><td>월별 추진계획 ❌</td></tr><tr><td></td><td>지역교통안전시행계획의 추진상 문제점 ❌</td></tr></tbody></table></div><div class="tip">★ 수립절차: 지침 통보 → 소관별 계획안 제출 → 기본계획안 작성·확정 → 확정계획 통보·공고</div>
+<div class="concept-title"><span class="cnum">ê°ë 05</span>êµ­ê°êµíµìì ê¸°ë³¸ê³í íµì¬</div>
+<div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th><th>í¨ì </th></tr></thead><tbody><tr><td>ìë¦½ìë¬´ì</td><td><strong>êµ­í êµíµë¶ì¥ê´</strong></td><td>ìÂ·ëì§ì¬ êµì²´</td></tr><tr><td>ì£¼ê¸°</td><td><strong>5ë</strong></td><td>1ëÂ·10ë êµì²´</td></tr><tr><td>ì¬ìê¸°ê´</td><td><strong>êµ­ê°êµíµììí</strong></td><td>êµíµìì ììí êµì²´</td></tr><tr><td>ê²½ë¯¸í ë³ê²½</td><td>ë¶ë¬¸ë³ <strong>100ë¶ì 10</strong> ì´ë´</td><td>100ë¶ì 30 êµì²´</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>í¬í¨ì¬í­ O</th><th>í¬í¨ì¬í­ X</th></tr></thead><tbody><tr><td>êµíµìì ì ê´í <strong>ì¤Â·ì¥ê¸°</strong> ì¢í©ì ì±ë°©í¥</td><td>ë¨ê¸° ì¢í©ì ì±ë°©í¥ â</td></tr><tr><td>êµíµìì ì ì±ì ì¶ì§ì±ê³¼ ë¶ìÂ·íê°</td><td></td></tr><tr><td><strong>ì°ì°¨ë³</strong> ì¶ì§ê³í</td><td>ìë³ ì¶ì§ê³í â</td></tr><tr><td></td><td>ì§ì­êµíµìì ìíê³íì ì¶ì§ì ë¬¸ì ì  â</td></tr></tbody></table></div><div class="tip">â ìë¦½ì ì°¨: ì§ì¹¨ íµë³´ â ìê´ë³ ê³íì ì ì¶ â ê¸°ë³¸ê³íì ìì±Â·íì  â íì ê³í íµë³´Â·ê³µê³ </div>
 </div><div class="concept" id="p3-06">
-<div class="concept-title"><span class="cnum">개념 06</span>국가교통안전시행계획</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>수립의무자</td><td><strong>지정행정기관의 장</strong> (소관별 계획안 수립 → 국토교통부장관에 제출)</td></tr><tr><td>주기</td><td><strong>매년</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: '매년 12월 말까지' → 틀림. 시행계획은 단순히 <strong>매년</strong> 수립</div>
+<div class="concept-title"><span class="cnum">ê°ë 06</span>êµ­ê°êµíµìì ìíê³í</div>
+<div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th></tr></thead><tbody><tr><td>ìë¦½ìë¬´ì</td><td><strong>ì§ì íì ê¸°ê´ì ì¥</strong> (ìê´ë³ ê³íì ìë¦½ â êµ­í êµíµë¶ì¥ê´ì ì ì¶)</td></tr><tr><td>ì£¼ê¸°</td><td><strong>ë§¤ë</strong></td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: 'ë§¤ë 12ì ë§ê¹ì§' â íë¦¼. ìíê³íì ë¨ìí <strong>ë§¤ë</strong> ìë¦½</div>
 </div></div>
 </div><div class="part" id="p4">
-<div class="part-title" onclick="togglePart(this)">PART 4. 교통안전관리규정<span class="arrow">▲</span></div>
+<div class="part-title" onclick="togglePart(this)">PART 4. êµíµìì ê´ë¦¬ê·ì <span class="arrow">â²</span></div>
 <div class="part-body"><div class="concept" id="p4-07">
-<div class="concept-title"><span class="cnum">개념 07</span>교통안전관리규정 핵심</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>제출의무자</td><td>교통시설설치·관리자 및 교통수단운영자</td><td>교통운전자 ❌</td></tr><tr><td>제출처</td><td><strong>관할 교통행정기관</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>변경 후 제출</td><td>변경한 날부터 <strong>1개월</strong> 이내</td><td>3개월 교체</td></tr><tr><td>확인·평가 주기</td><td>제출일부터 매 <strong>5년</strong> 전후 <strong>100일</strong> 이내</td><td>3년·60일 교체</td></tr><tr><td>확인·평가 주체</td><td><strong>교통행정기관</strong></td><td>교통안전공단 ❌</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 확인평가: 5년/100일 ← 3년/60일 함정 (가장 빈출)</div>
+<div class="concept-title"><span class="cnum">ê°ë 07</span>êµíµìì ê´ë¦¬ê·ì  íµì¬</div>
+<div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th><th>í¨ì </th></tr></thead><tbody><tr><td>ì ì¶ìë¬´ì</td><td>êµíµìì¤ì¤ì¹Â·ê´ë¦¬ì ë° êµíµìë¨ì´ìì</td><td>êµíµì´ì ì â</td></tr><tr><td>ì ì¶ì²</td><td><strong>ê´í  êµíµíì ê¸°ê´</strong></td><td>êµ­í êµíµë¶ì¥ê´ â</td></tr><tr><td>ë³ê²½ í ì ì¶</td><td>ë³ê²½í ë ë¶í° <strong>1ê°ì</strong> ì´ë´</td><td>3ê°ì êµì²´</td></tr><tr><td>íì¸Â·íê° ì£¼ê¸°</td><td>ì ì¶ì¼ë¶í° ë§¤ <strong>5ë</strong> ì í <strong>100ì¼</strong> ì´ë´</td><td>3ëÂ·60ì¼ êµì²´</td></tr><tr><td>íì¸Â·íê° ì£¼ì²´</td><td><strong>êµíµíì ê¸°ê´</strong></td><td>êµíµìì ê³µë¨ â</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: íì¸íê°: 5ë/100ì¼ â 3ë/60ì¼ í¨ì  (ê°ì¥ ë¹ì¶)</div>
 </div><div class="concept" id="p4-08">
-<div class="concept-title"><span class="cnum">개념 08</span>검토 결과 3종</div>
-<div class="table-wrap"><table><thead><tr><th>결과</th><th>의미</th></tr></thead><tbody><tr><td>적합</td><td>교통안전 확보에 문제 없음</td></tr><tr><td><strong>조건부 적합</strong></td><td>교통안전 확보에 문제 없지만 <strong>부분 보완 필요</strong></td></tr><tr><td>부적합</td><td>교통안전 확보에 문제 있음</td></tr></tbody></table></div>
+<div class="concept-title"><span class="cnum">ê°ë 08</span>ê²í  ê²°ê³¼ 3ì¢</div>
+<div class="table-wrap"><table><thead><tr><th>ê²°ê³¼</th><th>ìë¯¸</th></tr></thead><tbody><tr><td>ì í©</td><td>êµíµìì  íë³´ì ë¬¸ì  ìì</td></tr><tr><td><strong>ì¡°ê±´ë¶ ì í©</strong></td><td>êµíµìì  íë³´ì ë¬¸ì  ìì§ë§ <strong>ë¶ë¶ ë³´ì íì</strong></td></tr><tr><td>ë¶ì í©</td><td>êµíµìì  íë³´ì ë¬¸ì  ìì</td></tr></tbody></table></div>
 </div></div>
 </div><div class="part" id="p5">
-<div class="part-title" onclick="togglePart(this)">PART 5. 교통수단안전점검<span class="arrow">▲</span></div>
+<div class="part-title" onclick="togglePart(this)">PART 5. êµíµìë¨ìì ì ê²<span class="arrow">â²</span></div>
 <div class="part-body"><div class="concept" id="p5-09">
-<div class="concept-title"><span class="cnum">개념 09</span>교통수단안전점검 핵심</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>2개 이상 기관 소관</td><td><strong>공동으로 점검할 수 있다</strong> (공동점검 가능)</td></tr><tr><td>사전통지 기간</td><td>검사일 <strong>7일</strong> 전까지</td></tr><tr><td>점검 대상</td><td>중상자 <strong>2명 이상</strong> 사고</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 경상자 10명 이상 단독 → 비해당 (중상자 기준이 핵심)</div>
+<div class="concept-title"><span class="cnum">ê°ë 09</span>êµíµìë¨ìì ì ê² íµì¬</div>
+<div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th></tr></thead><tbody><tr><td>2ê° ì´ì ê¸°ê´ ìê´</td><td><strong>ê³µëì¼ë¡ ì ê²í  ì ìë¤</strong> (ê³µëì ê² ê°ë¥)</td></tr><tr><td>ì¬ì íµì§ ê¸°ê°</td><td>ê²ì¬ì¼ <strong>7ì¼</strong> ì ê¹ì§</td></tr><tr><td>ì ê² ëì</td><td>ì¤ìì <strong>2ëª ì´ì</strong> ì¬ê³ </td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ê²½ìì 10ëª ì´ì ë¨ë â ë¹í´ë¹ (ì¤ìì ê¸°ì¤ì´ íµì¬)</div>
 </div></div>
 </div><div class="part" id="p6">
-<div class="part-title" onclick="togglePart(this)">PART 6. 교통시설안전진단·진단기관<span class="arrow">▲</span></div>
+<div class="part-title" onclick="togglePart(this)">PART 6. êµíµìì¤ìì ì§ë¨Â·ì§ë¨ê¸°ê´<span class="arrow">â²</span></div>
 <div class="part-body"><div class="concept" id="p6-10">
-<div class="concept-title"><span class="cnum">개념 10</span>진단기관 등록·취소</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>등록처</td><td><strong>시·도지사</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>등록취소 후 재등록 제한</td><td><strong>2년</strong></td><td>3년 교체</td></tr><tr><td>비용 부담</td><td><strong>진단을 받는 자</strong></td><td>진단기관 ❌</td></tr><tr><td>의무대상자</td><td><strong>교통시설설치·관리자</strong></td><td>교통수단운영자 ❌</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 임의적 취소사유: 등록기준에의 미달 (필요적 취소 아님)</div><div class="tip">★ 취소·정지 처분 후에도 착수한 진단업무는 계속 수행 가능</div>
+<div class="concept-title"><span class="cnum">ê°ë 10</span>ì§ë¨ê¸°ê´ ë±ë¡Â·ì·¨ì</div>
+<div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th><th>í¨ì </th></tr></thead><tbody><tr><td>ë±ë¡ì²</td><td><strong>ìÂ·ëì§ì¬</strong></td><td>êµ­í êµíµë¶ì¥ê´ â</td></tr><tr><td>ë±ë¡ì·¨ì í ì¬ë±ë¡ ì í</td><td><strong>2ë</strong></td><td>3ë êµì²´</td></tr><tr><td>ë¹ì© ë¶ë´</td><td><strong>ì§ë¨ì ë°ë ì</strong></td><td>ì§ë¨ê¸°ê´ â</td></tr><tr><td>ìë¬´ëìì</td><td><strong>êµíµìì¤ì¤ì¹Â·ê´ë¦¬ì</strong></td><td>êµíµìë¨ì´ìì â</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ììì  ì·¨ìì¬ì : ë±ë¡ê¸°ì¤ìì ë¯¸ë¬ (íìì  ì·¨ì ìë)</div><div class="tip">â ì·¨ìÂ·ì ì§ ì²ë¶ íìë ì°©ìí ì§ë¨ìë¬´ë ê³ì ìí ê°ë¥</div>
 </div><div class="concept" id="p6-11">
-<div class="concept-title"><span class="cnum">개념 11</span>결격사유 함정</div>
-<div class="table-wrap"><table><thead><tr><th>케이스</th><th>결격 여부</th></tr></thead><tbody><tr><td>등록취소 후 2년 <strong>미경과</strong>자</td><td><strong>결격 O</strong></td></tr><tr><td>등록취소 후 2년 <strong>경과</strong>한 자</td><td><strong>결격 아님</strong> (등록 가능)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 2년 지나면 다시 등록 가능 — 2년이 경과하면 결격 아님</div>
+<div class="concept-title"><span class="cnum">ê°ë 11</span>ê²°ê²©ì¬ì  í¨ì </div>
+<div class="table-wrap"><table><thead><tr><th>ì¼ì´ì¤</th><th>ê²°ê²© ì¬ë¶</th></tr></thead><tbody><tr><td>ë±ë¡ì·¨ì í 2ë <strong>ë¯¸ê²½ê³¼</strong>ì</td><td><strong>ê²°ê²© O</strong></td></tr><tr><td>ë±ë¡ì·¨ì í 2ë <strong>ê²½ê³¼</strong>í ì</td><td><strong>ê²°ê²© ìë</strong> (ë±ë¡ ê°ë¥)</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: 2ë ì§ëë©´ ë¤ì ë±ë¡ ê°ë¥ â 2ëì´ ê²½ê³¼íë©´ ê²°ê²© ìë</div>
 </div></div>
 </div><div class="part" id="p7">
-<div class="part-title" onclick="togglePart(this)">PART 7. 운행기록장치<span class="arrow">▲</span></div>
+<div class="part-title" onclick="togglePart(this)">PART 7. ì´íê¸°ë¡ì¥ì¹<span class="arrow">â²</span></div>
 <div class="part-body"><div class="concept" id="p7-12">
-<div class="concept-title"><span class="cnum">개념 12</span>운행기록 핵심 수치</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>보관기간</td><td><strong>6개월</strong></td><td>3개월·1년 교체</td></tr><tr><td>분석기관</td><td><strong>한국교통안전공단</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>주기적 제출</td><td><strong>노선 여객자동차운송사업자</strong></td><td>일반 사업자 교체</td></tr><tr><td>장착 불필요</td><td><strong>경형·소형 특수자동차</strong>운송사업자</td><td>대형 ❌</td></tr><tr><td>차로이탈경고 불필요</td><td><strong>피견인자동차</strong></td><td>일반차량 교체</td></tr></tbody></table></div>
+<div class="concept-title"><span class="cnum">ê°ë 12</span>ì´íê¸°ë¡ íµì¬ ìì¹</div>
+<div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th><th>í¨ì </th></tr></thead><tbody><tr><td>ë³´ê´ê¸°ê°</td><td><strong>6ê°ì</strong></td><td>3ê°ìÂ·1ë êµì²´</td></tr><tr><td>ë¶ìê¸°ê´</td><td><strong>íêµ­êµíµìì ê³µë¨</strong></td><td>êµ­í êµíµë¶ì¥ê´ â</td></tr><tr><td>ì£¼ê¸°ì  ì ì¶</td><td><strong>ë¸ì  ì¬ê°ìëì°¨ì´ì¡ì¬ìì</strong></td><td>ì¼ë° ì¬ìì êµì²´</td></tr><tr><td>ì¥ì°© ë¶íì</td><td><strong>ê²½íÂ·ìí í¹ììëì°¨</strong>ì´ì¡ì¬ìì</td><td>ëí â</td></tr><tr><td>ì°¨ë¡ì´íê²½ê³  ë¶íì</td><td><strong>í¼ê²¬ì¸ìëì°¨</strong></td><td>ì¼ë°ì°¨ë êµì²´</td></tr></tbody></table></div>
 </div><div class="concept" id="p7-13">
-<div class="concept-title"><span class="cnum">개념 13</span>운행기록 분석항목 6개</div>
-<div class="table-wrap"><table><thead><tr><th>분석항목 O (6개)</th><th>분석항목 X</th></tr></thead><tbody><tr><td>과속 / 급감속 / 급출발 / 회전 / 앞지르기 / 진로변경</td><td><strong>주차 ❌</strong> (가장 자주 출제)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>주차는 분석항목 아님</strong> ← 단골 출제</div>
+<div class="concept-title"><span class="cnum">ê°ë 13</span>ì´íê¸°ë¡ ë¶ìí­ëª© 6ê°</div>
+<div class="table-wrap"><table><thead><tr><th>ë¶ìí­ëª© O (6ê°)</th><th>ë¶ìí­ëª© X</th></tr></thead><tbody><tr><td>ê³¼ì / ê¸ê°ì / ê¸ì¶ë° / íì  / ìì§ë¥´ê¸° / ì§ë¡ë³ê²½</td><td><strong>ì£¼ì°¨ â</strong> (ê°ì¥ ìì£¼ ì¶ì )</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ì£¼ì°¨ë ë¶ìí­ëª© ìë</strong> â ë¨ê³¨ ì¶ì </div>
 </div><div class="concept" id="p7-14">
-<div class="concept-title"><span class="cnum">개념 14</span>운행기록 분석결과 활용</div>
-<div class="table-wrap"><table><thead><tr><th>활용 O</th><th>활용 X (비해당)</th></tr></thead><tbody><tr><td>자동차의 운행관리</td><td><strong>과태료 부과 시 일반기준 ❌</strong></td></tr><tr><td>차량운전자 교육·훈련</td><td>제재·처벌에 사용 불가</td></tr><tr><td>운행계통·운행경로 개선</td><td></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 분석결과 조치: 교통수단운영체계 개선권고 / 연속근무·최소휴게시간 확인 — <strong>교통안전진단 실시 ❌</strong></div>
+<div class="concept-title"><span class="cnum">ê°ë 14</span>ì´íê¸°ë¡ ë¶ìê²°ê³¼ íì©</div>
+<div class="table-wrap"><table><thead><tr><th>íì© O</th><th>íì© X (ë¹í´ë¹)</th></tr></thead><tbody><tr><td>ìëì°¨ì ì´íê´ë¦¬</td><td><strong>ê³¼íë£ ë¶ê³¼ ì ì¼ë°ê¸°ì¤ â</strong></td></tr><tr><td>ì°¨ëì´ì ì êµì¡Â·íë ¨</td><td>ì ì¬Â·ì²ë²ì ì¬ì© ë¶ê°</td></tr><tr><td>ì´íê³íµÂ·ì´íê²½ë¡ ê°ì </td><td></td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ë¶ìê²°ê³¼ ì¡°ì¹: êµíµìë¨ì´ìì²´ê³ ê°ì ê¶ê³  / ì°ìê·¼ë¬´Â·ìµìí´ê²ìê° íì¸ â <strong>êµíµìì ì§ë¨ ì¤ì â</strong></div>
 </div></div>
 </div><div class="part" id="p8">
-<div class="part-title" onclick="togglePart(this)">PART 8. 교통안전관리자 제도<span class="arrow">▲</span></div>
+<div class="part-title" onclick="togglePart(this)">PART 8. êµíµìì ê´ë¦¬ì ì ë<span class="arrow">â²</span></div>
 <div class="part-body"><div class="concept" id="p8-15">
-<div class="concept-title"><span class="cnum">개념 15</span>자격 종류 및 시험</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>자격 종류 5종</td><td>도로 / 철도 / 항공 / 항만 / 삭도</td><td><strong>해양 ❌</strong> (존재하지 않음)</td></tr><tr><td>시험 실시기관</td><td><strong>한국교통안전공단</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>부정행위자 응시제한</td><td>처분일부터 <strong>2년</strong></td><td>3년 교체</td></tr><tr><td>자격취소 후 응시제한</td><td><strong>2년</strong></td><td>3년 교체</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>해양</strong>교통안전관리자 → 없음 (비해당)</div>
+<div class="concept-title"><span class="cnum">ê°ë 15</span>ìê²© ì¢ë¥ ë° ìí</div>
+<div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th><th>í¨ì </th></tr></thead><tbody><tr><td>ìê²© ì¢ë¥ 5ì¢</td><td>ëë¡ / ì² ë / í­ê³µ / í­ë§ / ì­ë</td><td><strong>í´ì â</strong> (ì¡´ì¬íì§ ìì)</td></tr><tr><td>ìí ì¤ìê¸°ê´</td><td><strong>íêµ­êµíµìì ê³µë¨</strong></td><td>êµ­í êµíµë¶ì¥ê´ â</td></tr><tr><td>ë¶ì íìì ììì í</td><td>ì²ë¶ì¼ë¶í° <strong>2ë</strong></td><td>3ë êµì²´</td></tr><tr><td>ìê²©ì·¨ì í ììì í</td><td><strong>2ë</strong></td><td>3ë êµì²´</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>í´ì</strong>êµíµìì ê´ë¦¬ì â ìì (ë¹í´ë¹)</div>
 </div><div class="concept" id="p8-16">
-<div class="concept-title"><span class="cnum">개념 16</span>자격취소·정지</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>처분권자</td><td><strong>시·도지사</strong></td><td>국토교통부장관 ❌</td></tr><tr><td>자격정지 최대기간</td><td><strong>1년</strong></td><td>2년 교체</td></tr><tr><td>청문 실시기관</td><td><strong>시·도지사</strong></td><td>국토교통부장관 ❌</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 결격사유: 집행유예 선고 후 <strong>유예기간 중</strong>인 자 = 결격 / <strong>유예기간 경과 후 2년이 되지 않은 자 = 결격 아님</strong></div>
+<div class="concept-title"><span class="cnum">ê°ë 16</span>ìê²©ì·¨ìÂ·ì ì§</div>
+<div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th><th>í¨ì </th></tr></thead><tbody><tr><td>ì²ë¶ê¶ì</td><td><strong>ìÂ·ëì§ì¬</strong></td><td>êµ­í êµíµë¶ì¥ê´ â</td></tr><tr><td>ìê²©ì ì§ ìµëê¸°ê°</td><td><strong>1ë</strong></td><td>2ë êµì²´</td></tr><tr><td>ì²­ë¬¸ ì¤ìê¸°ê´</td><td><strong>ìÂ·ëì§ì¬</strong></td><td>êµ­í êµíµë¶ì¥ê´ â</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ê²°ê²©ì¬ì : ì§íì ì ì ê³  í <strong>ì ìê¸°ê° ì¤</strong>ì¸ ì = ê²°ê²© / <strong>ì ìê¸°ê° ê²½ê³¼ í 2ëì´ ëì§ ìì ì = ê²°ê²© ìë</strong></div>
 </div></div>
 </div><div class="part" id="p9">
-<div class="part-title" onclick="togglePart(this)">PART 9. 교통안전담당자<span class="arrow">▲</span></div>
+<div class="part-title" onclick="togglePart(this)">PART 9. êµíµìì ë´ë¹ì<span class="arrow">â²</span></div>
 <div class="part-body"><div class="concept" id="p9-17">
-<div class="concept-title"><span class="cnum">개념 17</span>지정의무자 + 직무</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>지정의무자 O</td><td>교통시설설치자 / 교통시설관리자 / 교통수단운영자</td></tr><tr><td>지정의무자 X</td><td><strong>교통시설생산자 ❌</strong></td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>직무 O</th><th>직무 X (비해당)</th></tr></thead><tbody><tr><td>교통안전점검의 <strong>지도·감독</strong></td><td><strong>교통안전점검의 실시 ❌</strong> (지도·감독만)</td></tr><tr><td>교통사고원인 조사·분석 및 기록 유지</td><td></td></tr><tr><td>교통시설 시설·장비의 설치·보완 <strong>요청</strong></td><td><strong>직접 설치·보완 ❌</strong> (요청만)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>교통시설생산자</strong> → 지정의무자 비해당</div><div class="trap">⚠️ 함정 주의: 안전점검 직접 실시 ❌ → 지도·감독만</div>
+<div class="concept-title"><span class="cnum">ê°ë 17</span>ì§ì ìë¬´ì + ì§ë¬´</div>
+<div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th></tr></thead><tbody><tr><td>ì§ì ìë¬´ì O</td><td>êµíµìì¤ì¤ì¹ì / êµíµìì¤ê´ë¦¬ì / êµíµìë¨ì´ìì</td></tr><tr><td>ì§ì ìë¬´ì X</td><td><strong>êµíµìì¤ìì°ì â</strong></td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>ì§ë¬´ O</th><th>ì§ë¬´ X (ë¹í´ë¹)</th></tr></thead><tbody><tr><td>êµíµìì ì ê²ì <strong>ì§ëÂ·ê°ë</strong></td><td><strong>êµíµìì ì ê²ì ì¤ì â</strong> (ì§ëÂ·ê°ëë§)</td></tr><tr><td>êµíµì¬ê³ ìì¸ ì¡°ì¬Â·ë¶ì ë° ê¸°ë¡ ì ì§</td><td></td></tr><tr><td>êµíµìì¤ ìì¤Â·ì¥ë¹ì ì¤ì¹Â·ë³´ì <strong>ìì²­</strong></td><td><strong>ì§ì  ì¤ì¹Â·ë³´ì â</strong> (ìì²­ë§)</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>êµíµìì¤ìì°ì</strong> â ì§ì ìë¬´ì ë¹í´ë¹</div><div class="trap">â ï¸ í¨ì  ì£¼ì: ìì ì ê² ì§ì  ì¤ì â â ì§ëÂ·ê°ëë§</div>
 </div><div class="concept" id="p9-18">
-<div class="concept-title"><span class="cnum">개념 18</span>교육 시간</div>
-<div class="table-wrap"><table><thead><tr><th>구분</th><th>시기</th><th>시간</th><th>함정</th></tr></thead><tbody><tr><td>신규교육</td><td>직무 시작 <strong>6개월</strong> 이내</td><td><strong>16시간</strong></td><td>3개월·8시간 교체</td></tr><tr><td>보수교육</td><td><strong>2년</strong>마다</td><td><strong>8시간</strong></td><td>1년·16시간 교체</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 신규: 6개월/16시간 ↔ 보수: 2년/8시간 — 숫자 바꾸기 함정</div>
+<div class="concept-title"><span class="cnum">ê°ë 18</span>êµì¡ ìê°</div>
+<div class="table-wrap"><table><thead><tr><th>êµ¬ë¶</th><th>ìê¸°</th><th>ìê°</th><th>í¨ì </th></tr></thead><tbody><tr><td>ì ê·êµì¡</td><td>ì§ë¬´ ìì <strong>6ê°ì</strong> ì´ë´</td><td><strong>16ìê°</strong></td><td>3ê°ìÂ·8ìê° êµì²´</td></tr><tr><td>ë³´ìêµì¡</td><td><strong>2ë</strong>ë§ë¤</td><td><strong>8ìê°</strong></td><td>1ëÂ·16ìê° êµì²´</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ì ê·: 6ê°ì/16ìê° â ë³´ì: 2ë/8ìê° â ì«ì ë°ê¾¸ê¸° í¨ì </div>
 </div></div>
 </div><div class="part" id="p10">
-<div class="part-title" onclick="togglePart(this)">PART 10. 교통안전도 평가지수<span class="arrow">▲</span></div>
+<div class="part-title" onclick="togglePart(this)">PART 10. êµíµìì ë íê°ì§ì<span class="arrow">â²</span></div>
 <div class="part-body"><div class="concept" id="p10-19">
-<div class="concept-title"><span class="cnum">개념 19</span>가중치 + 부상 기준</div>
-<div class="vis-wrap"><img src="images/VIS-025_교통안전도가중치표.jpg" alt="교통안전도 가중치 + 중상·사망 기준" loading="lazy"><p class="vis-cap">교통안전도 가중치 + 중상·사망 기준</p></div><div class="table-wrap"><table><thead><tr><th>구분</th><th>가중치</th><th>기준</th><th>함정</th></tr></thead><tbody><tr class="hl"><td><strong>사망</strong></td><td><strong>1.0</strong></td><td>사고 발생부터 <strong>30일</strong> 이내 사망</td><td>10일·20일 교체</td></tr><tr class="hl"><td><strong>중상</strong></td><td><strong>0.7</strong></td><td><strong>3주</strong> 이상 치료</td><td>0.5·1.0 / 2주·4주 교체</td></tr><tr><td><strong>경상</strong></td><td><strong>0.3</strong></td><td>3주 미만 치료</td><td>0.1·0.5 교체</td></tr></tbody></table></div>
+<div class="concept-title"><span class="cnum">ê°ë 19</span>ê°ì¤ì¹ + ë¶ì ê¸°ì¤</div>
+<div class="vis-wrap"><img src="images/VIS-025_êµíµìì ëê°ì¤ì¹í.jpg" alt="êµíµìì ë ê°ì¤ì¹ + ì¤ìÂ·ì¬ë§ ê¸°ì¤" loading="lazy"><p class="vis-cap">êµíµìì ë ê°ì¤ì¹ + ì¤ìÂ·ì¬ë§ ê¸°ì¤</p></div><div class="table-wrap"><table><thead><tr><th>êµ¬ë¶</th><th>ê°ì¤ì¹</th><th>ê¸°ì¤</th><th>í¨ì </th></tr></thead><tbody><tr class="hl"><td><strong>ì¬ë§</strong></td><td><strong>1.0</strong></td><td>ì¬ê³  ë°ìë¶í° <strong>30ì¼</strong> ì´ë´ ì¬ë§</td><td>10ì¼Â·20ì¼ êµì²´</td></tr><tr class="hl"><td><strong>ì¤ì</strong></td><td><strong>0.7</strong></td><td><strong>3ì£¼</strong> ì´ì ì¹ë£</td><td>0.5Â·1.0 / 2ì£¼Â·4ì£¼ êµì²´</td></tr><tr><td><strong>ê²½ì</strong></td><td><strong>0.3</strong></td><td>3ì£¼ ë¯¸ë§ ì¹ë£</td><td>0.1Â·0.5 êµì²´</td></tr></tbody></table></div>
 </div><div class="concept" id="p10-20">
-<div class="concept-title"><span class="cnum">개념 20</span>교통안전도 산정식</div>
-<p style='background:#f0f8ff;padding:10px;border-radius:6px;font-weight:bold;font-size:1em;margin:8px 0'>(교통사고 발생건수 × 0.6) + (교통사고 사상자 수 × 0.4) × 자동차등록(면허) 대수</p>
+<div class="concept-title"><span class="cnum">ê°ë 20</span>êµíµìì ë ì°ì ì</div>
+<p style='background:#f0f8ff;padding:10px;border-radius:6px;font-weight:bold;font-size:1em;margin:8px 0'>(êµíµì¬ê³  ë°ìê±´ì Ã 0.6) + (êµíµì¬ê³  ì¬ìì ì Ã 0.4) Ã ìëì°¨ë±ë¡(ë©´í) ëì</p>
 </div><div class="concept" id="p10-21">
-<div class="concept-title"><span class="cnum">개념 21</span>중대교통사고</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>기준</td><td><strong>8주</strong> 이상 치료를 요하는 피해자 발생</td><td>4주·6주·10주 교체</td></tr><tr><td>체험교육 이수기한</td><td>통지 받은 날부터 <strong>60일</strong> 이내</td><td>30일·90일 교체</td></tr><tr><td>미이수 제재</td><td><strong>1천만원</strong> 이하 과태료</td><td>500만원 교체</td></tr><tr><td>누적지점 자료 보관</td><td><strong>3년</strong></td><td>5년으로 착각 (빈출)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 중대교통사고 누적지점 자료 보관 = 3년 ← 교통사고 관련 자료(5년)와 혼동 금지</div>
+<div class="concept-title"><span class="cnum">ê°ë 21</span>ì¤ëêµíµì¬ê³ </div>
+<div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th><th>í¨ì </th></tr></thead><tbody><tr><td>ê¸°ì¤</td><td><strong>8ì£¼</strong> ì´ì ì¹ë£ë¥¼ ìíë í¼í´ì ë°ì</td><td>4ì£¼Â·6ì£¼Â·10ì£¼ êµì²´</td></tr><tr><td>ì²´íêµì¡ ì´ìê¸°í</td><td>íµì§ ë°ì ë ë¶í° <strong>60ì¼</strong> ì´ë´</td><td>30ì¼Â·90ì¼ êµì²´</td></tr><tr><td>ë¯¸ì´ì ì ì¬</td><td><strong>1ì²ë§ì</strong> ì´í ê³¼íë£</td><td>500ë§ì êµì²´</td></tr><tr><td>ëì ì§ì  ìë£ ë³´ê´</td><td><strong>3ë</strong></td><td>5ëì¼ë¡ ì°©ê° (ë¹ì¶)</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ì¤ëêµíµì¬ê³  ëì ì§ì  ìë£ ë³´ê´ = 3ë â êµíµì¬ê³  ê´ë ¨ ìë£(5ë)ì í¼ë ê¸ì§</div>
 </div></div>
 </div><div class="part" id="p11">
-<div class="part-title" onclick="togglePart(this)">PART 11. 교통문화지수<span class="arrow">▲</span></div>
+<div class="part-title" onclick="togglePart(this)">PART 11. êµíµë¬¸íì§ì<span class="arrow">â²</span></div>
 <div class="part-body"><div class="concept" id="p11-22">
-<div class="concept-title"><span class="cnum">개념 22</span>교통문화지수 핵심</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>정의</td><td>국민의 교통안전의식 수준을 객관적으로 측정하기 위한 지수</td><td></td></tr><tr><td>조사항목 3개</td><td><strong>운전행태 + 교통안전 + 보행행태</strong></td><td><strong>교통사고 ❌</strong></td></tr><tr><td>특별실태조사 대상</td><td>하위 <strong>100분의 20</strong> 이내</td><td>100분의 10 교체</td></tr><tr><td>조사방법 특례</td><td>도로교통 외 분야: 다르게 정하여 조사 <strong>할 수 있다</strong></td><td>하여야 한다 ❌</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>교통사고는 교통문화지수 조사항목 아님</strong></div>
+<div class="concept-title"><span class="cnum">ê°ë 22</span>êµíµë¬¸íì§ì íµì¬</div>
+<div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th><th>í¨ì </th></tr></thead><tbody><tr><td>ì ì</td><td>êµ­ë¯¼ì êµíµìì ìì ìì¤ì ê°ê´ì ì¼ë¡ ì¸¡ì íê¸° ìí ì§ì</td><td></td></tr><tr><td>ì¡°ì¬í­ëª© 3ê°</td><td><strong>ì´ì íí + êµíµìì  + ë³´ííí</strong></td><td><strong>êµíµì¬ê³  â</strong></td></tr><tr><td>í¹ë³ì¤íì¡°ì¬ ëì</td><td>íì <strong>100ë¶ì 20</strong> ì´ë´</td><td>100ë¶ì 10 êµì²´</td></tr><tr><td>ì¡°ì¬ë°©ë² í¹ë¡</td><td>ëë¡êµíµ ì¸ ë¶ì¼: ë¤ë¥´ê² ì íì¬ ì¡°ì¬ <strong>í  ì ìë¤</strong></td><td>íì¬ì¼ íë¤ â</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>êµíµì¬ê³ ë êµíµë¬¸íì§ì ì¡°ì¬í­ëª© ìë</strong></div>
 </div></div>
 </div><div class="part" id="p12">
-<div class="part-title" onclick="togglePart(this)">PART 12. 청문·과태료·벌칙<span class="arrow">▲</span></div>
+<div class="part-title" onclick="togglePart(this)">PART 12. ì²­ë¬¸Â·ê³¼íë£Â·ë²ì¹<span class="arrow">â²</span></div>
 <div class="part-body"><div class="concept" id="p12-23">
-<div class="concept-title"><span class="cnum">개념 23</span>청문</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>실시기관</td><td><strong>시·도지사</strong></td></tr><tr><td>필수 실시 사유</td><td><strong>교통안전진단기관의 등록취소</strong> / <strong>교통안전관리자 자격의 취소</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 청문 실시기관 = 시·도지사 ← 국토교통부장관 교체 함정</div>
+<div class="concept-title"><span class="cnum">ê°ë 23</span>ì²­ë¬¸</div>
+<div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th></tr></thead><tbody><tr><td>ì¤ìê¸°ê´</td><td><strong>ìÂ·ëì§ì¬</strong></td></tr><tr><td>íì ì¤ì ì¬ì </td><td><strong>êµíµìì ì§ë¨ê¸°ê´ì ë±ë¡ì·¨ì</strong> / <strong>êµíµìì ê´ë¦¬ì ìê²©ì ì·¨ì</strong></td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ì²­ë¬¸ ì¤ìê¸°ê´ = ìÂ·ëì§ì¬ â êµ­í êµíµë¶ì¥ê´ êµì²´ í¨ì </div>
 </div><div class="concept" id="p12-24">
-<div class="concept-title"><span class="cnum">개념 24</span>과태료 구조</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>부과권자</td><td>국토교통부장관 또는 교통행정기관</td><td>시·도지사 ❌</td></tr><tr><td>감액·증액 범위</td><td><strong>1/2</strong> 이내</td><td>1/3 교체</td></tr><tr><td>감액 불가</td><td><strong>과태료를 체납하고 있는 자</strong></td><td></td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>금액</th><th>위반 행위</th></tr></thead><tbody><tr><td>500만원 이하 과태료</td><td>교통안전관리규정 미제출·미준수</td></tr><tr><td>1천만원 이하 과태료</td><td>교통안전진단 미실시·허위 보고서 / 체험교육 미이수</td></tr><tr class="hl"><td><strong>2년 이하 징역·2천만원 이하 벌금</strong></td><td><strong>직무상 비밀 누설 (형사처벌, 과태료 아님!)</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>직무상 비밀 누설 = 형사처벌</strong> (과태료 아님 — 최빈출 함정)</div>
+<div class="concept-title"><span class="cnum">ê°ë 24</span>ê³¼íë£ êµ¬ì¡°</div>
+<div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th><th>í¨ì </th></tr></thead><tbody><tr><td>ë¶ê³¼ê¶ì</td><td>êµ­í êµíµë¶ì¥ê´ ëë êµíµíì ê¸°ê´</td><td>ìÂ·ëì§ì¬ â</td></tr><tr><td>ê°ì¡Â·ì¦ì¡ ë²ì</td><td><strong>1/2</strong> ì´ë´</td><td>1/3 êµì²´</td></tr><tr><td>ê°ì¡ ë¶ê°</td><td><strong>ê³¼íë£ë¥¼ ì²´ë©íê³  ìë ì</strong></td><td></td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>ê¸ì¡</th><th>ìë° íì</th></tr></thead><tbody><tr><td>500ë§ì ì´í ê³¼íë£</td><td>êµíµìì ê´ë¦¬ê·ì  ë¯¸ì ì¶Â·ë¯¸ì¤ì</td></tr><tr><td>1ì²ë§ì ì´í ê³¼íë£</td><td>êµíµìì ì§ë¨ ë¯¸ì¤ìÂ·íì ë³´ê³ ì / ì²´íêµì¡ ë¯¸ì´ì</td></tr><tr class="hl"><td><strong>2ë ì´í ì§ì­Â·2ì²ë§ì ì´í ë²ê¸</strong></td><td><strong>ì§ë¬´ì ë¹ë° ëì¤ (íì¬ì²ë², ê³¼íë£ ìë!)</strong></td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ì§ë¬´ì ë¹ë° ëì¤ = íì¬ì²ë²</strong> (ê³¼íë£ ìë â ìµë¹ì¶ í¨ì )</div>
 </div><div class="concept" id="p12-25">
-<div class="concept-title"><span class="cnum">개념 25</span>수수료·비밀유지 비해당</div>
-<div class="table-wrap"><table><thead><tr><th>구분</th><th>비해당</th></tr></thead><tbody><tr><td>과태료 부과대상자</td><td><strong>교통안전체험 연구·교육시설 설치·운영자 ❌</strong></td></tr><tr><td>수수료 부과대상자</td><td><strong>교통안전체험 연구·교육시설 설치·운영자 ❌</strong></td></tr><tr><td>비밀유지의무 적용</td><td><strong>교통안전교육업무 ❌</strong></td></tr></tbody></table></div><div class="tip">★ 과태료·수수료·비밀유지 — 3가지 모두 체험시설 설치·운영자는 비해당</div>
+<div class="concept-title"><span class="cnum">ê°ë 25</span>ììë£Â·ë¹ë°ì ì§ ë¹í´ë¹</div>
+<div class="table-wrap"><table><thead><tr><th>êµ¬ë¶</th><th>ë¹í´ë¹</th></tr></thead><tbody><tr><td>ê³¼íë£ ë¶ê³¼ëìì</td><td><strong>êµíµìì ì²´í ì°êµ¬Â·êµì¡ìì¤ ì¤ì¹Â·ì´ìì â</strong></td></tr><tr><td>ììë£ ë¶ê³¼ëìì</td><td><strong>êµíµìì ì²´í ì°êµ¬Â·êµì¡ìì¤ ì¤ì¹Â·ì´ìì â</strong></td></tr><tr><td>ë¹ë°ì ì§ìë¬´ ì ì©</td><td><strong>êµíµìì êµì¡ìë¬´ â</strong></td></tr></tbody></table></div><div class="tip">â ê³¼íë£Â·ììë£Â·ë¹ë°ì ì§ â 3ê°ì§ ëª¨ë ì²´íìì¤ ì¤ì¹Â·ì´ììë ë¹í´ë¹</div>
 </div></div>
 </div>
 </div>
@@ -182,8 +214,8 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 function togglePart(el){
   const body=el.nextElementSibling;
   const arrow=el.querySelector('.arrow');
-  if(body.style.display==='none'){body.style.display='block';arrow.textContent='▲';}
-  else{body.style.display='none';arrow.textContent='▼';}
+  if(body.style.display==='none'){body.style.display='block';arrow.textContent='â²';}
+  else{body.style.display='none';arrow.textContent='â¼';}
 }
 function search(){
   const q=document.getElementById('q').value.trim().toLowerCase();
@@ -218,6 +250,20 @@ function search(){
 document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')search();});
 });
+</script>
+
+<button id="toc-toggle-btn" onclick="openTocDrawer()" aria-label="목차 열기">📋 목차</button>
+<div id="toc-overlay" onclick="closeTocDrawer()"></div>
+<div id="toc-drawer">
+  <div id="toc-drawer-close">
+    <span>📋 목차</span>
+    <button onclick="closeTocDrawer()" aria-label="닫기">✕</button>
+  </div>
+  <nav class="toc" id="toc-drawer-nav"></nav>
+</div>
+<script>
+function openTocDrawer(){var t=document.querySelector('.container .toc'),d=document.getElementById('toc-drawer-nav');if(t&&d){d.innerHTML=t.innerHTML;d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){closeTocDrawer();});})}document.getElementById('toc-drawer').classList.add('open');document.getElementById('toc-overlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeTocDrawer(){document.getElementById('toc-drawer').classList.remove('open');document.getElementById('toc-overlay').classList.remove('open');document.body.style.overflow='';}
 </script>
 </body>
 </html>
