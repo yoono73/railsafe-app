@@ -295,7 +295,7 @@ export default function CbtPage() {
   if (allQuestions.length === 0) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#f5f3ff', gap: '1rem', padding: '2rem' }}>
-        <div style={{ fontSize: '3rem' }}>📭</div>
+        <div style={{ fontSize: '3rem' }}>📝</div>
         <p style={{ color: '#7c3aed', fontSize: '1.1rem', fontWeight: '600' }}>아직 CBT 문제가 없습니다</p>
         <button onClick={() => router.push('/dashboard')} style={{ padding: '0.75rem 1.5rem', background: '#7c3aed', color: 'white', border: 'none', borderRadius: '0.5rem', fontSize: '1rem', cursor: 'pointer', fontWeight: '600' }}>대시보드로 돌아가기</button>
       </div>
@@ -397,19 +397,19 @@ export default function CbtPage() {
                 <div style={{ background: pct >= 60 ? '#16a34a' : '#dc2626', height: '100%', width: pct + '%', borderRadius: '9999px' }} />
               </div>
               <p style={{ fontSize: '0.9rem', color: pct >= 60 ? '#16a34a' : '#dc2626', fontWeight: '600', marginBottom: '1.5rem' }}>
-               {pct >= 60 ? '✅ 합격 기준(60%) 달성`' : '� 합격 기준(60%) 미러�}�}
+                {pct >= 60 ? '✅ 합격 기준(60%) 달성!' : '❌ 합격 기준(60%) 미달'}
               </p>
               <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
                 <button onClick={() => setExamReviewing(true)} style={{ padding: '0.75rem 1.25rem', background: '#ede9fe', color: '#7c3aed', border: 'none', borderRadius: '0.5rem', fontSize: '0.9rem', cursor: 'pointer', fontWeight: '600' }}>
-                  문제 해준 보기
+                  문제 해설 보기
                 </button>
                 <button onClick={() => setMode('select')} style={{ padding: '0.75rem 1.25rem', background: '#7c3aed', color: 'white', border: 'none', borderRadius: '0.5rem', fontSize: '0.9rem', cursor: 'pointer', fontWeight: '600' }}>
-                  다쉜 도전
+                  다시 도전
                 </button>
               </div>
             </div>
 
-            {/* #뎸제별 요요 */}
+            {/* 문제별 정오표 */}
             {!examReviewing && (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.5rem' }}>
                 {questions.map((q, i) => {
@@ -423,7 +423,7 @@ export default function CbtPage() {
                       borderRadius: '0.5rem', padding: '0.5rem',
                       textAlign: 'center', fontSize: '0.8rem',
                     }}>
-                      <div style={{ color: '#6b7280', marginBottom: '0.2rem' }}>{i + 1}번<�div>
+                      <div style={{ color: '#6b7280', marginBottom: '0.2rem' }}>{i + 1}번</div>
                       <div style={{ fontWeight: '700', color: notAnswered ? '#9ca3af' : isCorrect ? '#16a34a' : '#dc2626' }}>
                         {notAnswered ? '-' : isCorrect ? 'O' : 'X'}
                       </div>
@@ -431,9 +431,9 @@ export default function CbtPage() {
                   );
                 })}
               </div>
-             )}
+            )}
 
-            {/* 쵴설 쪬록 */}
+            {/* 해설 목록 */}
             {examReviewing && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {questions.map((q, i) => {
@@ -804,5 +804,6 @@ export default function CbtPage() {
           </div>
         )}
       </div>
-      </div>
-    
+    </div>
+  );
+}
