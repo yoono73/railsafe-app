@@ -68,6 +68,14 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 #toc-drawer .toc ul li a:active{background:#ede9fe}
 #toc-drawer .toc .toc-part a{color:#4c1d95;font-weight:700}
 }
+
+/* ===== TTS 음성 읽기 ===== */
+#tts-bar{position:fixed;bottom:72px;right:14px;z-index:201;display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
+#tts-play-btn{display:flex;align-items:center;gap:6px;background:#7c3aed;color:#fff;border:none;border-radius:24px;padding:8px 16px 8px 12px;font-size:.82em;font-weight:bold;cursor:pointer;box-shadow:0 3px 10px rgba(76,29,149,.45);font-family:'Malgun Gothic','맑은 고딕',sans-serif;white-space:nowrap;}
+#tts-play-btn:active{background:#6d28d9;}
+#tts-stop-btn{display:none;align-items:center;gap:6px;background:#dc2626;color:#fff;border:none;border-radius:24px;padding:8px 16px 8px 12px;font-size:.82em;font-weight:bold;cursor:pointer;box-shadow:0 3px 10px rgba(220,38,38,.4);font-family:'Malgun Gothic','맑은 고딕',sans-serif;white-space:nowrap;}
+.part-tts-btn{font-size:.72em;background:rgba(255,255,255,0.22);border:none;color:#fff;border-radius:12px;padding:2px 9px;cursor:pointer;margin-left:8px;vertical-align:middle;font-family:'Malgun Gothic','맑은 고딕',sans-serif;}
+.part-tts-btn:active{background:rgba(255,255,255,0.4);}
 </style>
 </head>
 <body>
@@ -341,5 +349,19 @@ document.addEventListener('DOMContentLoaded',()=>{
 <script>
 function openTocDrawer(){var s=document.querySelector('.container>.toc'),d=document.getElementById('toc-drawer-inner');if(s&&d){d.innerHTML=s.innerHTML;d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){closeTocDrawer();});})}document.getElementById('toc-drawer').classList.add('open');document.getElementById('toc-overlay').classList.add('open');document.body.style.overflow='hidden';}
 function closeTocDrawer(){document.getElementById('toc-drawer').classList.remove('open');document.getElementById('toc-overlay').classList.remove('open');document.body.style.overflow='';}
+</script>
+
+<div id="tts-bar">
+  <button id="tts-play-btn" onclick="ttsPlayAll()">🔊 전체 읽기</button>
+  <button id="tts-stop-btn" onclick="ttsStop()">⏹ 멈추기</button>
+</div>
+
+<script>
+var _ttsParts=[],_ttsIdx=0;
+function ttsPlayAll(){speechSynthesis.cancel();_ttsParts=Array.from(document.querySelectorAll('.part-body'));_ttsIdx=0;if(!_ttsParts.length)return;document.getElementById('tts-play-btn').style.display='none';document.getElementById('tts-stop-btn').style.display='flex';_ttsNext();}
+function _ttsNext(){if(_ttsIdx>=_ttsParts.length){ttsStop();return;}var text=_ttsParts[_ttsIdx].innerText.replace(/\s+/g,' ').trim();var utt=new SpeechSynthesisUtterance(text);utt.lang='ko-KR';utt.rate=1.0;utt.onend=function(){_ttsIdx++;_ttsNext();};utt.onerror=function(){ttsStop();};speechSynthesis.speak(utt);_ttsIdx++;}
+function ttsStop(){speechSynthesis.cancel();_ttsParts=[];_ttsIdx=0;document.getElementById('tts-play-btn').style.display='flex';document.getElementById('tts-stop-btn').style.display='none';}
+function ttsSection(btn){speechSynthesis.cancel();var pb=btn.closest('.part').querySelector('.part-body');if(!pb)return;var utt=new SpeechSynthesisUtterance(pb.innerText.replace(/\s+/g,' ').trim());utt.lang='ko-KR';utt.rate=1.0;speechSynthesis.speak(utt);}
+document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.part-title').forEach(function(t){var b=document.createElement('button');b.className='part-tts-btn';b.textContent='🔊';b.title='이 파트 읽기';b.onclick=function(e){e.stopPropagation();ttsSection(this);};var a=t.querySelector('.arrow');if(a)t.insertBefore(b,a);else t.appendChild(b);});});
 </script>
 </body></html>
