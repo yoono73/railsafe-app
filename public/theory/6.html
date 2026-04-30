@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ì² ëì í¸ íµì¬ì ë¦¬</title>
+<title>철도신호 핵심정리</title>
 <style>
 * { box-sizing:border-box; margin:0; padding:0; }
-body { font-family:'Malgun Gothic','ë§ì ê³ ë',sans-serif; background:#f5f7fa; color:#1a1a2e; font-size:15px; line-height:1.7; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#f5f7fa; color:#1a1a2e; font-size:15px; line-height:1.7; }
 .site-header { background:linear-gradient(135deg,#78350f,#92400e); color:#fff; padding:5px 16px 4px; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.3); }
 .site-header h1 { font-size:1.05em; }
 .site-header .meta { font-size:.75em; opacity:.8; margin-top:1px; }
@@ -45,235 +45,222 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .highlight { background:#fef08a; border-radius:2px; }
 @media(max-width:768px){ .toc{display:none;} .content{padding:12px 10px 40px;} table{font-size:.82em;} }
 
-/* ëª¨ë°ì¼ íì´ë¸ ê°ë¡ ì¤í¬ë¡¤ ë°©ì§ */
+/* 모바일 테이블 가로 스크롤 방지 */
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
 @media(max-width:768px){
   .content table { min-width: 480px; }
 }
 
-/* ===== 모바일 목차 드로어 ===== */
-#toc-toggle-btn { display: none; }
-@media(max-width:900px) {
-  .toc { display: none !important; }
-  #toc-toggle-btn {
-    display: flex; align-items: center; gap: 6px;
-    position: fixed; bottom: 72px; left: 14px; z-index: 200;
-    background: #4c1d95; color: #fff; border: none; border-radius: 24px;
-    padding: 8px 16px 8px 12px; font-size: .85em; font-weight: bold;
-    cursor: pointer; box-shadow: 0 3px 10px rgba(76,29,149,.45);
-    font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
-  }
-  #toc-toggle-btn:active { background: #6d28d9; }
-  #toc-drawer {
-    position: fixed; top: 0; left: 0; bottom: 0; width: 80vw; max-width: 300px;
-    background: #fff; z-index: 500; overflow-y: auto;
-    padding: 16px 12px 80px; box-shadow: 4px 0 20px rgba(0,0,0,.25);
-    transform: translateX(-110%); transition: transform .28s cubic-bezier(.4,0,.2,1);
-    font-size: .85em;
-  }
-  #toc-drawer.open { transform: translateX(0); }
-  #toc-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 499; }
-  #toc-overlay.open { display: block; }
-  #toc-drawer-close { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #ede9fe; }
-  #toc-drawer-close span { font-weight: bold; color: #4c1d95; font-size: 1em; }
-  #toc-drawer-close button { background: none; border: none; font-size: 1.3em; cursor: pointer; color: #777; padding: 2px 6px; }
-  #toc-drawer .toc { display: flex !important; flex-direction: column; position: static; height: auto; width: 100%; }
-  #toc-drawer .toc ul li a { padding: 5px 8px; display: block; border-radius: 4px; color: #333; text-decoration: none; }
-  #toc-drawer .toc ul li a:active { background: #ede9fe; }
-  #toc-drawer .toc .toc-part a { color: #4c1d95; font-weight: bold; }
+/* ===== mobile-toc-drawer ===== */
+#toc-toggle-btn{display:none}
+@media(max-width:900px){
+.toc{display:none!important}
+#toc-toggle-btn{display:flex;align-items:center;gap:6px;position:fixed;bottom:72px;left:14px;z-index:200;background:#4c1d95;color:#fff;border:none;border-radius:24px;padding:8px 16px 8px 12px;font-size:.85em;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(76,29,149,.45);font-family:inherit}
+#toc-toggle-btn:active{background:#6d28d9}
+#toc-drawer{position:fixed;top:0;left:0;bottom:0;width:80vw;max-width:300px;background:#fff;z-index:500;overflow-y:auto;padding:16px 12px 80px;box-shadow:4px 0 20px rgba(0,0,0,.25);transform:translateX(-110%);transition:transform .28s cubic-bezier(.4,0,.2,1);font-size:.85em}
+#toc-drawer.open{transform:translateX(0)}
+#toc-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:499}
+#toc-overlay.open{display:block}
+#toc-drawer-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #ede9fe}
+#toc-drawer-header span{font-weight:700;color:#4c1d95}
+#toc-drawer-header button{background:none;border:none;font-size:1.3em;cursor:pointer;color:#777;padding:2px 6px}
+#toc-drawer .toc{display:flex!important;flex-direction:column;position:static;height:auto;width:100%}
+#toc-drawer .toc ul li a{padding:5px 8px;display:block;border-radius:4px;color:#333;text-decoration:none}
+#toc-drawer .toc ul li a:active{background:#ede9fe}
+#toc-drawer .toc .toc-part a{color:#4c1d95;font-weight:700}
 }
 </style>
 </head>
 <body>
 <div class="site-header">
-  <h1>ð¦ ì² ëì í¸ íµì¬ì ë¦¬</h1>
-  <div class="meta">ì² ëêµíµìì ê´ë¦¬ì | 14 PARTS Â· 37ê° íµì¬ê°ë Â· VIS-038~048</div>
-  <div class="search-bar"><input id="q" placeholder="ê°ë ê²ì (Enter)"><button onclick="search()">ê²ì</button></div>
+  <h1>🚦 철도신호 핵심정리</h1>
+  <div class="meta">철도교통안전관리자 | 14 PARTS · 37개 핵심개념 · VIS-038~048</div>
+  <div class="search-bar"><input id="q" placeholder="개념 검색 (Enter)"><button onclick="search()">검색</button></div>
 </div>
 <div class="container">
-  <nav class="toc"><h2>ëª©ì°¨</h2><ul><li><a href="#p1" class="toc-part">PART 1. ì² ëì í¸ ê¸°ë³¸ ê°ë</a></li><li><a href="#p2" class="toc-part">PART 2. ì í¸ê¸° êµ¬ì¡°ìÂ·ì¡°ìì ë¶ë¥</a></li><li><a href="#p3" class="toc-part">PART 3. ì í¸ê¸° ê¸°ë¥ë³ ë¶ë¥ (ì£¼Â·ì¢ìÂ·ìì)</a></li><li><a href="#p4" class="toc-part">PART 4. ì í¸ê¸° ì ì & íì¸ê±°ë¦¬</a></li><li><a href="#p5" class="toc-part">PART 5. ì ë¡ì íê¸° ë¶ë¥Â·ê³íµë</a></li><li><a href="#p6" class="toc-part">PART 6. ê¶¤ëíë¡</a></li><li><a href="#p7" class="toc-part">PART 7. ê³ì ê¸° ì¢ë¥</a></li><li><a href="#p8" class="toc-part">PART 8. íì ë°©ì</a></li><li><a href="#p9" class="toc-part">PART 9. ì°ëì¥ì¹</a></li><li><a href="#p10" class="toc-part">PART 10. ì´ì°¨ì ì´ìì¤í</a></li><li><a href="#p11" class="toc-part">PART 11. ê±´ëëª© ë³´ìì¥ì¹</a></li><li><a href="#p12" class="toc-part">PART 12. ê²ì§ì¥ì¹ ì¢ë¥</a></li><li><a href="#p13" class="toc-part">PART 13. ê³ ìì² ë ì í¸ íµì¬</a></li><li><a href="#p14" class="toc-part">PART 14. íµì¬ ìì¹ íµí© ìê¸°</a></li></ul></nav>
+  <nav class="toc"><h2>목차</h2><ul><li><a href="#p1" class="toc-part">PART 1. 철도신호 기본 개념</a></li><li><a href="#p2" class="toc-part">PART 2. 신호기 구조상·조작상 분류</a></li><li><a href="#p3" class="toc-part">PART 3. 신호기 기능별 분류 (주·종속·임시)</a></li><li><a href="#p4" class="toc-part">PART 4. 신호기 정위 & 확인거리</a></li><li><a href="#p5" class="toc-part">PART 5. 선로전환기 분류·계통도</a></li><li><a href="#p6" class="toc-part">PART 6. 궤도회로</a></li><li><a href="#p7" class="toc-part">PART 7. 계전기 종류</a></li><li><a href="#p8" class="toc-part">PART 8. 폐색 방식</a></li><li><a href="#p9" class="toc-part">PART 9. 연동장치</a></li><li><a href="#p10" class="toc-part">PART 10. 열차제어시스템</a></li><li><a href="#p11" class="toc-part">PART 11. 건널목 보안장치</a></li><li><a href="#p12" class="toc-part">PART 12. 검지장치 종류</a></li><li><a href="#p13" class="toc-part">PART 13. 고속철도 신호 핵심</a></li><li><a href="#p14" class="toc-part">PART 14. 핵심 수치 통합 암기</a></li></ul></nav>
   <div class="content">
-    <div class="summary-bar">ì² ëì í¸ â 14 PARTS | 37ê° íµì¬ê°ë | VIS-038~048 (11ê° ì´ë¯¸ì§) | í¨ì í¨í´ 6ì í</div>
+    <div class="summary-bar">철도신호 — 14 PARTS | 37개 핵심개념 | VIS-038~048 (11개 이미지) | 함정패턴 6유형</div>
     <div class="part" id="p1">
   <div class="part-title" onclick="togglePart(this)">
-    PART 1. ì² ëì í¸ ê¸°ë³¸ ê°ë <span class="arrow">â²</span>
+    PART 1. 철도신호 기본 개념 <span class="arrow">▲</span>
   </div>
   <div class="part-body"><div class="concept">
-  <div class="concept-title"><span class="cnum">01</span>ì í¸Â·ì í¸Â·íì§ êµ¬ë¶</div>
-  <div class="table-wrap"><table><thead><tr><th>ì©ì´</th><th>ìë¨</th><th>ëª©ì </th></tr></thead><tbody><tr><td><strong>ì í¸</strong></td><td>íìÂ·ìÂ·ì</td><td>ì´ì°¨ ì´í ì¡°ê±´ì <strong>ê¸°ê´ì¬ìê² ì§ì</strong>. íì ê¸°êµ¬=ì í¸ê¸°</td></tr><tr><td><strong>ì í¸(Sign)</strong></td><td>ëª¸ì§Â·ê¸°êµ¬Â·ìí¥</td><td><strong>ê´ê³ì ìí¸ê°</strong> ìì§ ì ë¬ (ì¶ë°Â·ë¹ìÂ·ìíì í¸)</td></tr><tr><td><strong>íì§</strong></td><td>íìë¬¼</td><td>ìì¹Â·ë°©í¥Â·ì¡°ê±´ì <strong>íì</strong> (ê³ ì  ì ë³´)</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ì í¸ = ê¸°ê´ì¬ìê² ì§ì â â / ì í¸ = <strong>ê´ê³ì ìí¸ê°</strong></div>
+  <div class="concept-title"><span class="cnum">01</span>신호·전호·표지 구분</div>
+  <div class="table-wrap"><table><thead><tr><th>용어</th><th>수단</th><th>목적</th></tr></thead><tbody><tr><td><strong>신호</strong></td><td>형상·색·음</td><td>열차 운행 조건을 <strong>기관사에게 지시</strong>. 현시 기구=신호기</td></tr><tr><td><strong>전호(Sign)</strong></td><td>몸짓·기구·음향</td><td><strong>관계자 상호간</strong> 의지 전달 (출발·비상·입환전호)</td></tr><tr><td><strong>표지</strong></td><td>표시물</td><td>위치·방향·조건을 <strong>표시</strong> (고정 정보)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 전호 = 기관사에게 지시 → ❌ / 전호 = <strong>관계자 상호간</strong></div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">02</span>ì² ëì í¸ì ëª©ì </div>
-  <p><strong>ê¶ê·¹ì  ëª©ì </strong>: ì´ì°¨ì <strong>ìì ì´í íë³´</strong> â</p><p><strong>ìµì°ì  ì¬í­</strong>: <strong>ì ëìì </strong> â</p>
+  <div class="concept-title"><span class="cnum">02</span>철도신호의 목적</div>
+  <p><strong>궁극적 목적</strong>: 열차의 <strong>안전운행 확보</strong> ★</p><p><strong>최우선 사항</strong>: <strong>절대안전</strong> ★</p>
 </div></div>
 </div><div class="part" id="p2">
   <div class="part-title" onclick="togglePart(this)">
-    PART 2. ì í¸ê¸° êµ¬ì¡°ìÂ·ì¡°ìì ë¶ë¥ <span class="arrow">â²</span>
+    PART 2. 신호기 구조상·조작상 분류 <span class="arrow">▲</span>
   </div>
   <div class="part-body"><div class="concept">
-  <div class="concept-title"><span class="cnum">03</span>êµ¬ì¡°ì ë¶ë¥ 3ì¢</div>
-  <div class="table-wrap"><table><thead><tr><th>ì¢ë¥</th><th>íì ë°©ë²</th><th>í¹ì§</th></tr></thead><tbody><tr><td><strong>ìëª©ì ì í¸ê¸°</strong></td><td>ì£¼ê°=ìëª© ìì¹Â·íí / ì¼ê°=ë±ì</td><td><strong>ì£¼ì¼ê° íìë°©ë² ë¤ë¦</strong> â</td></tr><tr><td><strong>ìë±ì ì í¸ê¸°</strong></td><td>ìë±ì¼ë¡ íì</td><td>ì£¼ì¼ê° ëì¼. ë¨ë±í(ë¯¸ì¬ì©)/ë¤ë±í</td></tr><tr><td><strong>ë±ì´ì ì í¸ê¸°</strong></td><td>2ê° ì´ì ë°±ìë± ë°°ì´</td><td><strong>ì ëÂ·ì¤ê³ì í¸ê¸°</strong>ì ì¬ì©</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ìëª©ìë§</strong> ì£¼ì¼ê° íìë°©ë²ì´ ë¤ë¦. ìë±ìÂ·ë±ì´ìì ì£¼ì¼ê° <strong>ëì¼</strong></div>
+  <div class="concept-title"><span class="cnum">03</span>구조상 분류 3종</div>
+  <div class="table-wrap"><table><thead><tr><th>종류</th><th>현시 방법</th><th>특징</th></tr></thead><tbody><tr><td><strong>완목식 신호기</strong></td><td>주간=완목 위치·형태 / 야간=등색</td><td><strong>주야간 현시방법 다름</strong> ★</td></tr><tr><td><strong>색등식 신호기</strong></td><td>색등으로 현시</td><td>주야간 동일. 단등형(미사용)/다등형</td></tr><tr><td><strong>등열식 신호기</strong></td><td>2개 이상 백색등 배열</td><td><strong>유도·중계신호기</strong>에 사용</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>완목식만</strong> 주야간 현시방법이 다름. 색등식·등열식은 주야간 <strong>동일</strong></div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">04</span>ì¡°ìì ë¶ë¥ 3ì¢</div>
-  <div class="table-wrap"><table><thead><tr><th>ì¢ë¥</th><th>ìë ë°©ì</th><th>ì¬ì© êµ¬ê°</th></tr></thead><tbody><tr><td><strong>ìëì í¸ê¸°</strong></td><td>ì í¸ì·¨ê¸ìê° ë ë² ì¡°ì</td><td>ë¹ìëêµ¬ê°</td></tr><tr><td><strong>ìëì í¸ê¸°</strong></td><td>ê¶¤ëíë¡ë¡ ìë íì / <strong>ì·¨ê¸ì ì¡°ì ë¶ê°</strong></td><td>ìëíìêµ¬ê° <strong>íìì í¸ê¸°</strong></td></tr><tr><td><strong>ë°ìëì í¸ê¸°</strong></td><td>ìëíì + ì·¨ê¸ì ì¡°ì ê°ë¥</td><td>ìëíìêµ¬ê° <strong>ì¥ë´Â·ì¶ë°ì í¸ê¸°</strong></td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>íìì í¸ê¸° = ìë</strong> / ì¥ë´Â·ì¶ë° = <strong>ë°ìë</strong> (í¼ë ì£¼ì)</div>
+  <div class="concept-title"><span class="cnum">04</span>조작상 분류 3종</div>
+  <div class="table-wrap"><table><thead><tr><th>종류</th><th>작동 방식</th><th>사용 구간</th></tr></thead><tbody><tr><td><strong>수동신호기</strong></td><td>신호취급자가 레버 조작</td><td>비자동구간</td></tr><tr><td><strong>자동신호기</strong></td><td>궤도회로로 자동 현시 / <strong>취급자 조작 불가</strong></td><td>자동폐색구간 <strong>폐색신호기</strong></td></tr><tr><td><strong>반자동신호기</strong></td><td>자동현시 + 취급자 조작 가능</td><td>자동폐색구간 <strong>장내·출발신호기</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>폐색신호기 = 자동</strong> / 장내·출발 = <strong>반자동</strong> (혼동 주의)</div>
 </div></div>
 </div><div class="part" id="p3">
   <div class="part-title" onclick="togglePart(this)">
-    PART 3. ì í¸ê¸° ê¸°ë¥ë³ ë¶ë¥ (ì£¼Â·ì¢ìÂ·ìì) <span class="arrow">â²</span>
+    PART 3. 신호기 기능별 분류 (주·종속·임시) <span class="arrow">▲</span>
   </div>
   <div class="part-body"><div class="concept">
-  <div class="concept-title"><span class="cnum">05</span>ì£¼ì í¸ê¸° 6ì¢</div>
-  <div class="vis-wrap"><img src="images/VIS-038_ì í¸ê¸°ê¸°ë¥ë³ë¶ë¥í¸ë¦¬.jpg" alt="ì í¸ê¸° ê¸°ë¥ë³ ë¶ë¥ ê³ì¸µ í¸ë¦¬" loading="lazy"><p class="vis-cap">ì í¸ê¸° ê¸°ë¥ë³ ë¶ë¥ ê³ì¸µ í¸ë¦¬</p></div><div class="table-wrap"><table><thead><tr><th>ì¢ë¥</th><th>ê¸°ë¥</th><th>ì¤ì¹ ìì¹</th></tr></thead><tbody><tr><td><strong>ì¥ë´ì í¸ê¸°</strong></td><td>ì ê±°ì¥ êµ¬ë´ ì§ì ê°ë¶ ì§ì</td><td>ëí¥ 100m / ë°°í¥ 60m</td></tr><tr><td><strong>ì¶ë°ì í¸ê¸°</strong></td><td>ì ê±°ì¥ ì¶ë° ê°ë¶ ì§ì</td><td>ì¶ë°ì  ìì </td></tr><tr><td><strong>íìì í¸ê¸°</strong></td><td>íìêµ¬ê° ì§ì ê°ë¶ ì§ì</td><td>íìêµ¬ê° ììì </td></tr><tr><td><strong>ìí¸ì í¸ê¸°</strong></td><td>íë©´êµì°¨ë¶ê¸°Â·í¹ììì¤ íµê³¼ ì´ì°¨ ì§ì ê°ë¶</td><td>í¹ìì§ì  ì</td></tr><tr><td><strong>ì ëì í¸ê¸°</strong></td><td>ì¥ë´ì í¸ê¸° ì ì§ ììë ìì¸ ì§ì íì©</td><td>ì¥ë´ì í¸ê¸°ì ë¶ì</td></tr><tr><td><strong>ìíì í¸ê¸°</strong></td><td>ìíì°¨ë ì§ì ê°ë¶</td><td>ìí êµ¬ì­</td></tr></tbody></table></div><div class="tip">â <strong>ì ëì í¸ê¸° ì ì = ìë±(ë¬´íì)</strong> â íìì êº¼ì ¸ ìì â</div><div class="tip">â <strong>íìì í¸ê¸° ì ì</strong>: ë³µì =<strong>ì§í</strong> / ë¨ì =<strong>ì ì§</strong></div>
+  <div class="concept-title"><span class="cnum">05</span>주신호기 6종</div>
+  <div class="vis-wrap"><img src="images/VIS-038_신호기기능별분류트리.jpg" alt="신호기 기능별 분류 계층 트리" loading="lazy"><p class="vis-cap">신호기 기능별 분류 계층 트리</p></div><div class="table-wrap"><table><thead><tr><th>종류</th><th>기능</th><th>설치 위치</th></tr></thead><tbody><tr><td><strong>장내신호기</strong></td><td>정거장 구내 진입 가부 지시</td><td>대향 100m / 배향 60m</td></tr><tr><td><strong>출발신호기</strong></td><td>정거장 출발 가부 지시</td><td>출발선 시점</td></tr><tr><td><strong>폐색신호기</strong></td><td>폐색구간 진입 가부 지시</td><td>폐색구간 시작점</td></tr><tr><td><strong>엄호신호기</strong></td><td>평면교차분기·특수시설 통과 열차 진입 가부</td><td>특수지점 앞</td></tr><tr><td><strong>유도신호기</strong></td><td>장내신호기 정지 시에도 예외 진입 허용</td><td>장내신호기에 부속</td></tr><tr><td><strong>입환신호기</strong></td><td>입환차량 진입 가부</td><td>입환 구역</td></tr></tbody></table></div><div class="tip">★ <strong>유도신호기 정위 = 소등(무현시)</strong> — 평상시 꺼져 있음 ★</div><div class="tip">★ <strong>폐색신호기 정위</strong>: 복선=<strong>진행</strong> / 단선=<strong>정지</strong></div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">06</span>ì¢ìì í¸ê¸° 3ì¢</div>
-  <div class="table-wrap"><table><thead><tr><th>ì¢ë¥</th><th>ê¸°ë¥</th><th>í¹ì§</th></tr></thead><tbody><tr><td><strong>ìë°©ì í¸ê¸°</strong></td><td>ì¥ë´ì í¸ê¸° íì <strong>ìê³ </strong></td><td>ë¹ìëêµ¬ê° / <strong>ì ì=ì£¼ì</strong></td></tr><tr><td><strong>íµê³¼ì í¸ê¸°</strong></td><td>ê¸°ê³ì ì¥ë´ì í¸ê¸° íë¨ìì íµê³¼ ì¬ë¶ ì§ì</td><td>ê¸°ê³ììë§ ì¬ì©</td></tr><tr><td><strong>ì¤ê³ì í¸ê¸°</strong></td><td>ì£¼ì í¸ê¸° íììí ìê³ Â·ì¤ê³</td><td><strong>ë±ì´ì</strong> ì¬ì©</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ì¤ê³ì í¸ê¸° = ì¢ìì í¸ê¸°</strong> (ì£¼ì í¸ê¸° ìë), <strong>ììì í¸ê¸°ë ìë</strong> ââ</div>
+  <div class="concept-title"><span class="cnum">06</span>종속신호기 3종</div>
+  <div class="table-wrap"><table><thead><tr><th>종류</th><th>기능</th><th>특징</th></tr></thead><tbody><tr><td><strong>원방신호기</strong></td><td>장내신호기 현시 <strong>예고</strong></td><td>비자동구간 / <strong>정위=주의</strong></td></tr><tr><td><strong>통과신호기</strong></td><td>기계식 장내신호기 하단에서 통과 여부 지시</td><td>기계식에만 사용</td></tr><tr><td><strong>중계신호기</strong></td><td>주신호기 현시상태 예고·중계</td><td><strong>등열식</strong> 사용</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>중계신호기 = 종속신호기</strong> (주신호기 아님), <strong>임시신호기도 아님</strong> ★★</div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">07</span>ììì í¸ê¸° 3ì¢ â ë¹í´ë¹ ìì£¼ ì¶ì </div>
-  <p><strong>ìíìê³ ì í¸ê¸° / ìíì í¸ê¸° / ìíí´ì ì í¸ê¸°</strong></p><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ì¤ê³ì í¸ê¸°ë ììì í¸ê¸°ê° ìë</strong> â</div><div class="tip">â ììì í¸ê¸° ë¹í´ë¹ = <strong>ì¤ê³ì í¸ê¸°</strong> â ë§¤ í ì¶ì </div>
+  <div class="concept-title"><span class="cnum">07</span>임시신호기 3종 ★ 비해당 자주 출제</div>
+  <p><strong>서행예고신호기 / 서행신호기 / 서행해제신호기</strong></p><div class="trap">⚠️ 함정 주의: <strong>중계신호기는 임시신호기가 아님</strong> ★</div><div class="tip">★ 임시신호기 비해당 = <strong>중계신호기</strong> — 매 회 출제</div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">08</span>ì í¸ë¶ìê¸° & ì´ìì ë¶ë¥</div>
-  <p><strong>ì§ë¡íìê¸°</strong>: ì¥ë´Â·ì¶ë°Â·ìíì í¸ê¸°ì ë¶ì</p><div class="table-wrap"><table><thead><tr><th>ì§ë¡ ì</th><th>ì§ë¡íìê¸° ì¢ë¥</th></tr></thead><tbody><tr><td>3ì§ë¡ ì´í</td><td><strong>ë±ë ¬ì</strong></td></tr><tr><td>4ì§ë¡ ì´ì</td><td><strong>ë¬¸ìì</strong></td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>êµ¬ë¶</th><th>í´ë¹ ì í¸ê¸°</th><th>ì ì§ íì ì</th></tr></thead><tbody><tr><td><strong>ì ëì í¸ê¸°</strong></td><td>ì¥ë´Â·ì¶ë°Â·ìí¸Â·ì ëÂ·ìí</td><td><strong>ì ë ì ì§</strong></td></tr><tr><td><strong>íì©ì í¸ê¸°</strong></td><td>ìëíìêµ¬ê° íìì í¸ê¸°</td><td>ì¼ë¨ì ì§ í <strong>ìí ê°ë¥</strong></td></tr></tbody></table></div>
+  <div class="concept-title"><span class="cnum">08</span>신호부속기 & 운영상 분류</div>
+  <p><strong>진로표시기</strong>: 장내·출발·입환신호기에 부속</p><div class="table-wrap"><table><thead><tr><th>진로 수</th><th>진로표시기 종류</th></tr></thead><tbody><tr><td>3진로 이하</td><td><strong>등렬식</strong></td></tr><tr><td>4진로 이상</td><td><strong>문자식</strong></td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>구분</th><th>해당 신호기</th><th>정지 현시 시</th></tr></thead><tbody><tr><td><strong>절대신호기</strong></td><td>장내·출발·엄호·유도·입환</td><td><strong>절대 정지</strong></td></tr><tr><td><strong>허용신호기</strong></td><td>자동폐색구간 폐색신호기</td><td>일단정지 후 <strong>서행 가능</strong></td></tr></tbody></table></div>
 </div></div>
 </div><div class="part" id="p4">
   <div class="part-title" onclick="togglePart(this)">
-    PART 4. ì í¸ê¸° ì ì & íì¸ê±°ë¦¬ <span class="arrow">â²</span>
+    PART 4. 신호기 정위 & 확인거리 <span class="arrow">▲</span>
   </div>
   <div class="part-body"><div class="concept">
-  <div class="concept-title"><span class="cnum">09</span>ì í¸ê¸° ì ì ìê¸°í â íµì¬</div>
-  <div class="vis-wrap"><img src="images/VIS-039_ì í¸ê¸°ì ììê¸°ì¹´ë.jpg" alt="ì í¸ê¸° ì ì ìí ìê¸°ì¹´ë" loading="lazy"><p class="vis-cap">ì í¸ê¸° ì ì ìí ìê¸°ì¹´ë</p></div><div class="table-wrap"><table><thead><tr><th>ì í¸ê¸°</th><th>ì ì ìí</th><th>ë¹ê³ </th></tr></thead><tbody><tr><td>ì¥ë´Â·ì¶ë°Â·ìíÂ·ìí¸</td><td><strong>ì ì§</strong></td><td></td></tr><tr class="hl"><td><strong>ì ëì í¸ê¸°</strong></td><td><strong>ìë±(ë¬´íì)</strong></td><td>ì ì§ ìë! â</td></tr><tr><td>íìì í¸ê¸° (ë³µì )</td><td><strong>ì§í</strong></td><td></td></tr><tr><td>íìì í¸ê¸° (ë¨ì )</td><td><strong>ì ì§</strong></td><td></td></tr><tr class="hl"><td><strong>ìë°©ì í¸ê¸°</strong></td><td><strong>ì£¼ì</strong></td><td>ì§í ìë! â</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ì ëì í¸ê¸° ì ì = 'ì ì§' â â <strong>ìë±(ë¬´íì)</strong></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ìë°©ì í¸ê¸° ì ì = 'ì ì§' â â <strong>ì£¼ì</strong></div>
+  <div class="concept-title"><span class="cnum">09</span>신호기 정위 암기표 ★ 핵심</div>
+  <div class="vis-wrap"><img src="images/VIS-039_신호기정위암기카드.jpg" alt="신호기 정위 상태 암기카드" loading="lazy"><p class="vis-cap">신호기 정위 상태 암기카드</p></div><div class="table-wrap"><table><thead><tr><th>신호기</th><th>정위 상태</th><th>비고</th></tr></thead><tbody><tr><td>장내·출발·입환·엄호</td><td><strong>정지</strong></td><td></td></tr><tr class="hl"><td><strong>유도신호기</strong></td><td><strong>소등(무현시)</strong></td><td>정지 아님! ★</td></tr><tr><td>폐색신호기 (복선)</td><td><strong>진행</strong></td><td></td></tr><tr><td>폐색신호기 (단선)</td><td><strong>정지</strong></td><td></td></tr><tr class="hl"><td><strong>원방신호기</strong></td><td><strong>주의</strong></td><td>진행 아님! ★</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 유도신호기 정위 = '정지' → ❌ <strong>소등(무현시)</strong></div><div class="trap">⚠️ 함정 주의: 원방신호기 정위 = '정지' → ❌ <strong>주의</strong></div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">10</span>ì í¸ê¸° íì¸ê±°ë¦¬</div>
-  <div class="table-wrap"><table><thead><tr><th>ì í¸ê¸° ì¢ë¥</th><th>íì¸ê±°ë¦¬</th><th>ë¹ê³ </th></tr></thead><tbody><tr><td>ì¥ë´Â·ì¶ë°Â·íìÂ·ìí¸</td><td><strong>600m ì´ì</strong></td><td>â</td></tr><tr><td>ìíÂ·ì¤ê³ì í¸ê¸°Â·ì£¼ì í¸ì© ì§ë¡íìê¸°</td><td><strong>200m ì´ì</strong></td><td></td></tr><tr><td>ì ëì í¸ê¸°Â·ìíì í¸ì© ì§ë¡íìê¸°</td><td><strong>100m ì´ì</strong></td><td></td></tr><tr><td>ì¥ë´ì í¸ê¸° <strong>ëí¥</strong> ë°©í¥</td><td><strong>100m ì´ì</strong></td><td></td></tr><tr><td>ì¥ë´ì í¸ê¸° <strong>ë°°í¥</strong> ë°©í¥</td><td><strong>60m ì´ì</strong></td><td></td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ì¥ë´ 'ë°°í¥ 600m' â â ë°°í¥ì <strong>60m</strong>, ëí¥ì <strong>100m</strong></div>
+  <div class="concept-title"><span class="cnum">10</span>신호기 확인거리</div>
+  <div class="table-wrap"><table><thead><tr><th>신호기 종류</th><th>확인거리</th><th>비고</th></tr></thead><tbody><tr><td>장내·출발·폐색·엄호</td><td><strong>600m 이상</strong></td><td>★</td></tr><tr><td>입환·중계신호기·주신호용 진로표시기</td><td><strong>200m 이상</strong></td><td></td></tr><tr><td>유도신호기·입환신호용 진로표시기</td><td><strong>100m 이상</strong></td><td></td></tr><tr><td>장내신호기 <strong>대향</strong> 방향</td><td><strong>100m 이상</strong></td><td></td></tr><tr><td>장내신호기 <strong>배향</strong> 방향</td><td><strong>60m 이상</strong></td><td></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 장내 '배향 600m' → ❌ 배향은 <strong>60m</strong>, 대향은 <strong>100m</strong></div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">11</span>í¹ìì í¸ 3ì¢ â</div>
-  <div class="table-wrap"><table><thead><tr><th>ì¢ë¥</th><th>ë°©ë²</th></tr></thead><tbody><tr><td><strong>ë°ë¢°ì í¸</strong></td><td>ë ì¼ì ì¤ì¹ â ì°¨ë¥ì´ ë°ì¼ë©´ ëê´ í­ë°</td></tr><tr><td><strong>ë°ì¼ì í¸</strong></td><td>ì í¸ì¼ê´ì ì ìíì¼</td></tr><tr><td><strong>ë°ê´ì í¸</strong></td><td>í¹ìì í¸ ë°ê´ê¸°ì ìí ì ìë± ìì§ì</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ë°í­ì í¸</strong> â ì¡´ì¬íì§ ìì (ë¹í´ë¹ ëµì¼ë¡ ìì£¼ ì¶ì ) â</div>
+  <div class="concept-title"><span class="cnum">11</span>특수신호 3종 ★</div>
+  <div class="table-wrap"><table><thead><tr><th>종류</th><th>방법</th></tr></thead><tbody><tr><td><strong>발뢰신호</strong></td><td>레일에 설치 → 차륜이 밟으면 뇌관 폭발</td></tr><tr><td><strong>발염신호</strong></td><td>신호염관의 적색화염</td></tr><tr><td><strong>발광신호</strong></td><td>특수신호 발광기에 의한 적색등 움직임</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>발폭신호</strong> → 존재하지 않음 (비해당 답으로 자주 출제) ★</div>
 </div></div>
 </div><div class="part" id="p5">
   <div class="part-title" onclick="togglePart(this)">
-    PART 5. ì ë¡ì íê¸° ë¶ë¥Â·ê³íµë <span class="arrow">â²</span>
+    PART 5. 선로전환기 분류·계통도 <span class="arrow">▲</span>
   </div>
   <div class="part-body"><div class="concept">
-  <div class="concept-title"><span class="cnum">12</span>êµ¬ì¡°ë³ 5ì¢ & ëë ¥ë³ ë¶ë¥</div>
-  <div class="vis-wrap"><img src="images/VIS-044_ì ë¡ì íê¸°ë¶ë¥ì²´ê³í¸ë¦¬.jpg" alt="ì ë¡ì íê¸° ë¶ë¥ì²´ê³ í¸ë¦¬" loading="lazy"><p class="vis-cap">ì ë¡ì íê¸° ë¶ë¥ì²´ê³ í¸ë¦¬</p></div><div class="table-wrap"><table><thead><tr><th>ì¢ë¥</th><th>í¹ì§</th></tr></thead><tbody><tr><td><strong>ë³´íµ ì ë¡ì íê¸°</strong></td><td>íë ì¼ 2ê°, ì¢Â·ì° 2ê° ë¶ê¸°</td></tr><tr><td><strong>íì  ì ë¡ì íê¸°</strong></td><td>ê³¼ì£¼ ì ìëì  íì . <strong>ìì ì¸¡ì ì ì¬ì©</strong></td></tr><tr><td><strong>ê°ëí¬ë¡ì±ë¶ ì ë¡ì íê¸°</strong></td><td>ë¸ì¤ë ì¼+íë ì¼ ëì ì´ë / <strong>ê²°ì ë¶ ì ê±°</strong> / <strong>ê³ ìì² ë</strong> â</td></tr><tr><td><strong>ì¼ì§ì ë¡ì íê¸°</strong></td><td>íë ì¼ 4ê°, ì¢Â·ì¤Â·ì° 3ê° ë¶ê¸°</td></tr><tr><td><strong>ì ê¸°ì ë¡ì íê¸°</strong></td><td>ì ëê¸° ì´ì© ì í</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ê°ëí¬ë¡ì± = ê²°ì ë¶ ì ê±°</strong> (ìì± ìë!) â</div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ìë ì ë¡ì íê¸°</strong> = ì íì ë¶ë¥ ìë â <strong>ëë ¥ ë¶ë¥</strong></div>
+  <div class="concept-title"><span class="cnum">12</span>구조별 5종 & 동력별 분류</div>
+  <div class="vis-wrap"><img src="images/VIS-044_선로전환기분류체계트리.jpg" alt="선로전환기 분류체계 트리" loading="lazy"><p class="vis-cap">선로전환기 분류체계 트리</p></div><div class="table-wrap"><table><thead><tr><th>종류</th><th>특징</th></tr></thead><tbody><tr><td><strong>보통 선로전환기</strong></td><td>텅레일 2개, 좌·우 2개 분기</td></tr><tr><td><strong>탈선 선로전환기</strong></td><td>과주 시 의도적 탈선. <strong>안전측선에 사용</strong></td></tr><tr><td><strong>가동크로싱부 선로전환기</strong></td><td>노스레일+텅레일 동시 이동 / <strong>결선부 제거</strong> / <strong>고속철도</strong> ★</td></tr><tr><td><strong>삼지선로전환기</strong></td><td>텅레일 4개, 좌·중·우 3개 분기</td></tr><tr><td><strong>전기선로전환기</strong></td><td>전동기 이용 전환</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>가동크로싱 = 결선부 제거</strong> (생성 아님!) ★</div><div class="trap">⚠️ 함정 주의: <strong>수동 선로전환기</strong> = 전환수 분류 아님 → <strong>동력 분류</strong></div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">13</span>ì íìÂ·ì ì ê²°ì ë²</div>
-  <div class="table-wrap"><table><thead><tr><th>ì íì ë¶ë¥</th><th>1ë²í¼ì¼ë¡ ì ííë ì</th></tr></thead><tbody><tr><td><strong>ë¨ë</strong></td><td>1ë</td></tr><tr><td><strong>ìë</strong></td><td>2ë</td></tr><tr><td><strong>ì¼ë</strong></td><td>3ë</td></tr></tbody></table></div><p style='margin:8px 0'><strong>ì ì ê²°ì ë²</strong> (ì°ì ìì ì)</p><div class="table-wrap"><table><thead><tr><th>ì°ì ìì</th><th>ê²°ì  ë°©í¥</th></tr></thead><tbody><tr><td>ë³¸ì Â·ë³¸ì  ëë ì¸¡ì Â·ì¸¡ì </td><td><strong>ì£¼ì ë°©í¥</strong></td></tr><tr><td>ë¨ì  ìíë³¸ì </td><td><strong>ì´ì°¨ê° ì§ìíë ë°©í¥</strong></td></tr><tr><td>ë³¸ì Â·ì¸¡ì </td><td><strong>ë³¸ì  ë°©í¥</strong></td></tr><tr><td>ë³¸ì (ì¸¡ì )Â·ìì ì¸¡ì </td><td><strong>ìì ì¸¡ì  ë°©í¥</strong></td></tr><tr><td>íì ì ë¡ì íê¸°</td><td><strong>íì ìí¤ë ë°©í¥</strong></td></tr></tbody></table></div>
+  <div class="concept-title"><span class="cnum">13</span>전환수·정위 결정법</div>
+  <div class="table-wrap"><table><thead><tr><th>전환수 분류</th><th>1버튼으로 전환하는 수</th></tr></thead><tbody><tr><td><strong>단동</strong></td><td>1대</td></tr><tr><td><strong>쌍동</strong></td><td>2대</td></tr><tr><td><strong>삼동</strong></td><td>3대</td></tr></tbody></table></div><p style='margin:8px 0'><strong>정위 결정법</strong> (우선순위 순)</p><div class="table-wrap"><table><thead><tr><th>우선순위</th><th>결정 방향</th></tr></thead><tbody><tr><td>본선·본선 또는 측선·측선</td><td><strong>주요 방향</strong></td></tr><tr><td>단선 상하본선</td><td><strong>열차가 진입하는 방향</strong></td></tr><tr><td>본선·측선</td><td><strong>본선 방향</strong></td></tr><tr><td>본선(측선)·안전측선</td><td><strong>안전측선 방향</strong></td></tr><tr><td>탈선선로전환기</td><td><strong>탈선시키는 방향</strong></td></tr></tbody></table></div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">14</span>ì ê¸°ì ë¡ì íê¸° ê³íµë â</div>
-  <div class="vis-wrap"><img src="images/VIS-045_ì ê¸°ì ë¡ì íê¸°ê³íµë.jpg" alt="ì ê¸°ì ë¡ì íê¸° ê³íµë 8ë¨ê³" loading="lazy"><p class="vis-cap">ì ê¸°ì ë¡ì íê¸° ê³íµë 8ë¨ê³</p></div><div class="step-box">ì ì´ë²í¼ â ì ì´ê³ì ê¸° â ì ëê¸° â ë§ì°°ì°ì¶ê¸° â ê°ìê¸°ì´ì¥ì¹ â ì íìì ì¥ì¹ â íë¡ì ì´ê¸° â íì</div><div class="table-wrap"><table><thead><tr><th>ë¶í</th><th>ë´ì©</th></tr></thead><tbody><tr><td><strong>ì ëê¸°</strong></td><td>ì½ë´ì ê¸°ëí <strong>ì ë</strong>ì ëê¸°, ë¨ì 4ê·¹ â</td></tr><tr><td><strong>ì íìì ì¥ì¹</strong></td><td>í´ì Â·ì íÂ·ìì  <strong>3ìì©</strong> ìí</td></tr><tr><td><strong>ë§ì°°í´ë¬ì¹</strong></td><td>ì¬ë¦=<strong>ê°íê²</strong>, ê²¨ì¸=<strong>ì½íê²</strong> â (ì§ê´ ë°ë!)</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ì ëê¸° = <strong>ì½ë´ìê¸°ëí ì ëì ëê¸°</strong> (ëê¸°ì ëê¸° ìë, êµë¥NSíë ëì¼) â</div>
+  <div class="concept-title"><span class="cnum">14</span>전기선로전환기 계통도 ★</div>
+  <div class="vis-wrap"><img src="images/VIS-045_전기선로전환기계통도.jpg" alt="전기선로전환기 계통도 8단계" loading="lazy"><p class="vis-cap">전기선로전환기 계통도 8단계</p></div><div class="step-box">제어버튼 → 제어계전기 → 전동기 → 마찰연축기 → 감속기어장치 → 전환쇄정장치 → 회로제어기 → 표시</div><div class="table-wrap"><table><thead><tr><th>부품</th><th>내용</th></tr></thead><tbody><tr><td><strong>전동기</strong></td><td>콘덴서 기동형 <strong>유도</strong>전동기, 단상 4극 ★</td></tr><tr><td><strong>전환쇄정장치</strong></td><td>해정·전환·쇄정 <strong>3작용</strong> 수행</td></tr><tr><td><strong>마찰클러치</strong></td><td>여름=<strong>강하게</strong>, 겨울=<strong>약하게</strong> ★ (직관 반대!)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 전동기 = <strong>콘덴서기동형 유도전동기</strong> (동기전동기 아님, 교류NS형도 동일) ★</div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">15</span>ì ë¡ì íê¸° ì íìê°Â·ëí¥Â·ë°°í¥</div>
-  <div class="table-wrap"><table><thead><tr><th>ì¢ë¥</th><th>ì íìê°</th><th>í¨ì </th></tr></thead><tbody><tr><td><strong>NSí</strong></td><td><strong>6ì´ ì´í</strong></td><td>7ì´ êµì²´</td></tr><tr><td><strong>NS-AMí</strong></td><td><strong>7ì´ ì´í</strong></td><td>6ì´ êµì²´</td></tr><tr><td><strong>MJ81í</strong></td><td><strong>5ì´ ì´í</strong> â</td><td>6Â·7ì´ êµì²´</td></tr><tr><td><strong>ì°¨ìì ë¡ì íê¸°</strong></td><td><strong>2ì´ ì´í</strong></td><td></td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>êµ¬ë¶</th><th>ìí</th></tr></thead><tbody><tr><td><strong>ëí¥</strong> (ë¾°ì¡±í ìª½ì¼ë¡ ì§ì)</td><td><strong>íì </strong> ì°ë ¤</td></tr><tr><td><strong>ë°°í¥</strong> (ëì ìª½ìì ì§ì)</td><td><strong>í ì¶</strong> ì°ë ¤</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ëí¥=í ì¶</strong> â â / <strong>ëí¥=íì </strong>, <strong>ë°°í¥=í ì¶</strong></div>
+  <div class="concept-title"><span class="cnum">15</span>선로전환기 전환시간·대향·배향</div>
+  <div class="table-wrap"><table><thead><tr><th>종류</th><th>전환시간</th><th>함정</th></tr></thead><tbody><tr><td><strong>NS형</strong></td><td><strong>6초 이하</strong></td><td>7초 교체</td></tr><tr><td><strong>NS-AM형</strong></td><td><strong>7초 이하</strong></td><td>6초 교체</td></tr><tr><td><strong>MJ81형</strong></td><td><strong>5초 이하</strong> ★</td><td>6·7초 교체</td></tr><tr><td><strong>차상선로전환기</strong></td><td><strong>2초 이하</strong></td><td></td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>구분</th><th>위험</th></tr></thead><tbody><tr><td><strong>대향</strong> (뾰족한 쪽으로 진입)</td><td><strong>탈선</strong> 우려</td></tr><tr><td><strong>배향</strong> (넓은 쪽에서 진입)</td><td><strong>할출</strong> 우려</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>대향=할출</strong> → ❌ / <strong>대향=탈선</strong>, <strong>배향=할출</strong></div>
 </div></div>
 </div><div class="part" id="p6">
   <div class="part-title" onclick="togglePart(this)">
-    PART 6. ê¶¤ëíë¡ <span class="arrow">â²</span>
+    PART 6. 궤도회로 <span class="arrow">▲</span>
   </div>
   <div class="part-body"><div class="concept">
-  <div class="concept-title"><span class="cnum">16</span>ê¶¤ëíë¡ ì¢ë¥ 6ì¢</div>
-  <div class="vis-wrap"><img src="images/VIS-042_ê¶¤ëíë¡ì¢ë¥ë¹êµ.jpg" alt="ê¶¤ëíë¡ 6ì¢ ë¹êµ ë° íµì¬ë¶í ëí´" loading="lazy"><p class="vis-cap">ê¶¤ëíë¡ 6ì¢ ë¹êµ ë° íµì¬ë¶í ëí´</p></div><div class="table-wrap"><table><thead><tr><th>ì¢ë¥</th><th>í¹ì§</th></tr></thead><tbody><tr><td><strong>ì§ë¥(DC) ê¶¤ëíë¡</strong></td><td>ì§ë¥ ì ì / êµë¥ì ì² êµ¬ê° <strong>ì¬ì© ë¶ê°</strong> â</td></tr><tr><td><strong>êµë¥(AC) ê¶¤ëíë¡</strong></td><td>ë¹ì ì² êµ¬ê°Â·ì§ë¥ì ì² êµ¬ê°ìì ì¬ì©</td></tr><tr><td><strong>ì ë¥ ê¶¤ëíë¡</strong></td><td>êµë¥ë¥¼ ì ë¥í ë§¥ë¥ ì¬ì©</td></tr><tr><td><strong>ì½ë(Code) ê¶¤ëíë¡</strong></td><td>ì½ë(ë¶í¸)ë¡ ì ë¥ ë¨ì. ì½ëê³ì ê¸°Â·ë³µì¡°ê¸° ì¬ì©</td></tr><tr><td><strong>AF ê¶¤ëíë¡</strong></td><td><strong>ê°ì²­ì£¼íì(AF)</strong> ì¬ì©. ê³ ì <strong>200km/h ì´ì</strong>. ì°¨ë´ ì ëê±°ë¦¬ ì ë¬</td></tr><tr><td><strong>ê³ ììíì¤ ê¶¤ëíë¡</strong></td><td>êµë¥ <strong>25,000V</strong> ì ì² êµ¬ê°. <strong>ìí¼ëì¤ë³¸ë</strong> ì¬ì©. ì¸ëì ê°í¨ â</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: DC ê¶¤ëíë¡ = êµë¥ì ì² êµ¬ê° <strong>ì¬ì© ë¶ê°</strong> â ê°ë¥íë¤ê³  êµì²´ í¨ì </div>
+  <div class="concept-title"><span class="cnum">16</span>궤도회로 종류 6종</div>
+  <div class="vis-wrap"><img src="images/VIS-042_궤도회로종류비교.jpg" alt="궤도회로 6종 비교 및 핵심부품 도해" loading="lazy"><p class="vis-cap">궤도회로 6종 비교 및 핵심부품 도해</p></div><div class="table-wrap"><table><thead><tr><th>종류</th><th>특징</th></tr></thead><tbody><tr><td><strong>직류(DC) 궤도회로</strong></td><td>직류 전원 / 교류전철구간 <strong>사용 불가</strong> ★</td></tr><tr><td><strong>교류(AC) 궤도회로</strong></td><td>비전철구간·직류전철구간에서 사용</td></tr><tr><td><strong>정류 궤도회로</strong></td><td>교류를 정류한 맥류 사용</td></tr><tr><td><strong>코드(Code) 궤도회로</strong></td><td>코드(부호)로 전류 단속. 코드계전기·복조기 사용</td></tr><tr><td><strong>AF 궤도회로</strong></td><td><strong>가청주파수(AF)</strong> 사용. 고속 <strong>200km/h 이상</strong>. 차내 제동거리 전달</td></tr><tr><td><strong>고압임펄스 궤도회로</strong></td><td>교류 <strong>25,000V</strong> 전철구간. <strong>임피던스본드</strong> 사용. 외란에 강함 ★</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: DC 궤도회로 = 교류전철구간 <strong>사용 불가</strong> ← 가능하다고 교체 함정</div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">17</span>íµì¬ ë¶í 4ì¢</div>
-  <div class="table-wrap"><table><thead><tr><th>ë¶í</th><th>ê¸°ë¥</th></tr></thead><tbody><tr><td><strong>ìí¼ëì¤ ë³¸ë</strong></td><td>ê·ì ì ë¥(ì ì°¨ì ë¥) <strong>íµê³¼</strong> / ì í¸ì ë¥ <strong>ì°¨ë¨</strong> â</td></tr><tr><td><strong>íë¥ì¥ì¹</strong></td><td>ì°¨ì¶ ë¨ë½ ì <strong>ê³¼ì ë¥ ì í</strong>. ì§ë¥=ê°ë³ì í­, êµë¥=ì í­ ëë ë¦¬ì¡í° â</td></tr><tr><td><strong>ë³´ìì½ë´ì</strong></td><td>ê¶¤ëíë¡ ì£¼íì ë ë²¨ ê°ì ë³´ì</td></tr><tr><td><strong>ê°ìì (LF)</strong></td><td>ì´íë°©í¥ ê´ê³ìì´ ì¼ì  ìí¼ëì¤ ì ì§</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ìí¼ëì¤ ë³¸ë = <strong>ì ë¥ ë¶ë¦¬</strong>(ê·ì âì í¸) / íë¥ì¥ì¹ = <strong>ê³¼ì ë¥ ì í</strong> â í¼ë ê¸ì§</div>
+  <div class="concept-title"><span class="cnum">17</span>핵심 부품 4종</div>
+  <div class="table-wrap"><table><thead><tr><th>부품</th><th>기능</th></tr></thead><tbody><tr><td><strong>임피던스 본드</strong></td><td>귀선전류(전차전류) <strong>통과</strong> / 신호전류 <strong>차단</strong> ★</td></tr><tr><td><strong>한류장치</strong></td><td>차축 단락 시 <strong>과전류 제한</strong>. 직류=가변저항, 교류=저항 또는 리액터 ★</td></tr><tr><td><strong>보상콘덴서</strong></td><td>궤도회로 주파수 레벨 감쇄 보상</td></tr><tr><td><strong>가상선(LF)</strong></td><td>운행방향 관계없이 일정 임피던스 유지</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 임피던스 본드 = <strong>전류 분리</strong>(귀선↔신호) / 한류장치 = <strong>과전류 제한</strong> — 혼동 금지</div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">18</span>ì¬êµ¬ê° & ë¶íí ìì¸</div>
-  <p><strong>ì¬êµ¬ê°</strong>: ì°¨ì¶ì´ ì ì í´ë ê¶¤ëê³ì ê¸°ê° ìëíì§ ìë êµ¬ê°</p><div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th></tr></thead><tbody><tr><td>íì© ìµë ê¸¸ì´</td><td><strong>7m ì´í</strong> â</td></tr><tr><td>ë°ì ì¥ì</td><td>í°ë / ì ë¡ ë¶ê¸°êµì°¨ì§ì  / í¬ë¡ì± ë¶ë¶</td></tr><tr><td>ë¹í´ë¹</td><td><strong>êµë â</strong> â ì¬êµ¬ê° ë°ì ì¥ì ìë</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ì¬êµ¬ê° = <strong>7m ì´í</strong> â 5mÂ·10më¡ êµì²´ í¨ì </div><div class="trap">â ï¸ í¨ì  ì£¼ì: ê¶¤ëíë¡ ë¶íí ìì¸: <strong>ì´ì°¨ ì´íì¥ì </strong> = ìì¸ ìë â</div>
+  <div class="concept-title"><span class="cnum">18</span>사구간 & 불평형 원인</div>
+  <p><strong>사구간</strong>: 차축이 점유해도 궤도계전기가 작동하지 않는 구간</p><div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>허용 최대 길이</td><td><strong>7m 이하</strong> ★</td></tr><tr><td>발생 장소</td><td>터널 / 선로 분기교차지점 / 크로싱 부분</td></tr><tr><td>비해당</td><td><strong>교량 ❌</strong> — 사구간 발생 장소 아님</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 사구간 = <strong>7m 이하</strong> ← 5m·10m로 교체 함정</div><div class="trap">⚠️ 함정 주의: 궤도회로 불평형 원인: <strong>열차 운행장애</strong> = 원인 아님 ★</div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">19</span>UM71Cí ë¬´ì ì°ê¶¤ëíë¡ (ê³ ìì² ë ì ì©)</div>
-  <div class="table-wrap"><table><thead><tr><th>ë¶í</th><th>ê¸°ë¥</th></tr></thead><tbody><tr><td><strong>ë³´ìì© ì½ë´ì</strong></td><td>ì¸ëí´ì¤ ìì â ì§ë ¬ê³µì§ â ì í¸ê°ì  ê°ì â <strong>ê¶¤ëíë¡ ê¸¸ì´ ì°ì¥</strong></td></tr><tr><td><strong>ëì¡°ì ë(TU)</strong></td><td>í¹ì  ì£¼íì íµê³¼/ì°¨ë¨ â ì¸ì  ê¶¤ëíë¡ ê°ì­ ë°©ì§</td></tr><tr><td><strong>ë§¤ì¹­ì ë</strong></td><td>ìí¼ëì¤ ì í© â ì ì¡ìì¤ ìµìí</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ì ììì ê¸°</strong> = ê³ ììíì¤ ê¶¤ëíë¡ êµ¬ì±ìì (UM71C ìë) â</div>
+  <div class="concept-title"><span class="cnum">19</span>UM71C형 무절연궤도회로 (고속철도 전용)</div>
+  <div class="table-wrap"><table><thead><tr><th>부품</th><th>기능</th></tr></thead><tbody><tr><td><strong>보상용 콘덴서</strong></td><td>인덕턴스 상쇄 → 직렬공진 → 신호감쇠 감소 → <strong>궤도회로 길이 연장</strong></td></tr><tr><td><strong>동조유닛(TU)</strong></td><td>특정 주파수 통과/차단 → 인접 궤도회로 간섭 방지</td></tr><tr><td><strong>매칭유닛</strong></td><td>임피던스 정합 → 전송손실 최소화</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>전압안정기</strong> = 고압임펄스 궤도회로 구성요소 (UM71C 아님) ★</div>
 </div></div>
 </div><div class="part" id="p7">
   <div class="part-title" onclick="togglePart(this)">
-    PART 7. ê³ì ê¸° ì¢ë¥ <span class="arrow">â²</span>
+    PART 7. 계전기 종류 <span class="arrow">▲</span>
   </div>
   <div class="part-body"><div class="concept">
-  <div class="concept-title"><span class="cnum">20</span>ê³ì ê¸° 6ì¢ ë¶ë¥</div>
-  <div class="table-wrap"><table><thead><tr><th>ì¢ë¥</th><th>ëì í¹ì±</th><th>ì©ë</th></tr></thead><tbody><tr><td><strong>ìê¸°ì ì§ ê³ì ê¸°</strong></td><td>ì¬ìì ë¥ ì°¨ë¨ íìë ìí ì ì§</td><td><strong>ì ê¸°ì ë¡ì íê¸° ì ì´ê³ì ê¸°</strong> (DC24M)</td></tr><tr><td><strong>ìë ê³ì ê¸°</strong></td><td>ì ì ì¸ê° í ì¼ì  ìê° í ëì (ì§ì° ëì)</td><td></td></tr><tr><td><strong>ìë°© ê³ì ê¸°</strong></td><td>ì ë¥ ì°¨ë¨ í ì¼ì  ìê° í ëí (ì§ì° ë³µê·)</td><td></td></tr><tr><td><strong>ë¬´ê·¹ì ì¡° ê³ì ê¸°</strong></td><td>ìì ê·¹ì± ê´ê³ìì´ ëì</td><td>ê¶¤ëë°ìÂ·ì ì² ìì </td></tr><tr><td><strong>ì ê·¹ 3ìì ê³ì ê¸°</strong></td><td>N/R/Open 3ê°ì§ ìí</td><td>ì ê¸°ì°ëì¥ì¹ ì ì² íìê³ì ê¸°(KR)</td></tr><tr><td><strong>ì ì¡°ê³ì ê¸°</strong></td><td>Nì ì Â·Rì ì  ë³´ì , DC 24V</td><td>ì¼ë°ì  ì§ë¥ê³ì ê¸°</td></tr></tbody></table></div>
+  <div class="concept-title"><span class="cnum">20</span>계전기 6종 분류</div>
+  <div class="table-wrap"><table><thead><tr><th>종류</th><th>동작 특성</th><th>용도</th></tr></thead><tbody><tr><td><strong>자기유지 계전기</strong></td><td>여자전류 차단 후에도 상태 유지</td><td><strong>전기선로전환기 제어계전기</strong> (DC24M)</td></tr><tr><td><strong>완동 계전기</strong></td><td>전압 인가 후 일정 시간 후 동작 (지연 동작)</td><td></td></tr><tr><td><strong>완방 계전기</strong></td><td>전류 차단 후 일정 시간 후 낙하 (지연 복귀)</td><td></td></tr><tr><td><strong>무극선조 계전기</strong></td><td>자속 극성 관계없이 동작</td><td>궤도반응·전철쇄정</td></tr><tr><td><strong>유극 3위식 계전기</strong></td><td>N/R/Open 3가지 상태</td><td>전기연동장치 전철표시계전기(KR)</td></tr><tr><td><strong>선조계전기</strong></td><td>N접점·R접점 보유, DC 24V</td><td>일반적 직류계전기</td></tr></tbody></table></div>
 </div></div>
 </div><div class="part" id="p8">
   <div class="part-title" onclick="togglePart(this)">
-    PART 8. íì ë°©ì <span class="arrow">â²</span>
+    PART 8. 폐색 방식 <span class="arrow">▲</span>
   </div>
   <div class="part-body"><div class="concept">
-  <div class="concept-title"><span class="cnum">21</span>ìì©íì 6ì¢ ë¹êµ</div>
-  <div class="vis-wrap"><img src="images/VIS-040_íìë°©ì6ì¢ë¹êµí.jpg" alt="íìë°©ì 6ì¢ ë¹êµí" loading="lazy"><p class="vis-cap">íìë°©ì 6ì¢ ë¹êµí</p></div><div class="table-wrap"><table><thead><tr><th>ë°©ì</th><th>í¹ì§</th><th>ë¹ê³ </th></tr></thead><tbody><tr><td><strong>ê³ ì íì</strong></td><td>ë¬¼ë¦¬ì ì¼ë¡ ê³ ì ë íìêµ¬ê°</td><td></td></tr><tr><td><strong>ì´ëíì</strong></td><td>ì íì´ì°¨ ìì¹ ê¸°ë° ê°ë³ êµ¬ê° / <strong>ì´ì°¨ìê²© ë¨ì¶Â·ìì¡ë ¥ ì¦ê°</strong> â</td><td></td></tr><tr><td><strong>ì°ëíì</strong></td><td>ì­ê° 1íì / ì í¸ê¸°+íì <strong>ë¨ì¼í</strong> / <strong>ìëë°© ì­ ì ì</strong> ì¬ì© â</td><td>ë³µì Â·ë¨ì </td></tr><tr><td><strong>ìëíì</strong></td><td>ê¶¤ëíë¡ë¡ ì´ì°¨ ìëê²ì§ â íìì í¸ê¸° ìëì ì´ / <strong>ì´ííì ì¦ê°</strong> â</td><td>ë¨ì Â·ë³µì </td></tr><tr><td><strong>ì°¨ë´ì í¸íì</strong></td><td>ì´ì ì¤ íìê¸°ì íì. ATC ì°ê³</td><td></td></tr><tr><td><strong>íµííì</strong></td><td>íµí(ì¦í) ê¸°ê³ ì¬ì©</td><td><strong>ë¨ì  ì ì©</strong> â</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>íµííì = ë¨ì  ì ì©</strong> â ë³µì êµ¬ê° ì¬ì© ë¶ê° â</div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ì°ëíì ì ì = ìëë°© ì­ ì ì</strong> (ìì­ ì ì ìë) â</div>
+  <div class="concept-title"><span class="cnum">21</span>상용폐색 6종 비교</div>
+  <div class="vis-wrap"><img src="images/VIS-040_폐색방식6종비교표.jpg" alt="폐색방식 6종 비교표" loading="lazy"><p class="vis-cap">폐색방식 6종 비교표</p></div><div class="table-wrap"><table><thead><tr><th>방식</th><th>특징</th><th>비고</th></tr></thead><tbody><tr><td><strong>고정폐색</strong></td><td>물리적으로 고정된 폐색구간</td><td></td></tr><tr><td><strong>이동폐색</strong></td><td>선행열차 위치 기반 가변 구간 / <strong>열차시격 단축·수송력 증강</strong> ★</td><td></td></tr><tr><td><strong>연동폐색</strong></td><td>역간 1폐색 / 신호기+폐색 <strong>단일화</strong> / <strong>상대방 역 전원</strong> 사용 ★</td><td>복선·단선</td></tr><tr><td><strong>자동폐색</strong></td><td>궤도회로로 열차 자동검지 → 폐색신호기 자동제어 / <strong>운행횟수 증가</strong> ★</td><td>단선·복선</td></tr><tr><td><strong>차내신호폐색</strong></td><td>운전실 표시기에 현시. ATC 연계</td><td></td></tr><tr><td><strong>통표폐색</strong></td><td>통표(증표) 기계 사용</td><td><strong>단선 전용</strong> ★</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>통표폐색 = 단선 전용</strong> — 복선구간 사용 불가 ★</div><div class="trap">⚠️ 함정 주의: <strong>연동폐색 전원 = 상대방 역 전원</strong> (자역 전원 아님) ★</div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">22</span>ëì©íì 3ì¢</div>
-  <div class="table-wrap"><table><thead><tr><th>ë°©ì</th><th>ì¡°ê±´</th></tr></thead><tbody><tr><td><strong>íµì ì</strong></td><td>ê´ì ì¬Â·ê¸°ê´ì¬ ë¬´ì  ê°ë¥ ì</td></tr><tr><td><strong>ì§ëíµì ì</strong></td><td>ê´ì ì¬Â·ê¸°ê´ì¬ ë¬´ì  ë¶ê° ì</td></tr><tr><td><strong>ì§ëì</strong></td><td>í¹ë³í ê²½ì°</td></tr></tbody></table></div>
+  <div class="concept-title"><span class="cnum">22</span>대용폐색 3종</div>
+  <div class="table-wrap"><table><thead><tr><th>방식</th><th>조건</th></tr></thead><tbody><tr><td><strong>통신식</strong></td><td>관제사·기관사 무전 가능 시</td></tr><tr><td><strong>지도통신식</strong></td><td>관제사·기관사 무전 불가 시</td></tr><tr><td><strong>지도식</strong></td><td>특별한 경우</td></tr></tbody></table></div>
 </div></div>
 </div><div class="part" id="p9">
   <div class="part-title" onclick="togglePart(this)">
-    PART 9. ì°ëì¥ì¹ <span class="arrow">â²</span>
+    PART 9. 연동장치 <span class="arrow">▲</span>
   </div>
   <div class="part-body"><div class="concept">
-  <div class="concept-title"><span class="cnum">23</span>ì°ëì¥ì¹ 3ì¢ë¥</div>
-  <p>ì í¸ê¸°Â·ì ë¡ì íê¸°Â·ê¶¤ëíë¡ë¥¼ ìí¸ ì°ëíì¬ <strong>Fail-safe</strong> ì¤í</p><div class="table-wrap"><table><thead><tr><th>ì¢ë¥</th><th>í¹ì§</th></tr></thead><tbody><tr><td><strong>ê¸°ê³ì°ëì¥ì¹</strong></td><td>ë ë² ì¡°ì. ê¸°ê¸° ê° ì°ì ê¸°ê³ì  ì´ë£¨ì´ì§. ê¶¤ëíë¡ìë ì°ì â</td></tr><tr><td><strong>ì ê¸°ì°ëì¥ì¹</strong></td><td>ë ë²Â·ë²í¼ ì§ì¤. ê³ì ê¸°êµ°ì ìí ì ê¸°ì  ì°ì</td></tr><tr><td><strong>ì ìì°ëì¥ì¹</strong></td><td>ê³ì ê¸° ë¡ì§ì ì ì ë¼ë¦¬íë¡+ì»´í¨í°+ìíí¸ì¨ì´ë¡ êµ¬ì±</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ì ìì°ëì¥ì¹ êµ¬ì±ìì</strong>: íìì ì´ë¶/ê´íµì ë¶/ì°ëë¼ë¦¬ë¶ / <strong>LDTS â</strong></div>
+  <div class="concept-title"><span class="cnum">23</span>연동장치 3종류</div>
+  <p>신호기·선로전환기·궤도회로를 상호 연동하여 <strong>Fail-safe</strong> 실현</p><div class="table-wrap"><table><thead><tr><th>종류</th><th>특징</th></tr></thead><tbody><tr><td><strong>기계연동장치</strong></td><td>레버 조작. 기기 간 연쇄 기계적 이루어짐. 궤도회로와는 연쇄 ❌</td></tr><tr><td><strong>전기연동장치</strong></td><td>레버·버튼 집중. 계전기군에 의한 전기적 연쇄</td></tr><tr><td><strong>전자연동장치</strong></td><td>계전기 로직을 전자 논리회로+컴퓨터+소프트웨어로 구성</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>전자연동장치 구성요소</strong>: 표시제어부/광통신부/연동논리부 / <strong>LDTS ❌</strong></div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">24</span>ì§ë¡ ì¤ì  ë°©ì</div>
-  <div class="table-wrap"><table><thead><tr><th>ë°©ì</th><th>í¹ì§</th></tr></thead><tbody><tr><td><strong>ì§ë¡ì ìì</strong></td><td>ê° ì§ë¡ë§ë¤ 1ê° ë ë²</td></tr><tr><td><strong>ë¨ëì ìì</strong></td><td>ì ë¡ì íê¸° ê°ë³ ì í í ì í¸ë ë²ë¡ ì§ë¡ êµ¬ì±</td></tr><tr><td><strong>ì§ë¡ì ë³ì</strong></td><td>ì¶ë°ì +ëì°©ì  ë²í¼ 2ê° ì·¨ê¸ â ìë ì§ë¡ ì í / <strong>íë¡ ê°ìíÂ·ì ì  ì ì½</strong> â</td></tr></tbody></table></div>
+  <div class="concept-title"><span class="cnum">24</span>진로 설정 방식</div>
+  <div class="table-wrap"><table><thead><tr><th>방식</th><th>특징</th></tr></thead><tbody><tr><td><strong>진로정자식</strong></td><td>각 진로마다 1개 레버</td></tr><tr><td><strong>단독정자식</strong></td><td>선로전환기 개별 전환 후 신호레버로 진로 구성</td></tr><tr><td><strong>진로선별식</strong></td><td>출발점+도착점 버튼 2개 취급 → 자동 진로 선택 / <strong>회로 간소화·접점 절약</strong> ★</td></tr></tbody></table></div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">25</span>ìì  ì¢ë¥ 4ê°ì§ + ë¹í´ë¹</div>
-  <div class="table-wrap"><table><thead><tr><th>ì¢ë¥</th><th>ë´ì©</th></tr></thead><tbody><tr><td><strong>ì ììì </strong></td><td>ê°âë°ì ì ìì ì ì ìì </td></tr><tr><td><strong>ë°ììì </strong></td><td>ìâë°ì í ê°âë°ì ì ìì ë°ì ìì </td></tr><tr><td><strong>ì ë°ììì </strong></td><td>ê°âë°ì ì ìì ì ìÂ·ë°ì ì´ëë  ìì </td></tr><tr><td><strong>ì¡°ê±´ë¶ìì </strong></td><td>ë¤ë¥¸ ì·¨ê¸ë²í¼ ì¡°ê±´ ì¶©ì¡± ììë§ ìì </td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ì°ììì </strong> = ìì  ì¢ë¥ì ìì (ë¹í´ë¹) â</div>
+  <div class="concept-title"><span class="cnum">25</span>쇄정 종류 4가지 + 비해당</div>
+  <div class="table-wrap"><table><thead><tr><th>종류</th><th>내용</th></tr></thead><tbody><tr><td><strong>정위쇄정</strong></td><td>갑→반위 시 을은 정위 쇄정</td></tr><tr><td><strong>반위쇄정</strong></td><td>을→반위 후 갑→반위 시 을은 반위 쇄정</td></tr><tr><td><strong>정반위쇄정</strong></td><td>갑→반위 시 을은 정위·반위 어디든 쇄정</td></tr><tr><td><strong>조건부쇄정</strong></td><td>다른 취급버튼 조건 충족 시에만 쇄정</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>연속쇄정</strong> = 쇄정 종류에 없음 (비해당) ★</div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">26</span>ì ê·¼ìì  í´ì ìë¶ â</div>
-  <div class="vis-wrap"><img src="images/VIS-047_ì ê·¼ìì í´ì ìë¶ë¹êµì¹´ë.jpg" alt="ì ê·¼ìì  í´ì ìë¶ ë¹êµì¹´ë" loading="lazy"><p class="vis-cap">ì ê·¼ìì  í´ì ìë¶ ë¹êµì¹´ë</p></div><div class="table-wrap"><table><thead><tr><th>ì í¸ê¸°</th><th>í´ì ìë¶</th><th>í¨ì </th></tr></thead><tbody><tr><td><strong>ì¥ë´ì í¸ê¸°</strong></td><td><strong>90ì´ Â± 10%</strong></td><td>30ì´ êµì²´</td></tr><tr><td><strong>ì¶ë°Â·ìíì í¸ê¸°</strong></td><td><strong>30ì´ Â± 10%</strong></td><td>90ì´ êµì²´</td></tr><tr><td><strong>ë³´ë¥ìì </strong></td><td>ì ê·¼ìì ì ì¤í¨ â ì¥ë´ ê¸°ì¤ <strong>90ì´</strong></td><td></td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ì¥ë´ = <strong>90ì´</strong>, ì¶ë°Â·ìí = <strong>30ì´</strong> â ì«ì êµì²´ í¨ì  ë¹ì¶</div>
+  <div class="concept-title"><span class="cnum">26</span>접근쇄정 해정시분 ★</div>
+  <div class="vis-wrap"><img src="images/VIS-047_접근쇄정해정시분비교카드.jpg" alt="접근쇄정 해정시분 비교카드" loading="lazy"><p class="vis-cap">접근쇄정 해정시분 비교카드</p></div><div class="table-wrap"><table><thead><tr><th>신호기</th><th>해정시분</th><th>함정</th></tr></thead><tbody><tr><td><strong>장내신호기</strong></td><td><strong>90초 ± 10%</strong></td><td>30초 교체</td></tr><tr><td><strong>출발·입환신호기</strong></td><td><strong>30초 ± 10%</strong></td><td>90초 교체</td></tr><tr><td><strong>보류쇄정</strong></td><td>접근쇄정에 준함 → 장내 기준 <strong>90초</strong></td><td></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 장내 = <strong>90초</strong>, 출발·입환 = <strong>30초</strong> — 숫자 교체 함정 빈출</div>
 </div></div>
 </div><div class="part" id="p10">
   <div class="part-title" onclick="togglePart(this)">
-    PART 10. ì´ì°¨ì ì´ìì¤í <span class="arrow">â²</span>
+    PART 10. 열차제어시스템 <span class="arrow">▲</span>
   </div>
   <div class="part-body"><div class="concept">
-  <div class="concept-title"><span class="cnum">27</span>7ë ìì¤í ë¹êµ â íµì¬</div>
-  <div class="vis-wrap"><img src="images/VIS-041_ì´ì°¨ì ì´ìì¤íë¹êµ.jpg" alt="ATS/ATC/ATO/ATP/CTC/CBTC ë¹êµ" loading="lazy"><p class="vis-cap">ATS/ATC/ATO/ATP/CTC/CBTC ë¹êµ</p></div><div class="table-wrap"><table><thead><tr><th>ìì¤í</th><th>íë¤ì</th><th>íµì¬ ê¸°ë¥</th></tr></thead><tbody><tr><td><strong>ATS</strong></td><td>Automatic Train Stop</td><td>ì í¸ ê³¼ì ì <strong>ìë ì ë</strong> ì ì©</td></tr><tr><td><strong>ATC</strong></td><td>Automatic Train Control</td><td>ê¶¤ëíë¡ ìëì ë³´ ìì  â ìµë ì§ì ìë ì´ê³¼ ì ìë ì ë</td></tr><tr><td><strong>ATO</strong></td><td>Automatic Train Operation</td><td>ì¶ë°Â·ê°ìÂ·ì£¼íÂ·ê°ìÂ·ì ìì¹ì ì°¨Â·<strong>ì¶ìë¬¸</strong> ìë ì ì´</td></tr><tr><td><strong>ATP</strong></td><td>Automatic Train Protection</td><td>ì í¸ëª¨ì§Â·ê³¼ì ë°©ì§. ì´ì°¨ê°ê²©ì¡°ì Â·ë¹ìì ì§ ì ì´</td></tr><tr><td><strong>ATS(S)</strong></td><td>Automatic Train Supervision</td><td>ì´ì°¨ ì´íìí© íµì Â·ê°ì. <strong>ATR ê¸°ë¥ í¬í¨</strong></td></tr><tr><td><strong>CTC</strong></td><td>Centralized Traffic Control</td><td>ì¼ê´ ìê²© ì¡°ì. ì´ì°¨ ìì¹ ì§ì¤ ê°ìÂ·ì ì´</td></tr><tr><td><strong>CBTC</strong></td><td>Communication Based Train Control</td><td><strong>ë¬´ì íµì </strong> ê¸°ë°. ê¶¤ëíë¡ <strong>ë¶íì</strong>. ì ì§ë¹ <strong>ê°ì</strong></td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ATO = <strong>ì§ìì í¸ ì ì´ë íì§ ìì</strong> (ì¶ë°Â·ê°ìÂ·ì£¼íÂ·ê°ìÂ·ì ìì¹Â·ì¶ìë¬¸ë§)</div><div class="trap">â ï¸ í¨ì  ì£¼ì: CBTC = ì ì§ë¹ <strong>ê°ì</strong> (ì¦ê° ìë) â</div>
+  <div class="concept-title"><span class="cnum">27</span>7대 시스템 비교 ★ 핵심</div>
+  <div class="vis-wrap"><img src="images/VIS-041_열차제어시스템비교.jpg" alt="ATS/ATC/ATO/ATP/CTC/CBTC 비교" loading="lazy"><p class="vis-cap">ATS/ATC/ATO/ATP/CTC/CBTC 비교</p></div><div class="table-wrap"><table><thead><tr><th>시스템</th><th>풀네임</th><th>핵심 기능</th></tr></thead><tbody><tr><td><strong>ATS</strong></td><td>Automatic Train Stop</td><td>신호 과속 시 <strong>자동 제동</strong> 적용</td></tr><tr><td><strong>ATC</strong></td><td>Automatic Train Control</td><td>궤도회로 속도정보 수신 → 최대 지정속도 초과 시 자동 제동</td></tr><tr><td><strong>ATO</strong></td><td>Automatic Train Operation</td><td>출발·가속·주행·감속·정위치정차·<strong>출입문</strong> 자동 제어</td></tr><tr><td><strong>ATP</strong></td><td>Automatic Train Protection</td><td>신호모진·과속 방지. 열차간격조정·비상정지 제어</td></tr><tr><td><strong>ATS(S)</strong></td><td>Automatic Train Supervision</td><td>열차 운행상황 통제·감시. <strong>ATR 기능 포함</strong></td></tr><tr><td><strong>CTC</strong></td><td>Centralized Traffic Control</td><td>일괄 원격 조작. 열차 위치 집중 감시·제어</td></tr><tr><td><strong>CBTC</strong></td><td>Communication Based Train Control</td><td><strong>무선통신</strong> 기반. 궤도회로 <strong>불필요</strong>. 유지비 <strong>감소</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: ATO = <strong>지상신호 제어는 하지 않음</strong> (출발·가속·주행·감속·정위치·출입문만)</div><div class="trap">⚠️ 함정 주의: CBTC = 유지비 <strong>감소</strong> (증가 아님) ★</div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">28</span>CTC ì£¼ì ê¸°ë¥Â·ë¹í´ë¹</div>
-  <p><strong>CTC í¨ê³¼ â</strong>: ì´ì°¨ì´íê³í ìë¦½ / ì í¸ì¤ë¹ ê°ì / ì§ë¡ ìëì ì´ / ì´íìí© íì</p><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ì´ì°¨ì´íê³íê´ë¦¬ì ë¬¸ìí</strong> â CTC í¨ê³¼ ìë â</div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ì ë ¥ìì¤ ê°ì</strong> â CTC í¨ê³¼ ìë â</div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>LCP</strong> â íì¥ì­ ì¤ì¹ ì¥ì¹ (CTC ì¬ë ¹ì¤ ì¥ì¹ ìë) â</div><p style='margin:6px 0'><strong>CTC ê¸°ë° íìì¥ì¹</strong>: <strong>ìëíìì¥ì¹</strong></p><p><strong>CTC ë°ì´í° ì ì¡ ë°©ì</strong>: <strong>ë°ì´ì¤ ë°©ì</strong> (ëì ìë°©í¥ ë¶ê°)</p>
+  <div class="concept-title"><span class="cnum">28</span>CTC 주요 기능·비해당</div>
+  <p><strong>CTC 효과 ✅</strong>: 열차운행계획 수립 / 신호설비 감시 / 진로 자동제어 / 운행상황 표시</p><div class="trap">⚠️ 함정 주의: <strong>열차운행계획관리의 문서화</strong> → CTC 효과 아님 ★</div><div class="trap">⚠️ 함정 주의: <strong>전력손실 감소</strong> → CTC 효과 아님 ★</div><div class="trap">⚠️ 함정 주의: <strong>LCP</strong> → 현장역 설치 장치 (CTC 사령실 장치 아님) ★</div><p style='margin:6px 0'><strong>CTC 기반 폐색장치</strong>: <strong>자동폐색장치</strong></p><p><strong>CTC 데이터 전송 방식</strong>: <strong>반이중 방식</strong> (동시 양방향 불가)</p>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">29</span>ATS ì§ììÂ·ATP ì§ìì¥ì¹Â·TTC</div>
-  <div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th></tr></thead><tbody><tr><td>ATS ì§ìì ì´ê²© ê±°ë¦¬</td><td><strong>400mm ì´ì</strong></td></tr><tr><td>ìëì¡°ì¬ì ì¤ì¹ìì¹</td><td>ì°ì¸¡ <strong>300mm Â± 10mm</strong></td></tr></tbody></table></div><p style='margin:6px 0'><strong>ATP ì§ìì¥ì¹ êµ¬ì±ìì â</strong>: ê³ ì ì ë³´ì ì¡ì¥ì¹ / ì ë¡ë³ì ì´ì ëí¸ / ê°ë³ì ë³´ì ì¡ì¥ì¹</p><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>íë¡ê·¸ëë° ì¥ì¹</strong> â ATP ì§ìì¥ì¹ êµ¬ì±ìì ìë</div><p style='margin:6px 0'><strong>TTC(ì´ì°¨ì¢í©ì ì´) êµ¬ì±ìì</strong>: íìë° / ì ì´ì©ì½ì / ë°ì´í°ì ì¡ì¥ì¹</p><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ì°ëì¥ì¹</strong> = TTC êµ¬ì±ìì ìë</div><p style='margin:6px 0'><strong>ë°ë¦¬ì¤(Balise)</strong>: ATPìì íì¥ì ë³´ë¥¼ ì´ì°¨ë¡ ì ì¡íë ì¥ì¹</p>
+  <div class="concept-title"><span class="cnum">29</span>ATS 지상자·ATP 지상장치·TTC</div>
+  <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>ATS 지상자 이격 거리</td><td><strong>400mm 이상</strong></td></tr><tr><td>속도조사식 설치위치</td><td>우측 <strong>300mm ± 10mm</strong></td></tr></tbody></table></div><p style='margin:6px 0'><strong>ATP 지상장치 구성요소 ✅</strong>: 고정정보전송장치 / 선로변제어유니트 / 가변정보전송장치</p><div class="trap">⚠️ 함정 주의: <strong>프로그래밍 장치</strong> → ATP 지상장치 구성요소 아님</div><p style='margin:6px 0'><strong>TTC(열차종합제어) 구성요소</strong>: 표시반 / 제어용콘솔 / 데이터전송장치</p><div class="trap">⚠️ 함정 주의: <strong>연동장치</strong> = TTC 구성요소 아님</div><p style='margin:6px 0'><strong>발리스(Balise)</strong>: ATP에서 현장정보를 열차로 전송하는 장치</p>
 </div></div>
 </div><div class="part" id="p11">
   <div class="part-title" onclick="togglePart(this)">
-    PART 11. ê±´ëëª© ë³´ìì¥ì¹ <span class="arrow">â²</span>
+    PART 11. 건널목 보안장치 <span class="arrow">▲</span>
   </div>
   <div class="part-body"><div class="concept">
-  <div class="concept-title"><span class="cnum">30</span>ê²½ë³´ ì¥ì¹ ìì¹ ìê¸°í</div>
-  <div class="vis-wrap"><img src="images/VIS-046_ê±´ëëª©ê²½ë³´ì¥ì¹ìì¹ìê¸°ì¹´ë.jpg" alt="ê±´ëëª© ê²½ë³´ì¥ì¹ íµì¬ ìì¹ ìê¸°ì¹´ë" loading="lazy"><p class="vis-cap">ê±´ëëª© ê²½ë³´ì¥ì¹ íµì¬ ìì¹ ìê¸°ì¹´ë</p></div><div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ìì¹</th><th>í¨ì (ì¤ëµ)</th></tr></thead><tbody><tr><td>ì§ë¦½í ê²½ë³´ë± ì ë©¸</td><td><strong>ë¶ë¹ 40 Â± 10í</strong></td><td>60í â</td></tr><tr><td>ê²½ë³´ì¢ íì¢ì</td><td><strong>ë¶ë¹ 70~100í</strong></td><td>60~90í â</td></tr><tr><td>ê²½ë³´ì¢ ì½ì¼ ì ë¥ íì© ë²ì</td><td>ì ê²©ê°ì <strong>Â± 10%</strong> ì´ë´</td><td>Â±5% â</td></tr><tr><td>ì ëì°¨ë¨ê¸° ì ì´ì ì</td><td>ì ê²©ê°ì <strong>0.9~1.2ë°°</strong></td><td>0.8~1.1ë°° â</td></tr><tr><td>ì ëì°¨ë¨ê¸° ì°¨ë¨ë´ ìì¹</td><td>ê¶¤ëì¤ì¬~ì°¨ë¨ë´ <strong>2.8m</strong></td><td>3m/2m â</td></tr><tr class="hl"><td>ì ëì°¨ë¨ê¸° <strong>íê° ìê°</strong></td><td><strong>8ì´ Â± 2ì´</strong> ââ</td><td>20ì´ ì´í â</td></tr><tr><td>ì ëì°¨ë¨ê¸° ìì¹ ìê°</td><td><strong>12ì´ ì´í</strong></td><td>8ì´ â</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: íê° ìê° = <strong>8ì´ Â± 2ì´</strong> â '20ì´ ì´ë´' êµì²´ í¨ì  ë¹ì¶ â</div>
+  <div class="concept-title"><span class="cnum">30</span>경보 장치 수치 암기표</div>
+  <div class="vis-wrap"><img src="images/VIS-046_건널목경보장치수치암기카드.jpg" alt="건널목 경보장치 핵심 수치 암기카드" loading="lazy"><p class="vis-cap">건널목 경보장치 핵심 수치 암기카드</p></div><div class="table-wrap"><table><thead><tr><th>항목</th><th>수치</th><th>함정(오답)</th></tr></thead><tbody><tr><td>직립형 경보등 점멸</td><td><strong>분당 40 ± 10회</strong></td><td>60회 ❌</td></tr><tr><td>경보종 타종수</td><td><strong>분당 70~100회</strong></td><td>60~90회 ❌</td></tr><tr><td>경보종 코일 전류 허용 범위</td><td>정격값의 <strong>± 10%</strong> 이내</td><td>±5% ❌</td></tr><tr><td>전동차단기 제어전압</td><td>정격값의 <strong>0.9~1.2배</strong></td><td>0.8~1.1배 ❌</td></tr><tr><td>전동차단기 차단봉 위치</td><td>궤도중심~차단봉 <strong>2.8m</strong></td><td>3m/2m ❌</td></tr><tr class="hl"><td>전동차단기 <strong>하강 시간</strong></td><td><strong>8초 ± 2초</strong> ★★</td><td>20초 이하 ❌</td></tr><tr><td>전동차단기 상승 시간</td><td><strong>12초 이하</strong></td><td>8초 ❌</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 하강 시간 = <strong>8초 ± 2초</strong> ← '20초 이내' 교체 함정 빈출 ★</div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">31</span>ê±´ëëª© ì ì´ ë°©ìÂ·ì ëì°¨ë¨ê¸° êµ¬ì±</div>
-  <p><strong>ìëì í¸êµ¬ê°</strong> = <strong>ê¶¤ëíë¡ì</strong> (ìë ê²½ë³´ì ì´)</p><p><strong>ì­êµ¬ë´ ê±´ëëª©</strong> = <strong>ìëì ì´</strong> ê¸°ë³¸ (ë¶ê°í¼ ììë§ ìë)</p><div class="trap">â ï¸ í¨ì  ì£¼ì: 'ì­êµ¬ë´=ìëâìë ì' â â <strong>ìëì´ ê¸°ë³¸</strong></div><p style='margin:8px 0'><strong>ì ëì°¨ë¨ê¸° êµ¬ì±ìì</strong>: ë§ì°°ì°ì¶ê¸° / ì§ë¥ì§ê¶ì ëê¸° / ê°ìì¹ì°¨</p><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ì ìê²ì§ì¥ì¹</strong> = ì ëì°¨ë¨ê¸° êµ¬ì±ìì ìë</div>
+  <div class="concept-title"><span class="cnum">31</span>건널목 제어 방식·전동차단기 구성</div>
+  <p><strong>자동신호구간</strong> = <strong>궤도회로식</strong> (자동 경보제어)</p><p><strong>역구내 건널목</strong> = <strong>자동제어</strong> 기본 (불가피 시에만 수동)</p><div class="trap">⚠️ 함정 주의: '역구내=수동→자동 순' → ❌ <strong>자동이 기본</strong></div><p style='margin:8px 0'><strong>전동차단기 구성요소</strong>: 마찰연축기 / 직류직권전동기 / 감속치차</p><div class="trap">⚠️ 함정 주의: <strong>전압검지장치</strong> = 전동차단기 구성요소 아님</div>
 </div></div>
 </div><div class="part" id="p12">
   <div class="part-title" onclick="togglePart(this)">
-    PART 12. ê²ì§ì¥ì¹ ì¢ë¥ <span class="arrow">â²</span>
+    PART 12. 검지장치 종류 <span class="arrow">▲</span>
   </div>
   <div class="part-body"><div class="concept">
-  <div class="concept-title"><span class="cnum">32</span>ê²ì§ì¥ì¹ 9ì¢ë¥</div>
-  <div class="table-wrap"><table><thead><tr><th>ì¥ì¹</th><th>ê²ì§ ëìÂ·í¹ì§</th></tr></thead><tbody><tr><td><strong>ëë¦¼ê²ì§ì¥ì¹</strong></td><td>ì°¨ë íë¶ ëë¦¼ ë¬¼ì²´. ê¸°ì§~ê³ ìì  ì§ìë¶, ì½ <strong>60km ê°ê²©</strong></td></tr><tr><td><strong>ê°ì°ê²ì§ì¥ì¹</strong></td><td>ì§ì¤í¸ì°Â·ì°ìê°ì° â ë¸ë° ë¶ê´´ ë°©ì§</td></tr><tr><td><strong>ì ì¤ê²ì§ì¥ì¹</strong></td><td>ì ë¡ë³ ì ì¤ë</td></tr><tr><td><strong>ê¸°ìê²ì§ì¥ì¹</strong></td><td>íí¥Â·íìÂ·ê°ì°ëÂ·ì ì¤ë íµí©</td></tr><tr><td><strong>ì§ì¥ë¬¼ê²ì§ì¥ì¹</strong></td><td>ëìÂ·í ì¬Â·ì°¨ë ì¹¨ë²</td></tr><tr><td><strong>ê±´ëëª© ì§ì¥ë¬¼ ê²ì§ì¥ì¹</strong></td><td>ê±´ëëª© ì§ì¥ë¬¼ â ê²½ê³ ë± ë°ê´</td></tr><tr><td><strong>ì°¨ì¶ì¨ëê²ì§ì¥ì¹(HBD)</strong></td><td>ì°¨ì¶ ì¨ë</td></tr><tr><td><strong>ë ì¼ì¨ëê²ì§ì¥ì¹(RTCP)</strong></td><td>í¹ìê¸° ë ì¼ ì¥ì¶ ë°©ì§</td></tr><tr><td><strong>í°ëê²½ë³´ì¥ì¹(TACB)</strong></td><td>í°ë ë´ ë³´ìì ë³´í¸</td></tr></tbody></table></div><div class="tip">â <strong>íì ê²ì§</strong> = <strong>ê¸°ìê²ì§ì¥ì¹</strong> (ê±´ëëª© ì ìê° ì ì´ê¸°ì ë¬´ê´)</div>
+  <div class="concept-title"><span class="cnum">32</span>검지장치 9종류</div>
+  <div class="table-wrap"><table><thead><tr><th>장치</th><th>검지 대상·특징</th></tr></thead><tbody><tr><td><strong>끌림검지장치</strong></td><td>차량 하부 끌림 물체. 기지~고속선 진입부, 약 <strong>60km 간격</strong></td></tr><tr><td><strong>강우검지장치</strong></td><td>집중호우·연속강우 → 노반 붕괴 방지</td></tr><tr><td><strong>적설검지장치</strong></td><td>선로변 적설량</td></tr><tr><td><strong>기상검지장치</strong></td><td>풍향·풍속·강우량·적설량 통합</td></tr><tr><td><strong>지장물검지장치</strong></td><td>낙석·토사·차량 침범</td></tr><tr><td><strong>건널목 지장물 검지장치</strong></td><td>건널목 지장물 → 경고등 발광</td></tr><tr><td><strong>차축온도검지장치(HBD)</strong></td><td>차축 온도</td></tr><tr><td><strong>레일온도검지장치(RTCP)</strong></td><td>혹서기 레일 장출 방지</td></tr><tr><td><strong>터널경보장치(TACB)</strong></td><td>터널 내 보수자 보호</td></tr></tbody></table></div><div class="tip">★ <strong>풍속 검지</strong> = <strong>기상검지장치</strong> (건널목 정시간 제어기와 무관)</div>
 </div></div>
 </div><div class="part" id="p13">
   <div class="part-title" onclick="togglePart(this)">
-    PART 13. ê³ ìì² ë ì í¸ íµì¬ <span class="arrow">â²</span>
+    PART 13. 고속철도 신호 핵심 <span class="arrow">▲</span>
   </div>
   <div class="part-body"><div class="concept">
-  <div class="concept-title"><span class="cnum">33</span>ì´ì°¨ì ì´ì ë³´ ì ì¡ ë°©ì â</div>
-  <div class="vis-wrap"><img src="images/VIS-043_ê³ ìì² ëì°ìë¶ì°ìì ë³´.jpg" alt="ê³ ìì² ë ì°ìì ë³´ vs ë¶ì°ìì ë³´ ë¹êµ" loading="lazy"><p class="vis-cap">ê³ ìì² ë ì°ìì ë³´ vs ë¶ì°ìì ë³´ ë¹êµ</p></div><div class="table-wrap"><table><thead><tr><th>êµ¬ë¶</th><th>ì ì¡ ì¥ì¹</th><th>ì ì¡ ë´ì©</th></tr></thead><tbody><tr><td><strong>ì°ìì ë³´</strong></td><td><strong>ê¶¤ëíë¡</strong></td><td>ìëì ë³´Â·êµ¬ë°°ì ë³´Â·ëª©íê±°ë¦¬Â·ì êµ¬ë³Â·ìë¬ê²ì</td></tr><tr class="hl"><td><strong>ë¶ì°ìì ë³´</strong></td><td><strong>ë£¨íì¼ì´ë¸</strong></td><td><strong>ì ëì ì§ì ì´</strong>Â·ì ì°¨ì ì¬êµ¬ê°Â·í°ëì§ì¶ì</td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: <strong>ì ëì ì§ì ì´</strong> = <strong>ë£¨íì¼ì´ë¸(ë¶ì°ìì ë³´)</strong> â ê¶¤ëíë¡ ì°ìì ë³´ ìë â</div><div class="trap">â ï¸ í¨ì  ì£¼ì: íìêµ¬ê° ë´ ìëì ë³´ = <strong>ì°ìì ë³´(ê¶¤ëíë¡)</strong> â ë¶ì°ìì ë³´ ìë</div>
+  <div class="concept-title"><span class="cnum">33</span>열차제어정보 전송 방식 ★</div>
+  <div class="vis-wrap"><img src="images/VIS-043_고속철도연속불연속정보.jpg" alt="고속철도 연속정보 vs 불연속정보 비교" loading="lazy"><p class="vis-cap">고속철도 연속정보 vs 불연속정보 비교</p></div><div class="table-wrap"><table><thead><tr><th>구분</th><th>전송 장치</th><th>전송 내용</th></tr></thead><tbody><tr><td><strong>연속정보</strong></td><td><strong>궤도회로</strong></td><td>속도정보·구배정보·목표거리·선구별·에러검색</td></tr><tr class="hl"><td><strong>불연속정보</strong></td><td><strong>루프케이블</strong></td><td><strong>절대정지제어</strong>·전차선사구간·터널진출입</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>절대정지제어</strong> = <strong>루프케이블(불연속정보)</strong> — 궤도회로 연속정보 아님 ★</div><div class="trap">⚠️ 함정 주의: 폐색구간 내 속도정보 = <strong>연속정보(궤도회로)</strong> — 불연속정보 아님</div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">34</span>ê³ ìì² ë ì ë¡ì íê¸°Â·ê³ ì¥ê°ìÂ·ë³´ìì</div>
-  <div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ë´ì©</th></tr></thead><tbody><tr><td>ê³ ìì² ë ë¶ê¸°ê¸°</td><td>F18 ì´ì: <strong>ë¸ì¤ ê°ëí ì ë¡ì íê¸°</strong> (TGVÂ·ê²½ë¶ê³ ìì  ì¬ì©) â</td></tr><tr><td>ê³ ì¥ê°ì ì ì ìì</td><td><strong>ë¹ì</strong> (ê³ ì¥=ì ì)</td></tr><tr><td>ê³ ì¥ê°ì ê³ ì¥ ìì</td><td><strong>ì ì</strong></td></tr><tr><td>LCP ì¤ì¹ ìì¹</td><td><strong>íì¥ì­</strong> (CTC ì¬ë ¹ì¤ ìë) â</td></tr><tr><td>ë³´ìì ì ë¡í¡ë¨ ìììê°</td><td><strong>20ì´</strong> (ììê³ì ê¸° ì¤ì )</td></tr><tr><td>ê³ ìì  ì¥ë´ ì ê·¼ìì  í´ì ìë¶</td><td><strong>90ì´</strong></td></tr></tbody></table></div><div class="trap">â ï¸ í¨ì  ì£¼ì: ê³ ì¥ê°ì: 'ì ì=ì ì, ê³ ì¥=ë¹ì' â â <strong>ë°ëë¡ ì¶ì  ì£¼ì</strong></div><div class="trap">â ï¸ í¨ì  ì£¼ì: LCP = CTC ì¬ë ¹ì¤ ì¥ì¹ â â <strong>íì¥ì­ ì¤ì¹</strong></div>
+  <div class="concept-title"><span class="cnum">34</span>고속철도 선로전환기·고장감시·보수자</div>
+  <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>고속철도 분기기</td><td>F18 이상: <strong>노스 가동형 선로전환기</strong> (TGV·경부고속선 사용) ★</td></tr><tr><td>고장감시 정상 색상</td><td><strong>녹색</strong> (고장=적색)</td></tr><tr><td>고장감시 고장 색상</td><td><strong>적색</strong></td></tr><tr><td>LCP 설치 위치</td><td><strong>현장역</strong> (CTC 사령실 아님) ★</td></tr><tr><td>보수자 선로횡단 소요시간</td><td><strong>20초</strong> (시소계전기 설정)</td></tr><tr><td>고속선 장내 접근쇄정 해정시분</td><td><strong>90초</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 고장감시: '정상=적색, 고장=녹색' → ❌ <strong>반대로 출제 주의</strong></div><div class="trap">⚠️ 함정 주의: LCP = CTC 사령실 장치 → ❌ <strong>현장역 설치</strong></div>
 </div></div>
 </div><div class="part" id="p14">
   <div class="part-title" onclick="togglePart(this)">
-    PART 14. íµì¬ ìì¹ íµí© ìê¸° <span class="arrow">â²</span>
+    PART 14. 핵심 수치 통합 암기 <span class="arrow">▲</span>
   </div>
   <div class="part-body"><div class="concept">
-  <div class="concept-title"><span class="cnum">35</span>ì í¸ê¸° íì¸ê±°ë¦¬ & ì¬êµ¬ê°</div>
-  <div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ìì¹</th><th>í¨ì </th></tr></thead><tbody><tr><td>ì¥ë´Â·ì¶ë°Â·íìÂ·ìí¸ íì¸ê±°ë¦¬</td><td><strong>600m ì´ì</strong></td><td></td></tr><tr><td>ìíÂ·ì¤ê³ì í¸ê¸° íì¸ê±°ë¦¬</td><td><strong>200m ì´ì</strong></td><td></td></tr><tr><td>ì ëì í¸ê¸° íì¸ê±°ë¦¬</td><td><strong>100m ì´ì</strong></td><td></td></tr><tr><td>ì¥ë´ ëí¥ ê±°ë¦¬</td><td><strong>100m ì´ì</strong></td><td></td></tr><tr><td>ì¥ë´ ë°°í¥ ê±°ë¦¬</td><td><strong>60m ì´ì</strong></td><td></td></tr><tr><td>ì¬êµ¬ê° íì© ê¸¸ì´</td><td><strong>7m ì´í</strong></td><td>5mÂ·10m êµì²´</td></tr></tbody></table></div>
+  <div class="concept-title"><span class="cnum">35</span>신호기 확인거리 & 사구간</div>
+  <div class="table-wrap"><table><thead><tr><th>항목</th><th>수치</th><th>함정</th></tr></thead><tbody><tr><td>장내·출발·폐색·엄호 확인거리</td><td><strong>600m 이상</strong></td><td></td></tr><tr><td>입환·중계신호기 확인거리</td><td><strong>200m 이상</strong></td><td></td></tr><tr><td>유도신호기 확인거리</td><td><strong>100m 이상</strong></td><td></td></tr><tr><td>장내 대향 거리</td><td><strong>100m 이상</strong></td><td></td></tr><tr><td>장내 배향 거리</td><td><strong>60m 이상</strong></td><td></td></tr><tr><td>사구간 허용 길이</td><td><strong>7m 이하</strong></td><td>5m·10m 교체</td></tr></tbody></table></div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">36</span>ì ë¡ì íê¸° ì íìê° & ì ê·¼ìì </div>
-  <div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ìì¹</th><th>í¨ì </th></tr></thead><tbody><tr><td>NSí ì íìê°</td><td><strong>6ì´ ì´í</strong></td><td></td></tr><tr><td>NS-AMí ì íìê°</td><td><strong>7ì´ ì´í</strong></td><td></td></tr><tr><td>MJ81í ì íìê°</td><td><strong>5ì´ ì´í</strong> â</td><td>6Â·7ì´ êµì²´</td></tr><tr><td>ì°¨ìì ë¡ì íê¸° ì íìê°</td><td><strong>2ì´ ì´í</strong></td><td></td></tr><tr><td>ì¥ë´ì í¸ê¸° ì ê·¼ìì  í´ì </td><td><strong>90ì´ Â± 10%</strong></td><td>30ì´ êµì²´</td></tr><tr><td>ì¶ë°Â·ìíì í¸ê¸° ì ê·¼ìì  í´ì </td><td><strong>30ì´ Â± 10%</strong></td><td>90ì´ êµì²´</td></tr><tr><td>ë³´ìì ì ë¡í¡ë¨ ìììê°</td><td><strong>20ì´</strong></td><td></td></tr><tr><td>ëë¦¼ê²ì§ì¥ì¹ ì¤ì¹ ê°ê²©</td><td><strong>60km</strong> ê°ê²©</td><td></td></tr></tbody></table></div>
+  <div class="concept-title"><span class="cnum">36</span>선로전환기 전환시간 & 접근쇄정</div>
+  <div class="table-wrap"><table><thead><tr><th>항목</th><th>수치</th><th>함정</th></tr></thead><tbody><tr><td>NS형 전환시간</td><td><strong>6초 이하</strong></td><td></td></tr><tr><td>NS-AM형 전환시간</td><td><strong>7초 이하</strong></td><td></td></tr><tr><td>MJ81형 전환시간</td><td><strong>5초 이하</strong> ★</td><td>6·7초 교체</td></tr><tr><td>차상선로전환기 전환시간</td><td><strong>2초 이하</strong></td><td></td></tr><tr><td>장내신호기 접근쇄정 해정</td><td><strong>90초 ± 10%</strong></td><td>30초 교체</td></tr><tr><td>출발·입환신호기 접근쇄정 해정</td><td><strong>30초 ± 10%</strong></td><td>90초 교체</td></tr><tr><td>보수자 선로횡단 소요시간</td><td><strong>20초</strong></td><td></td></tr><tr><td>끌림검지장치 설치 간격</td><td><strong>60km</strong> 간격</td><td></td></tr></tbody></table></div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">37</span>ê±´ëëª©Â·ê¸°í ìì¹</div>
-  <div class="vis-wrap"><img src="images/VIS-048_ì² ëì í¸íµì¬ìì¹íµí©ìê¸°í.jpg" alt="ì² ëì í¸ íµì¬ ìì¹ íµí© ìê¸°í" loading="lazy"><p class="vis-cap">ì² ëì í¸ íµì¬ ìì¹ íµí© ìê¸°í</p></div><div class="table-wrap"><table><thead><tr><th>í­ëª©</th><th>ìì¹</th><th>í¨ì </th></tr></thead><tbody><tr><td>ê²½ë³´ë± ì ë©¸</td><td><strong>40 Â± 10í</strong>/ë¶</td><td>60í êµì²´</td></tr><tr><td>ê²½ë³´ì¢ íì¢ì</td><td><strong>70~100í</strong>/ë¶</td><td>60~90í êµì²´</td></tr><tr><td>ê²½ë³´ì¢ ì½ì¼ ì ë¥</td><td>ì ê²© <strong>Â± 10%</strong></td><td></td></tr><tr><td>ì°¨ë¨ê¸° ì ì´ì ì</td><td>ì ê²© <strong>0.9~1.2ë°°</strong></td><td></td></tr><tr><td>ì°¨ë¨ë´ ìì¹</td><td>ê¶¤ëì¤ì¬~ <strong>2.8m</strong></td><td>3m/2m</td></tr><tr><td>ì°¨ë¨ê¸° <strong>íê° ìê°</strong></td><td><strong>8ì´ Â± 2ì´</strong> â</td><td>20ì´ êµì²´</td></tr><tr><td>ì°¨ë¨ê¸° ìì¹ ìê°</td><td><strong>12ì´ ì´í</strong></td><td></td></tr><tr><td>ATS ì§ìì ì´ê²©</td><td><strong>400mm ì´ì</strong></td><td>300mm</td></tr><tr><td>ìëì¡°ì¬ì ì¤ì¹ìì¹</td><td>ì°ì¸¡ <strong>300mm Â± 10mm</strong></td><td></td></tr></tbody></table></div>
+  <div class="concept-title"><span class="cnum">37</span>건널목·기타 수치</div>
+  <div class="vis-wrap"><img src="images/VIS-048_철도신호핵심수치통합암기표.jpg" alt="철도신호 핵심 수치 통합 암기표" loading="lazy"><p class="vis-cap">철도신호 핵심 수치 통합 암기표</p></div><div class="table-wrap"><table><thead><tr><th>항목</th><th>수치</th><th>함정</th></tr></thead><tbody><tr><td>경보등 점멸</td><td><strong>40 ± 10회</strong>/분</td><td>60회 교체</td></tr><tr><td>경보종 타종수</td><td><strong>70~100회</strong>/분</td><td>60~90회 교체</td></tr><tr><td>경보종 코일 전류</td><td>정격 <strong>± 10%</strong></td><td></td></tr><tr><td>차단기 제어전압</td><td>정격 <strong>0.9~1.2배</strong></td><td></td></tr><tr><td>차단봉 위치</td><td>궤도중심~ <strong>2.8m</strong></td><td>3m/2m</td></tr><tr><td>차단기 <strong>하강 시간</strong></td><td><strong>8초 ± 2초</strong> ★</td><td>20초 교체</td></tr><tr><td>차단기 상승 시간</td><td><strong>12초 이하</strong></td><td></td></tr><tr><td>ATS 지상자 이격</td><td><strong>400mm 이상</strong></td><td>300mm</td></tr><tr><td>속도조사식 설치위치</td><td>우측 <strong>300mm ± 10mm</strong></td><td></td></tr></tbody></table></div>
 </div></div>
 </div>
   </div>
@@ -281,8 +268,8 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <script>
 function togglePart(el){
   const body=el.nextElementSibling; const arrow=el.querySelector('.arrow');
-  if(body.style.display==='none'){body.style.display='block';arrow.textContent='â²';}
-  else{body.style.display='none';arrow.textContent='â¼';}
+  if(body.style.display==='none'){body.style.display='block';arrow.textContent='▲';}
+  else{body.style.display='none';arrow.textContent='▼';}
 }
 function search(){
   const q=document.getElementById('q').value.trim().toLowerCase();
@@ -306,15 +293,9 @@ document.addEventListener('DOMContentLoaded',()=>{document.getElementById('q').a
 
 <button id="toc-toggle-btn" onclick="openTocDrawer()" aria-label="목차 열기">📋 목차</button>
 <div id="toc-overlay" onclick="closeTocDrawer()"></div>
-<div id="toc-drawer">
-  <div id="toc-drawer-close">
-    <span>📋 목차</span>
-    <button onclick="closeTocDrawer()" aria-label="닫기">✕</button>
-  </div>
-  <nav class="toc" id="toc-drawer-nav"></nav>
-</div>
+<div id="toc-drawer"><div id="toc-drawer-header"><span>📋 목차</span><button onclick="closeTocDrawer()">✕</button></div><nav class="toc" id="toc-drawer-inner"></nav></div>
 <script>
-function openTocDrawer(){var t=document.querySelector('.container .toc'),d=document.getElementById('toc-drawer-nav');if(t&&d){d.innerHTML=t.innerHTML;d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){closeTocDrawer();});})}document.getElementById('toc-drawer').classList.add('open');document.getElementById('toc-overlay').classList.add('open');document.body.style.overflow='hidden';}
+function openTocDrawer(){var s=document.querySelector('.container>.toc'),d=document.getElementById('toc-drawer-inner');if(s&&d){d.innerHTML=s.innerHTML;d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){closeTocDrawer();});})}document.getElementById('toc-drawer').classList.add('open');document.getElementById('toc-overlay').classList.add('open');document.body.style.overflow='hidden';}
 function closeTocDrawer(){document.getElementById('toc-drawer').classList.remove('open');document.getElementById('toc-overlay').classList.remove('open');document.body.style.overflow='';}
 </script>
 </body>
