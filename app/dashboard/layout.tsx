@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import SidebarNav from '@/components/SidebarNav';
+import MobileNav from '@/components/MobileNav';
 
 export default async function DashboardLayout({
   children,
@@ -33,7 +34,8 @@ export default async function DashboardLayout({
       {/* 사이드바 + 본문 */}
       <div className="flex flex-1 overflow-hidden">
         <SidebarNav />
-        <main className="flex-1 overflow-y-auto p-6 md:p-8">
+        <MobileNav />
+        <main className="flex-1 overflow-y-auto p-6 pb-20 md:p-8 md:pb-8">
           <div className="max-w-4xl mx-auto">
             {children}
           </div>

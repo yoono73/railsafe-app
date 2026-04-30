@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import SidebarNav from '@/components/SidebarNav';
+import MobileNav from '@/components/MobileNav';
 
 export default async function WrongAnswersLayout({
   children,
@@ -31,7 +32,8 @@ export default async function WrongAnswersLayout({
 
       <div className="flex flex-1 overflow-hidden">
         <SidebarNav />
-        <main className="flex-1 overflow-y-auto">
+        <MobileNav />
+        <main className="flex-1 overflow-y-auto pb-16 md:pb-0">
           {children}
         </main>
       </div>
