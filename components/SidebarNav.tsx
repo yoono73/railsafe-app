@@ -16,7 +16,16 @@ const subjects = [
 
 export default function SidebarNav() {
   const pathname = usePathname();
-  const [openSection, setOpenSection] = useState<'theory' | 'story' | 'cbt' | null>(null);
+
+  // 현재 경로에 맞는 섹션 자동 열림
+  const getInitialSection = (): 'theory' | 'story' | 'cbt' | null => {
+    if (pathname.startsWith('/theory')) return 'theory';
+    if (pathname.startsWith('/story')) return 'story';
+    if (pathname.startsWith('/cbt')) return 'cbt';
+    return null;
+  };
+
+  const [openSection, setOpenSection] = useState<'theory' | 'story' | 'cbt' | null>(getInitialSection);
   const [appVersion, setAppVersion] = useState<string>('');
 
   useEffect(() => {

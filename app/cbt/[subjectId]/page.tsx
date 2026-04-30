@@ -502,11 +502,11 @@ export default function CbtPage() {
                   key={i}
                   onClick={() => setExamCurrent(i)}
                   style={{
-                    width: '2rem', height: '2rem', borderRadius: '0.375rem',
+                    width: '2.75rem', height: '2.75rem', borderRadius: '0.375rem',
                     border: isCurr ? '2px solid #7c3aed' : '1.5px solid #e5e7eb',
                     background: isCurr ? '#7c3aed' : answered ? '#ede9fe' : 'white',
                     color: isCurr ? 'white' : answered ? '#7c3aed' : '#9ca3af',
-                    fontSize: '0.75rem', fontWeight: '600', cursor: 'pointer',
+                    fontSize: '0.8rem', fontWeight: '600', cursor: 'pointer',
                   }}
                 >
                   {i + 1}
