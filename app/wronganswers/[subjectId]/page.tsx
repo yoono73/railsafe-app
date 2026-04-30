@@ -43,6 +43,7 @@ export default function WrongAnswersSubjectPage() {
   const [loading, setLoading] = useState(true);
   const sessionId = useRef<string>(crypto.randomUUID());
   const questionStartTime = useRef<number>(Date.now());
+  const ttsRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
     async function fetchWrongQuestions() {
@@ -87,6 +88,29 @@ export default function WrongAnswersSubjectPage() {
     }
     fetchWrongQuestions();
   }, [subjectId, router]);
+
+  // TTS: 문제 변경 시 자동 읽기
+  useEffect(() => {
+    if (typeof window === 'undefined' || loading || finished || questions.length === 0) return;
+    const q = questions[current];
+    if (!q) return;
+    window.speechSynthesis.cancel();
+    const utt = new window.SpeechSynthesisUtterance(q.question_text);
+    utt.lang = 'ko-KR';
+    utt.rate = 0.9;
+    ttsRef.current = utt;
+    window.speechSynthesis.speak(utt);
+    return () => { window.speechSynthesis.cancel(); };
+  }, [current, questions, loading, finished]);
+
+  const ttsReplay = () => {
+    if (!questions.length) return;
+    window.speechSynthesis.cancel();
+    const utt = new window.SpeechSynthesisUtterance(questions[current].question_text);
+    utt.lang = 'ko-KR';
+    utt.rate = 0.9;
+    window.speechSynthesis.speak(utt);
+  };
 
   const handleSelect = (idx: number) => {
     if (confirmed) return;
@@ -232,8 +256,15 @@ export default function WrongAnswersSubjectPage() {
 
         {/* 문제 카드 */}
         <div className="bg-white rounded-2xl shadow-sm p-6 mb-4">
-          <div className="inline-block bg-red-50 text-red-600 rounded-lg px-3 py-1 text-xs font-semibold mb-3">
-            오답문제 {current + 1}
+          <div className="flex items-center justify-between mb-3">
+            <div className="inline-block bg-red-50 text-red-600 rounded-lg px-3 py-1 text-xs font-semibold">
+              오답문제 {current + 1}
+            </div>
+            <button
+              onClick={ttsReplay}
+              className="text-xs text-red-400 hover:text-red-600 transition"
+              title="다시 읽기"
+            >🔊 다시 읽기</button>
           </div>
           <p className="text-base font-semibold text-gray-800 leading-relaxed">{q.question_text}</p>
         </div>
