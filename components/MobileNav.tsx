@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const navItems = [
-  { label: '홈',    icon: '🏠', href: '/dashboard' },
-  { label: '이론',  icon: '📚', href: '/theory/1'  },
-  { label: 'CBT',   icon: '📝', href: '/cbt/1'     },
-  { label: '인출',  icon: '🧠', href: '/retrieval'  },
+  { label: '홈',    icon: '🏠', href: '/dashboard'  },
+  { label: '이론',  icon: '📚', href: '/theory/1'   },
+  { label: '스토리', icon: '📖', href: '/story/1/1'  },
+  { label: 'CBT',   icon: '📝', href: '/cbt/1'      },
+  { label: '인출',  icon: '🧠', href: '/retrieval'   },
   { label: '오답',  icon: '📒', href: '/wronganswers'},
 ];
 
@@ -29,8 +30,8 @@ export default function MobileNav() {
               isActive ? 'text-purple-700' : 'text-gray-400'
             }`}
           >
-            <span className="text-xl leading-none">{item.icon}</span>
-            <span className={`text-[10px] font-medium ${isActive ? 'text-purple-700' : 'text-gray-400'}`}>
+            <span className="text-lg leading-none">{item.icon}</span>
+            <span className={`text-[9px] font-medium ${isActive ? 'text-purple-700' : 'text-gray-400'}`}>
               {item.label}
             </span>
           </Link>
