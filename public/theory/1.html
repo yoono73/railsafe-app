@@ -386,7 +386,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 <script>
 // ElevenLabs TTS — 1과목 (Mr. K)
 (function(){
-  const VOICE_ID = 'sQ3a15DhENXU8pKTHlcc';
+  const VOICE_ID = '5n5gqmaQi9Ewevrz7bOS';
   let currentAudio = null;
   let isPlaying = false;
   let activeBtn = null;
@@ -516,7 +516,7 @@ function playEduTTS(text, btn) {
   fetch('/api/tts', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
+    body: JSON.stringify({text: text, voiceId: '5n5gqmaQi9Ewevrz7bOS'})
   })
   .then(function(r) { return r.blob(); })
   .then(function(blob) {

@@ -29,7 +29,7 @@ interface Story {
 }
 
 // ── ElevenLabs 3-voice IDs ──
-const VOICE_NARRATOR = 'sQ3a15DhENXU8pKTHlcc'; // 여자 나레이터
+const VOICE_NARRATOR = '5n5gqmaQi9Ewevrz7bOS'; // 여자 나레이터
 const VOICE_PARK     = 'Ir7oQcBXWiq4oFGROCfj';  // 박과장
 const VOICE_YUNHO    = 'NpneagLVR101ytYGxUPX';  // 윤호
 
