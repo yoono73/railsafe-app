@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
@@ -27,7 +27,6 @@ interface Topic {
   };
 }
 
-// SM-2 간략화: quality 1=모름(1점) 3=애매(3점) 5=알아요(5점)
 function sm2Next(
   quality: number,
   stability: number,
@@ -51,6 +50,7 @@ export default function RetrievalPage() {
   const [finished, setFinished] = useState(false);
   const [results, setResults] = useState<{ topic: Topic; quality: number }[]>([]);
   const [userId, setUserId] = useState<string>('');
+  const ttsRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   const loadTopics = useCallback(async () => {
     const supabase = createClient();
@@ -60,7 +60,6 @@ export default function RetrievalPage() {
 
     const today = new Date().toISOString().split('T')[0];
 
-    // 복습 기한 지난 토픽 (topic_learning_history에 기록 있고 오늘 이하)
     const { data: historyData } = await supabase
       .from('topic_learning_history')
       .select('id, topic_id, stability_score, interval_days, next_retrieval_due, retrieval_count')
@@ -85,7 +84,6 @@ export default function RetrievalPage() {
       }
     }
 
-    // 복습 기한 지난 것 없으면 → 이력 없는 토픽 (신규) 5개
     if (topicsToReview.length === 0) {
       const { data: existingHistory } = await supabase
         .from('topic_learning_history')
@@ -113,6 +111,29 @@ export default function RetrievalPage() {
   useEffect(() => {
     loadTopics();
   }, [loadTopics]);
+
+  // 카드 변경 시 토픽명 자동 TTS
+  useEffect(() => {
+    if (typeof window === 'undefined' || !topics.length || finished || loading) return;
+    const topic = topics[current];
+    if (!topic) return;
+    window.speechSynthesis.cancel();
+    const utt = new window.SpeechSynthesisUtterance(topic.topic_name);
+    utt.lang = 'ko-KR';
+    utt.rate = 0.9;
+    ttsRef.current = utt;
+    window.speechSynthesis.speak(utt);
+    return () => { window.speechSynthesis.cancel(); };
+  }, [current, topics, finished, loading]);
+
+  const ttsReplay = () => {
+    if (!topics.length) return;
+    window.speechSynthesis.cancel();
+    const utt = new window.SpeechSynthesisUtterance(topics[current].topic_name);
+    utt.lang = 'ko-KR';
+    utt.rate = 0.9;
+    window.speechSynthesis.speak(utt);
+  };
 
   const handleRate = async (quality: number) => {
     if (saving) return;
@@ -152,7 +173,6 @@ export default function RetrievalPage() {
     }
   };
 
-  // ── 로딩 ──
   if (loading) {
     return (
       <div className="min-h-full flex items-center justify-center bg-orange-50">
@@ -161,7 +181,6 @@ export default function RetrievalPage() {
     );
   }
 
-  // ── 할 것 없음 ──
   if (!loading && topics.length === 0) {
     return (
       <div className="min-h-full flex flex-col items-center justify-center bg-orange-50 gap-4 p-8">
@@ -178,7 +197,6 @@ export default function RetrievalPage() {
     );
   }
 
-  // ── 완료 화면 ──
   if (finished) {
     const knew = results.filter(r => r.quality >= 4).length;
     const vague = results.filter(r => r.quality === 3).length;
@@ -227,14 +245,12 @@ export default function RetrievalPage() {
     );
   }
 
-  // ── 토픽 카드 ──
   const topic = topics[current];
   const color = subjectColors[topic.subject_id] ?? '#7c3aed';
   const isNew = !topic.history;
 
   return (
     <div className="min-h-full bg-orange-50">
-      {/* 브레드크럼 */}
       <div className="px-6 py-3 flex items-center gap-2 text-sm border-b border-orange-100 bg-white">
         <button onClick={() => router.push('/start')} className="text-orange-400 hover:text-orange-600 transition">
           ← 학습 시작
@@ -244,7 +260,6 @@ export default function RetrievalPage() {
       </div>
 
       <div className="max-w-xl mx-auto px-4 py-8">
-        {/* 진행 헤더 */}
         <div className="flex items-center justify-between mb-4">
           <span className="text-xs font-semibold text-orange-500 bg-orange-100 px-3 py-1 rounded-full">
             🧠 {current + 1} / {topics.length}
@@ -256,7 +271,6 @@ export default function RetrievalPage() {
           )}
         </div>
 
-        {/* 진행바 */}
         <div className="bg-orange-100 rounded-full h-1.5 mb-8 overflow-hidden">
           <div
             className="h-full bg-orange-400 rounded-full transition-all duration-300"
@@ -264,7 +278,6 @@ export default function RetrievalPage() {
           />
         </div>
 
-        {/* 토픽 카드 */}
         <div className="bg-white rounded-2xl shadow-sm p-8 mb-8 text-center">
           <div
             className="inline-block text-xs font-semibold px-3 py-1 rounded-full mb-4"
@@ -275,6 +288,13 @@ export default function RetrievalPage() {
           <p className="text-lg font-bold text-gray-800 leading-relaxed mb-2">
             {topic.topic_name}
           </p>
+          <button
+            onClick={ttsReplay}
+            className="text-xs text-orange-400 hover:text-orange-600 transition mt-1 mb-2"
+            title="다시 읽기"
+          >
+            🔊 다시 읽기
+          </button>
           {topic.history && (
             <p className="text-xs text-gray-400">
               복습 {topic.history.retrieval_count}회 · 다음 복습까지{' '}
@@ -283,12 +303,10 @@ export default function RetrievalPage() {
           )}
         </div>
 
-        {/* 안내 */}
         <p className="text-center text-sm text-gray-500 mb-5">
           이 토픽을 얼마나 기억하고 있나요?
         </p>
 
-        {/* 평가 버튼 */}
         <div className="flex flex-col gap-3">
           <button
             onClick={() => handleRate(5)}

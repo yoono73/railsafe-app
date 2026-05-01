@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
@@ -38,6 +38,7 @@ export default function StoryPage() {
   const [story, setStory] = useState<Story | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
+  const ttsRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   const subjectNames: Record<number, string> = {
     1: '교통안전관리론', 2: '교통안전법', 3: '열차운전',
@@ -57,6 +58,33 @@ export default function StoryPage() {
     }
     fetchStory();
   }, [subjectId, chapterId]);
+
+  // TTS: 페이지 변경 시 대화문 자동 읽기
+  useEffect(() => {
+    if (typeof window === 'undefined' || loading || !story) return;
+    const page = story.pages[currentPage];
+    if (!page) return;
+    window.speechSynthesis.cancel();
+    const text = page.dialogues.map((d) => `${d.character}. ${d.text}`).join(' ');
+    const utt = new window.SpeechSynthesisUtterance(text);
+    utt.lang = 'ko-KR';
+    utt.rate = 0.9;
+    ttsRef.current = utt;
+    window.speechSynthesis.speak(utt);
+    return () => { window.speechSynthesis.cancel(); };
+  }, [currentPage, story, loading]);
+
+  const ttsReplay = () => {
+    if (!story) return;
+    const page = story.pages[currentPage];
+    if (!page) return;
+    window.speechSynthesis.cancel();
+    const text = page.dialogues.map((d) => `${d.character}. ${d.text}`).join(' ');
+    const utt = new window.SpeechSynthesisUtterance(text);
+    utt.lang = 'ko-KR';
+    utt.rate = 0.9;
+    window.speechSynthesis.speak(utt);
+  };
 
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center bg-purple-50">
@@ -138,6 +166,11 @@ export default function StoryPage() {
             disabled={isFirst}
             className="px-6 py-3 rounded-xl bg-white shadow-sm text-gray-600 text-sm font-medium disabled:opacity-30 hover:bg-gray-50 transition"
           >← 이전</button>
+          <button
+            onClick={ttsReplay}
+            className="text-xs text-purple-400 hover:text-purple-600 transition"
+            title="다시 읽기"
+          >🔊 다시 읽기</button>
           {isLast ? (
             <button
               onClick={() => router.push('/dashboard')}

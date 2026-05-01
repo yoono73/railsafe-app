@@ -81,6 +81,7 @@ export default function CbtPage() {
   const [examReviewing, setExamReviewing] = useState(false);
   const examTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const examSessionId = useRef<string>(crypto.randomUUID());
+  const ttsRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -122,6 +123,52 @@ export default function CbtPage() {
     return () => { if (examTimerRef.current) clearInterval(examTimerRef.current); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, examFinished]);
+
+  // TTS: 연습 모드 문제 변경 시 자동 읽기
+  useEffect(() => {
+    if (typeof window === 'undefined' || mode !== 'practice' || loading || finished || questions.length === 0) return;
+    const q = questions[current];
+    if (!q) return;
+    window.speechSynthesis.cancel();
+    const utt = new window.SpeechSynthesisUtterance(q.question_text);
+    utt.lang = 'ko-KR';
+    utt.rate = 0.9;
+    ttsRef.current = utt;
+    window.speechSynthesis.speak(utt);
+    return () => { window.speechSynthesis.cancel(); };
+  }, [current, mode, loading, finished, questions]);
+
+  // TTS: 시험 모드 문제 변경 시 자동 읽기
+  useEffect(() => {
+    if (typeof window === 'undefined' || mode !== 'exam' || examFinished || questions.length === 0) return;
+    const q = questions[examCurrent];
+    if (!q) return;
+    window.speechSynthesis.cancel();
+    const utt = new window.SpeechSynthesisUtterance(q.question_text);
+    utt.lang = 'ko-KR';
+    utt.rate = 0.9;
+    ttsRef.current = utt;
+    window.speechSynthesis.speak(utt);
+    return () => { window.speechSynthesis.cancel(); };
+  }, [examCurrent, mode, examFinished, questions]);
+
+  const ttsPracticeReplay = () => {
+    if (!questions.length) return;
+    window.speechSynthesis.cancel();
+    const utt = new window.SpeechSynthesisUtterance(questions[current].question_text);
+    utt.lang = 'ko-KR';
+    utt.rate = 0.9;
+    window.speechSynthesis.speak(utt);
+  };
+
+  const ttsExamReplay = () => {
+    if (!questions.length) return;
+    window.speechSynthesis.cancel();
+    const utt = new window.SpeechSynthesisUtterance(questions[examCurrent].question_text);
+    utt.lang = 'ko-KR';
+    utt.rate = 0.9;
+    window.speechSynthesis.speak(utt);
+  };
 
   const startPractice = () => {
     setQuestions(allQuestions);
@@ -248,7 +295,7 @@ export default function CbtPage() {
   if (allQuestions.length === 0) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#f5f3ff', gap: '1rem', padding: '2rem' }}>
-        <div style={{ fontSize: '3rem' }}>📭</div>
+        <div style={{ fontSize: '3rem' }}>📝</div>
         <p style={{ color: '#7c3aed', fontSize: '1.1rem', fontWeight: '600' }}>아직 CBT 문제가 없습니다</p>
         <button onClick={() => router.push('/dashboard')} style={{ padding: '0.75rem 1.5rem', background: '#7c3aed', color: 'white', border: 'none', borderRadius: '0.5rem', fontSize: '1rem', cursor: 'pointer', fontWeight: '600' }}>대시보드로 돌아가기</button>
       </div>
@@ -517,8 +564,11 @@ export default function CbtPage() {
 
           {/* 문제 카드 */}
           <div style={{ background: 'white', borderRadius: '1rem', padding: '1.5rem', marginBottom: '1rem', boxShadow: '0 2px 12px rgba(124,58,237,0.08)' }}>
-            <div style={{ display: 'inline-block', background: '#ede9fe', color: '#7c3aed', borderRadius: '0.375rem', padding: '0.2rem 0.6rem', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.75rem' }}>
-              문제 {examCurrent + 1}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+              <div style={{ display: 'inline-block', background: '#ede9fe', color: '#7c3aed', borderRadius: '0.375rem', padding: '0.2rem 0.6rem', fontSize: '0.8rem', fontWeight: '600' }}>
+                문제 {examCurrent + 1}
+              </div>
+              <button onClick={ttsExamReplay} style={{ background: 'none', border: 'none', color: '#7c3aed', fontSize: '0.8rem', cursor: 'pointer', opacity: 0.7 }} title="다시 읽기">🔊 다시 읽기</button>
             </div>
             <p style={{ fontSize: '1.05rem', fontWeight: '600', color: '#1f2937', lineHeight: '1.6' }}>{eq.question_text}</p>
           </div>
@@ -701,7 +751,10 @@ export default function CbtPage() {
         </div>
 
         <div style={{ background: 'white', borderRadius: '1rem', padding: '1.5rem', marginBottom: '1rem', boxShadow: '0 2px 12px rgba(124,58,237,0.08)' }}>
-          <div style={{ display: 'inline-block', background: '#ede9fe', color: '#7c3aed', borderRadius: '0.375rem', padding: '0.2rem 0.6rem', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.75rem' }}>문제 {current + 1}</div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+            <div style={{ display: 'inline-block', background: '#ede9fe', color: '#7c3aed', borderRadius: '0.375rem', padding: '0.2rem 0.6rem', fontSize: '0.8rem', fontWeight: '600' }}>문제 {current + 1}</div>
+            <button onClick={ttsPracticeReplay} style={{ background: 'none', border: 'none', color: '#7c3aed', fontSize: '0.8rem', cursor: 'pointer', opacity: 0.7 }} title="다시 읽기">🔊 다시 읽기</button>
+          </div>
           <p style={{ fontSize: '1.05rem', fontWeight: '600', color: '#1f2937', lineHeight: '1.6' }}>{q.question_text}</p>
         </div>
 

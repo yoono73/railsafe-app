@@ -50,7 +50,7 @@ export default function SidebarNav() {
   const isWrongAnswers = pathname.startsWith('/wronganswers');
 
   return (
-    <aside className="w-56 shrink-0 bg-white border-r border-gray-200 flex flex-col overflow-y-auto">
+    <aside className="hidden md:flex md:flex-col w-56 shrink-0 bg-white border-r border-gray-200 overflow-y-auto">
       <nav className="flex flex-col py-4 gap-1 px-3">
 
         {/* 학습 현황 */}
