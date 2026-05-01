@@ -49,6 +49,13 @@ function shuffle<T>(arr: T[]): T[] {
 const EXAM_COUNT = 20;
 const EXAM_SECONDS = 25 * 60; // 25분
 
+const TTS_SPEEDS = [
+  { label: '0.7×', value: 0.7, emoji: '🐢' },
+  { label: '0.9×', value: 0.9, emoji: '🚶' },
+  { label: '1.1×', value: 1.1, emoji: '🏃' },
+  { label: '1.3×', value: 1.3, emoji: '🚀' },
+];
+
 export default function CbtPage() {
   const params = useParams();
   const router = useRouter();
@@ -56,6 +63,17 @@ export default function CbtPage() {
 
   // ── 모드 선택 상태 ──
   const [mode, setMode] = useState<'select' | 'practice' | 'exam'>('select');
+
+  // ── TTS 속도 ──
+  const [ttsRate, setTtsRate] = useState<number>(() => {
+    if (typeof window === 'undefined') return 0.9;
+    return parseFloat(localStorage.getItem('cbt_tts_rate') || '0.9');
+  });
+
+  const changeTtsRate = (rate: number) => {
+    setTtsRate(rate);
+    if (typeof window !== 'undefined') localStorage.setItem('cbt_tts_rate', String(rate));
+  };
 
   // ── 공통 ──
   const [allQuestions, setAllQuestions] = useState<Question[]>([]);
@@ -132,10 +150,11 @@ export default function CbtPage() {
     window.speechSynthesis.cancel();
     const utt = new window.SpeechSynthesisUtterance(q.question_text);
     utt.lang = 'ko-KR';
-    utt.rate = 0.9;
+    utt.rate = ttsRate;
     ttsRef.current = utt;
     window.speechSynthesis.speak(utt);
     return () => { window.speechSynthesis.cancel(); };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current, mode, loading, finished, questions]);
 
   // TTS: 시험 모드 문제 변경 시 자동 읽기
@@ -146,10 +165,11 @@ export default function CbtPage() {
     window.speechSynthesis.cancel();
     const utt = new window.SpeechSynthesisUtterance(q.question_text);
     utt.lang = 'ko-KR';
-    utt.rate = 0.9;
+    utt.rate = ttsRate;
     ttsRef.current = utt;
     window.speechSynthesis.speak(utt);
     return () => { window.speechSynthesis.cancel(); };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [examCurrent, mode, examFinished, questions]);
 
   const ttsPracticeReplay = () => {
@@ -157,7 +177,7 @@ export default function CbtPage() {
     window.speechSynthesis.cancel();
     const utt = new window.SpeechSynthesisUtterance(questions[current].question_text);
     utt.lang = 'ko-KR';
-    utt.rate = 0.9;
+    utt.rate = ttsRate;
     window.speechSynthesis.speak(utt);
   };
 
@@ -166,9 +186,49 @@ export default function CbtPage() {
     window.speechSynthesis.cancel();
     const utt = new window.SpeechSynthesisUtterance(questions[examCurrent].question_text);
     utt.lang = 'ko-KR';
-    utt.rate = 0.9;
+    utt.rate = ttsRate;
     window.speechSynthesis.speak(utt);
   };
+
+  // 속도 조절 UI 컴포넌트 (인라인)
+  const SpeedControl = () => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+      <span style={{ fontSize: '0.75rem', color: '#9ca3af', marginRight: '0.1rem' }}>속도</span>
+      {TTS_SPEEDS.map((s) => (
+        <button
+          key={s.value}
+          onClick={() => {
+            changeTtsRate(s.value);
+            // 현재 재생 중인 발화가 있으면 새 속도로 다시 읽기
+            if (window.speechSynthesis.speaking) {
+              window.speechSynthesis.cancel();
+              const textToRead = mode === 'exam' ? questions[examCurrent]?.question_text : questions[current]?.question_text;
+              if (textToRead) {
+                const utt = new window.SpeechSynthesisUtterance(textToRead);
+                utt.lang = 'ko-KR';
+                utt.rate = s.value;
+                window.speechSynthesis.speak(utt);
+              }
+            }
+          }}
+          style={{
+            padding: '0.2rem 0.45rem',
+            borderRadius: '0.375rem',
+            border: '1.5px solid ' + (ttsRate === s.value ? '#7c3aed' : '#e5e7eb'),
+            background: ttsRate === s.value ? '#ede9fe' : 'white',
+            color: ttsRate === s.value ? '#7c3aed' : '#9ca3af',
+            fontSize: '0.72rem',
+            fontWeight: ttsRate === s.value ? '700' : '400',
+            cursor: 'pointer',
+            lineHeight: '1',
+          }}
+          title={s.emoji + ' ' + s.label}
+        >
+          {s.label}
+        </button>
+      ))}
+    </div>
+  );
 
   const startPractice = () => {
     setQuestions(allQuestions);
@@ -564,11 +624,14 @@ export default function CbtPage() {
 
           {/* 문제 카드 */}
           <div style={{ background: 'white', borderRadius: '1rem', padding: '1.5rem', marginBottom: '1rem', boxShadow: '0 2px 12px rgba(124,58,237,0.08)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
               <div style={{ display: 'inline-block', background: '#ede9fe', color: '#7c3aed', borderRadius: '0.375rem', padding: '0.2rem 0.6rem', fontSize: '0.8rem', fontWeight: '600' }}>
                 문제 {examCurrent + 1}
               </div>
-              <button onClick={ttsExamReplay} style={{ background: 'none', border: 'none', color: '#7c3aed', fontSize: '0.8rem', cursor: 'pointer', opacity: 0.7 }} title="다시 읽기">🔊 다시 읽기</button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <SpeedControl />
+                <button onClick={ttsExamReplay} style={{ background: 'none', border: 'none', color: '#7c3aed', fontSize: '0.8rem', cursor: 'pointer', opacity: 0.7 }} title="다시 읽기">🔊 다시 읽기</button>
+              </div>
             </div>
             <p style={{ fontSize: '1.05rem', fontWeight: '600', color: '#1f2937', lineHeight: '1.6' }}>{eq.question_text}</p>
           </div>
@@ -751,9 +814,12 @@ export default function CbtPage() {
         </div>
 
         <div style={{ background: 'white', borderRadius: '1rem', padding: '1.5rem', marginBottom: '1rem', boxShadow: '0 2px 12px rgba(124,58,237,0.08)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
             <div style={{ display: 'inline-block', background: '#ede9fe', color: '#7c3aed', borderRadius: '0.375rem', padding: '0.2rem 0.6rem', fontSize: '0.8rem', fontWeight: '600' }}>문제 {current + 1}</div>
-            <button onClick={ttsPracticeReplay} style={{ background: 'none', border: 'none', color: '#7c3aed', fontSize: '0.8rem', cursor: 'pointer', opacity: 0.7 }} title="다시 읽기">🔊 다시 읽기</button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <SpeedControl />
+              <button onClick={ttsPracticeReplay} style={{ background: 'none', border: 'none', color: '#7c3aed', fontSize: '0.8rem', cursor: 'pointer', opacity: 0.7 }} title="다시 읽기">🔊 다시 읽기</button>
+            </div>
           </div>
           <p style={{ fontSize: '1.05rem', fontWeight: '600', color: '#1f2937', lineHeight: '1.6' }}>{q.question_text}</p>
         </div>
