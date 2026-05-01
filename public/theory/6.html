@@ -50,6 +50,80 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 @media(max-width:768px){
   .content table { min-width: 480px; }
 }
+
+/* ===== 모바일 목차 드로어 ===== */
+#toc-toggle-btn {
+  display: none;
+}
+@media(max-width:900px) {
+  .toc { display: none !important; }
+  #toc-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: fixed;
+    bottom: 72px; /* MobileNav 위 */
+    left: 14px;
+    z-index: 200;
+    background: #4c1d95;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 8px 16px 8px 12px;
+    font-size: .85em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(76,29,149,.45);
+    font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
+  }
+  #toc-toggle-btn:active { background: #6d28d9; }
+  #toc-drawer {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 80vw;
+    max-width: 300px;
+    background: #fff;
+    z-index: 500;
+    overflow-y: auto;
+    padding: 16px 12px 80px;
+    box-shadow: 4px 0 20px rgba(0,0,0,.25);
+    transform: translateX(-110%);
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
+    font-size: .85em;
+  }
+  #toc-drawer.open { transform: translateX(0); }
+  #toc-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 499;
+  }
+  #toc-overlay.open { display: block; }
+  #toc-drawer-close {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ede9fe;
+  }
+  #toc-drawer-close span { font-weight: bold; color: #4c1d95; font-size: 1em; }
+  #toc-drawer-close button {
+    background: none; border: none; font-size: 1.3em;
+    cursor: pointer; color: #777; padding: 2px 6px;
+  }
+  #toc-drawer .toc { display: flex !important; flex-direction: column; position: static; height: auto; width: 100%; }
+  #toc-drawer .toc ul li a { padding: 5px 8px; display: block; border-radius: 4px; color: #333; text-decoration: none; }
+  #toc-drawer .toc ul li a:active { background: #ede9fe; }
+  #toc-drawer .toc .toc-part a { color: #4c1d95; font-weight: bold; }
+}
+
+/* ===== 교육 TTS 버튼 ===== */
+.tts-edu-btn { display:inline-flex; align-items:center; gap:5px; background:#7c3aed; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px; transition:background .2s; }
+.tts-edu-btn:hover { background:#6d28d9; }
+.tts-edu-btn:disabled { opacity:.6; cursor:wait; }
+.tts-edu-btn.playing { background:#059669; }
 </style>
 </head>
 <body>
@@ -270,6 +344,79 @@ function search(){
   document.querySelectorAll('.part-body').forEach(b=>{walk(b);if(b.querySelector('.highlight'))b.style.display='block';});
 }
 document.addEventListener('DOMContentLoaded',()=>{document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')search();});});
+</script>
+<script>
+// 모바일 목차 드로어
+function openTocDrawer() {
+  var mainToc = document.querySelector('.container .toc');
+  var drawerNav = document.getElementById('toc-drawer-nav');
+  if (mainToc && drawerNav) {
+    drawerNav.innerHTML = mainToc.innerHTML;
+    // 링크 클릭 시 드로어 닫기
+    drawerNav.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() { closeTocDrawer(); });
+    });
+  }
+  document.getElementById('toc-drawer').classList.add('open');
+  document.getElementById('toc-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeTocDrawer() {
+  document.getElementById('toc-drawer').classList.remove('open');
+  document.getElementById('toc-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+<script>
+
+// ===== 교육 강의 TTS 플레이어 =====
+var _eduAudio = null;
+function playEduTTS(text, btn) {
+  if (_eduAudio && !_eduAudio.paused) {
+    _eduAudio.pause(); _eduAudio = null;
+    btn.textContent = '🔊 강의 듣기';
+    btn.classList.remove('playing'); return;
+  }
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
+  })
+  .then(function(r) { return r.blob(); })
+  .then(function(blob) {
+    var url = URL.createObjectURL(blob);
+    _eduAudio = new Audio(url);
+    _eduAudio.play();
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
+    _eduAudio.onended = function() {
+      btn.textContent = '🔊 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
+    };
+  })
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
+}
+
+var EDU6 = {
+  '05': `신호기 종류입니다. 종류별 역할을 함께 외워야 해요. 장내신호기는 역으로 들어오는 열차에게 진입해도 되는지 알려주는 신호기입니다. 역 입구에 있어요. 출발신호기는 역을 출발하는 열차에게 출발해도 되는지 알려줍니다. 역 출구 쪽에 있어요. 폐색신호기는 폐색구간 경계에 설치됩니다. 각 구간의 진입 가능 여부를 알려줍니다. 색 현시는 이렇습니다. 녹색은 진행, 속도 제한 없이 가도 됩니다. 황색은 주의, 속도를 줄이며 다음 신호기를 준비하세요. 적색은 정지, 멈추세요. 시험에서 자주 나오는 패턴! 진행 신호 현시 색은? 녹색! 주의 신호는? 황색! 역 입구에서 열차 진입을 허가하는 신호기는? 장내 신호기! 들어올 때 장내, 나갈 때 출발, 구간 경계에 폐색. 이렇게 연결하면 됩니다!`,
+  '21': `폐색이 뭔지부터 짚고 갑니다. 폐색은 열차 충돌 방지를 위해 특정 구간에 한 번에 하나의 열차만 진입하도록 하는 방식입니다. 구간을 잠근다는 뜻이에요. 상용폐색과 대용폐색 두 가지로 나뉩니다. 상용폐색은 정상 운영 시 사용하는 방식입니다. 자동폐색식, 연동폐색식, 통표폐색식, 지도통신식 등이 있어요. 자동폐색은 궤도회로로 열차 위치를 자동 감지하여 신호기가 자동으로 작동합니다. 대용폐색은 상용폐색이 고장났을 때 사용하는 임시 방식입니다. 지도식, 지령식, 전령법이 있어요. 시험 포인트! 궤도회로를 이용해 자동으로 구간을 관리하는 폐색 방식은? 자동폐색식! 상용폐색이 불가능할 때 사용하는 폐색은? 대용폐색! 폐색의 목적은 하나입니다. 하나의 구간에 하나의 열차. 이 원칙을 지키기 위한 모든 방법이 폐색 방식이에요!`,
+  '27': `ATS, ATP, ATC, 세 개 한 번에 정리합니다. 알파벳 하나 차이인데 완전히 다른 장치예요. ATS는 열차 자동 정지 장치입니다. Automatic Train Stop. 열차가 정지 신호를 무시하고 지나치면 자동으로 브레이크를 걸어 정지시킵니다. 기능이 단순해요. 정지 신호 위반 시 강제 정지. 그게 전부입니다. ATP는 열차 자동 방호 장치입니다. Automatic Train Protection. ATS보다 한 단계 높은 수준이에요. 허용 속도를 지속적으로 계산하고, 초과하면 자동 제동합니다. 앞 열차와의 간격, 선로 조건까지 고려해요. ATC는 열차 자동 제어 장치입니다. Automatic Train Control. 가장 상위 개념이에요. 속도 제어를 넘어서 열차 운행 전체를 자동으로 제어합니다. 정리합니다. ATS = 정지 신호 위반 시 강제 정지. ATP = 허용 속도 초과 시 자동 제동. ATC = 전체 운행 자동 제어. Stop, Protection, Control 순서로 기억하세요!`,
+};
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.cnum').forEach(function(cnumEl) {
+    var num = cnumEl.textContent.trim().replace(/^[^0-9A-Z]*/,'').replace(/[^0-9A-Z-].*/,'');
+    if (!EDU6[num]) return;
+    var title = cnumEl.closest('.concept-title');
+    if (!title) return;
+    if (title.querySelector('.tts-edu-btn')) return;
+    var btn = document.createElement('button');
+    btn.className = 'tts-edu-btn';
+    btn.textContent = '🔊 강의 듣기';
+    var script = EDU6[num];
+    btn.onclick = function() { playEduTTS(script, btn); };
+    title.insertAdjacentElement('afterend', btn);
+  });
+});
 </script>
 </body>
 </html>

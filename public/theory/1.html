@@ -50,6 +50,80 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
 @media(max-width:768px){
   .content table { min-width: 480px; }
 }
+
+/* ===== 모바일 목차 드로어 ===== */
+#toc-toggle-btn {
+  display: none;
+}
+@media(max-width:900px) {
+  .toc { display: none !important; }
+  #toc-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: fixed;
+    bottom: 72px; /* MobileNav 위 */
+    left: 14px;
+    z-index: 200;
+    background: #4c1d95;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 8px 16px 8px 12px;
+    font-size: .85em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(76,29,149,.45);
+    font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
+  }
+  #toc-toggle-btn:active { background: #6d28d9; }
+  #toc-drawer {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 80vw;
+    max-width: 300px;
+    background: #fff;
+    z-index: 500;
+    overflow-y: auto;
+    padding: 16px 12px 80px;
+    box-shadow: 4px 0 20px rgba(0,0,0,.25);
+    transform: translateX(-110%);
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
+    font-size: .85em;
+  }
+  #toc-drawer.open { transform: translateX(0); }
+  #toc-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 499;
+  }
+  #toc-overlay.open { display: block; }
+  #toc-drawer-close {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ede9fe;
+  }
+  #toc-drawer-close span { font-weight: bold; color: #4c1d95; font-size: 1em; }
+  #toc-drawer-close button {
+    background: none; border: none; font-size: 1.3em;
+    cursor: pointer; color: #777; padding: 2px 6px;
+  }
+  #toc-drawer .toc { display: flex !important; flex-direction: column; position: static; height: auto; width: 100%; }
+  #toc-drawer .toc ul li a { padding: 5px 8px; display: block; border-radius: 4px; color: #333; text-decoration: none; }
+  #toc-drawer .toc ul li a:active { background: #ede9fe; }
+  #toc-drawer .toc .toc-part a { color: #4c1d95; font-weight: bold; }
+}
+
+/* ===== 교육 TTS 버튼 ===== */
+.tts-edu-btn { display:inline-flex; align-items:center; gap:5px; background:#7c3aed; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px; transition:background .2s; }
+.tts-edu-btn:hover { background:#6d28d9; }
+.tts-edu-btn:disabled { opacity:.6; cursor:wait; }
+.tts-edu-btn.playing { background:#059669; }
 </style>
 </head>
 <body>
@@ -307,6 +381,178 @@ function search(){
 }
 document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')search();});
+});
+</script>
+<script>
+// ElevenLabs TTS — 1과목 (Mr. K)
+(function(){
+  const VOICE_ID = 'sQ3a15DhENXU8pKTHlcc';
+  let currentAudio = null;
+  let isPlaying = false;
+  let activeBtn = null;
+
+  function extractText(el) {
+    return el.innerText.replace(/\s+/g, ' ').trim();
+  }
+
+  function splitText(text, maxLen) {
+    maxLen = maxLen || 2000;
+    var chunks = [];
+    var remaining = text;
+    while (remaining.length > 0) {
+      if (remaining.length <= maxLen) { chunks.push(remaining); break; }
+      var splitAt = remaining.lastIndexOf('다.', maxLen);
+      if (splitAt < maxLen / 2) splitAt = remaining.lastIndexOf(' ', maxLen);
+      if (splitAt < 0) splitAt = maxLen;
+      chunks.push(remaining.slice(0, splitAt + 1).trim());
+      remaining = remaining.slice(splitAt + 1).trim();
+    }
+    return chunks;
+  }
+
+  function stopAll() {
+    isPlaying = false;
+    if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+    if (activeBtn) { activeBtn.textContent = '🔊 읽기'; activeBtn.style.opacity = '1'; activeBtn = null; }
+  }
+
+  async function playChunks(chunks, btn) {
+    for (var i = 0; i < chunks.length; i++) {
+      if (!isPlaying) break;
+      btn.textContent = '⏹ ' + (i + 1) + '/' + chunks.length;
+      try {
+        var res = await fetch('/api/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: chunks[i], voiceId: VOICE_ID })
+        });
+        if (!res.ok) { console.error('TTS 오류'); break; }
+        var blob = await res.blob();
+        var url = URL.createObjectURL(blob);
+        await new Promise(function(resolve, reject) {
+          currentAudio = new Audio(url);
+          currentAudio.onended = resolve;
+          currentAudio.onerror = reject;
+          currentAudio.play();
+        });
+        URL.revokeObjectURL(url);
+      } catch(e) { console.error(e); break; }
+    }
+    isPlaying = false;
+    btn.textContent = '🔊 읽기';
+    btn.style.opacity = '1';
+    activeBtn = null;
+    currentAudio = null;
+  }
+
+  async function handleClick(btn, partBody) {
+    if (isPlaying) { stopAll(); return; }
+    stopAll();
+    isPlaying = true;
+    activeBtn = btn;
+    btn.textContent = '⏳ 로딩...';
+    btn.style.opacity = '0.7';
+    if (partBody.style.display === 'none') {
+      partBody.style.display = 'block';
+      var arrow = partBody.previousElementSibling.querySelector('.arrow');
+      if (arrow) arrow.textContent = '▲';
+    }
+    var text = extractText(partBody);
+    var chunks = splitText(text);
+    await playChunks(chunks, btn);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.part-title').forEach(function(title) {
+      var partBody = title.nextElementSibling;
+      if (!partBody) return;
+      var btn = document.createElement('button');
+      btn.textContent = '🔊 읽기';
+      btn.style.cssText = 'background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.5);color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75em;cursor:pointer;margin-left:8px;flex-shrink:0;vertical-align:middle;';
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        handleClick(btn, partBody);
+      });
+      var arrow = title.querySelector('.arrow');
+      title.insertBefore(btn, arrow);
+    });
+  });
+})();
+</script>
+<script>
+// 모바일 목차 드로어
+function openTocDrawer() {
+  var mainToc = document.querySelector('.container .toc');
+  var drawerNav = document.getElementById('toc-drawer-nav');
+  if (mainToc && drawerNav) {
+    drawerNav.innerHTML = mainToc.innerHTML;
+    // 링크 클릭 시 드로어 닫기
+    drawerNav.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() { closeTocDrawer(); });
+    });
+  }
+  document.getElementById('toc-drawer').classList.add('open');
+  document.getElementById('toc-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeTocDrawer() {
+  document.getElementById('toc-drawer').classList.remove('open');
+  document.getElementById('toc-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+<script>
+
+// ===== 교육 강의 TTS 플레이어 =====
+var _eduAudio = null;
+function playEduTTS(text, btn) {
+  if (_eduAudio && !_eduAudio.paused) {
+    _eduAudio.pause(); _eduAudio = null;
+    btn.textContent = '🔊 강의 듣기';
+    btn.classList.remove('playing'); return;
+  }
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
+  })
+  .then(function(r) { return r.blob(); })
+  .then(function(blob) {
+    var url = URL.createObjectURL(blob);
+    _eduAudio = new Audio(url);
+    _eduAudio.play();
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
+    _eduAudio.onended = function() {
+      btn.textContent = '🔊 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
+    };
+  })
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
+}
+
+var EDU1 = {
+  'p2-04': `자, 하인리히 법칙입니다. 숫자 세 개가 핵심이에요. 1 대 29 대 300! 다시, 1 대 29 대 300! 무슨 뜻이냐? 중상 사고가 1건 발생했다면, 그 전에 경상 사고가 29건 있었고, 그보다 훨씬 전에 아차사고 즉 위험 순간이 300번 있었다는 겁니다. 시험에 딱 이렇게 나와요. 하인리히 법칙에서 경상 사고 비율은? 29입니다! 아차사고 비율은? 300입니다! 반대로 쓰면 바로 틀려요. 순서대로 외우세요. 중상 1, 경상 29, 아차사고 300. 핵심 교훈이 뭐냐? 큰 사고 하나 뒤에는 수많은 작은 징조가 있다는 거예요. 아차사고, 사소한 불안전 행동을 없애야 대형 사고를 막을 수 있다. 이게 안전관리의 기본 원리입니다. 1 대 29 대 300, 이거 꼭 나옵니다!`,
+  'p2-06': `욕조곡선입니다. 영어로 배스터브 커브, 왜 욕조냐? 모양이 욕조처럼 양쪽이 높고 가운데가 낮은 U자 형태입니다. 3단계로 나뉩니다. 첫 번째, 초기고장기. 처음에 고장률이 높아요. 새 제품인데 초기 불량, 설계 결함 때문입니다. 두 번째, 우발고장기. 가운데 낮은 구간입니다. 고장률이 낮고 일정해요. 제품이 안정적으로 작동하는 시기입니다. 세 번째, 마모고장기. 오른쪽 끝, 다시 올라가는 구간입니다. 오래 쓰다 보니 부품이 닳고 마모되어 고장률이 높아집니다. 시험 포인트는 이겁니다. 초기고장기 대책은? 번인 테스트, 충분한 검사! 마모고장기 대책은? 예방정비, 부품 교체! 욕조 모양 떠올리면서 초기, 우발, 마모, 세 단계 꼭 기억하세요!`,
+  'p4-21': `맥그리거 X·Y 이론, 반드시 나옵니다. 그리고 반드시 헷갈리게 나와요. X이론부터 갑니다. X이론은 인간을 부정적으로 봐요. 사람은 기본적으로 일하기 싫어하고, 책임을 피하고, 강제해야 일한다고 봅니다. 그래서 관리자는 통제하고 감시하고 명령해야 한다는 거예요. X이론 = 인간 불신 = 통제 관리. Y이론은 반대입니다. 인간은 일을 즐길 수 있고, 스스로 책임지려 하며, 창의적이라고 봐요. 그래서 자율, 참여, 위임이 효과적인 관리 방식이에요. Y이론 = 인간 신뢰 = 자율 관리. 시험에서 이렇게 나와요. X이론에 따른 관리 방식은? 감시, 통제, 규정 강화! Y이론에 따른 관리 방식은? 자율, 참여, 권한 위임! X는 엑스표, 부정적. Y는 가능성을 믿는 거예요. X 부정, Y 긍정. 이걸로 외우세요!`,
+  'p5-26': `동기이론, 헷갈리는 분들 많죠? 딱 두 가지로 나뉩니다. 내용이론과 과정이론. 내용이론은 무엇이 동기를 일으키나를 연구합니다. 동기의 원천, 즉 내용에 집중해요. 여기에 해당하는 이론들이 매슬로우의 욕구 5단계, 허즈버그의 2요인 이론, 맥그리거 X·Y 이론, 앨더퍼 ERG 이론입니다. 내용이론 학자들은 매, 허, 맥, 앨 이렇게 외우세요. 과정이론은 어떻게 동기가 생기나, 과정에 집중합니다. 브룸의 기대이론, 아담스의 공정성 이론, 로크의 목표설정이론이 여기 해당해요. 시험에 자주 나오는 패턴은 이겁니다. 허즈버그 이론은 내용이론인가, 과정이론인가? 내용이론입니다! 브룸의 기대이론은? 과정이론입니다! 내용 = 무엇이, 과정 = 어떻게. 이거 딱 구분하세요!`,
+  'p5-29': `허즈버그 2요인이론입니다. 동기-위생 이론이라고도 합니다. 핵심은 이거예요. 만족의 반대는 불만족이 아니다! 만족에 영향 주는 요인 따로, 불만족에 영향 주는 요인이 따로입니다. 동기요인은 만족을 만드는 요인입니다. 성취감, 인정, 책임감, 성장, 승진. 이게 있으면 일하고 싶어져요. 그런데 없다고 해서 불만족하진 않아요. 위생요인은 불만족을 없애는 요인입니다. 급여, 근무환경, 회사정책, 대인관계. 이게 나쁘면 불만족하지만, 좋다고 해서 동기가 생기진 않아요. 시험 함정이 여기 있습니다. 급여를 올리면 동기부여가 된다? 아닙니다! 급여는 위생요인이에요. 불만족을 없애줄 뿐, 동기를 만들진 않습니다. 이거 틀리는 사람 엄청 많아요. 동기요인 = 만족 창출, 위생요인 = 불만족 예방. 이 두 줄만 기억하면 됩니다!`,
+  'p6-32': `교육과 훈련, 비슷해 보여도 시험에서 딱 구분해서 나옵니다. 반대로 외우면 바로 틀려요. 교육은 이론과 지식 중심입니다. 왜 그런지, 어떤 원리인지를 가르치는 거예요. 장기적이고 일반적인 능력 개발을 목표로 합니다. 교실에서 배우는 걸 떠올리면 됩니다. 훈련은 기술과 행동 중심입니다. 반복 연습을 통해 특정 기술을 몸에 익히는 거예요. 단기적이고 구체적인 직무 능력을 키웁니다. 운동선수가 연습하는 걸 떠올리면 돼요. 정리합니다. 교육 = 지식, 이론, 장기, 일반적. 훈련 = 기술, 반복, 단기, 직무 특화. 교육은 알게 하는 것, 훈련은 할 수 있게 하는 것. 이 문장으로 기억하세요!`,
+  'p7-42': `정지거리 공식입니다. 계산 문제로 자주 나와요. 공식 외우면 점수 가져올 수 있습니다. 정지거리는 공주거리 더하기 제동거리입니다. 공주거리는 운전자가 위험을 인식하고 브레이크를 밟기 전까지 달린 거리예요. 이 시간을 공주시간이라고 하는데 보통 0.7초에서 1초 정도입니다. 제동거리는 브레이크를 밟은 후 완전히 멈출 때까지 달린 거리입니다. 속도의 제곱에 비례합니다. 속도가 2배 빠르면 제동거리는 4배 늘어나요! 이게 시험 포인트입니다. 정지거리 = 공주거리 + 제동거리. 핵심 포인트 다시 한번. 속도가 2배 되면 제동거리는 4배. 속도와 정지거리의 관계는? 속도의 제곱에 비례! 이거 꼭 기억하세요.`,
+};
+document.addEventListener('DOMContentLoaded', function() {
+  Object.keys(EDU1).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var title = el.querySelector('.concept-title');
+    if (!title) return;
+    var btn = document.createElement('button');
+    btn.className = 'tts-edu-btn';
+    btn.textContent = '🔊 강의 듣기';
+    var script = EDU1[id];
+    btn.onclick = function() { playEduTTS(script, btn); };
+    title.insertAdjacentElement('afterend', btn);
+  });
 });
 </script>
 </body>

@@ -50,6 +50,80 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 @media(max-width:768px){
   .content table { min-width: 480px; }
 }
+
+/* ===== 모바일 목차 드로어 ===== */
+#toc-toggle-btn {
+  display: none;
+}
+@media(max-width:900px) {
+  .toc { display: none !important; }
+  #toc-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: fixed;
+    bottom: 72px; /* MobileNav 위 */
+    left: 14px;
+    z-index: 200;
+    background: #4c1d95;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 8px 16px 8px 12px;
+    font-size: .85em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(76,29,149,.45);
+    font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
+  }
+  #toc-toggle-btn:active { background: #6d28d9; }
+  #toc-drawer {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 80vw;
+    max-width: 300px;
+    background: #fff;
+    z-index: 500;
+    overflow-y: auto;
+    padding: 16px 12px 80px;
+    box-shadow: 4px 0 20px rgba(0,0,0,.25);
+    transform: translateX(-110%);
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
+    font-size: .85em;
+  }
+  #toc-drawer.open { transform: translateX(0); }
+  #toc-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 499;
+  }
+  #toc-overlay.open { display: block; }
+  #toc-drawer-close {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ede9fe;
+  }
+  #toc-drawer-close span { font-weight: bold; color: #4c1d95; font-size: 1em; }
+  #toc-drawer-close button {
+    background: none; border: none; font-size: 1.3em;
+    cursor: pointer; color: #777; padding: 2px 6px;
+  }
+  #toc-drawer .toc { display: flex !important; flex-direction: column; position: static; height: auto; width: 100%; }
+  #toc-drawer .toc ul li a { padding: 5px 8px; display: block; border-radius: 4px; color: #333; text-decoration: none; }
+  #toc-drawer .toc ul li a:active { background: #ede9fe; }
+  #toc-drawer .toc .toc-part a { color: #4c1d95; font-weight: bold; }
+}
+
+/* ===== 교육 TTS 버튼 ===== */
+.tts-edu-btn { display:inline-flex; align-items:center; gap:5px; background:#7c3aed; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px; transition:background .2s; }
+.tts-edu-btn:hover { background:#6d28d9; }
+.tts-edu-btn:disabled { opacity:.6; cursor:wait; }
+.tts-edu-btn.playing { background:#059669; }
 </style>
 </head>
 <body>
@@ -157,6 +231,79 @@ function search(){
   document.querySelectorAll('.part-body').forEach(b=>{walk(b);if(b.querySelector('.highlight'))b.style.display='block';});
 }
 document.addEventListener('DOMContentLoaded',()=>{document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')search();});});
+</script>
+<script>
+// 모바일 목차 드로어
+function openTocDrawer() {
+  var mainToc = document.querySelector('.container .toc');
+  var drawerNav = document.getElementById('toc-drawer-nav');
+  if (mainToc && drawerNav) {
+    drawerNav.innerHTML = mainToc.innerHTML;
+    // 링크 클릭 시 드로어 닫기
+    drawerNav.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() { closeTocDrawer(); });
+    });
+  }
+  document.getElementById('toc-drawer').classList.add('open');
+  document.getElementById('toc-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeTocDrawer() {
+  document.getElementById('toc-drawer').classList.remove('open');
+  document.getElementById('toc-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+<script>
+
+// ===== 교육 강의 TTS 플레이어 =====
+var _eduAudio = null;
+function playEduTTS(text, btn) {
+  if (_eduAudio && !_eduAudio.paused) {
+    _eduAudio.pause(); _eduAudio = null;
+    btn.textContent = '🔊 강의 듣기';
+    btn.classList.remove('playing'); return;
+  }
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
+  })
+  .then(function(r) { return r.blob(); })
+  .then(function(blob) {
+    var url = URL.createObjectURL(blob);
+    _eduAudio = new Audio(url);
+    _eduAudio.play();
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
+    _eduAudio.onended = function() {
+      btn.textContent = '🔊 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
+    };
+  })
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
+}
+
+var EDU4 = {
+  'p3-12': `건축한계와 차량한계, 이름이 비슷해서 많이 헷갈려요. 한 번에 정리합니다. 차량한계는 차량의 최대 크기입니다. 열차가 이 선 밖으로 나가면 안 된다는 한계선이에요. 열차 자체에 관한 기준입니다. 건축한계는 차량 주변 구조물이 침범하면 안 되는 공간입니다. 플랫폼이든, 기둥이든, 어떤 건축물도 이 선 안으로 들어오면 안 돼요. 건축물에 관한 기준입니다. 핵심 관계가 중요합니다. 건축한계는 차량한계보다 반드시 큽니다! 건축한계가 더 크니까, 열차가 달릴 공간이 확보되는 거예요. 시험 함정! 건축한계와 차량한계 중 더 큰 것은? 건축한계! 차량한계 = 열차 크기 기준, 건축한계 = 구조물 침범 금지 기준. 건축한계가 차량한계보다 크다. 세 줄 외우세요!`,
+  'p3-13': `CTC와 ATC, 알파벳이 헷갈리죠. 정확히 구분합니다. CTC는 열차 집중 제어장치입니다. 한 곳의 중앙 사령실에서 넓은 구간의 여러 열차를 한꺼번에 감시하고 제어하는 시스템이에요. 신호기, 선로 전환기 등을 원격으로 조작합니다. CTC는 사람이 중앙에서 컨트롤하는 시스템입니다. ATC는 열차 자동 제어장치입니다. 허용 속도를 초과하면 자동으로 브레이크가 걸립니다. 운전기사가 실수로 과속해도 시스템이 자동으로 제어해요. ATC는 자동으로 속도를 제한하는 시스템입니다. 구분 포인트! CTC = 중앙 집중 제어, 사람이 운영. ATC = 속도 자동 제어, 기계가 작동. 시험에서 열차가 허용 속도 초과 시 자동 감속되는 장치는? ATC! 중앙에서 여러 열차를 한꺼번에 통제하는 시스템은? CTC! C가 두 개면 중앙 집중 제어 CTC, A로 시작하면 자동 제어 ATC. 이렇게 외우세요!`,
+  'p5-19': `건널목 분류는 시험에 정말 자주 나옵니다. 반드시 외워야 해요. 1종 건널목입니다. 가장 안전해요. 차단기, 경보기, 표지가 모두 있고 주야간 안전 작동 또는 안내원이 근무합니다. 2종 건널목입니다. 경보기와 표지만 있습니다. 차단기가 없어요! 그리고 무인이에요. 이 부분이 함정입니다. 2종은 차단기 없음, 경보기만, 무인! 꼭 기억하세요. 3종 건널목입니다. 교통안전표지판만 있습니다. 차단기도 없고, 경보기도 없고, 직원도 없어요. 정리합니다. 1종 = 차단기 + 경보기 + 표지. 2종 = 경보기 + 표지, 차단기 없음, 무인. 3종 = 표지판만. 시험 패턴! 차단기는 없지만 경보기는 있는 건널목은 몇 종? 2종! 숫자가 올라갈수록 안전 설비가 줄어드는 거예요. 1종이 제일 좋고, 3종이 제일 단순합니다!`,
+  'p5-20': `선로 종류 4가지입니다. 이것도 자주 나와요. 대피선입니다. 열차 추월, 대피, 장시간 정차에 사용하는 선로예요. 안전측선입니다. 2개 이상 열차가 동시에 진입할 때 충돌을 방지하기 위한 선로예요. 피난측선입니다. 급구배에서 역행하는 차량이 충돌하지 않도록 만들어 놓은 선로예요. 급구배, 즉 경사가 급한 곳에서 사용합니다. 인상선입니다. 차량 입환, 즉 차량을 이동시키는 작업에 사용하는 선로예요. 핵심 함정! 안전측선과 피난측선 헷갈리지 마세요. 안전측선은 동시진입 충돌 방지, 피난측선은 급구배 역행차량 충돌 방지입니다. 시험에서 열차 충돌 방지를 위해 설치하는 선로는? 안전측선! 급구배 역행차량을 위한 선로는? 피난측선! 대피선, 안전측선, 피난측선, 인상선, 네 개 외우고 각각의 용도를 연결하세요!`,
+};
+document.addEventListener('DOMContentLoaded', function() {
+  Object.keys(EDU4).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var title = el.querySelector('.concept-title');
+    if (!title) return;
+    var btn = document.createElement('button');
+    btn.className = 'tts-edu-btn';
+    btn.textContent = '🔊 강의 듣기';
+    var script = EDU4[id];
+    btn.onclick = function() { playEduTTS(script, btn); };
+    title.insertAdjacentElement('afterend', btn);
+  });
+});
 </script>
 </body>
 </html>

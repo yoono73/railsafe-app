@@ -50,6 +50,80 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 @media(max-width:768px){
   .content table { min-width: 480px; }
 }
+
+/* ===== 모바일 목차 드로어 ===== */
+#toc-toggle-btn {
+  display: none;
+}
+@media(max-width:900px) {
+  .toc { display: none !important; }
+  #toc-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: fixed;
+    bottom: 72px; /* MobileNav 위 */
+    left: 14px;
+    z-index: 200;
+    background: #4c1d95;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 8px 16px 8px 12px;
+    font-size: .85em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(76,29,149,.45);
+    font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
+  }
+  #toc-toggle-btn:active { background: #6d28d9; }
+  #toc-drawer {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 80vw;
+    max-width: 300px;
+    background: #fff;
+    z-index: 500;
+    overflow-y: auto;
+    padding: 16px 12px 80px;
+    box-shadow: 4px 0 20px rgba(0,0,0,.25);
+    transform: translateX(-110%);
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
+    font-size: .85em;
+  }
+  #toc-drawer.open { transform: translateX(0); }
+  #toc-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 499;
+  }
+  #toc-overlay.open { display: block; }
+  #toc-drawer-close {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ede9fe;
+  }
+  #toc-drawer-close span { font-weight: bold; color: #4c1d95; font-size: 1em; }
+  #toc-drawer-close button {
+    background: none; border: none; font-size: 1.3em;
+    cursor: pointer; color: #777; padding: 2px 6px;
+  }
+  #toc-drawer .toc { display: flex !important; flex-direction: column; position: static; height: auto; width: 100%; }
+  #toc-drawer .toc ul li a { padding: 5px 8px; display: block; border-radius: 4px; color: #333; text-decoration: none; }
+  #toc-drawer .toc ul li a:active { background: #ede9fe; }
+  #toc-drawer .toc .toc-part a { color: #4c1d95; font-weight: bold; }
+}
+
+/* ===== 교육 TTS 버튼 ===== */
+.tts-edu-btn { display:inline-flex; align-items:center; gap:5px; background:#7c3aed; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px; transition:background .2s; }
+.tts-edu-btn:hover { background:#6d28d9; }
+.tts-edu-btn:disabled { opacity:.6; cursor:wait; }
+.tts-edu-btn.playing { background:#059669; }
 </style>
 </head>
 <body>
@@ -205,6 +279,77 @@ function search(){
 }
 document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')search();});
+});
+</script>
+<script>
+// 모바일 목차 드로어
+function openTocDrawer() {
+  var mainToc = document.querySelector('.container .toc');
+  var drawerNav = document.getElementById('toc-drawer-nav');
+  if (mainToc && drawerNav) {
+    drawerNav.innerHTML = mainToc.innerHTML;
+    // 링크 클릭 시 드로어 닫기
+    drawerNav.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() { closeTocDrawer(); });
+    });
+  }
+  document.getElementById('toc-drawer').classList.add('open');
+  document.getElementById('toc-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeTocDrawer() {
+  document.getElementById('toc-drawer').classList.remove('open');
+  document.getElementById('toc-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+<script>
+
+// ===== 교육 강의 TTS 플레이어 =====
+var _eduAudio = null;
+function playEduTTS(text, btn) {
+  if (_eduAudio && !_eduAudio.paused) {
+    _eduAudio.pause(); _eduAudio = null;
+    btn.textContent = '🔊 강의 듣기';
+    btn.classList.remove('playing'); return;
+  }
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
+  })
+  .then(function(r) { return r.blob(); })
+  .then(function(blob) {
+    var url = URL.createObjectURL(blob);
+    _eduAudio = new Audio(url);
+    _eduAudio.play();
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
+    _eduAudio.onended = function() {
+      btn.textContent = '🔊 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
+    };
+  })
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
+}
+
+var EDU5 = {
+  'p2-08': `철도사업 면허 취소 관련입니다. 숫자 하나가 시험에 나와요. 철도사업 면허가 취소되면 그 날로부터 2년간 면허를 다시 신청할 수 없습니다. 2년! 1년 아닙니다. 2년이에요! 이게 왜 중요하냐? 시험에서 1년이라고 써놓고 고르라고 해요. 반드시 2년으로 기억하세요. 그리고 사업계획 변경 시 처리 방법도 중요해요. 중요한 사항을 변경할 때는 국토교통부장관의 승인을 받아야 합니다. 경미한 사항을 변경할 때는 신고만 하면 됩니다. 시험 함정! 중요 사항 변경 시 처리는? 승인! 경미한 사항은? 신고! 이걸 반대로 쓰는 문제가 나옵니다. 면허 취소 후 2년, 중요 변경은 승인, 경미한 변경은 신고. 이 세 가지 꼭 기억하세요!`,
+  'p3-16': `철도산업기본법의 핵심 숫자들입니다. 이 숫자들이 시험에 그대로 나와요. 국가철도망구축계획은 10년마다 수립합니다. 교통안전기본계획이 5년이었죠? 철도망 계획은 10년입니다. 헷갈리지 마세요. 10년! 누가 수립하냐? 국토교통부장관입니다. 철도관련 계획을 정리해 드릴게요. 교통안전기본계획 5년, 철도안전종합계획 5년, 국가철도망구축계획 10년. 5년짜리 두 개, 10년짜리 하나. 이렇게 기억하세요! 시험에서 국가철도망구축계획 수립 주기는? 10년! 수립 주체는? 국토교통부장관! 헷갈리는 숫자가 나오면 이 표를 떠올리세요!`,
+};
+document.addEventListener('DOMContentLoaded', function() {
+  Object.keys(EDU5).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var title = el.querySelector('.concept-title');
+    if (!title) return;
+    var btn = document.createElement('button');
+    btn.className = 'tts-edu-btn';
+    btn.textContent = '🔊 강의 듣기';
+    var script = EDU5[id];
+    btn.onclick = function() { playEduTTS(script, btn); };
+    title.insertAdjacentElement('afterend', btn);
+  });
 });
 </script>
 </body>
