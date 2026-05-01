@@ -123,14 +123,24 @@ export default function StoryPage() {
     }
   }, []);
 
+  // scene + dialogues 합쳐서 재생 (scene은 나레이터 목소리로 맨 앞)
+  const buildItems = (page: Page): Dialogue[] => {
+    const items: Dialogue[] = [];
+    if (page.scene && page.scene.trim()) {
+      items.push({ character: '나레이터', icon: '📢', text: page.scene });
+    }
+    items.push(...page.dialogues);
+    return items;
+  };
+
   // 페이지 변경 시 자동 재생
   useEffect(() => {
     if (loading || !story) return;
     const page = story.pages[currentPage];
-    if (!page || page.dialogues.length === 0) return;
+    if (!page) return;
     stopTts();
     const timer = setTimeout(() => {
-      playDialogues(page.dialogues);
+      playDialogues(buildItems(page));
     }, 150);
     return () => {
       clearTimeout(timer);
@@ -144,7 +154,7 @@ export default function StoryPage() {
     const page = story.pages[currentPage];
     if (!page) return;
     stopTts();
-    setTimeout(() => playDialogues(page.dialogues), 50);
+    setTimeout(() => playDialogues(buildItems(page)), 50);
   };
 
   const handleStopPlay = () => {
@@ -192,17 +202,35 @@ export default function StoryPage() {
           {/* TTS 상태 뱃지 */}
           {isPlaying && (
             <span className="text-xs text-purple-500 bg-purple-100 px-3 py-1 rounded-full flex items-center gap-1 animate-pulse">
-              🔊 {ttsLoading ? '불러오는 중...' : `${page.dialogues[playingIdx!]?.character || ''} 말하는 중`}
+              🔊 {ttsLoading ? '불러오는 중...' : (() => {
+                const items = buildItems(page);
+                return `${items[playingIdx!]?.character || ''} 말하는 중`;
+              })()}
             </span>
           )}
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm p-6 mb-4">
-          <p className="text-sm text-gray-700 italic mb-5 leading-relaxed border-l-4 border-purple-200 pl-4">{page.scene}</p>
+          {/* scene: 나레이터가 읽는 중이면 하이라이트 */}
+          {(() => {
+            const items = buildItems(page);
+            const sceneIsPlaying = isPlaying && items[playingIdx!]?.character === '나레이터';
+            return (
+              <p className={`text-sm italic mb-5 leading-relaxed border-l-4 pl-4 transition-all ${
+                sceneIsPlaying
+                  ? 'text-purple-700 border-purple-500 bg-purple-50 rounded-r-lg py-2'
+                  : 'text-gray-700 border-purple-200'
+              }`}>
+                {page.scene}
+              </p>
+            );
+          })()}
           <div className="space-y-5">
             {page.dialogues.map((d, i) => {
               const isPark = d.character.includes('과장') || d.character.includes('박');
-              const isActive = playingIdx === i;
+              // scene이 index 0이므로 dialogue는 +1 오프셋
+              const sceneOffset = (page.scene && page.scene.trim()) ? 1 : 0;
+              const isActive = playingIdx === i + sceneOffset;
               return (
                 <div
                   key={i}
