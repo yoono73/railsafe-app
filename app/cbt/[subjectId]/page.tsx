@@ -869,6 +869,24 @@ export default function CbtPage() {
             <p style={{ fontSize: '0.9rem', color: '#374151', lineHeight: '1.6' }}>{q.explanation}</p>
           </div>
         )}
+
+        {/* 오답일 때 핵심정리 바로가기 */}
+        {confirmed && selected !== q.correct_option && (
+          <div style={{ marginTop: '0.75rem', display: 'flex', justifyContent: 'center' }}>
+            <button
+              onClick={() => router.push(`/theory/${subjectId}`)}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '0.4rem',
+                padding: '0.6rem 1.2rem',
+                background: '#f5f3ff', border: '1.5px solid #c4b5fd',
+                color: '#7c3aed', borderRadius: '0.75rem',
+                fontSize: '0.85rem', fontWeight: '600', cursor: 'pointer',
+              }}
+            >
+              📚 핵심정리 강의 보러가기
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

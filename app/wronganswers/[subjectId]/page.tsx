@@ -324,6 +324,18 @@ export default function WrongAnswersSubjectPage() {
           </div>
         )}
 
+        {/* 핵심정리 바로가기 — 확인 후 항상 표시 */}
+        {confirmed && (
+          <div className="mb-4 flex justify-center">
+            <button
+              onClick={() => router.push(`/theory/${subjectId}`)}
+              className="flex items-center gap-2 px-5 py-2.5 bg-purple-50 border border-purple-200 text-purple-700 rounded-xl text-sm font-semibold hover:bg-purple-100 transition"
+            >
+              📚 핵심정리 강의 보러가기
+            </button>
+          </div>
+        )}
+
         {/* 버튼 */}
         <div className="flex justify-end">
           {!confirmed ? (
