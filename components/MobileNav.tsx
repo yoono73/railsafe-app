@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 const navItems = [
   { label: '홈',    icon: '🏠', href: '/dashboard'  },
   { label: '이론',  icon: '📚', href: '/theory/1'   },
-  { label: '스토리', icon: '📖', href: '/story/1/1'  },
+  { label: '스토리', icon: '📖', href: '/story'      },
   { label: 'CBT',   icon: '📝', href: '/cbt/1'      },
   { label: '인출',  icon: '🧠', href: '/retrieval'   },
   { label: '오답',  icon: '📒', href: '/wronganswers'},
