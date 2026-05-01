@@ -33,7 +33,7 @@ export default function StoryIndexPage() {
         {subjects.map((s) => (
           <button
             key={s.id}
-            onClick={() => router.push(`/story/${s.id}/1`)}
+            onClick={() => router.push(`/story/${s.id}`)}
             style={{ borderLeft: `4px solid ${s.color}` }}
             className="bg-white rounded-2xl shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition text-left w-full"
           >
@@ -45,7 +45,7 @@ export default function StoryIndexPage() {
             </div>
             <div className="flex-1">
               <p className="font-semibold text-gray-800">{s.name}</p>
-              <p className="text-xs text-gray-400 mt-0.5">Ch.1부터 시작</p>
+              <p className="text-xs text-gray-400 mt-0.5">챕터 목록 보기</p>
             </div>
             <span className="text-gray-300 text-xl">›</span>
           </button>

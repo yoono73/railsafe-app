@@ -17,6 +17,8 @@ interface SubjectProgress {
   total: number;
   attempted: number;
   correct: number;
+  storyCompleted: number;
+  storyTotal: number;
 }
 
 interface Announcement {
@@ -75,10 +77,20 @@ export default function DashboardPage() {
         .from('attempts')
         .select('question_id, is_correct, questions(subject_id)');
 
+      // 스토리 전체 챕터 수
+      const { data: storyCounts } = await supabase
+        .from('subject_stories')
+        .select('subject_id');
+
+      // 내 스토리 완료 챕터
+      const { data: storyProgress } = await supabase
+        .from('story_progress')
+        .select('subject_id');
+
       const result: Record<number, SubjectProgress> = {};
 
       (qCounts || []).forEach((q: { subject_id: number }) => {
-        if (!result[q.subject_id]) result[q.subject_id] = { total: 0, attempted: 0, correct: 0 };
+        if (!result[q.subject_id]) result[q.subject_id] = { total: 0, attempted: 0, correct: 0, storyCompleted: 0, storyTotal: 0 };
         result[q.subject_id].total += 1;
       });
 
@@ -94,10 +106,21 @@ export default function DashboardPage() {
         if (a.is_correct) correctMap[sid].add(a.question_id);
       });
 
+      const storyTotalMap: Record<number, number> = {};
+      const storyCompletedMap: Record<number, number> = {};
+      (storyCounts || []).forEach((s: { subject_id: number }) => {
+        storyTotalMap[s.subject_id] = (storyTotalMap[s.subject_id] || 0) + 1;
+      });
+      (storyProgress || []).forEach((s: { subject_id: number }) => {
+        storyCompletedMap[s.subject_id] = (storyCompletedMap[s.subject_id] || 0) + 1;
+      });
+
       subjects.forEach(s => {
-        if (!result[s.id]) result[s.id] = { total: 0, attempted: 0, correct: 0 };
+        if (!result[s.id]) result[s.id] = { total: 0, attempted: 0, correct: 0, storyCompleted: 0, storyTotal: 0 };
         result[s.id].attempted = attemptedMap[s.id]?.size || 0;
         result[s.id].correct = correctMap[s.id]?.size || 0;
+        result[s.id].storyTotal = storyTotalMap[s.id] || 0;
+        result[s.id].storyCompleted = storyCompletedMap[s.id] || 0;
       });
 
       setProgress(result);
@@ -149,13 +172,22 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-bold text-gray-800">학습 현황</h1>
           <p className="text-gray-500 text-sm mt-1">시험일 D-{dday} · 2026.06.21</p>
         </div>
-        <button
-          onClick={() => router.push('/start')}
-          className="shrink-0 flex items-center gap-2 bg-purple-700 hover:bg-purple-800 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition shadow-sm"
-        >
-          <span>🚀</span>
-          오늘의 학습 시작
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => router.push('/bookmarks')}
+            className="shrink-0 flex items-center gap-1.5 bg-yellow-50 border border-yellow-200 text-yellow-700 text-sm font-semibold px-4 py-2.5 rounded-xl transition hover:bg-yellow-100"
+          >
+            <span>★</span>
+            북마크
+          </button>
+          <button
+            onClick={() => router.push('/start')}
+            className="shrink-0 flex items-center gap-2 bg-purple-700 hover:bg-purple-800 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition shadow-sm"
+          >
+            <span>🚀</span>
+            오늘의 학습 시작
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -164,7 +196,10 @@ export default function DashboardPage() {
           const attempted = p?.attempted || 0;
           const correct = p?.correct || 0;
           const total = p?.total || 0;
-          const pct = total > 0 ? Math.round((attempted / total) * 100) : 0;
+          const storyCompleted = p?.storyCompleted || 0;
+          const storyTotal = p?.storyTotal || 0;
+          const cbtPct = total > 0 ? Math.round((attempted / total) * 100) : 0;
+          const storyPct = storyTotal > 0 ? Math.round((storyCompleted / storyTotal) * 100) : 0;
           const correctPct = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
 
           return (
@@ -174,30 +209,45 @@ export default function DashboardPage() {
               </div>
               <h2 className="font-semibold text-gray-800 mb-1">{subject.name}</h2>
 
-              {/* 진행률 */}
               {!loadingProgress && (
-                <div className="mb-3">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-xs text-gray-400">
-                      {attempted > 0 ? `${attempted}/${total}문제 · 정답률 ${correctPct}%` : '아직 안 풀었어요'}
-                    </span>
-                    <span className="text-xs font-semibold text-purple-600">{pct}%</span>
+                <div className="mb-3 space-y-2">
+                  {/* 스토리 진도 */}
+                  <div>
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-xs text-gray-400">📖 스토리 {storyCompleted}/{storyTotal}챕터</span>
+                      <span className="text-xs font-semibold text-purple-500">{storyPct}%</span>
+                    </div>
+                    <div className="bg-purple-100 rounded-full h-1.5 overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all duration-500 bg-purple-500"
+                        style={{ width: `${storyPct}%` }}
+                      />
+                    </div>
                   </div>
-                  <div className="bg-gray-100 rounded-full h-1.5 overflow-hidden">
-                    <div
-                      className="h-full rounded-full transition-all duration-500"
-                      style={{
-                        width: `${pct}%`,
-                        background: pct === 0 ? '#e5e7eb' : correct / (attempted || 1) >= 0.6 ? '#16a34a' : '#7c3aed'
-                      }}
-                    />
+                  {/* CBT 진도 */}
+                  <div>
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-xs text-gray-400">
+                        📝 CBT {attempted > 0 ? `${attempted}/${total}문제 · 정답률 ${correctPct}%` : '미풀이'}
+                      </span>
+                      <span className="text-xs font-semibold text-blue-500">{cbtPct}%</span>
+                    </div>
+                    <div className="bg-blue-100 rounded-full h-1.5 overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all duration-500"
+                        style={{
+                          width: `${cbtPct}%`,
+                          background: cbtPct === 0 ? '#e5e7eb' : correctPct >= 60 ? '#16a34a' : '#3b82f6'
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               )}
 
               <div className="flex gap-2">
                 <button
-                  onClick={() => router.push(`/story/${subject.id}/1`)}
+                  onClick={() => router.push(`/story/${subject.id}`)}
                   className="bg-purple-700 text-white text-sm px-4 py-1.5 rounded-lg hover:bg-purple-800 transition"
                 >
                   스토리

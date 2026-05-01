@@ -88,6 +88,10 @@ export default function CbtPage() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // ── 북마크 ──
+  const [bookmarked, setBookmarked] = useState<Set<number>>(new Set());
+  const [bookmarkLoading, setBookmarkLoading] = useState(false);
+
   // ── 연습 모드 ──
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
@@ -129,6 +133,16 @@ export default function CbtPage() {
 
       setAllQuestions(filtered);
       setLoading(false);
+
+      // 북마크 목록 로드
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: bData } = await supabase
+          .from('question_bookmarks')
+          .select('question_id')
+          .eq('user_id', user.id);
+        if (bData) setBookmarked(new Set(bData.map((b: { question_id: number }) => b.question_id)));
+      }
     };
     fetchAll();
   }, [subjectId]);
@@ -200,6 +214,27 @@ export default function CbtPage() {
     utt.lang = 'ko-KR';
     utt.rate = ttsRate;
     window.speechSynthesis.speak(utt);
+  };
+
+  const toggleBookmark = async (questionId: number) => {
+    if (bookmarkLoading) return;
+    setBookmarkLoading(true);
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { setBookmarkLoading(false); return; }
+
+    if (bookmarked.has(questionId)) {
+      await supabase.from('question_bookmarks')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('question_id', questionId);
+      setBookmarked(prev => { const s = new Set(prev); s.delete(questionId); return s; });
+    } else {
+      await supabase.from('question_bookmarks')
+        .insert({ user_id: user.id, question_id: questionId });
+      setBookmarked(prev => new Set([...prev, questionId]));
+    }
+    setBookmarkLoading(false);
   };
 
   const ttsExamReplay = () => {
@@ -1076,6 +1111,14 @@ export default function CbtPage() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
               <SpeedControl />
               <button onClick={ttsPracticeReplay} style={{ background: 'none', border: 'none', color: '#7c3aed', fontSize: '0.8rem', cursor: 'pointer', opacity: 0.7 }} title="다시 읽기">🔊 다시 읽기</button>
+              <button
+                onClick={() => toggleBookmark(q.id)}
+                disabled={bookmarkLoading}
+                style={{ background: 'none', border: 'none', fontSize: '1.1rem', cursor: 'pointer', lineHeight: 1, opacity: bookmarkLoading ? 0.4 : 1 }}
+                title={bookmarked.has(q.id) ? '북마크 해제' : '북마크'}
+              >
+                {bookmarked.has(q.id) ? '★' : '☆'}
+              </button>
             </div>
           </div>
           <p style={{ fontSize: '1.05rem', fontWeight: '600', color: '#1f2937', lineHeight: '1.6' }}>{q.question_text}</p>

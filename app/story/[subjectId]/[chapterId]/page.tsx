@@ -49,12 +49,30 @@ export default function StoryPage() {
   const [story, setStory] = useState<Story | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [progressSaved, setProgressSaved] = useState(false);
 
   // ── TTS 상태 ──
   const [playingIdx, setPlayingIdx] = useState<number | null>(null); // 현재 재생 중인 dialogue 인덱스
   const [ttsLoading, setTtsLoading] = useState(false); // 불러오는 중
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const cancelRef = useRef(false); // 중단 요청 플래그
+
+  // 챕터 완료 시 progress 저장
+  const saveProgress = useCallback(async () => {
+    if (progressSaved) return;
+    setProgressSaved(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        await supabase.from('story_progress').upsert({
+          user_id: user.id,
+          subject_id: subjectId,
+          chapter_number: chapterId,
+          completed_at: new Date().toISOString(),
+        }, { onConflict: 'user_id,subject_id,chapter_number' });
+      }
+    } catch { /* silent */ }
+  }, [progressSaved, subjectId, chapterId, supabase]);
 
   const subjectNames: Record<number, string> = {
     1: '교통안전관리론', 2: '교통안전법', 3: '열차운전',
@@ -187,7 +205,7 @@ export default function StoryPage() {
     <div className="bg-purple-50 min-h-full">
       {/* 브레드크럼 */}
       <div className="px-6 py-3 flex items-center gap-2 text-sm border-b border-purple-100 bg-white">
-        <button onClick={() => router.push('/dashboard')} className="text-purple-500 hover:text-purple-700 transition">← 대시보드</button>
+        <button onClick={() => { stopTts(); router.push(`/story/${subjectId}`); }} className="text-purple-500 hover:text-purple-700 transition">← 챕터 목록</button>
         <span className="text-gray-300">|</span>
         <span className="text-gray-500">{subjectNames[subjectId]}</span>
         <span className="text-gray-300">›</span>
@@ -299,7 +317,7 @@ export default function StoryPage() {
 
           {isLast ? (
             <button
-              onClick={() => { stopTts(); router.push('/dashboard'); }}
+              onClick={() => { stopTts(); saveProgress(); router.push(`/story/${subjectId}`); }}
               className="px-6 py-3 rounded-xl bg-purple-700 text-white text-sm font-medium hover:bg-purple-800 transition"
             >완료 ✓</button>
           ) : (
