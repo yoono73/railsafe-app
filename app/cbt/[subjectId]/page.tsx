@@ -64,6 +64,14 @@ export default function CbtPage() {
   // ── 모드 선택 상태 ──
   const [mode, setMode] = useState<'select' | 'practice' | 'exam'>('select');
 
+  // ── 운전 모드 ──
+  const [drivingMode, setDrivingMode] = useState(false);
+  const [driveCountdown, setDriveCountdown] = useState(0);
+  const driveTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [listening, setListening] = useState(false);   // 음성 인식 중
+  const [voiceError, setVoiceError] = useState('');    // 인식 실패 메시지
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
+
   // ── TTS 속도 ──
   const [ttsRate, setTtsRate] = useState<number>(() => {
     if (typeof window === 'undefined') return 0.9;
@@ -142,20 +150,33 @@ export default function CbtPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, examFinished]);
 
+  // drivingSelectRef 항상 최신 함수 참조 유지
+  useEffect(() => { drivingSelectRef.current = drivingSelect; });
+
   // TTS: 연습 모드 문제 변경 시 자동 읽기
   useEffect(() => {
     if (typeof window === 'undefined' || mode !== 'practice' || loading || finished || questions.length === 0) return;
     const q = questions[current];
     if (!q) return;
+    setListening(false);
+    setVoiceError('');
     window.speechSynthesis.cancel();
-    const utt = new window.SpeechSynthesisUtterance(q.question_text);
+    // 운전 모드: 문제 + 보기 4개 모두 읽기
+    const text = drivingMode
+      ? `${q.question_text}. ${q.options.map((o, i) => `${i + 1}번. ${getOptionText(o)}`).join('. ')}`
+      : q.question_text;
+    const utt = new window.SpeechSynthesisUtterance(text);
     utt.lang = 'ko-KR';
     utt.rate = ttsRate;
+    // 운전 모드: TTS 끝나면 자동으로 음성 인식 시작
+    if (drivingMode) {
+      utt.onend = () => { setTimeout(startListening, 300); };
+    }
     ttsRef.current = utt;
     window.speechSynthesis.speak(utt);
     return () => { window.speechSynthesis.cancel(); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [current, mode, loading, finished, questions]);
+  }, [current, mode, loading, finished, questions, drivingMode]);
 
   // TTS: 시험 모드 문제 변경 시 자동 읽기
   useEffect(() => {
@@ -229,6 +250,108 @@ export default function CbtPage() {
       ))}
     </div>
   );
+
+  // 음성 입력 숫자 파싱
+  const parseVoiceAnswer = (text: string): number => {
+    const t = text.trim();
+    if (/1|일번|일/.test(t)) return 1;
+    if (/2|이번|이$/.test(t)) return 2;
+    if (/3|삼번|삼/.test(t)) return 3;
+    if (/4|사번|사$/.test(t)) return 4;
+    return 0;
+  };
+
+  // 음성 인식 시작 (TTS 끝난 후 자동 호출)
+  const startListening = () => {
+    if (typeof window === 'undefined') return;
+    const SR = (window as Window & { SpeechRecognition?: typeof SpeechRecognition; webkitSpeechRecognition?: typeof SpeechRecognition }).SpeechRecognition
+              || (window as Window & { webkitSpeechRecognition?: typeof SpeechRecognition }).webkitSpeechRecognition;
+    if (!SR) return;
+
+    if (recognitionRef.current) { try { recognitionRef.current.stop(); } catch {} }
+    const rec = new SR();
+    rec.lang = 'ko-KR';
+    rec.continuous = false;
+    rec.interimResults = false;
+    rec.maxAlternatives = 3;
+    recognitionRef.current = rec;
+
+    rec.onstart = () => { setListening(true); setVoiceError(''); };
+    rec.onend = () => setListening(false);
+    rec.onerror = (e) => {
+      setListening(false);
+      if (e.error !== 'no-speech') setVoiceError('인식 실패 — 번호를 탭하세요');
+    };
+    rec.onresult = (e) => {
+      for (let i = 0; i < e.results[0].length; i++) {
+        const num = parseVoiceAnswer(e.results[0][i].transcript);
+        if (num >= 1 && num <= 4) { drivingSelectRef.current(num); return; }
+      }
+      setVoiceError('못 들었어요 — 다시 말하거나 탭하세요');
+    };
+    rec.start();
+  };
+
+  // drivingSelect를 ref로 감싸기 (클로저 문제 방지)
+  const drivingSelectRef = useRef<(n: number) => void>(() => {});
+
+  // 운전 모드 — 번호 터치/음성 즉시 확인 + 음성 결과 + 자동 넘김
+  const drivingSelect = async (optNum: number) => {
+    if (confirmed) return;
+    setListening(false);
+    setVoiceError('');
+    if (recognitionRef.current) { try { recognitionRef.current.stop(); } catch {} }
+    setSelected(optNum);
+    setConfirmed(true);
+    const q = questions[current];
+    const isCorrect = optNum === q.correct_option;
+    const timeSpent = Date.now() - questionStartTime.current;
+    if (isCorrect) setScore((s) => s + 1);
+    else setWrongAnswers((prev) => [...prev, { question: q, selectedOption: optNum }]);
+
+    // 결과 음성 안내
+    window.speechSynthesis.cancel();
+    const resultText = isCorrect
+      ? '정답입니다.'
+      : `오답입니다. 정답은 ${q.correct_option}번. ${getOptionText(q.options[q.correct_option - 1])}.`;
+    const utt = new window.SpeechSynthesisUtterance(resultText);
+    utt.lang = 'ko-KR';
+    utt.rate = ttsRate;
+    window.speechSynthesis.speak(utt);
+
+    // DB 저장
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      await supabase.from('attempts').insert({
+        user_id: user.id, question_id: q.id,
+        selected_option: optNum, is_correct: isCorrect,
+        time_spent_ms: timeSpent, session_mode: 'cbt',
+        session_id: sessionId.current,
+      });
+    }
+
+    // 3초 카운트다운 후 자동 넘김
+    let count = 3;
+    setDriveCountdown(count);
+    if (driveTimerRef.current) clearInterval(driveTimerRef.current);
+    driveTimerRef.current = setInterval(() => {
+      count -= 1;
+      setDriveCountdown(count);
+      if (count <= 0) {
+        clearInterval(driveTimerRef.current!);
+        setDriveCountdown(0);
+        if (current + 1 >= questions.length) {
+          setFinished(true);
+        } else {
+          setCurrent((c) => c + 1);
+          setSelected(null);
+          setConfirmed(false);
+          questionStartTime.current = Date.now();
+        }
+      }
+    }, 1000);
+  };
 
   const startPractice = () => {
     setQuestions(allQuestions);
@@ -376,6 +499,39 @@ export default function CbtPage() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+
+            {/* 운전 모드 토글 */}
+            <button
+              onClick={() => setDrivingMode((v) => !v)}
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                background: drivingMode ? '#1e1b4b' : 'white',
+                border: '2px solid ' + (drivingMode ? '#6d28d9' : '#e5e7eb'),
+                borderRadius: '1rem', padding: '1rem 1.25rem', cursor: 'pointer',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <span style={{ fontSize: '1.5rem' }}>🚗</span>
+                <div style={{ textAlign: 'left' }}>
+                  <p style={{ fontWeight: '700', color: drivingMode ? 'white' : '#1f2937', fontSize: '0.95rem' }}>운전 모드</p>
+                  <p style={{ fontSize: '0.75rem', color: drivingMode ? '#a5b4fc' : '#9ca3af', marginTop: '0.1rem' }}>문제+보기 전부 읽기 · 터치 후 자동 넘김</p>
+                </div>
+              </div>
+              <div style={{
+                width: '2.5rem', height: '1.4rem', borderRadius: '9999px',
+                background: drivingMode ? '#7c3aed' : '#e5e7eb',
+                position: 'relative', transition: 'background 0.2s',
+              }}>
+                <div style={{
+                  position: 'absolute', top: '0.15rem',
+                  left: drivingMode ? '1.2rem' : '0.15rem',
+                  width: '1.1rem', height: '1.1rem',
+                  borderRadius: '50%', background: 'white',
+                  transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+                }} />
+              </div>
+            </button>
+
             {/* 연습 모드 */}
             <button
               onClick={startPractice}
@@ -691,6 +847,107 @@ export default function CbtPage() {
               </button>
             )}
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ════════════════════════════════
+  // 운전 모드 화면
+  // ════════════════════════════════
+  if (mode === 'practice' && drivingMode && !finished && !reviewing) {
+    const q = questions[current];
+    const isCorrectAns = selected === q.correct_option;
+
+    return (
+      <div style={{ minHeight: '100vh', background: '#0f0a2e', display: 'flex', flexDirection: 'column', padding: '1.25rem' }}>
+        {/* 헤더 */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+          <button
+            onClick={() => { window.speechSynthesis.cancel(); if (driveTimerRef.current) clearInterval(driveTimerRef.current); setMode('select'); setDrivingMode(false); setCurrent(0); setSelected(null); setConfirmed(false); setScore(0); setFinished(false); setWrongAnswers([]); }}
+            style={{ color: '#a5b4fc', background: 'none', border: 'none', fontSize: '0.85rem', cursor: 'pointer' }}
+          >✕ 나가기</button>
+          <span style={{ color: '#818cf8', fontSize: '0.85rem', fontWeight: '600' }}>🚗 {current + 1} / {questions.length}</span>
+          <SpeedControl />
+        </div>
+
+        {/* 진행바 */}
+        <div style={{ background: '#1e1b4b', borderRadius: '9999px', height: '4px', marginBottom: '1.25rem', overflow: 'hidden' }}>
+          <div style={{ background: '#7c3aed', height: '100%', width: ((current + 1) / questions.length * 100) + '%', borderRadius: '9999px', transition: 'width 0.3s' }} />
+        </div>
+
+        {/* 문제 카드 */}
+        <div style={{ background: '#1e1b4b', borderRadius: '1.25rem', padding: '1.5rem', marginBottom: '1.25rem', flex: 1 }}>
+          <p style={{ color: '#c4b5fd', fontSize: '0.75rem', fontWeight: '600', marginBottom: '0.75rem' }}>문제 {current + 1}</p>
+          <p style={{ color: 'white', fontSize: '1.05rem', fontWeight: '600', lineHeight: '1.7' }}>{q.question_text}</p>
+
+          {/* 음성 인식 상태 */}
+          {!confirmed && (
+            <div style={{ marginTop: '1rem' }}>
+              {listening ? (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#34d399' }}>
+                  <span style={{ fontSize: '1.2rem', animation: 'pulse 1s infinite' }}>🎤</span>
+                  <span style={{ fontSize: '0.85rem', fontWeight: '600' }}>듣는 중... "일", "이", "삼", "사" 또는 "1번"~"4번"</span>
+                </div>
+              ) : voiceError ? (
+                <p style={{ color: '#f87171', fontSize: '0.8rem' }}>⚠️ {voiceError}</p>
+              ) : (
+                <p style={{ color: '#6366f1', fontSize: '0.8rem' }}>🔊 문제를 읽고 나면 자동으로 듣기 시작해요</p>
+              )}
+            </div>
+          )}
+
+          {confirmed && (
+            <div style={{ marginTop: '1.25rem', padding: '0.75rem 1rem', background: isCorrectAns ? '#14532d' : '#450a0a', borderRadius: '0.75rem', borderLeft: '4px solid ' + (isCorrectAns ? '#22c55e' : '#ef4444') }}>
+              <p style={{ color: isCorrectAns ? '#86efac' : '#fca5a5', fontWeight: '700', fontSize: '0.95rem' }}>
+                {isCorrectAns ? '✅ 정답!' : `❌ 오답 — 정답: ${q.correct_option}번`}
+              </p>
+              {!isCorrectAns && (
+                <p style={{ color: '#fca5a5', fontSize: '0.8rem', marginTop: '0.3rem' }}>{getOptionText(q.options[q.correct_option - 1])}</p>
+              )}
+              {driveCountdown > 0 && (
+                <p style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '0.5rem' }}>⏱ {driveCountdown}초 후 다음 문제...</p>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* 큰 숫자 버튼 2×2 */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+          {q.options.map((opt, idx) => {
+            const optNum = idx + 1;
+            const isSelected = selected === optNum;
+            const isCorrectOpt = q.correct_option === optNum;
+
+            let bg = '#312e81';
+            let border = '2px solid #4c1d95';
+            if (confirmed) {
+              if (isCorrectOpt) { bg = '#14532d'; border = '2px solid #22c55e'; }
+              else if (isSelected) { bg = '#450a0a'; border = '2px solid #ef4444'; }
+            } else if (isSelected) {
+              bg = '#6d28d9'; border = '2px solid #a78bfa';
+            }
+
+            return (
+              <button
+                key={idx}
+                onClick={() => drivingSelect(optNum)}
+                disabled={confirmed}
+                style={{
+                  background: bg, border, borderRadius: '1rem',
+                  padding: '1.75rem 1rem',
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem',
+                  cursor: confirmed ? 'default' : 'pointer', transition: 'all 0.15s',
+                  opacity: confirmed && !isCorrectOpt && !isSelected ? 0.4 : 1,
+                }}
+              >
+                <span style={{ color: 'white', fontSize: '2rem', fontWeight: '800', lineHeight: 1 }}>{optNum}</span>
+                <span style={{ color: '#c4b5fd', fontSize: '0.7rem', textAlign: 'center', lineHeight: '1.4', wordBreak: 'keep-all' }}>
+                  {getOptionText(opt).slice(0, 20)}{getOptionText(opt).length > 20 ? '…' : ''}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
     );
