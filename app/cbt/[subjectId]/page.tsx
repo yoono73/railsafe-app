@@ -112,6 +112,42 @@ export default function CbtPage() {
   const examTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const examSessionId = useRef<string>(crypto.randomUUID());
   const ttsRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const cbtAudioRef = useRef<HTMLAudioElement | null>(null);
+  const [cbtTtsLoading, setCbtTtsLoading] = useState(false);
+
+  // ElevenLabs TTS (나레이터 여성 목소리)
+  const VOICE_NARRATOR_CBT = '5n5gqmaQi9Ewevrz7bOS';
+
+  const playCbtTts = useCallback(async (text: string, rate: number, onEnd?: () => void) => {
+    if (cbtAudioRef.current) { cbtAudioRef.current.pause(); cbtAudioRef.current = null; }
+    setCbtTtsLoading(true);
+    try {
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, voiceId: VOICE_NARRATOR_CBT }),
+      });
+      if (!res.ok) throw new Error();
+      const blob = await res.blob();
+      setCbtTtsLoading(false);
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audio.playbackRate = rate;
+      cbtAudioRef.current = audio;
+      audio.onended = () => { URL.revokeObjectURL(url); onEnd?.(); };
+      audio.onerror = () => { URL.revokeObjectURL(url); onEnd?.(); };
+      audio.play().catch(() => onEnd?.());
+    } catch {
+      setCbtTtsLoading(false);
+      onEnd?.();
+    }
+  }, []);
+
+  const stopCbtTts = useCallback(() => {
+    if (cbtAudioRef.current) { cbtAudioRef.current.pause(); cbtAudioRef.current = null; }
+    window.speechSynthesis?.cancel();
+    setCbtTtsLoading(false);
+  }, []);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -169,51 +205,35 @@ export default function CbtPage() {
 
   // TTS: 연습 모드 문제 변경 시 자동 읽기
   useEffect(() => {
-    if (typeof window === 'undefined' || mode !== 'practice' || loading || finished || questions.length === 0) return;
+    if (mode !== 'practice' || loading || finished || questions.length === 0) return;
     const q = questions[current];
     if (!q) return;
     setListening(false);
     setVoiceError('');
-    window.speechSynthesis.cancel();
-    // 운전 모드: 문제 + 보기 4개 모두 읽기
+    stopCbtTts();
     const text = drivingMode
       ? `${q.question_text}. ${q.options.map((o, i) => `${i + 1}번. ${getOptionText(o)}`).join('. ')}`
       : q.question_text;
-    const utt = new window.SpeechSynthesisUtterance(text);
-    utt.lang = 'ko-KR';
-    utt.rate = ttsRate;
-    // 운전 모드: TTS 끝나면 자동으로 음성 인식 시작
-    if (drivingMode) {
-      utt.onend = () => { setTimeout(startListening, 300); };
-    }
-    ttsRef.current = utt;
-    window.speechSynthesis.speak(utt);
-    return () => { window.speechSynthesis.cancel(); };
+    const onEnd = drivingMode ? () => { setTimeout(startListening, 300); } : undefined;
+    playCbtTts(text, ttsRate, onEnd);
+    return () => { stopCbtTts(); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current, mode, loading, finished, questions, drivingMode]);
 
   // TTS: 시험 모드 문제 변경 시 자동 읽기
   useEffect(() => {
-    if (typeof window === 'undefined' || mode !== 'exam' || examFinished || questions.length === 0) return;
+    if (mode !== 'exam' || examFinished || questions.length === 0) return;
     const q = questions[examCurrent];
     if (!q) return;
-    window.speechSynthesis.cancel();
-    const utt = new window.SpeechSynthesisUtterance(q.question_text);
-    utt.lang = 'ko-KR';
-    utt.rate = ttsRate;
-    ttsRef.current = utt;
-    window.speechSynthesis.speak(utt);
-    return () => { window.speechSynthesis.cancel(); };
+    stopCbtTts();
+    playCbtTts(q.question_text, ttsRate);
+    return () => { stopCbtTts(); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [examCurrent, mode, examFinished, questions]);
 
   const ttsPracticeReplay = () => {
     if (!questions.length) return;
-    window.speechSynthesis.cancel();
-    const utt = new window.SpeechSynthesisUtterance(questions[current].question_text);
-    utt.lang = 'ko-KR';
-    utt.rate = ttsRate;
-    window.speechSynthesis.speak(utt);
+    playCbtTts(questions[current].question_text, ttsRate);
   };
 
   const toggleBookmark = async (questionId: number) => {
@@ -239,11 +259,7 @@ export default function CbtPage() {
 
   const ttsExamReplay = () => {
     if (!questions.length) return;
-    window.speechSynthesis.cancel();
-    const utt = new window.SpeechSynthesisUtterance(questions[examCurrent].question_text);
-    utt.lang = 'ko-KR';
-    utt.rate = ttsRate;
-    window.speechSynthesis.speak(utt);
+    playCbtTts(questions[examCurrent].question_text, ttsRate);
   };
 
   // 속도 조절 UI 컴포넌트 (인라인)
@@ -255,17 +271,8 @@ export default function CbtPage() {
           key={s.value}
           onClick={() => {
             changeTtsRate(s.value);
-            // 현재 재생 중인 발화가 있으면 새 속도로 다시 읽기
-            if (window.speechSynthesis.speaking) {
-              window.speechSynthesis.cancel();
-              const textToRead = mode === 'exam' ? questions[examCurrent]?.question_text : questions[current]?.question_text;
-              if (textToRead) {
-                const utt = new window.SpeechSynthesisUtterance(textToRead);
-                utt.lang = 'ko-KR';
-                utt.rate = s.value;
-                window.speechSynthesis.speak(utt);
-              }
-            }
+            const textToRead = mode === 'exam' ? questions[examCurrent]?.question_text : questions[current]?.question_text;
+            if (textToRead) playCbtTts(textToRead, s.value);
           }}
           style={{
             padding: '0.2rem 0.45rem',
@@ -345,14 +352,10 @@ export default function CbtPage() {
     else setWrongAnswers((prev) => [...prev, { question: q, selectedOption: optNum }]);
 
     // 결과 음성 안내
-    window.speechSynthesis.cancel();
     const resultText = isCorrect
       ? '정답입니다.'
       : `오답입니다. 정답은 ${q.correct_option}번. ${getOptionText(q.options[q.correct_option - 1])}.`;
-    const utt = new window.SpeechSynthesisUtterance(resultText);
-    utt.lang = 'ko-KR';
-    utt.rate = ttsRate;
-    window.speechSynthesis.speak(utt);
+    playCbtTts(resultText, ttsRate);
 
     // DB 저장
     const supabase = createClient();
@@ -899,7 +902,7 @@ export default function CbtPage() {
         {/* 헤더 */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
           <button
-            onClick={() => { window.speechSynthesis.cancel(); if (driveTimerRef.current) clearInterval(driveTimerRef.current); setMode('select'); setDrivingMode(false); setCurrent(0); setSelected(null); setConfirmed(false); setScore(0); setFinished(false); setWrongAnswers([]); }}
+            onClick={() => { stopCbtTts(); if (driveTimerRef.current) clearInterval(driveTimerRef.current); setMode('select'); setDrivingMode(false); setCurrent(0); setSelected(null); setConfirmed(false); setScore(0); setFinished(false); setWrongAnswers([]); }}
             style={{ color: '#a5b4fc', background: 'none', border: 'none', fontSize: '0.85rem', cursor: 'pointer' }}
           >✕ 나가기</button>
           <span style={{ color: '#818cf8', fontSize: '0.85rem', fontWeight: '600' }}>🚗 {current + 1} / {questions.length}</span>

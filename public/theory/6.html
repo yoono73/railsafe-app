@@ -382,7 +382,7 @@ function playEduTTS(text, btn) {
   fetch('/api/tts', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({text: text, voiceId: '5n5gqmaQi9Ewevrz7bOS'})
+    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
   })
   .then(function(r) { return r.blob(); })
   .then(function(blob) {

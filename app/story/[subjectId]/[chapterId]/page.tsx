@@ -28,16 +28,25 @@ interface Story {
   pages: Page[];
 }
 
-// ── ElevenLabs 3-voice IDs ──
+// ── ElevenLabs 4-voice IDs ──
 const VOICE_NARRATOR = '5n5gqmaQi9Ewevrz7bOS'; // 여자 나레이터
+const VOICE_JO       = 'sQ3a15DhENXU8pKTHlcc';  // 조계장 (남성)
 const VOICE_PARK     = 'Ir7oQcBXWiq4oFGROCfj';  // 박과장
 const VOICE_YUNHO    = 'NpneagLVR101ytYGxUPX';  // 윤호
 
 function getVoiceId(character: string): string {
   if (character.includes('과장') || character.includes('박')) return VOICE_PARK;
   if (character.includes('윤호')) return VOICE_YUNHO;
+  if (character.includes('계장') || character.includes('조')) return VOICE_JO;
   return VOICE_NARRATOR;
 }
+
+const TTS_SPEEDS = [
+  { label: '0.7×', value: 0.7 },
+  { label: '0.9×', value: 0.9 },
+  { label: '1.1×', value: 1.1 },
+  { label: '1.3×', value: 1.3 },
+];
 
 export default function StoryPage() {
   const router = useRouter();
@@ -52,10 +61,36 @@ export default function StoryPage() {
   const [progressSaved, setProgressSaved] = useState(false);
 
   // ── TTS 상태 ──
-  const [playingIdx, setPlayingIdx] = useState<number | null>(null); // 현재 재생 중인 dialogue 인덱스
-  const [ttsLoading, setTtsLoading] = useState(false); // 불러오는 중
+  const [playingIdx, setPlayingIdx] = useState<number | null>(null);
+  const [ttsLoading, setTtsLoading] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const cancelRef = useRef(false); // 중단 요청 플래그
+  const cancelRef = useRef(false);
+
+  // ── 운전 모드 / 속도 ──
+  const [drivingMode, setDrivingMode] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return localStorage.getItem('story_driving_mode') === 'true';
+  });
+  const [ttsRate, setTtsRate] = useState(() => {
+    if (typeof window === 'undefined') return 0.9;
+    return parseFloat(localStorage.getItem('story_tts_rate') || '0.9');
+  });
+  const drivingModeRef = useRef(drivingMode);
+  const ttsRateRef = useRef(ttsRate);
+
+  useEffect(() => { drivingModeRef.current = drivingMode; }, [drivingMode]);
+  useEffect(() => { ttsRateRef.current = ttsRate; }, [ttsRate]);
+
+  const toggleDrivingMode = () => {
+    const next = !drivingMode;
+    setDrivingMode(next);
+    localStorage.setItem('story_driving_mode', String(next));
+  };
+
+  const changeTtsRate = (rate: number) => {
+    setTtsRate(rate);
+    localStorage.setItem('story_tts_rate', String(rate));
+  };
 
   // 챕터 완료 시 progress 저장
   const saveProgress = useCallback(async () => {
@@ -104,44 +139,62 @@ export default function StoryPage() {
     setTtsLoading(false);
   }, []);
 
-  // 대화 순차 재생 (ElevenLabs 3-voice)
-  const playDialogues = useCallback(async (dialogues: Dialogue[]) => {
-    cancelRef.current = false;
-    for (let i = 0; i < dialogues.length; i++) {
-      if (cancelRef.current) break;
-      const d = dialogues[i];
-      setPlayingIdx(i);
-      setTtsLoading(true);
-      try {
-        const res = await fetch('/api/tts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: d.text, voiceId: getVoiceId(d.character) }),
-        });
-        if (!res.ok) throw new Error('TTS fetch failed');
-        const blob = await res.blob();
-        if (cancelRef.current) break;
-        setTtsLoading(false);
-        const url = URL.createObjectURL(blob);
-        await new Promise<void>((resolve) => {
-          const audio = new Audio(url);
-          audioRef.current = audio;
-          audio.onended = () => { URL.revokeObjectURL(url); resolve(); };
-          audio.onerror = () => { URL.revokeObjectURL(url); resolve(); };
-          audio.play().catch(() => resolve());
-        });
-      } catch {
-        setTtsLoading(false);
-        if (cancelRef.current) break;
-        // 에러 발생 시 해당 대화 건너뛰고 다음으로
-      }
-    }
-    if (!cancelRef.current) {
-      setPlayingIdx(null);
+  // 단일 텍스트 재생 (Promise)
+  const playOne = useCallback(async (text: string, voiceId: string, rate: number): Promise<void> => {
+    if (cancelRef.current) return;
+    setTtsLoading(true);
+    try {
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, voiceId }),
+      });
+      if (!res.ok) throw new Error('TTS fetch failed');
+      const blob = await res.blob();
+      if (cancelRef.current) return;
+      setTtsLoading(false);
+      const url = URL.createObjectURL(blob);
+      await new Promise<void>((resolve) => {
+        const audio = new Audio(url);
+        audio.playbackRate = rate;
+        audioRef.current = audio;
+        audio.onended = () => { URL.revokeObjectURL(url); resolve(); };
+        audio.onerror = () => { URL.revokeObjectURL(url); resolve(); };
+        audio.play().catch(() => resolve());
+      });
+    } catch {
+      setTtsLoading(false);
     }
   }, []);
 
-  // scene + dialogues 합쳐서 재생 (scene은 나레이터 목소리로 맨 앞)
+  // 대화 + (운전모드시) summary_box 순차 재생
+  const playDialogues = useCallback(async (dialogues: Dialogue[], summaryItems?: string[], onFinish?: () => void) => {
+    cancelRef.current = false;
+    const rate = ttsRateRef.current;
+
+    // 대화 재생
+    for (let i = 0; i < dialogues.length; i++) {
+      if (cancelRef.current) return;
+      const d = dialogues[i];
+      setPlayingIdx(i);
+      await playOne(d.text, getVoiceId(d.character), rate);
+    }
+
+    // 운전 모드 + summary_box: 나레이터가 핵심 암기 포인트 읽기
+    if (!cancelRef.current && summaryItems && summaryItems.length > 0) {
+      const summaryIdx = dialogues.length; // summary는 dialogues 뒤
+      setPlayingIdx(summaryIdx);
+      const summaryText = summaryItems.join('. ');
+      await playOne(summaryText, VOICE_NARRATOR, rate);
+    }
+
+    if (!cancelRef.current) {
+      setPlayingIdx(null);
+      onFinish?.();
+    }
+  }, [playOne]);
+
+  // scene + dialogues + (운전모드) summary 합쳐서 재생
   const buildItems = (page: Page): Dialogue[] => {
     const items: Dialogue[] = [];
     if (page.scene && page.scene.trim()) {
@@ -157,9 +210,28 @@ export default function StoryPage() {
     const page = story.pages[currentPage];
     if (!page) return;
     stopTts();
+
+    const isLastPage = currentPage === story.pages.length - 1;
+    const items = buildItems(page);
+    const summaryItems = drivingModeRef.current && page.summary_box?.items?.length
+      ? page.summary_box.items
+      : undefined;
+
+    const onFinish = drivingModeRef.current
+      ? () => {
+          if (isLastPage) {
+            saveProgress();
+            router.push(`/story/${subjectId}`);
+          } else {
+            setCurrentPage(p => p + 1);
+          }
+        }
+      : undefined;
+
     const timer = setTimeout(() => {
-      playDialogues(buildItems(page));
+      playDialogues(items, summaryItems, onFinish);
     }, 150);
+
     return () => {
       clearTimeout(timer);
       stopTts();
@@ -172,11 +244,11 @@ export default function StoryPage() {
     const page = story.pages[currentPage];
     if (!page) return;
     stopTts();
-    setTimeout(() => playDialogues(buildItems(page)), 50);
-  };
-
-  const handleStopPlay = () => {
-    stopTts();
+    const items = buildItems(page);
+    const summaryItems = drivingMode && page.summary_box?.items?.length
+      ? page.summary_box.items
+      : undefined;
+    setTimeout(() => playDialogues(items, summaryItems), 50);
   };
 
   const isPlaying = playingIdx !== null;
@@ -200,6 +272,10 @@ export default function StoryPage() {
   const page = story.pages[currentPage];
   const isFirst = currentPage === 0;
   const isLast = currentPage === story.pages.length - 1;
+  const items = buildItems(page);
+  const sceneIsPlaying = isPlaying && items[playingIdx!]?.character === '나레이터' && playingIdx === 0;
+  // summary 재생 중 여부
+  const summaryIsPlaying = isPlaying && playingIdx === items.length;
 
   return (
     <div className="bg-purple-50 min-h-full">
@@ -213,40 +289,65 @@ export default function StoryPage() {
       </div>
 
       <main className="max-w-2xl mx-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-4">
+        {/* 상단 컨트롤 바 */}
+        <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
           <span className="text-sm text-purple-600 font-medium bg-purple-100 px-3 py-1 rounded-full">
             {currentPage + 1} / {story.pages.length} 페이지
           </span>
+
+          <div className="flex items-center gap-2">
+            {/* 속도 조절 */}
+            <div className="flex items-center gap-1">
+              {TTS_SPEEDS.map(s => (
+                <button
+                  key={s.value}
+                  onClick={() => changeTtsRate(s.value)}
+                  className={`text-xs px-2 py-1 rounded-md border transition ${
+                    ttsRate === s.value
+                      ? 'border-purple-500 bg-purple-100 text-purple-700 font-bold'
+                      : 'border-gray-200 text-gray-400 hover:border-purple-300'
+                  }`}
+                >{s.label}</button>
+              ))}
+            </div>
+
+            {/* 운전 모드 토글 */}
+            <button
+              onClick={toggleDrivingMode}
+              className={`text-xs px-3 py-1 rounded-full border font-medium transition ${
+                drivingMode
+                  ? 'bg-purple-700 text-white border-purple-700'
+                  : 'bg-white text-gray-500 border-gray-200 hover:border-purple-300'
+              }`}
+            >🚗 {drivingMode ? '운전모드 ON' : '운전모드'}</button>
+          </div>
+
           {/* TTS 상태 뱃지 */}
           {isPlaying && (
             <span className="text-xs text-purple-500 bg-purple-100 px-3 py-1 rounded-full flex items-center gap-1 animate-pulse">
-              🔊 {ttsLoading ? '불러오는 중...' : (() => {
-                const items = buildItems(page);
-                return `${items[playingIdx!]?.character || ''} 말하는 중`;
-              })()}
+              🔊 {ttsLoading
+                ? '불러오는 중...'
+                : summaryIsPlaying
+                  ? '핵심 암기 포인트 읽는 중'
+                  : `${items[playingIdx!]?.character || ''} 말하는 중`}
             </span>
           )}
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm p-6 mb-4">
-          {/* scene: 나레이터가 읽는 중이면 하이라이트 */}
-          {(() => {
-            const items = buildItems(page);
-            const sceneIsPlaying = isPlaying && items[playingIdx!]?.character === '나레이터';
-            return (
-              <p className={`text-sm italic mb-5 leading-relaxed border-l-4 pl-4 transition-all ${
-                sceneIsPlaying
-                  ? 'text-purple-700 border-purple-500 bg-purple-50 rounded-r-lg py-2'
-                  : 'text-gray-700 border-purple-200'
-              }`}>
-                {page.scene}
-              </p>
-            );
-          })()}
+          {/* scene */}
+          <p className={`text-sm italic mb-5 leading-relaxed border-l-4 pl-4 transition-all ${
+            sceneIsPlaying
+              ? 'text-purple-700 border-purple-500 bg-purple-50 rounded-r-lg py-2'
+              : 'text-gray-700 border-purple-200'
+          }`}>
+            {page.scene}
+          </p>
+
+          {/* 대화 */}
           <div className="space-y-5">
             {page.dialogues.map((d, i) => {
               const isPark = d.character.includes('과장') || d.character.includes('박');
-              // scene이 index 0이므로 dialogue는 +1 오프셋
               const sceneOffset = (page.scene && page.scene.trim()) ? 1 : 0;
               const isActive = playingIdx === i + sceneOffset;
               return (
@@ -277,9 +378,17 @@ export default function StoryPage() {
           </div>
         </div>
 
+        {/* summary_box */}
         {page.summary_box && (
-          <div className="bg-purple-700 text-white rounded-2xl p-6 mb-4">
-            <h3 className="font-bold mb-3 text-base">📌 {page.summary_box.title}</h3>
+          <div className={`rounded-2xl p-6 mb-4 transition-all ${
+            summaryIsPlaying
+              ? 'bg-purple-800 ring-2 ring-purple-400'
+              : 'bg-purple-700'
+          } text-white`}>
+            <h3 className="font-bold mb-3 text-base flex items-center gap-2">
+              📌 {page.summary_box.title}
+              {summaryIsPlaying && <span className="text-xs font-normal bg-purple-500 px-2 py-0.5 rounded-full animate-pulse">🔊 읽는 중</span>}
+            </h3>
             <ul className="space-y-2">
               {page.summary_box.items.map((item, i) => (
                 <li key={i} className="text-sm leading-relaxed flex gap-2">
@@ -291,6 +400,14 @@ export default function StoryPage() {
           </div>
         )}
 
+        {/* 운전 모드 안내 */}
+        {drivingMode && (
+          <div className="text-center text-xs text-purple-400 bg-purple-50 rounded-xl py-2 mb-4">
+            🚗 운전모드: 핵심 암기 포인트까지 읽고 자동으로 다음 페이지로 이동해요
+          </div>
+        )}
+
+        {/* 네비게이션 */}
         <div className="flex justify-between items-center mt-2">
           <button
             onClick={() => { stopTts(); setCurrentPage(p => p - 1); }}
@@ -302,15 +419,13 @@ export default function StoryPage() {
           <div className="flex items-center gap-2">
             {isPlaying ? (
               <button
-                onClick={handleStopPlay}
+                onClick={stopTts}
                 className="text-xs text-red-400 hover:text-red-600 transition px-2 py-1 rounded-lg bg-red-50"
-                title="정지"
               >⏹ 정지</button>
             ) : (
               <button
                 onClick={handleReplay}
                 className="text-xs text-purple-400 hover:text-purple-600 transition"
-                title="다시 읽기"
               >🔊 다시 읽기</button>
             )}
           </div>

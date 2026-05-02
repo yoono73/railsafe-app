@@ -345,23 +345,174 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 <button id="toc-toggle-btn" onclick="openTocDrawer()" aria-label="목차 열기">📋 목차</button>
 <div id="toc-overlay" onclick="closeTocDrawer()"></div>
-<div id="toc-drawer"><div id="toc-drawer-header"><span>📋 목차</span><button onclick="closeTocDrawer()">✕</button></div><nav class="toc" id="toc-drawer-inner"></nav></div>
+<div id="toc-drawer"><div id="toc-drawer-header"><span>목차</span><button onclick="closeTocDrawer()">✕</button></div><nav id="toc-drawer-nav" class="toc"></nav></div>
 <script>
-function openTocDrawer(){var s=document.querySelector('.container>.toc'),d=document.getElementById('toc-drawer-inner');if(s&&d){d.innerHTML=s.innerHTML;d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){closeTocDrawer();});})}document.getElementById('toc-drawer').classList.add('open');document.getElementById('toc-overlay').classList.add('open');document.body.style.overflow='hidden';}
-function closeTocDrawer(){document.getElementById('toc-drawer').classList.remove('open');document.getElementById('toc-overlay').classList.remove('open');document.body.style.overflow='';}
+// 모바일 목차 드로어
+function openTocDrawer() {
+  var mainToc = document.querySelector('.container .toc');
+  var drawerNav = document.getElementById('toc-drawer-nav');
+  if (mainToc && drawerNav) {
+    drawerNav.innerHTML = mainToc.innerHTML;
+    drawerNav.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() { closeTocDrawer(); });
+    });
+  }
+  document.getElementById('toc-drawer').classList.add('open');
+  document.getElementById('toc-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeTocDrawer() {
+  document.getElementById('toc-drawer').classList.remove('open');
+  document.getElementById('toc-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
 </script>
 
-<div id="tts-bar">
-  <button id="tts-play-btn" onclick="ttsPlayAll()">🔊 전체 읽기</button>
-  <button id="tts-stop-btn" onclick="ttsStop()">⏹ 멈추기</button>
-</div>
+<script>
+// ElevenLabs TTS — 3과목 (열차운전)
+(function(){
+  var VOICE_ID = 'sQ3a15DhENXU8pKTHlcc';
+  var currentAudio = null;
+  var isPlaying = false;
+  var activeBtn = null;
+
+  function extractText(el) {
+    return el.innerText.replace(/\s+/g, ' ').trim();
+  }
+
+  function splitText(text, maxLen) {
+    maxLen = maxLen || 2000;
+    var chunks = [];
+    var remaining = text;
+    while (remaining.length > 0) {
+      if (remaining.length <= maxLen) { chunks.push(remaining); break; }
+      var splitAt = remaining.lastIndexOf('다.', maxLen);
+      if (splitAt < maxLen / 2) splitAt = remaining.lastIndexOf(' ', maxLen);
+      if (splitAt < 0) splitAt = maxLen;
+      chunks.push(remaining.slice(0, splitAt + 1).trim());
+      remaining = remaining.slice(splitAt + 1).trim();
+    }
+    return chunks;
+  }
+
+  function stopAll() {
+    isPlaying = false;
+    if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+    if (activeBtn) { activeBtn.textContent = '🔊 읽기'; activeBtn.style.opacity = '1'; activeBtn = null; }
+  }
+
+  async function playChunks(chunks, btn) {
+    for (var i = 0; i < chunks.length; i++) {
+      if (!isPlaying) break;
+      btn.textContent = '⏹ ' + (i + 1) + '/' + chunks.length;
+      try {
+        var res = await fetch('/api/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: chunks[i], voiceId: VOICE_ID })
+        });
+        if (!res.ok) { console.error('TTS 오류'); break; }
+        var blob = await res.blob();
+        var url = URL.createObjectURL(blob);
+        await new Promise(function(resolve, reject) {
+          currentAudio = new Audio(url);
+          currentAudio.onended = resolve;
+          currentAudio.onerror = reject;
+          currentAudio.play();
+        });
+        URL.revokeObjectURL(url);
+      } catch(e) { console.error(e); break; }
+    }
+    isPlaying = false;
+    btn.textContent = '🔊 읽기';
+    btn.style.opacity = '1';
+    activeBtn = null;
+    currentAudio = null;
+  }
+
+  async function handleClick(btn, partBody) {
+    if (isPlaying) { stopAll(); return; }
+    stopAll();
+    isPlaying = true;
+    activeBtn = btn;
+    btn.textContent = '⏳ 로딩...';
+    btn.style.opacity = '0.7';
+    if (partBody.style.display === 'none') {
+      partBody.style.display = 'block';
+    }
+    var text = extractText(partBody);
+    var chunks = splitText(text);
+    await playChunks(chunks, btn);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.part-title').forEach(function(title) {
+      var partBody = title.nextElementSibling;
+      if (!partBody) return;
+      var btn = document.createElement('button');
+      btn.textContent = '🔊 읽기';
+      btn.style.cssText = 'background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.5);color:#fff;border-radius:4px;padding:2px 8px;font-size:0.75em;cursor:pointer;margin-left:8px;flex-shrink:0;vertical-align:middle;';
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        handleClick(btn, partBody);
+      });
+      var arr = title.querySelector('.arr');
+      if (arr) title.insertBefore(btn, arr);
+      else title.appendChild(btn);
+    });
+  });
+})();
+</script>
 
 <script>
-var _ttsParts=[],_ttsIdx=0;
-function ttsPlayAll(){speechSynthesis.cancel();_ttsParts=Array.from(document.querySelectorAll('.part-body'));_ttsIdx=0;if(!_ttsParts.length)return;document.getElementById('tts-play-btn').style.display='none';document.getElementById('tts-stop-btn').style.display='flex';_ttsNext();}
-function _ttsNext(){if(_ttsIdx>=_ttsParts.length){ttsStop();return;}var text=_ttsParts[_ttsIdx].innerText.replace(/\s+/g,' ').trim();var utt=new SpeechSynthesisUtterance(text);utt.lang='ko-KR';utt.rate=1.0;utt.onend=function(){_ttsIdx++;_ttsNext();};utt.onerror=function(){ttsStop();};speechSynthesis.speak(utt);_ttsIdx++;}
-function ttsStop(){speechSynthesis.cancel();_ttsParts=[];_ttsIdx=0;document.getElementById('tts-play-btn').style.display='flex';document.getElementById('tts-stop-btn').style.display='none';}
-function ttsSection(btn){speechSynthesis.cancel();var pb=btn.closest('.part').querySelector('.part-body');if(!pb)return;var utt=new SpeechSynthesisUtterance(pb.innerText.replace(/\s+/g,' ').trim());utt.lang='ko-KR';utt.rate=1.0;speechSynthesis.speak(utt);}
-document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.part-title').forEach(function(t){var b=document.createElement('button');b.className='part-tts-btn';b.textContent='🔊';b.title='이 파트 읽기';b.onclick=function(e){e.stopPropagation();ttsSection(this);};var a=t.querySelector('.arrow');if(a)t.insertBefore(b,a);else t.appendChild(b);});});
+// ===== 교육 강의 TTS 플레이어 =====
+var _eduAudio3 = null;
+function playEduTTS3(text, btn) {
+  if (_eduAudio3 && !_eduAudio3.paused) {
+    _eduAudio3.pause(); _eduAudio3 = null;
+    btn.textContent = '🔊 강의 듣기';
+    btn.classList.remove('playing'); return;
+  }
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
+  })
+  .then(function(r) { return r.blob(); })
+  .then(function(blob) {
+    var url = URL.createObjectURL(blob);
+    _eduAudio3 = new Audio(url);
+    _eduAudio3.play();
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
+    _eduAudio3.onended = function() {
+      btn.textContent = '🔊 강의 듣기'; btn.classList.remove('playing'); _eduAudio3 = null;
+    };
+  })
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
+}
+
+var EDU3 = {
+  'C-06': `폐색방식, 열차운전에서 가장 많이 나오는 파트입니다. 폐색이란 무엇이냐? 한 구간에 한 열차만 진입하도록 막는 방법입니다. 두 열차가 같은 구간에 들어가면 충돌 위험이 있으니까요. 폐색방식은 크게 상용폐색과 대용폐색으로 나뉩니다. 상용폐색은 정상 운전 시 사용하는 방식, 4가지입니다. 자동폐색식, 연동폐색식, 차내신호폐색식, 통표폐색식. 자연차통! 자동, 연동, 차내신호, 통표! 이렇게 외우세요. 대용폐색은 상용이 고장났을 때 쓰는 방식, 4가지입니다. 통신식, 지도통신식, 지도식, 전령법. 통지지전! 통신, 지도통신, 지도, 전령! 외우셨죠? 자연차통, 통지지전. 이 여덟 가지가 핵심입니다!`,
+  'C-08': `지도표와 지도권, 반드시 구분해야 합니다. 지도표는 뭐냐? 단선 구간에서 열차가 그 구간을 통과할 권한을 주는 문서예요. 기입 사항이 중요합니다. 구간 양끝 역명, 발행 일자, 열차 번호, 이 세 가지입니다. 반면 지도권은 지도표를 발행할 수 없을 때 임시로 발행하는 거예요. 시험에서 자주 틀리는 부분! 지도표 기입 사항에 역장 이름이 들어간다? 아닙니다! 양끝역명, 발행일자, 열차번호만 기억하세요. 지도표와 지도권의 차이점도 나옵니다. 지도표는 구간 입구역에서 발행, 지도권은 역장이 발행 불가할 때 임시 발행. 이렇게 구분하세요!`,
+  'C-11': `신호기 정위, 이게 시험에 정말 많이 나옵니다. 정위란 평상시 기본 위치를 말해요. 각 신호기의 정위를 외우는 게 핵심입니다. 출발신호기 정위는 정지! 입환신호기 정위는 정지! 여기까지는 쉬워요. 함정이 있는 것들을 봅시다. 유도신호기 정위는 현시없음입니다. 정지가 아니에요! 원방신호기 정위는 주의입니다. 진행이 아니에요! 자동폐색신호기 정위는 진행입니다. 이게 반대로 나오면 바로 틀려요. 자동폐색은 정지가 정위 아닌가? 아닙니다! 자동폐색은 진행이 정위입니다. 유도신호기 = 현시없음, 원방신호기 = 주의, 자동폐색 = 진행! 이 세 개 꼭 외우세요!`,
+  'C-14': `임시신호기 3종, 이것도 자주 나와요. 세 가지가 있습니다. 서행신호기, 서행예고신호기, 서행해제신호기입니다. 서행신호기는 해당 구간에서 서행하라는 신호예요. 주간에는 백색테두리에 등황색 원판, 야간에는 등황색등입니다. 서행예고신호기는 전방에 서행 구간이 있다고 미리 알려주는 신호예요. 주간에 흑색삼각형 세 개에 백색삼각형. 서행해제신호기는 서행 구간이 끝났다는 신호입니다. 함정! 서행해제신호기 주간 현시가 백색 원판이라고 하면 틀린 겁니다. 백색 원판이 아니라 녹색 원판입니다! 흰색 테두리 안에 녹색 원판이에요. 서행해제 = 녹색 원판, 이거 꼭 기억하세요!`,
+  'C-15': `입환전호, 오너라와 가거라, 매번 헷갈리죠. 확실하게 정리해 드리겠습니다. 오너라전호는 접근전호라고도 합니다. 열차를 이쪽으로 오게 하는 신호예요. 주간에는 녹색기를 좌우로 흔듭니다. 좌우! 가거라전호는 퇴거전호라고도 합니다. 열차를 저쪽으로 가게 하는 신호예요. 주간에는 녹색기를 위아래로 흔듭니다. 위아래! 오너라=좌우, 가거라=위아래! 반대로 외우면 100% 틀려요. 오너라 할 때 두 팔 벌려서 좌우로 흔드는 모습, 가거라 할 때 손 들어올렸다 내리는 모습을 상상하면 기억하기 쉬워요. 정지전호는 적색기, 야간은 적색등. 이건 쉽죠. 오너라=좌우, 가거라=위아래, 이것만 기억하세요!`,
+};
+document.addEventListener('DOMContentLoaded', function() {
+  Object.keys(EDU3).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var title = el.querySelector('.concept-title');
+    if (!title) return;
+    var btn = document.createElement('button');
+    btn.className = 'tts-edu-btn';
+    btn.textContent = '🔊 강의 듣기';
+    var script = EDU3[id];
+    btn.onclick = function() { playEduTTS3(script, btn); };
+    title.insertAdjacentElement('afterend', btn);
+  });
+});
 </script>
-</body></html>
+</body>
+</html>

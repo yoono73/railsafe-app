@@ -58,7 +58,8 @@ export default function RetrievalPage() {
   const [userId, setUserId] = useState('');
   const [selectedSubject, setSelectedSubject] = useState<number | null>(null);
   const [showSubjectPicker, setShowSubjectPicker] = useState(false);
-  const ttsRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [ttsLoading, setTtsLoading] = useState(false);
 
   const loadCards = useCallback(async (subjectFilter: number | null) => {
     setLoading(true);
@@ -133,29 +134,53 @@ export default function RetrievalPage() {
     loadCards(null);
   }, [loadCards]);
 
+  // ElevenLabs TTS 재생
+  const playTts = useCallback(async (text: string) => {
+    if (audioRef.current) { audioRef.current.pause(); audioRef.current = null; }
+    setTtsLoading(true);
+    try {
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, voiceId: '5n5gqmaQi9Ewevrz7bOS' }),
+      });
+      if (!res.ok) throw new Error();
+      const blob = await res.blob();
+      setTtsLoading(false);
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      audio.onended = () => URL.revokeObjectURL(url);
+      audio.play().catch(() => {});
+    } catch {
+      setTtsLoading(false);
+    }
+  }, []);
+
+  const stopTts = useCallback(() => {
+    if (audioRef.current) { audioRef.current.pause(); audioRef.current = null; }
+    setTtsLoading(false);
+  }, []);
+
   // 카드 변경 시 질문 TTS
   useEffect(() => {
-    if (typeof window === 'undefined' || !cards.length || finished || loading || flipped) return;
+    if (!cards.length || finished || loading || flipped) return;
     const card = cards[current];
     if (!card) return;
-    window.speechSynthesis.cancel();
-    const utt = new window.SpeechSynthesisUtterance(card.question);
-    utt.lang = 'ko-KR';
-    utt.rate = 0.9;
-    ttsRef.current = utt;
-    window.speechSynthesis.speak(utt);
-    return () => { window.speechSynthesis.cancel(); };
+    stopTts();
+    playTts(card.question);
+    return () => { stopTts(); };
   }, [current, cards, finished, loading, flipped]);
 
   const handleFlip = () => {
     setFlipped(true);
-    window.speechSynthesis.cancel();
+    stopTts();
   };
 
   const handleRate = async (knew: boolean) => {
     if (saving) return;
     setSaving(true);
-    window.speechSynthesis.cancel();
+    stopTts();
 
     const card = cards[current];
     const prev = card.review;
@@ -275,7 +300,7 @@ export default function RetrievalPage() {
       {/* 브레드크럼 */}
       <div className="px-6 py-3 flex items-center justify-between text-sm border-b border-orange-100 bg-white">
         <div className="flex items-center gap-2">
-          <button onClick={() => { window.speechSynthesis.cancel(); router.push('/dashboard'); }} className="text-orange-400 hover:text-orange-600 transition">
+          <button onClick={() => { stopTts(); router.push('/dashboard'); }} className="text-orange-400 hover:text-orange-600 transition">
             ← 대시보드
           </button>
           <span className="text-gray-300">|</span>
@@ -357,14 +382,9 @@ export default function RetrievalPage() {
                 {card.question}
               </p>
               <button
-                onClick={() => {
-                  window.speechSynthesis.cancel();
-                  const utt = new window.SpeechSynthesisUtterance(card.question);
-                  utt.lang = 'ko-KR'; utt.rate = 0.9;
-                  window.speechSynthesis.speak(utt);
-                }}
-                className="mt-4 text-xs text-orange-400 hover:text-orange-600 transition"
-              >🔊 다시 읽기</button>
+                onClick={() => playTts(card.question)}
+                className={`mt-4 text-xs transition ${ttsLoading ? 'text-orange-300' : 'text-orange-400 hover:text-orange-600'}`}
+              >{ttsLoading ? '⏳ 불러오는 중...' : '🔊 다시 읽기'}</button>
               {card.review && (
                 <p className="text-xs text-gray-300 mt-3">
                   {card.review.review_count}회 복습 · {card.review.interval_days}일 간격
