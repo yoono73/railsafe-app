@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
@@ -111,7 +111,6 @@ export default function CbtPage() {
   const [examReviewing, setExamReviewing] = useState(false);
   const examTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const examSessionId = useRef<string>(crypto.randomUUID());
-  const ttsRef = useRef<SpeechSynthesisUtterance | null>(null);
   const cbtAudioRef = useRef<HTMLAudioElement | null>(null);
   const [cbtTtsLoading, setCbtTtsLoading] = useState(false);
 
@@ -145,7 +144,6 @@ export default function CbtPage() {
 
   const stopCbtTts = useCallback(() => {
     if (cbtAudioRef.current) { cbtAudioRef.current.pause(); cbtAudioRef.current = null; }
-    window.speechSynthesis?.cancel();
     setCbtTtsLoading(false);
   }, []);
 
@@ -367,11 +365,36 @@ export default function CbtPage() {
     if (isCorrect) setScore((s) => s + 1);
     else setWrongAnswers((prev) => [...prev, { question: q, selectedOption: optNum }]);
 
-    // 결과 음성 안내
+    // 결과 + 해설 음성 안내
     const resultText = isCorrect
       ? '정답입니다.'
       : `오답입니다. 정답은 ${q.correct_option}번. ${getOptionText(q.options[q.correct_option - 1])}.`;
-    playCbtTts(resultText, ttsRate);
+    const explanationText = q.explanation ? ` 해설. ${q.explanation}` : '';
+
+    // 해설 읽기 완료 후 3초 카운트다운 시작
+    const startCountdown = () => {
+      let count = 3;
+      setDriveCountdown(count);
+      if (driveTimerRef.current) clearInterval(driveTimerRef.current);
+      driveTimerRef.current = setInterval(() => {
+        count -= 1;
+        setDriveCountdown(count);
+        if (count <= 0) {
+          clearInterval(driveTimerRef.current!);
+          setDriveCountdown(0);
+          if (current + 1 >= questions.length) {
+            setFinished(true);
+          } else {
+            setCurrent((c) => c + 1);
+            setSelected(null);
+            setConfirmed(false);
+            questionStartTime.current = Date.now();
+          }
+        }
+      }, 1000);
+    };
+
+    playCbtTts(resultText + explanationText, ttsRate, startCountdown);
 
     // DB 저장
     const supabase = createClient();
@@ -384,27 +407,6 @@ export default function CbtPage() {
         session_id: sessionId.current,
       });
     }
-
-    // 3초 카운트다운 후 자동 넘김
-    let count = 3;
-    setDriveCountdown(count);
-    if (driveTimerRef.current) clearInterval(driveTimerRef.current);
-    driveTimerRef.current = setInterval(() => {
-      count -= 1;
-      setDriveCountdown(count);
-      if (count <= 0) {
-        clearInterval(driveTimerRef.current!);
-        setDriveCountdown(0);
-        if (current + 1 >= questions.length) {
-          setFinished(true);
-        } else {
-          setCurrent((c) => c + 1);
-          setSelected(null);
-          setConfirmed(false);
-          questionStartTime.current = Date.now();
-        }
-      }
-    }, 1000);
   };
 
   const startPractice = () => {
@@ -435,17 +437,25 @@ export default function CbtPage() {
   const handleConfirm = async () => {
     if (selected === null) return;
     setConfirmed(true);
-    const isCorrect = selected === questions[current].correct_option;
+    const q = questions[current];
+    const isCorrect = selected === q.correct_option;
     const timeSpent = Date.now() - questionStartTime.current;
     if (isCorrect) setScore((s) => s + 1);
-    else setWrongAnswers((prev) => [...prev, { question: questions[current], selectedOption: selected }]);
+    else setWrongAnswers((prev) => [...prev, { question: q, selectedOption: selected }]);
+
+    // 결과 + 해설 TTS
+    const resultText = isCorrect
+      ? '정답입니다.'
+      : `오답입니다. 정답은 ${q.correct_option}번. ${getOptionText(q.options[q.correct_option - 1])}.`;
+    const explanationText = q.explanation ? ` 해설. ${q.explanation}` : '';
+    playCbtTts(resultText + explanationText, ttsRate);
 
     const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
       await supabase.from('attempts').insert({
         user_id: user.id,
-        question_id: questions[current].id,
+        question_id: q.id,
         selected_option: selected,
         is_correct: isCorrect,
         time_spent_ms: timeSpent,
@@ -1199,7 +1209,71 @@ export default function CbtPage() {
             </button>
           </div>
         )}
+
+        {/* 문제 오류 신고 */}
+        {confirmed && <QuestionReportButton questionId={q.id} />}
       </div>
+    </div>
+  );
+}
+
+function QuestionReportButton({ questionId }: { questionId: number }) {
+  const [open, setOpen] = useState(false);
+  const [reason, setReason] = useState('');
+  const [done, setDone] = useState(false);
+  const reasons = ['정답 오류', '문제 오타', '해설 오류', '기타'];
+
+  const handleReport = async () => {
+    if (!reason) return;
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    await supabase.from('feedback').insert({
+      user_id: user?.id ?? null,
+      user_email: user?.email ?? null,
+      type: 'question_report',
+      question_id: questionId,
+      report_reason: reason,
+      content: `문제 ID ${questionId} 신고: ${reason}`,
+    });
+    setDone(true);
+    setTimeout(() => { setDone(false); setOpen(false); setReason(''); }, 1500);
+  };
+
+  if (!open) return (
+    <div style={{ marginTop: '0.5rem', display: 'flex', justifyContent: 'flex-end' }}>
+      <button onClick={() => setOpen(true)} style={{ fontSize: '0.75rem', color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', padding: '0.25rem 0.5rem' }}>
+        🚩 문제 오류 신고
+      </button>
+    </div>
+  );
+
+  return (
+    <div style={{ marginTop: '0.75rem', background: '#fef2f2', border: '1.5px solid #fca5a5', borderRadius: '0.75rem', padding: '0.875rem' }}>
+      {done ? (
+        <p style={{ fontSize: '0.85rem', color: '#dc2626', textAlign: 'center', fontWeight: '600' }}>신고가 접수됐어요 🙏</p>
+      ) : (
+        <>
+          <p style={{ fontSize: '0.8rem', fontWeight: '600', color: '#dc2626', marginBottom: '0.5rem' }}>🚩 문제 오류 신고</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.5rem' }}>
+            {reasons.map(r => (
+              <button key={r} onClick={() => setReason(r)}
+                style={{ fontSize: '0.8rem', padding: '0.3rem 0.7rem', borderRadius: '0.5rem', border: `1.5px solid ${reason === r ? '#dc2626' : '#fca5a5'}`, background: reason === r ? '#dc2626' : 'white', color: reason === r ? 'white' : '#dc2626', cursor: 'pointer' }}>
+                {r}
+              </button>
+            ))}
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <button onClick={handleReport} disabled={!reason}
+              style={{ flex: 1, padding: '0.5rem', borderRadius: '0.5rem', background: reason ? '#dc2626' : '#e5e7eb', color: reason ? 'white' : '#9ca3af', border: 'none', fontSize: '0.8rem', fontWeight: '600', cursor: reason ? 'pointer' : 'not-allowed' }}>
+              신고하기
+            </button>
+            <button onClick={() => { setOpen(false); setReason(''); }}
+              style={{ padding: '0.5rem 0.75rem', borderRadius: '0.5rem', background: '#f3f4f6', border: 'none', color: '#6b7280', fontSize: '0.8rem', cursor: 'pointer' }}>
+              취소
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

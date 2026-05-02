@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+
+const VOICE_NARRATOR = '5n5gqmaQi9Ewevrz7bOS';
 
 const subjectNames: Record<number, string> = {
   1: '교통안전관리론', 2: '교통안전법', 3: '열차운전',
@@ -43,7 +45,8 @@ export default function WrongAnswersSubjectPage() {
   const [loading, setLoading] = useState(true);
   const sessionId = useRef<string>(crypto.randomUUID());
   const questionStartTime = useRef<number>(Date.now());
-  const ttsRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [ttsLoading, setTtsLoading] = useState(false);
 
   useEffect(() => {
     async function fetchWrongQuestions() {
@@ -89,27 +92,51 @@ export default function WrongAnswersSubjectPage() {
     fetchWrongQuestions();
   }, [subjectId, router]);
 
+  // ElevenLabs TTS
+  const speakText = useCallback(async (text: string) => {
+    try {
+      // 기존 재생 중지
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+      setTtsLoading(true);
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, voiceId: VOICE_NARRATOR }),
+      });
+      if (!res.ok) return;
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      audio.play();
+      audio.onended = () => URL.revokeObjectURL(url);
+    } catch (e) {
+      console.error('TTS error:', e);
+    } finally {
+      setTtsLoading(false);
+    }
+  }, []);
+
   // TTS: 문제 변경 시 자동 읽기
   useEffect(() => {
-    if (typeof window === 'undefined' || loading || finished || questions.length === 0) return;
+    if (loading || finished || questions.length === 0) return;
     const q = questions[current];
     if (!q) return;
-    window.speechSynthesis.cancel();
-    const utt = new window.SpeechSynthesisUtterance(q.question_text);
-    utt.lang = 'ko-KR';
-    utt.rate = 0.9;
-    ttsRef.current = utt;
-    window.speechSynthesis.speak(utt);
-    return () => { window.speechSynthesis.cancel(); };
-  }, [current, questions, loading, finished]);
+    speakText(q.question_text);
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, [current, questions, loading, finished, speakText]);
 
   const ttsReplay = () => {
     if (!questions.length) return;
-    window.speechSynthesis.cancel();
-    const utt = new window.SpeechSynthesisUtterance(questions[current].question_text);
-    utt.lang = 'ko-KR';
-    utt.rate = 0.9;
-    window.speechSynthesis.speak(utt);
+    speakText(questions[current].question_text);
   };
 
   const handleSelect = (idx: number) => {
@@ -262,9 +289,10 @@ export default function WrongAnswersSubjectPage() {
             </div>
             <button
               onClick={ttsReplay}
-              className="text-xs text-red-400 hover:text-red-600 transition"
+              disabled={ttsLoading}
+              className="text-xs text-red-400 hover:text-red-600 transition disabled:opacity-50"
               title="다시 읽기"
-            >🔊 다시 읽기</button>
+            >{ttsLoading ? '⏳ 읽는 중...' : '🔊 다시 읽기'}</button>
           </div>
           <p className="text-base font-semibold text-gray-800 leading-relaxed">{q.question_text}</p>
         </div>

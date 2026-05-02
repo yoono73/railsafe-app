@@ -10,6 +10,8 @@ const navItems = [
   { label: 'CBT',   icon: '📝', href: '/cbt/1'      },
   { label: '인출',  icon: '🧠', href: '/retrieval'   },
   { label: '오답',  icon: '📒', href: '/wronganswers'},
+  { label: '북마크', icon: '🔖', href: '/bookmarks'  },
+  { label: '토픽맵', icon: '🗺️', href: '/topicmap'   },
 ];
 
 export default function MobileNav() {

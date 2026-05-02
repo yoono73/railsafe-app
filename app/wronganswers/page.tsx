@@ -112,10 +112,9 @@ export default function WrongAnswersPage() {
             <h2 className="text-sm font-semibold text-gray-500 mb-3 px-1">과목별 오답 현황</h2>
             <div className="flex flex-col gap-3">
               {stats.map(({ subjectId, count }) => (
-                <button
+                <div
                   key={subjectId}
-                  onClick={() => router.push(`/wronganswers/${subjectId}`)}
-                  className="bg-white rounded-2xl shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition text-left"
+                  className="bg-white rounded-2xl shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition"
                 >
                   <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center text-xl flex-shrink-0">
                     {subjectIcons[subjectId]}
@@ -124,8 +123,13 @@ export default function WrongAnswersPage() {
                     <p className="font-semibold text-gray-800">{subjectNames[subjectId]}</p>
                     <p className="text-sm text-red-500 mt-0.5">{count}문제 오답</p>
                   </div>
-                  <div className="text-gray-300 text-xl">›</div>
-                </button>
+                  <button
+                    onClick={() => router.push(`/wronganswers/${subjectId}`)}
+                    className="shrink-0 bg-red-600 hover:bg-red-700 text-white text-sm font-bold px-4 py-2 rounded-xl transition shadow-sm"
+                  >
+                    재도전 →
+                  </button>
+                </div>
               ))}
             </div>
             <p className="text-xs text-gray-400 text-center mt-6">같은 문제를 여러 번 틀려도 1문제로 표시됩니다</p>

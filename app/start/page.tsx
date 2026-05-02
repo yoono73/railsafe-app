@@ -237,6 +237,18 @@ export default function StartPage() {
             </div>
             <span className="text-gray-300 text-xl">›</span>
           </button>
+
+          <button
+            onClick={() => router.push('/topicmap')}
+            className="flex items-center gap-4 bg-white border-2 border-amber-200 rounded-2xl px-6 py-5 text-left hover:border-amber-400 hover:shadow-md transition group"
+          >
+            <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center text-2xl group-hover:bg-amber-100 transition">🗺️</div>
+            <div className="flex-1">
+              <p className="font-bold text-gray-800 text-base">핵심 토픽 맵</p>
+              <p className="text-xs text-gray-500 mt-0.5">기출 빈도 Tier 1/2/3 — 뭐부터 외울지 확인</p>
+            </div>
+            <span className="text-gray-300 text-xl">›</span>
+          </button>
         </div>
 
         <button

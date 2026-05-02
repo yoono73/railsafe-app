@@ -213,20 +213,18 @@ export default function StoryPage() {
 
     const isLastPage = currentPage === story.pages.length - 1;
     const items = buildItems(page);
-    const summaryItems = drivingModeRef.current && page.summary_box?.items?.length
+    const summaryItems = page.summary_box?.items?.length
       ? page.summary_box.items
       : undefined;
 
-    const onFinish = drivingModeRef.current
-      ? () => {
-          if (isLastPage) {
-            saveProgress();
-            router.push(`/story/${subjectId}`);
-          } else {
-            setCurrentPage(p => p + 1);
-          }
-        }
-      : undefined;
+    const onFinish = () => {
+      if (isLastPage) {
+        saveProgress();
+        router.push(`/story/${subjectId}`);
+      } else {
+        setCurrentPage(p => p + 1);
+      }
+    };
 
     const timer = setTimeout(() => {
       playDialogues(items, summaryItems, onFinish);
@@ -245,7 +243,7 @@ export default function StoryPage() {
     if (!page) return;
     stopTts();
     const items = buildItems(page);
-    const summaryItems = drivingMode && page.summary_box?.items?.length
+    const summaryItems = page.summary_box?.items?.length
       ? page.summary_box.items
       : undefined;
     setTimeout(() => playDialogues(items, summaryItems), 50);

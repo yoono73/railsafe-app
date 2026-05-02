@@ -108,6 +108,23 @@ export default function StorySubjectPage() {
         </div>
       </div>
 
+      {/* 모든 챕터 완료 축하 배너 */}
+      {!loading && totalCount > 0 && completedCount === totalCount && (
+        <div className="mx-4 mt-4 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-4 flex items-center gap-3">
+          <span className="text-3xl">🎉</span>
+          <div>
+            <p className="font-bold text-sm">전체 챕터 완료!</p>
+            <p className="text-xs opacity-80 mt-0.5">CBT 문제도 풀어보세요!</p>
+          </div>
+          <button
+            onClick={() => router.push(`/cbt/${subjectId}`)}
+            className="ml-auto bg-white bg-opacity-20 hover:bg-opacity-30 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition"
+          >
+            CBT 도전 →
+          </button>
+        </div>
+      )}
+
       {/* 챕터 목록 */}
       <div className="max-w-2xl mx-auto px-4 py-4 flex flex-col gap-2">
         {loading ? (
@@ -118,23 +135,27 @@ export default function StorySubjectPage() {
             <p className="text-gray-500">아직 준비 중인 챕터예요.</p>
           </div>
         ) : (
-          chapters.map((ch) => {
+          chapters.map((ch, idx) => {
             const isDone = completedChapters.has(ch.chapter_number);
+            // 첫 번째 미완료 챕터 찾기 (다음 챕터 표시용)
+            const isNext = !isDone && chapters.slice(0, idx).every(c => completedChapters.has(c.chapter_number));
             return (
               <button
                 key={ch.chapter_number}
                 onClick={() => router.push(`/story/${subjectId}/${ch.chapter_number}`)}
-                className="bg-white rounded-2xl shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition text-left w-full"
+                className={`rounded-2xl shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition text-left w-full ${
+                  isDone ? 'bg-white opacity-70' : isNext ? 'bg-white ring-2 ring-purple-300' : 'bg-white'
+                }`}
               >
                 {/* 챕터 번호 */}
                 <div
                   className="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
                   style={{
-                    background: isDone ? color : color + '18',
-                    color: isDone ? 'white' : color,
+                    background: isDone ? color : isNext ? color : color + '18',
+                    color: isDone ? 'white' : isNext ? 'white' : color,
                   }}
                 >
-                  {isDone ? '✓' : `Ch.${ch.chapter_number}`}
+                  {isDone ? '✓' : isNext ? '▶' : `${ch.chapter_number}`}
                 </div>
 
                 {/* 제목 */}
@@ -143,12 +164,15 @@ export default function StorySubjectPage() {
                   <p className={`font-semibold truncate ${isDone ? 'text-gray-400' : 'text-gray-800'}`}>
                     {ch.chapter_title}
                   </p>
+                  {isNext && <p className="text-xs text-purple-500 font-semibold mt-0.5">▶ 다음 챕터</p>}
                 </div>
 
                 {/* 상태 */}
                 <div className="flex-shrink-0">
                   {isDone ? (
-                    <span className="text-xs text-green-500 font-semibold bg-green-50 px-2 py-1 rounded-full">완료</span>
+                    <span className="text-xs text-green-600 font-bold bg-green-50 border border-green-200 px-2.5 py-1 rounded-full">✓ 완료</span>
+                  ) : isNext ? (
+                    <span className="text-xs text-purple-600 font-bold bg-purple-100 px-2.5 py-1 rounded-full">시작 →</span>
                   ) : (
                     <span className="text-gray-300 text-xl">›</span>
                   )}

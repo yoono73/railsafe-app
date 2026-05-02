@@ -2,9 +2,8 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import SidebarNav from '@/components/SidebarNav';
 import MobileNav from '@/components/MobileNav';
-import FeedbackButton from '@/components/FeedbackButton';
 
-export default async function DashboardLayout({
+export default async function BookmarksLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -15,7 +14,6 @@ export default async function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-zinc-50 flex flex-col">
-      {/* 상단 헤더 */}
       <header className="bg-purple-900 text-white px-6 py-3 flex items-center justify-between shrink-0 z-20">
         <div className="flex items-center gap-2">
           <span className="text-xl">🚇</span>
@@ -24,11 +22,6 @@ export default async function DashboardLayout({
         </div>
         <div className="flex items-center gap-4">
           <span className="text-sm text-purple-300 hidden sm:block">{user.email}</span>
-          {user.email === 'yoono73@gmail.com' && (
-            <a href="/admin" className="text-xs bg-yellow-500 text-yellow-900 px-2 py-1 rounded-full font-bold hover:bg-yellow-400 transition hidden sm:block">
-              ⚙️ 관리
-            </a>
-          )}
           <form action="/auth/signout" method="post">
             <button type="submit" className="text-sm text-purple-300 hover:text-white transition-colors">
               로그아웃
@@ -37,17 +30,13 @@ export default async function DashboardLayout({
         </div>
       </header>
 
-      {/* 사이드바 + 본문 */}
       <div className="flex flex-1 overflow-hidden">
         <SidebarNav />
         <MobileNav />
-        <main className="flex-1 overflow-y-auto p-6 pb-20 md:p-8 md:pb-8">
-          <div className="max-w-4xl mx-auto">
-            {children}
-          </div>
+        <main className="flex-1 overflow-y-auto pb-16 md:pb-0">
+          {children}
         </main>
       </div>
-      <FeedbackButton />
     </div>
   );
 }

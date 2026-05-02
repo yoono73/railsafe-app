@@ -116,7 +116,7 @@ export default function SidebarNav() {
             {subjects.map(s => (
               <Link
                 key={s.id}
-                href={`/story/${s.id}/1`}
+                href={`/story/${s.id}`}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
                   pathname.startsWith(`/story/${s.id}`)
                     ? 'bg-purple-100 text-purple-800 font-semibold'
@@ -185,6 +185,32 @@ export default function SidebarNav() {
         >
           <span className="text-base">📒</span>
           오답노트
+        </Link>
+
+        {/* 오답노트 — 북마크 */}
+        <Link
+          href="/bookmarks"
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+            pathname.startsWith('/bookmarks')
+              ? 'bg-amber-100 text-amber-800'
+              : 'text-gray-600 hover:bg-gray-100'
+          }`}
+        >
+          <span className="text-base">🔖</span>
+          북마크
+        </Link>
+
+        {/* 핵심 토픽 맵 */}
+        <Link
+          href="/topicmap"
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+            pathname.startsWith('/topicmap')
+              ? 'bg-amber-100 text-amber-800'
+              : 'text-gray-600 hover:bg-gray-100'
+          }`}
+        >
+          <span className="text-base">🗺️</span>
+          핵심 토픽 맵
         </Link>
 
         <div className="h-px bg-gray-100 my-2" />
