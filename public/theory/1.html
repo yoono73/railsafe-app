@@ -124,6 +124,11 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
 .tts-edu-btn:hover { background:#6d28d9; }
 .tts-edu-btn:disabled { opacity:.6; cursor:wait; }
 .tts-edu-btn.playing { background:#059669; }
+/* ===== 보충강의 TTS 버튼 ===== */
+.tts-supp-btn { display:inline-flex; align-items:center; gap:5px; background:#0891b2; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px 8px; transition:background .2s; }
+.tts-supp-btn:hover { background:#0e7490; }
+.tts-supp-btn:disabled { opacity:.6; cursor:wait; }
+.tts-supp-btn.playing { background:#047857; }
 </style>
 </head>
 <body>
@@ -413,7 +418,7 @@ var _eduAudio = null;
 function playEduTTS(text, btn) {
   if (_eduAudio && !_eduAudio.paused) {
     _eduAudio.pause(); _eduAudio = null;
-    btn.textContent = '🔊 강의 듣기';
+    btn.textContent = '⭐ 중요 강의 듣기';
     btn.classList.remove('playing'); return;
   }
   btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
@@ -429,7 +434,7 @@ function playEduTTS(text, btn) {
     _eduAudio.play();
     btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
     _eduAudio.onended = function() {
-      btn.textContent = '🔊 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
+      btn.textContent = '⭐ 중요 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
     };
   })
   .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
@@ -452,9 +457,63 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!title) return;
     var btn = document.createElement('button');
     btn.className = 'tts-edu-btn';
-    btn.textContent = '🔊 강의 듣기';
+    btn.textContent = '⭐ 중요 강의 듣기';
     var script = EDU1[id];
     btn.onclick = function() { playEduTTS(script, btn); };
+    title.insertAdjacentElement('afterend', btn);
+  });
+});
+</script>
+
+<script>
+// ===== 보충강의 TTS 플레이어 =====
+var _suppAudio1 = null;
+function playSuppTTS1(text, btn) {
+  if (_suppAudio1 && !_suppAudio1.paused) {
+    _suppAudio1.pause(); _suppAudio1 = null;
+    btn.textContent = '📚 보충강의';
+    btn.classList.remove('playing'); return;
+  }
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
+  })
+  .then(function(r) { return r.blob(); })
+  .then(function(blob) {
+    var url = URL.createObjectURL(blob);
+    _suppAudio1 = new Audio(url);
+    _suppAudio1.play();
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
+    _suppAudio1.onended = function() {
+      btn.textContent = '📚 보충강의'; btn.classList.remove('playing'); _suppAudio1 = null;
+    };
+  })
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
+}
+
+var EDU1_SUPP = {
+  'p1-03': `안전관리 3대 접근방법, 3E입니다. 세 가지를 외워야 해요. 기술적 접근, 교육적 접근, 제도적 접근입니다. 영어 이름이 모두 E로 시작해서 3E라고 합니다. 기술적 접근은 Engineering입니다. 기계, 설비, 시스템을 개선해서 안전을 확보하는 방법이에요. 하드웨어를 바꾸는 거죠. 교육적 접근은 Education입니다. 사람에게 안전 지식과 기술을 가르치는 방법이에요. 인적 요인을 개선합니다. 제도적 접근은 Enforcement입니다. 법과 규정으로 강제하는 방법이에요. 법령 제정, 기준 설정, 단속과 처벌이 여기 해당합니다. 함정! 관리적 접근이라는 용어가 나오면? 제도적 접근과 다릅니다. 관리적 접근은 소프트웨어, 통계, 품질관리 기법이에요. 3E는 기술, 교육, 제도입니다. Engineering, Education, Enforcement. E, E, E. 세 개 모두 E로 시작해요!`,
+  'p2-07': `페일 세이프, Fail-Safe입니다. 이름부터 분석해요. Fail은 고장, Safe는 안전. 즉 고장나도 안전하다는 개념입니다. 어떤 부품이나 시스템이 고장났을 때 자동으로 안전한 상태로 전환되도록 설계하는 방법이에요. 철도에서 대표적인 예가 신호기입니다. 신호기가 고장나면 자동으로 적색 정지 신호를 현시합니다. 고장이 나도 열차가 멈추는 방향으로 작동하는 거예요. 이게 페일 세이프입니다. 시험 함정! 페일 세이프는 고장을 예방하는 것이다? 아닙니다! 고장이 나도 안전하게 만드는 거예요. 예방이 아닌 대응 설계입니다. 반대 개념으로 풀 프루프가 있어요. 풀 프루프는 사람이 실수해도 사고가 나지 않는 설계예요. 페일 세이프는 기계 고장, 풀 프루프는 사람 실수. 이렇게 구분하세요! 고장 시 안전 측으로 자동 전환, 페일 세이프. 한 문장으로 기억하세요.`,
+  'p2-08': `PDCA 사이클, 관리 사이클이라고도 합니다. P-D-C-A, 4단계예요. P는 Plan, 계획입니다. 목표를 세우고 달성 방법을 계획해요. D는 Do, 실시입니다. 계획한 내용을 실행합니다. C는 Check, 통제입니다. 실행 결과가 계획과 맞는지 확인하고 평가해요. A는 Act, 조정입니다. 문제가 있으면 수정하고 개선합니다. 시험 함정이 두 개 있어요! 첫째, C는 확인이 아닌 통제! Check는 통제입니다. 둘째, A는 개선이 아닌 조정! Act는 조정입니다. 이 두 개가 자주 틀려요. PDCA는 한 번으로 끝나지 않아요. A에서 다시 P로 돌아가서 계속 반복하는 사이클입니다. 지속적으로 품질을 개선해 나가는 관리 도구예요. Plan 계획, Do 실시, Check 통제, Act 조정. C는 통제, A는 조정. 절대로 뒤집지 마세요!`,
+  'p3-09': `위험요소 제거 6단계, 순서가 핵심입니다. 1단계 조직구성, 2단계 탐지, 3단계 원인분석, 4단계 대안제시, 5단계 채택시행, 6단계 환류입니다. 조탐원대채환! 첫 단계가 조직구성이에요. 안전관리 체계를 먼저 만든다는 뜻입니다. 안전관리책임자 임명, 안전계획 수립이 여기 해당해요. 시험에서 안전관리책임자 임명은 위험요소 제거 6단계 중 몇 단계? 1단계 조직구성! 이걸 3단계라고 쓰면 틀려요. 마지막 환류는 피드백입니다. 시행 결과를 다시 처음으로 돌려보내서 개선하는 거예요. 2단계 탐지는 위험을 찾아내는 것, 3단계 원인분석은 왜 위험한지 분석, 4단계 대안제시는 해결책을 여러 개 제시, 5단계 채택시행은 최선책을 골라 실행. 조탐원대채환, 여섯 글자로 외우세요!`,
+  'p3-10': `교통안전관리 6단계입니다. 위험요소 제거 6단계와 다른 거예요! 헷갈리지 마세요. 교통안전관리 6단계는 준비, 조사, 계획, 설득, 교육훈련, 확인입니다. 준조계설교확! 첫 단계가 준비예요. 바로 조사하는 게 아닙니다. 준비부터 시작해야 합니다! 핵심 단계를 보죠. 조사 단계에서는 작업장 방문, 안전지시, 감독상태 점검을 합니다. 계획 단계에서는 복수안을 마련해요. 단 하나의 방안이 아닙니다! 설득 단계에서는 경영진에게 효과적인 안전관리 방안을 제시합니다. 경영진을 설득하는 단계예요. 시험 함정! 교통안전관리 6단계의 계획 단계에서는? 복수안 마련! 단수 방안이라고 쓰면 오답입니다. 준비, 조사, 계획, 설득, 교육훈련, 확인. 준조계설교확으로 외우세요!`,
+  'p4-17': `경영학 발전 순서, 반드시 암기해야 해요. 시험에 순서대로 출제됩니다. 과학적 관리론, 인간관계론, 행동과학론, 시스템이론, 상황적합이론 순입니다. 과인행시상! 먼저 테일러의 과학적 관리론입니다. 1900년대 초반, 작업을 과학적으로 분석해서 효율을 극대화했어요. 시간연구와 동작연구가 대표적입니다. 다음은 인간관계론입니다. 메이요의 호손 실험이 계기였어요. 사람의 감정과 관계가 생산성에 영향을 미친다는 걸 발견했어요. 그 다음 행동과학론, 바나드와 사이몬이 대표적입니다. 시스템이론은 조직을 전체 시스템으로 보는 관점이에요. 마지막으로 상황적합이론, 상황에 따라 최적의 관리 방식이 다르다는 이론입니다. 시험에서 가장 먼저 발달한 이론은? 과학적 관리론! 인간의 심리와 감정을 강조한 이론은? 인간관계론! 과인행시상, 이 순서 꼭 외우세요!`,
+  'p5-27': `매슬로우 욕구 5단계입니다. 동기이론의 대표주자예요. 피라미드 모양으로 아래서부터 위로 올라갑니다. 1단계 생리적 욕구입니다. 먹고 자고 숨 쉬는 가장 기본적인 욕구예요. 2단계 안전 욕구입니다. 위험에서 보호받고 싶은 욕구예요. 3단계 사회적 욕구입니다. 소속감, 애정, 우정을 원하는 욕구예요. 4단계 존경 욕구입니다. 인정받고 싶고 지위를 얻고 싶은 욕구예요. 5단계 자아실현 욕구입니다. 자신의 잠재력을 최대한 발휘하고 싶은 욕구예요. 생안사존자! 생리, 안전, 사회, 존경, 자아실현. 하위 욕구가 충족되어야 상위 욕구가 생긴다는 게 핵심이에요. 시험 함정! 가장 하위 단계는? 생리적 욕구! 최상위는? 자아실현! 욕구는 충족되면 더 이상 동기가 되지 않아요. 생안사존자, 다섯 단계 꼭 외우세요!`,
+  'p6-33': `OJT와 Off JT, 교육 방법의 두 가지 축입니다. OJT는 On the Job Training, 직장 내 훈련이에요. 실제 일하면서 배우는 방법입니다. 상사나 선배가 실제 업무를 통해 직접 가르쳐요. 장점은 실무와 직결되고 별도 비용이 적게 들어요. Off JT는 Off the Job Training, 직장 외 훈련이에요. 업무에서 벗어나서 배우는 방법입니다. 강의실 교육, 연수원 집합교육이 여기 해당해요. 장점은 체계적이고 전문적이에요. 시험 함정! 업무현장에서 직속상관이 직접 지도하는 방식은? OJT! 외부 강사를 초빙해서 강의실에서 교육하는 방식은? Off JT! O는 On, 현장에서. Off는 현장 밖에서. 이렇게 연결해서 기억하세요. 또 하나, 멘토링과 코칭은 OJT에 해당해요. 세미나와 강의는 Off JT입니다. OJT와 Off JT, 현장 안과 밖으로 구분하면 됩니다!`,
+};
+document.addEventListener('DOMContentLoaded', function() {
+  Object.keys(EDU1_SUPP).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var title = el.querySelector('.concept-title');
+    if (!title) return;
+    var btn = document.createElement('button');
+    btn.className = 'tts-supp-btn';
+    btn.textContent = '📚 보충강의';
+    var script = EDU1_SUPP[id];
+    btn.onclick = function() { playSuppTTS1(script, btn); };
     title.insertAdjacentElement('afterend', btn);
   });
 });

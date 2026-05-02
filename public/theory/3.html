@@ -76,6 +76,16 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 #tts-stop-btn{display:none;align-items:center;gap:6px;background:#dc2626;color:#fff;border:none;border-radius:24px;padding:8px 16px 8px 12px;font-size:.82em;font-weight:bold;cursor:pointer;box-shadow:0 3px 10px rgba(220,38,38,.4);font-family:'Malgun Gothic','맑은 고딕',sans-serif;white-space:nowrap;}
 .part-tts-btn{font-size:.72em;background:rgba(255,255,255,0.22);border:none;color:#fff;border-radius:12px;padding:2px 9px;cursor:pointer;margin-left:8px;vertical-align:middle;font-family:'Malgun Gothic','맑은 고딕',sans-serif;}
 .part-tts-btn:active{background:rgba(255,255,255,0.4);}
+/* ===== 교육 TTS 버튼 ===== */
+.tts-edu-btn { display:inline-flex; align-items:center; gap:5px; background:#7c3aed; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px; transition:background .2s; }
+.tts-edu-btn:hover { background:#6d28d9; }
+.tts-edu-btn:disabled { opacity:.6; cursor:wait; }
+.tts-edu-btn.playing { background:#059669; }
+/* ===== 보충강의 TTS 버튼 ===== */
+.tts-supp-btn { display:inline-flex; align-items:center; gap:5px; background:#0891b2; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px 8px; transition:background .2s; }
+.tts-supp-btn:hover { background:#0e7490; }
+.tts-supp-btn:disabled { opacity:.6; cursor:wait; }
+.tts-supp-btn.playing { background:#047857; }
 </style>
 </head>
 <body>
@@ -375,7 +385,7 @@ var _eduAudio3 = null;
 function playEduTTS3(text, btn) {
   if (_eduAudio3 && !_eduAudio3.paused) {
     _eduAudio3.pause(); _eduAudio3 = null;
-    btn.textContent = '🔊 강의 듣기';
+    btn.textContent = '⭐ 중요 강의 듣기';
     btn.classList.remove('playing'); return;
   }
   btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
@@ -391,7 +401,7 @@ function playEduTTS3(text, btn) {
     _eduAudio3.play();
     btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
     _eduAudio3.onended = function() {
-      btn.textContent = '🔊 강의 듣기'; btn.classList.remove('playing'); _eduAudio3 = null;
+      btn.textContent = '⭐ 중요 강의 듣기'; btn.classList.remove('playing'); _eduAudio3 = null;
     };
   })
   .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
@@ -412,9 +422,63 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!title) return;
     var btn = document.createElement('button');
     btn.className = 'tts-edu-btn';
-    btn.textContent = '🔊 강의 듣기';
+    btn.textContent = '⭐ 중요 강의 듣기';
     var script = EDU3[id];
     btn.onclick = function() { playEduTTS3(script, btn); };
+    title.insertAdjacentElement('afterend', btn);
+  });
+});
+</script>
+
+<script>
+// ===== 보충강의 TTS 플레이어 =====
+var _suppAudio3 = null;
+function playSuppTTS3(text, btn) {
+  if (_suppAudio3 && !_suppAudio3.paused) {
+    _suppAudio3.pause(); _suppAudio3 = null;
+    btn.textContent = '📚 보충강의';
+    btn.classList.remove('playing'); return;
+  }
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
+  })
+  .then(function(r) { return r.blob(); })
+  .then(function(blob) {
+    var url = URL.createObjectURL(blob);
+    _suppAudio3 = new Audio(url);
+    _suppAudio3.play();
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
+    _suppAudio3.onended = function() {
+      btn.textContent = '📚 보충강의'; btn.classList.remove('playing'); _suppAudio3 = null;
+    };
+  })
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
+}
+
+var EDU3_SUPP = {
+  'C-01': `열차운전 기본 개념입니다. 열차와 차량을 구분해야 해요. 차량은 철도 위를 달리는 개별 이동체예요. 열차는 하나 이상의 차량이 연결되어 운전 가능한 상태가 된 것을 말합니다. 차량이 여러 개 붙어서 운행 준비가 되면 열차라고 해요. 운전취급규정에서 열차 정의가 자주 나옵니다. 정거장은 여객 취급, 화물 취급, 차량 기지 기능을 하는 곳이에요. 역, 신호소, 조차장, 차량기지가 모두 정거장에 포함됩니다. 시험 함정! 신호소가 정거장에 해당하나요? 해당합니다! 역만 정거장이 아니에요. 신호소, 조차장, 차량기지도 정거장입니다. 열차와 차량의 차이, 정거장의 범위, 이 두 가지를 정확히 기억하세요!`,
+  'C-02': `열차 종별 분류입니다. 속도와 목적에 따라 나뉘어요. 특급열차는 주요 정거장에만 정차하는 가장 빠른 열차예요. 급행열차는 일부 정거장만 정차해요. 완행열차는 모든 정거장에 정차합니다. 화물열차는 화물 운송이 목적이에요. 시험에서 열차 우선순위도 나와요. 같은 선로를 달릴 때 어떤 열차가 우선인지입니다. 일반적으로 여객열차가 화물열차보다 우선이에요. 같은 종류라면 정시에 출발하는 열차가 우선입니다. 다음으로 열차 번호 체계입니다. 하행열차는 홀수 번호, 상행열차는 짝수 번호를 사용해요. 하행이 홀수, 상행이 짝수! 반대로 외우면 틀려요. 하홀상짝! 하행 홀수, 상행 짝수로 외우세요.`,
+  'C-04': `열차 운행 허가의 핵심입니다. 열차는 허가 없이 출발할 수 없어요. 출발 허가는 출발신호기로 표시됩니다. 출발신호기가 진행을 현시해야 출발할 수 있어요. 출발신호기가 없는 경우에는 역장이나 관제사의 지시에 따릅니다. 폐색 방식도 연결됩니다. 열차가 다음 구간에 진입하려면 그 구간이 비어 있다는 걸 확인해야 해요. 이게 폐색입니다. 출발 전 점검 사항도 중요해요. 차량 상태, 화물 고정, 문 닫힘 여부를 확인해야 합니다. 시험 포인트! 출발신호기 정위는? 정지! 출발 허가를 받으면 진행을 현시해요. 열차 출발 전 확인 사항에 문 닫힘이 포함되나요? 포함됩니다! 정거장 출발 조건과 출발신호기 정위를 함께 기억하세요.`,
+  'C-05': `신호 현시 원칙입니다. 신호는 열차와 차량을 안전하게 운행시키는 지시예요. 신호 현시의 기본 원칙이 있습니다. 첫째, 정지 신호를 최우선으로 해요. 진행 신호보다 정지 신호가 항상 우선입니다. 둘째, 보수적 원칙입니다. 불확실할 때는 항상 안전한 쪽으로 작동해야 해요. 신호기 고장 시 정지 신호가 현시되는 게 이 원칙 때문이에요. 셋째, 최근접 신호기 원칙입니다. 열차는 가장 가까운 신호기의 현시에 따라야 해요. 색 기준입니다. 녹색은 진행, 황색은 주의, 적색은 정지예요. 야간과 주간 모두 적용됩니다. 시험 함정! 신호기 고장 시 어떤 신호를 보여야 하나요? 정지! 진행이 아닙니다. 안전 우선 원칙, 고장 시 정지 신호, 이 두 가지를 꼭 기억하세요!`,
+  'C-07': `속도 제한 관련 개념입니다. 열차는 구간별로 허용 최고속도가 정해져 있어요. 이를 초과하면 안 됩니다. 최고속도 종류가 있어요. 설계속도는 선로를 설계할 때 기준이 된 최고속도예요. 운행속도는 실제 운행 시 허용되는 최고속도입니다. 항상 설계속도 이하여야 해요. 서행운전 조건도 중요해요. 서행이란 규정 속도보다 낮은 속도로 운행하는 것입니다. 선로 작업 중, 신호기 고장, 악천후 시 서행해야 합니다. 서행 속도는 시속 25킬로미터 이하가 기본이에요. 시험 함정! 설계속도와 운행속도 중 어느 것이 더 높나요? 설계속도! 운행속도는 설계속도를 초과할 수 없습니다. 서행 기본 속도는? 시속 25킬로미터 이하! 이 숫자도 나옵니다.`,
+  'C-09': `통표 취급 방법입니다. 통표폐색식에서 사용해요. 통표는 열차가 구간을 통과할 권리를 부여하는 표식입니다. 통표를 가진 열차만 그 구간에 진입할 수 있어요. 단선 구간에서 반드시 통표를 지참해야 합니다. 통표 수수 방법이 중요해요. 정거장에서 열차가 정차할 때 역무원에게서 통표를 받아요. 통표기라는 장치에 있는 통표를 꺼내서 기관사에게 전달합니다. 통표 수수 오류가 나면 큰 사고로 이어질 수 있어요. 시험 포인트! 통표폐색식에서 열차 진입 허가는 어떻게 부여하나요? 통표를 지참하면 됩니다. 통표 없이 구간에 진입하면? 금지! 통표를 가진 열차만이 그 구간 진입 허가를 받은 것입니다. 통표폐색식은 단선 구간, 통표 지참이 진입 허가, 이렇게 연결하세요!`,
+  'C-12': `신호기 정위 전체 정리입니다. 정위는 평상시 기본 위치예요. 각 신호기별 정위를 한 번에 정리합니다. 먼저 진행 계열의 정위입니다. 자동폐색신호기 정위는 진행이에요. 이게 함정입니다. 자동폐색은 진행이 정위! 다음으로 정지 계열의 정위입니다. 장내신호기, 출발신호기, 입환신호기의 정위는 정지입니다. 특수한 경우입니다. 원방신호기 정위는 주의예요. 진행도 정지도 아닌 주의가 정위! 유도신호기 정위는 현시없음이에요. 정지가 아닙니다! 정리합니다. 자동폐색 = 진행 정위, 원방신호기 = 주의 정위, 유도신호기 = 현시없음 정위, 나머지 = 정지 정위. 이 세 가지 예외만 확실히 외우면 됩니다!`,
+  'C-16': `선로전환기와 그 정위입니다. 선로전환기는 열차의 진로를 바꾸는 장치예요. 직선으로 갈지 곡선으로 갈지를 결정합니다. 선로전환기 정위는 기본 위치를 말합니다. 통상 사용하는 방향으로 놓여 있어요. 일반적으로 본선 방향이 정위입니다. 부본선이나 측선으로 가는 방향은 반위예요. 선로전환기 취급 원칙이 있어요. 열차 진로를 정확하게 설정한 후 잠가야 합니다. 열차가 지나갈 때 전환하면 절대 안 돼요. 선로전환기 잠금이 안 되면 출발 불가입니다. 시험 함정! 선로전환기 정위는? 본선 방향! 반위는? 측선 또는 부본선 방향! 열차 통과 중 선로전환기를 전환할 수 있나요? 절대 안 됩니다! 선로전환기는 정위가 본선, 반위가 측선. 이렇게 기억하세요.`,
+};
+document.addEventListener('DOMContentLoaded', function() {
+  Object.keys(EDU3_SUPP).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var title = el.querySelector('.concept-title');
+    if (!title) return;
+    var btn = document.createElement('button');
+    btn.className = 'tts-supp-btn';
+    btn.textContent = '📚 보충강의';
+    var script = EDU3_SUPP[id];
+    btn.onclick = function() { playSuppTTS3(script, btn); };
     title.insertAdjacentElement('afterend', btn);
   });
 });

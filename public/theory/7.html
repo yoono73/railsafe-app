@@ -122,6 +122,11 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .tts-edu-btn:hover { background:#6d28d9; }
 .tts-edu-btn:disabled { opacity:.6; cursor:wait; }
 .tts-edu-btn.playing { background:#059669; }
+/* ===== 보충강의 TTS 버튼 ===== */
+.tts-supp-btn { display:inline-flex; align-items:center; gap:5px; background:#0891b2; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px 8px; transition:background .2s; }
+.tts-supp-btn:hover { background:#0e7490; }
+.tts-supp-btn:disabled { opacity:.6; cursor:wait; }
+.tts-supp-btn.playing { background:#047857; }
 </style>
 </head>
 <body>
@@ -420,7 +425,7 @@ var _eduAudio = null;
 function playEduTTS(text, btn) {
   if (_eduAudio && !_eduAudio.paused) {
     _eduAudio.pause(); _eduAudio = null;
-    btn.textContent = '🔊 강의 듣기';
+    btn.textContent = '⭐ 중요 강의 듣기';
     btn.classList.remove('playing'); return;
   }
   btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
@@ -436,7 +441,7 @@ function playEduTTS(text, btn) {
     _eduAudio.play();
     btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
     _eduAudio.onended = function() {
-      btn.textContent = '🔊 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
+      btn.textContent = '⭐ 중요 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
     };
   })
   .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
@@ -458,9 +463,62 @@ document.addEventListener('DOMContentLoaded', function() {
     if (title.querySelector('.tts-edu-btn')) return;
     var btn = document.createElement('button');
     btn.className = 'tts-edu-btn';
-    btn.textContent = '🔊 강의 듣기';
+    btn.textContent = '⭐ 중요 강의 듣기';
     var script = EDU7[num];
     btn.onclick = function() { playEduTTS(script, btn); };
+    title.insertAdjacentElement('afterend', btn);
+  });
+});
+</script>
+
+<script>
+// ===== 보충강의 TTS 플레이어 =====
+var _suppAudio7 = null;
+function playSuppTTS7(text, btn) {
+  if (_suppAudio7 && !_suppAudio7.paused) {
+    _suppAudio7.pause(); _suppAudio7 = null;
+    btn.textContent = '📚 보충강의';
+    btn.classList.remove('playing'); return;
+  }
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
+  })
+  .then(function(r) { return r.blob(); })
+  .then(function(blob) {
+    var url = URL.createObjectURL(blob);
+    _suppAudio7 = new Audio(url);
+    _suppAudio7.play();
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
+    _suppAudio7.onended = function() {
+      btn.textContent = '📚 보충강의'; btn.classList.remove('playing'); _suppAudio7 = null;
+    };
+  })
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
+}
+
+var EDU7_SUPP = {
+  'C-01': `철도안전법 목적과 정의입니다. 철도안전법의 목적은 철도 안전을 확보해서 공공복리를 증진하는 거예요. 철도 운영의 안전 확보가 핵심입니다. 철도 안전 관리에 필요한 사항을 정해 놓은 법이에요. 중요한 정의들이 있어요. 철도사고는 열차 충돌, 탈선, 화재, 건널목 사고 등 철도 운행 중 발생하는 사고입니다. 운행장애는 사고보다 낮은 수준의 이상 상황이에요. 사고가 아닌 장애! 중대사고는 사망자가 발생하거나 대규모 피해가 있는 경우예요. 시험 함정! 열차가 지연된 것은 철도사고인가요? 아닙니다! 지연은 운행장애예요. 사고와 장애를 구분하는 문제가 자주 나와요. 철도사고 = 충돌, 탈선, 화재 등 실제 사고. 운행장애 = 지연, 장비 고장 등 운행에 지장을 주는 상황. 이렇게 구분하세요!`,
+  'C-02': `철도 종사자의 종류입니다. 철도 안전법에서 철도 종사자를 구분해요. 운전 업무 종사자는 기관사처럼 직접 열차를 운전하는 사람이에요. 여기에 철도 운전 면허가 필요합니다. 관제 업무 종사자는 열차 운행을 지시하고 통제하는 사람이에요. 여객 서비스 종사자는 승객 서비스를 담당해요. 중요한 것은 운전 업무 종사자와 관제 업무 종사자는 신체검사, 적성검사, 교육을 받아야 해요. 시험 함정! 철도 운전 면허가 필요한 자는? 운전 업무 종사자! 역무원은 운전 면허가 필요한가요? 아닙니다! 운전 업무 종사자만 면허가 필요해요. 운전 종사자 = 면허 필요, 관제 종사자 = 별도 교육 필요, 여객 서비스 = 일반 고용. 이렇게 구분하세요!`,
+  'C-05': `철도 안전 관리 체계 승인입니다. 철도 운영자는 안전 관리 체계를 수립해서 국토교통부장관의 승인을 받아야 해요. 승인! 단순 신고가 아닙니다. 안전 관리 체계에는 뭐가 들어가냐? 안전 목표, 안전 조직, 위험 관리 절차, 비상 대응 계획이 포함돼요. 안전 관리 체계를 변경할 때는 어떻게 하나요? 중요한 사항을 변경할 때는 다시 승인을 받아야 해요. 경미한 사항은 신고로 가능합니다. 국토교통부장관이 안전 관리 체계를 검토해서 부적합하면 변경을 명할 수 있어요. 시험 포인트! 안전 관리 체계 수립 후 처리는? 승인! 신고가 아닙니다. 중요 사항 변경 시? 다시 승인! 경미한 사항? 신고! 승인과 신고를 구분하는 문제가 꼭 나옵니다.`,
+  'C-07': `위험물 운송 규정입니다. 철도로 위험물을 운송할 때는 특별한 기준이 있어요. 위험물이란 폭발물, 인화성 물질, 독성 물질 등 위험한 물질을 말합니다. 철도로 위험물을 운송하려면 국토교통부장관의 허가를 받아야 해요. 허가! 그냥 실어도 되는 게 아닙니다. 허가 없이 위험물을 운송하면 처벌받아요. 위험물 용기에도 기준이 있어요. 위험물임을 표시하는 라벨을 붙여야 하고, 전용 차량을 사용해야 할 수도 있어요. 시험 포인트! 철도로 위험물 운송 시 필요한 것은? 국토교통부장관 허가! 신고가 아닙니다. 허가 없이 운송하면? 처벌! 위험물 운송 = 허가 + 기준 준수. 이 두 가지가 핵심이에요.`,
+  'C-09': `운행선 공사입니다. 열차가 운행하는 선로에서 공사를 할 때는 특별한 절차가 필요해요. 열차가 다니는 선로에서 공사하면 매우 위험하거든요. 운행선 공사 절차입니다. 공사 계획을 세우고, 열차 운행과 공사 시간을 협의해야 해요. 공사 중에는 열차 운행 속도를 제한하거나 운행을 중단할 수 있어요. 공사 담당자와 열차 운행 관제사 사이의 소통이 중요합니다. 작업 허가 절차도 있어요. 작업 책임자가 관제사로부터 작업 허가를 받은 후에야 공사를 시작할 수 있어요. 시험 함정! 운행선에서 임의로 공사를 시작할 수 있나요? 안 됩니다! 관제사 허가 후에만 가능해요. 작업 허가 없이 운행선 작업 시? 처벌! 관제사 허가 = 작업 시작 조건, 이 원칙 기억하세요!`,
+  'C-14': `철도 보호지구입니다. 철도 선로 주변에 설정하는 보호 구역이에요. 철도 보호지구 안에서는 일정한 행위가 제한됩니다. 굴착, 성토, 절토 등 지형을 바꾸는 행위는 허가를 받아야 해요. 철도 구조물에 영향을 줄 수 있는 공사도 제한됩니다. 철도 보호지구의 범위는 선로 중심에서 양쪽으로 30미터 이내예요. 30미터! 50미터가 아닙니다. 시험 함정! 철도 보호지구 범위는? 선로 중심에서 30미터 이내! 보호지구 내 굴착 공사 시? 허가 필요! 30미터 이내에서 허가 없이 굴착하면? 처벌! 철도 보호지구는 선로 중심 30미터, 허가 없이 공사 불가. 이 두 가지 기억하세요!`,
+};
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.cnum').forEach(function(cnumEl) {
+    var num = cnumEl.textContent.trim().replace(/^[^0-9A-Z]*/,'').replace(/[^0-9A-Z-].*/,'');
+    if (!EDU7_SUPP[num]) return;
+    var title = cnumEl.closest('.concept-title');
+    if (!title) return;
+    if (title.querySelector('.tts-supp-btn')) return;
+    var btn = document.createElement('button');
+    btn.className = 'tts-supp-btn';
+    btn.textContent = '📚 보충강의';
+    var script = EDU7_SUPP[num];
+    btn.onclick = function() { playSuppTTS7(script, btn); };
     title.insertAdjacentElement('afterend', btn);
   });
 });

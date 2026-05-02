@@ -124,6 +124,11 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .tts-edu-btn:hover { background:#6d28d9; }
 .tts-edu-btn:disabled { opacity:.6; cursor:wait; }
 .tts-edu-btn.playing { background:#059669; }
+/* ===== 보충강의 TTS 버튼 ===== */
+.tts-supp-btn { display:inline-flex; align-items:center; gap:5px; background:#0891b2; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px 8px; transition:background .2s; }
+.tts-supp-btn:hover { background:#0e7490; }
+.tts-supp-btn:disabled { opacity:.6; cursor:wait; }
+.tts-supp-btn.playing { background:#047857; }
 </style>
 </head>
 <body>
@@ -262,7 +267,7 @@ var _eduAudio = null;
 function playEduTTS(text, btn) {
   if (_eduAudio && !_eduAudio.paused) {
     _eduAudio.pause(); _eduAudio = null;
-    btn.textContent = '🔊 강의 듣기';
+    btn.textContent = '⭐ 중요 강의 듣기';
     btn.classList.remove('playing'); return;
   }
   btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
@@ -278,7 +283,7 @@ function playEduTTS(text, btn) {
     _eduAudio.play();
     btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
     _eduAudio.onended = function() {
-      btn.textContent = '🔊 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
+      btn.textContent = '⭐ 중요 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
     };
   })
   .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
@@ -298,9 +303,62 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!title) return;
     var btn = document.createElement('button');
     btn.className = 'tts-edu-btn';
-    btn.textContent = '🔊 강의 듣기';
+    btn.textContent = '⭐ 중요 강의 듣기';
     var script = EDU4[id];
     btn.onclick = function() { playEduTTS(script, btn); };
+    title.insertAdjacentElement('afterend', btn);
+  });
+});
+</script>
+
+<script>
+// ===== 보충강의 TTS 플레이어 =====
+var _suppAudio4 = null;
+function playSuppTTS4(text, btn) {
+  if (_suppAudio4 && !_suppAudio4.paused) {
+    _suppAudio4.pause(); _suppAudio4 = null;
+    btn.textContent = '📚 보충강의';
+    btn.classList.remove('playing'); return;
+  }
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
+  })
+  .then(function(r) { return r.blob(); })
+  .then(function(blob) {
+    var url = URL.createObjectURL(blob);
+    _suppAudio4 = new Audio(url);
+    _suppAudio4.play();
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
+    _suppAudio4.onended = function() {
+      btn.textContent = '📚 보충강의'; btn.classList.remove('playing'); _suppAudio4 = null;
+    };
+  })
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
+}
+
+var EDU4_SUPP = {
+  'p1-01': `철도의 정의와 특성입니다. 철도는 두 줄의 레일 위를 차량이 달리는 교통수단이에요. 전용 선로를 사용하기 때문에 다른 교통수단과 분리됩니다. 철도의 특성 4가지를 알아야 해요. 첫째, 대량수송성입니다. 한 번에 많은 사람과 화물을 운반할 수 있어요. 둘째, 안전성입니다. 전용 선로로 교통사고 위험이 낮아요. 셋째, 정시성입니다. 시간표대로 운행해서 약속을 지킬 수 있어요. 넷째, 에너지 효율성입니다. 같은 거리에서 다른 교통수단보다 에너지 소비가 적어요. 시험 함정! 철도의 단점은? 노선 신설이 어렵고 비용이 많이 든다는 거예요. 그리고 문전에서 문전까지 서비스가 안 된다는 한계도 있어요. 대량, 안전, 정시, 에너지 효율. 이 네 가지 장점 꼭 기억하세요!`,
+  'p1-02': `궤도 구조 기본 요소입니다. 궤도는 레일, 침목, 도상으로 구성돼요. 레일은 차량이 직접 달리는 강철 부재입니다. 차량 하중을 지지하고 차량을 안내해요. 침목은 레일 아래에 가로로 놓이는 부재입니다. 레일을 고정하고 하중을 분산시켜요. 과거에는 목침목을 썼지만 지금은 PC침목이 주류예요. 도상은 침목 아래의 자갈층이에요. 하중을 지반에 전달하고 배수를 도와요. 자갈 도상과 콘크리트 도상이 있습니다. 시험 포인트! 궤도의 3대 구성 요소는? 레일, 침목, 도상! 순서대로 레침도. 레일이 직접 차량과 접촉하는 부분이에요. 레일 단면이 I자 모양인 것도 알아두세요. 레침도, 세 글자로 기억하세요!`,
+  'p2-07': `궤간 종류입니다. 궤간은 두 레일 안쪽 간격이에요. 국제표준궤간은 1435밀리미터입니다. 1,435mm! 이 숫자가 시험에 나와요. 우리나라 일반 철도가 표준궤간입니다. 광궤는 1435보다 넓은 궤간이에요. 러시아, 스페인 일부가 광궤를 사용합니다. 협궤는 1435보다 좁은 궤간이에요. 산악 지역, 산업용 철도에 많이 쓰여요. 궤간별 특성도 있어요. 광궤는 고속, 대용량에 유리하고, 협궤는 건설비가 적게 들어요. 우리나라 지하철은 표준궤간 1435mm를 사용합니다. 시험 함정! 표준궤간은? 1,435mm! 1,520mm는 러시아 광궤입니다. 1,435mm, 이 숫자 꼭 외우세요!`,
+  'p2-09': `슬랙과 캔트입니다. 곡선 구간에서 적용하는 개념이에요. 슬랙은 곡선 구간에서 궤간을 넓히는 것입니다. 왜 넓히냐? 차량이 곡선을 돌 때 바퀴가 레일에 밀리는 현상을 줄이기 위해서예요. 곡선이 급할수록 슬랙을 더 많이 줍니다. 캔트는 곡선 구간에서 바깥쪽 레일을 안쪽보다 높이는 것입니다. 원심력을 상쇄하기 위해서예요. 빠른 속도, 급한 곡선일수록 캔트를 크게 해요. 기억 방법! 슬랙은 넓힘, 캔트는 높임. 슬랙 = 간격, 캔트 = 높이. 시험 함정! 캔트는 어느 쪽 레일을 높이나요? 바깥쪽 레일! 안쪽이 아닙니다. 원심력이 바깥쪽으로 쏠리니까 바깥쪽을 높여서 균형을 잡는 거예요. 슬랙은 넓힘, 캔트는 바깥쪽 높임. 구분해서 외우세요!`,
+  'p4-15': `완화곡선입니다. 직선과 원곡선 사이에 삽입하는 점이선이에요. 왜 넣냐? 직선에서 갑자기 원곡선으로 진입하면 차량이 심하게 흔들려요. 완화곡선은 직선과 원곡선 사이의 부드러운 전환 구간입니다. 완화곡선이 있으면 캔트와 슬랙도 서서히 변화해요. 완화곡선 종류는 클로소이드 곡선이 가장 많이 사용돼요. 3차 포물선도 사용합니다. 시험 함정! 완화곡선이 없으면 어떻게 되나요? 열차가 직선에서 곡선 진입 시 급격한 원심력 변화로 승차감이 나빠지고 탈선 위험이 있어요. 완화곡선 삽입 목적은? 승차감 향상과 안전한 곡선 진입! 완화곡선은 직선과 원곡선 사이의 부드러운 연결 구간, 이렇게 기억하세요!`,
+  'p6-23': `역 시설 분류입니다. 역은 여객 취급, 화물 취급, 차량 기지 기능에 따라 구분해요. 여객역은 승객 승하차 서비스를 제공하는 역이에요. 화물역은 화물의 적재 및 하역을 처리해요. 조차장은 차량을 분류하고 편성하는 곳이에요. 역에는 반드시 있어야 하는 시설이 있어요. 대합실, 개찰구, 승강장, 화장실 등이 기본 시설입니다. 선로 측면에서 역 구조를 보면 정거장 내 선로는 본선과 측선으로 나뉩니다. 본선은 열차가 통과하는 주선로, 측선은 대피나 입환에 사용하는 보조 선로예요. 시험 포인트! 차량을 분류하고 편성하는 정거장은? 조차장! 여객 취급만 하는 곳은? 여객역! 역, 신호소, 조차장, 차량기지 모두 정거장에 포함됩니다.`,
+  'p7-25': `선로용량입니다. 일정 구간에서 단위 시간당 운행할 수 있는 최대 열차 수예요. 선로용량이 클수록 많은 열차를 운행할 수 있어요. 선로용량에 영향을 주는 요소들이 있습니다. 열차 종류별 속도 차이가 크면 용량이 줄어요. 빠른 열차와 느린 열차가 섞이면 서로 방해가 되거든요. 정거장 간격이 짧으면 용량이 늘어나요. 폐색 구간이 짧아지기 때문이에요. 신호 시스템도 영향을 줍니다. 자동폐색식은 수동 방식보다 용량이 커요. 선로용량 향상 방법은 복선화, 신호 현대화, 열차 속도 균질화입니다. 시험 포인트! 선로용량을 늘리는 가장 효과적인 방법은? 복선화! 단선을 복선으로 바꾸면 상하행 분리로 용량이 크게 늘어나요. 선로용량 = 단위 시간 최대 열차 수, 복선화로 향상 가능, 기억하세요!`,
+};
+document.addEventListener('DOMContentLoaded', function() {
+  Object.keys(EDU4_SUPP).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var title = el.querySelector('.concept-title');
+    if (!title) return;
+    var btn = document.createElement('button');
+    btn.className = 'tts-supp-btn';
+    btn.textContent = '📚 보충강의';
+    var script = EDU4_SUPP[id];
+    btn.onclick = function() { playSuppTTS4(script, btn); };
     title.insertAdjacentElement('afterend', btn);
   });
 });

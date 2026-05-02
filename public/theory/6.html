@@ -124,6 +124,11 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .tts-edu-btn:hover { background:#6d28d9; }
 .tts-edu-btn:disabled { opacity:.6; cursor:wait; }
 .tts-edu-btn.playing { background:#059669; }
+/* ===== 보충강의 TTS 버튼 ===== */
+.tts-supp-btn { display:inline-flex; align-items:center; gap:5px; background:#0891b2; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px 8px; transition:background .2s; }
+.tts-supp-btn:hover { background:#0e7490; }
+.tts-supp-btn:disabled { opacity:.6; cursor:wait; }
+.tts-supp-btn.playing { background:#047857; }
 </style>
 </head>
 <body>
@@ -375,7 +380,7 @@ var _eduAudio = null;
 function playEduTTS(text, btn) {
   if (_eduAudio && !_eduAudio.paused) {
     _eduAudio.pause(); _eduAudio = null;
-    btn.textContent = '🔊 강의 듣기';
+    btn.textContent = '⭐ 중요 강의 듣기';
     btn.classList.remove('playing'); return;
   }
   btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
@@ -391,7 +396,7 @@ function playEduTTS(text, btn) {
     _eduAudio.play();
     btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
     _eduAudio.onended = function() {
-      btn.textContent = '🔊 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
+      btn.textContent = '⭐ 중요 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
     };
   })
   .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
@@ -411,9 +416,63 @@ document.addEventListener('DOMContentLoaded', function() {
     if (title.querySelector('.tts-edu-btn')) return;
     var btn = document.createElement('button');
     btn.className = 'tts-edu-btn';
-    btn.textContent = '🔊 강의 듣기';
+    btn.textContent = '⭐ 중요 강의 듣기';
     var script = EDU6[num];
     btn.onclick = function() { playEduTTS(script, btn); };
+    title.insertAdjacentElement('afterend', btn);
+  });
+});
+</script>
+
+<script>
+// ===== 보충강의 TTS 플레이어 =====
+var _suppAudio6 = null;
+function playSuppTTS6(text, btn) {
+  if (_suppAudio6 && !_suppAudio6.paused) {
+    _suppAudio6.pause(); _suppAudio6 = null;
+    btn.textContent = '📚 보충강의';
+    btn.classList.remove('playing'); return;
+  }
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
+  })
+  .then(function(r) { return r.blob(); })
+  .then(function(blob) {
+    var url = URL.createObjectURL(blob);
+    _suppAudio6 = new Audio(url);
+    _suppAudio6.play();
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
+    _suppAudio6.onended = function() {
+      btn.textContent = '📚 보충강의'; btn.classList.remove('playing'); _suppAudio6 = null;
+    };
+  })
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
+}
+
+var EDU6_SUPP = {
+  '01': `신호의 의의와 목적입니다. 신호는 열차 운행의 안전과 효율을 위해 시각, 청각, 촉각으로 정보를 전달하는 수단이에요. 신호의 종류는 신호, 표지, 전호로 구분합니다. 신호는 열차나 차량 운전에 직접 관계되는 지시입니다. 표지는 선로의 상태, 위험 지점 등을 나타내는 고정 표시예요. 전호는 직원들 간의 통신 수단으로 사용하는 신호입니다. 시험 함정! 열차 출발 지시는 신호인가 전호인가요? 신호입니다! 역무원이 기관사에게 손을 흔들어 보내는 것은? 전호입니다! 신호는 기계나 장치가 열차에 지시, 전호는 사람이 사람에게 전달. 이렇게 구분하세요. 신호-표지-전호, 세 가지 종류 꼭 외우세요!`,
+  '03': `신호기 분류입니다. 신호기는 종류가 많아요. 목적에 따라 분류합니다. 주신호기는 열차 운행을 직접 지시하는 신호기예요. 장내신호기, 출발신호기, 폐색신호기, 원방신호기가 주신호기입니다. 종속신호기는 주신호기에 종속되어 예고 역할을 해요. 입환신호기는 차량 입환 작업에 사용해요. 신호기 설치 위치도 중요해요. 장내신호기는 역 구내로 들어오는 입구에 설치합니다. 출발신호기는 역 출구 쪽에 설치해요. 시험 함정! 폐색신호기는 주신호기인가 종속신호기인가? 주신호기입니다! 원방신호기는? 주신호기입니다. 예고 역할이어도 원방신호기는 주신호기예요. 장내-출발-폐색-원방은 모두 주신호기. 이 네 가지 기억하세요!`,
+  '07': `진로표시기입니다. 출발신호기나 입환신호기에 부속되어 열차가 진행할 방향을 표시해요. 여러 선로 중 어디로 갈지 알려주는 장치입니다. 진로표시기 숫자 현시가 시험에 나와요. 번호로 진로를 표시합니다. 1번 선로, 2번 선로 이런 식으로요. 진로표시기와 신호기의 관계! 신호기가 진행을 현시할 때 함께 어느 방향으로 가야 하는지를 알려줘요. 신호기가 정지를 현시하면 진로표시기는 작동하지 않아요. 시험 포인트! 진로표시기의 역할은? 열차가 진행할 방향 표시! 어디에 부속되나요? 출발신호기 또는 입환신호기! 진로표시기는 방향 안내, 신호기가 진행일 때만 작동합니다. 기억하세요!`,
+  '11': `궤도회로 원리입니다. 궤도회로는 두 레일 사이에 전류를 흘려 열차의 위치를 자동으로 감지하는 장치예요. 열차가 선로에 진입하면 열차 차축이 두 레일을 단락시켜요. 단락이 되면 전류가 차단되거나 변화해요. 이 변화를 감지해서 열차 있음을 판단합니다. 궤도회로의 장점은 자동으로 열차 위치를 감지한다는 거예요. 사람이 확인하지 않아도 돼요. 자동폐색식의 핵심 기술이에요. 시험 함정! 궤도회로가 단락되면 열차가 있다는 의미인가요? 맞습니다! 단락 = 열차 존재! 단락이 없으면? 선로 비어있음! 궤도회로의 단락 원리로 열차 위치를 감지. 이 원리가 자동폐색의 기반입니다!`,
+  '14': `선로전환기 종류입니다. 선로전환기는 열차 진로를 바꾸는 장치예요. 종류가 여러 가지입니다. 보통 선로전환기는 스프링 없이 직접 전환해요. 스프링 선로전환기는 열차가 통과하면 자동으로 원래 위치로 돌아와요. 안전 측면에서 유리해요. 탈선 선로전환기는 차량을 의도적으로 탈선시켜 다른 차량과 충돌을 막는 안전 장치예요. 긴급 상황에서 사용합니다. 선로전환기 잠금 방식도 중요해요. 전기잠금은 전기 신호로 잠그는 방식, 기계잠금은 기계적으로 잠가요. 시험 함정! 스프링 선로전환기의 특징은? 열차 통과 후 자동 복귀! 탈선 선로전환기 목적은? 충돌 방지! 탈선이라는 단어 때문에 위험한 것처럼 보여도 안전 장치예요.`,
+  '17': `연동장치입니다. 신호기, 선로전환기, 궤도회로를 연결해서 서로 조건을 맞춰 작동하게 하는 장치예요. 예를 들어, 선로전환기가 올바른 방향으로 잠겨 있어야만 진행 신호가 켜져요. 신호기와 선로전환기가 연동되는 거예요. 연동장치의 목적은 안전한 진로를 확보하는 것입니다. 잘못된 진로에 신호가 켜지는 사고를 막아요. 연동장치 종류는 기계식, 전기식, 전자식이 있어요. 현재는 전자식 연동장치가 주류예요. 시험 포인트! 연동장치의 핵심 기능은? 신호기와 선로전환기의 상호 조건 제어! 연동장치가 없으면? 잘못된 진로에 진행 신호가 켜질 수 있어요. 연동장치 = 신호와 선로전환기의 안전 연계 시스템, 이렇게 기억하세요!`,
+  '24': `ATO와 ATP 심화입니다. 열차 자동화 시스템입니다. ATO는 Automatic Train Operation, 열차 자동 운전 장치예요. 출발, 가속, 감속, 정위치 정차까지 자동으로 해요. 기관사 없이 자동으로 운전할 수 있어요. 지하철 무인 운전이 여기에 해당합니다. ATP는 Automatic Train Protection, 열차 자동 방호 장치예요. 열차가 허용 속도를 초과하면 자동으로 브레이크를 걸어요. ATO와 ATP의 관계는 ATO가 자동 운전하고, ATP가 안전을 보호해요. 함께 쓰이는 경우가 많아요. 구분 포인트! ATO는 운전 자동화, ATP는 안전 방호. ATO는 운전사를 대신, ATP는 과속을 막아요. CBTC는 무선 통신 기반의 열차 제어 시스템이에요. 지하철에 많이 사용돼요. ATO 운전 자동화, ATP 안전 방호, CBTC 무선 제어. 세 개 구분하세요!`,
+};
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.cnum').forEach(function(cnumEl) {
+    var num = cnumEl.textContent.trim().replace(/^[^0-9A-Z]*/,'').replace(/[^0-9A-Z-].*/,'');
+    if (!EDU6_SUPP[num]) return;
+    var title = cnumEl.closest('.concept-title');
+    if (!title) return;
+    if (title.querySelector('.tts-supp-btn')) return;
+    var btn = document.createElement('button');
+    btn.className = 'tts-supp-btn';
+    btn.textContent = '📚 보충강의';
+    var script = EDU6_SUPP[num];
+    btn.onclick = function() { playSuppTTS6(script, btn); };
     title.insertAdjacentElement('afterend', btn);
   });
 });

@@ -124,6 +124,11 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .tts-edu-btn:hover { background:#6d28d9; }
 .tts-edu-btn:disabled { opacity:.6; cursor:wait; }
 .tts-edu-btn.playing { background:#059669; }
+/* ===== 보충강의 TTS 버튼 ===== */
+.tts-supp-btn { display:inline-flex; align-items:center; gap:5px; background:#0891b2; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px 8px; transition:background .2s; }
+.tts-supp-btn:hover { background:#0e7490; }
+.tts-supp-btn:disabled { opacity:.6; cursor:wait; }
+.tts-supp-btn.playing { background:#047857; }
 </style>
 </head>
 <body>
@@ -311,7 +316,7 @@ var _eduAudio = null;
 function playEduTTS(text, btn) {
   if (_eduAudio && !_eduAudio.paused) {
     _eduAudio.pause(); _eduAudio = null;
-    btn.textContent = '🔊 강의 듣기';
+    btn.textContent = '⭐ 중요 강의 듣기';
     btn.classList.remove('playing'); return;
   }
   btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
@@ -327,7 +332,7 @@ function playEduTTS(text, btn) {
     _eduAudio.play();
     btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
     _eduAudio.onended = function() {
-      btn.textContent = '🔊 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
+      btn.textContent = '⭐ 중요 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
     };
   })
   .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
@@ -345,9 +350,62 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!title) return;
     var btn = document.createElement('button');
     btn.className = 'tts-edu-btn';
-    btn.textContent = '🔊 강의 듣기';
+    btn.textContent = '⭐ 중요 강의 듣기';
     var script = EDU5[id];
     btn.onclick = function() { playEduTTS(script, btn); };
+    title.insertAdjacentElement('afterend', btn);
+  });
+});
+</script>
+
+<script>
+// ===== 보충강의 TTS 플레이어 =====
+var _suppAudio5 = null;
+function playSuppTTS5(text, btn) {
+  if (_suppAudio5 && !_suppAudio5.paused) {
+    _suppAudio5.pause(); _suppAudio5 = null;
+    btn.textContent = '📚 보충강의';
+    btn.classList.remove('playing'); return;
+  }
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
+  })
+  .then(function(r) { return r.blob(); })
+  .then(function(blob) {
+    var url = URL.createObjectURL(blob);
+    _suppAudio5 = new Audio(url);
+    _suppAudio5.play();
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
+    _suppAudio5.onended = function() {
+      btn.textContent = '📚 보충강의'; btn.classList.remove('playing'); _suppAudio5 = null;
+    };
+  })
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
+}
+
+var EDU5_SUPP = {
+  'p1-01': `철도의 정의입니다. 철도산업기본법에서 정의하는 철도는 여객과 화물을 운송하는 데 필요한 철도 차량과 철도 시설 및 이와 관련된 운영·지원 체계가 유기적으로 구성된 운송 체계예요. 단순히 선로만이 아닙니다. 차량, 시설, 운영 체계를 모두 포함해요. 철도의 종류도 알아야 합니다. 고속철도, 일반철도, 도시철도, 전용철도로 나뉩니다. 고속철도는 시속 200킬로미터 이상으로 운행할 수 있는 철도예요. 200킬로미터 이상! 250킬로미터가 아닙니다. 시험 함정! 고속철도 기준 속도는? 시속 200킬로미터 이상! 도시철도와 전용철도 구분도 중요해요. 도시철도는 도시 내 교통 수요를 처리, 전용철도는 특정 목적을 위해 설치한 철도입니다.`,
+  'p1-04': `철도산업과 철도운영의 구별입니다. 비슷해 보여도 다른 개념이에요. 철도산업은 철도와 관련된 산업 전체를 말합니다. 철도 건설, 운영, 유지보수, 차량 제조, 연구개발 등 철도와 관련된 모든 경제 활동이 포함돼요. 넓은 개념이에요. 철도운영은 철도 이용자에게 철도 서비스를 제공하는 것입니다. 여객과 화물을 직접 운송하는 활동이에요. 좁은 개념입니다. 쉽게 말하면 철도산업 안에 철도운영이 포함돼요. 시험 함정! 철도차량 제조업이 철도산업에 포함되나요? 포함됩니다! 철도운영에는 포함 안 되지만 철도산업에는 포함돼요. 철도산업이 더 넓은 상위 개념, 철도운영은 직접 서비스 제공하는 하위 활동. 이렇게 기억하세요!`,
+  'p2-09': `국가철도공단의 역할입니다. 국가철도공단은 철도 시설을 건설하고 관리하는 공공기관이에요. 철도 노선을 만들고 유지하는 일을 해요. 운영은 안 합니다! 한국철도공사와 역할이 다릅니다. 국가철도공단의 주요 업무는 철도 시설의 건설 및 관리, 철도 시설 임대 수입 관리, 철도 기술 연구 개발이에요. 한국철도공사는 실제 열차를 운행하는 기관이에요. 역을 운영하고 승객을 태워요. 시험 함정! 철도를 직접 운영하는 기관은? 한국철도공사! 철도 시설을 건설하고 관리하는 기관은? 국가철도공단! 국가철도공단 = 건설·관리, 한국철도공사 = 운영·서비스. 이 구분이 핵심입니다!`,
+  'p2-11': `철도산업위원회 구성입니다. 위원장과 위원 수를 외워야 해요. 철도산업위원회는 국토교통부장관이 위원장이에요. 위원 수는 25명 이내입니다. 25명! 30명이 아닙니다. 위원 임기는 2년이에요. 2년! 철도산업위원회에서 심의하는 사항이 있어요. 철도산업발전기본계획, 철도 구조개혁에 관한 사항, 철도망 구축계획 등이 심의 대상입니다. 시험 포인트! 철도산업위원회 위원장은? 국토교통부장관! 위원 수는? 25명 이내! 위원 임기는? 2년! 이 세 가지 숫자와 직책을 정확히 기억하세요. 위원장 국토교통부장관, 25명 이내, 임기 2년. 나옵니다!`,
+  'p5-17': `구조개혁기본계획 수립 절차입니다. 국토교통부장관이 수립해요. 절차가 시험에 나옵니다. 국토교통부장관이 계획안을 작성하고, 철도산업위원회의 심의를 거쳐, 대통령의 승인을 받아야 해요. 위원회 심의 → 대통령 승인. 이 순서가 중요합니다. 공익서비스 보상계약도 중요해요. 국가나 지자체가 철도 운영자에게 공익 서비스를 요청할 때는 비용을 보상해야 합니다. 경제성이 없어도 운행해야 하는 노선에 대한 보상이에요. 시험 함정! 구조개혁기본계획 최종 승인권자는? 대통령! 국토교통부장관이 아닙니다. 계획 수립 → 위원회 심의 → 대통령 승인. 이 3단계 순서를 꼭 기억하세요!`,
+  'p6-21': `철도시설 시책과 철도운영 시책 구분입니다. 각각의 시책 내용을 구분해야 해요. 철도시설 시책은 선로, 역사, 전력, 신호, 통신 시설과 관련된 정책이에요. 시설 투자, 안전 기준, 기술 개발이 포함됩니다. 철도운영 시책은 철도 운영 효율화, 서비스 개선, 요금 정책과 관련돼요. 여객 서비스, 화물 서비스 개선이 포함됩니다. 시험 함정! 선로 안전 기준을 정하는 것은 어떤 시책인가요? 철도시설 시책! 여객 서비스 개선은? 철도운영 시책! 시설과 운영을 정확히 구분해서 연결하세요. 선로, 역사, 신호 = 시설 시책. 서비스, 요금, 효율 = 운영 시책.`,
+  'p7-23': `철도산업기본법 벌칙 구조입니다. 벌칙 종류와 수준을 외워야 해요. 철도산업기본법 위반에 대한 벌칙은 형사 처벌과 과태료로 나뉩니다. 형사 처벌은 거짓 신고, 허위 자료 제출 등 심각한 위반에 적용돼요. 과태료는 신고 의무 미이행, 경미한 위반에 적용됩니다. 선로사용계약 관련 위반도 나와요. 국가철도공단과 선로사용계약을 체결하지 않고 선로를 사용하면 제재를 받아요. 시험 포인트! 벌칙 문제에서 금액 숫자가 나오면 철도안전법과 헷갈리지 마세요. 각 법마다 벌칙 금액이 다릅니다. 철도산업기본법의 과태료는 위반 내용에 따라 500만원 이하에서 1000만원 이하까지 다양해요. 형사처벌은 거짓 신고, 과태료는 절차 위반. 이렇게 구분하세요!`,
+};
+document.addEventListener('DOMContentLoaded', function() {
+  Object.keys(EDU5_SUPP).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var title = el.querySelector('.concept-title');
+    if (!title) return;
+    var btn = document.createElement('button');
+    btn.className = 'tts-supp-btn';
+    btn.textContent = '📚 보충강의';
+    var script = EDU5_SUPP[id];
+    btn.onclick = function() { playSuppTTS5(script, btn); };
     title.insertAdjacentElement('afterend', btn);
   });
 });
