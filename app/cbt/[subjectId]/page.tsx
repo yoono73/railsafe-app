@@ -226,14 +226,21 @@ export default function CbtPage() {
     const q = questions[examCurrent];
     if (!q) return;
     stopCbtTts();
-    playCbtTts(q.question_text, ttsRate);
+    const text = drivingMode
+      ? `${q.question_text}. ${q.options.map((o, i) => `${i + 1}번. ${getOptionText(o)}`).join('. ')}`
+      : q.question_text;
+    playCbtTts(text, ttsRate);
     return () => { stopCbtTts(); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [examCurrent, mode, examFinished, questions]);
+  }, [examCurrent, mode, examFinished, questions, drivingMode]);
 
   const ttsPracticeReplay = () => {
     if (!questions.length) return;
-    playCbtTts(questions[current].question_text, ttsRate);
+    const q = questions[current];
+    const text = drivingMode
+      ? `${q.question_text}. ${q.options.map((o, i) => `${i + 1}번. ${getOptionText(o)}`).join('. ')}`
+      : q.question_text;
+    playCbtTts(text, ttsRate);
   };
 
   const toggleBookmark = async (questionId: number) => {
@@ -259,7 +266,11 @@ export default function CbtPage() {
 
   const ttsExamReplay = () => {
     if (!questions.length) return;
-    playCbtTts(questions[examCurrent].question_text, ttsRate);
+    const q = questions[examCurrent];
+    const text = drivingMode
+      ? `${q.question_text}. ${q.options.map((o, i) => `${i + 1}번. ${getOptionText(o)}`).join('. ')}`
+      : q.question_text;
+    playCbtTts(text, ttsRate);
   };
 
   // 속도 조절 UI 컴포넌트 (인라인)
@@ -271,8 +282,13 @@ export default function CbtPage() {
           key={s.value}
           onClick={() => {
             changeTtsRate(s.value);
-            const textToRead = mode === 'exam' ? questions[examCurrent]?.question_text : questions[current]?.question_text;
-            if (textToRead) playCbtTts(textToRead, s.value);
+            const q = mode === 'exam' ? questions[examCurrent] : questions[current];
+            if (q) {
+              const textToRead = drivingMode
+                ? `${q.question_text}. ${q.options.map((o, i) => `${i + 1}번. ${getOptionText(o)}`).join('. ')}`
+                : q.question_text;
+              playCbtTts(textToRead, s.value);
+            }
           }}
           style={{
             padding: '0.2rem 0.45rem',
@@ -533,46 +549,39 @@ export default function CbtPage() {
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
             <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>📝</div>
             <h1 style={{ fontSize: '1.4rem', fontWeight: '700', color: '#1f2937' }}>CBT 모의고사</h1>
-            <p style={{ color: '#6b7280', fontSize: '0.9rem', marginTop: '0.25rem' }}>총 {allQuestions.length}문제</p>
+            <p style={{ color: '#6b7280', fontSize: '0.9rem', marginTop: '0.25rem' }}>총 {allQuestions.length}문제 · 모드를 선택하세요</p>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 
-            {/* 운전 모드 토글 */}
+            {/* 🚗 음성 모드 */}
             <button
-              onClick={() => setDrivingMode((v) => !v)}
+              onClick={() => { setDrivingMode(true); startPractice(); }}
               style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                background: drivingMode ? '#1e1b4b' : 'white',
-                border: '2px solid ' + (drivingMode ? '#6d28d9' : '#e5e7eb'),
-                borderRadius: '1rem', padding: '1rem 1.25rem', cursor: 'pointer',
+                background: 'linear-gradient(135deg, #1e1b4b 0%, #3730a3 100%)',
+                border: '2px solid #6d28d9', borderRadius: '1rem',
+                padding: '1.5rem', textAlign: 'left', cursor: 'pointer',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <span style={{ fontSize: '1.5rem' }}>🚗</span>
-                <div style={{ textAlign: 'left' }}>
-                  <p style={{ fontWeight: '700', color: drivingMode ? 'white' : '#1f2937', fontSize: '0.95rem' }}>운전 모드</p>
-                  <p style={{ fontSize: '0.75rem', color: drivingMode ? '#a5b4fc' : '#9ca3af', marginTop: '0.1rem' }}>문제+보기 전부 읽기 · 터치 후 자동 넘김</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.6rem' }}>
+                <span style={{ fontSize: '1.75rem' }}>🚗</span>
+                <div>
+                  <p style={{ fontWeight: '700', color: 'white', fontSize: '1.05rem' }}>음성 모드 (운전 중)</p>
+                  <p style={{ color: '#a5b4fc', fontSize: '0.8rem', fontWeight: '600' }}>전체 {allQuestions.length}문제</p>
                 </div>
               </div>
-              <div style={{
-                width: '2.5rem', height: '1.4rem', borderRadius: '9999px',
-                background: drivingMode ? '#7c3aed' : '#e5e7eb',
-                position: 'relative', transition: 'background 0.2s',
-              }}>
-                <div style={{
-                  position: 'absolute', top: '0.15rem',
-                  left: drivingMode ? '1.2rem' : '0.15rem',
-                  width: '1.1rem', height: '1.1rem',
-                  borderRadius: '50%', background: 'white',
-                  transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
-                }} />
-              </div>
+              <ul style={{ margin: '0', paddingLeft: '0', listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                {['문제 + 보기 4개 전체 자동 낭독', '말로 번호 답변 (1~4)', '터치 후 자동 다음 문제'].map((t) => (
+                  <li key={t} style={{ fontSize: '0.85rem', color: '#c7d2fe', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ color: '#818cf8' }}>✓</span>{t}
+                  </li>
+                ))}
+              </ul>
             </button>
 
-            {/* 연습 모드 */}
+            {/* 🎯 연습 모드 */}
             <button
-              onClick={startPractice}
+              onClick={() => { setDrivingMode(false); startPractice(); }}
               style={{ background: 'white', border: '2px solid #e5e7eb', borderRadius: '1rem', padding: '1.5rem', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s' }}
               onMouseOver={(e) => (e.currentTarget.style.borderColor = '#7c3aed')}
               onMouseOut={(e) => (e.currentTarget.style.borderColor = '#e5e7eb')}
@@ -585,7 +594,7 @@ export default function CbtPage() {
                 </div>
               </div>
               <ul style={{ margin: '0', paddingLeft: '0', listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                {['문제마다 즉시 정답 확인', '해설 바로 확인 가능', '오답 복습 제공'].map((t) => (
+                {['문제만 자동 낭독', '문제마다 즉시 정답 확인', '해설 바로 확인 가능'].map((t) => (
                   <li key={t} style={{ fontSize: '0.85rem', color: '#6b7280', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <span style={{ color: '#7c3aed' }}>✓</span>{t}
                   </li>
@@ -593,9 +602,9 @@ export default function CbtPage() {
               </ul>
             </button>
 
-            {/* 시험 모드 */}
+            {/* ⏱️ 시험 모드 */}
             <button
-              onClick={startExam}
+              onClick={() => { setDrivingMode(false); startExam(); }}
               style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%)', border: 'none', borderRadius: '1rem', padding: '1.5rem', textAlign: 'left', cursor: 'pointer', transition: 'opacity 0.2s' }}
               onMouseOver={(e) => (e.currentTarget.style.opacity = '0.93')}
               onMouseOut={(e) => (e.currentTarget.style.opacity = '1')}
