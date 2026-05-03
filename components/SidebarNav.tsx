@@ -213,6 +213,19 @@ export default function SidebarNav() {
           핵심 토픽 맵
         </Link>
 
+        {/* 학습가이드 */}
+        <Link
+          href="/guide"
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+            pathname.startsWith('/guide')
+              ? 'bg-purple-100 text-purple-800'
+              : 'text-gray-600 hover:bg-gray-100'
+          }`}
+        >
+          <span className="text-base">📘</span>
+          학습가이드
+        </Link>
+
         <div className="h-px bg-gray-100 my-2" />
 
         {/* 오늘의 학습 시작 버튼 */}
