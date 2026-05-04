@@ -87,11 +87,10 @@ export default function TheoryPage() {
         </button>
       </div>
 
-      {/* 핵심정리 HTML iframe */}
+      {/* 핵심정리 HTML iframe — flex-1로 뷰포트 맞춤, 내부 스크롤 */}
       <iframe
         src={`/theory/${subjectId}.html`}
-        className="flex-1 w-full border-none"
-        style={{ minHeight: 'calc(100vh - 110px)' }}
+        className="flex-1 w-full border-none min-h-0"
         title={`${subjectNames[subjectId]} 핵심정리`}
         loading="lazy"
       />
