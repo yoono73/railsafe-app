@@ -39,7 +39,6 @@ export default async function GuidePage() {
       brain_principles ( name, tagline, icon, application_type )
     `)
     .in('subject_type_id', typeIds.length ? typeIds : [0])
-    .lte('priority', 2)
     .order('priority');
 
   const strategies = rawStrategies ?? [];

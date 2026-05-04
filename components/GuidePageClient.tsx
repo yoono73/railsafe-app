@@ -136,6 +136,8 @@ export default function GuidePageClient({
   const [expandedTerm, setExpandedTerm] = useState<string | null>(null);
   // 추가 용어 섹션 표시 여부 (과목별 초기화)
   const [showExtended, setShowExtended] = useState<Record<number, boolean>>({});
+  // 3층 학습법 더 보기 (과목별)
+  const [showMoreStrats, setShowMoreStrats] = useState<Record<number, boolean>>({});
 
   const dday         = getDday();
   const currentPhase = getCurrentPhase();
@@ -458,51 +460,72 @@ export default function GuidePageClient({
               )}
             </div>
 
-            {/* ── 3층 + 4층: 학습법 × 타이밍 ── */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm space-y-4">
+            {/* ── 3층 + 4층: 추천 학습법 ── */}
+            <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm space-y-3">
               <p className="text-sm font-bold text-gray-800 flex items-center gap-2">
-                <span>📚</span> 3층 — 학습법 매핑
+                <span>📚</span> 3층 — 추천 학습법
               </p>
 
-              {currentStrats.length > 0 ? (
-                <div className="space-y-3">
-                  {currentStrats.map((st, i) => {
-                    const bp      = st.brain_principles;
-                    const badge   = APP_TYPE_BADGE[bp.application_type] ?? APP_TYPE_BADGE.hybrid;
-                    const isFirst = i === 0;
-                    return (
-                      <div key={i} className={`rounded-xl border p-4 space-y-2 ${isFirst ? `${typeColor.bg} border-opacity-40` : 'border-gray-100'}`}>
-                        <div className="flex items-start justify-between gap-2">
-                          <div>
-                            <p className="text-xs font-bold text-gray-800">
-                              {bp.icon && <span className="mr-1">{bp.icon}</span>}
-                              {bp.name}
-                              <span className="ml-1.5 text-gray-400 font-normal">— {bp.tagline}</span>
-                            </p>
-                          </div>
-                          <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full flex-shrink-0 ${badge.cls}`}>
-                            {badge.label}
-                          </span>
-                        </div>
-                        <p className="text-xs text-gray-600">{st.how_to_apply}</p>
+              {currentStrats.length > 0 ? (() => {
+                const baseStrats  = currentStrats.filter(s => s.priority === 1);
+                const extraStrats = currentStrats.filter(s => s.priority > 1);
+                const isExpanded  = showMoreStrats[currentSubject.id] ?? false;
+                const displayed   = isExpanded ? currentStrats : baseStrats;
 
-                        {/* 4층: 타이밍 */}
-                        {st.timing_guide && (
-                          <div className="bg-white rounded-lg px-3 py-2 border border-gray-100 space-y-1">
-                            <p className="text-[10px] font-semibold text-gray-500">⏱️ 언제 어떻게</p>
-                            <p className="text-xs text-gray-600">{st.timing_guide}</p>
+                return (
+                  <div className="space-y-2">
+                    {displayed.map((st, i) => {
+                      const bp    = st.brain_principles;
+                      const badge = APP_TYPE_BADGE[bp.application_type] ?? APP_TYPE_BADGE.hybrid;
+                      return (
+                        <div key={i} className="flex items-start gap-3 bg-gray-50 rounded-xl px-4 py-3">
+                          <span className={`text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${typeColor.bg} ${typeColor.text}`}>
+                            {i + 1}
+                          </span>
+                          <div className="flex-1 min-w-0 space-y-1.5">
+                            {/* 실천법 전면 */}
+                            <p className="text-xs font-semibold text-gray-800 leading-snug">
+                              {st.how_to_apply}
+                            </p>
+                            {/* 원리명 작게 */}
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="text-[10px] text-gray-400">
+                                └ {bp.icon} {bp.name}
+                              </span>
+                              <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${badge.cls}`}>
+                                {badge.label}
+                              </span>
+                            </div>
+                            {/* 4층: 타이밍 */}
+                            {st.timing_guide && (
+                              <p className="text-[11px] text-gray-500 bg-white rounded-lg px-2.5 py-1.5 border border-gray-100 leading-relaxed">
+                                ⏱️ {st.timing_guide}
+                              </p>
+                            )}
+                            {st.wrong_pattern && (
+                              <p className="text-[11px] text-red-400 leading-snug">
+                                ❌ {st.wrong_pattern}
+                              </p>
+                            )}
                           </div>
-                        )}
-                        {st.wrong_pattern && (
-                          <p className="text-[11px] text-red-500">
-                            <span className="font-semibold">❌ 잘못된 패턴:</span> {st.wrong_pattern}
-                          </p>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
+                        </div>
+                      );
+                    })}
+
+                    {/* 더 보기 버튼 */}
+                    {extraStrats.length > 0 && (
+                      <button
+                        onClick={() => setShowMoreStrats(prev => ({ ...prev, [currentSubject.id]: !isExpanded }))}
+                        className="w-full text-[11px] text-gray-400 hover:text-purple-600 py-2 flex items-center justify-center gap-1 border border-gray-100 rounded-xl transition hover:border-purple-200">
+                        {isExpanded
+                          ? <><span>▲</span> 접기</>
+                          : <><span>+</span> 더 보기 ({extraStrats.length}개)</>
+                        }
+                      </button>
+                    )}
+                  </div>
+                );
+              })() : (
                 <p className="text-xs text-gray-400 italic">전략 데이터 준비 중입니다.</p>
               )}
 
