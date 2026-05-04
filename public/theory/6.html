@@ -129,6 +129,34 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .tts-supp-btn:hover { background:#0e7490; }
 .tts-supp-btn:disabled { opacity:.6; cursor:wait; }
 .tts-supp-btn.playing { background:#047857; }
+
+/* ===== 전체강의 듣기 버튼 ===== */
+#play-all-btn {
+  display: none;
+}
+@media(max-width:900px) {
+  #play-all-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: fixed;
+    bottom: 72px;
+    right: 14px;
+    z-index: 200;
+    background: #059669;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 8px 16px 8px 12px;
+    font-size: .85em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(5,150,105,.45);
+    font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
+  }
+  #play-all-btn.playing { background: #dc2626; }
+  #play-all-btn:active { background: #047857; }
+}
 </style>
 </head>
 <body>
@@ -350,6 +378,7 @@ function search(){
 }
 document.addEventListener('DOMContentLoaded',()=>{document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')search();});});
 </script>
+<button id="play-all-btn" onclick="playAllTTS()">🎧 전체강의</button>
 <button id="toc-toggle-btn" onclick="openTocDrawer()" aria-label="목차 열기">📋 목차</button>
 <div id="toc-overlay" onclick="closeTocDrawer()"></div>
 <div id="toc-drawer"><div id="toc-drawer-header"><span>목차</span><button onclick="closeTocDrawer()">✕</button></div><nav id="toc-drawer-nav" class="toc"></nav></div>
@@ -485,5 +514,59 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
+<script>
+// ===== 전체강의 듣기 =====
+var _allAudio = null;
+var _allQueue = [];
+var _allIndex = 0;
+var _allPlaying = false;
+
+function playAllTTS() {
+  var btn = document.getElementById('play-all-btn');
+  if (_allPlaying) {
+    if (_allAudio) { _allAudio.pause(); _allAudio = null; }
+    _allPlaying = false; _allQueue = []; _allIndex = 0;
+    if (btn) { btn.textContent = '🎧 전체강의'; btn.classList.remove('playing'); }
+    return;
+  }
+  var eduObj = (typeof EDU1!=='undefined'?EDU1:
+                typeof EDU2!=='undefined'?EDU2:
+                typeof EDU3!=='undefined'?EDU3:
+                typeof EDU4!=='undefined'?EDU4:
+                typeof EDU5!=='undefined'?EDU5:
+                typeof EDU6!=='undefined'?EDU6:
+                typeof EDU7!=='undefined'?EDU7:{});
+  _allQueue = Object.values(eduObj);
+  if (!_allQueue.length) return;
+  _allIndex = 0; _allPlaying = true;
+  if (btn) btn.classList.add('playing');
+  playNextAll(btn);
+}
+function playNextAll(btn) {
+  if (!_allPlaying || _allIndex >= _allQueue.length) {
+    _allPlaying = false; _allQueue = []; _allIndex = 0;
+    if (btn) { btn.textContent = '🎧 전체강의'; btn.classList.remove('playing'); }
+    return;
+  }
+  var total = _allQueue.length;
+  var cur = _allIndex + 1;
+  if (btn) btn.textContent = '⏸ ' + cur + '/' + total;
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({text: _allQueue[_allIndex], voiceId:'sQ3a15DhENXU8pKTHlcc'})
+  })
+  .then(function(r){ return r.blob(); })
+  .then(function(blob){
+    var url = URL.createObjectURL(blob);
+    _allAudio = new Audio(url);
+    _allAudio.play();
+    _allAudio.onended = function(){ _allIndex++; playNextAll(btn); };
+  })
+  .catch(function(){ _allIndex++; playNextAll(btn); });
+}
+</script>
+
 </body>
 </html>

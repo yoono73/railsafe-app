@@ -199,15 +199,6 @@ export default function TopicMapPage() {
 
   return (
     <div className="min-h-full bg-purple-50">
-      {/* 헤더 */}
-      <div className="bg-white border-b border-gray-100 px-6 py-4 flex items-center gap-3">
-        <button onClick={() => router.push('/start')} className="text-purple-400 hover:text-purple-600 text-sm transition">
-          ← 돌아가기
-        </button>
-        <span className="text-gray-300">|</span>
-        <span className="font-bold text-gray-800">🗺️ 핵심 토픽 맵</span>
-      </div>
-
       <div className="max-w-2xl mx-auto px-4 py-6">
         {/* 안내 배너 */}
         <div className="bg-purple-900 text-white rounded-2xl p-5 mb-6">
