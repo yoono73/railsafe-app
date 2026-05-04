@@ -62,7 +62,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
     align-items: center;
     gap: 6px;
     position: fixed;
-    bottom: 72px; /* MobileNav 위 */
+    bottom: 88px; /* MobileNav 위 */
     left: 14px;
     z-index: 200;
     background: #4c1d95;
@@ -140,7 +140,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
     align-items: center;
     gap: 6px;
     position: fixed;
-    bottom: 72px;
+    bottom: 88px;
     right: 14px;
     z-index: 200;
     background: #059669;
@@ -157,13 +157,37 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
   #play-all-btn.playing { background: #dc2626; }
   #play-all-btn:active { background: #047857; }
 }
+
+/* ===== 전체강의 데스크탑 버튼 ===== */
+.play-all-desktop-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #059669;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 14px 5px 12px;
+  font-size: .82em;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
+  transition: background .2s;
+}
+.play-all-desktop-btn:hover { background: #047857; }
+.play-all-desktop-btn.playing { background: #dc2626; }
+@media(max-width:900px) {
+  .play-all-desktop-btn { display: none; }
+}
 </style>
 </head>
 <body>
 <div class="site-header">
   <h1>🚦 철도신호 핵심정리</h1>
   <div class="meta">철도교통안전관리자 | 14 PARTS · 37개 핵심개념 · VIS-038~048</div>
-  <div class="search-bar"><input id="q" placeholder="개념 검색 (Enter)"><button onclick="search()">검색</button></div>
+  <div class="search-bar"><input id="q" placeholder="개념 검색 (Enter)"><button onclick="search()">검색</button>
+    <button class="play-all-desktop-btn" id="play-all-desktop" onclick="playAllTTS()">🎧 전체강의</button>
+  </div>
 </div>
 <div class="container">
   <nav class="toc"><h2>목차</h2><ul><li><a href="#p1" class="toc-part">PART 1. 철도신호 기본 개념</a></li><li><a href="#p2" class="toc-part">PART 2. 신호기 구조상·조작상 분류</a></li><li><a href="#p3" class="toc-part">PART 3. 신호기 기능별 분류 (주·종속·임시)</a></li><li><a href="#p4" class="toc-part">PART 4. 신호기 정위 & 확인거리</a></li><li><a href="#p5" class="toc-part">PART 5. 선로전환기 분류·계통도</a></li><li><a href="#p6" class="toc-part">PART 6. 궤도회로</a></li><li><a href="#p7" class="toc-part">PART 7. 계전기 종류</a></li><li><a href="#p8" class="toc-part">PART 8. 폐색 방식</a></li><li><a href="#p9" class="toc-part">PART 9. 연동장치</a></li><li><a href="#p10" class="toc-part">PART 10. 열차제어시스템</a></li><li><a href="#p11" class="toc-part">PART 11. 건널목 보안장치</a></li><li><a href="#p12" class="toc-part">PART 12. 검지장치 종류</a></li><li><a href="#p13" class="toc-part">PART 13. 고속철도 신호 핵심</a></li><li><a href="#p14" class="toc-part">PART 14. 핵심 수치 통합 암기</a></li></ul></nav>

@@ -62,7 +62,7 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
     align-items: center;
     gap: 6px;
     position: fixed;
-    bottom: 72px; /* MobileNav 위 */
+    bottom: 88px; /* MobileNav 위 */
     left: 14px;
     z-index: 200;
     background: #4c1d95;
@@ -140,7 +140,7 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
     align-items: center;
     gap: 6px;
     position: fixed;
-    bottom: 72px;
+    bottom: 88px;
     right: 14px;
     z-index: 200;
     background: #059669;
@@ -157,6 +157,28 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
   #play-all-btn.playing { background: #dc2626; }
   #play-all-btn:active { background: #047857; }
 }
+
+/* ===== 전체강의 데스크탑 버튼 ===== */
+.play-all-desktop-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #059669;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 14px 5px 12px;
+  font-size: .82em;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
+  transition: background .2s;
+}
+.play-all-desktop-btn:hover { background: #047857; }
+.play-all-desktop-btn.playing { background: #dc2626; }
+@media(max-width:900px) {
+  .play-all-desktop-btn { display: none; }
+}
 </style>
 </head>
 <body>
@@ -166,6 +188,7 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
   <div class="search-bar">
     <input id="q" type="text" placeholder="개념 검색... (Enter)">
     <button onclick="search()">검색</button>
+    <button class="play-all-desktop-btn" id="play-all-desktop" onclick="playAllTTS()">🎧 전체강의</button>
   </div>
 </header>
 <div class="container">

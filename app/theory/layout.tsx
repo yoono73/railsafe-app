@@ -13,7 +13,7 @@ export default async function TheoryLayout({
   if (!user) redirect('/login');
 
   return (
-    <div className="h-screen bg-zinc-50 flex flex-col overflow-hidden">
+    <div className="h-[100dvh] bg-zinc-50 flex flex-col overflow-hidden">
       <header className="bg-purple-900 text-white px-6 py-3 flex items-center justify-between shrink-0 z-20">
         <div className="flex items-center gap-2">
           <span className="text-xl">🚇</span>
@@ -33,7 +33,7 @@ export default async function TheoryLayout({
       <div className="flex flex-1 overflow-hidden min-h-0">
         <SidebarNav />
         <MobileNav />
-        <main className="flex-1 flex flex-col overflow-hidden pb-16 md:pb-0">
+        <main className="flex-1 flex flex-col overflow-hidden pb-20 md:pb-0">
           {children}
         </main>
       </div>

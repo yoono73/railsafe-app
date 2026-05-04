@@ -13,7 +13,7 @@ export default async function MindmapLayout({
   if (!user) redirect('/login');
 
   return (
-    <div className="h-screen bg-zinc-50 flex flex-col overflow-hidden">
+    <div className="h-[100dvh] bg-zinc-50 flex flex-col overflow-hidden">
       <header className="bg-purple-900 text-white px-6 py-3 flex items-center justify-between shrink-0 z-20">
         <div className="flex items-center gap-2">
           <span className="text-xl">🚇</span>
