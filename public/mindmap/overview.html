@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>철도교통안전관리자 — 전체 마인드맵 (최상위)</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+  background: #ffffff;
+  color: #1e293b;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  text-align: center;
+  padding: 18px 20px 14px;
+  background: #f8fafc;
+  border-bottom: 2px solid #e2e8f0;
+}
+.header h1 { font-size: 20px; color: #1e3a8a; font-weight: bold; }
+.header p  { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+
+/* ── MINDMAP WRAPPER ── */
+#mindmap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 30px;
+  gap: 0;
+  min-width: 1100px;
+  background: #ffffff;
+}
+
+/* ── CENTER NODE ── */
+.center-node {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1e3a8a 0%, #0c4a6e 100%);
+  border: 2.5px solid #3b82f6;
+  border-radius: 20px;
+  padding: 22px 28px;
+  min-width: 180px;
+  max-width: 200px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(30,58,138,0.2);
+  flex-shrink: 0;
+}
+.center-node .c-title { font-size: 18px; font-weight: bold; color: #ffffff; line-height: 1.5; }
+.center-node .c-sub   { font-size: 11px; color: #bfdbfe; margin-top: 5px; line-height: 1.6; }
+.center-node .c-badge {
+  margin-top: 10px;
+  font-size: 10px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 20px;
+  padding: 3px 10px;
+  color: #dbeafe;
+}
+
+/* ── SIDE AREAS ── */
+#left  { display: flex; flex-direction: column; gap: 22px; align-items: flex-end;   min-width: 290px; padding-right: 40px; }
+#right { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; min-width: 340px; padding-left: 40px; }
+
+/* ── BRANCH GROUP ── */
+.branch-group { display: flex; flex-direction: column; gap: 5px; }
+
+/* ── BRANCH HEADER ROW ── */
+.branch-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+#left .branch-header { flex-direction: row-reverse; }
+
+.toggle-icon {
+  font-size: 11px;
+  color: #94a3b8;
+  transition: transform 0.2s;
+  min-width: 12px;
+}
+
+.branch-label {
+  display: inline-block;
+  padding: 9px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  white-space: nowrap;
+  border: 2px solid transparent;
+  transition: filter 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.branch-label:hover { filter: brightness(0.95); }
+
+/* ── SUB-NODES ── */
+.sub-nodes { display: flex; flex-direction: column; gap: 4px; padding-top: 2px; }
+#left  .sub-nodes { align-items: flex-end; }
+#right .sub-nodes { align-items: flex-start; }
+
+.sub-node {
+  padding: 5px 12px;
+  border-radius: 7px;
+  font-size: 11.5px;
+  background: #f8fafc;
+  border-left: 3px solid #cbd5e1;
+  line-height: 1.5;
+  color: #334155;
+  transition: background 0.15s;
+}
+#left .sub-node { border-left: none; border-right: 3px solid #cbd5e1; text-align: right; }
+.sub-node:hover { background: #f1f5f9; }
+
+.badge {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.07);
+  margin-left: 5px;
+  font-weight: normal;
+  color: #475569;
+}
+
+.ok  { color: #16a34a; }
+.wip { color: #d97706; }
+.no  { color: #dc2626; }
+
+/* ── SECTION COLORS (라이트 모드) ── */
+
+/* 시험정보 — navy */
+.bl-exam { background: #dbeafe; border-color: #3b82f6 !important; color: #1e3a8a; }
+.bn-exam { border-color: #3b82f6 !important; }
+#left .bn-exam { border-left: none; border-right: 3px solid #3b82f6 !important; }
+
+/* 학습전략 — sky */
+.bl-strat { background: #e0f2fe; border-color: #0ea5e9 !important; color: #0c4a6e; }
+.bn-strat { border-color: #0ea5e9 !important; }
+#left .bn-strat { border-left: none; border-right: 3px solid #0ea5e9 !important; }
+
+/* 과목 — purple */
+.bl-subj { background: #ede9fe; border-color: #7c3aed !important; color: #3b0764; }
+.s1 { border-color: #7c3aed !important; color: #3b0764; }
+.s2 { border-color: #1d4ed8 !important; color: #1e3a8a; }
+.s3 { border-color: #15803d !important; color: #14532d; }
+.s4 { border-color: #b45309 !important; color: #78350f; }
+.s5 { border-color: #b45309 !important; color: #78350f; }
+.s6 { border-color: #b91c1c !important; color: #7f1d1d; }
+.s7 { border-color: #0369a1 !important; color: #0c4a6e; }
+
+/* 콘텐츠 — green */
+.bl-cont { background: #dcfce7; border-color: #16a34a !important; color: #14532d; }
+.bn-cont { border-color: #16a34a !important; }
+
+/* 시스템 — amber */
+.bl-sys { background: #fef3c7; border-color: #d97706 !important; color: #78350f; }
+.bn-sys { border-color: #d97706 !important; }
+
+/* ── LEGEND ── */
+.legend {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 11px;
+  z-index: 200;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.legend-title { font-size: 11px; font-weight: bold; color: #64748b; margin-bottom: 8px; }
+.legend-row   { display: flex; align-items: center; gap: 7px; margin-bottom: 4px; color: #475569; }
+.legend-dot   { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── COLLAPSE ── */
+.collapsed .sub-nodes  { display: none; }
+.collapsed .toggle-icon { transform: rotate(-90deg); }
+
+/* ── SVG ── */
+#connector-svg {
+  position: absolute; top:0; left:0;
+  width:100%; height:100%;
+  pointer-events: none;
+  z-index: 2;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🚆 철도교통안전관리자 — 전체 마인드맵</h1>
+  <p>최종 업데이트: 2026.04.21 &nbsp;|&nbsp; 시험일: 2026.06.21 &nbsp;|&nbsp; 시스템 베타 오픈: 2026.05.17</p>
+</div>
+
+<div id="mindmap">
+
+  <!-- ══════════ LEFT ══════════ -->
+  <div id="left">
+
+    <!-- 시험 정보 -->
+    <div class="branch-group" id="g-exam">
+      <div class="branch-header" onclick="toggle('g-exam')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-exam">📋 시험 정보</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node bn-exam">주관: TS한국교통안전공단</div>
+        <div class="sub-node bn-exam">구성: 필기 5과목 (면제 없음)</div>
+        <div class="sub-node" style="border-color:#d97706; color:#92400e; background:#fffbeb;">🎯 시험일: <strong>2026.06.21</strong></div>
+      </div>
+    </div>
+
+    <!-- 학습 전략 -->
+    <div class="branch-group" id="g-strat">
+      <div class="branch-header" onclick="toggle('g-strat')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-strat">🧠 학습 전략</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node bn-strat">뇌과학 기반 39개 학습법 (DB 완성)</div>
+        <div class="sub-node bn-strat">출력 중심 인출훈련 ← 핵심</div>
+        <div class="sub-node bn-strat">전체→부분→디테일 학습 흐름</div>
+        <div class="sub-node bn-strat">D-Day 역산 스케줄 (6/21 기준)</div>
+        <div class="sub-node bn-strat">#36 3회 분산 반복 (간격반복)</div>
+        <div class="sub-node bn-strat">#37 자기 설명 · 가르치기</div>
+        <div class="sub-node bn-strat">#38 빈칸 복원 훈련</div>
+        <div class="sub-node bn-strat">#39 시간 제한 출력 (5분 타이머)</div>
+        <div class="sub-node bn-strat">함정패턴 A/B/C형 분류 적용</div>
+      </div>
+    </div>
+
+  </div><!-- /left -->
+
+  <!-- ══════════ CENTER ══════════ -->
+  <div style="position:relative; z-index:10; flex-shrink:0;">
+    <div class="center-node" id="centerNode">
+      <div class="c-title">🚆 철도교통<br>안전관리자</div>
+      <div class="c-sub">국가자격 · TS한국교통안전공단<br>7개 학습영역 통합 학습시스템</div>
+      <div class="c-badge">문제DB 4,656줄 &nbsp;|&nbsp; VIS 66개</div>
+    </div>
+  </div>
+
+  <!-- ══════════ RIGHT ══════════ -->
+  <div id="right">
+
+    <!-- 7개 과목 -->
+    <div class="branch-group" id="g-subj">
+      <div class="branch-header" onclick="toggle('g-subj')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-subj">📚 7개 학습 영역 (과목)</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node s1">① 교통안전관리론 <span class="badge">10파트 · 42개 개념 · 함정패턴</span></div>
+        <div class="sub-node s2">② 교통안전법 <span class="badge">12파트 · 42개 개념 · 숫자암기</span></div>
+        <div class="sub-node s3">③ 철도산업기본법 <span class="badge">9파트 · 승계·절차 핵심</span></div>
+        <div class="sub-node s4">④ 철도공학 <span class="badge">7파트 · 45개 개념 · 종류 분류</span></div>
+        <div class="sub-node s5">⑤ 철도신호 <span class="badge">14파트 · 60개 개념 · ★★★ 최빈출</span></div>
+        <div class="sub-node s6">⑥ 철도안전법 <span class="badge">6편 · Q01~Q138 · 조문 구조</span></div>
+        <div class="sub-node s7">⑦ 열차운전 <span class="badge">6파트 · 운전규칙+도시철도규칙</span></div>
+      </div>
+    </div>
+
+    <!-- 학습 콘텐츠 현황 -->
+    <div class="branch-group" id="g-cont">
+      <div class="branch-header" onclick="toggle('g-cont')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-cont">✅ 학습 콘텐츠 현황</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node bn-cont"><span class="ok">✅</span> 이론분석 MD — 7과목 완료</div>
+        <div class="sub-node bn-cont"><span class="ok">✅</span> 핵심정리 HTML+docx — 7과목 완료</div>
+        <div class="sub-node bn-cont"><span class="ok">✅</span> 토픽카드 HTML+docx — 7과목 완료</div>
+        <div class="sub-node bn-cont"><span class="ok">✅</span> VIS 이미지 66개 (001~066) 완료</div>
+        <div class="sub-node bn-cont"><span class="ok">✅</span> 문제DB MD — 6과목 (4,656줄)</div>
+        <div class="sub-node bn-cont"><span class="ok">✅</span> 통합 학습가이드라인 v1.0</div>
+        <div class="sub-node bn-cont"><span class="ok">✅</span> 뇌과학 학습전략가이드 v2</div>
+        <div class="sub-node" style="border-color:#d97706; background:#fffbeb; color:#78350f;"><span class="wip">🔶</span> 마인드맵 — 전체(오늘) + 7과목(4/22~25)</div>
+        <div class="sub-node" style="border-color:#dc2626; background:#fff1f2; color:#7f1d1d;"><span class="no">⬜</span> 빈출 토픽 정리집 — 시험 직전 예정</div>
+        <div class="sub-node" style="border-color:#dc2626; background:#fff1f2; color:#7f1d1d;"><span class="no">⬜</span> 실전 문제풀기 — 5/16 이후 착수</div>
+      </div>
+    </div>
+
+    <!-- 시스템 개발 -->
+    <div class="branch-group" id="g-sys">
+      <div class="branch-header" onclick="toggle('g-sys')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-sys">⚙️ 시스템 개발 일정</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node bn-sys">DB: organizations → users → progress (Supabase)</div>
+        <div class="sub-node bn-sys">4/25~ : Supabase 스키마 설계 시작</div>
+        <div class="sub-node" style="border-color:#d97706; background:#fffbeb; color:#78350f;"><strong>5/17 베타</strong>: 로그인 · CBT · 오답 · 간격반복 · OX카드</div>
+        <div class="sub-node" style="border-color:#d97706; background:#fffbeb; color:#78350f;"><strong>6/01 정식</strong>: + 음성 TTS · STT 학습 모드</div>
+        <div class="sub-node" style="border-color:#d97706; background:#fffbeb; color:#78350f;"><strong>6/15 완성</strong>: 완성도 95% (시험 6일 전)</div>
+        <div class="sub-node bn-sys">법령 딥링크 (국가법령정보센터) — 5/17 이후</div>
+        <div class="sub-node" style="border-color:#dc2626; background:#fff1f2; color:#7f1d1d;"><strong>6/21 🎯</strong> 철도안전관리자 시험 (첫 검증)</div>
+      </div>
+    </div>
+
+  </div><!-- /right -->
+
+</div><!-- /mindmap -->
+
+<!-- ── LEGEND ── -->
+<div class="legend">
+  <div class="legend-title">과목 색상 범례</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#7c3aed"></div>교통안전관리론</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#1d4ed8"></div>교통안전법</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#15803d"></div>철도산업기본법</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#b45309"></div>철도공학 · 신호</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#b91c1c"></div>철도안전법</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#0369a1"></div>열차운전</div>
+</div>
+
+<script>
+function toggle(id) {
+  const g = document.getElementById(id);
+  g.classList.toggle('collapsed');
+  const icon = g.querySelector('.toggle-icon');
+  icon.textContent = g.classList.contains('collapsed') ? '▶' : '▼';
+}
+
+function drawLines() {
+  const old = document.getElementById('connector-svg');
+  if (old) old.remove();
+
+  const mm = document.getElementById('mindmap');
+  const cn = document.getElementById('centerNode');
+  const mmR = mm.getBoundingClientRect();
+  const cnR = cn.getBoundingClientRect();
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.id = 'connector-svg';
+  Object.assign(svg.style, { position:'absolute', top:'0', left:'0', width:'100%', height:'100%', pointerEvents:'none', zIndex:'2' });
+  mm.insertBefore(svg, mm.firstChild);
+
+  const cx = cnR.left - mmR.left + cnR.width  / 2;
+  const cy = cnR.top  - mmR.top  + cnR.height / 2;
+
+  const groups = [
+    { id: 'g-exam',  side: 'left',  color: '#3b82f6' },
+    { id: 'g-strat', side: 'left',  color: '#0ea5e9' },
+    { id: 'g-subj',  side: 'right', color: '#7c3aed' },
+    { id: 'g-cont',  side: 'right', color: '#16a34a' },
+    { id: 'g-sys',   side: 'right', color: '#d97706' },
+  ];
+
+  groups.forEach(({ id, side, color }) => {
+    const g = document.getElementById(id);
+    if (!g) return;
+    const lbl = g.querySelector('.branch-label');
+    const lr  = lbl.getBoundingClientRect();
+    const x2  = side === 'left' ? lr.right - mmR.left : lr.left - mmR.left;
+    const y2  = lr.top - mmR.top + lr.height / 2;
+    const cpx = (cx + x2) / 2;
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d',            `M ${cx} ${cy} C ${cpx} ${cy}, ${cpx} ${y2}, ${x2} ${y2}`);
+    path.setAttribute('stroke',       color);
+    path.setAttribute('stroke-width', '2');
+    path.setAttribute('fill',         'none');
+    path.setAttribute('opacity',      '0.5');
+    svg.appendChild(path);
+  });
+}
+
+window.addEventListener('load',   () => setTimeout(drawLines, 120));
+window.addEventListener('resize', drawLines);
+document.querySelectorAll('.branch-header').forEach(h => {
+  h.addEventListener('click', () => setTimeout(drawLines, 300));
+});
+</script>
+
+</body>
+</html>

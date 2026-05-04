@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>열차운전 — 과목 마인드맵</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+  background: #ffffff;
+  color: #1e293b;
+  min-height: 100vh;
+}
+.header {
+  text-align: center;
+  padding: 16px 20px 12px;
+  background: #fffbeb;
+  border-bottom: 2px solid #d97706;
+}
+.header h1 { font-size: 20px; color: #92400e; font-weight: bold; }
+.header p  { font-size: 12px; color: #b45309; margin-top: 4px; }
+
+#mindmap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-width: 1200px;
+  background: #ffffff;
+}
+
+.center-node {
+  position: relative; z-index: 10; flex-shrink: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #92400e 0%, #d97706 100%);
+  border: 2.5px solid #f59e0b;
+  border-radius: 20px;
+  padding: 20px 26px;
+  min-width: 170px; max-width: 190px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(146,64,14,0.22);
+}
+.center-node .c-title { font-size: 17px; font-weight: bold; color: #fff; line-height: 1.5; }
+.center-node .c-sub   { font-size: 11px; color: #fde68a; margin-top: 5px; line-height: 1.6; }
+.center-node .c-badge {
+  margin-top: 8px; font-size: 10px;
+  background: rgba(255,255,255,0.18); border-radius: 20px;
+  padding: 3px 10px; color: #fffbeb;
+}
+
+#left  { display: flex; flex-direction: column; gap: 20px; align-items: flex-end;   min-width: 300px; padding-right: 36px; }
+#right { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; min-width: 400px; padding-left: 36px; }
+
+.branch-group { display: flex; flex-direction: column; gap: 5px; }
+.branch-header {
+  display: flex; align-items: center; gap: 6px;
+  cursor: pointer; user-select: none;
+}
+#left .branch-header { flex-direction: row-reverse; }
+.toggle-icon { font-size: 11px; color: #94a3b8; transition: transform 0.2s; min-width: 12px; }
+.branch-label {
+  display: inline-block; padding: 8px 14px;
+  border-radius: 10px; font-size: 13px; font-weight: bold;
+  white-space: nowrap; border: 2px solid transparent;
+  transition: filter 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+}
+.branch-label:hover { filter: brightness(0.95); }
+
+.sub-nodes { display: flex; flex-direction: column; gap: 3px; padding-top: 2px; }
+#left  .sub-nodes { align-items: flex-end; }
+#right .sub-nodes { align-items: flex-start; }
+
+.sub-node {
+  padding: 4px 11px; border-radius: 7px;
+  font-size: 11.5px; background: #f8fafc;
+  border-left: 3px solid #fbbf24;
+  line-height: 1.5; color: #334155;
+  transition: background 0.15s;
+}
+#left .sub-node { border-left: none; border-right: 3px solid #fbbf24; text-align: right; }
+.sub-node:hover { background: #f1f5f9; }
+
+.trap  { color: #dc2626; font-weight: bold; }
+.star  { color: #d97706; font-weight: bold; }
+.num   { color: #0284c7; font-weight: bold; }
+
+.bl-info  { background: #f0fdf4; border-color: #16a34a !important; color: #14532d; }
+.bl-trap  { background: #fef2f2; border-color: #dc2626 !important; color: #7f1d1d; }
+.bl-p1    { background: #fffbeb; border-color: #d97706 !important; color: #92400e; }
+.bl-p2    { background: #fef3c7; border-color: #f59e0b !important; color: #78350f; }
+.bl-p3    { background: #fde68a; border-color: #fbbf24 !important; color: #713f12; }
+
+.sn-o1 { border-color: #d97706 !important; }
+.sn-o2 { border-color: #f59e0b !important; }
+.sn-o3 { border-color: #fbbf24 !important; }
+
+#connector-svg {
+  position: absolute; top:0; left:0;
+  width:100%; height:100%;
+  pointer-events: none; z-index: 2;
+}
+.collapsed .sub-nodes { display: none; }
+.collapsed .toggle-icon { transform: rotate(-90deg); }
+
+.legend {
+  position: fixed; bottom: 16px; right: 16px;
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 11px; z-index: 200;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.legend-title { font-weight: bold; color: #64748b; margin-bottom: 6px; }
+.legend-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; color: #475569; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>③ 열차운전 — 과목 마인드맵</h1>
+  <p>6파트 · 폐색·신호·운전이론 핵심 수치 암기 &nbsp;|&nbsp; 색상: 앰버 계열</p>
+</div>
+
+<div id="mindmap">
+  <svg id="connector-svg"></svg>
+
+  <!-- LEFT -->
+  <div id="left">
+
+    <div class="branch-group" id="g-info">
+      <div class="branch-header" onclick="toggle('g-info')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-info">📋 과목 개요</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node" style="border-color:#16a34a">6파트 · 수치 집중 암기</div>
+        <div class="sub-node" style="border-color:#16a34a">출제: 4지선다 20문항</div>
+        <div class="sub-node" style="border-color:#16a34a">합격선: 40점 이상</div>
+        <div class="sub-node" style="border-color:#16a34a">학습 DNA: <strong>폐색방식 + 신호기 정위</strong></div>
+        <div class="sub-node" style="border-color:#16a34a">수치: 200m/150m/100m 동시진출입</div>
+        <div class="sub-node" style="border-color:#16a34a">도시철도 비상제동: 600m 이하</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-trap">
+      <div class="branch-header" onclick="toggle('g-trap')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-trap">⚠️ 함정패턴 & 빈출 TOP</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 상용폐색 4종: 자동·연동·차내신호·통표</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 대용폐색 4종: 통신·지도통신·지도·지령식</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 원방신호기 정위 = <strong>주의</strong> (진행 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 유도신호기 정위 = <strong>소등(무현시)</strong></div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 지도표 기입: 구간양끝역명+발행일+사용열차번호</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 다른방향 동시진입: 일반 200m, 동차 150m</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 동일방향 동시진입: 100m</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 선로·전차선로 순회점검: 매일 1회 이상</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> ATS=경보+자동제동 / ATC=자동속도제어</div>
+      </div>
+    </div>
+
+  </div><!-- /left -->
+
+  <!-- CENTER -->
+  <div style="position:relative; z-index:10; flex-shrink:0;">
+    <div class="center-node" id="centerNode">
+      <div class="c-title">열차운전</div>
+      <div class="c-sub">6파트 · 폐색·신호<br>운전규칙 수치</div>
+      <div class="c-badge">철도차량운전규칙</div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div id="right">
+
+    <div class="branch-group" id="g-p12">
+      <div class="branch-header" onclick="toggle('g-p12')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-p1">🚂 PART 1~2. 운전규칙·폐색방식</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-o1"><strong>P1.</strong> 동력차 연결 원칙: 맨 앞 / 예외 6가지(구원·제설·공사열차 등)</div>
+        <div class="sub-node sn-o1"><strong>P1.</strong> 여객열차 화차 연결 금지 원칙 / 예외: 회송·특별사유</div>
+        <div class="sub-node sn-o1"><strong>P1.</strong> 열차 안전 확보 3법: 폐색·열차제어장치·시계운전</div>
+        <div class="sub-node sn-o1"><strong>P1.</strong> 퇴행운전 금지 원칙 / 예외: 선로·차량 고장, 공사·구원열차</div>
+        <div class="sub-node sn-o2"><strong>P2.</strong> 상용폐색 4종: <strong>자연차통</strong> (자동·연동·차내신호·통표)</div>
+        <div class="sub-node sn-o2"><strong>P2.</strong> 대용폐색 4종: <strong>통지지지</strong> (통신·지도통신·지도·지령식)</div>
+        <div class="sub-node sn-o2"><strong>P2.</strong> 통표폐색: 단선 전용 / 해당 구간 통표 1개만 사용</div>
+        <div class="sub-node sn-o2"><strong>P2.</strong> 지령식: 관제업무종사자 감시가능 + 통신장치 정상 → 시행</div>
+        <div class="sub-node sn-o2"><strong>P2.</strong> 지도표 기입: 구간 양끝역명 + 발행일 + 사용열차번호</div>
+        <div class="sub-node sn-o2"><strong>P2.</strong> 시계운전: 복선=격시·전령 / 단선=지도격시·전령</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-p34">
+      <div class="branch-header" onclick="toggle('g-p34')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-p2">🚦 PART 3~4. 신호기·열차제어장치</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-o2"><strong>P3.</strong> 주신호기 6종: <strong>장출폐엄유입</strong> (장내·출발·폐색·엄호·유도·입환)</div>
+        <div class="sub-node sn-o2"><strong>P3.</strong> 종속신호기 3종: <strong>원통중</strong> (원방·통과·중계)</div>
+        <div class="sub-node sn-o2"><strong>P3.</strong> 신호기 정위: 장내·출발·폐색·엄호·입환 = <strong>정지</strong></div>
+        <div class="sub-node sn-o2"><strong>P3.</strong> 신호기 정위: 유도 = <strong>소등(무현시)</strong> / 원방 = <strong>주의</strong></div>
+        <div class="sub-node sn-o2"><strong>P3.</strong> 수신호 표시: 정지=양손X / 서행=한팔 좌우 / 진행=한팔 머리위</div>
+        <div class="sub-node sn-o3"><strong>P4.</strong> ATS: 자동열차정지장치 → 경보 후 자동제동</div>
+        <div class="sub-node sn-o3"><strong>P4.</strong> ATC: 자동열차제어장치 → 속도 초과 시 자동제어</div>
+        <div class="sub-node sn-o3"><strong>P4.</strong> ATP: 자동열차방호장치 → ATS+ATC 기능 통합</div>
+        <div class="sub-node sn-o3"><strong>P4.</strong> ATO: 자동열차운전장치 → 출발~정차 자동운전</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-p56">
+      <div class="branch-header" onclick="toggle('g-p56')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-p3">🏙️ PART 5~6. 도시철도·운전이론</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-o2"><strong>P5.</strong> 비상제동거리: <strong>600m 이하</strong></div>
+        <div class="sub-node sn-o2"><strong>P5.</strong> 선로·전차선로 순회점검: <strong>매일 1회 이상</strong></div>
+        <div class="sub-node sn-o2"><strong>P5.</strong> 동시 진출입: 다른방향 <span class="num">200m</span>(동차 <span class="num">150m</span>) / 동일방향 <span class="num">100m</span></div>
+        <div class="sub-node sn-o2"><strong>P5.</strong> 정거장 외 정차 금지 / 예외: 급경사 진입 전·정지신호·사고</div>
+        <div class="sub-node sn-o3"><strong>P6.</strong> 열차저항: 주행저항·구배저항·곡선저항·가속저항</div>
+        <div class="sub-node sn-o3"><strong>P6.</strong> 제동력 ≤ 점착력 (점착력 한계 내에서 제동 작용)</div>
+        <div class="sub-node sn-o3"><strong>P6.</strong> 공전 방지: 레일에 모래 / 선로·차량 정비 양호</div>
+        <div class="sub-node sn-o3"><strong>P6.</strong> 브레이크 3종: 공기제동·발전제동·회생제동</div>
+      </div>
+    </div>
+
+  </div><!-- /right -->
+
+</div><!-- /mindmap -->
+
+<div class="legend">
+  <div class="legend-title">범례</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#d97706"></div>P1~2 운전규칙·폐색</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#f59e0b"></div>P3~4 신호기·제어장치</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#fbbf24"></div>P5~6 도시철도·이론</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#dc2626"></div>함정패턴</div>
+  <div style="margin-top:5px; color:#94a3b8; font-size:10px;">클릭 → 접기/펼치기</div>
+</div>
+
+<script>
+function toggle(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('collapsed');
+  drawLines();
+}
+function getCenter(el) {
+  const r = el.getBoundingClientRect();
+  const wr = document.getElementById('mindmap').getBoundingClientRect();
+  return { x: r.left - wr.left + r.width/2, y: r.top - wr.top + r.height/2 };
+}
+function drawLines() {
+  const svg = document.getElementById('connector-svg');
+  const mm  = document.getElementById('mindmap');
+  svg.setAttribute('width', mm.offsetWidth);
+  svg.setAttribute('height', mm.offsetHeight);
+  svg.innerHTML = '';
+  const center = getCenter(document.getElementById('centerNode'));
+  const branches = [
+    {id:'g-info', side:'left'}, {id:'g-trap', side:'left'},
+    {id:'g-p12',  side:'right'}, {id:'g-p34',  side:'right'}, {id:'g-p56',  side:'right'},
+  ];
+  branches.forEach(b => {
+    const el = document.getElementById(b.id);
+    if (!el) return;
+    const lbl = el.querySelector('.branch-label');
+    if (!lbl) return;
+    const bp = getCenter(lbl);
+    const isLeft = b.side === 'left';
+    const cx1 = isLeft ? center.x - 20 : center.x + 20;
+    const cx2 = isLeft ? bp.x + lbl.offsetWidth/2 + 5 : bp.x - lbl.offsetWidth/2 - 5;
+    const mx  = (cx1 + cx2) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', `M${cx1},${center.y} C${mx},${center.y} ${mx},${bp.y} ${cx2},${bp.y}`);
+    path.setAttribute('fill','none');
+    path.setAttribute('stroke','#fbbf24');
+    path.setAttribute('stroke-width','1.5');
+    path.setAttribute('stroke-dasharray','5,3');
+    path.setAttribute('opacity','0.7');
+    svg.appendChild(path);
+  });
+}
+window.addEventListener('load', drawLines);
+window.addEventListener('resize', drawLines);
+</script>
+</body>
+</html>

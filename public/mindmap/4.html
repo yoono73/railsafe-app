@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>철도공학 — 과목 마인드맵</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+  background: #ffffff;
+  color: #1e293b;
+  min-height: 100vh;
+}
+.header {
+  text-align: center;
+  padding: 16px 20px 12px;
+  background: #f0fdf4;
+  border-bottom: 2px solid #16a34a;
+}
+.header h1 { font-size: 20px; color: #14532d; font-weight: bold; }
+.header p  { font-size: 12px; color: #15803d; margin-top: 4px; }
+
+#mindmap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-width: 1200px;
+  background: #ffffff;
+}
+
+.center-node {
+  position: relative; z-index: 10; flex-shrink: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #14532d 0%, #16a34a 100%);
+  border: 2.5px solid #22c55e;
+  border-radius: 20px;
+  padding: 20px 26px;
+  min-width: 170px; max-width: 190px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(20,83,45,0.22);
+}
+.center-node .c-title { font-size: 17px; font-weight: bold; color: #fff; line-height: 1.5; }
+.center-node .c-sub   { font-size: 11px; color: #bbf7d0; margin-top: 5px; line-height: 1.6; }
+.center-node .c-badge {
+  margin-top: 8px; font-size: 10px;
+  background: rgba(255,255,255,0.18); border-radius: 20px;
+  padding: 3px 10px; color: #f0fdf4;
+}
+
+#left  { display: flex; flex-direction: column; gap: 20px; align-items: flex-end;   min-width: 300px; padding-right: 36px; }
+#right { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; min-width: 410px; padding-left: 36px; }
+
+.branch-group { display: flex; flex-direction: column; gap: 5px; }
+.branch-header {
+  display: flex; align-items: center; gap: 6px;
+  cursor: pointer; user-select: none;
+}
+#left .branch-header { flex-direction: row-reverse; }
+.toggle-icon { font-size: 11px; color: #94a3b8; transition: transform 0.2s; min-width: 12px; }
+.branch-label {
+  display: inline-block; padding: 8px 14px;
+  border-radius: 10px; font-size: 13px; font-weight: bold;
+  white-space: nowrap; border: 2px solid transparent;
+  transition: filter 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+}
+.branch-label:hover { filter: brightness(0.95); }
+
+.sub-nodes { display: flex; flex-direction: column; gap: 3px; padding-top: 2px; }
+#left  .sub-nodes { align-items: flex-end; }
+#right .sub-nodes { align-items: flex-start; }
+
+.sub-node {
+  padding: 4px 11px; border-radius: 7px;
+  font-size: 11.5px; background: #f8fafc;
+  border-left: 3px solid #86efac;
+  line-height: 1.5; color: #334155;
+  transition: background 0.15s;
+}
+#left .sub-node { border-left: none; border-right: 3px solid #86efac; text-align: right; }
+.sub-node:hover { background: #f1f5f9; }
+
+.trap  { color: #dc2626; font-weight: bold; }
+.star  { color: #d97706; font-weight: bold; }
+.num   { color: #0284c7; font-weight: bold; }
+
+.bl-info  { background: #fef9c3; border-color: #ca8a04 !important; color: #713f12; }
+.bl-trap  { background: #fef2f2; border-color: #dc2626 !important; color: #7f1d1d; }
+.bl-p12   { background: #dcfce7; border-color: #16a34a !important; color: #14532d; }
+.bl-p34   { background: #bbf7d0; border-color: #15803d !important; color: #14532d; }
+.bl-p567  { background: #f0fdf4; border-color: #22c55e !important; color: #166534; }
+
+.sn-g1 { border-color: #16a34a !important; }
+.sn-g2 { border-color: #22c55e !important; }
+.sn-g3 { border-color: #86efac !important; }
+
+#connector-svg {
+  position: absolute; top:0; left:0;
+  width:100%; height:100%;
+  pointer-events: none; z-index: 2;
+}
+.collapsed .sub-nodes { display: none; }
+.collapsed .toggle-icon { transform: rotate(-90deg); }
+
+.legend {
+  position: fixed; bottom: 16px; right: 16px;
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 11px; z-index: 200;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.legend-title { font-weight: bold; color: #64748b; margin-bottom: 6px; }
+.legend-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; color: #475569; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>④ 철도공학 — 과목 마인드맵</h1>
+  <p>7파트 · 비해당 찾기 · 숫자 암기 · 직관 반대 함정 &nbsp;|&nbsp; 색상: 그린 계열</p>
+</div>
+
+<div id="mindmap">
+  <svg id="connector-svg"></svg>
+
+  <!-- LEFT -->
+  <div id="left">
+
+    <div class="branch-group" id="g-info">
+      <div class="branch-header" onclick="toggle('g-info')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-info">📋 과목 개요</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node" style="border-color:#ca8a04">7파트 · 약 45개 핵심 개념</div>
+        <div class="sub-node" style="border-color:#ca8a04">출제: 4지선다 20문항</div>
+        <div class="sub-node" style="border-color:#ca8a04">합격선: 40점 이상</div>
+        <div class="sub-node" style="border-color:#ca8a04">학습 DNA: <strong>비해당 찾기 + 직관 반대</strong></div>
+        <div class="sub-node" style="border-color:#ca8a04">분류·종류 구분 / 숫자 암기 집중</div>
+        <div class="sub-node" style="border-color:#ca8a04">기출: 2020.11.01 기출복원 25문항</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-trap">
+      <div class="branch-header" onclick="toggle('g-trap')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-trap">⚠️ 함정패턴 & 빈출 TOP</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 기동성 = 자동차 특징 (철도 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 세계 최초 여객철도: 1830년 (1835년 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 교류 25,000V = 국철 전기철도 (직류 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 모노레일: 소음·공해 거의 없음 (많다 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 분산집배수송: 철도 불리 (유리 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 축전지 = 집전장치 아님 (전력 저장)</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 차륜지름 표준: 860mm</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 보통철도 이론적 한계속도: 300~350km/h</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 건널목 3종: 1종(자동차단기)·2종(교통안전표지)·3종(기타)</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 장대레일 용접: 테르밋>가스압>플래시버트>전기저항</div>
+      </div>
+    </div>
+
+  </div><!-- /left -->
+
+  <!-- CENTER -->
+  <div style="position:relative; z-index:10; flex-shrink:0;">
+    <div class="center-node" id="centerNode">
+      <div class="c-title">철도공학</div>
+      <div class="c-sub">7파트 · 분류·숫자<br>비해당 찾기</div>
+      <div class="c-badge">약 45개 핵심 개념</div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div id="right">
+
+    <div class="branch-group" id="g-p12">
+      <div class="branch-header" onclick="toggle('g-p12')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-p12">🏛️ PART 1~2. 총론·차량</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-g1"><strong>P1.</strong> 철도 특징: 신속·신뢰·안정·친환경·경제·에너지효율·대량수송</div>
+        <div class="sub-node sn-g1"><strong>P1.</strong> 세계 최초: <span class="num">1830년</span> 영국 리버풀~맨체스터 / 우리나라: <span class="num">1899년</span> 경인선</div>
+        <div class="sub-node sn-g1"><strong>P1.</strong> 법제상 분류: 국유·지방·경편·전용철도 (공영 아님)</div>
+        <div class="sub-node sn-g1"><strong>P1.</strong> 수송수요 예측: 시계열분석·요인분석·OD표·중력모델</div>
+        <div class="sub-node sn-g2"><strong>P2.</strong> 철도 종류: 점착(마찰)·치궤조·강색·모노레일</div>
+        <div class="sub-node sn-g2"><strong>P2.</strong> 전기방식: 교류 25,000V=국철 / 직류 1,500V=구형 도시철도</div>
+        <div class="sub-node sn-g2"><strong>P2.</strong> 차륜지름 표준: 전기동차·객차 <span class="num">860mm</span></div>
+        <div class="sub-node sn-g2"><strong>P2.</strong> 집전장치: 팬터그래프·트롤리폴·뷰겔·집전슈 (축전지 제외)</div>
+        <div class="sub-node sn-g2"><strong>P2.</strong> 공전 방지: 레일에 모래 / 선로·차량 정비 양호 (급가속 아님)</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-p34">
+      <div class="branch-header" onclick="toggle('g-p34')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-p34">🛤️ PART 3~4. 선로·궤도·레일</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-g2"><strong>P3.</strong> 선로 구성: 궤도+노반+분기기+선로방호설비+노반구조물</div>
+        <div class="sub-node sn-g2"><strong>P3.</strong> 건축한계 vs 차량한계: 건축한계 > 차량한계</div>
+        <div class="sub-node sn-g2"><strong>P3.</strong> CTC: 중앙집중제어 / ATC: 자동열차제어 (혼동 주의)</div>
+        <div class="sub-node sn-g2"><strong>P3.</strong> 정거장 종류: 여객역·화물역·조차장·신호장·신호소</div>
+        <div class="sub-node sn-g3"><strong>P4.</strong> 레일 용접 효율 순: 테르밋 > 가스압접 > 플래시버트 > 전기저항</div>
+        <div class="sub-node sn-g3"><strong>P4.</strong> 장대레일: 200m 이상 연속용접 / 열팽창·좌굴 주의</div>
+        <div class="sub-node sn-g3"><strong>P4.</strong> 침목 비교: 콘크리트침목 > 목침목 (내구성·보수비)</div>
+        <div class="sub-node sn-g3"><strong>P4.</strong> 충격률: 속도↑·차륜편심↑ → 충격률↑</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-p567">
+      <div class="branch-header" onclick="toggle('g-p567')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-p567">🔧 PART 5~7. 선로설비·보수·특수철도</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-g2"><strong>P5.</strong> 건널목 3종: 1종=자동차단기+경보기 / 2종=교통안전표지 / 3종=기타</div>
+        <div class="sub-node sn-g2"><strong>P5.</strong> 선로 종류: 본선·측선·안전선·피난선</div>
+        <div class="sub-node sn-g2"><strong>P5.</strong> 정거장 구내 범위: 출발신호기 외방~장내신호기 내방</div>
+        <div class="sub-node sn-g3"><strong>P6.</strong> 선로순회검사: 고속 <span class="num">매일 1회</span> / 일반 <span class="num">3일 1회</span></div>
+        <div class="sub-node sn-g3"><strong>P6.</strong> 유간검사: 레일 이음매 틈새 / 온도 변화 대응</div>
+        <div class="sub-node sn-g3"><strong>P7.</strong> 모노레일: 고무타이어·급구배·급곡선 용이 / 공해 적음</div>
+        <div class="sub-node sn-g3"><strong>P7.</strong> 트롤리버스: 가공선 따라 → 운전 융통성 없음</div>
+        <div class="sub-node sn-g3"><strong>P7.</strong> 노면철도: 2선 궤도 운영 (1선 아님)</div>
+      </div>
+    </div>
+
+  </div><!-- /right -->
+
+</div><!-- /mindmap -->
+
+<div class="legend">
+  <div class="legend-title">범례</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#16a34a"></div>P1~2 총론·차량</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#15803d"></div>P3~4 선로·궤도</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#22c55e"></div>P5~7 설비·보수</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#dc2626"></div>함정패턴</div>
+  <div style="margin-top:5px; color:#94a3b8; font-size:10px;">클릭 → 접기/펼치기</div>
+</div>
+
+<script>
+function toggle(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('collapsed');
+  drawLines();
+}
+function getCenter(el) {
+  const r = el.getBoundingClientRect();
+  const wr = document.getElementById('mindmap').getBoundingClientRect();
+  return { x: r.left - wr.left + r.width/2, y: r.top - wr.top + r.height/2 };
+}
+function drawLines() {
+  const svg = document.getElementById('connector-svg');
+  const mm  = document.getElementById('mindmap');
+  svg.setAttribute('width', mm.offsetWidth);
+  svg.setAttribute('height', mm.offsetHeight);
+  svg.innerHTML = '';
+  const center = getCenter(document.getElementById('centerNode'));
+  const branches = [
+    {id:'g-info', side:'left'}, {id:'g-trap', side:'left'},
+    {id:'g-p12',  side:'right'}, {id:'g-p34',  side:'right'}, {id:'g-p567', side:'right'},
+  ];
+  branches.forEach(b => {
+    const el = document.getElementById(b.id);
+    if (!el) return;
+    const lbl = el.querySelector('.branch-label');
+    if (!lbl) return;
+    const bp = getCenter(lbl);
+    const isLeft = b.side === 'left';
+    const cx1 = isLeft ? center.x - 20 : center.x + 20;
+    const cx2 = isLeft ? bp.x + lbl.offsetWidth/2 + 5 : bp.x - lbl.offsetWidth/2 - 5;
+    const mx  = (cx1 + cx2) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', `M${cx1},${center.y} C${mx},${center.y} ${mx},${bp.y} ${cx2},${bp.y}`);
+    path.setAttribute('fill','none');
+    path.setAttribute('stroke','#86efac');
+    path.setAttribute('stroke-width','1.5');
+    path.setAttribute('stroke-dasharray','5,3');
+    path.setAttribute('opacity','0.7');
+    svg.appendChild(path);
+  });
+}
+window.addEventListener('load', drawLines);
+window.addEventListener('resize', drawLines);
+</script>
+</body>
+</html>

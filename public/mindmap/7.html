@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>철도안전법 — 과목 마인드맵</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+  background: #ffffff;
+  color: #1e293b;
+  min-height: 100vh;
+}
+.header {
+  text-align: center;
+  padding: 16px 20px 12px;
+  background: #f1f5f9;
+  border-bottom: 2px solid #475569;
+}
+.header h1 { font-size: 20px; color: #0f172a; font-weight: bold; }
+.header p  { font-size: 12px; color: #475569; margin-top: 4px; }
+
+#mindmap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-width: 1260px;
+  background: #ffffff;
+}
+
+.center-node {
+  position: relative; z-index: 10; flex-shrink: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+  border: 2.5px solid #64748b;
+  border-radius: 20px;
+  padding: 20px 26px;
+  min-width: 170px; max-width: 190px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(15,23,42,0.22);
+}
+.center-node .c-title { font-size: 17px; font-weight: bold; color: #fff; line-height: 1.5; }
+.center-node .c-sub   { font-size: 11px; color: #cbd5e1; margin-top: 5px; line-height: 1.6; }
+.center-node .c-badge {
+  margin-top: 8px; font-size: 10px;
+  background: rgba(255,255,255,0.18); border-radius: 20px;
+  padding: 3px 10px; color: #f1f5f9;
+}
+
+#left  { display: flex; flex-direction: column; gap: 20px; align-items: flex-end;   min-width: 310px; padding-right: 36px; }
+#right { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; min-width: 440px; padding-left: 36px; }
+
+.branch-group { display: flex; flex-direction: column; gap: 5px; }
+.branch-header {
+  display: flex; align-items: center; gap: 6px;
+  cursor: pointer; user-select: none;
+}
+#left .branch-header { flex-direction: row-reverse; }
+.toggle-icon { font-size: 11px; color: #94a3b8; transition: transform 0.2s; min-width: 12px; }
+.branch-label {
+  display: inline-block; padding: 8px 14px;
+  border-radius: 10px; font-size: 13px; font-weight: bold;
+  white-space: nowrap; border: 2px solid transparent;
+  transition: filter 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+}
+.branch-label:hover { filter: brightness(0.95); }
+
+.sub-nodes { display: flex; flex-direction: column; gap: 3px; padding-top: 2px; }
+#left  .sub-nodes { align-items: flex-end; }
+#right .sub-nodes { align-items: flex-start; }
+
+.sub-node {
+  padding: 4px 11px; border-radius: 7px;
+  font-size: 11.5px; background: #f8fafc;
+  border-left: 3px solid #94a3b8;
+  line-height: 1.5; color: #334155;
+  transition: background 0.15s;
+}
+#left .sub-node { border-left: none; border-right: 3px solid #94a3b8; text-align: right; }
+.sub-node:hover { background: #f1f5f9; }
+
+.trap  { color: #dc2626; font-weight: bold; }
+.star  { color: #d97706; font-weight: bold; }
+.num   { color: #0284c7; font-weight: bold; }
+
+.bl-info  { background: #f0fdf4; border-color: #16a34a !important; color: #14532d; }
+.bl-trap  { background: #fef2f2; border-color: #dc2626 !important; color: #7f1d1d; }
+.bl-s1    { background: #e2e8f0; border-color: #334155 !important; color: #0f172a; }
+.bl-s2    { background: #f1f5f9; border-color: #475569 !important; color: #1e293b; }
+.bl-s3    { background: #f8fafc; border-color: #64748b !important; color: #334155; }
+
+.sn-s1 { border-color: #334155 !important; }
+.sn-s2 { border-color: #64748b !important; }
+.sn-s3 { border-color: #94a3b8 !important; }
+
+#connector-svg {
+  position: absolute; top:0; left:0;
+  width:100%; height:100%;
+  pointer-events: none; z-index: 2;
+}
+.collapsed .sub-nodes { display: none; }
+.collapsed .toggle-icon { transform: rotate(-90deg); }
+
+.legend {
+  position: fixed; bottom: 16px; right: 16px;
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 11px; z-index: 200;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.legend-title { font-weight: bold; color: #64748b; margin-bottom: 6px; }
+.legend-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; color: #475569; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>⑦ 철도안전법 — 과목 마인드맵</h1>
+  <p>6편(18파트) · 수치 집중 · 주체-행위 매핑 · 청문·벌칙 &nbsp;|&nbsp; 색상: 슬레이트 계열</p>
+</div>
+
+<div id="mindmap">
+  <svg id="connector-svg"></svg>
+
+  <!-- LEFT -->
+  <div id="left">
+
+    <div class="branch-group" id="g-info">
+      <div class="branch-header" onclick="toggle('g-info')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-info">📋 과목 개요</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node" style="border-color:#16a34a">6편 18파트 · 가장 방대한 과목</div>
+        <div class="sub-node" style="border-color:#16a34a">출제: 4지선다 20문항</div>
+        <div class="sub-node" style="border-color:#16a34a">합격선: 40점 이상</div>
+        <div class="sub-node" style="border-color:#16a34a">학습 DNA: <strong>수치 암기 + 주체 구분</strong></div>
+        <div class="sub-node" style="border-color:#16a34a">종합계획: 5년 / 시행계획: 10월말</div>
+        <div class="sub-node" style="border-color:#16a34a">면허 유효: 10년 / 결격기간: 2년</div>
+        <div class="sub-node" style="border-color:#16a34a">즉시보고: 사상 3명↑ / 피해 5천만원↑</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-trap">
+      <div class="branch-header" onclick="toggle('g-trap')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-trap">⚠️ 함정패턴 & 빈출 TOP</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 철도종사자: 조언·자문·컨설팅 수행자 <strong>제외</strong></div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 즉시보고: 사상 3명↑ / 재산피해 5천만원↑ (1명·3천만원 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 면허 결격: 취소 후 <strong>2년</strong> 미경과 (5년 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 여객승무원 음주기준: <strong>0.02%</strong> (0.03% 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 노면전차: 철도면허 + <strong>도로교통법 운전면허</strong> 둘 다 필요</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 철도보호지구: 일반 <span class="num">30m</span> / 노면전차 <span class="num">10m</span></div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 직무장비: 수갑·포승·가스·충격기·경비봉 (<strong>권총 없음</strong>)</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 종합계획: 5년 / 시행계획 10월말 / 실적 2월말 / 예산공시 5월말</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 청문 대상: 안전관리체계·면허·형식승인 취소 (품질인증 취소 제외)</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 탑승차량 탈선·파괴: 무기징역 또는 5년 이상</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 안전관리체계: 철도운영자·시설관리자 모두 승인 필요</div>
+      </div>
+    </div>
+
+  </div><!-- /left -->
+
+  <!-- CENTER -->
+  <div style="position:relative; z-index:10; flex-shrink:0;">
+    <div class="center-node" id="centerNode">
+      <div class="c-title">철도안전법</div>
+      <div class="c-sub">6편·18파트<br>수치·주체 구분</div>
+      <div class="c-badge">법률 제19611호</div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div id="right">
+
+    <div class="branch-group" id="g-e12">
+      <div class="branch-header" onclick="toggle('g-e12')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-s1">📘 1~2편. 기본개념·종합계획·안전관리체계</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-s1"><strong>1편.</strong> 목적: 철도사고 예방·피해경감·국민 생명·신체·재산 보호</div>
+        <div class="sub-node sn-s1"><strong>1편.</strong> 철도사고(실피해) vs 준사고(가능성) vs 운행장애(방해) 구분</div>
+        <div class="sub-node sn-s1"><strong>1편.</strong> 중대한 운행장애: 사망자 발생 <strong>+</strong> 재산피해 <span class="num">5억원</span> 이상 (둘 다 충족)</div>
+        <div class="sub-node sn-s1"><strong>1편.</strong> 철도종사자 7종: 운전·관제·여객승무·여객역무·작업책임·운행안전관리·대통령령</div>
+        <div class="sub-node sn-s1"><strong>1편.</strong> 종합계획: 국토부장관·<span class="num">5년</span>·철도산업위원회 심의→관보고시</div>
+        <div class="sub-node sn-s1"><strong>1편.</strong> 시행계획 제출: <span class="num">10월말</span> / 추진실적: <span class="num">2월말</span> / 안전예산 공시: <span class="num">5월말</span></div>
+        <div class="sub-node sn-s2"><strong>2편.</strong> 안전관리체계: 철도운영자·시설관리자 → 국토부장관 승인</div>
+        <div class="sub-node sn-s2"><strong>2편.</strong> 안전관리체계 변경: 중요사항=승인 / 경미사항=신고</div>
+        <div class="sub-node sn-s2"><strong>2편.</strong> 과징금: 안전관리체계 위반 → 운행정지 대신 과징금 부과 가능</div>
+        <div class="sub-node sn-s2"><strong>2편.</strong> 우수운영자 인증: 국토부장관 / 안전관리수준평가: 국토부장관</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-e34">
+      <div class="branch-header" onclick="toggle('g-e34')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-s2">🪪 3~4편. 면허·자격·적성검사·차량·형식승인</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-s1"><strong>3편.</strong> 운전면허 6종: 고속·일반·도시·철도장비·노면전차·고무바퀴</div>
+        <div class="sub-node sn-s1"><strong>3편.</strong> 노면전차: 철도면허 + 도로교통법 운전면허 모두 필요</div>
+        <div class="sub-node sn-s1"><strong>3편.</strong> 결격: 19세 미만 / 취소 후 <span class="num">2년</span> 미경과 / 청력·색각 이상</div>
+        <div class="sub-node sn-s1"><strong>3편.</strong> 면허 유효기간: <span class="num">10년</span> / 필기합격 유효: <span class="num">2년</span> / 반납기한: <span class="num">15일</span></div>
+        <div class="sub-node sn-s1"><strong>3편.</strong> 필요적 취소: 거짓 취득 / 효력정지 중 운전</div>
+        <div class="sub-node sn-s2"><strong>3편.</strong> 운전적성검사: 정기 <span class="num">10년</span> (50세 이상 <span class="num">5년</span>) / 검사인력 <span class="num">3명</span></div>
+        <div class="sub-node sn-s2"><strong>4편.</strong> 종합시험운행: 영업운행 전 철도시스템 전체 성능 시험</div>
+        <div class="sub-node sn-s2"><strong>4편.</strong> 형식승인: 신규 철도차량 유형 → 국토부장관 승인</div>
+        <div class="sub-node sn-s2"><strong>4편.</strong> 완성검사: 형식승인 받은 차량 양산 시 각각 검사</div>
+        <div class="sub-node sn-s2"><strong>4편.</strong> 정비조직인증: 결격사유 있으면 인증 불가</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-e56">
+      <div class="branch-header" onclick="toggle('g-e56')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-s3">⚖️ 5~6편. 운행안전·보안·사고보고·청문·벌칙</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-s2"><strong>5편.</strong> 음주기준: 1~4호(운전·관제·승무·안전관리자)=<span class="num">0.02%</span> / 5~7호=<span class="num">0.03%</span></div>
+        <div class="sub-node sn-s2"><strong>5편.</strong> 여객승무원: 0.02% 기준 (1~4호) — 0.03% 아님</div>
+        <div class="sub-node sn-s2"><strong>5편.</strong> 철도보호지구: 일반 <span class="num">30m</span> / 노면전차 <span class="num">10m</span> / 물건방치 금지 <span class="num">3m</span></div>
+        <div class="sub-node sn-s2"><strong>5편.</strong> 직무장비 5종: 수갑·포승·가스분사기·전자충격기·경비봉 (권총 제외)</div>
+        <div class="sub-node sn-s2"><strong>5편.</strong> 관제업무: 운행정보 제공·비상지시 = 관제업무종사자 준수사항</div>
+        <div class="sub-node sn-s3"><strong>6편.</strong> 즉시보고: 사상자 <span class="num">3명</span> 이상 or 재산피해 <span class="num">5천만원</span> 이상</div>
+        <div class="sub-node sn-s3"><strong>6편.</strong> 열차운행 일시중지: 천재지변·중대장애 (이용자 요구 불가)</div>
+        <div class="sub-node sn-s3"><strong>6편.</strong> 청문 대상: 안전관리체계·면허·관제자격·형식승인 취소</div>
+        <div class="sub-node sn-s3"><strong>6편.</strong> 청문 제외: 품질인증 취소 (청문 불필요)</div>
+        <div class="sub-node sn-s3"><strong>6편.</strong> 벌칙: 탑승차량 탈선·파괴 = <strong>무기 또는 5년↑</strong> / 종사자 방해 = 5년↓</div>
+        <div class="sub-node sn-s3"><strong>6편.</strong> 재정지원 불가: 철도승객 권익보호단체 (지원 대상 아님)</div>
+      </div>
+    </div>
+
+  </div><!-- /right -->
+
+</div><!-- /mindmap -->
+
+<div class="legend">
+  <div class="legend-title">범례</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#334155"></div>1~2편 기본개념·안전관리</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#475569"></div>3~4편 면허·자격·차량</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#64748b"></div>5~6편 운행안전·벌칙</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#dc2626"></div>함정패턴</div>
+  <div style="margin-top:5px; color:#94a3b8; font-size:10px;">클릭 → 접기/펼치기</div>
+</div>
+
+<script>
+function toggle(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('collapsed');
+  drawLines();
+}
+function getCenter(el) {
+  const r = el.getBoundingClientRect();
+  const wr = document.getElementById('mindmap').getBoundingClientRect();
+  return { x: r.left - wr.left + r.width/2, y: r.top - wr.top + r.height/2 };
+}
+function drawLines() {
+  const svg = document.getElementById('connector-svg');
+  const mm  = document.getElementById('mindmap');
+  svg.setAttribute('width', mm.offsetWidth);
+  svg.setAttribute('height', mm.offsetHeight);
+  svg.innerHTML = '';
+  const center = getCenter(document.getElementById('centerNode'));
+  const branches = [
+    {id:'g-info', side:'left'}, {id:'g-trap', side:'left'},
+    {id:'g-e12',  side:'right'}, {id:'g-e34',  side:'right'}, {id:'g-e56',  side:'right'},
+  ];
+  branches.forEach(b => {
+    const el = document.getElementById(b.id);
+    if (!el) return;
+    const lbl = el.querySelector('.branch-label');
+    if (!lbl) return;
+    const bp = getCenter(lbl);
+    const isLeft = b.side === 'left';
+    const cx1 = isLeft ? center.x - 20 : center.x + 20;
+    const cx2 = isLeft ? bp.x + lbl.offsetWidth/2 + 5 : bp.x - lbl.offsetWidth/2 - 5;
+    const mx  = (cx1 + cx2) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', `M${cx1},${center.y} C${mx},${center.y} ${mx},${bp.y} ${cx2},${bp.y}`);
+    path.setAttribute('fill','none');
+    path.setAttribute('stroke','#94a3b8');
+    path.setAttribute('stroke-width','1.5');
+    path.setAttribute('stroke-dasharray','5,3');
+    path.setAttribute('opacity','0.7');
+    svg.appendChild(path);
+  });
+}
+window.addEventListener('load', drawLines);
+window.addEventListener('resize', drawLines);
+</script>
+</body>
+</html>

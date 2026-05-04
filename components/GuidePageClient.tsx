@@ -257,18 +257,36 @@ export default function GuidePageClient({
 
       {/* 섹션 3: 과목 연결 지도 */}
       <section id="s3" className="space-y-3 scroll-mt-6">
-        <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2"><span>🗺️</span> 과목 연결 지도</h2>
-        <p className="text-xs text-gray-500">과목을 클릭하면 핵심정리로 이동합니다</p>
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2"><span>🗺️</span> 과목 연결 지도</h2>
+          <Link
+            href="/mindmap"
+            className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-purple-50 text-purple-700 text-xs font-semibold hover:bg-purple-100 transition shrink-0"
+          >
+            🧠 전체 마인드맵
+          </Link>
+        </div>
+        <p className="text-xs text-gray-500">핵심정리 또는 마인드맵으로 바로 이동</p>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
           {subjects.map(s => {
             const color = TYPE_COLOR[s.subject_types?.code ?? ''] ?? TYPE_COLOR.conceptual;
             return (
-              <Link key={s.id} href={s.theory_url ?? `/theory/${s.id}`}
-                className={`flex flex-col items-center justify-center gap-2 rounded-2xl px-3 py-4 text-center font-medium text-sm transition hover:scale-105 hover:shadow-md active:scale-95 ${color.bg} ${color.text}`}>
-                <span className="text-2xl">{s.icon}</span>
-                <span className="text-xs leading-tight">{s.name}</span>
-                <span className="text-[10px] opacity-60">{s.question_count}문항</span>
-              </Link>
+              <div key={s.id} className={`flex flex-col rounded-2xl overflow-hidden shadow-sm ${color.bg}`}>
+                {/* 핵심정리 링크 */}
+                <Link href={s.theory_url ?? `/theory/${s.id}`}
+                  className={`flex flex-col items-center justify-center gap-2 px-3 pt-4 pb-3 text-center font-medium transition hover:opacity-80 active:scale-95 ${color.text}`}>
+                  <span className="text-2xl">{s.icon}</span>
+                  <span className="text-xs leading-tight font-semibold">{s.name}</span>
+                  <span className="text-[10px] opacity-60">{s.question_count}문항</span>
+                </Link>
+                {/* 마인드맵 버튼 */}
+                <Link
+                  href={`/mindmap?s=${s.id}`}
+                  className={`flex items-center justify-center gap-1 py-1.5 text-[11px] font-medium border-t border-white border-opacity-40 hover:bg-white hover:bg-opacity-30 transition ${color.text} opacity-75 hover:opacity-100`}
+                >
+                  🧠 마인드맵
+                </Link>
+              </div>
             );
           })}
         </div>

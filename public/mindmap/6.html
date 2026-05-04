@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>철도신호 — 과목 마인드맵</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+  background: #ffffff;
+  color: #1e293b;
+  min-height: 100vh;
+}
+.header {
+  text-align: center;
+  padding: 16px 20px 12px;
+  background: #fff1f2;
+  border-bottom: 2px solid #be123c;
+}
+.header h1 { font-size: 20px; color: #7f1d1d; font-weight: bold; }
+.header p  { font-size: 12px; color: #b91c1c; margin-top: 4px; }
+
+#mindmap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-width: 1240px;
+  background: #ffffff;
+}
+
+.center-node {
+  position: relative; z-index: 10; flex-shrink: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #7f1d1d 0%, #dc2626 100%);
+  border: 2.5px solid #ef4444;
+  border-radius: 20px;
+  padding: 20px 26px;
+  min-width: 170px; max-width: 190px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(127,29,29,0.22);
+}
+.center-node .c-title { font-size: 17px; font-weight: bold; color: #fff; line-height: 1.5; }
+.center-node .c-sub   { font-size: 11px; color: #fecaca; margin-top: 5px; line-height: 1.6; }
+.center-node .c-badge {
+  margin-top: 8px; font-size: 10px;
+  background: rgba(255,255,255,0.18); border-radius: 20px;
+  padding: 3px 10px; color: #fff1f2;
+}
+
+#left  { display: flex; flex-direction: column; gap: 20px; align-items: flex-end;   min-width: 310px; padding-right: 36px; }
+#right { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; min-width: 430px; padding-left: 36px; }
+
+.branch-group { display: flex; flex-direction: column; gap: 5px; }
+.branch-header {
+  display: flex; align-items: center; gap: 6px;
+  cursor: pointer; user-select: none;
+}
+#left .branch-header { flex-direction: row-reverse; }
+.toggle-icon { font-size: 11px; color: #94a3b8; transition: transform 0.2s; min-width: 12px; }
+.branch-label {
+  display: inline-block; padding: 8px 14px;
+  border-radius: 10px; font-size: 13px; font-weight: bold;
+  white-space: nowrap; border: 2px solid transparent;
+  transition: filter 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+}
+.branch-label:hover { filter: brightness(0.95); }
+
+.sub-nodes { display: flex; flex-direction: column; gap: 3px; padding-top: 2px; }
+#left  .sub-nodes { align-items: flex-end; }
+#right .sub-nodes { align-items: flex-start; }
+
+.sub-node {
+  padding: 4px 11px; border-radius: 7px;
+  font-size: 11.5px; background: #f8fafc;
+  border-left: 3px solid #fca5a5;
+  line-height: 1.5; color: #334155;
+  transition: background 0.15s;
+}
+#left .sub-node { border-left: none; border-right: 3px solid #fca5a5; text-align: right; }
+.sub-node:hover { background: #f1f5f9; }
+
+.trap  { color: #dc2626; font-weight: bold; }
+.star  { color: #d97706; font-weight: bold; }
+.num   { color: #0284c7; font-weight: bold; }
+
+.bl-info  { background: #f0fdf4; border-color: #16a34a !important; color: #14532d; }
+.bl-trap  { background: #fef2f2; border-color: #dc2626 !important; color: #7f1d1d; }
+.bl-r1    { background: #fee2e2; border-color: #dc2626 !important; color: #7f1d1d; }
+.bl-r2    { background: #fecaca; border-color: #b91c1c !important; color: #7f1d1d; }
+.bl-r3    { background: #fff1f2; border-color: #e11d48 !important; color: #881337; }
+
+.sn-r1 { border-color: #dc2626 !important; }
+.sn-r2 { border-color: #ef4444 !important; }
+.sn-r3 { border-color: #fca5a5 !important; }
+
+#connector-svg {
+  position: absolute; top:0; left:0;
+  width:100%; height:100%;
+  pointer-events: none; z-index: 2;
+}
+.collapsed .sub-nodes { display: none; }
+.collapsed .toggle-icon { transform: rotate(-90deg); }
+
+.legend {
+  position: fixed; bottom: 16px; right: 16px;
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 11px; z-index: 200;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.legend-title { font-weight: bold; color: #64748b; margin-bottom: 6px; }
+.legend-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; color: #475569; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>⑥ 철도신호 — 과목 마인드맵</h1>
+  <p>14파트 · 정위 암기 · 수치 · 직관 반대 함정 &nbsp;|&nbsp; 색상: 레드 계열</p>
+</div>
+
+<div id="mindmap">
+  <svg id="connector-svg"></svg>
+
+  <!-- LEFT -->
+  <div id="left">
+
+    <div class="branch-group" id="g-info">
+      <div class="branch-header" onclick="toggle('g-info')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-info">📋 과목 개요</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node" style="border-color:#16a34a">14파트 · 약 60개 핵심 개념</div>
+        <div class="sub-node" style="border-color:#16a34a">출제: 4지선다 20문항</div>
+        <div class="sub-node" style="border-color:#16a34a">합격선: 40점 이상</div>
+        <div class="sub-node" style="border-color:#16a34a">학습 DNA: <strong>신호기 정위 + 수치 암기</strong></div>
+        <div class="sub-node" style="border-color:#16a34a">기출: 2017년 기출 + 2020 기출복원</div>
+        <div class="sub-node" style="border-color:#16a34a">출제유형: 비해당 찾기·직관 반대 함정</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-trap">
+      <div class="branch-header" onclick="toggle('g-trap')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-trap">⚠️ 함정패턴 & 빈출 TOP</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 유도신호기 정위 = <strong>소등(무현시)</strong> (정지 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 원방신호기 정위 = <strong>주의</strong> (진행 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 완목식만 주야간 현시 다름 (색등식·등열식은 동일)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 발폭신호 → <strong>존재하지 않음</strong> (비해당 답)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 가동크로싱 = <strong>결선부 제거</strong> (생성 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 마찰클러치: 여름=<strong>강하게</strong>, 겨울=<strong>약하게</strong> (직관 반대!)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 대향=<strong>탈선</strong> / 배향=<strong>할출</strong> (혼동 주의)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 사구간 허용 최대: <span class="num">7m</span> 이하</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 확인거리: 주신호기 600m / 입환·중계 200m / 유도 100m</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 전동기 = 콘덴서기동형 유도전동기 (동기 아님)</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> AF 궤도회로: 200km/h 이상 / 고압임펄스: 25,000V 구간</div>
+      </div>
+    </div>
+
+  </div><!-- /left -->
+
+  <!-- CENTER -->
+  <div style="position:relative; z-index:10; flex-shrink:0;">
+    <div class="center-node" id="centerNode">
+      <div class="c-title">철도신호</div>
+      <div class="c-sub">14파트 · 정위암기<br>수치·분류 집중</div>
+      <div class="c-badge">60개 핵심 개념</div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div id="right">
+
+    <div class="branch-group" id="g-p14">
+      <div class="branch-header" onclick="toggle('g-p14')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-r1">🚦 PART 1~4. 신호기 분류·정위·확인거리</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-r1"><strong>P1.</strong> 신호·전호·표지 구분: 신호=기관사 지시 / 전호=관계자 상호 / 표지=위치 표시</div>
+        <div class="sub-node sn-r1"><strong>P2.</strong> 구조상: 완목식(주야 다름)·색등식·등열식(유도·중계 사용)</div>
+        <div class="sub-node sn-r1"><strong>P2.</strong> 조작상: 수동·자동(폐색신호기)·반자동(장내·출발신호기)</div>
+        <div class="sub-node sn-r1"><strong>P2.</strong> 주신호기 6종: <strong>장출폐엄유입</strong> / 종속신호기 3종: <strong>원통중</strong></div>
+        <div class="sub-node sn-r1"><strong>P2.</strong> 임시신호기 3종: 서행예고·서행·서행해제 (중계신호기 포함 안 됨)</div>
+        <div class="sub-node sn-r2"><strong>P3.</strong> 정위 암기: 장내·출발·입환·엄호 = <strong>정지</strong></div>
+        <div class="sub-node sn-r2"><strong>P3.</strong> 정위 암기: 유도 = <strong>소등(무현시)</strong> / 원방 = <strong>주의</strong></div>
+        <div class="sub-node sn-r2"><strong>P3.</strong> 폐색신호기 정위: 복선=<strong>진행</strong> / 단선=<strong>정지</strong></div>
+        <div class="sub-node sn-r3"><strong>P4.</strong> 확인거리: 장내·출발·폐색·엄호 = <span class="num">600m</span> 이상</div>
+        <div class="sub-node sn-r3"><strong>P4.</strong> 확인거리: 입환·중계 = <span class="num">200m</span> / 유도 = <span class="num">100m</span></div>
+        <div class="sub-node sn-r3"><strong>P5.</strong> 특수신호 3종: 발뢰·발염·발광 (발폭 없음)</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-p56">
+      <div class="branch-header" onclick="toggle('g-p56')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-r2">🔀 PART 6~8. 선로전환기·궤도회로·계전기</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-r1"><strong>P6.</strong> 선로전환기 5종: 보통·탈선·가동크로싱·삼지·전기</div>
+        <div class="sub-node sn-r1"><strong>P6.</strong> 탈선선로전환기: 과주 시 의도적 탈선 / 안전측선에 사용</div>
+        <div class="sub-node sn-r1"><strong>P6.</strong> 가동크로싱: <strong>결선부 제거</strong> / 고속철도 구간 사용</div>
+        <div class="sub-node sn-r1"><strong>P6.</strong> 전동기: 콘덴서기동형 <strong>유도전동기</strong> 단상 4극 (동기 아님)</div>
+        <div class="sub-node sn-r1"><strong>P6.</strong> 마찰클러치: 여름=<strong>강</strong> / 겨울=<strong>약</strong> (직관 반대)</div>
+        <div class="sub-node sn-r1"><strong>P6.</strong> 전환시간: NS형 <span class="num">6초</span> / NS-AM형 <span class="num">7초</span> / MJ81형 <span class="num">5초</span> / 차상 <span class="num">2초</span></div>
+        <div class="sub-node sn-r2"><strong>P7.</strong> 궤도회로 6종: DC·AC·정류·코드·AF·고압임펄스</div>
+        <div class="sub-node sn-r2"><strong>P7.</strong> AF 궤도회로: 가청주파수 / <span class="num">200km/h</span> 이상</div>
+        <div class="sub-node sn-r2"><strong>P7.</strong> 고압임펄스: 교류 <span class="num">25,000V</span> 구간 / 임피던스본드 사용</div>
+        <div class="sub-node sn-r2"><strong>P7.</strong> 임피던스본드: 귀선전류 통과·신호전류 차단 / 한류장치: 과전류 제한</div>
+        <div class="sub-node sn-r2"><strong>P7.</strong> 사구간: 허용 최대 <span class="num">7m</span> 이하 / 교량은 발생 장소 아님</div>
+        <div class="sub-node sn-r3"><strong>P8.</strong> 자기유지 계전기: 전류차단 후도 상태 유지 → 전기선로전환기 제어</div>
+        <div class="sub-node sn-r3"><strong>P8.</strong> 유극 3위식: N/R/Open 3상태 → 전철표시계전기(KR)</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-p914">
+      <div class="branch-header" onclick="toggle('g-p914')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-r3">🖥️ PART 9~14. 폐색·연동·열차제어·고속철도</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-r2"><strong>P9.</strong> 폐색방식: 자동·연동·차내신호·통표(상용) / 통신·지도통신·지도·지령(대용)</div>
+        <div class="sub-node sn-r2"><strong>P10.</strong> 연동장치: 신호기·선로전환기·쇄정장치를 상호 연쇄로 동작</div>
+        <div class="sub-node sn-r2"><strong>P10.</strong> 연동표: 신호기~선로전환기 상호관계 표시</div>
+        <div class="sub-node sn-r3"><strong>P11.</strong> ATS: 자동열차정지 / ATC: 자동속도제어 / ATP: ATS+ATC 통합</div>
+        <div class="sub-node sn-r3"><strong>P11.</strong> ATO: 출발~정차 자동운전 / CTC: 중앙집중제어</div>
+        <div class="sub-node sn-r3"><strong>P12.</strong> 건널목 보안장치: 자동경보기·자동차단기·건널목제어장치</div>
+        <div class="sub-node sn-r3"><strong>P13.</strong> 검지장치: 차축계수기·루프선·타코미터·레이더</div>
+        <div class="sub-node sn-r3"><strong>P14.</strong> UM71C 무절연궤도회로: 보상콘덴서+동조유닛(TU)+매칭유닛</div>
+        <div class="sub-node sn-r3"><strong>P14.</strong> 고속철도 전용: 가동크로싱·AF궤도회로·TVM430·ATP</div>
+      </div>
+    </div>
+
+  </div><!-- /right -->
+
+</div><!-- /mindmap -->
+
+<div class="legend">
+  <div class="legend-title">범례</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#dc2626"></div>P1~4 신호기·정위</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#b91c1c"></div>P6~8 전환기·궤도회로</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#e11d48"></div>P9~14 폐색·제어</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#991b1b"></div>함정패턴</div>
+  <div style="margin-top:5px; color:#94a3b8; font-size:10px;">클릭 → 접기/펼치기</div>
+</div>
+
+<script>
+function toggle(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('collapsed');
+  drawLines();
+}
+function getCenter(el) {
+  const r = el.getBoundingClientRect();
+  const wr = document.getElementById('mindmap').getBoundingClientRect();
+  return { x: r.left - wr.left + r.width/2, y: r.top - wr.top + r.height/2 };
+}
+function drawLines() {
+  const svg = document.getElementById('connector-svg');
+  const mm  = document.getElementById('mindmap');
+  svg.setAttribute('width', mm.offsetWidth);
+  svg.setAttribute('height', mm.offsetHeight);
+  svg.innerHTML = '';
+  const center = getCenter(document.getElementById('centerNode'));
+  const branches = [
+    {id:'g-info', side:'left'}, {id:'g-trap', side:'left'},
+    {id:'g-p14',  side:'right'}, {id:'g-p56',  side:'right'}, {id:'g-p914', side:'right'},
+  ];
+  branches.forEach(b => {
+    const el = document.getElementById(b.id);
+    if (!el) return;
+    const lbl = el.querySelector('.branch-label');
+    if (!lbl) return;
+    const bp = getCenter(lbl);
+    const isLeft = b.side === 'left';
+    const cx1 = isLeft ? center.x - 20 : center.x + 20;
+    const cx2 = isLeft ? bp.x + lbl.offsetWidth/2 + 5 : bp.x - lbl.offsetWidth/2 - 5;
+    const mx  = (cx1 + cx2) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', `M${cx1},${center.y} C${mx},${center.y} ${mx},${bp.y} ${cx2},${bp.y}`);
+    path.setAttribute('fill','none');
+    path.setAttribute('stroke','#fca5a5');
+    path.setAttribute('stroke-width','1.5');
+    path.setAttribute('stroke-dasharray','5,3');
+    path.setAttribute('opacity','0.7');
+    svg.appendChild(path);
+  });
+}
+window.addEventListener('load', drawLines);
+window.addEventListener('resize', drawLines);
+</script>
+</body>
+</html>

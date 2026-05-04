@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>철도산업기본법 — 과목 마인드맵</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+  background: #ffffff;
+  color: #1e293b;
+  min-height: 100vh;
+}
+.header {
+  text-align: center;
+  padding: 16px 20px 12px;
+  background: #f0fdfa;
+  border-bottom: 2px solid #0d9488;
+}
+.header h1 { font-size: 20px; color: #134e4a; font-weight: bold; }
+.header p  { font-size: 12px; color: #0f766e; margin-top: 4px; }
+
+#mindmap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-width: 1200px;
+  background: #ffffff;
+}
+
+.center-node {
+  position: relative; z-index: 10; flex-shrink: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #134e4a 0%, #0d9488 100%);
+  border: 2.5px solid #14b8a6;
+  border-radius: 20px;
+  padding: 20px 26px;
+  min-width: 170px; max-width: 195px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(19,78,74,0.22);
+}
+.center-node .c-title { font-size: 15px; font-weight: bold; color: #fff; line-height: 1.5; }
+.center-node .c-sub   { font-size: 11px; color: #99f6e4; margin-top: 5px; line-height: 1.6; }
+.center-node .c-badge {
+  margin-top: 8px; font-size: 10px;
+  background: rgba(255,255,255,0.18); border-radius: 20px;
+  padding: 3px 10px; color: #f0fdfa;
+}
+
+#left  { display: flex; flex-direction: column; gap: 20px; align-items: flex-end;   min-width: 300px; padding-right: 36px; }
+#right { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; min-width: 420px; padding-left: 36px; }
+
+.branch-group { display: flex; flex-direction: column; gap: 5px; }
+.branch-header {
+  display: flex; align-items: center; gap: 6px;
+  cursor: pointer; user-select: none;
+}
+#left .branch-header { flex-direction: row-reverse; }
+.toggle-icon { font-size: 11px; color: #94a3b8; transition: transform 0.2s; min-width: 12px; }
+.branch-label {
+  display: inline-block; padding: 8px 14px;
+  border-radius: 10px; font-size: 13px; font-weight: bold;
+  white-space: nowrap; border: 2px solid transparent;
+  transition: filter 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+}
+.branch-label:hover { filter: brightness(0.95); }
+
+.sub-nodes { display: flex; flex-direction: column; gap: 3px; padding-top: 2px; }
+#left  .sub-nodes { align-items: flex-end; }
+#right .sub-nodes { align-items: flex-start; }
+
+.sub-node {
+  padding: 4px 11px; border-radius: 7px;
+  font-size: 11.5px; background: #f8fafc;
+  border-left: 3px solid #5eead4;
+  line-height: 1.5; color: #334155;
+  transition: background 0.15s;
+}
+#left .sub-node { border-left: none; border-right: 3px solid #5eead4; text-align: right; }
+.sub-node:hover { background: #f1f5f9; }
+
+.trap  { color: #dc2626; font-weight: bold; }
+.star  { color: #d97706; font-weight: bold; }
+.num   { color: #0284c7; font-weight: bold; }
+
+.bl-info  { background: #f0fdf4; border-color: #16a34a !important; color: #14532d; }
+.bl-trap  { background: #fef2f2; border-color: #dc2626 !important; color: #7f1d1d; }
+.bl-t1    { background: #ccfbf1; border-color: #0d9488 !important; color: #134e4a; }
+.bl-t2    { background: #99f6e4; border-color: #0f766e !important; color: #134e4a; }
+.bl-t3    { background: #f0fdfa; border-color: #14b8a6 !important; color: #115e59; }
+
+.sn-t1 { border-color: #0d9488 !important; }
+.sn-t2 { border-color: #14b8a6 !important; }
+.sn-t3 { border-color: #5eead4 !important; }
+
+#connector-svg {
+  position: absolute; top:0; left:0;
+  width:100%; height:100%;
+  pointer-events: none; z-index: 2;
+}
+.collapsed .sub-nodes { display: none; }
+.collapsed .toggle-icon { transform: rotate(-90deg); }
+
+.legend {
+  position: fixed; bottom: 16px; right: 16px;
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 11px; z-index: 200;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.legend-title { font-weight: bold; color: #64748b; margin-bottom: 6px; }
+.legend-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; color: #475569; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>⑤ 철도산업기본법 — 과목 마인드맵</h1>
+  <p>9파트 · 주체-행위 매핑 · 자산·부채 포괄승계 구조 &nbsp;|&nbsp; 색상: 틸 계열</p>
+</div>
+
+<div id="mindmap">
+  <svg id="connector-svg"></svg>
+
+  <!-- LEFT -->
+  <div id="left">
+
+    <div class="branch-group" id="g-info">
+      <div class="branch-header" onclick="toggle('g-info')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-info">📋 과목 개요</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node" style="border-color:#16a34a">9파트 · 조문·숫자 암기</div>
+        <div class="sub-node" style="border-color:#16a34a">출제: 4지선다 20문항</div>
+        <div class="sub-node" style="border-color:#16a34a">합격선: 40점 이상</div>
+        <div class="sub-node" style="border-color:#16a34a">학습 DNA: <strong>주체-행위 매핑</strong></div>
+        <div class="sub-node" style="border-color:#16a34a">자산·부채·고용 포괄승계 3기관 흐름</div>
+        <div class="sub-node" style="border-color:#16a34a">한국철도공사 ≠ 시설관리자 (운영자)</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-trap">
+      <div class="branch-header" onclick="toggle('g-trap')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-trap">⚠️ 함정패턴 & 빈출 TOP</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 한국철도공사 = 철도운영자 (시설관리자 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 철도시설관리권 효력: 계약 아닌 <strong>등록</strong>으로 발생</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 운임·요금 증액분: 공익서비스비용 <strong>포함 안 됨</strong></div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 기타부채 승계: 고속철도건설공단 아닌 <strong>일반회계</strong></div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 위원회 <span class="num">25인</span> vs 실무위원회 <span class="num">20인</span> 구분</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 고정부채 → 철도부채 분류에 <strong>없음</strong></div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 기본계획 수립주기: 5년</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 운영부채 인계시기: 설립등기일 (익일 아님)</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 특정노선폐지: 국토부장관 승인 + 청문 필수</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 비상사태 해제: 지체없이 (위원회 심의 불필요)</div>
+      </div>
+    </div>
+
+  </div><!-- /left -->
+
+  <!-- CENTER -->
+  <div style="position:relative; z-index:10; flex-shrink:0;">
+    <div class="center-node" id="centerNode">
+      <div class="c-title">철도산업<br>기본법</div>
+      <div class="c-sub">9파트 · 주체매핑<br>포괄승계 구조</div>
+      <div class="c-badge">철도산업발전기본법</div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div id="right">
+
+    <div class="branch-group" id="g-p123">
+      <div class="branch-header" onclick="toggle('g-p123')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-t1">📘 PART 1~3. 용어·주체·승계구조</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-t1"><strong>P1.</strong> 철도 = 철도시설 + 철도차량 + 운영·지원체계</div>
+        <div class="sub-node sn-t1"><strong>P1.</strong> 철도시설 포함: 선로·역·차량정비기지·전철전력·신호열차제어</div>
+        <div class="sub-node sn-t1"><strong>P1.</strong> 철도시설 제외: 기숙시설, 철도승무원 통근버스</div>
+        <div class="sub-node sn-t1"><strong>P1.</strong> 철도운영 3가지: 여객·화물운송 / 차량정비·열차운행관리 / 부대사업</div>
+        <div class="sub-node sn-t1"><strong>P2.</strong> 국토부장관: 기본계획 수립(<span class="num">5년</span>)·관리청·시설관리권 설정·비상사태 해제</div>
+        <div class="sub-node sn-t1"><strong>P2.</strong> 국가철도공단: 시설자산(건설중) 포괄승계 / 시설부채 승계</div>
+        <div class="sub-node sn-t1"><strong>P2.</strong> 한국철도공사: 운영자산 현물출자 / 운영부채 승계(설립등기일)</div>
+        <div class="sub-node sn-t1"><strong>P2.</strong> 철도산업위원회: <span class="num">25인</span> 이내 / 위원장=국토부장관</div>
+        <div class="sub-node sn-t2"><strong>P3.</strong> 자산 포괄승계: 시설자산(완공)→국토부 이관 / 시설자산(건설중)→공단</div>
+        <div class="sub-node sn-t2"><strong>P3.</strong> 부채 포괄승계: 운영부채→공사(설립등기일) / 시설부채→공단(2004.1.1)</div>
+        <div class="sub-node sn-t2"><strong>P3.</strong> 기타부채(공공자금관리기금 부채) → 일반회계 승계</div>
+        <div class="sub-node sn-t2"><strong>P3.</strong> 고용 포괄승계: 철도직원 → 한국철도공사 + 국가철도공단 양쪽</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-p456">
+      <div class="branch-header" onclick="toggle('g-p456')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-t2">📋 PART 4~6. 숫자·절차·적용범위</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-t2"><strong>P4.</strong> 기본계획 수립주기: <span class="num">5년</span></div>
+        <div class="sub-node sn-t2"><strong>P4.</strong> 위원회 위원: <span class="num">25인</span> 이내 / 실무위원회: <span class="num">20인</span> 이내</div>
+        <div class="sub-node sn-t2"><strong>P4.</strong> 시행계획 제출: 전년도 <span class="num">11월말</span></div>
+        <div class="sub-node sn-t2"><strong>P4.</strong> 추진실적 제출: 매년 <span class="num">2월말</span></div>
+        <div class="sub-node sn-t2"><strong>P4.</strong> 국가부담비용추정서 제출: 매년 <span class="num">3월말</span></div>
+        <div class="sub-node sn-t3"><strong>P5.</strong> 특정노선폐지 절차: 국토부장관 승인 → 청문 실시 필수</div>
+        <div class="sub-node sn-t3"><strong>P5.</strong> 비상사태 선포: 위원회 심의 / 해제: 위원회 심의 없이 지체없이</div>
+        <div class="sub-node sn-t3"><strong>P6.</strong> 공익서비스 비용: 감면액·벽지경영손실·국가특수목적수행비용</div>
+        <div class="sub-node sn-t3"><strong>P6.</strong> 보상계약 사전협의: 기획재정부장관과 협의</div>
+      </div>
+    </div>
+
+    <div class="branch-group" id="g-p789">
+      <div class="branch-header" onclick="toggle('g-p789')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-t3">⚖️ PART 7~9. 시설관리·선로사용·벌칙</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-t2"><strong>P7.</strong> 철도시설관리권: 법적 성질 = <strong>물권</strong> / 민법 부동산 규정 준용</div>
+        <div class="sub-node sn-t2"><strong>P7.</strong> 효력 발생: <strong>등록부에 등록</strong>으로 효력 발생 (계약 아님)</div>
+        <div class="sub-node sn-t2"><strong>P7.</strong> 저당권자 동의 없으면 처분 불가</div>
+        <div class="sub-node sn-t3"><strong>P8.</strong> 철도시설관리대장: 국토부장관이 작성·비치</div>
+        <div class="sub-node sn-t3"><strong>P8.</strong> 선로사용계약: 국가철도공단 ↔ 철도운영자 체결</div>
+        <div class="sub-node sn-t3"><strong>P9.</strong> 과태료: 미신고·위반 행위별 차등 적용</div>
+        <div class="sub-node sn-t3"><strong>P9.</strong> 벌칙: 비밀 누설·허위보고 → 형사처벌</div>
+      </div>
+    </div>
+
+  </div><!-- /right -->
+
+</div><!-- /mindmap -->
+
+<div class="legend">
+  <div class="legend-title">범례</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#0d9488"></div>P1~3 용어·주체·승계</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#0f766e"></div>P4~6 숫자·절차</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#14b8a6"></div>P7~9 시설관리·벌칙</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#dc2626"></div>함정패턴</div>
+  <div style="margin-top:5px; color:#94a3b8; font-size:10px;">클릭 → 접기/펼치기</div>
+</div>
+
+<script>
+function toggle(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('collapsed');
+  drawLines();
+}
+function getCenter(el) {
+  const r = el.getBoundingClientRect();
+  const wr = document.getElementById('mindmap').getBoundingClientRect();
+  return { x: r.left - wr.left + r.width/2, y: r.top - wr.top + r.height/2 };
+}
+function drawLines() {
+  const svg = document.getElementById('connector-svg');
+  const mm  = document.getElementById('mindmap');
+  svg.setAttribute('width', mm.offsetWidth);
+  svg.setAttribute('height', mm.offsetHeight);
+  svg.innerHTML = '';
+  const center = getCenter(document.getElementById('centerNode'));
+  const branches = [
+    {id:'g-info', side:'left'}, {id:'g-trap', side:'left'},
+    {id:'g-p123', side:'right'}, {id:'g-p456', side:'right'}, {id:'g-p789', side:'right'},
+  ];
+  branches.forEach(b => {
+    const el = document.getElementById(b.id);
+    if (!el) return;
+    const lbl = el.querySelector('.branch-label');
+    if (!lbl) return;
+    const bp = getCenter(lbl);
+    const isLeft = b.side === 'left';
+    const cx1 = isLeft ? center.x - 20 : center.x + 20;
+    const cx2 = isLeft ? bp.x + lbl.offsetWidth/2 + 5 : bp.x - lbl.offsetWidth/2 - 5;
+    const mx  = (cx1 + cx2) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', `M${cx1},${center.y} C${mx},${center.y} ${mx},${bp.y} ${cx2},${bp.y}`);
+    path.setAttribute('fill','none');
+    path.setAttribute('stroke','#5eead4');
+    path.setAttribute('stroke-width','1.5');
+    path.setAttribute('stroke-dasharray','5,3');
+    path.setAttribute('opacity','0.7');
+    svg.appendChild(path);
+  });
+}
+window.addEventListener('load', drawLines);
+window.addEventListener('resize', drawLines);
+</script>
+</body>
+</html>

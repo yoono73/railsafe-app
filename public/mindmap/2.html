@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>교통안전법 — 과목 마인드맵</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+  background: #ffffff;
+  color: #1e293b;
+  min-height: 100vh;
+}
+.header {
+  text-align: center;
+  padding: 16px 20px 12px;
+  background: #eff6ff;
+  border-bottom: 2px solid #1d4ed8;
+}
+.header h1 { font-size: 20px; color: #1e3a8a; font-weight: bold; }
+.header p  { font-size: 12px; color: #1d4ed8; margin-top: 4px; }
+
+#mindmap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-width: 1200px;
+  background: #ffffff;
+}
+
+/* CENTER */
+.center-node {
+  position: relative; z-index: 10; flex-shrink: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+  border: 2.5px solid #2563eb;
+  border-radius: 20px;
+  padding: 20px 26px;
+  min-width: 170px; max-width: 190px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(30,58,138,0.22);
+}
+.center-node .c-title { font-size: 17px; font-weight: bold; color: #fff; line-height: 1.5; }
+.center-node .c-sub   { font-size: 11px; color: #bfdbfe; margin-top: 5px; line-height: 1.6; }
+.center-node .c-badge {
+  margin-top: 8px; font-size: 10px;
+  background: rgba(255,255,255,0.18); border-radius: 20px;
+  padding: 3px 10px; color: #eff6ff;
+}
+
+/* SIDES */
+#left  { display: flex; flex-direction: column; gap: 20px; align-items: flex-end;   min-width: 300px; padding-right: 36px; }
+#right { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; min-width: 380px; padding-left: 36px; }
+
+.branch-group { display: flex; flex-direction: column; gap: 5px; }
+.branch-header {
+  display: flex; align-items: center; gap: 6px;
+  cursor: pointer; user-select: none;
+}
+#left .branch-header { flex-direction: row-reverse; }
+
+.toggle-icon { font-size: 11px; color: #94a3b8; transition: transform 0.2s; min-width: 12px; }
+.branch-label {
+  display: inline-block; padding: 8px 14px;
+  border-radius: 10px; font-size: 13px; font-weight: bold;
+  white-space: nowrap; border: 2px solid transparent;
+  transition: filter 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+}
+.branch-label:hover { filter: brightness(0.95); }
+
+.sub-nodes { display: flex; flex-direction: column; gap: 3px; padding-top: 2px; }
+#left  .sub-nodes { align-items: flex-end; }
+#right .sub-nodes { align-items: flex-start; }
+
+.sub-node {
+  padding: 4px 11px; border-radius: 7px;
+  font-size: 11.5px; background: #f8fafc;
+  border-left: 3px solid #93c5fd;
+  line-height: 1.5; color: #334155;
+  transition: background 0.15s;
+}
+#left .sub-node { border-left: none; border-right: 3px solid #93c5fd; text-align: right; }
+.sub-node:hover { background: #f1f5f9; }
+
+.badge {
+  font-size: 10px; padding: 1px 5px;
+  border-radius: 8px; background: rgba(0,0,0,0.06);
+  margin-left: 4px; font-weight: normal; color: #475569;
+}
+.trap  { color: #dc2626; font-weight: bold; }
+.star  { color: #d97706; font-weight: bold; }
+.num   { color: #0284c7; font-weight: bold; }
+.subj  { color: #7c3aed; font-weight: bold; }
+
+/* 그룹별 색상 */
+.bl-info  { background: #f0fdf4; border-color: #16a34a !important; color: #14532d; }
+.bl-trap  { background: #fef2f2; border-color: #dc2626 !important; color: #7f1d1d; }
+.bl-a14  { background: #dbeafe; border-color: #1d4ed8 !important; color: #1e3a8a; }
+.bl-a58  { background: #bfdbfe; border-color: #2563eb !important; color: #1e3a8a; }
+.bl-a912 { background: #eff6ff; border-color: #3b82f6 !important; color: #1e40af; }
+
+/* 서브노드 테두리 색 */
+.sn-blue { border-color: #3b82f6 !important; }
+.sn-mid  { border-color: #60a5fa !important; }
+.sn-lite { border-color: #93c5fd !important; }
+
+/* SVG */
+#connector-svg {
+  position: absolute; top:0; left:0;
+  width:100%; height:100%;
+  pointer-events: none; z-index: 2;
+}
+
+.collapsed .sub-nodes { display: none; }
+.collapsed .toggle-icon { transform: rotate(-90deg); }
+
+/* 범례 */
+.legend {
+  position: fixed; bottom: 16px; right: 16px;
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 11px; z-index: 200;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.legend-title { font-weight: bold; color: #64748b; margin-bottom: 6px; }
+.legend-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; color: #475569; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>② 교통안전법 — 과목 마인드맵</h1>
+  <p>12파트 · 숫자&amp;주기 암기 · 주체-행위 매핑 집중 &nbsp;|&nbsp; 색상: 네이비 계열</p>
+</div>
+
+<div id="mindmap">
+  <svg id="connector-svg"></svg>
+
+  <!-- LEFT -->
+  <div id="left">
+
+    <!-- 과목 개요 -->
+    <div class="branch-group" id="g-info">
+      <div class="branch-header" onclick="toggle('g-info')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-info">📋 과목 개요</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node" style="border-color:#16a34a">12파트 · 조문 중심 암기</div>
+        <div class="sub-node" style="border-color:#16a34a">출제: 4지선다 20문항</div>
+        <div class="sub-node" style="border-color:#16a34a">합격선: 40점 이상</div>
+        <div class="sub-node" style="border-color:#16a34a">학습 DNA: <strong>숫자·주기 암기</strong></div>
+        <div class="sub-node" style="border-color:#16a34a">주체(국토부·도지사·군수·시장) 구분</div>
+        <div class="sub-node" style="border-color:#16a34a">의무(shall) vs 임의(may) 정확히 구분</div>
+      </div>
+    </div>
+
+    <!-- 함정패턴 -->
+    <div class="branch-group" id="g-trap">
+      <div class="branch-header" onclick="toggle('g-trap')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-trap">⚠️ 함정패턴 A~E형</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠ A형</span> 숫자교체 — 5년↔3년, 30일↔15일 혼용</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠ A형</span> 계획수립 주기: 국가5년, 지역5년, 부문5년</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠ B형</span> 주체교체 — 국토부장관 vs 시·도지사</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠ B형</span> 안전점검: 국토부장관 (지자체 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠ C형</span> 의무·임의 — "하여야" vs "할 수 있다"</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠ D형</span> 범주오류 — 안전점검≠안전진단 구분</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠ E형</span> 국민 vs 주민 — 지역계획은 "주민" 의견 청취</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 운행기록장치: 버스·택시·화물차(의무)</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 안전관리자: 선임 후 15일 내 신고</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 교통안전도 평가: 3년마다</div>
+      </div>
+    </div>
+
+  </div><!-- /left -->
+
+  <!-- CENTER -->
+  <div style="position:relative; z-index:10; flex-shrink:0;">
+    <div class="center-node" id="centerNode">
+      <div class="c-title">교통안전법</div>
+      <div class="c-sub">12파트 · 조문 암기<br>숫자·주체 구분</div>
+      <div class="c-badge">법률 제19009호</div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div id="right">
+
+    <!-- PART 1~4 -->
+    <div class="branch-group" id="g-p14">
+      <div class="branch-header" onclick="toggle('g-p14')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-a14">📘 PART 1~4. 총칙·의무·계획·관리규정</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-blue"><strong>P1.</strong> 목적·정의 — 교통수단·시설·체계·문화 4대 정의 암기</div>
+        <div class="sub-node sn-blue"><strong>P1.</strong> 용어: 교통사고·교통안전·교통체계 정확히 구분</div>
+        <div class="sub-node sn-blue"><strong>P2.</strong> 국가·지자체 의무 vs 교통사업자 의무 vs 국민 의무</div>
+        <div class="sub-node sn-blue"><strong>P2.</strong> 국토교통부장관 = 교통안전 주무부처</div>
+        <div class="sub-node sn-mid"><strong>P3.</strong> 국가교통안전기본계획 — <span class="num">5년</span> 단위 수립</div>
+        <div class="sub-node sn-mid"><strong>P3.</strong> 지역교통안전기본계획 — 시·도지사, <span class="num">5년</span> 단위</div>
+        <div class="sub-node sn-mid"><strong>P3.</strong> 부문별교통안전계획 — 관계행정기관, <span class="num">5년</span> 단위</div>
+        <div class="sub-node sn-mid"><strong>P3.</strong> 계획 수립 전 "주민" 의견 청취 필수</div>
+        <div class="sub-node sn-lite"><strong>P4.</strong> 교통안전관리규정 — 교통사업자 작성·신고 의무</div>
+        <div class="sub-node sn-lite"><strong>P4.</strong> 관리규정 변경: 신고 후 <span class="num">30일</span> 내 효력</div>
+        <div class="sub-node sn-lite"><strong>P4.</strong> 준수 의무: 교통사업자·종사자 모두</div>
+      </div>
+    </div>
+
+    <!-- PART 5~8 -->
+    <div class="branch-group" id="g-p58">
+      <div class="branch-header" onclick="toggle('g-p58')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-a58">🔍 PART 5~8. 점검·진단·운행기록·관리자</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-blue"><strong>P5.</strong> 교통수단 안전점검 — 국토부장관 실시</div>
+        <div class="sub-node sn-blue"><strong>P5.</strong> 정기점검: <span class="num">1년</span>마다 / 수시점검: 필요시</div>
+        <div class="sub-node sn-blue"><strong>P5.</strong> 점검 결과: 개선권고 → 불이행 시 운행정지</div>
+        <div class="sub-node sn-mid"><strong>P6.</strong> 교통시설 안전진단 — 국토부장관 지정기관</div>
+        <div class="sub-node sn-mid"><strong>P6.</strong> 안전진단 주기: <span class="num">5년</span>마다 (안전점검과 구분)</div>
+        <div class="sub-node sn-mid"><strong>P6.</strong> 안전점검 ≠ 안전진단 (주체·주기·대상 모두 다름)</div>
+        <div class="sub-node sn-mid"><strong>P7.</strong> 운행기록장치 — 버스·택시·화물차 <span class="num">의무</span> 장착</div>
+        <div class="sub-node sn-mid"><strong>P7.</strong> 기록 보존: <span class="num">6개월</span> 이상</div>
+        <div class="sub-node sn-mid"><strong>P7.</strong> 분석·활용: 교통사업자 자체 분석 의무</div>
+        <div class="sub-node sn-lite"><strong>P8.</strong> 교통안전관리자 — 일정 규모 이상 교통사업자 필수 선임</div>
+        <div class="sub-node sn-lite"><strong>P8.</strong> 선임 신고: <span class="num">15일</span> 내 국토부장관에게</div>
+        <div class="sub-node sn-lite"><strong>P8.</strong> 해임 즉시 재선임 → 또 <span class="num">15일</span> 내 신고</div>
+      </div>
+    </div>
+
+    <!-- PART 9~12 -->
+    <div class="branch-group" id="g-p912">
+      <div class="branch-header" onclick="toggle('g-p912')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-a912">📊 PART 9~12. 담당자·평가·문화·벌칙</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-blue"><strong>P9.</strong> 교통안전담당자 — 사업자 자체 지정(선임과 구분)</div>
+        <div class="sub-node sn-blue"><strong>P9.</strong> 담당자 ≠ 관리자: 담당자는 내부 지정, 관리자는 신고</div>
+        <div class="sub-node sn-blue"><strong>P9.</strong> 교통안전교육 — 교통사고 유발자 이수 의무</div>
+        <div class="sub-node sn-mid"><strong>P10.</strong> 교통안전도 평가 — 국토부장관 <span class="num">3년</span>마다</div>
+        <div class="sub-node sn-mid"><strong>P10.</strong> 평가 대상: 교통사업자(여객·화물 등)</div>
+        <div class="sub-node sn-mid"><strong>P10.</strong> 평가 결과 공표 → 우수기관 인센티브</div>
+        <div class="sub-node sn-mid"><strong>P11.</strong> 교통문화지수 — 운전행태·보행행태·교통안전의식</div>
+        <div class="sub-node sn-mid"><strong>P11.</strong> 교통문화지수 조사: 국토부장관, <span class="num">매년</span> 실시</div>
+        <div class="sub-node sn-mid"><strong>P11.</strong> 우수 지자체 시상·지원 가능</div>
+        <div class="sub-node sn-lite"><strong>P12.</strong> 청문: 안전진단기관 지정취소 전 실시</div>
+        <div class="sub-node sn-lite"><strong>P12.</strong> 과태료 주요: 관리규정 미신고 <span class="num">300만원</span>, 장치 미설치 <span class="num">200만원</span></div>
+        <div class="sub-node sn-lite"><strong>P12.</strong> 벌칙: 운행기록 거짓 작성 → <span class="num">1년</span> 이하 징역·벌금</div>
+      </div>
+    </div>
+
+  </div><!-- /right -->
+
+</div><!-- /mindmap -->
+
+<!-- 범례 -->
+<div class="legend">
+  <div class="legend-title">범례</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#1d4ed8"></div>P1~4 총칙·계획</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#2563eb"></div>P5~8 점검·관리자</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#3b82f6"></div>P9~12 평가·벌칙</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#dc2626"></div>함정패턴</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#d97706"></div>빈출 TOP</div>
+  <div style="margin-top:5px; color:#94a3b8; font-size:10px;">클릭 → 접기/펼치기</div>
+</div>
+
+<script>
+function toggle(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('collapsed');
+  drawLines();
+}
+
+function getCenter(el) {
+  const r = el.getBoundingClientRect();
+  const wr = document.getElementById('mindmap').getBoundingClientRect();
+  return {
+    x: r.left - wr.left + r.width / 2,
+    y: r.top  - wr.top  + r.height / 2
+  };
+}
+
+function drawLines() {
+  const svg = document.getElementById('connector-svg');
+  const mm  = document.getElementById('mindmap');
+  svg.setAttribute('width',  mm.offsetWidth);
+  svg.setAttribute('height', mm.offsetHeight);
+  svg.innerHTML = '';
+
+  const center = getCenter(document.getElementById('centerNode'));
+
+  const branches = [
+    { id:'g-info',  side:'left' },
+    { id:'g-trap',  side:'left' },
+    { id:'g-p14',   side:'right' },
+    { id:'g-p58',   side:'right' },
+    { id:'g-p912',  side:'right' },
+  ];
+
+  branches.forEach(b => {
+    const el = document.getElementById(b.id);
+    if (!el) return;
+    const lbl = el.querySelector('.branch-label');
+    if (!lbl) return;
+    const bp = getCenter(lbl);
+
+    const isLeft = b.side === 'left';
+    const cx1 = isLeft ? center.x - 20 : center.x + 20;
+    const cx2 = isLeft ? bp.x + lbl.offsetWidth / 2 + 5 : bp.x - lbl.offsetWidth / 2 - 5;
+    const mx  = (cx1 + cx2) / 2;
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', `M${cx1},${center.y} C${mx},${center.y} ${mx},${bp.y} ${cx2},${bp.y}`);
+    path.setAttribute('fill','none');
+    path.setAttribute('stroke','#93c5fd');
+    path.setAttribute('stroke-width','1.5');
+    path.setAttribute('stroke-dasharray','5,3');
+    path.setAttribute('opacity','0.7');
+    svg.appendChild(path);
+  });
+}
+
+window.addEventListener('load', drawLines);
+window.addEventListener('resize', drawLines);
+</script>
+</body>
+</html>

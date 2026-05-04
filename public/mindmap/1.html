@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>교통안전관리론 — 과목 마인드맵</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+  background: #ffffff;
+  color: #1e293b;
+  min-height: 100vh;
+}
+.header {
+  text-align: center;
+  padding: 16px 20px 12px;
+  background: #f5f3ff;
+  border-bottom: 2px solid #7c3aed;
+}
+.header h1 { font-size: 20px; color: #4c1d95; font-weight: bold; }
+.header p  { font-size: 12px; color: #7c3aed; margin-top: 4px; }
+
+#mindmap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-width: 1100px;
+  background: #ffffff;
+}
+
+/* CENTER */
+.center-node {
+  position: relative; z-index: 10; flex-shrink: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
+  border: 2.5px solid #7c3aed;
+  border-radius: 20px;
+  padding: 20px 26px;
+  min-width: 170px; max-width: 190px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(76,29,149,0.2);
+}
+.center-node .c-title { font-size: 17px; font-weight: bold; color: #fff; line-height: 1.5; }
+.center-node .c-sub   { font-size: 11px; color: #ddd6fe; margin-top: 5px; line-height: 1.6; }
+.center-node .c-badge {
+  margin-top: 8px; font-size: 10px;
+  background: rgba(255,255,255,0.18); border-radius: 20px;
+  padding: 3px 10px; color: #ede9fe;
+}
+
+/* SIDES */
+#left  { display: flex; flex-direction: column; gap: 20px; align-items: flex-end;   min-width: 280px; padding-right: 36px; }
+#right { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; min-width: 360px; padding-left: 36px; }
+
+.branch-group { display: flex; flex-direction: column; gap: 5px; }
+.branch-header {
+  display: flex; align-items: center; gap: 6px;
+  cursor: pointer; user-select: none;
+}
+#left .branch-header { flex-direction: row-reverse; }
+
+.toggle-icon { font-size: 11px; color: #94a3b8; transition: transform 0.2s; min-width: 12px; }
+.branch-label {
+  display: inline-block; padding: 8px 14px;
+  border-radius: 10px; font-size: 13px; font-weight: bold;
+  white-space: nowrap; border: 2px solid transparent;
+  transition: filter 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+}
+.branch-label:hover { filter: brightness(0.95); }
+
+.sub-nodes { display: flex; flex-direction: column; gap: 3px; padding-top: 2px; }
+#left  .sub-nodes { align-items: flex-end; }
+#right .sub-nodes { align-items: flex-start; }
+
+.sub-node {
+  padding: 4px 11px; border-radius: 7px;
+  font-size: 11.5px; background: #f8fafc;
+  border-left: 3px solid #c4b5fd;
+  line-height: 1.5; color: #334155;
+  transition: background 0.15s;
+}
+#left .sub-node { border-left: none; border-right: 3px solid #c4b5fd; text-align: right; }
+.sub-node:hover { background: #f1f5f9; }
+
+.badge {
+  font-size: 10px; padding: 1px 5px;
+  border-radius: 8px; background: rgba(0,0,0,0.06);
+  margin-left: 4px; font-weight: normal; color: #475569;
+}
+.trap { color: #dc2626; font-weight: bold; }
+.star { color: #d97706; font-weight: bold; }
+
+/* PART 그룹별 색상 */
+.bl-base  { background: #ede9fe; border-color: #7c3aed !important; color: #3b0764; }
+.bl-mgmt  { background: #ddd6fe; border-color: #6d28d9 !important; color: #4c1d95; }
+.bl-drive { background: #e9d5ff; border-color: #9333ea !important; color: #581c87; }
+.bl-trap  { background: #fef2f2; border-color: #dc2626 !important; color: #7f1d1d; }
+.bl-info  { background: #f0fdf4; border-color: #16a34a !important; color: #14532d; }
+
+/* 서브노드 PART별 */
+.sn-p { border-color: #8b5cf6 !important; }
+
+/* SVG */
+#connector-svg {
+  position: absolute; top:0; left:0;
+  width:100%; height:100%;
+  pointer-events: none; z-index: 2;
+}
+
+.collapsed .sub-nodes { display: none; }
+.collapsed .toggle-icon { transform: rotate(-90deg); }
+
+/* 범례 */
+.legend {
+  position: fixed; bottom: 16px; right: 16px;
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 11px; z-index: 200;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.legend-title { font-weight: bold; color: #64748b; margin-bottom: 6px; }
+.legend-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; color: #475569; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>① 교통안전관리론 — 과목 마인드맵</h1>
+  <p>10파트 · 42개 개념 · 함정패턴 집중 과목 &nbsp;|&nbsp; 색상: 퍼플 계열</p>
+</div>
+
+<div id="mindmap">
+
+  <!-- LEFT -->
+  <div id="left">
+
+    <!-- 과목 개요 -->
+    <div class="branch-group" id="g-info">
+      <div class="branch-header" onclick="toggle('g-info')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-info">📋 과목 개요</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node" style="border-color:#16a34a">10파트 · 42개 개념</div>
+        <div class="sub-node" style="border-color:#16a34a">출제: 4지선다 20문항</div>
+        <div class="sub-node" style="border-color:#16a34a">합격선: 40점 이상</div>
+        <div class="sub-node" style="border-color:#16a34a">학습 DNA: <strong>함정패턴</strong></div>
+        <div class="sub-node" style="border-color:#16a34a">동일 함정 매 회 반복 출제</div>
+      </div>
+    </div>
+
+    <!-- 함정패턴 -->
+    <div class="branch-group" id="g-trap">
+      <div class="branch-header" onclick="toggle('g-trap')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-trap">⚠️ 함정패턴 & 빈출 TOP</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 교통구성요소 vs 교통기관요소 혼동</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 임금 = 위생요인 (동기요인 아님)</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 교육(이론) vs 훈련(실기) 반대로 외우기</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> 간접원인 = 교육적 원인</div>
+        <div class="sub-node" style="border-color:#dc2626"><span class="trap">⚠</span> Media = 작업정보·환경 (미디어 아님)</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 하인리히 1:29:300</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 경영학 발전 순서 암기</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> 매슬로우 5단계</div>
+        <div class="sub-node" style="border-color:#d97706"><span class="star">★</span> PDCA 순환 = 운행계획</div>
+      </div>
+    </div>
+
+  </div><!-- /left -->
+
+  <!-- CENTER -->
+  <div style="position:relative; z-index:10; flex-shrink:0;">
+    <div class="center-node" id="centerNode">
+      <div class="c-title">교통안전<br>관리론</div>
+      <div class="c-sub">10파트 · 42개 개념<br>함정패턴 집중</div>
+      <div class="c-badge">VIS-001~021</div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div id="right">
+
+    <!-- PART 1~3 기초 -->
+    <div class="branch-group" id="g-p1">
+      <div class="branch-header" onclick="toggle('g-p1')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-base">📘 PART 1~3. 기초·이론·절차</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-p"><strong>P1.</strong> 교통의 구성요소 · 사고원인 4M · 안전관리 3대 접근</div>
+        <div class="sub-node sn-p"><strong>P2.</strong> 하인리히 1:29:300 · 욕조곡선 · 페일세이프 · PDCA</div>
+        <div class="sub-node sn-p"><strong>P3.</strong> 위험요소 제거 6단계 · 교통안전관리 6단계 · TBM 5단계</div>
+        <div class="sub-node sn-p">&nbsp;&nbsp;&nbsp;&nbsp; ZD운동 3단계 · 안전진단 5단계 · IPDE · PIEV</div>
+      </div>
+    </div>
+
+    <!-- PART 4~6 경영·조직 -->
+    <div class="branch-group" id="g-p2">
+      <div class="branch-header" onclick="toggle('g-p2')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-mgmt">📗 PART 4~6. 경영·조직·동기·교육</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-p"><strong>P4.</strong> 경영학 발전순서 (테일러→페이욜→인간관계론→행동과학)</div>
+        <div class="sub-node sn-p">&nbsp;&nbsp;&nbsp;&nbsp; X·Y이론(맥그리거) · Z이론(오우치) · 조직유형 · 관리층 역할</div>
+        <div class="sub-node sn-p"><strong>P5.</strong> 내용이론 vs 과정이론 · 매슬로우 5단계 · ERG · 2요인이론</div>
+        <div class="sub-node sn-p">&nbsp;&nbsp;&nbsp;&nbsp; 공정성이론(아담스) · MBO</div>
+        <div class="sub-node sn-p"><strong>P6.</strong> 교육 vs 훈련 구분 · OJT vs Off JT · 교수설계 · 인사평가 오류</div>
+      </div>
+    </div>
+
+    <!-- PART 7~8 운전·사고 -->
+    <div class="branch-group" id="g-p3">
+      <div class="branch-header" onclick="toggle('g-p3')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label bl-drive">📙 PART 7~8. 운전특성·사고조사</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-p"><strong>P7.</strong> 시야 · 동체시력 · 순응(명·암) · 정지거리 공식</div>
+        <div class="sub-node sn-p">&nbsp;&nbsp;&nbsp;&nbsp; 마찰계수(μ) · 정상운전 여유시간 · 운전자 특성</div>
+        <div class="sub-node sn-p"><strong>P8.</strong> 사고조사 목적·분류 · 사고요인 배열형 3가지</div>
+        <div class="sub-node sn-p">&nbsp;&nbsp;&nbsp;&nbsp; 분석방법 구분 · 노선(구간) 평가 구간 단위</div>
+      </div>
+    </div>
+
+    <!-- PART 9~10 심리·기타 -->
+    <div class="branch-group" id="g-p4">
+      <div class="branch-header" onclick="toggle('g-p4')">
+        <span class="toggle-icon">▼</span>
+        <span class="branch-label" style="background:#faf5ff; border-color:#a855f7 !important; color:#581c87;">📒 PART 9~10. 심리·기타</span>
+      </div>
+      <div class="sub-nodes">
+        <div class="sub-node sn-p"><strong>P9.</strong> 인지부조화이론 · 준거집단 · 집단갈등 해소 · 색채·시각</div>
+        <div class="sub-node sn-p"><strong>P10.</strong> 평균임금 계산 · 전략계획 vs 전술계획</div>
+        <div class="sub-node sn-p">&nbsp;&nbsp;&nbsp;&nbsp; 합리적 의사결정과정 · 교통안전관리 목표 비해당</div>
+      </div>
+    </div>
+
+  </div><!-- /right -->
+
+</div>
+
+<!-- 범례 -->
+<div class="legend">
+  <div class="legend-title">파트 그룹</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#7c3aed"></div>기초·이론·절차 (P1~3)</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#6d28d9"></div>경영·조직·동기·교육 (P4~6)</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#9333ea"></div>운전특성·사고조사 (P7~8)</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#a855f7"></div>심리·기타 (P9~10)</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#dc2626"></div>함정패턴·빈출 TOP</div>
+</div>
+
+<script>
+function toggle(id) {
+  const g = document.getElementById(id);
+  g.classList.toggle('collapsed');
+  g.querySelector('.toggle-icon').textContent = g.classList.contains('collapsed') ? '▶' : '▼';
+  setTimeout(drawLines, 280);
+}
+function drawLines() {
+  const old = document.getElementById('connector-svg');
+  if (old) old.remove();
+  const mm = document.getElementById('mindmap');
+  const cn = document.getElementById('centerNode');
+  const mmR = mm.getBoundingClientRect();
+  const cnR = cn.getBoundingClientRect();
+  const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.id = 'connector-svg';
+  Object.assign(svg.style,{position:'absolute',top:'0',left:'0',width:'100%',height:'100%',pointerEvents:'none',zIndex:'2'});
+  mm.insertBefore(svg, mm.firstChild);
+  const cx = cnR.left - mmR.left + cnR.width/2;
+  const cy = cnR.top  - mmR.top  + cnR.height/2;
+  const groups = [
+    {id:'g-info', side:'left',  color:'#16a34a'},
+    {id:'g-trap', side:'left',  color:'#dc2626'},
+    {id:'g-p1',   side:'right', color:'#7c3aed'},
+    {id:'g-p2',   side:'right', color:'#6d28d9'},
+    {id:'g-p3',   side:'right', color:'#9333ea'},
+    {id:'g-p4',   side:'right', color:'#a855f7'},
+  ];
+  groups.forEach(({id,side,color}) => {
+    const g = document.getElementById(id);
+    if (!g) return;
+    const lbl = g.querySelector('.branch-label');
+    const lr  = lbl.getBoundingClientRect();
+    const x2  = side==='left' ? lr.right-mmR.left : lr.left-mmR.left;
+    const y2  = lr.top-mmR.top+lr.height/2;
+    const cpx = (cx+x2)/2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',`M ${cx} ${cy} C ${cpx} ${cy}, ${cpx} ${y2}, ${x2} ${y2}`);
+    path.setAttribute('stroke',color);
+    path.setAttribute('stroke-width','2');
+    path.setAttribute('fill','none');
+    path.setAttribute('opacity','0.5');
+    svg.appendChild(path);
+  });
+}
+window.addEventListener('load', ()=>setTimeout(drawLines,120));
+window.addEventListener('resize', drawLines);
+</script>
+</body>
+</html>
