@@ -43,7 +43,7 @@ export default function TheoryPage() {
   const nextId = subjectId < 7 ? subjectId + 1 : null;
 
   return (
-    <div className="flex flex-col h-full overflow-hidden">
+    <div className="flex flex-col flex-1 overflow-hidden min-h-0">
       {/* 상단 바 */}
       <div className="px-4 py-2 flex items-center gap-2 text-sm border-b border-gray-100 bg-white shrink-0">
         {/* 대시보드 링크 */}
