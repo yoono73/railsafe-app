@@ -5,12 +5,15 @@ import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 
 // ── 타입 ──────────────────────────────────────────────────
-type Term = { term: string; plain: string; analogy: string };
+type Term = { term: string; plain: string; analogy?: string; is_core?: boolean };
+type Wall = { number: number; wall: string; solution: string };
 type FoundationStep = { step: number; action: string; duration_min: number };
 
 type EntryGuide = {
   entry_difficulty: 'low' | 'medium' | 'high';
   must_know_terms: Term[];
+  must_know_terms_extended: Term[];
+  three_walls: Wall[];
   why_this_subject: string | null;
   real_world_context: string | null;
   foundation_steps: FoundationStep[];
@@ -125,11 +128,14 @@ export default function GuidePageClient({
   subjects: Subject[];
   strategies: Strategy[];
 }) {
-  const [activeTab, setActiveTab]   = useState(subjects[0]?.id ?? 0);
-  const [flipped, setFlipped]       = useState<Record<number, boolean>>({});
-  const [feedback, setFeedback]     = useState('');
-  const [fbStatus, setFbStatus]     = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
-  const [expandedTerm, setExpandedTerm] = useState<number | null>(null);
+  const [activeTab, setActiveTab]     = useState(subjects[0]?.id ?? 0);
+  const [flipped, setFlipped]         = useState<Record<number, boolean>>({});
+  const [feedback, setFeedback]       = useState('');
+  const [fbStatus, setFbStatus]       = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
+  // 용어 펼침: 'c-0' = core 0번, 'e-1' = extended 1번
+  const [expandedTerm, setExpandedTerm] = useState<string | null>(null);
+  // 추가 용어 섹션 표시 여부 (과목별 초기화)
+  const [showExtended, setShowExtended] = useState<Record<number, boolean>>({});
 
   const dday         = getDday();
   const currentPhase = getCurrentPhase();
@@ -148,6 +154,15 @@ export default function GuidePageClient({
   const currentGuide   = currentSubject?.subject_entry_guides?.[0];
   const currentStrats  = currentType ? (strategyMap[currentType.id] ?? []) : [];
   const typeColor      = TYPE_COLOR[currentType?.code ?? ''] ?? TYPE_COLOR.conceptual;
+
+  function toggleTerm(key: string) {
+    setExpandedTerm(prev => prev === key ? null : key);
+  }
+
+  function toggleExtended(subjectId: number) {
+    setShowExtended(prev => ({ ...prev, [subjectId]: !prev[subjectId] }));
+    setExpandedTerm(null); // 탭 전환 시 초기화
+  }
 
   // ── 피드백 제출 ─────────────────────────────────────────
   async function handleFeedback(e: React.FormEvent) {
@@ -266,7 +281,7 @@ export default function GuidePageClient({
           {subjects.map(s => {
             const color = TYPE_COLOR[s.subject_types?.code ?? ''] ?? TYPE_COLOR.conceptual;
             return (
-              <button key={s.id} onClick={() => setActiveTab(s.id)}
+              <button key={s.id} onClick={() => { setActiveTab(s.id); setExpandedTerm(null); }}
                 className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition ${
                   activeTab === s.id
                     ? 'bg-purple-700 text-white shadow-sm'
@@ -296,45 +311,19 @@ export default function GuidePageClient({
                 )}
               </div>
 
-              {/* 사전 용어 */}
-              {currentGuide && currentGuide.must_know_terms?.length > 0 && (
-                <div className="space-y-2">
-                  <p className="text-xs font-semibold text-gray-600">지금 당장 알아야 할 용어</p>
-                  <div className="grid grid-cols-1 gap-2">
-                    {currentGuide.must_know_terms.map((t, i) => (
-                      <button key={i} onClick={() => setExpandedTerm(expandedTerm === i ? null : i)}
-                        className="bg-white rounded-xl px-4 py-2.5 text-left border border-white hover:border-gray-200 transition w-full">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs font-semibold text-gray-800">{t.term}</span>
-                          <span className="text-[10px] text-gray-400">{expandedTerm === i ? '▲' : '▼'}</span>
-                        </div>
-                        {expandedTerm === i && (
-                          <div className="mt-1.5 space-y-1">
-                            <p className="text-xs text-gray-600">{t.plain}</p>
-                            {t.analogy && (
-                              <p className="text-[11px] text-gray-400 italic">비유: {t.analogy}</p>
-                            )}
-                          </div>
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* 준비 단계 (high 난이도) */}
+              {/* ① 준비 단계 (모든 과목 표시) */}
               {currentGuide && currentGuide.foundation_steps?.length > 0 && (
                 <div className="space-y-1.5">
-                  <p className="text-xs font-semibold text-gray-600">교재 전 준비 단계</p>
+                  <p className="text-xs font-semibold text-gray-600">📋 교재 펼치기 전 준비</p>
                   {currentGuide.foundation_steps.map((step) => (
-                    <div key={step.step} className="flex items-start gap-2 bg-white rounded-xl px-3 py-2 border border-white">
+                    <div key={step.step} className="flex items-start gap-2 bg-white rounded-xl px-3 py-2.5 border border-white shadow-sm">
                       <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${typeColor.bg} ${typeColor.text} flex-shrink-0 mt-0.5`}>
                         {step.step}
                       </span>
                       <div>
                         <p className="text-xs text-gray-700">{step.action}</p>
                         {step.duration_min > 0 && (
-                          <p className="text-[10px] text-gray-400">{step.duration_min}분</p>
+                          <p className="text-[10px] text-gray-400 mt-0.5">⏱️ {step.duration_min}분</p>
                         )}
                       </div>
                     </div>
@@ -342,21 +331,108 @@ export default function GuidePageClient({
                 </div>
               )}
 
-              {/* 첫날 가이드 */}
+              {/* ② 3개의 벽 */}
+              {currentGuide && currentGuide.three_walls?.length > 0 && (
+                <div className="space-y-2">
+                  <p className="text-xs font-semibold text-gray-600">🧱 이 과목의 3개의 벽</p>
+                  {currentGuide.three_walls.map((w) => (
+                    <div key={w.number} className="bg-white rounded-xl border border-white shadow-sm overflow-hidden">
+                      <div className="flex items-start gap-2 px-3 py-2.5">
+                        <span className="text-[10px] font-bold w-5 h-5 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                          {w.number}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs text-gray-700 font-medium">😓 {w.wall}</p>
+                          <p className="text-xs text-green-700 mt-1">
+                            <span className="font-semibold">✅ 해소법:</span> {w.solution}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* ③ 핵심 용어 — 이건 꼭 */}
+              {currentGuide && currentGuide.must_know_terms?.length > 0 && (
+                <div className="space-y-2">
+                  <p className="text-xs font-semibold text-gray-600">
+                    📌 이건 꼭 — 핵심 용어 {currentGuide.must_know_terms.length}개
+                  </p>
+                  <div className="grid grid-cols-1 gap-1.5">
+                    {currentGuide.must_know_terms.map((t, i) => {
+                      const key = `c-${i}`;
+                      return (
+                        <button key={i} onClick={() => toggleTerm(key)}
+                          className="bg-white rounded-xl px-4 py-2.5 text-left border border-white hover:border-gray-200 transition w-full shadow-sm">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-semibold text-gray-800">{t.term}</span>
+                            <span className="text-[10px] text-gray-400">{expandedTerm === key ? '▲' : '▼'}</span>
+                          </div>
+                          {expandedTerm === key && (
+                            <div className="mt-1.5 space-y-1">
+                              <p className="text-xs text-gray-600">{t.plain}</p>
+                              {t.analogy && (
+                                <p className="text-[11px] text-gray-400 italic">비유: {t.analogy}</p>
+                              )}
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* 이것도 알아두면 — 토글 */}
+                  {currentGuide.must_know_terms_extended?.length > 0 && (
+                    <div className="mt-1">
+                      <button
+                        onClick={() => toggleExtended(currentSubject.id)}
+                        className="w-full text-[11px] text-gray-400 hover:text-gray-600 flex items-center gap-1 px-1 py-1 transition">
+                        <span>{showExtended[currentSubject.id] ? '▲' : '▶'}</span>
+                        이것도 알아두면 (+{currentGuide.must_know_terms_extended.length}개)
+                      </button>
+                      {showExtended[currentSubject.id] && (
+                        <div className="grid grid-cols-1 gap-1.5 mt-1.5">
+                          {currentGuide.must_know_terms_extended.map((t, i) => {
+                            const key = `e-${i}`;
+                            return (
+                              <button key={i} onClick={() => toggleTerm(key)}
+                                className="bg-white bg-opacity-60 rounded-xl px-4 py-2 text-left border border-gray-100 hover:border-gray-200 transition w-full">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-xs font-medium text-gray-600">{t.term}</span>
+                                  <span className="text-[10px] text-gray-400">{expandedTerm === key ? '▲' : '▼'}</span>
+                                </div>
+                                {expandedTerm === key && (
+                                  <div className="mt-1.5 space-y-1">
+                                    <p className="text-xs text-gray-500">{t.plain}</p>
+                                    {t.analogy && (
+                                      <p className="text-[11px] text-gray-400 italic">비유: {t.analogy}</p>
+                                    )}
+                                  </div>
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* ④ 첫날 가이드 */}
               {currentGuide?.day_one_guide && (
-                <div className="bg-white rounded-xl px-4 py-2.5 border border-white">
+                <div className="bg-white rounded-xl px-4 py-2.5 border border-white shadow-sm">
                   <p className="text-[10px] font-semibold text-gray-500 mb-1">📅 첫날 학습 순서</p>
                   <p className="text-xs text-gray-700 leading-relaxed">{currentGuide.day_one_guide}</p>
                 </div>
               )}
 
-              {/* 흔한 실수 */}
+              {/* ⑤ 잘못된 패턴 — 모든 과목 필수 */}
               {currentGuide?.common_mistake && (
-                <div className="bg-red-50 rounded-xl px-4 py-2.5 border border-red-100">
-                  <p className="text-xs text-red-700">
-                    <span className="font-semibold">❌ 이렇게 시작하면 안 됩니다</span><br/>
-                    {currentGuide.common_mistake}
-                  </p>
+                <div className="bg-red-50 rounded-xl px-4 py-3 border border-red-100">
+                  <p className="text-[10px] font-bold text-red-600 mb-1">❌ 이렇게 시작하면 안 됩니다</p>
+                  <p className="text-xs text-red-700 leading-relaxed">{currentGuide.common_mistake}</p>
                 </div>
               )}
 

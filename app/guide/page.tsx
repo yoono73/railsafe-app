@@ -18,9 +18,9 @@ export default async function GuidePage() {
       id, name, icon, question_count, display_order, theory_url,
       subject_types ( id, code, name, description ),
       subject_entry_guides (
-        entry_difficulty, must_know_terms, why_this_subject,
-        real_world_context, foundation_steps, prep_days,
-        day_one_guide, common_mistake
+        entry_difficulty, must_know_terms, must_know_terms_extended,
+        three_walls, why_this_subject, real_world_context,
+        foundation_steps, prep_days, day_one_guide, common_mistake
       )
     `)
     .eq('exam_id', exam?.id ?? 0)
