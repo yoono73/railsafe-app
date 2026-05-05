@@ -214,7 +214,7 @@ export default function GuidePageClient({
             <p className="text-sm font-semibold text-purple-800 mb-1">시험 개요</p>
             <p className="text-sm text-gray-700 leading-relaxed">
               <strong>철도교통안전관리자 자격시험</strong>은 국토교통부 주관 철도안전 분야 국가전문자격입니다.
-              필기시험(7과목, {totalQ}문항)을 합격한 후 실무경력 요건을 갖추면 취득합니다.
+              필기시험(6과목, 125문항)을 합격한 후 실무경력 요건을 갖추면 취득합니다.
             </p>
           </div>
           <div>
@@ -233,7 +233,7 @@ export default function GuidePageClient({
       {/* 섹션 2: 출제 비중 바차트 */}
       <section id="s2" className="space-y-3 scroll-mt-6">
         <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2"><span>📊</span> 출제 비중 분석</h2>
-        <p className="text-xs text-gray-400">총 {totalQ}문항 기준</p>
+        <p className="text-xs text-gray-400">앱 수록 {totalQ}문항 기준 (시험 실제 125문항)</p>
         <div className="bg-white border border-gray-100 rounded-2xl p-5 space-y-3 shadow-sm">
           {subjects.map(s => {
             const pct   = Math.round((s.question_count / totalQ) * 100);
