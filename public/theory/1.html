@@ -575,18 +575,30 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-// ===== 전체강의 듣기 =====
+// ===== 전체강의 듣기 (prefetch로 강의 사이 간격 최소화) =====
 var _allAudio = null;
 var _allQueue = [];
 var _allIndex = 0;
 var _allPlaying = false;
+var _allCache = {}; // index -> blobUrl (prefetch 캐시)
+
+function _allBtns() {
+  return [document.getElementById('play-all-btn'), document.getElementById('play-all-desktop')];
+}
+function _allSetLabel(text) {
+  _allBtns().forEach(function(b){ if(b) b.textContent = text; });
+}
+function _allSetPlaying(on) {
+  _allBtns().forEach(function(b){ if(!b) return; on ? b.classList.add('playing') : b.classList.remove('playing'); });
+}
 
 function playAllTTS() {
-  var btn = document.getElementById('play-all-btn');
   if (_allPlaying) {
     if (_allAudio) { _allAudio.pause(); _allAudio = null; }
     _allPlaying = false; _allQueue = []; _allIndex = 0;
-    if (btn) { btn.textContent = '🎧 전체강의'; btn.classList.remove('playing'); }
+    Object.values(_allCache).forEach(function(u){ try{URL.revokeObjectURL(u);}catch(e){} });
+    _allCache = {};
+    _allSetLabel('🎧 전체강의'); _allSetPlaying(false);
     return;
   }
   var eduObj = (typeof EDU1!=='undefined'?EDU1:
@@ -598,32 +610,48 @@ function playAllTTS() {
                 typeof EDU7!=='undefined'?EDU7:{});
   _allQueue = Object.values(eduObj);
   if (!_allQueue.length) return;
-  _allIndex = 0; _allPlaying = true;
-  if (btn) btn.classList.add('playing');
-  playNextAll(btn);
+  _allIndex = 0; _allPlaying = true; _allCache = {};
+  _allSetPlaying(true);
+  // 첫 트랙 + 다음 트랙 미리 로드
+  _allPrefetch(0); _allPrefetch(1);
+  _allPlayNext();
 }
-function playNextAll(btn) {
+
+// index 번 트랙을 백그라운드 fetch해서 캐시에 저장
+function _allPrefetch(idx) {
+  if (idx < 0 || idx >= _allQueue.length || _allCache[idx] !== undefined) return;
+  _allCache[idx] = null; // 로딩 중 표시 (null = 진행중)
+  fetch('/api/tts', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({text:_allQueue[idx], voiceId:'sQ3a15DhENXU8pKTHlcc'})
+  }).then(function(r){ return r.blob(); })
+    .then(function(blob){ _allCache[idx] = URL.createObjectURL(blob); })
+    .catch(function(){ _allCache[idx] = 'error'; });
+}
+
+function _allPlayNext() {
   if (!_allPlaying || _allIndex >= _allQueue.length) {
     _allPlaying = false; _allQueue = []; _allIndex = 0;
-    if (btn) { btn.textContent = '🎧 전체강의'; btn.classList.remove('playing'); }
+    _allSetLabel('🎧 전체강의'); _allSetPlaying(false);
     return;
   }
-  var total = _allQueue.length;
-  var cur = _allIndex + 1;
-  if (btn) btn.textContent = '⏸ ' + cur + '/' + total;
-  fetch('/api/tts', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({text: _allQueue[_allIndex], voiceId:'sQ3a15DhENXU8pKTHlcc'})
-  })
-  .then(function(r){ return r.blob(); })
-  .then(function(blob){
-    var url = URL.createObjectURL(blob);
-    _allAudio = new Audio(url);
+  _allSetLabel('⏸ ' + (_allIndex+1) + '/' + _allQueue.length);
+  // 미리 다음+1, 다음+2 트랙 prefetch
+  _allPrefetch(_allIndex + 1); _allPrefetch(_allIndex + 2);
+
+  function tryPlay() {
+    if (!_allPlaying) return;
+    var cached = _allCache[_allIndex];
+    if (cached === undefined || cached === null) {
+      // 아직 로딩 중 — 50ms 후 재시도
+      setTimeout(tryPlay, 50); return;
+    }
+    if (cached === 'error') { _allIndex++; _allPlayNext(); return; }
+    _allAudio = new Audio(cached);
     _allAudio.play();
-    _allAudio.onended = function(){ _allIndex++; playNextAll(btn); };
-  })
-  .catch(function(){ _allIndex++; playNextAll(btn); });
+    _allAudio.onended = function(){ _allIndex++; _allPlayNext(); };
+  }
+  tryPlay();
 }
 </script>
 
