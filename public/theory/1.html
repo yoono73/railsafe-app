@@ -179,6 +179,69 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
 @media(max-width:900px) {
   .play-all-desktop-btn { display: none; }
 }
+
+/* ===== 프린트 전용 스타일 ===== */
+@media print {
+  /* 화면 전용 요소 숨기기 */
+  .site-header, .toc, #play-all-btn, #toc-toggle-btn,
+  #toc-overlay, #toc-drawer, .tts-edu-btn, .tts-supp-btn,
+  .play-all-desktop-btn, button { display: none !important; }
+
+  /* 레이아웃 단순화 */
+  body { font-size: 10.5pt; background: #fff; color: #000; line-height: 1.6; }
+  .container { display: block; max-width: 100%; }
+  .content { padding: 0; }
+
+  /* 모든 파트 펼치기 */
+  .part-body { display: block !important; }
+
+  /* 파트 제목 색상 유지 */
+  .part-title { background: #444 !important; color: #fff !important;
+    print-color-adjust: exact; -webkit-print-color-adjust: exact;
+    border-radius: 0 !important; font-size: 10.5pt; padding: 6px 12px; }
+  .part-title .arrow { display: none; }
+
+  /* 개념 블록 — 페이지 경계 안 잘림 */
+  .concept { page-break-inside: avoid; break-inside: avoid;
+    border-bottom: 1px solid #ddd; padding-bottom: 8pt; margin-bottom: 6pt; }
+  .concept-title { page-break-after: avoid; break-after: avoid;
+    font-size: 10.5pt; font-weight: bold; }
+
+  /* 표 — 페이지 경계 안 잘림 */
+  table { page-break-inside: avoid; break-inside: avoid;
+    width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 4pt 0; }
+  tr { page-break-inside: avoid; break-inside: avoid; }
+  th { background: #555 !important; color: #fff !important;
+    print-color-adjust: exact; -webkit-print-color-adjust: exact;
+    padding: 4px 8px; }
+  td { padding: 4px 8px; border-bottom: 1px solid #ccc; }
+
+  /* 이미지 — 페이지 경계 안 잘림 */
+  .vis-wrap { page-break-inside: avoid; break-inside: avoid; }
+  img { max-width: 100%; page-break-inside: avoid; break-inside: avoid; }
+
+  /* 경고·팁·단계 박스 */
+  .trap, .tip, .step-box {
+    page-break-inside: avoid; break-inside: avoid;
+    border-left-width: 3px; padding: 5px 10px; margin: 4pt 0; }
+
+  /* PART 시작 전 약간의 여백 */
+  .part { margin-bottom: 10pt; }
+
+  /* 상단 요약바 */
+  .summary-bar { background: #555 !important; color: #fff !important;
+    print-color-adjust: exact; -webkit-print-color-adjust: exact;
+    font-size: 9pt; padding: 5px 10px; border-radius: 0; margin-bottom: 8pt; }
+
+  /* 하이라이트 색상 유지 */
+  .highlight { background: #ff0 !important;
+    print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .cnum { background: #eee !important;
+    print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+
+  /* 페이지 여백 */
+  @page { margin: 15mm 12mm; }
+}
 </style>
 </head>
 <body>
