@@ -43,11 +43,17 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .vis-cap { font-size:.8em; color:#777; margin-top:6px; }
 .summary-bar { background:#1E3A8A; color:#fff; text-align:center; padding:10px; font-size:.85em; margin-bottom:16px; border-radius:8px; }
 .highlight { background:#fff176; border-radius:2px; }
-@media(max-width:768px){ .toc{display:none;} .content{padding:12px 10px 40px;} table{font-size:.82em;} }
+
+  .print-btn { display:inline-flex; align-items:center; gap:4px; background:#fff; color:#4c1d95; border:none; border-radius:6px; padding:5px 12px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:700; margin-left:6px; transition:background .2s; }
+  .print-btn:hover { background:#ede9fe; }
+  @media(max-width:768px){ .toc{display:none;} .content{padding:12px 10px 40px;} table{font-size:.82em;} }
 
 /* 모바일 테이블 가로 스크롤 방지 */
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
-@media(max-width:768px){
+
+  .print-btn { display:inline-flex; align-items:center; gap:4px; background:#fff; color:#4c1d95; border:none; border-radius:6px; padding:5px 12px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:700; margin-left:6px; transition:background .2s; }
+  .print-btn:hover { background:#ede9fe; }
+  @media(max-width:768px){
   .content table { min-width: 480px; }
 }
 
@@ -182,10 +188,13 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 
 /* ===== 프린트 전용 스타일 ===== */
 @media print {
+
+  /* 인쇄 시 overflow 강제 해제 */
+  html, body { overflow: visible !important; height: auto !important; }
   /* 화면 전용 요소 숨기기 */
   .site-header, .toc, #play-all-btn, #toc-toggle-btn,
   #toc-overlay, #toc-drawer, .tts-edu-btn, .tts-supp-btn,
-  .play-all-desktop-btn, button { display: none !important; }
+  .play-all-desktop-btn, .print-btn, button { display: none !important; }
 
   /* 레이아웃 단순화 */
   body { font-size: 10.5pt; background: #fff; color: #000; line-height: 1.6; }
@@ -251,6 +260,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
   <div class="search-bar">
     <input id="q" type="text" placeholder="개념 검색... (Enter)">
     <button onclick="search()">검색</button>
+    <button class="print-btn" onclick="window.print()">🖨️ 인쇄</button>
     <button class="play-all-desktop-btn" id="play-all-desktop" onclick="playAllTTS()">🎧 전체강의</button>
   </div>
 </header>
@@ -276,7 +286,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="part-title" onclick="togglePart(this)">PART 3. 교통안전 계획 체계<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p3-04">
 <div class="concept-title"><span class="cnum">개념 04</span>계획 4종 구조</div>
-<div class="vis-wrap"><img src="images/VIS-022_교통안전계획체계흐름도.jpg" alt="교통안전 계획 4종 체계 흐름도" loading="lazy"><p class="vis-cap">교통안전 계획 4종 체계 흐름도</p></div><div class="step-box">국가교통안전기본계획(5년, 국토교통부장관) → 심의: 국가교통위원회<br>→ 국가교통안전시행계획(매년, 지정행정기관의 장)<br><br>지역교통안전기본계획(5년, 시·도지사)<br>→ 지역교통안전시행계획(매년, 시·도지사 / 시장·군수·구청장)</div><div class="trap">⚠️ 함정 주의: 시행계획 수립의무자: <strong>지정행정기관의 장</strong> (국토교통부장관 ❌)</div>
+<div class="vis-wrap"><img src="images/VIS-022_교통안전계획체계흐름도.jpg" alt="교통안전 계획 4종 체계 흐름도" loading="eager"><p class="vis-cap">교통안전 계획 4종 체계 흐름도</p></div><div class="step-box">국가교통안전기본계획(5년, 국토교통부장관) → 심의: 국가교통위원회<br>→ 국가교통안전시행계획(매년, 지정행정기관의 장)<br><br>지역교통안전기본계획(5년, 시·도지사)<br>→ 지역교통안전시행계획(매년, 시·도지사 / 시장·군수·구청장)</div><div class="trap">⚠️ 함정 주의: 시행계획 수립의무자: <strong>지정행정기관의 장</strong> (국토교통부장관 ❌)</div>
 </div><div class="concept" id="p3-05">
 <div class="concept-title"><span class="cnum">개념 05</span>국가교통안전기본계획 핵심</div>
 <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>수립의무자</td><td><strong>국토교통부장관</strong></td><td>시·도지사 교체</td></tr><tr><td>주기</td><td><strong>5년</strong></td><td>1년·10년 교체</td></tr><tr><td>심의기관</td><td><strong>국가교통위원회</strong></td><td>교통안전위원회 교체</td></tr><tr><td>경미한 변경</td><td>부문별 <strong>100분의 10</strong> 이내</td><td>100분의 30 교체</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>포함사항 O</th><th>포함사항 X</th></tr></thead><tbody><tr><td>교통안전에 관한 <strong>중·장기</strong> 종합정책방향</td><td>단기 종합정책방향 ❌</td></tr><tr><td>교통안전정책의 추진성과 분석·평가</td><td></td></tr><tr><td><strong>연차별</strong> 추진계획</td><td>월별 추진계획 ❌</td></tr><tr><td></td><td>지역교통안전시행계획의 추진상 문제점 ❌</td></tr></tbody></table></div><div class="tip">★ 수립절차: 지침 통보 → 소관별 계획안 제출 → 기본계획안 작성·확정 → 확정계획 통보·공고</div>
@@ -342,7 +352,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="part-title" onclick="togglePart(this)">PART 10. 교통안전도 평가지수<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p10-19">
 <div class="concept-title"><span class="cnum">개념 19</span>가중치 + 부상 기준</div>
-<div class="vis-wrap"><img src="images/VIS-025_교통안전도가중치표.jpg" alt="교통안전도 가중치 + 중상·사망 기준" loading="lazy"><p class="vis-cap">교통안전도 가중치 + 중상·사망 기준</p></div><div class="table-wrap"><table><thead><tr><th>구분</th><th>가중치</th><th>기준</th><th>함정</th></tr></thead><tbody><tr class="hl"><td><strong>사망</strong></td><td><strong>1.0</strong></td><td>사고 발생부터 <strong>30일</strong> 이내 사망</td><td>10일·20일 교체</td></tr><tr class="hl"><td><strong>중상</strong></td><td><strong>0.7</strong></td><td><strong>3주</strong> 이상 치료</td><td>0.5·1.0 / 2주·4주 교체</td></tr><tr><td><strong>경상</strong></td><td><strong>0.3</strong></td><td>3주 미만 치료</td><td>0.1·0.5 교체</td></tr></tbody></table></div>
+<div class="vis-wrap"><img src="images/VIS-025_교통안전도가중치표.jpg" alt="교통안전도 가중치 + 중상·사망 기준" loading="eager"><p class="vis-cap">교통안전도 가중치 + 중상·사망 기준</p></div><div class="table-wrap"><table><thead><tr><th>구분</th><th>가중치</th><th>기준</th><th>함정</th></tr></thead><tbody><tr class="hl"><td><strong>사망</strong></td><td><strong>1.0</strong></td><td>사고 발생부터 <strong>30일</strong> 이내 사망</td><td>10일·20일 교체</td></tr><tr class="hl"><td><strong>중상</strong></td><td><strong>0.7</strong></td><td><strong>3주</strong> 이상 치료</td><td>0.5·1.0 / 2주·4주 교체</td></tr><tr><td><strong>경상</strong></td><td><strong>0.3</strong></td><td>3주 미만 치료</td><td>0.1·0.5 교체</td></tr></tbody></table></div>
 </div><div class="concept" id="p10-20">
 <div class="concept-title"><span class="cnum">개념 20</span>교통안전도 산정식</div>
 <p style='background:#f0f8ff;padding:10px;border-radius:6px;font-weight:bold;font-size:1em;margin:8px 0'>(교통사고 발생건수 × 0.6) + (교통사고 사상자 수 × 0.4) × 자동차등록(면허) 대수</p>
@@ -648,5 +658,17 @@ function _allPlayNext() {
 }
 </script>
 
+<script>
+// 인쇄 전: lazy 이미지 강제 로드 + overflow 해제
+window.onbeforeprint = function() {
+  document.body.style.overflow = '';
+  document.querySelectorAll('img').forEach(function(img) {
+    img.loading = 'eager';
+    if (!img.complete || img.naturalWidth === 0) {
+      var s = img.src; img.src = ''; img.src = s;
+    }
+  });
+};
+</script>
 </body>
 </html>

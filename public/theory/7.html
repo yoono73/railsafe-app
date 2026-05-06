@@ -41,11 +41,17 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .vis-cap { font-size:.8em; color:#777; margin-top:6px; }
 .summary-bar { background:#7f1d1d; color:#fff; text-align:center; padding:10px; font-size:.85em; margin-bottom:16px; border-radius:8px; }
 .highlight { background:#fff176; border-radius:2px; }
-@media(max-width:768px){ .toc{display:none;} .content{padding:12px 10px 40px;} table{font-size:.82em;} }
+
+  .print-btn { display:inline-flex; align-items:center; gap:4px; background:#fff; color:#4c1d95; border:none; border-radius:6px; padding:5px 12px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:700; margin-left:6px; transition:background .2s; }
+  .print-btn:hover { background:#ede9fe; }
+  @media(max-width:768px){ .toc{display:none;} .content{padding:12px 10px 40px;} table{font-size:.82em;} }
 
 /* 모바일 테이블 가로 스크롤 방지 */
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
-@media(max-width:768px){
+
+  .print-btn { display:inline-flex; align-items:center; gap:4px; background:#fff; color:#4c1d95; border:none; border-radius:6px; padding:5px 12px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:700; margin-left:6px; transition:background .2s; }
+  .print-btn:hover { background:#ede9fe; }
+  @media(max-width:768px){
   .content table { min-width: 480px; }
 }
 
@@ -180,10 +186,13 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 
 /* ===== 프린트 전용 스타일 ===== */
 @media print {
+
+  /* 인쇄 시 overflow 강제 해제 */
+  html, body { overflow: visible !important; height: auto !important; }
   /* 화면 전용 요소 숨기기 */
   .site-header, .toc, #play-all-btn, #toc-toggle-btn,
   #toc-overlay, #toc-drawer, .tts-edu-btn, .tts-supp-btn,
-  .play-all-desktop-btn, button { display: none !important; }
+  .play-all-desktop-btn, .print-btn, button { display: none !important; }
 
   /* 레이아웃 단순화 */
   body { font-size: 10.5pt; background: #fff; color: #000; line-height: 1.6; }
@@ -249,6 +258,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
   <div class="search-bar">
     <input id="q" type="text" placeholder="키워드 검색 (예: 90일, 필요적, 청문...)">
     <button onclick="search()">검색</button>
+    <button class="print-btn" onclick="window.print()">🖨️ 인쇄</button>
     <button class="play-all-desktop-btn" id="play-all-desktop" onclick="playAllTTS()">🎧 전체강의</button>
   </div>
 </header>
@@ -754,4 +764,16 @@ function _allPlayNext() {
 }
 </script>
 
+<script>
+// 인쇄 전: lazy 이미지 강제 로드 + overflow 해제
+window.onbeforeprint = function() {
+  document.body.style.overflow = '';
+  document.querySelectorAll('img').forEach(function(img) {
+    img.loading = 'eager';
+    if (!img.complete || img.naturalWidth === 0) {
+      var s = img.src; img.src = ''; img.src = s;
+    }
+  });
+};
+</script>
 </body></html>

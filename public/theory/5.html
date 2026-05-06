@@ -43,11 +43,17 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .vis-cap { font-size:.8em; color:#777; margin-top:6px; }
 .summary-bar { background:#14532D; color:#fff; text-align:center; padding:10px; font-size:.85em; margin-bottom:16px; border-radius:8px; }
 .highlight { background:#fff176; border-radius:2px; }
-@media(max-width:768px){ .toc{display:none;} .content{padding:12px 10px 40px;} table{font-size:.82em;} }
+
+  .print-btn { display:inline-flex; align-items:center; gap:4px; background:#fff; color:#4c1d95; border:none; border-radius:6px; padding:5px 12px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:700; margin-left:6px; transition:background .2s; }
+  .print-btn:hover { background:#ede9fe; }
+  @media(max-width:768px){ .toc{display:none;} .content{padding:12px 10px 40px;} table{font-size:.82em;} }
 
 /* 모바일 테이블 가로 스크롤 방지 */
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
-@media(max-width:768px){
+
+  .print-btn { display:inline-flex; align-items:center; gap:4px; background:#fff; color:#4c1d95; border:none; border-radius:6px; padding:5px 12px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:700; margin-left:6px; transition:background .2s; }
+  .print-btn:hover { background:#ede9fe; }
+  @media(max-width:768px){
   .content table { min-width: 480px; }
 }
 
@@ -182,10 +188,13 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 
 /* ===== 프린트 전용 스타일 ===== */
 @media print {
+
+  /* 인쇄 시 overflow 강제 해제 */
+  html, body { overflow: visible !important; height: auto !important; }
   /* 화면 전용 요소 숨기기 */
   .site-header, .toc, #play-all-btn, #toc-toggle-btn,
   #toc-overlay, #toc-drawer, .tts-edu-btn, .tts-supp-btn,
-  .play-all-desktop-btn, button { display: none !important; }
+  .play-all-desktop-btn, .print-btn, button { display: none !important; }
 
   /* 레이아웃 단순화 */
   body { font-size: 10.5pt; background: #fff; color: #000; line-height: 1.6; }
@@ -251,6 +260,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
   <div class="search-bar">
     <input id="q" type="text" placeholder="개념 검색... (Enter)">
     <button onclick="search()">검색</button>
+    <button class="print-btn" onclick="window.print()">🖨️ 인쇄</button>
     <button class="play-all-desktop-btn" id="play-all-desktop" onclick="playAllTTS()">🎧 전체강의</button>
   </div>
 </header>
@@ -303,10 +313,10 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="part-title" onclick="togglePart(this)">PART 3. 자산·부채·고용 포괄승계<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p3-13">
 <div class="concept-title"><span class="cnum">개념 13</span>자산 포괄승계 전체 구조</div>
-<div class="vis-wrap"><img src="images/VIS-018_포괄승계구조도.jpg" alt="자산 포괄승계 구조도" loading="lazy"><p class="vis-cap">자산 포괄승계 구조도</p></div><div class="table-wrap"><table><thead><tr><th>자산 종류</th><th>승계 주체</th></tr></thead><tbody><tr><td>철도청 시설자산 (건설완료)</td><td>국토교통부장관 이관</td></tr><tr><td>철도청 시설자산 (건설중)</td><td><strong>국가철도공단</strong> 포괄승계</td></tr><tr><td>고속철도건설공단 모든 자산</td><td><strong>국가철도공단</strong> 포괄승계</td></tr><tr class="hl"><td>운영자산</td><td><strong>한국철도공사</strong> 현물출자</td></tr><tr><td>완공 시</td><td>→ 국가귀속</td></tr></tbody></table></div><div class="tip">★ 운영자산 = 한국철도공사 / 시설자산·건설중 = 국가철도공단</div>
+<div class="vis-wrap"><img src="images/VIS-018_포괄승계구조도.jpg" alt="자산 포괄승계 구조도" loading="eager"><p class="vis-cap">자산 포괄승계 구조도</p></div><div class="table-wrap"><table><thead><tr><th>자산 종류</th><th>승계 주체</th></tr></thead><tbody><tr><td>철도청 시설자산 (건설완료)</td><td>국토교통부장관 이관</td></tr><tr><td>철도청 시설자산 (건설중)</td><td><strong>국가철도공단</strong> 포괄승계</td></tr><tr><td>고속철도건설공단 모든 자산</td><td><strong>국가철도공단</strong> 포괄승계</td></tr><tr class="hl"><td>운영자산</td><td><strong>한국철도공사</strong> 현물출자</td></tr><tr><td>완공 시</td><td>→ 국가귀속</td></tr></tbody></table></div><div class="tip">★ 운영자산 = 한국철도공사 / 시설자산·건설중 = 국가철도공단</div>
 </div><div class="concept" id="p3-14">
 <div class="concept-title"><span class="cnum">개념 14</span>부채 포괄승계 구조</div>
-<div class="vis-wrap"><img src="images/VIS-019_주체별역할매핑.jpg" alt="주체별 역할 매핑" loading="lazy"><p class="vis-cap">주체별 역할 매핑</p></div><div class="table-wrap"><table><thead><tr><th>부채 종류</th><th>승계 주체</th><th>인계 시기</th></tr></thead><tbody><tr><td><strong>운영부채</strong></td><td><strong>한국철도공사</strong></td><td>설립등기일</td></tr><tr><td><strong>시설부채</strong></td><td><strong>국가철도공단</strong></td><td>2004년 1월 1일</td></tr><tr class="hl"><td><strong>기타부채</strong></td><td><strong>일반회계</strong></td><td>2004년 1월 1일</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 운영부채 인계 시기 = <strong>설립등기일</strong> (익일 아님)</div><div class="trap">⚠️ 함정 주의: <strong>고정부채</strong> → 철도부채 분류에 없음 (함정)</div>
+<div class="vis-wrap"><img src="images/VIS-019_주체별역할매핑.jpg" alt="주체별 역할 매핑" loading="eager"><p class="vis-cap">주체별 역할 매핑</p></div><div class="table-wrap"><table><thead><tr><th>부채 종류</th><th>승계 주체</th><th>인계 시기</th></tr></thead><tbody><tr><td><strong>운영부채</strong></td><td><strong>한국철도공사</strong></td><td>설립등기일</td></tr><tr><td><strong>시설부채</strong></td><td><strong>국가철도공단</strong></td><td>2004년 1월 1일</td></tr><tr class="hl"><td><strong>기타부채</strong></td><td><strong>일반회계</strong></td><td>2004년 1월 1일</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 운영부채 인계 시기 = <strong>설립등기일</strong> (익일 아님)</div><div class="trap">⚠️ 함정 주의: <strong>고정부채</strong> → 철도부채 분류에 없음 (함정)</div>
 </div><div class="concept" id="p3-15">
 <div class="concept-title"><span class="cnum">개념 15</span>고용 포괄승계</div>
 <p>철도직원 고용 포괄승계: <strong>한국철도공사 + 국가철도공단</strong> 양쪽 모두</p>
@@ -315,7 +325,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="part-title" onclick="togglePart(this)">PART 4. 핵심 숫자·기간<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p4-16">
 <div class="concept-title"><span class="cnum">개념 16</span>전체 숫자 암기표</div>
-<div class="vis-wrap"><img src="images/VIS-020_핵심기간숫자암기표.jpg" alt="핵심 기간·숫자 암기표" loading="lazy"><p class="vis-cap">핵심 기간·숫자 암기표</p></div><div class="table-wrap"><table><thead><tr><th>항목</th><th>숫자/기간</th><th>함정</th></tr></thead><tbody><tr><td>기본계획 수립 주기</td><td><strong>5년</strong></td><td>1년·10년</td></tr><tr><td>위원회 위원</td><td><strong>25인 이내</strong></td><td>20인 교체</td></tr><tr><td>실무위원회 위원</td><td><strong>20인 이내</strong></td><td>25인 교체</td></tr><tr><td>경미한 변경</td><td><strong>1년</strong> 이내</td><td>3년 교체</td></tr><tr class="hl"><td>시행계획 제출</td><td>전년도 <strong>11월말</strong></td><td>12월말 교체</td></tr><tr><td>추진실적 제출</td><td>매년 <strong>2월말</strong></td><td>3월말 교체</td></tr><tr><td>국가부담비용추정서</td><td>매년 <strong>3월말</strong></td><td>2월말 교체</td></tr><tr class="hl"><td>국가부담비용 지급</td><td>매 <strong>반기</strong> <strong>반기 초</strong></td><td>반기말 교체</td></tr><tr><td>정산서 제출</td><td>반기 후 <strong>30일</strong> 이내</td><td>15·60일 교체</td></tr><tr><td>선로계약 최장기간</td><td><strong>5년</strong></td><td>3년 교체</td></tr><tr><td>협의일정 통보</td><td><strong>1월</strong> 이내</td><td>3월 교체</td></tr><tr class="hl"><td>갱신신청 기한</td><td>만료 <strong>10월</strong> 전</td><td>6월 전 교체</td></tr><tr><td>특정노선 폐지 공고</td><td>승인 후 <strong>1월</strong> 이내</td><td>3월 교체</td></tr><tr><td>과태료 의견진술</td><td><strong>10일</strong> 이상</td><td>30일 교체</td></tr><tr><td>최고 벌칙</td><td>3년 이하 징역 / <strong>5천만원</strong></td><td>1억원 교체</td></tr></tbody></table></div>
+<div class="vis-wrap"><img src="images/VIS-020_핵심기간숫자암기표.jpg" alt="핵심 기간·숫자 암기표" loading="eager"><p class="vis-cap">핵심 기간·숫자 암기표</p></div><div class="table-wrap"><table><thead><tr><th>항목</th><th>숫자/기간</th><th>함정</th></tr></thead><tbody><tr><td>기본계획 수립 주기</td><td><strong>5년</strong></td><td>1년·10년</td></tr><tr><td>위원회 위원</td><td><strong>25인 이내</strong></td><td>20인 교체</td></tr><tr><td>실무위원회 위원</td><td><strong>20인 이내</strong></td><td>25인 교체</td></tr><tr><td>경미한 변경</td><td><strong>1년</strong> 이내</td><td>3년 교체</td></tr><tr class="hl"><td>시행계획 제출</td><td>전년도 <strong>11월말</strong></td><td>12월말 교체</td></tr><tr><td>추진실적 제출</td><td>매년 <strong>2월말</strong></td><td>3월말 교체</td></tr><tr><td>국가부담비용추정서</td><td>매년 <strong>3월말</strong></td><td>2월말 교체</td></tr><tr class="hl"><td>국가부담비용 지급</td><td>매 <strong>반기</strong> <strong>반기 초</strong></td><td>반기말 교체</td></tr><tr><td>정산서 제출</td><td>반기 후 <strong>30일</strong> 이내</td><td>15·60일 교체</td></tr><tr><td>선로계약 최장기간</td><td><strong>5년</strong></td><td>3년 교체</td></tr><tr><td>협의일정 통보</td><td><strong>1월</strong> 이내</td><td>3월 교체</td></tr><tr class="hl"><td>갱신신청 기한</td><td>만료 <strong>10월</strong> 전</td><td>6월 전 교체</td></tr><tr><td>특정노선 폐지 공고</td><td>승인 후 <strong>1월</strong> 이내</td><td>3월 교체</td></tr><tr><td>과태료 의견진술</td><td><strong>10일</strong> 이상</td><td>30일 교체</td></tr><tr><td>최고 벌칙</td><td>3년 이하 징역 / <strong>5천만원</strong></td><td>1억원 교체</td></tr></tbody></table></div>
 </div></div>
 </div><div class="part" id="p5">
 <div class="part-title" onclick="togglePart(this)">PART 5. 주요 절차 흐름<span class="arrow">▲</span></div>
@@ -327,7 +337,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="step-box">보상계약 체결 전 → 국토교통부장관 + 기획재정부장관과 <strong>사전협의</strong> → 원인제공자가 체결</div><div class="trap">⚠️ 함정 주의: <strong>보상계약 = 원인제공자</strong>가 체결 (국토교통부장관이 체결하는 것 아님)</div>
 </div><div class="concept" id="p5-19">
 <div class="concept-title"><span class="cnum">개념 19</span>특정노선폐지 절차</div>
-<div class="vis-wrap"><img src="images/VIS-021_특정노선폐지절차.jpg" alt="특정노선폐지 절차 흐름도" loading="lazy"><p class="vis-cap">특정노선폐지 절차 흐름도</p></div><p><strong>신청 사유 4가지:</strong></p><ol style='margin:6px 0 6px 20px'><li>수지균형이 극히 곤란</li><li>보상계약에도 불구하고 적정보상 미이루어진 경우</li><li>원인제공자가 공익서비스비용을 부담하지 않은 경우</li><li>원인제공자가 조정에 <strong>따르지 아니한</strong> 경우</li></ol><div class="table-wrap"><table><thead><tr><th>첨부서류</th><th>기간</th></tr></thead><tbody><tr><td>1일 평균 수요</td><td>과거 <strong>6월</strong> 이상</td></tr><tr><td>회계보고서</td><td>과거 <strong>1년</strong> 이상</td></tr><tr><td>수요 전망</td><td>향후 <strong>5년</strong></td></tr><tr><td>공익서비스비용 규모</td><td>과거 <strong>5년</strong></td></tr></tbody></table></div><div class="step-box">청문 실시 (필수) → 국토교통부장관 승인 → 공고: 승인 후 <strong>1월</strong> 이내</div>
+<div class="vis-wrap"><img src="images/VIS-021_특정노선폐지절차.jpg" alt="특정노선폐지 절차 흐름도" loading="eager"><p class="vis-cap">특정노선폐지 절차 흐름도</p></div><p><strong>신청 사유 4가지:</strong></p><ol style='margin:6px 0 6px 20px'><li>수지균형이 극히 곤란</li><li>보상계약에도 불구하고 적정보상 미이루어진 경우</li><li>원인제공자가 공익서비스비용을 부담하지 않은 경우</li><li>원인제공자가 조정에 <strong>따르지 아니한</strong> 경우</li></ol><div class="table-wrap"><table><thead><tr><th>첨부서류</th><th>기간</th></tr></thead><tbody><tr><td>1일 평균 수요</td><td>과거 <strong>6월</strong> 이상</td></tr><tr><td>회계보고서</td><td>과거 <strong>1년</strong> 이상</td></tr><tr><td>수요 전망</td><td>향후 <strong>5년</strong></td></tr><tr><td>공익서비스비용 규모</td><td>과거 <strong>5년</strong></td></tr></tbody></table></div><div class="step-box">청문 실시 (필수) → 국토교통부장관 승인 → 공고: 승인 후 <strong>1월</strong> 이내</div>
 </div><div class="concept" id="p5-20">
 <div class="concept-title"><span class="cnum">개념 20</span>국가부담비용 처리 흐름</div>
 <div class="step-box">매년 3월말 — 국가부담비용추정서 제출 → 반기 초 지급 (반기마다) → 반기 후 30일 이내 정산서 제출</div>
@@ -636,5 +646,17 @@ function _allPlayNext() {
 }
 </script>
 
+<script>
+// 인쇄 전: lazy 이미지 강제 로드 + overflow 해제
+window.onbeforeprint = function() {
+  document.body.style.overflow = '';
+  document.querySelectorAll('img').forEach(function(img) {
+    img.loading = 'eager';
+    if (!img.complete || img.naturalWidth === 0) {
+      var s = img.src; img.src = ''; img.src = s;
+    }
+  });
+};
+</script>
 </body>
 </html>
