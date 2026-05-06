@@ -594,7 +594,8 @@ function _allPrefetch(idx) {
     .catch(function(){ _allCache[idx] = 'error'; });
 }
 
-// ── 볼륨 부스트 (Web Audio API GainNode) ──
+// ── 볼륨 균일화 (GainNode + DynamicsCompressor) ──
+// 작은 소리 키우고 큰 소리 눌러서 차 오디오에서도 균일하게
 var _audioCtx = null;
 function _playBoosted(url, onended) {
   var audio = new Audio(url);
@@ -602,10 +603,19 @@ function _playBoosted(url, onended) {
     if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (_audioCtx.state === 'suspended') _audioCtx.resume();
     var src = _audioCtx.createMediaElementSource(audio);
+    // 1단계: 전체 볼륨 부스트
     var gain = _audioCtx.createGain();
-    gain.gain.value = 2.5; // 2.5배 부스트 (ElevenLabs 볼륨 편차 보정)
+    gain.gain.value = 3.0;
+    // 2단계: 다이나믹 압축 — 볼륨 편차 자동 보정 (방송 오디오 효과)
+    var comp = _audioCtx.createDynamicsCompressor();
+    comp.threshold.value = -20; // -20dB 이상은 압축
+    comp.knee.value = 30;       // 부드러운 압축 시작
+    comp.ratio.value = 12;      // 12:1 강한 압축 (일정한 출력)
+    comp.attack.value = 0.003;  // 빠른 반응
+    comp.release.value = 0.25;  // 자연스러운 복귀
     src.connect(gain);
-    gain.connect(_audioCtx.destination);
+    gain.connect(comp);
+    comp.connect(_audioCtx.destination);
   } catch(e) { /* 미지원 브라우저 fallback */ }
   audio.play();
   audio.onended = onended;
