@@ -594,6 +594,24 @@ function _allPrefetch(idx) {
     .catch(function(){ _allCache[idx] = 'error'; });
 }
 
+// ── 볼륨 부스트 (Web Audio API GainNode) ──
+var _audioCtx = null;
+function _playBoosted(url, onended) {
+  var audio = new Audio(url);
+  try {
+    if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (_audioCtx.state === 'suspended') _audioCtx.resume();
+    var src = _audioCtx.createMediaElementSource(audio);
+    var gain = _audioCtx.createGain();
+    gain.gain.value = 2.5; // 2.5배 부스트 (ElevenLabs 볼륨 편차 보정)
+    src.connect(gain);
+    gain.connect(_audioCtx.destination);
+  } catch(e) { /* 미지원 브라우저 fallback */ }
+  audio.play();
+  audio.onended = onended;
+  return audio;
+}
+
 function _allPlayNext() {
   if (!_allPlaying || _allIndex >= _allQueue.length) {
     _allPlaying = false; _allQueue = []; _allIndex = 0;
@@ -601,21 +619,17 @@ function _allPlayNext() {
     return;
   }
   _allSetLabel('⏸ ' + (_allIndex+1) + '/' + _allQueue.length);
-  // 미리 다음+1 트랙 prefetch
+  // 미리 다음+1, 다음+2 트랙 prefetch
   _allPrefetch(_allIndex + 1); _allPrefetch(_allIndex + 2);
 
-  // 캐시 준비 여부에 따라 즉시 재생 or 폴링
   function tryPlay() {
     if (!_allPlaying) return;
     var cached = _allCache[_allIndex];
     if (cached === undefined || cached === null) {
-      // 아직 로딩 중 — 50ms 후 재시도
       setTimeout(tryPlay, 50); return;
     }
     if (cached === 'error') { _allIndex++; _allPlayNext(); return; }
-    _allAudio = new Audio(cached);
-    _allAudio.play();
-    _allAudio.onended = function(){ _allIndex++; _allPlayNext(); };
+    _allAudio = _playBoosted(cached, function(){ _allIndex++; _allPlayNext(); });
   }
   tryPlay();
 }
