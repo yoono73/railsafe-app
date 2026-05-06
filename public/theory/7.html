@@ -208,9 +208,8 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
     border-radius: 0 !important; font-size: 10.5pt; padding: 6px 12px; }
   .part-title .arrow { display: none; }
 
-  /* 개념 블록 — 페이지 경계 안 잘림 */
-  .concept { page-break-inside: avoid; break-inside: avoid;
-    border-bottom: 1px solid #ddd; padding-bottom: 8pt; margin-bottom: 6pt; }
+  /* 개념 블록 — 페이지 넘어가도 됨 (표·이미지만 안 잘림) */
+  .concept { border-bottom: 1px solid #ddd; padding-bottom: 8pt; margin-bottom: 6pt; }
   .concept-title { page-break-after: avoid; break-after: avoid;
     font-size: 10.5pt; font-weight: bold; }
 
