@@ -137,6 +137,8 @@ export default function GuidePageClient({
   // 추가 용어 섹션 표시 여부 (과목별 초기화)
   const [showExtended, setShowExtended] = useState<Record<number, boolean>>({});
   // 3층 학습법 더 보기 (과목별)
+  // 현재 과목 인쇄
+  const handlePrintSubject = () => { window.print(); };
   const [showMoreStrats, setShowMoreStrats] = useState<Record<number, boolean>>({});
 
   const dday         = getDday();
@@ -294,10 +296,28 @@ export default function GuidePageClient({
 
       {/* ── 섹션 4: 과목별 전략 (4층 구조) ── */}
       <section id="s4" className="space-y-4 scroll-mt-6">
-        <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2"><span>📚</span> 과목별 학습 전략</h2>
+        <style>{`
+          @media print {
+            @page { size: A4 portrait; margin: 12mm; }
+            body > *, [data-sidebar], nav, header, aside { display: none !important; }
+            #s4 { display: block !important; }
+            .no-print { display: none !important; }
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
+        `}</style>
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2"><span>📚</span> 과목별 학습 전략</h2>
+          <button
+            onClick={handlePrintSubject}
+            className="no-print bg-purple-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl hover:bg-purple-800 transition"
+          >
+            🖨️ 현재 과목 인쇄
+          </button>
+        </div>
 
         {/* 탭 버튼 */}
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1.5 no-print">
           {subjects.map(s => {
             const color = TYPE_COLOR[s.subject_types?.code ?? ''] ?? TYPE_COLOR.conceptual;
             return (
