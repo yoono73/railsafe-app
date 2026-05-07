@@ -670,28 +670,49 @@ function _allPrefetch(idx) {
 // ── 볼륨 균일화 (GainNode + DynamicsCompressor) ──
 // 작은 소리 키우고 큰 소리 눌러서 차 오디오에서도 균일하게
 var _audioCtx = null;
+// 차 블루투스 환경에서 AudioContext suspend 자동 복구
+function _ensureCtx() {
+  if (!_audioCtx) {
+    _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    _audioCtx.onstatechange = function() {
+      if (_audioCtx.state === 'suspended') _audioCtx.resume();
+    };
+  }
+  return _audioCtx.state === 'suspended' ? _audioCtx.resume() : Promise.resolve();
+}
+document.addEventListener('visibilitychange', function() {
+  if (_audioCtx && _audioCtx.state === 'suspended') _audioCtx.resume();
+});
 function _playBoosted(url, onended) {
   var audio = new Audio(url);
-  try {
-    if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if (_audioCtx.state === 'suspended') _audioCtx.resume();
-    var src = _audioCtx.createMediaElementSource(audio);
-    // 1단계: 전체 볼륨 부스트
-    var gain = _audioCtx.createGain();
-    gain.gain.value = 3.0;
-    // 2단계: 다이나믹 압축 — 볼륨 편차 자동 보정 (방송 오디오 효과)
-    var comp = _audioCtx.createDynamicsCompressor();
-    comp.threshold.value = -20; // -20dB 이상은 압축
-    comp.knee.value = 30;       // 부드러운 압축 시작
-    comp.ratio.value = 12;      // 12:1 강한 압축 (일정한 출력)
-    comp.attack.value = 0.003;  // 빠른 반응
-    comp.release.value = 0.25;  // 자연스러운 복귀
-    src.connect(gain);
-    gain.connect(comp);
-    comp.connect(_audioCtx.destination);
-  } catch(e) { /* 미지원 브라우저 fallback */ }
-  audio.play();
-  audio.onended = onended;
+  var graph = null;
+  _ensureCtx().then(function() {
+    try {
+      var src  = _audioCtx.createMediaElementSource(audio);
+      var gain = _audioCtx.createGain();
+      gain.gain.value = 3.0;                // 볼륨 유지
+      var comp = _audioCtx.createDynamicsCompressor();
+      comp.threshold.value = -10;           // 피크만 잡음 (펌핑 방지)
+      comp.knee.value      = 6;
+      comp.ratio.value     = 4;             // 12→4: 차량 dropout 원인 제거
+      comp.attack.value    = 0.003;
+      comp.release.value   = 0.08;
+      var makeup = _audioCtx.createGain();
+      makeup.gain.value = 1.7;              // 완화된 ratio 보상
+      src.connect(gain); gain.connect(comp);
+      comp.connect(makeup); makeup.connect(_audioCtx.destination);
+      graph = { src: src, gain: gain, comp: comp, makeup: makeup };
+    } catch(e) {}
+    audio.play().catch(function() { _cleanup(); onended && onended(); });
+  });
+  function _cleanup() {
+    if (!graph) return;
+    try { graph.makeup.disconnect(); graph.comp.disconnect();
+          graph.gain.disconnect(); graph.src.disconnect(); } catch(e) {}
+    graph = null;
+  }
+  audio.onended  = function() { _cleanup(); onended && onended(); };
+  audio.onerror  = function() { _cleanup(); onended && onended(); };
   return audio;
 }
 
@@ -703,7 +724,7 @@ function _allPlayNext() {
   }
   _allSetLabel('⏸ ' + (_allIndex+1) + '/' + _allQueue.length);
   // 미리 다음+1, 다음+2 트랙 prefetch
-  _allPrefetch(_allIndex + 1); _allPrefetch(_allIndex + 2);
+  _allPrefetch(_allIndex + 1); _allPrefetch(_allIndex + 2); _allPrefetch(_allIndex + 3);
 
   function tryPlay() {
     if (!_allPlaying) return;
