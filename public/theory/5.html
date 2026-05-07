@@ -565,6 +565,7 @@ function playAllTTS() {
     Object.values(_allCache).forEach(function(u){ try{URL.revokeObjectURL(u);}catch(e){} });
     _allCache = {};
     _allSetLabel('🎧 전체강의'); _allSetPlaying(false);
+    _stopKeepAlive();
     return;
   }
   var eduObj = (typeof EDU1!=='undefined'?EDU1:
@@ -580,7 +581,7 @@ function playAllTTS() {
   _allSetPlaying(true);
   // 첫 트랙 + 다음 트랙 미리 로드
   _allPrefetch(0); _allPrefetch(1);
-  _allPlayNext();
+  _ensureCtx().then(function() { _startKeepAlive(); _allPlayNext(); });
 }
 
 // index 번 트랙을 백그라운드 fetch해서 캐시에 저장
@@ -611,6 +612,23 @@ function _ensureCtx() {
 document.addEventListener('visibilitychange', function() {
   if (_audioCtx && _audioCtx.state === 'suspended') _audioCtx.resume();
 });
+var _keepAliveNode = null;
+function _startKeepAlive() {
+  if (_keepAliveNode || !_audioCtx) return;
+  try {
+    var osc = _audioCtx.createOscillator();
+    var g   = _audioCtx.createGain();
+    osc.frequency.value = 20; g.gain.value = 0.00001; // 20Hz 극소음 — A2DP 스트림 유지용
+    osc.connect(g); g.connect(_audioCtx.destination);
+    osc.start();
+    _keepAliveNode = { osc: osc, gain: g };
+  } catch(e) {}
+}
+function _stopKeepAlive() {
+  if (!_keepAliveNode) return;
+  try { _keepAliveNode.osc.stop(); _keepAliveNode.gain.disconnect(); } catch(e) {}
+  _keepAliveNode = null;
+}
 function _playBoosted(url, onended) {
   var audio = new Audio(url);
   var graph = null;
