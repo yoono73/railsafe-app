@@ -116,6 +116,26 @@ body {
 .legend-title { font-weight: bold; color: #64748b; margin-bottom: 6px; }
 .legend-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; color: #475569; }
 .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ===== 인쇄 CSS ===== */
+@media print {
+  @page { size: A4 portrait; margin: 8mm; }
+  body { background: #fff !important; }
+  .print-btn { display: none !important; }
+  .legend { position: static !important; margin: 0 auto; box-shadow: none !important; }
+  #mindmap {
+    transform-origin: top center;
+    transform: scale(0.62);
+    margin-top: -120px;
+    min-width: unset !important;
+    page-break-inside: avoid;
+  }
+  .branch-group .sub-nodes { display: flex !important; }
+  .collapsed .sub-nodes { display: flex !important; }
+  .toggle-icon { display: none !important; }
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
 </style>
 </head>
 <body>
@@ -123,6 +143,9 @@ body {
 <div class="header">
   <h1>③ 열차운전 — 과목 마인드맵</h1>
   <p>6파트 · 폐색·신호·운전이론 핵심 수치 암기 &nbsp;|&nbsp; 색상: 앰버 계열</p>
+<div style="text-align:center;padding:6px 0 2px;">
+  <button onclick="window.print()" style="background:#4c1d95;color:#fff;border:none;border-radius:6px;padding:6px 18px;font-size:13px;cursor:pointer;font-family:inherit;font-weight:600;">🖨️ 인쇄</button>
+</div>
 </div>
 
 <div id="mindmap">
@@ -289,6 +312,13 @@ function drawLines() {
 }
 window.addEventListener('load', drawLines);
 window.addEventListener('resize', drawLines);
+</script>
+<script>
+window.onbeforeprint = function() {
+  document.querySelectorAll('.branch-group').forEach(function(g) {
+    g.classList.remove('collapsed');
+  });
+};
 </script>
 </body>
 </html>
