@@ -185,6 +185,7 @@ export default function TopicMapPage() {
   const router = useRouter();
   const [openSubject, setOpenSubject] = useState<number | null>(1);
   const [openTier, setOpenTier] = useState<Record<number, string>>({ 1: 'tier1' });
+  const [printMode, setPrintMode] = useState(false);
 
   const toggleSubject = (id: number) => {
     setOpenSubject(prev => prev === id ? null : id);
@@ -197,22 +198,49 @@ export default function TopicMapPage() {
     }));
   };
 
+  const handlePrint = () => {
+    setPrintMode(true);
+    setTimeout(() => {
+      window.print();
+      setPrintMode(false);
+    }, 200);
+  };
+
   return (
     <div className="min-h-full bg-purple-50">
+      <style>{`
+        @media print {
+          @page { size: A4 portrait; margin: 10mm; }
+          nav, header, aside, [data-sidebar], .no-print { display: none !important; }
+          body { background: #fff !important; }
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      `}</style>
       <div className="max-w-2xl mx-auto px-4 py-6">
         {/* 안내 배너 */}
         <div className="bg-purple-900 text-white rounded-2xl p-5 mb-6">
-          <p className="font-bold text-base mb-1">시험 전 반드시 확인하세요</p>
-          <p className="text-xs text-purple-200 leading-relaxed">
-            기출 분석 기반으로 출제 빈도순 정리했어요.<br/>
-            🔴 Tier 1 → 🟡 Tier 2 → 🟢 Tier 3 순으로 학습하세요.
-          </p>
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="font-bold text-base mb-1">시험 전 반드시 확인하세요</p>
+              <p className="text-xs text-purple-200 leading-relaxed">
+                기출 분석 기반으로 출제 빈도순 정리했어요.<br/>
+                🔴 Tier 1 → 🟡 Tier 2 → 🟢 Tier 3 순으로 학습하세요.
+              </p>
+            </div>
+            <button
+              onClick={handlePrint}
+              className="no-print shrink-0 bg-white text-purple-900 font-bold text-xs px-3 py-2 rounded-xl hover:bg-purple-100 transition"
+            >
+              🖨️ 인쇄
+            </button>
+          </div>
         </div>
 
         {/* 과목별 아코디언 */}
         <div className="space-y-3">
           {SUBJECTS.map((subject) => {
-            const isOpen = openSubject === subject.id;
+            const isOpen = printMode || openSubject === subject.id;
             const tier1Count = subject.tier1.length;
             const totalCount = subject.tier1.length + subject.tier2.length + subject.tier3.length;
 
@@ -252,7 +280,7 @@ export default function TopicMapPage() {
                     <div className="space-y-2 mt-1">
                       {TIER_CONFIG.map((tier) => {
                         const items = subject[tier.key];
-                        const isTierOpen = openTier[subject.id] === tier.key;
+                        const isTierOpen = printMode || openTier[subject.id] === tier.key;
 
                         return (
                           <div key={tier.key} className={`rounded-xl border ${tier.border} overflow-hidden`}>
