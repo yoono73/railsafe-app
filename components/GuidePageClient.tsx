@@ -299,8 +299,9 @@ export default function GuidePageClient({
         <style>{`
           @media print {
             @page { size: A4 portrait; margin: 12mm; }
-            body > *, [data-sidebar], nav, header, aside { display: none !important; }
-            #s4 { display: block !important; }
+            body * { visibility: hidden; }
+            #s4, #s4 * { visibility: visible; }
+            #s4 { position: fixed; top: 0; left: 0; width: 100%; }
             .no-print { display: none !important; }
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;

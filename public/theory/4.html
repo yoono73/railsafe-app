@@ -14,11 +14,11 @@ body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#f5f7f
 .search-bar input { flex:1; padding:3px 10px; border-radius:6px; border:none; font-size:.9em; font-family:inherit; }
 .search-bar button { padding:3px 10px; background:#fff; color:#78350f; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:.85em; }
 .container { display:flex; max-width:1200px; margin:0 auto; }
-.toc { width:200px; flex-shrink:0; padding:20px 12px; position:sticky; top:54px; height:calc(100vh - 54px); overflow-y:auto; font-size:.82em; }
+.toc { width:160px; flex-shrink:0; padding:20px 10px; position:sticky; top:54px; height:calc(100vh - 54px); overflow-y:auto; font-size:.80em; }
 .toc h2 { font-size:.95em; color:#555; margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid #ddd; }
 .toc ul { list-style:none; }
 .toc li { margin:3px 0; }
-.toc a { color:#444; text-decoration:none; display:block; padding:3px 6px; border-radius:4px; transition:background .15s; }
+.toc a { color:#444; text-decoration:none; display:block; padding:3px 6px; border-radius:4px; transition:background .15s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .toc a:hover { background:#fef3c7; color:#78350f; }
 .toc .toc-part { font-weight:bold; color:#78350f; margin-top:10px; font-size:.88em; }
 .content { flex:1; padding:20px 20px 60px; min-width:0; }
@@ -46,7 +46,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 
   .print-btn { display:inline-flex; align-items:center; gap:4px; background:#fff; color:#4c1d95; border:none; border-radius:6px; padding:5px 12px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:700; margin-left:6px; transition:background .2s; }
   .print-btn:hover { background:#ede9fe; }
-  @media(min-width:1400px){ .container{ max-width:1440px; } .toc{ width:180px; } .content{ min-width:0; } }
+  @media(min-width:1400px){ .container{ max-width:1440px; } .toc{ width:160px; } .content{ min-width:0; } }
   @media(max-width:768px){ .toc{display:none;} .content{padding:12px 10px 40px;} table{font-size:.82em;} }
 
 /* 모바일 테이블 가로 스크롤 방지 */

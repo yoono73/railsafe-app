@@ -133,14 +133,11 @@ body {
 
 /* ===== 인쇄 CSS ===== */
 @media print {
-  @page { size: A4 portrait; margin: 8mm; }
-  body { background: #fff !important; }
-  .print-btn { display: none !important; }
+  @page { size: A4 portrait; margin: 6mm; }
+  body { background: #fff !important; zoom: 0.58; }
+  .print-btn, .header button { display: none !important; }
   .legend { position: static !important; margin: 0 auto; box-shadow: none !important; }
   #mindmap {
-    transform-origin: top center;
-    transform: scale(0.62);
-    margin-top: -120px;
     min-width: unset !important;
     page-break-inside: avoid;
   }
@@ -157,9 +154,7 @@ body {
 <div class="header">
   <h1>② 교통안전법 — 과목 마인드맵</h1>
   <p>12파트 · 숫자&amp;주기 암기 · 주체-행위 매핑 집중 &nbsp;|&nbsp; 색상: 네이비 계열</p>
-<div style="text-align:center;padding:6px 0 2px;">
-  <button onclick="window.print()" style="background:#4c1d95;color:#fff;border:none;border-radius:6px;padding:6px 18px;font-size:13px;cursor:pointer;font-family:inherit;font-weight:600;">🖨️ 인쇄</button>
-</div>
+<button onclick="window.print()" class="print-btn" style="position:absolute;top:12px;right:16px;background:#4c1d95;color:#fff;border:none;border-radius:6px;padding:5px 14px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600;">🖨️ 인쇄</button>
 </div>
 
 <div id="mindmap">
