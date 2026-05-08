@@ -638,7 +638,7 @@ function playAllTTS() {
     Object.values(_allCache).forEach(function(u){ try{URL.revokeObjectURL(u);}catch(e){} });
     _allCache = {};
     _allSetLabel('🎧 전체강의'); _allSetPlaying(false);
-    _stopKeepAlive();
+    _stopKeepAlive(); _stopHeartbeat();
     return;
   }
   var eduObj = (typeof EDU1!=='undefined'?EDU1:
@@ -654,7 +654,7 @@ function playAllTTS() {
   _allSetPlaying(true);
   // 첫 트랙 + 다음 트랙 미리 로드
   _allPrefetch(0); _allPrefetch(1);
-  _ensureCtx().then(function() { _startKeepAlive(); _allPlayNext(); });
+  _ensureCtx().then(function() { _startKeepAlive(); _startHeartbeat(); _allPlayNext(); });
 }
 
 // index 번 트랙을 백그라운드 fetch해서 캐시에 저장
@@ -702,6 +702,18 @@ function _stopKeepAlive() {
   try { _keepAliveNode.osc.stop(); _keepAliveNode.gain.disconnect(); } catch(e) {}
   _keepAliveNode = null;
 }
+// 500ms 박동 — 재생 중 AudioContext 일시정지 즉시 복구 (블루투스 mid-track 끊김 방지)
+var _heartbeatTimer = null;
+function _startHeartbeat() {
+  if (_heartbeatTimer) return;
+  _heartbeatTimer = setInterval(function() {
+    if (!_audioCtx || !_allPlaying) return;
+    if (_audioCtx.state === 'suspended') _audioCtx.resume();
+  }, 500);
+}
+function _stopHeartbeat() {
+  if (_heartbeatTimer) { clearInterval(_heartbeatTimer); _heartbeatTimer = null; }
+}
 function _playBoosted(url, onended) {
   var audio = new Audio(url);
   var graph = null;
@@ -713,11 +725,11 @@ function _playBoosted(url, onended) {
       var comp = _audioCtx.createDynamicsCompressor();
       comp.threshold.value = -10;           // 피크만 잡음 (펌핑 방지)
       comp.knee.value      = 6;
-      comp.ratio.value     = 4;             // 12→4: 차량 dropout 원인 제거
+      comp.ratio.value     = 8;             // 8: 피크 억제로 차량 AGC 안정화
       comp.attack.value    = 0.003;
       comp.release.value   = 0.08;
       var makeup = _audioCtx.createGain();
-      makeup.gain.value = 1.7;              // 완화된 ratio 보상
+      makeup.gain.value = 1.3;              // ratio 8 보상 (volume 유지)
       src.connect(gain); gain.connect(comp);
       comp.connect(makeup); makeup.connect(_audioCtx.destination);
       graph = { src: src, gain: gain, comp: comp, makeup: makeup };
@@ -730,6 +742,16 @@ function _playBoosted(url, onended) {
           graph.gain.disconnect(); graph.src.disconnect(); } catch(e) {}
     graph = null;
   }
+  // 차량 AVRCP가 pause 명령을 보내면 Audio 엘리먼트가 pause됨 → 자동 복구
+  audio.onpause = function() {
+    if (!_allPlaying || audio.ended) return;
+    var _ref = audio;
+    setTimeout(function() {
+      if (_allPlaying && _ref.paused && !_ref.ended) {
+        _ensureCtx().then(function() { _ref.play().catch(function(){}); });
+      }
+    }, 300);
+  };
   audio.onended  = function() { _cleanup(); onended && onended(); };
   audio.onerror  = function() { _cleanup(); onended && onended(); };
   return audio;
@@ -739,6 +761,7 @@ function _allPlayNext() {
   if (!_allPlaying || _allIndex >= _allQueue.length) {
     _allPlaying = false; _allQueue = []; _allIndex = 0;
     _allSetLabel('🎧 전체강의'); _allSetPlaying(false);
+    _stopHeartbeat();
     return;
   }
   _allSetLabel('⏸ ' + (_allIndex+1) + '/' + _allQueue.length);
