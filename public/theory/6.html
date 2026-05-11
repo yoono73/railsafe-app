@@ -717,6 +717,18 @@ function _stopHeartbeat() {
 function _playBoosted(url, onended) {
   var audio = new Audio(url);
   var graph = null;
+  var _progressTimer = null;
+  var _lastCT = -1, _stuckTicks = 0;
+
+  function _cleanup() {
+    if (_progressTimer) { clearInterval(_progressTimer); _progressTimer = null; }
+    if (!graph) return;
+    try { graph.makeup.disconnect(); graph.comp.disconnect();
+          graph.gain.disconnect(); graph.src.disconnect(); } catch(e) {}
+    graph = null;
+  }
+  function _done() { _cleanup(); onended && onended(); }
+
   _ensureCtx().then(function() {
     try {
       var src  = _audioCtx.createMediaElementSource(audio);
@@ -734,26 +746,45 @@ function _playBoosted(url, onended) {
       comp.connect(makeup); makeup.connect(_audioCtx.destination);
       graph = { src: src, gain: gain, comp: comp, makeup: makeup };
     } catch(e) {}
-    audio.play().catch(function() { _cleanup(); onended && onended(); });
+    audio.play().catch(function() { _done(); });
+
+    // 진행 감시 — 2초마다 currentTime 체크, 14초간 멈추면 다음 트랙 강제 진행
+    // (onended가 영원히 안 오는 차량 BT 환경 대응)
+    _progressTimer = setInterval(function() {
+      if (!_allPlaying || audio.ended) { _cleanup(); return; }
+      if (!audio.paused) {
+        if (audio.currentTime === _lastCT) {
+          _stuckTicks++;
+          if (_stuckTicks >= 7) { // 14s 이상 currentTime 정체 → 강제 이동
+            try { audio.pause(); } catch(e) {}
+            _done();
+          }
+        } else { _lastCT = audio.currentTime; _stuckTicks = 0; }
+      } else {
+        _stuckTicks = 0; // paused 상태면 카운터 리셋 (onpause 핸들러가 처리 중)
+      }
+    }, 2000);
   });
-  function _cleanup() {
-    if (!graph) return;
-    try { graph.makeup.disconnect(); graph.comp.disconnect();
-          graph.gain.disconnect(); graph.src.disconnect(); } catch(e) {}
-    graph = null;
-  }
-  // 차량 AVRCP가 pause 명령을 보내면 Audio 엘리먼트가 pause됨 → 자동 복구
+
+  // 차량 AVRCP pause → 최대 5회 재시도로 자동 복구
+  // (play() 가 "interrupted by pause" 오류로 실패할 때 재시도 없이 포기하는 버그 수정)
   audio.onpause = function() {
     if (!_allPlaying || audio.ended) return;
-    var _ref = audio;
-    setTimeout(function() {
-      if (_allPlaying && _ref.paused && !_ref.ended) {
-        _ensureCtx().then(function() { _ref.play().catch(function(){}); });
-      }
-    }, 300);
+    var _ref = audio, _tries = 0;
+    function _resume() {
+      if (!_allPlaying || _ref.ended || !_ref.paused) return;
+      _ensureCtx().then(function() {
+        _ref.play().catch(function() {
+          _tries++;
+          if (_tries < 5) setTimeout(_resume, 300 + _tries * 100);
+          // 5회 모두 실패하면 진행 감시가 14s 후 강제 이동시킴
+        });
+      });
+    }
+    setTimeout(_resume, 200);
   };
-  audio.onended  = function() { _cleanup(); onended && onended(); };
-  audio.onerror  = function() { _cleanup(); onended && onended(); };
+  audio.onended = function() { _done(); };
+  audio.onerror = function() { _done(); };
   return audio;
 }
 
