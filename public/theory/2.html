@@ -559,6 +559,7 @@ var _allQueue = [];
 var _allIndex = 0;
 var _allPlaying = false;
 var _allCache = {}; // index -> blobUrl (prefetch 캐시)
+var _warmupTimer = null; // BT A2DP 워밍업 타이머
 
 function _allBtns() {
   return [document.getElementById('play-all-btn'), document.getElementById('play-all-desktop')];
@@ -578,6 +579,7 @@ function playAllTTS() {
     _allCache = {};
     _allSetLabel('🎧 전체강의'); _allSetPlaying(false);
     _stopKeepAlive(); _stopHeartbeat();
+    if (_warmupTimer) { clearTimeout(_warmupTimer); _warmupTimer = null; }
     return;
   }
   var eduObj = (typeof EDU1!=='undefined'?EDU1:
@@ -593,7 +595,7 @@ function playAllTTS() {
   _allSetPlaying(true);
   // 첫 트랙 + 다음 트랙 미리 로드
   _allPrefetch(0); _allPrefetch(1);
-  _ensureCtx().then(function() { _startKeepAlive(); _startHeartbeat(); _allPlayNext(); });
+  _ensureCtx().then(function() { _startKeepAlive(); _startHeartbeat(); _warmupTimer = setTimeout(function() { _warmupTimer = null; _allPlayNext(); }, 700); });
 }
 
 // index 번 트랙을 백그라운드 fetch해서 캐시에 저장
@@ -630,7 +632,7 @@ function _startKeepAlive() {
   try {
     var osc = _audioCtx.createOscillator();
     var g   = _audioCtx.createGain();
-    osc.frequency.value = 20; g.gain.value = 0.00001; // 20Hz 극소음 — A2DP 스트림 유지용
+    osc.frequency.value = 150; g.gain.value = 0.00001; // 150Hz 극소음 — A2DP 스트림 유지용 (BT cold-start 대응)
     osc.connect(g); g.connect(_audioCtx.destination);
     osc.start();
     _keepAliveNode = { osc: osc, gain: g };
@@ -731,7 +733,7 @@ function _allPlayNext() {
   if (!_allPlaying || _allIndex >= _allQueue.length) {
     _allPlaying = false; _allQueue = []; _allIndex = 0;
     _allSetLabel('🎧 전체강의'); _allSetPlaying(false);
-    _stopHeartbeat();
+    _stopHeartbeat(); _stopKeepAlive();
     return;
   }
   _allSetLabel('⏸ ' + (_allIndex+1) + '/' + _allQueue.length);
