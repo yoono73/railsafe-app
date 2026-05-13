@@ -38,9 +38,12 @@ export async function POST(request: NextRequest) {
 
     if (existing) {
       const buffer = await existing.arrayBuffer();
+      const kb = Math.round(buffer.byteLength / 1024);
+      console.log(`[TTS] CACHE HIT key=${cacheKey} size=${kb}KB text_len=${text.length}`);
       return new NextResponse(buffer, {
         headers: {
           'Content-Type': 'audio/mpeg',
+          'Content-Length': String(buffer.byteLength),
           'Cache-Control': 'public, max-age=31536000',
           'X-Cache': 'HIT',
         },
@@ -77,6 +80,8 @@ export async function POST(request: NextRequest) {
     }
 
     const audioBuffer = await response.arrayBuffer();
+    const kb = Math.round(audioBuffer.byteLength / 1024);
+    console.log(`[TTS] CACHE MISS key=${cacheKey} size=${kb}KB text_len=${text.length}`);
 
     // ── 3. Supabase Storage에 저장 (비동기, 실패해도 응답은 정상) ──
     supabase.storage
@@ -90,6 +95,7 @@ export async function POST(request: NextRequest) {
     return new NextResponse(audioBuffer, {
       headers: {
         'Content-Type': 'audio/mpeg',
+        'Content-Length': String(audioBuffer.byteLength),
         'Cache-Control': 'public, max-age=31536000',
         'X-Cache': 'MISS',
       },
