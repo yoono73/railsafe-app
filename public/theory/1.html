@@ -709,6 +709,30 @@ function _allPrefetch(idx) {
 // ── 볼륨 균일화 (GainNode + DynamicsCompressor) ──
 // 작은 소리 키우고 큰 소리 눌러서 차 오디오에서도 균일하게
 var _audioCtx = null;
+var _debugLogs = [];
+function _debugAppend(name, ct) {
+  try {
+    var now = new Date();
+    var hh = ('0'+now.getHours()).slice(-2);
+    var mm = ('0'+now.getMinutes()).slice(-2);
+    var ss = ('0'+now.getSeconds()).slice(-2);
+    var ms = ('00'+now.getMilliseconds()).slice(-3);
+    var ctx = _audioCtx ? _audioCtx.state : '-';
+    var entry = hh+':'+mm+':'+ss+'.'+ms+' | '+name+' | T'+(_allIndex+1)+'/'+(_allQueue.length||'?')+' | ct='+ct+'s | ctx='+ctx;
+    _debugLogs.push(entry);
+    if (_debugLogs.length > 60) _debugLogs.shift();
+    _debugPanelRefresh();
+  } catch(e) {}
+}
+function _debugPanelRefresh() {
+  var panel = document.getElementById('_dbgPanel');
+  if (!panel || panel.style.display === 'none') return;
+  var body = document.getElementById('_dbgBody');
+  if (!body) return;
+  body.innerHTML = _debugLogs.slice().reverse().map(function(l) {
+    return '<div style="border-bottom:1px solid #333;padding:3px 2px;">'+l+'</div>';
+  }).join('');
+}
 // 차 블루투스 환경에서 AudioContext suspend 자동 복구
 function _ensureCtx() {
   if (!_audioCtx) {
@@ -756,6 +780,7 @@ function _playBoosted(url, onended) {
   var graph = null;
   var _progressTimer = null;
   var _lastCT = -1, _stuckTicks = 0;
+  var _doneCalled = false; // 중복 호출 방지
 
   function _cleanup() {
     if (_progressTimer) { clearInterval(_progressTimer); _progressTimer = null; }
@@ -764,7 +789,18 @@ function _playBoosted(url, onended) {
           graph.gain.disconnect(); graph.src.disconnect(); } catch(e) {}
     graph = null;
   }
-  function _done() { _cleanup(); onended && onended(); }
+  function _done() {
+    if (_doneCalled) return; _doneCalled = true;
+    _cleanup(); onended && onended();
+  }
+  // 차량 진단용 — 버튼에 최근 이벤트+시각 노출 (차에서 끊기면 폰 화면으로 확인)
+  function _logEvt(name) {
+    try {
+      var t = Math.round(audio.currentTime || 0);
+      _allSetLabel('⏸ ' + (_allIndex+1) + '/' + _allQueue.length + ' [' + name + '@' + t + 's]');
+      _debugAppend(name, t);
+    } catch(e) {}
+  }
 
   _ensureCtx().then(function() {
     try {
@@ -772,56 +808,81 @@ function _playBoosted(url, onended) {
       var gain = _audioCtx.createGain();
       gain.gain.value = 3.0;                // 볼륨 유지
       var comp = _audioCtx.createDynamicsCompressor();
-      comp.threshold.value = -10;           // 피크만 잡음 (펌핑 방지)
+      comp.threshold.value = -10;
       comp.knee.value      = 6;
-      comp.ratio.value     = 8;             // 8: 피크 억제로 차량 AGC 안정화
+      comp.ratio.value     = 8;
       comp.attack.value    = 0.003;
       comp.release.value   = 0.08;
       var makeup = _audioCtx.createGain();
-      makeup.gain.value = 1.3;              // ratio 8 보상 (volume 유지)
+      makeup.gain.value = 1.3;
       src.connect(gain); gain.connect(comp);
       comp.connect(makeup); makeup.connect(_audioCtx.destination);
       graph = { src: src, gain: gain, comp: comp, makeup: makeup };
     } catch(e) {}
-    audio.play().catch(function() { _done(); });
+    audio.play().catch(function() { _logEvt('play-fail'); _done(); });
 
-    // 진행 감시 — 2초마다 currentTime 체크, 14초간 멈추면 다음 트랙 강제 진행
-    // (onended가 영원히 안 오는 차량 BT 환경 대응)
+    // 진행 감시 — 2초마다 체크
+    // paused 상태도 누적 (이전 버그: paused면 리셋해서 watchdog 영원히 안 터졌음)
     _progressTimer = setInterval(function() {
       if (!_allPlaying || audio.ended) { _cleanup(); return; }
       if (!audio.paused) {
         if (audio.currentTime === _lastCT) {
           _stuckTicks++;
-          if (_stuckTicks >= 7) { // 14s 이상 currentTime 정체 → 강제 이동
+          if (_stuckTicks >= 7) { // 14s 재생 중 정체 → 강제 이동
+            _logEvt('stuck');
             try { audio.pause(); } catch(e) {}
             _done();
           }
         } else { _lastCT = audio.currentTime; _stuckTicks = 0; }
       } else {
-        _stuckTicks = 0; // paused 상태면 카운터 리셋 (onpause 핸들러가 처리 중)
+        // paused: onpause retry 중이지만 장기 멈춤도 감시 (이전엔 여기서 리셋해서 교착)
+        _stuckTicks++;
+        if (_stuckTicks >= 10) { // 20s paused 교착 → 강제 이동
+          _logEvt('pause-stuck');
+          _done();
+        }
       }
     }, 2000);
   });
 
-  // 차량 AVRCP pause → 최대 5회 재시도로 자동 복구
-  // (play() 가 "interrupted by pause" 오류로 실패할 때 재시도 없이 포기하는 버그 수정)
+  // AVRCP pause → 최대 5회 재시도. 5회 소진 시 강제 다음 트랙 (이전 버그: 소진 후 교착)
   audio.onpause = function() {
     if (!_allPlaying || audio.ended) return;
+    _logEvt('pause');
     var _ref = audio, _tries = 0;
     function _resume() {
       if (!_allPlaying || _ref.ended || !_ref.paused) return;
       _ensureCtx().then(function() {
         _ref.play().catch(function() {
           _tries++;
-          if (_tries < 5) setTimeout(_resume, 300 + _tries * 100);
-          // 5회 모두 실패하면 진행 감시가 14s 후 강제 이동시킴
+          if (_tries < 5) {
+            setTimeout(_resume, 300 + _tries * 100);
+          } else {
+            _logEvt('retry-fail'); // 5회 소진 → 다음 트랙 강제
+            _done();
+          }
         });
       });
     }
     setTimeout(_resume, 200);
   };
+
+  // stalled: 버퍼 공급 중단 (blob 잘림·네트워크·AudioContext 문제)
+  // 이전에 핸들러 없어서 stalled 발생 시 영구 교착 — 3s 후 강제 이동
+  audio.onstalled = function() {
+    _logEvt('stalled');
+    setTimeout(function() {
+      if (!_allPlaying || audio.ended || (!audio.paused && audio.currentTime !== _lastCT)) return;
+      _done();
+    }, 3000);
+  };
+
+  // abort / emptied: 비정상 종료 — 즉시 다음 트랙
+  audio.onabort   = function() { _logEvt('abort');   _done(); };
+  audio.onemptied = function() { _logEvt('emptied'); if (!audio.ended) _done(); };
+
   audio.onended = function() { _done(); };
-  audio.onerror = function() { _done(); };
+  audio.onerror = function() { _logEvt('error'); _done(); };
   return audio;
 }
 
@@ -862,5 +923,16 @@ window.onbeforeprint = function() {
   });
 };
 </script>
+<!-- TTS Debug Panel -->
+<button id="_dbgToggle" onclick="(function(){var p=document.getElementById('_dbgPanel');var v=p.style.display!=='none';p.style.display=v?'none':'block';if(!v)_debugPanelRefresh();})()" style="position:fixed;bottom:8px;right:8px;z-index:9999;background:#1a1a1a;color:#00ff88;border:1px solid #00ff88;padding:5px 10px;font-size:12px;font-family:monospace;border-radius:4px;opacity:0.9;cursor:pointer;-webkit-tap-highlight-color:transparent;">&#128269;LOG</button>
+<div id="_dbgPanel" style="display:none;position:fixed;bottom:36px;right:0;width:100vw;max-width:440px;height:260px;background:#111;color:#00ff88;font-family:monospace;font-size:11px;z-index:9998;overflow:hidden;border-top:2px solid #00ff88;box-shadow:-2px -2px 8px rgba(0,255,136,0.2);">
+  <div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:#1a1a1a;border-bottom:1px solid #333;">
+    <span style="flex:1;font-weight:bold;font-size:12px;">&#9679; TTS Debug Log</span>
+    <button onclick="if(navigator.clipboard){navigator.clipboard.writeText(_debugLogs.join('\n')).then(function(){alert('Copied '+_debugLogs.length+' lines');});}else{alert(_debugLogs.join('\n'));}" style="background:#222;color:#00ff88;border:1px solid #00ff88;padding:3px 8px;font-size:11px;font-family:monospace;cursor:pointer;border-radius:2px;">COPY</button>
+    <button onclick="_debugLogs=[];_debugPanelRefresh();" style="background:#222;color:#ff5555;border:1px solid #ff5555;padding:3px 8px;font-size:11px;font-family:monospace;cursor:pointer;border-radius:2px;">CLR</button>
+    <button onclick="document.getElementById('_dbgPanel').style.display='none';" style="background:#222;color:#aaa;border:1px solid #555;padding:3px 8px;font-size:11px;font-family:monospace;cursor:pointer;border-radius:2px;">X</button>
+  </div>
+  <div id="_dbgBody" style="height:220px;overflow-y:auto;padding:4px 8px;line-height:1.5;"></div>
+</div>
 </body>
 </html>
