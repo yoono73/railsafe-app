@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { warmupBluetooth } from '@/lib/audioWarmup';
 
 const subjectNames: Record<number, string> = {
   1: '교통안전관리론', 2: '교통안전법', 3: '열차운전',
@@ -151,6 +152,7 @@ export default function RetrievalPage() {
       const audio = new Audio(url);
       audioRef.current = audio;
       audio.onended = () => URL.revokeObjectURL(url);
+      await warmupBluetooth();
       audio.play().catch(() => {});
     } catch {
       setTtsLoading(false);

@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { warmupBluetooth } from '@/lib/audioWarmup';
 
 const VOICE_NARRATOR = '5n5gqmaQi9Ewevrz7bOS';
 
@@ -111,8 +112,9 @@ export default function WrongAnswersSubjectPage() {
       const url = URL.createObjectURL(blob);
       const audio = new Audio(url);
       audioRef.current = audio;
-      audio.play();
       audio.onended = () => URL.revokeObjectURL(url);
+      await warmupBluetooth();
+      audio.play().catch(() => {});
     } catch (e) {
       console.error('TTS error:', e);
     } finally {

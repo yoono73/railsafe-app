@@ -2,6 +2,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { warmupBluetooth } from '@/lib/audioWarmup';
 
 interface Dialogue {
   character: string;
@@ -160,7 +161,7 @@ export default function StoryPage() {
         audioRef.current = audio;
         audio.onended = () => { URL.revokeObjectURL(url); resolve(); };
         audio.onerror = () => { URL.revokeObjectURL(url); resolve(); };
-        audio.play().catch(() => resolve());
+        warmupBluetooth().then(() => audio.play().catch(() => resolve()));
       });
     } catch {
       setTtsLoading(false);

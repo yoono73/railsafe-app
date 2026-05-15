@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { warmupBluetooth } from '@/lib/audioWarmup';
 
 const APP_VERSION = 'v0.4';
 
@@ -135,6 +136,7 @@ export default function CbtPage() {
       cbtAudioRef.current = audio;
       audio.onended = () => { URL.revokeObjectURL(url); onEnd?.(); };
       audio.onerror = () => { URL.revokeObjectURL(url); onEnd?.(); };
+      await warmupBluetooth();
       audio.play().catch(() => onEnd?.());
     } catch {
       setCbtTtsLoading(false);
