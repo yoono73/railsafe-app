@@ -122,6 +122,11 @@ export default function CbtPage() {
   const [ratings, setRatings] = useState<Map<number, Rating>>(new Map());
   const [ratingLoading, setRatingLoading] = useState(false);
 
+  // ── 패스풀 ──
+  const [passedIds, setPassedIds] = useState<Set<number>>(new Set());
+  const [passLoading, setPassLoading] = useState(false);
+  const [passPickerFor, setPassPickerFor] = useState<number | null>(null); // 사유 선택 중인 questionId
+
   // ElevenLabs TTS (나레이터 여성 목소리)
   const VOICE_NARRATOR_CBT = '5n5gqmaQi9Ewevrz7bOS';
 
@@ -197,6 +202,12 @@ export default function CbtPage() {
           );
           setRatings(m);
         }
+
+        const { data: pData } = await supabase
+          .from('pass_pool')
+          .select('question_id')
+          .eq('user_id', user.id);
+        if (pData) setPassedIds(new Set(pData.map((p: { question_id: number }) => p.question_id)));
       }
     };
     fetchAll();
@@ -295,6 +306,32 @@ export default function CbtPage() {
     );
     setRatings(prev => new Map(prev).set(questionId, rating));
     setRatingLoading(false);
+  };
+
+  const PASS_REASONS = ['범위 외', '이미 완벽', '오류 의심', '기타'] as const;
+  type PassReason = typeof PASS_REASONS[number];
+
+  const togglePass = async (questionId: number, reason?: PassReason) => {
+    if (passLoading) return;
+    setPassLoading(true);
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { setPassLoading(false); return; }
+
+    if (passedIds.has(questionId)) {
+      // 손절 해제
+      await supabase.from('pass_pool').delete().eq('user_id', user.id).eq('question_id', questionId);
+      setPassedIds(prev => { const s = new Set(prev); s.delete(questionId); return s; });
+    } else {
+      // 손절 등록
+      await supabase.from('pass_pool').upsert(
+        { user_id: user.id, question_id: questionId, reason: reason ?? '기타' },
+        { onConflict: 'user_id,question_id' }
+      );
+      setPassedIds(prev => new Set(prev).add(questionId));
+    }
+    setPassPickerFor(null);
+    setPassLoading(false);
   };
 
   const ttsExamReplay = () => {
@@ -1307,6 +1344,59 @@ export default function CbtPage() {
             </div>
           </div>
         )}
+
+        {/* 패스풀 손절 버튼 */}
+        {confirmed && (() => {
+          const isPassed = passedIds.has(q.id);
+          const isPicking = passPickerFor === q.id;
+          return (
+            <div style={{ marginTop: '0.5rem' }}>
+              {isPassed ? (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 0.75rem', background: '#fef3c7', border: '1.5px solid #f59e0b', borderRadius: '0.75rem' }}>
+                  <span style={{ fontSize: '0.8rem', color: '#92400e', fontWeight: '600', flex: 1 }}>✂️ 패스풀에 등록됨</span>
+                  <button
+                    onClick={() => togglePass(q.id)}
+                    disabled={passLoading}
+                    style={{ fontSize: '0.75rem', color: '#b45309', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
+                  >
+                    해제
+                  </button>
+                </div>
+              ) : isPicking ? (
+                <div style={{ background: '#fff7ed', border: '1.5px solid #fdba74', borderRadius: '0.75rem', padding: '0.7rem 0.9rem' }}>
+                  <p style={{ fontSize: '0.75rem', color: '#9ca3af', margin: '0 0 0.4rem 0', fontWeight: '600' }}>손절 사유 선택</p>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                    {PASS_REASONS.map(r => (
+                      <button
+                        key={r}
+                        onClick={() => togglePass(q.id, r)}
+                        disabled={passLoading}
+                        style={{ padding: '0.3rem 0.7rem', fontSize: '0.78rem', background: 'white', border: '1.5px solid #fdba74', borderRadius: '9999px', color: '#9a3412', cursor: 'pointer', fontWeight: '500' }}
+                      >
+                        {r}
+                      </button>
+                    ))}
+                    <button
+                      onClick={() => setPassPickerFor(null)}
+                      style={{ padding: '0.3rem 0.7rem', fontSize: '0.78rem', background: 'none', border: '1.5px solid #e5e7eb', borderRadius: '9999px', color: '#9ca3af', cursor: 'pointer' }}
+                    >
+                      취소
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setPassPickerFor(q.id)}
+                  style={{ width: '100%', padding: '0.4rem', fontSize: '0.78rem', background: 'white', border: '1.5px dashed #d1d5db', borderRadius: '0.5rem', color: '#9ca3af', cursor: 'pointer', transition: 'all 0.15s' }}
+                  onMouseOver={(e) => { e.currentTarget.style.borderColor = '#f59e0b'; e.currentTarget.style.color = '#b45309'; }}
+                  onMouseOut={(e) => { e.currentTarget.style.borderColor = '#d1d5db'; e.currentTarget.style.color = '#9ca3af'; }}
+                >
+                  ✂️ 이 문제 손절하기
+                </button>
+              )}
+            </div>
+          );
+        })()}
 
         {/* 문제 오류 신고 */}
         {confirmed && <QuestionReportButton questionId={q.id} />}
