@@ -26,6 +26,9 @@ interface Question {
   explanation?: string;
 }
 
+type Rating = 'O' | '△' | 'X';
+type RatingFilter = 'all' | Rating | 'none';
+
 function getOptionText(opt: string | Option): string {
   if (typeof opt === 'string') return opt;
   if (opt && typeof opt === 'object' && 'text' in opt) return opt.text || '';
@@ -37,7 +40,17 @@ export default function WrongAnswersSubjectPage() {
   const router = useRouter();
   const subjectId = Number(params.subjectId);
 
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [allWrongQuestions, setAllWrongQuestions] = useState<Question[]>([]);
+  const [questionRatings, setQuestionRatings] = useState<Map<number, Rating>>(new Map());
+  const [ratingFilter, setRatingFilter] = useState<RatingFilter>('all');
+  const [ratingLoading, setRatingLoading] = useState(false);
+
+  const questions = ratingFilter === 'all'
+    ? allWrongQuestions
+    : ratingFilter === 'none'
+    ? allWrongQuestions.filter(q => !questionRatings.has(q.id))
+    : allWrongQuestions.filter(q => questionRatings.get(q.id) === ratingFilter);
+
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [confirmed, setConfirmed] = useState(false);
@@ -86,7 +99,21 @@ export default function WrongAnswersSubjectPage() {
         return q.options.every((o) => getOptionText(o).trim().length > 0);
       });
 
-      setQuestions(filtered);
+      setAllWrongQuestions(filtered);
+
+      // ratings 로드
+      const { data: rData } = await supabase
+        .from('question_ratings')
+        .select('question_id, rating')
+        .eq('user_id', user.id);
+      if (rData) {
+        const m = new Map<number, Rating>();
+        rData.forEach((r: { question_id: number; rating: string }) =>
+          m.set(r.question_id, r.rating as Rating)
+        );
+        setQuestionRatings(m);
+      }
+
       setLoading(false);
       questionStartTime.current = Date.now();
     }
@@ -139,6 +166,27 @@ export default function WrongAnswersSubjectPage() {
   const ttsReplay = () => {
     if (!questions.length) return;
     speakText(questions[current].question_text);
+  };
+
+  const changeFilter = (f: RatingFilter) => {
+    setRatingFilter(f);
+    setCurrent(0);
+    setSelected(null);
+    setConfirmed(false);
+  };
+
+  const saveRating = async (questionId: number, rating: Rating) => {
+    if (ratingLoading) return;
+    setRatingLoading(true);
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { setRatingLoading(false); return; }
+    await supabase.from('question_ratings').upsert(
+      { user_id: user.id, question_id: questionId, rating, updated_at: new Date().toISOString() },
+      { onConflict: 'user_id,question_id' }
+    );
+    setQuestionRatings(prev => new Map(prev).set(questionId, rating));
+    setRatingLoading(false);
   };
 
   const handleSelect = (idx: number) => {
@@ -198,7 +246,7 @@ export default function WrongAnswersSubjectPage() {
     );
   }
 
-  if (questions.length === 0) {
+  if (allWrongQuestions.length === 0) {
     return (
       <div className="min-h-full flex flex-col items-center justify-center bg-red-50 gap-4 p-8">
         <div className="text-5xl">🎯</div>
@@ -209,6 +257,20 @@ export default function WrongAnswersSubjectPage() {
           className="mt-2 px-6 py-3 bg-purple-700 text-white rounded-xl text-sm font-semibold hover:bg-purple-800 transition"
         >
           오답노트로 돌아가기
+        </button>
+      </div>
+    );
+  }
+
+  // 필터 결과가 0개인 경우
+  if (questions.length === 0) {
+    const filterLabel = ratingFilter === 'O' ? '○ 알아요' : ratingFilter === '△' ? '△ 헷갈려요' : ratingFilter === 'X' ? '× 몰라요' : '미분류';
+    return (
+      <div className="min-h-full flex flex-col items-center justify-center bg-red-50 gap-4 p-8">
+        <div className="text-4xl">🔍</div>
+        <p className="text-base font-bold text-gray-700">"{filterLabel}" 분류 문제가 없어요</p>
+        <button onClick={() => changeFilter('all')} className="px-5 py-2 bg-purple-700 text-white rounded-xl text-sm font-semibold hover:bg-purple-800 transition">
+          전체 보기
         </button>
       </div>
     );
@@ -275,11 +337,40 @@ export default function WrongAnswersSubjectPage() {
           </span>
         </div>
 
+        {/* ○△× 필터 */}
+        <div style={{ display: 'flex', gap: '0.4rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+          {([
+            { key: 'all' as RatingFilter,  label: '전체',       count: allWrongQuestions.length },
+            { key: 'X'   as RatingFilter,  label: '× 몰라요',   count: allWrongQuestions.filter(q => questionRatings.get(q.id) === 'X').length },
+            { key: '△'  as RatingFilter,  label: '△ 헷갈려요', count: allWrongQuestions.filter(q => questionRatings.get(q.id) === '△').length },
+            { key: 'O'   as RatingFilter,  label: '○ 알아요',   count: allWrongQuestions.filter(q => questionRatings.get(q.id) === 'O').length },
+            { key: 'none' as RatingFilter, label: '미분류',      count: allWrongQuestions.filter(q => !questionRatings.has(q.id)).length },
+          ]).map(({ key, label, count }) => {
+            const active = ratingFilter === key;
+            const accent = key === 'O' ? '#16a34a' : key === '△' ? '#ca8a04' : key === 'X' ? '#dc2626' : key === 'none' ? '#6b7280' : '#7c3aed';
+            return (
+              <button
+                key={key}
+                onClick={() => changeFilter(key)}
+                style={{
+                  padding: '0.35rem 0.7rem', borderRadius: '9999px', fontSize: '0.78rem', fontWeight: '600',
+                  cursor: 'pointer', transition: 'all 0.15s',
+                  background: active ? accent : 'white',
+                  color: active ? 'white' : '#6b7280',
+                  border: `1.5px solid ${active ? accent : '#e5e7eb'}`,
+                }}
+              >
+                {label}{count > 0 ? ` (${count})` : ''}
+              </button>
+            );
+          })}
+        </div>
+
         {/* 진행바 */}
         <div className="bg-red-100 rounded-full h-1.5 mb-5 overflow-hidden">
           <div
             className="h-full bg-red-500 rounded-full transition-all duration-300"
-            style={{ width: ((current + 1) / questions.length * 100) + '%' }}
+            style={{ width: questions.length > 0 ? ((current + 1) / questions.length * 100) + '%' : '0%' }}
           />
         </div>
 
@@ -363,6 +454,31 @@ export default function WrongAnswersSubjectPage() {
             >
               📚 핵심정리 강의 보러가기
             </button>
+          </div>
+        )}
+
+        {/* ○△× 분류 버튼 */}
+        {confirmed && (
+          <div style={{ marginBottom: '1rem', background: '#f9fafb', border: '1.5px solid #e5e7eb', borderRadius: '0.75rem', padding: '0.75rem 1rem' }}>
+            <p style={{ fontSize: '0.75rem', color: '#9ca3af', marginBottom: '0.4rem', fontWeight: '600' }}>이 문제 분류하기</p>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              {(['O', '△', 'X'] as Rating[]).map(r => {
+                const active = questionRatings.get(q.id) === r;
+                const accent = r === 'O' ? '#16a34a' : r === '△' ? '#ca8a04' : '#dc2626';
+                const bg = r === 'O' ? '#dcfce7' : r === '△' ? '#fef9c3' : '#fee2e2';
+                const label = r === 'O' ? '○ 알아요' : r === '△' ? '△ 헷갈려요' : '× 몰라요';
+                return (
+                  <button
+                    key={r}
+                    onClick={() => saveRating(q.id, r)}
+                    disabled={ratingLoading}
+                    style={{ flex: 1, padding: '0.45rem 0.3rem', background: active ? bg : 'white', border: `1.5px solid ${active ? accent : '#e5e7eb'}`, borderRadius: '0.5rem', color: active ? accent : '#9ca3af', fontSize: '0.8rem', fontWeight: active ? '700' : '500', cursor: ratingLoading ? 'not-allowed' : 'pointer', transition: 'all 0.15s' }}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         )}
 

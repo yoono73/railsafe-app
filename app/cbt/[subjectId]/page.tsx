@@ -26,6 +26,8 @@ interface WrongAnswer {
   selectedOption: number;
 }
 
+type Rating = 'O' | '△' | 'X';
+
 // 시험 모드: 각 문제에 선택한 답 저장
 interface ExamAnswer {
   questionId: number;
@@ -115,6 +117,11 @@ export default function CbtPage() {
   const cbtAudioRef = useRef<HTMLAudioElement | null>(null);
   const [cbtTtsLoading, setCbtTtsLoading] = useState(false);
 
+  // ── 1회독 수집 모드 + ○△× 분류 ──
+  const [collectMode, setCollectMode] = useState(false);
+  const [ratings, setRatings] = useState<Map<number, Rating>>(new Map());
+  const [ratingLoading, setRatingLoading] = useState(false);
+
   // ElevenLabs TTS (나레이터 여성 목소리)
   const VOICE_NARRATOR_CBT = '5n5gqmaQi9Ewevrz7bOS';
 
@@ -178,6 +185,18 @@ export default function CbtPage() {
           .select('question_id')
           .eq('user_id', user.id);
         if (bData) setBookmarked(new Set(bData.map((b: { question_id: number }) => b.question_id)));
+
+        const { data: rData } = await supabase
+          .from('question_ratings')
+          .select('question_id, rating')
+          .eq('user_id', user.id);
+        if (rData) {
+          const m = new Map<number, Rating>();
+          rData.forEach((r: { question_id: number; rating: string }) =>
+            m.set(r.question_id, r.rating as Rating)
+          );
+          setRatings(m);
+        }
       }
     };
     fetchAll();
@@ -262,6 +281,20 @@ export default function CbtPage() {
       setBookmarked(prev => new Set([...prev, questionId]));
     }
     setBookmarkLoading(false);
+  };
+
+  const saveRating = async (questionId: number, rating: Rating) => {
+    if (ratingLoading) return;
+    setRatingLoading(true);
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { setRatingLoading(false); return; }
+    await supabase.from('question_ratings').upsert(
+      { user_id: user.id, question_id: questionId, rating, updated_at: new Date().toISOString() },
+      { onConflict: 'user_id,question_id' }
+    );
+    setRatings(prev => new Map(prev).set(questionId, rating));
+    setRatingLoading(false);
   };
 
   const ttsExamReplay = () => {
@@ -445,11 +478,11 @@ export default function CbtPage() {
     if (isCorrect) setScore((s) => s + 1);
     else setWrongAnswers((prev) => [...prev, { question: q, selectedOption: selected }]);
 
-    // 결과 + 해설 TTS
+    // 결과 + 해설 TTS (1회독 수집 모드 시 해설 생략)
     const resultText = isCorrect
       ? '정답입니다.'
       : `오답입니다. 정답은 ${q.correct_option}번. ${getOptionText(q.options[q.correct_option - 1])}.`;
-    const explanationText = q.explanation ? ` 해설. ${q.explanation}` : '';
+    const explanationText = (!collectMode && q.explanation) ? ` 해설. ${q.explanation}` : '';
     playCbtTts(resultText + explanationText, ttsRate);
 
     const supabase = createClient();
@@ -594,9 +627,9 @@ export default function CbtPage() {
             {/* 🎯 연습 모드 */}
             <button
               onClick={() => { setDrivingMode(false); startPractice(); }}
-              style={{ background: 'white', border: '2px solid #e5e7eb', borderRadius: '1rem', padding: '1.5rem', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s' }}
+              style={{ background: 'white', border: `2px solid ${collectMode ? '#7c3aed' : '#e5e7eb'}`, borderRadius: '1rem', padding: '1.5rem', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s' }}
               onMouseOver={(e) => (e.currentTarget.style.borderColor = '#7c3aed')}
-              onMouseOut={(e) => (e.currentTarget.style.borderColor = '#e5e7eb')}
+              onMouseOut={(e) => (e.currentTarget.style.borderColor = collectMode ? '#7c3aed' : '#e5e7eb')}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
                 <span style={{ fontSize: '1.75rem' }}>🎯</span>
@@ -606,13 +639,29 @@ export default function CbtPage() {
                 </div>
               </div>
               <ul style={{ margin: '0', paddingLeft: '0', listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                {['문제만 자동 낭독', '문제마다 즉시 정답 확인', '해설 바로 확인 가능'].map((t) => (
-                  <li key={t} style={{ fontSize: '0.85rem', color: '#6b7280', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                {['문제만 자동 낭독', '문제마다 즉시 정답 확인', collectMode ? '🔕 해설 숨김 (1회독 모드)' : '해설 바로 확인 가능'].map((t) => (
+                  <li key={t} style={{ fontSize: '0.85rem', color: collectMode && t.includes('숨김') ? '#7c3aed' : '#6b7280', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: collectMode && t.includes('숨김') ? '600' : '400' }}>
                     <span style={{ color: '#7c3aed' }}>✓</span>{t}
                   </li>
                 ))}
               </ul>
             </button>
+
+            {/* 1회독 수집 모드 토글 */}
+            <div
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.8rem 1rem', background: collectMode ? '#faf5ff' : '#f9fafb', border: `1.5px solid ${collectMode ? '#c4b5fd' : '#e5e7eb'}`, borderRadius: '0.75rem', transition: 'all 0.2s' }}
+              onClick={() => setCollectMode(v => !v)}
+            >
+              <div>
+                <p style={{ fontSize: '0.88rem', fontWeight: '600', color: collectMode ? '#7c3aed' : '#374151', margin: 0 }}>📖 1회독 수집 모드</p>
+                <p style={{ fontSize: '0.76rem', color: '#9ca3af', marginTop: '0.1rem', margin: 0 }}>해설 숨김 — 연습 모드에서 빠르게 훑기</p>
+              </div>
+              <div
+                style={{ width: '2.8rem', height: '1.5rem', borderRadius: '9999px', background: collectMode ? '#7c3aed' : '#d1d5db', border: 'none', cursor: 'pointer', position: 'relative', flexShrink: 0, transition: 'background 0.2s' }}
+              >
+                <span style={{ position: 'absolute', top: '0.15rem', left: collectMode ? '1.4rem' : '0.15rem', width: '1.2rem', height: '1.2rem', borderRadius: '50%', background: 'white', transition: 'left 0.2s', display: 'block', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+              </div>
+            </div>
 
             {/* ⏱️ 시험 모드 */}
             <button
@@ -1143,6 +1192,19 @@ export default function CbtPage() {
               >
                 {bookmarked.has(q.id) ? '★' : '☆'}
               </button>
+              {ratings.has(q.id) && (() => {
+                const r = ratings.get(q.id)!;
+                const rStyle = r === 'O'
+                  ? { bg: '#f0fdf4', color: '#16a34a', border: '#86efac' }
+                  : r === '△'
+                  ? { bg: '#fffbeb', color: '#d97706', border: '#fde68a' }
+                  : { bg: '#fff1f2', color: '#dc2626', border: '#fca5a5' };
+                return (
+                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '1.5rem', height: '1.5rem', borderRadius: '50%', fontSize: '0.8rem', fontWeight: '700', background: rStyle.bg, color: rStyle.color, border: `1.5px solid ${rStyle.border}` }}>
+                    {r}
+                  </span>
+                );
+              })()}
             </div>
           </div>
           <p style={{ fontSize: '1.05rem', fontWeight: '600', color: '#1f2937', lineHeight: '1.6' }}>{q.question_text}</p>
@@ -1187,10 +1249,16 @@ export default function CbtPage() {
           )}
         </div>
 
-        {confirmed && q.explanation && (
+        {confirmed && q.explanation && !collectMode && (
           <div style={{ marginTop: '1rem', background: '#ede9fe', borderRadius: '0.75rem', padding: '1rem', borderLeft: '4px solid #7c3aed' }}>
             <p style={{ fontSize: '0.85rem', fontWeight: '600', color: '#7c3aed', marginBottom: '0.25rem' }}>해설</p>
             <p style={{ fontSize: '0.9rem', color: '#374151', lineHeight: '1.6' }}>{q.explanation}</p>
+          </div>
+        )}
+        {confirmed && collectMode && (
+          <div style={{ marginTop: '1rem', background: '#f5f3ff', borderRadius: '0.75rem', padding: '0.75rem 1rem', borderLeft: '4px solid #c4b5fd', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontSize: '0.85rem', color: '#7c3aed' }}>📖 1회독 모드 — 해설 숨김</span>
+            <button onClick={() => setCollectMode(false)} style={{ marginLeft: 'auto', fontSize: '0.75rem', color: '#7c3aed', background: 'none', border: '1px solid #c4b5fd', borderRadius: '0.375rem', padding: '0.2rem 0.5rem', cursor: 'pointer' }}>해설 보기</button>
           </div>
         )}
 
@@ -1209,6 +1277,34 @@ export default function CbtPage() {
             >
               📚 핵심정리 강의 보러가기
             </button>
+          </div>
+        )}
+
+        {/* ○△× 분류 버튼 */}
+        {confirmed && (
+          <div style={{ marginTop: '0.75rem', background: '#f9fafb', border: '1.5px solid #e5e7eb', borderRadius: '0.75rem', padding: '0.75rem 1rem' }}>
+            <p style={{ fontSize: '0.75rem', color: '#9ca3af', marginBottom: '0.5rem', fontWeight: '600', margin: '0 0 0.4rem 0' }}>이 문제 분류하기</p>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              {(['O', '△', 'X'] as Rating[]).map(r => {
+                const active = ratings.get(q.id) === r;
+                const style = r === 'O'
+                  ? { bg: active ? '#dcfce7' : 'white', border: active ? '#16a34a' : '#e5e7eb', color: active ? '#16a34a' : '#9ca3af' }
+                  : r === '△'
+                  ? { bg: active ? '#fef9c3' : 'white', border: active ? '#ca8a04' : '#e5e7eb', color: active ? '#ca8a04' : '#9ca3af' }
+                  : { bg: active ? '#fee2e2' : 'white', border: active ? '#dc2626' : '#e5e7eb', color: active ? '#dc2626' : '#9ca3af' };
+                const label = r === 'O' ? '○ 알아요' : r === '△' ? '△ 헷갈려요' : '× 몰라요';
+                return (
+                  <button
+                    key={r}
+                    onClick={() => saveRating(q.id, r)}
+                    disabled={ratingLoading}
+                    style={{ flex: 1, padding: '0.45rem 0.3rem', background: style.bg, border: `1.5px solid ${style.border}`, borderRadius: '0.5rem', color: style.color, fontSize: '0.8rem', fontWeight: active ? '700' : '500', cursor: ratingLoading ? 'not-allowed' : 'pointer', transition: 'all 0.15s' }}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         )}
 
