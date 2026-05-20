@@ -187,6 +187,7 @@ export default function WrongAnswersSubjectPage() {
     setCurrent(0);
     setSelected(null);
     setConfirmed(false);
+    setPassPickerFor(null);
   };
 
   const saveRating = async (questionId: number, rating: Rating) => {
