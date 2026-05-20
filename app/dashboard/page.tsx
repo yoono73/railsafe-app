@@ -73,7 +73,7 @@ export default function DashboardPage() {
 
       const { data: ann } = await supabase
         .from('announcements').select('id,title,content,is_pinned')
-        .is('expires_at', null)
+        .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
         .order('is_pinned', { ascending: false })
         .order('created_at', { ascending: false }).limit(3);
       if (ann) setAnnouncements(ann as Announcement[]);

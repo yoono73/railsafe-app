@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { warmupBluetooth } from '@/lib/audioWarmup';
 
-const APP_VERSION = 'v0.4';
+const APP_VERSION = 'v0.5';
 
 interface Option {
   no?: number;
