@@ -17,6 +17,30 @@ const categoryEmoji: Record<string, string> = {
   '숫자': '🔢', '용어': '📖', '조건': '⚠️', '절차': '📋',
 };
 
+// 키워드 불용어 (채점에서 제외할 짧은 조사/어미)
+const STOP_WORDS = new Set([
+  '이', '가', '은', '는', '을', '를', '의', '에', '로', '으로',
+  '와', '과', '하', '한', '하는', '하고', '이고', '이며', '또는',
+  '및', '그', '이다', '있다', '없다', '것', '수', '때', '등',
+]);
+
+function extractKeywords(text: string): string[] {
+  return text
+    .replace(/[^\w\s가-힣]/g, ' ')
+    .split(/\s+/)
+    .map(w => w.trim())
+    .filter(w => w.length >= 2 && !STOP_WORDS.has(w));
+}
+
+function calcMatchScore(answer: string, transcript: string): { matched: number; total: number; pct: number } {
+  if (!transcript.trim()) return { matched: 0, total: 0, pct: 0 };
+  const keywords = extractKeywords(answer);
+  if (keywords.length === 0) return { matched: 0, total: 0, pct: 0 };
+  const matched = keywords.filter(kw => transcript.includes(kw)).length;
+  const pct = Math.round((matched / keywords.length) * 100);
+  return { matched, total: keywords.length, pct };
+}
+
 interface Flashcard {
   id: number;
   subject_id: number;
@@ -62,6 +86,85 @@ export default function RetrievalPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [ttsLoading, setTtsLoading] = useState(false);
 
+  // ── STT state ──
+  const sttRef = useRef<SpeechRecognition | null>(null);
+  const [isListening, setIsListening] = useState(false);
+  const [transcript, setTranscript] = useState('');       // 최종 확정 텍스트
+  const [interimText, setInterimText] = useState('');     // 현재 인식 중 (interim)
+  const [sttSupported, setSttSupported] = useState(false);
+
+  // STT 지원 여부 감지
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+    setSttSupported(!!(w.SpeechRecognition || w.webkitSpeechRecognition));
+  }, []);
+
+  const stopSTT = useCallback(() => {
+    if (sttRef.current) {
+      sttRef.current.abort();
+      sttRef.current = null;
+    }
+    setIsListening(false);
+    setInterimText('');
+  }, []);
+
+  const startSTT = useCallback(() => {
+    if (isListening) { stopSTT(); return; }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+    const SpeechRecognitionAPI = w.SpeechRecognition || w.webkitSpeechRecognition;
+    if (!SpeechRecognitionAPI) return;
+
+    // 이전 transcript 초기화 후 새로 시작
+    setTranscript('');
+    setInterimText('');
+
+    const rec = new SpeechRecognitionAPI();
+    rec.lang = 'ko-KR';
+    rec.continuous = true;
+    rec.interimResults = true;
+    rec.maxAlternatives = 1;
+    sttRef.current = rec;
+
+    rec.onstart = () => setIsListening(true);
+
+    rec.onresult = (event: SpeechRecognitionEvent) => {
+      let finalChunk = '';
+      let interimChunk = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const result = event.results[i];
+        if (result.isFinal) {
+          finalChunk += result[0].transcript;
+        } else {
+          interimChunk += result[0].transcript;
+        }
+      }
+      if (finalChunk) {
+        setTranscript(prev => prev + finalChunk);
+        setInterimText('');
+      }
+      if (interimChunk) {
+        setInterimText(interimChunk);
+      }
+    };
+
+    rec.onerror = () => {
+      setIsListening(false);
+      setInterimText('');
+      sttRef.current = null;
+    };
+
+    rec.onend = () => {
+      setIsListening(false);
+      setInterimText('');
+      sttRef.current = null;
+    };
+
+    rec.start();
+  }, [isListening, stopSTT]);
+
   const loadCards = useCallback(async (subjectFilter: number | null) => {
     setLoading(true);
     setCards([]);
@@ -69,6 +172,9 @@ export default function RetrievalPage() {
     setFlipped(false);
     setFinished(false);
     setResults([]);
+    stopSTT();
+    setTranscript('');
+    setInterimText('');
 
     const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -129,7 +235,8 @@ export default function RetrievalPage() {
 
     setCards(result);
     setLoading(false);
-  }, [router]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router, stopSTT]);
 
   useEffect(() => {
     loadCards(null);
@@ -164,17 +271,22 @@ export default function RetrievalPage() {
     setTtsLoading(false);
   }, []);
 
-  // 카드 변경 시 질문 TTS
+  // 카드 변경 시 질문 TTS + STT 초기화
   useEffect(() => {
     if (!cards.length || finished || loading || flipped) return;
     const card = cards[current];
     if (!card) return;
     stopTts();
+    stopSTT();
+    setTranscript('');
+    setInterimText('');
     playTts(card.question);
     return () => { stopTts(); };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current, cards, finished, loading, flipped]);
 
   const handleFlip = () => {
+    stopSTT();           // 뒤집을 때 STT 자동 중지
     setFlipped(true);
     stopTts();
   };
@@ -183,6 +295,7 @@ export default function RetrievalPage() {
     if (saving) return;
     setSaving(true);
     stopTts();
+    stopSTT();
 
     const card = cards[current];
     const prev = card.review;
@@ -211,6 +324,10 @@ export default function RetrievalPage() {
 
     setResults(r => [...r, { card, knew }]);
     setSaving(false);
+
+    // 다음 카드로 넘어갈 때 transcript 초기화
+    setTranscript('');
+    setInterimText('');
 
     if (current + 1 >= cards.length) {
       setFinished(true);
@@ -297,12 +414,46 @@ export default function RetrievalPage() {
   const color = subjectColors[card.subject_id] ?? '#7c3aed';
   const isNew = !card.review;
 
+  // 뒷면에서 채점 계산
+  const matchScore = flipped ? calcMatchScore(card.answer, transcript + interimText) : null;
+  const hasTranscript = transcript.trim().length > 0 || interimText.trim().length > 0;
+
+  // ── 회독 단계별 모드 ──
+  const reviewCount = card.review?.review_count ?? 0;
+  const readingMode = (() => {
+    if (reviewCount <= 1) return {
+      label: '1회독',
+      hint: '빠르게 훑기 — 외우려 하지 마세요. 전체 흐름만 잡아요.',
+      bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-700', dot: 'bg-blue-400',
+    };
+    if (reviewCount === 2) return {
+      label: '2회독',
+      hint: '"왜?" 중심 — 이 개념이 왜 나왔는지 연결해서 이해하세요.',
+      bg: 'bg-green-50', border: 'border-green-200', text: 'text-green-700', dot: 'bg-green-400',
+    };
+    if (reviewCount === 3) return {
+      label: '3회독',
+      hint: '백지 인출 — 뒤집기 전에 직접 떠올려보세요. STT를 써보세요.',
+      bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-700', dot: 'bg-orange-400',
+    };
+    if (reviewCount === 4) return {
+      label: '4회독',
+      hint: '디테일 집중 — 숫자·조건·예외에 집중하세요.',
+      bg: 'bg-purple-50', border: 'border-purple-200', text: 'text-purple-700', dot: 'bg-purple-400',
+    };
+    return {
+      label: '5회독+',
+      hint: '목차 재구성 — 이 개념 전체를 한 문장으로 연결해 설명해보세요.',
+      bg: 'bg-red-50', border: 'border-red-200', text: 'text-red-700', dot: 'bg-red-400',
+    };
+  })();
+
   return (
     <div className="min-h-full bg-orange-50">
       {/* 브레드크럼 */}
       <div className="px-6 py-3 flex items-center justify-between text-sm border-b border-orange-100 bg-white">
         <div className="flex items-center gap-2">
-          <button onClick={() => { stopTts(); router.push('/dashboard'); }} className="text-orange-400 hover:text-orange-600 transition">
+          <button onClick={() => { stopTts(); stopSTT(); router.push('/dashboard'); }} className="text-orange-400 hover:text-orange-600 transition">
             ← 대시보드
           </button>
           <span className="text-gray-300">|</span>
@@ -351,15 +502,24 @@ export default function RetrievalPage() {
         </div>
 
         {/* 진행바 */}
-        <div className="bg-orange-100 rounded-full h-1.5 mb-6 overflow-hidden">
+        <div className="bg-orange-100 rounded-full h-1.5 mb-4 overflow-hidden">
           <div
             className="h-full bg-orange-400 rounded-full transition-all duration-300"
             style={{ width: `${(current / cards.length) * 100}%` }}
           />
         </div>
 
+        {/* ── 회독 단계별 모드 배너 ── */}
+        <div className={`flex items-start gap-2.5 rounded-xl px-4 py-2.5 mb-4 border ${readingMode.bg} ${readingMode.border}`}>
+          <span className={`mt-0.5 w-2 h-2 rounded-full flex-shrink-0 ${readingMode.dot}`} style={{ marginTop: 6 }} />
+          <div>
+            <span className={`text-xs font-bold ${readingMode.text}`}>{readingMode.label} 모드</span>
+            <span className="text-xs text-gray-500 ml-2">{readingMode.hint}</span>
+          </div>
+        </div>
+
         {/* 플래시카드 */}
-        <div style={{ perspective: '1000px' }} className="mb-6">
+        <div style={{ perspective: '1000px' }} className="mb-4">
           <div
             style={{
               position: 'relative',
@@ -383,10 +543,40 @@ export default function RetrievalPage() {
               <p className="text-lg font-bold text-gray-800 leading-relaxed">
                 {card.question}
               </p>
-              <button
-                onClick={() => playTts(card.question)}
-                className={`mt-4 text-xs transition ${ttsLoading ? 'text-orange-300' : 'text-orange-400 hover:text-orange-600'}`}
-              >{ttsLoading ? '⏳ 불러오는 중...' : '🔊 다시 읽기'}</button>
+
+              {/* TTS + STT 버튼 */}
+              <div className="flex items-center gap-3 mt-4">
+                <button
+                  onClick={() => playTts(card.question)}
+                  className={`text-xs transition ${ttsLoading ? 'text-orange-300' : 'text-orange-400 hover:text-orange-600'}`}
+                >{ttsLoading ? '⏳ 불러오는 중...' : '🔊 다시 읽기'}</button>
+
+                {sttSupported && (
+                  <button
+                    onClick={startSTT}
+                    className={`text-xs px-3 py-1 rounded-full border transition font-medium ${
+                      isListening
+                        ? 'bg-red-50 border-red-300 text-red-600 animate-pulse'
+                        : 'bg-gray-50 border-gray-200 text-gray-500 hover:border-orange-300 hover:text-orange-600'
+                    }`}
+                  >
+                    {isListening ? '🎤 듣는 중...' : '🎤 말하기'}
+                  </button>
+                )}
+              </div>
+
+              {/* 실시간 음성 텍스트 표시 */}
+              {(transcript || interimText) && (
+                <div className="mt-3 w-full bg-gray-50 rounded-xl px-4 py-2 text-left max-h-24 overflow-y-auto">
+                  {transcript && (
+                    <span className="text-xs text-gray-700">{transcript}</span>
+                  )}
+                  {interimText && (
+                    <span className="text-xs text-gray-400 italic">{interimText}</span>
+                  )}
+                </div>
+              )}
+
               {card.review && (
                 <p className="text-xs text-gray-300 mt-3">
                   {card.review.review_count}회 복습 · {card.review.interval_days}일 간격
@@ -394,7 +584,7 @@ export default function RetrievalPage() {
               )}
             </div>
 
-            {/* 뒷면 — 정답 */}
+            {/* 뒷면 — 정답만 */}
             <div
               style={{
                 backfaceVisibility: 'hidden',
@@ -403,13 +593,44 @@ export default function RetrievalPage() {
               }}
               className="absolute inset-0 bg-white rounded-2xl shadow-sm p-8 flex flex-col items-center justify-center text-center"
             >
-              <p className="text-xs font-semibold text-orange-500 mb-3">정답</p>
+              <p className="text-xs font-semibold text-orange-500 mb-2">정답</p>
               <p className="text-base font-bold text-gray-800 leading-relaxed whitespace-pre-line">
                 {card.answer}
               </p>
             </div>
           </div>
         </div>
+
+        {/* 내 답변 비교 영역 — 카드 밖, 버튼 위 */}
+        {flipped && hasTranscript && matchScore && matchScore.total > 0 && (
+          <div className="bg-white rounded-2xl shadow-sm px-4 py-3 mb-4">
+            {/* 키워드 점수 */}
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xs text-gray-400">내 답변 키워드</span>
+              <span
+                className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                  matchScore.pct >= 70
+                    ? 'bg-green-50 text-green-600'
+                    : matchScore.pct >= 40
+                    ? 'bg-amber-50 text-amber-600'
+                    : 'bg-red-50 text-red-500'
+                }`}
+              >
+                {matchScore.matched}/{matchScore.total} ({matchScore.pct}%)
+              </span>
+              {matchScore.pct >= 70 && <span className="text-xs">✅ 잘 했어요!</span>}
+              {matchScore.pct >= 40 && matchScore.pct < 70 && <span className="text-xs">🟡 아쉬워요</span>}
+              {matchScore.pct < 40 && <span className="text-xs">❌ 다시 복습해요</span>}
+            </div>
+            {/* 내가 말한 내용 */}
+            <div className="bg-blue-50 rounded-xl px-3 py-2 max-h-20 overflow-y-auto">
+              <p className="text-xs text-gray-500 mb-0.5 font-medium">내가 말한 내용</p>
+              <p className="text-xs text-blue-700 leading-relaxed">
+                {transcript}
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* 버튼 영역 */}
         {!flipped ? (
@@ -441,7 +662,9 @@ export default function RetrievalPage() {
         {/* 힌트: 아직 뒤집기 전 */}
         {!flipped && (
           <p className="text-center text-xs text-gray-400 mt-4">
-            머릿속으로 먼저 떠올려본 뒤 정답을 확인하세요
+            {sttSupported
+              ? '🎤 말하기로 답을 말해본 뒤 정답을 확인하세요'
+              : '머릿속으로 먼저 떠올려본 뒤 정답을 확인하세요'}
           </p>
         )}
       </div>

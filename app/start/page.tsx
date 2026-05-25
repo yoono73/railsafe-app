@@ -176,7 +176,24 @@ export default function StartPage() {
           📅 시험일까지 D-{dday} · 2026.06.21
         </div>
         <h1 className="text-2xl font-bold text-gray-800 mb-1">오늘 어떻게 공부할까요?</h1>
-        <p className="text-sm text-gray-500 mb-8">학습 방식을 선택하세요</p>
+        <p className="text-sm text-gray-500 mb-5">학습 방식을 선택하세요</p>
+
+        {/* ── 3초 트리거: 선택 없이 즉시 시작 ── */}
+        <button
+          onClick={() => router.push('/retrieval')}
+          className="w-full max-w-md mb-6 flex items-center justify-between bg-purple-700 hover:bg-purple-800 active:bg-purple-900 text-white rounded-2xl px-6 py-5 transition shadow-lg shadow-purple-200"
+        >
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">⚡</span>
+            <div className="text-left">
+              <p className="font-bold text-base">지금 바로 시작</p>
+              <p className="text-xs text-purple-200 mt-0.5">
+                {overdueCount > 0 ? `밀린 복습 ${overdueCount}개 포함` : '오늘의 플래시카드로 바로 이동'}
+              </p>
+            </div>
+          </div>
+          <span className="text-xl font-bold text-purple-200">›</span>
+        </button>
 
         {overdueCount > 0 && (
           <div
