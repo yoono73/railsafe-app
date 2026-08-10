@@ -19,6 +19,13 @@ interface Question {
   options: (string | Option)[];
   correct_option: number;
   explanation?: string;
+  is_active?: boolean;
+}
+
+interface MidProgress {
+  current: number;
+  score: number;
+  questionIds: number[];
 }
 
 interface WrongAnswer {
@@ -127,6 +134,9 @@ export default function CbtPage() {
   const [passLoading, setPassLoading] = useState(false);
   const [passPickerFor, setPassPickerFor] = useState<number | null>(null); // 사유 선택 중인 questionId
 
+  // ── 이어하기 ──
+  const [resumeData, setResumeData] = useState<MidProgress | null>(null);
+
   // ElevenLabs TTS (나레이터 여성 목소리)
   const VOICE_NARRATOR_CBT = '5n5gqmaQi9Ewevrz7bOS';
 
@@ -173,6 +183,7 @@ export default function CbtPage() {
       if (error) { setLoading(false); return; }
 
       const filtered = (data || []).filter((q: Question) => {
+        if (q.is_active === false) return false; // 지문 누락 등 비활성 문항 제외
         if (!Array.isArray(q.options)) return false;
         if (q.options.length !== 4) return false;
         if (q.correct_option < 1 || q.correct_option > 4) return false;
@@ -181,6 +192,24 @@ export default function CbtPage() {
 
       setAllQuestions(filtered);
       setLoading(false);
+
+      // 이어하기: 중간 진행 상태 복원 확인
+      try {
+        const midKey = `cbt_mid_${subjectId}`;
+        const saved = localStorage.getItem(midKey);
+        if (saved) {
+          const parsed: MidProgress = JSON.parse(saved);
+          const currentIds = filtered.map((q: Question) => q.id).join(',');
+          const savedIds = parsed.questionIds.join(',');
+          if (currentIds === savedIds && parsed.current > 0 && parsed.current < filtered.length) {
+            setResumeData(parsed);
+          } else {
+            localStorage.removeItem(midKey);
+          }
+        }
+      } catch {
+        // 무시
+      }
 
       // 북마크 목록 로드
       const { data: { user } } = await supabase.auth.getUser();
@@ -482,11 +511,26 @@ export default function CbtPage() {
   };
 
   const startPractice = () => {
+    localStorage.removeItem(`cbt_mid_${subjectId}`);
+    setResumeData(null);
     setQuestions(allQuestions);
     setCurrent(0); setSelected(null); setConfirmed(false);
     setScore(0); setFinished(false); setWrongAnswers([]); setReviewing(false);
     sessionId.current = crypto.randomUUID();
     questionStartTime.current = Date.now();
+    setMode('practice');
+  };
+
+  const handleResume = () => {
+    if (!resumeData) return;
+    setQuestions(allQuestions);
+    setCurrent(resumeData.current);
+    setScore(resumeData.score);
+    setSelected(null); setConfirmed(false);
+    setFinished(false); setWrongAnswers([]); setReviewing(false);
+    sessionId.current = crypto.randomUUID();
+    questionStartTime.current = Date.now();
+    setResumeData(null);
     setMode('practice');
   };
 
@@ -547,6 +591,7 @@ export default function CbtPage() {
   };
 
   const handleRestart = () => {
+    localStorage.removeItem(`cbt_mid_${subjectId}`);
     setCurrent(0); setSelected(null); setConfirmed(false);
     setScore(0); setFinished(false); setWrongAnswers([]); setReviewing(false);
     sessionId.current = crypto.randomUUID();
@@ -563,8 +608,23 @@ export default function CbtPage() {
         bestPct: Math.max(pct, prev.bestPct || 0),
         lastDate: new Date().toLocaleDateString('ko-KR'),
       }));
+      // 완료 시 중간 저장 삭제
+      localStorage.removeItem(`cbt_mid_${subjectId}`);
     }
   }, [finished, score, questions.length, subjectId, mode]);
+
+  // 연습 모드: 문제 이동마다 중간 진행 상태 저장
+  useEffect(() => {
+    if (mode !== 'practice' || finished || questions.length === 0) return;
+    try {
+      localStorage.setItem(`cbt_mid_${subjectId}`, JSON.stringify({
+        current, score, questionIds: questions.map((q) => q.id),
+      }));
+    } catch {
+      // 무시
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current, score, mode, finished]);
 
   // ── 시험 모드 핸들러 ──
   const handleExamSelect = (optNum: number) => {
@@ -635,6 +695,35 @@ export default function CbtPage() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+
+            {/* 🔄 이어하기 배너 */}
+            {resumeData && (
+              <div style={{ background: '#fffbeb', border: '2px solid #f59e0b', borderRadius: '1rem', padding: '1rem 1.25rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.6rem' }}>
+                  <span style={{ fontSize: '1.3rem' }}>🔄</span>
+                  <div>
+                    <p style={{ fontWeight: '700', color: '#92400e', fontSize: '0.95rem', margin: 0 }}>이어서 풀기</p>
+                    <p style={{ color: '#b45309', fontSize: '0.78rem', margin: 0 }}>
+                      {resumeData.current + 1}번째 문제 · 현재 점수 {resumeData.score}점
+                    </p>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button
+                    onClick={handleResume}
+                    style={{ flex: 1, padding: '0.6rem', background: '#f59e0b', color: 'white', border: 'none', borderRadius: '0.5rem', fontSize: '0.9rem', fontWeight: '700', cursor: 'pointer' }}
+                  >
+                    이어하기
+                  </button>
+                  <button
+                    onClick={() => { setDrivingMode(false); startPractice(); }}
+                    style={{ flex: 1, padding: '0.6rem', background: '#fef3c7', color: '#92400e', border: '1.5px solid #fcd34d', borderRadius: '0.5rem', fontSize: '0.9rem', fontWeight: '600', cursor: 'pointer' }}
+                  >
+                    처음부터
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* 🚗 음성 모드 */}
             <button
