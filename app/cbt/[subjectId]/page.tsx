@@ -555,9 +555,19 @@ export default function CbtPage() {
     setConfirmed(true);
     const q = questions[current];
     const isCorrect = selected === q.correct_option;
+    const nextScore = isCorrect ? score + 1 : score;
     const timeSpent = Date.now() - questionStartTime.current;
-    if (isCorrect) setScore((s) => s + 1);
+    if (isCorrect) setScore(nextScore);
     else setWrongAnswers((prev) => [...prev, { question: q, selectedOption: selected }]);
+
+    // 확인 즉시 저장 (중간 이탈 대비)
+    if (allQuestions.length > 0) {
+      try {
+        localStorage.setItem(`cbt_mid_${subjectId}`, JSON.stringify({
+          current, score: nextScore, questionIds: allQuestions.map((q) => q.id),
+        }));
+      } catch { /* 무시 */ }
+    }
 
     // 결과 + 해설 TTS (1회독 수집 모드 시 해설 생략)
     const resultText = isCorrect
@@ -582,11 +592,21 @@ export default function CbtPage() {
   };
 
   const handleNext = () => {
-    if (current + 1 >= questions.length) setFinished(true);
-    else {
-      setCurrent((c) => c + 1);
+    if (current + 1 >= questions.length) {
+      setFinished(true);
+    } else {
+      const nextCurrent = current + 1;
+      setCurrent(nextCurrent);
       setSelected(null); setConfirmed(false);
       questionStartTime.current = Date.now();
+      // 문제 이동 시 current 업데이트하여 저장
+      if (allQuestions.length > 0) {
+        try {
+          localStorage.setItem(`cbt_mid_${subjectId}`, JSON.stringify({
+            current: nextCurrent, score, questionIds: allQuestions.map((q) => q.id),
+          }));
+        } catch { /* 무시 */ }
+      }
     }
   };
 
@@ -613,18 +633,6 @@ export default function CbtPage() {
     }
   }, [finished, score, questions.length, subjectId, mode]);
 
-  // 연습 모드: 문제 이동마다 중간 진행 상태 저장
-  useEffect(() => {
-    if (mode !== 'practice' || finished || questions.length === 0) return;
-    try {
-      localStorage.setItem(`cbt_mid_${subjectId}`, JSON.stringify({
-        current, score, questionIds: questions.map((q) => q.id),
-      }));
-    } catch {
-      // 무시
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [current, score, mode, finished]);
 
   // ── 시험 모드 핸들러 ──
   const handleExamSelect = (optNum: number) => {
