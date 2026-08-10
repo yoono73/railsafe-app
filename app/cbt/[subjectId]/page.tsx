@@ -193,24 +193,6 @@ export default function CbtPage() {
       setAllQuestions(filtered);
       setLoading(false);
 
-      // 이어하기: 중간 진행 상태 복원 확인
-      try {
-        const midKey = `cbt_mid_${subjectId}`;
-        const saved = localStorage.getItem(midKey);
-        if (saved) {
-          const parsed: MidProgress = JSON.parse(saved);
-          const currentIds = filtered.map((q: Question) => q.id).join(',');
-          const savedIds = parsed.questionIds.join(',');
-          if (currentIds === savedIds && parsed.current > 0 && parsed.current < filtered.length) {
-            setResumeData(parsed);
-          } else {
-            localStorage.removeItem(midKey);
-          }
-        }
-      } catch {
-        // 무시
-      }
-
       // 북마크 목록 로드
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
@@ -241,6 +223,28 @@ export default function CbtPage() {
     };
     fetchAll();
   }, [subjectId]);
+
+  // 이어하기: mode='select'로 돌아올 때마다 재확인 (나가기 버튼 포함)
+  useEffect(() => {
+    if (mode !== 'select' || allQuestions.length === 0) return;
+    try {
+      const midKey = `cbt_mid_${subjectId}`;
+      const saved = localStorage.getItem(midKey);
+      if (saved) {
+        const parsed: MidProgress = JSON.parse(saved);
+        const currentIds = allQuestions.map((q) => q.id).join(',');
+        const savedIds = parsed.questionIds.join(',');
+        if (currentIds === savedIds && parsed.current > 0 && parsed.current < allQuestions.length) {
+          setResumeData(parsed);
+          return;
+        }
+      }
+      setResumeData(null);
+    } catch {
+      setResumeData(null);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, subjectId, allQuestions.length]);
 
   // 시험 모드 타이머
   useEffect(() => {
