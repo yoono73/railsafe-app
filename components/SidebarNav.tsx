@@ -18,14 +18,15 @@ export default function SidebarNav() {
   const pathname = usePathname();
 
   // 현재 경로에 맞는 섹션 자동 열림
-  const getInitialSection = (): 'theory' | 'story' | 'cbt' | null => {
+  const getInitialSection = (): 'theory' | 'story' | 'cbt' | 'kibchul' | null => {
     if (pathname.startsWith('/theory')) return 'theory';
     if (pathname.startsWith('/story')) return 'story';
     if (pathname.startsWith('/cbt')) return 'cbt';
+    if (pathname.startsWith('/kibchul')) return 'kibchul';
     return null;
   };
 
-  const [openSection, setOpenSection] = useState<'theory' | 'story' | 'cbt' | null>(getInitialSection);
+  const [openSection, setOpenSection] = useState<'theory' | 'story' | 'cbt' | 'kibchul' | null>(getInitialSection);
   const [appVersion, setAppVersion] = useState<string>('');
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function SidebarNav() {
     });
   }, []);
 
-  const toggle = (section: 'theory' | 'story' | 'cbt') => {
+  const toggle = (section: 'theory' | 'story' | 'cbt' | 'kibchul') => {
     setOpenSection(prev => prev === section ? null : section);
   };
 
@@ -151,6 +152,37 @@ export default function SidebarNav() {
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
                   pathname.startsWith(`/cbt/${s.id}`)
                     ? 'bg-purple-100 text-purple-800 font-semibold'
+                    : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
+                }`}
+              >
+                <span>{s.icon}</span>
+                <span className="truncate">{s.name}</span>
+              </Link>
+            ))}
+          </div>
+        )}
+
+        {/* 기출문제 */}
+        <button
+          onClick={() => toggle('kibchul')}
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors w-full text-left ${
+            openSection === 'kibchul' ? 'bg-orange-50 text-orange-800' : 'text-gray-600 hover:bg-gray-100'
+          }`}
+        >
+          <span className="text-base">📋</span>
+          <span className="flex-1">기출문제</span>
+          <span className="text-xs text-gray-400">{openSection === 'kibchul' ? '▲' : '▼'}</span>
+        </button>
+
+        {openSection === 'kibchul' && (
+          <div className="ml-4 flex flex-col gap-0.5">
+            {subjects.map(s => (
+              <Link
+                key={s.id}
+                href={`/kibchul/${s.id}`}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
+                  pathname.startsWith(`/kibchul/${s.id}`)
+                    ? 'bg-orange-100 text-orange-800 font-semibold'
                     : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
                 }`}
               >
