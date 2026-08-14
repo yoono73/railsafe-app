@@ -52,6 +52,24 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
 /* 모바일 테이블 가로 스크롤 방지 */
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
 
+/* 이론 해설 박스 */
+.theory-note { background:#f0f7ff; border-left:4px solid #2563eb; padding:10px 14px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#1e3a5f; }
+.theory-note strong { color:#1d4ed8; }
+
+/* 기출 예시 박스 */
+.quiz-ex { background:#f0fdf4; border-left:4px solid #16a34a; padding:10px 14px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.88em; color:#14532d; }
+.quiz-ex .qe-title { font-weight:bold; color:#15803d; margin-bottom:4px; }
+.quiz-ex .qe-q { margin:4px 0 2px; }
+.quiz-ex .qe-a { font-weight:bold; color:#166534; }
+.quiz-ex .qe-wrong { color:#dc2626; text-decoration:line-through; }
+
+/* 비교 하이라이트 박스 */
+.compare-box { display:grid; gap:6px; margin:8px 0; }
+.compare-box.col2 { grid-template-columns: 1fr 1fr; }
+.cbox-item { background:#f8f8f8; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px; font-size:.88em; }
+.cbox-item .cbox-head { font-weight:bold; color:#4c1d95; margin-bottom:4px; font-size:.92em; }
+@media(max-width:600px){ .compare-box.col2{ grid-template-columns:1fr; } }
+
   .print-btn { display:inline-flex; align-items:center; gap:4px; background:#fff; color:#4c1d95; border:none; border-radius:6px; padding:5px 12px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:700; margin-left:6px; transition:background .2s; }
   .print-btn:hover { background:#ede9fe; }
   @media(max-width:768px){
@@ -273,12 +291,32 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
 <div class="part-body"><div class="concept" id="p1-01">
 <div class="concept-title"><span class="cnum">개념 01</span>교통의 구성요소 — 두 가지 구별</div>
 <div class="table-wrap"><table><thead><tr><th>구분</th><th>내용</th></tr></thead><tbody><tr><td>교통의 3대 구성요소</td><td><strong>사람 · 교통수단 · 통로</strong></td></tr><tr><td>교통기관의 3대요소</td><td><strong>통로 · 운반구 · 동력</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: '교통의 구성요소'에 운반구·동력 넣으면 오답 / '교통기관 요소'에 사람 넣으면 오답</div>
+<div class="theory-note">📖 <strong>구별 핵심</strong>: <strong>교통의 구성요소</strong>는 "교통 현상"을 이루는 요소 → <u>사람(주체) + 교통수단(도구) + 통로(경로)</u>. <strong>교통기관의 요소</strong>는 "교통수단 자체"를 이루는 요소 → <u>통로(선로·도로) + 운반구(차량) + 동력(엔진·전기)</u>. 두 세트에 공통인 것은 <strong>통로</strong> 하나뿐이며, '사람'은 교통기관 요소에 절대 포함되지 않는다.</div>
 </div><div class="concept" id="p1-02">
 <div class="concept-title"><span class="cnum">개념 02</span>교통사고 원인 분류</div>
 <div class="vis-wrap"><img src="images/VIS-013_4M구조도.jpg" alt="4M 사고원인 구조도" loading="eager"><p class="vis-cap">4M 사고원인 구조도</p></div><div class="table-wrap"><table><thead><tr><th>요인</th><th>내용</th><th>비율</th></tr></thead><tbody><tr><td>인적 요인</td><td>운전자 심리·신체·지식</td><td><strong>84.8%</strong> 압도적 1위</td></tr><tr><td>환경 요인</td><td>도로·기상 등 외부 환경</td><td></td></tr><tr><td>차량 요인</td><td>차량 결함·정비 불량</td><td></td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>4M 요소</th><th>영어</th><th>내용</th></tr></thead><tbody><tr><td>인간</td><td>Man</td><td>운전자 심리·신체·지식</td></tr><tr><td>기계</td><td>Machine</td><td>차량 결함·기계적 요인</td></tr><tr><td>매개체</td><td>Media</td><td>작업정보·작업환경·건강관리</td></tr><tr><td>관리</td><td>Management</td><td>관리조직·평가·훈련</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: Media = 매체·미디어가 아닌 <strong>작업정보·환경</strong></div><div class="tip">★ 직접원인: 음주·과속·장비불량 / 간접원인(잠재원인): <strong>교육적 원인</strong></div>
+<div class="theory-note">📖 <strong>원인 상세</strong><br>
+• <strong>직접원인(1차)</strong>: 불안전한 행동(음주·과속·신호무시) + 불안전한 상태(결빙도로·불량장비)<br>
+• <strong>간접원인(2차, 잠재원인)</strong>: 교육적 원인(지식·기술 부족), 기술적 원인(설계결함), 신체적 원인, 정신적 원인<br>
+• <strong>4M 핵심 암기</strong>: Man(인간)·Machine(기계)·<u>Media(작업환경·정보)</u>·Management(관리) — Media를 '매체'로 오해하는 함정 주의<br>
+• 인적요인 84.8%의 의미: 사고의 압도적 다수는 <u>운전자의 행동·심리</u>에서 비롯됨 → 교육·훈련의 중요성
+</div>
+<div class="quiz-ex">
+<div class="qe-title">📋 기출 예시</div>
+<div class="qe-q">Q. 교통사고 원인 중 간접원인(잠재원인)에 해당하는 것은?</div>
+<div class="qe-a">A. 교육적 원인 (음주·과속은 직접원인)</div>
+<div class="qe-q">Q. 4M에서 Media가 의미하는 것은?</div>
+<div class="qe-a">A. 작업정보·작업환경·건강관리 (매체·미디어 ❌)</div>
+</div>
 </div><div class="concept" id="p1-03">
 <div class="concept-title"><span class="cnum">개념 03</span>안전관리 3대 접근방법 (3E)</div>
 <div class="table-wrap"><table><thead><tr><th>접근</th><th>3E</th><th>내용</th></tr></thead><tbody><tr><td>기술적 접근</td><td>Engineering</td><td>하드웨어·기술개발</td></tr><tr><td>교육적 접근</td><td>Education</td><td>교육·훈련</td></tr><tr><td>제도적 접근</td><td>Enforcement</td><td>법령 제정·안전기준·단속</td></tr></tbody></table></div><div class="tip">★ 관리적 접근 = 소프트웨어·통계학·품질관리기법 (제도적 접근과 구별)</div>
+<div class="theory-note">📖 <strong>3E 실전 예시</strong><br>
+• <strong>Engineering(기술)</strong>: 가드레일 설치, 신호체계 자동화, 열차 자동제어장치(ATS)<br>
+• <strong>Education(교육)</strong>: 안전운전 교육훈련, 위험예지훈련(KYT), 안전보건교육<br>
+• <strong>Enforcement(제도)</strong>: 교통안전법 제정, 음주단속, 속도위반 과태료, 안전기준 강화<br>
+• <strong>관리적 접근</strong>(4번째, 시험 구별 포인트): 통계분석·PDCA·TQM 등 소프트웨어 기법 → 3E에 포함되지 않음
+</div>
 </div><div class="concept" id="p1-59">
 <div class="concept-title"><span class="cnum">개념 59</span>교통안전관리 3대 기능</div>
 <div class="step-box">계획기능 → 단속기능 → 개선기능</div><div class="table-wrap"><table><thead><tr><th>기능</th><th>내용</th></tr></thead><tbody><tr><td><strong>계획기능</strong></td><td>사고 예방을 위한 안전계획 수립</td></tr><tr><td><strong>단속기능</strong></td><td>안전기준 준수 여부 감독·점검</td></tr><tr><td><strong>개선기능</strong></td><td>문제점 발굴 및 시정·개선</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: '생산기능'·'평가기능' → 3대 기능에 없음</div>
@@ -288,27 +326,93 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
 <div class="part-body"><div class="concept" id="p2-04">
 <div class="concept-title"><span class="cnum">개념 04</span>하인리히 법칙 — 1 : 29 : 300</div>
 <div class="step-box">중대사고 <strong>1</strong> : 경미사고 <strong>29</strong> : 무상해사고 <strong>300</strong></div><div class="tip">★ 사소한 사고 300건이 쌓이면 대형사고 1건 발생 — 작은 사고 무시 금지</div><div class="trap">⚠️ 함정 주의: 숫자 순서 바꾸기 출제 — 1:300:29 형태</div>
+<div class="theory-note">📖 <strong>이론 배경</strong>: 하인리히(Herbert W. Heinrich)가 75,000건 산업재해를 분석해서 발견. 핵심 교훈 → 대형 사고는 갑자기 발생하지 않는다. 수백 번의 아차사고와 수십 번의 경상이 축적된 후에 중대 사고가 발생한다.<br><br>
+<strong>버드 법칙(Frank Bird)과 비교</strong>: 1:10:30:600 (중상 1 : 경상 10 : 물적피해 30 : 무피해사고 600) — 하인리히보다 더 세분화<br><br>
+<strong>암기법</strong>: "1-29-300, 하인리히 삼단계" / 중·경·무 = 1·29·300
+</div>
+<div class="quiz-ex">
+<div class="qe-title">📋 기출 예시</div>
+<div class="qe-q">Q. 하인리히 법칙에서 무상해사고(아차사고) 비율은?</div>
+<div class="qe-a">A. 300 (중상 1 : 경상 29 : 무상해 300)</div>
+<div class="qe-q">Q. 하인리히 법칙의 핵심 교훈은?</div>
+<div class="qe-a">A. 아차사고·경미한 사고를 방치하면 대형 사고로 이어진다</div>
+</div>
 </div><div class="concept" id="p2-05">
 <div class="concept-title"><span class="cnum">개념 05</span>등치성 원리</div>
 <div class="tip">★ 사고 원인 요인들의 비중이 <strong>동일</strong> — 어느 하나 제거해도 사고 방지 가능</div><div class="trap">⚠️ 함정 주의: '어느 하나가 더 중요하다' → 오답 / 빈출 TOP 1</div>
+<div class="theory-note">📖 <strong>이론 의미</strong>: 사고는 여러 원인이 연쇄적으로 작용해서 발생(연쇄이론)하는데, 그 각각의 원인이 사고 발생에 미치는 비중이 <strong>동등</strong>하다는 원리. 따라서 어떤 원인 하나라도 제거하면 사고의 연쇄고리를 끊을 수 있다. "하인리히의 연쇄이론"과 함께 이해하면 좋다.<br>
+<strong>핵심 포인트</strong>: "특정 원인이 다른 원인보다 더 중요하다" = 틀림 / "모든 원인이 동등하게 중요하다" = 맞음
+</div>
 </div><div class="concept" id="p2-06">
 <div class="concept-title"><span class="cnum">개념 06</span>욕조곡선 (Bathtub Curve)</div>
 <div class="vis-wrap"><img src="images/VIS-001_욕조곡선.jpg" alt="욕조곡선 — 고장률 시간 변화" loading="eager"><p class="vis-cap">욕조곡선 — 고장률 시간 변화</p></div><div class="table-wrap"><table><thead><tr><th>구간</th><th>고장 유형</th><th>원인</th></tr></thead><tbody><tr><td>초기 (감소형)</td><td>초기 결함 고장</td><td>설계·제조 결함·미숙</td></tr><tr><td>중기 (안정형)</td><td>우발적 고장</td><td>예측 불가</td></tr><tr><td>말기 (증가형)</td><td>마모 고장</td><td>노화·마모</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: '중기 = 고장 빈번' → 오답 (중기는 우발적, 빈도 낮음)</div>
+<div class="theory-note">📖 <strong>구간별 상세</strong><br>
+• <strong>초기고장기(감소형)</strong>: 설계·제조 결함, 조립불량, 작업자 미숙 → 대책: <u>번인(Burn-in) 테스트</u>, 충분한 검사·선별<br>
+• <strong>우발고장기(안정형)</strong>: 예측 불가한 랜덤 고장 → 대책: 예비부품 확보, 빠른 수리 체계<br>
+• <strong>마모고장기(증가형)</strong>: 노화·마모·피로 누적 → 대책: <u>예방정비</u>, 부품 주기적 교체<br>
+<strong>욕조 모양 기억법</strong>: 양쪽 끝(초기·말기)이 올라가고 가운데(중기)가 낮은 U자 모양 = 욕조
+</div>
+<div class="quiz-ex">
+<div class="qe-title">📋 기출 예시</div>
+<div class="qe-q">Q. 욕조곡선에서 새 제품의 초기 불량에 해당하는 구간은?</div>
+<div class="qe-a">A. 초기고장기 (감소형) — 번인 테스트로 해결</div>
+<div class="qe-q">Q. 부품이 노화되어 고장률이 높아지는 구간은?</div>
+<div class="qe-a">A. 마모고장기 (증가형) — 예방정비·부품교체로 해결</div>
+</div>
 </div><div class="concept" id="p2-07">
 <div class="concept-title"><span class="cnum">개념 07</span>페일 세이프 (Fail-Safe)</div>
 <div class="tip">★ 장치에 고장 발생해도 안전 상태 유지·전이하는 설계 — 철도 신호 고장 시 자동 정지</div>
+<div class="theory-note">📖 <strong>페일 세이프 vs 풀 프루프</strong><br>
+• <strong>Fail-Safe(페일 세이프)</strong>: <u>기계·장치가 고장</u>나도 안전 방향으로 자동 전환 → 예) 신호기 고장 시 자동 적색(정지) 표시<br>
+• <strong>Fool Proof(풀 프루프)</strong>: <u>사람이 실수</u>해도 사고가 나지 않는 설계 → 예) 세탁기 뚜껑 열리면 자동 정지<br>
+<strong>헷갈림 포인트</strong>: 페일 세이프 = 장치 고장 대응 / 풀 프루프 = 인간 실수 대응<br>
+<strong>오해 주의</strong>: 페일 세이프는 고장 <u>예방</u>이 아니라, 고장 <u>후의 안전 확보</u> 설계
+</div>
+<div class="quiz-ex">
+<div class="qe-title">📋 기출 예시</div>
+<div class="qe-q">Q. 철도 신호기가 고장났을 때 자동으로 정지 신호를 현시하는 것은 어떤 원리인가?</div>
+<div class="qe-a">A. 페일 세이프(Fail-Safe) — 기계 고장 시 안전 방향으로 작동</div>
+</div>
 </div><div class="concept" id="p2-08">
 <div class="concept-title"><span class="cnum">개념 08</span>PDCA 사이클</div>
 <div class="vis-wrap"><img src="images/VIS-005_PDCA사이클.jpg" alt="PDCA 사이클" loading="eager"><p class="vis-cap">PDCA 사이클</p></div><div class="table-wrap"><table><thead><tr><th>단계</th><th>영어</th><th>의미</th></tr></thead><tbody><tr><td>P</td><td>Plan</td><td>계획</td></tr><tr><td>D</td><td>Do</td><td>실시</td></tr><tr><td>C</td><td>Check</td><td><strong>통제</strong></td></tr><tr><td>A</td><td>Act</td><td><strong>조정</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: C = '확인' 아님 → <strong>통제</strong> / A = '개선' 아님 → <strong>조정</strong></div>
+<div class="theory-note">📖 <strong>PDCA 상세</strong><br>
+• <strong>P(Plan·계획)</strong>: 목표 설정, 달성 방법 계획, 문제 원인 파악<br>
+• <strong>D(Do·실시)</strong>: 계획에 따른 실행, 교육·훈련 병행<br>
+• <strong>C(Check·통제)</strong>: 실행 결과와 계획의 차이를 <u>평가·측정·통제</u> — "확인"이 아닌 <strong>통제</strong><br>
+• <strong>A(Act·조정)</strong>: 차이가 있으면 원인 분석 후 <u>시정·조정</u>하고 다음 P로 연결 — "개선"이 아닌 <strong>조정</strong><br>
+<strong>사이클 특성</strong>: PDCA는 한 번 완료 후 다시 P→D→C→A로 반복 → 지속적 품질향상
+</div>
+<div class="quiz-ex">
+<div class="qe-title">📋 기출 예시</div>
+<div class="qe-q">Q. PDCA 사이클에서 C 단계의 의미는?</div>
+<div class="qe-a">A. <strong>통제</strong>(Check) — "확인"이라고 쓰면 오답</div>
+<div class="qe-q">Q. PDCA에서 A 단계의 의미는?</div>
+<div class="qe-a">A. <strong>조정</strong>(Act) — "개선"이라고 쓰면 오답</div>
+</div>
 </div></div>
 </div><div class="part" id="p3">
 <div class="part-title" onclick="togglePart(this)">PART 3. 단계별 절차 — 순서가 핵심<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p3-09">
 <div class="concept-title"><span class="cnum">개념 09</span>위험요소 제거 6단계</div>
 <div class="vis-wrap"><img src="images/VIS-006_위험요소제거6단계.jpg" alt="위험요소 제거 6단계" loading="eager"><p class="vis-cap">위험요소 제거 6단계</p></div><div class="step-box">조직구성 → 탐지 → 원인분석 → 대안제시 → 채택시행 → 환류(피드백)</div><div class="tip">★ '안전관리책임자 임명·안전계획 수립' = <strong>조직구성</strong> 단계 (자주 출제)</div>
+<div class="theory-note">📖 <strong>단계별 핵심</strong><br>
+① 조직구성: 안전관리 책임자 임명, 안전계획 수립 — <u>첫 번째 단계가 항상 조직</u><br>
+② 탐지: 작업장에서 위험 요소 찾아내기<br>
+③ 원인분석: 발견된 위험의 원인 규명<br>
+④ 대안제시: 해결책을 <u>복수</u>로 제시 (단일안 ❌)<br>
+⑤ 채택시행: 최선의 대안 선택 후 실행<br>
+⑥ 환류(피드백): 결과를 처음 단계로 되돌려 개선<br>
+<strong>암기법</strong>: "조탐원대채환" — 조·탐·원·대·채·환 여섯 글자
+</div>
 </div><div class="concept" id="p3-10">
 <div class="concept-title"><span class="cnum">개념 10</span>교통안전관리 6단계</div>
 <div class="vis-wrap"><img src="images/VIS-007_교통안전관리6단계.jpg" alt="교통안전관리 6단계" loading="eager"><p class="vis-cap">교통안전관리 6단계</p></div><div class="step-box">준비 → 조사 → 계획 → 설득 → 교육훈련 → 확인</div><div class="table-wrap"><table><thead><tr><th>단계</th><th>핵심</th></tr></thead><tbody><tr><td>조사</td><td>작업장 방문·안전지시·감독상태 점검</td></tr><tr><td>설득</td><td>경영진에게 효과적 안전관리방안 <strong>제시</strong></td></tr><tr><td>계획</td><td>복수안 마련 (단수 ❌)</td></tr></tbody></table></div>
+<div class="theory-note">📖 <strong>위험요소 제거 6단계(개념09)와 혼동 주의</strong><br>
+• 개념09 위험요소 제거 6단계: 조탐원대채환 (조직구성·탐지·원인분석·대안제시·채택시행·환류)<br>
+• 개념10 교통안전관리 6단계: <strong>준조계설교확</strong> (준비·조사·계획·설득·교육훈련·확인)<br>
+두 단계를 구별하는 시험 문제 자주 출제! 시작 단어에 주목: 개념09=조직구성, 개념10=<u>준비</u>
+</div>
 </div><div class="concept" id="p3-11">
 <div class="concept-title"><span class="cnum">개념 11</span>TBM (현장안전회의) 5단계</div>
 <div class="vis-wrap"><img src="images/VIS-008_TBM5단계.jpg" alt="TBM 현장안전회의 5단계" loading="eager"><p class="vis-cap">TBM 현장안전회의 5단계</p></div><div class="step-box">도입 → 점검정비 → 운행지시 → 위험예지 → 확인</div><div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>적정 인원</td><td><strong>5~6명</strong></td></tr><tr><td>소집단 일반</td><td>10명 내외 (TBM과 구별!)</td></tr><tr><td>원칙</td><td>일방적 지시 ❌ → 스스로 생각하고 납득</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 소집단 일반=10명 ↔ TBM=5~6명 — 혼동 주의</div>
@@ -339,18 +443,47 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
 <div class="part-body"><div class="concept" id="p4-17">
 <div class="concept-title"><span class="cnum">개념 17</span>경영학 발전 순서 — 반드시 암기</div>
 <div class="vis-wrap"><img src="images/VIS-002_경영학발전타임라인.jpg" alt="경영학 발전 순서 타임라인" loading="eager"><p class="vis-cap">경영학 발전 순서 타임라인</p></div><div class="step-box">과학적 관리론(테일러,1911) → 경영관리론(페이욜,1916) → 인간관계론(메이요,1932,호손실험) → 행동과학</div><div class="trap">⚠️ 함정 주의: 순서 뒤섞어 출제 — 다(과학)→나(경영관리)→가(인간관계)→라(행동과학) 형태</div>
+<div class="theory-note">📖 <strong>학자·연도·핵심어 완전정리</strong><br>
+• <strong>테일러(1911)</strong>: 과학적 관리론 — 시간·동작 연구, 차별성과급제, 기능식 조직<br>
+• <strong>페이욜(1916)</strong>: 경영관리론 — 관리 5요소(계획·조직·지휘·조정·통제), 경영활동 6가지<br>
+• <strong>메이요(1932)</strong>: 인간관계론 — 호손실험(조명실험), 비공식조직의 중요성 발견<br>
+• <strong>바나드·사이몬</strong>: 행동과학 — 조직의 효과성, 제한된 합리성<br>
+<strong>암기법</strong>: "테페메행" (테일러→페이욜→메이요→행동과학)
+</div>
+<div class="quiz-ex">
+<div class="qe-title">📋 기출 예시</div>
+<div class="qe-q">Q. 경영학 발전 순서로 올바른 것은?</div>
+<div class="qe-a">A. 과학적 관리론 → 경영관리론 → 인간관계론 → 행동과학<br>(테일러 1911 → 페이욜 1916 → 메이요 1932)</div>
+</div>
 </div><div class="concept" id="p4-18">
 <div class="concept-title"><span class="cnum">개념 18</span>테일러 과학적 관리론</div>
 <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>핵심 방법</td><td>시간연구·동작연구로 표준과업 결정</td></tr><tr><td>임금 방식</td><td><strong>차별성과급제</strong></td></tr><tr><td>접근 방식</td><td>기술적 접근 (사회적 접근 ❌)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: '테일러 = 저가격·고임금' → ❌ 이것은 <strong>포드 시스템</strong></div><div class="trap">⚠️ 함정 주의: '경영관리론 모태 = 테일러' → ❌ 모태는 <strong>페이욜</strong></div>
+<div class="theory-note">📖 <strong>테일러 핵심 정리</strong><br>
+• 과업관리: 시간연구·동작연구로 <u>표준 과업량</u> 설정<br>
+• 임금: <strong>차별성과급제</strong> (표준량 달성 = 높은 임금, 미달 = 낮은 임금)<br>
+• 조직: 기능식(기능별) 조직 제안<br>
+• 핵심 키워드: 효율, 과학적, 기술적 접근<br>
+<strong>포드 시스템과 차이</strong>: 포드 = 저가격·고임금·대량생산(컨베이어벨트) / 테일러 ≠ 저가격·고임금
+</div>
 </div><div class="concept" id="p4-19">
 <div class="concept-title"><span class="cnum">개념 19</span>페이욜 경영관리론</div>
 <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>관리 5요소</td><td><strong>계획·조직·지휘(명령)·조정·통제</strong></td></tr><tr><td>경영활동 6가지</td><td>기술·상업·재무·보호·회계·<strong>관리</strong></td></tr><tr><td>핵심 원칙</td><td>분업의 원칙</td></tr></tbody></table></div>
+<div class="theory-note">📖 <strong>페이욜 관리 5요소 암기법</strong>: "계조지조통" — 계획·조직·지휘·조정·통제<br>
+<strong>경영활동 6가지</strong>: 기술(제조) / 상업(구매·판매) / 재무(자본) / 보호(재산·인원) / 회계(원가·통계) / <strong>관리</strong>(계획·조직·통제) — 여기서 '관리'가 관리 5요소를 포함<br>
+<strong>시험 포인트</strong>: 관리 5요소에서 '조정'을 빠뜨리면 오답 / 경영활동 6가지에서 '마케팅'은 없음
+</div>
 </div><div class="concept" id="p4-20">
 <div class="concept-title"><span class="cnum">개념 20</span>인간관계론 (메이요·뢰슬리스버거)</div>
 <div class="tip">★ 호손실험 → <strong>비공식조직</strong>이 동기부여에 결정적 영향</div><div class="trap">⚠️ 함정 주의: 공식조직 강조 = 인간관계론과 무관 (오답)</div>
 </div><div class="concept" id="p4-21">
 <div class="concept-title"><span class="cnum">개념 21</span>맥그리거 X·Y 이론</div>
 <div class="table-wrap"><table><thead><tr><th>이론</th><th>인간관</th><th>관리 방식</th></tr></thead><tbody><tr><td><strong>X이론</strong></td><td>인간은 게으르고 책임 회피</td><td>채찍·통제·명령</td></tr><tr><td><strong>Y이론</strong></td><td>인간은 자율적·창의적</td><td>자율·자기통제</td></tr></tbody></table></div><div class="tip">★ Y이론 = 자율성·합목적성 전제</div>
+<div class="theory-note">📖 <strong>X·Y이론 관리 방식 정리</strong><br>
+• <strong>X이론 → 외적 동기</strong>: 규칙·처벌·감시·명령·당근과 채찍, 중앙집권적 통제<br>
+• <strong>Y이론 → 내적 동기</strong>: 자율, 자기통제, 참여, 책임부여, 권한위임<br>
+<strong>허즈버그와 연결</strong>: Y이론 = 동기요인(내재적 보상) / X이론 = 위생요인(외재적 통제)<br>
+<strong>매슬로우와 연결</strong>: Y이론 = 상위욕구(존경·자아실현) / X이론 = 하위욕구(생리·안전)
+</div>
 </div><div class="concept" id="p4-22">
 <div class="concept-title"><span class="cnum">개념 22</span>Z이론 (오우치)</div>
 <div class="table-wrap"><table><thead><tr><th>Z이론 5가지 특징</th><th>있음/없음</th></tr></thead><tbody><tr><td>장기고용</td><td>✅</td></tr><tr><td>집단의사결정</td><td>✅</td></tr><tr><td>개인책임</td><td>✅</td></tr><tr><td><strong>느린</strong> 평가와 승진</td><td>✅ (느린 것이 맞음)</td></tr><tr><td>전인격적 관심</td><td>✅</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>'빠른 평가와 승진' = Z이론</strong> → ❌ 매우 자주 출제</div>
@@ -375,15 +508,59 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
 <div class="part-body"><div class="concept" id="p5-26">
 <div class="concept-title"><span class="cnum">개념 26</span>동기이론 분류 — 내용 vs 과정</div>
 <div class="vis-wrap"><img src="images/VIS-012_동기이론분류체계.jpg" alt="동기이론 분류 체계도" loading="eager"><p class="vis-cap">동기이론 분류 체계도</p></div><div class="table-wrap"><table><thead><tr><th>분류</th><th>이론</th><th>핵심 질문</th></tr></thead><tbody><tr><td><strong>내용이론</strong></td><td>욕구단계설·ERG·2요인·성취동기</td><td>무엇이 동기를 일으키나?</td></tr><tr><td><strong>과정이론</strong></td><td>기대이론·<strong>공정성이론</strong>·목표설정·강화이론</td><td>어떻게 동기가 일어나나?</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>공정성이론 = 과정이론</strong> ← 내용이론으로 착각하는 함정 (빈출)</div>
+<div class="theory-note">📖 <strong>동기이론 전체 분류 완전 정리</strong><br>
+<strong>[내용이론]</strong> — 무엇이 동기를 유발하는가?<br>
+① 매슬로우 욕구 5단계 ② 알더퍼 ERG이론 ③ 허즈버그 2요인이론 ④ 맥클리랜드 성취동기이론 ⑤ 맥그리거 X·Y이론<br><br>
+<strong>[과정이론]</strong> — 어떻게 동기가 생기는가?<br>
+① 브룸 기대이론 ② <u>아담스 공정성이론</u> ③ 로크 목표설정이론 ④ 스키너 강화이론<br><br>
+<strong>핵심 함정</strong>: 공정성이론(아담스)은 "<u>비교 과정</u>"을 다루므로 과정이론 — 내용이론 ❌
+</div>
+<div class="quiz-ex">
+<div class="qe-title">📋 기출 예시</div>
+<div class="qe-q">Q. 아담스의 공정성이론은 내용이론인가, 과정이론인가?</div>
+<div class="qe-a">A. <strong>과정이론</strong> — 투입/산출 비율 비교 과정을 다루기 때문</div>
+<div class="qe-q">Q. 다음 중 내용이론에 해당하는 것은? ① 기대이론 ② ERG이론 ③ 강화이론 ④ 공정성이론</div>
+<div class="qe-a">A. ② ERG이론 (①③④는 모두 과정이론)</div>
+</div>
 </div><div class="concept" id="p5-27">
 <div class="concept-title"><span class="cnum">개념 27</span>매슬로우 욕구 5단계</div>
 <div class="vis-wrap"><img src="images/VIS-003_매슬로우피라미드.jpg" alt="매슬로우 욕구 5단계 피라미드" loading="eager"><p class="vis-cap">매슬로우 욕구 5단계 피라미드</p></div><div class="step-box">생리 → 안전 → 사회(소속·애정) → 존경 → <strong>자아실현</strong> (최상위)</div><div class="tip">★ 최상위 = 자아실현 욕구</div>
+<div class="theory-note">📖 <strong>5단계 상세 내용</strong><br>
+① 생리적: 음식·물·수면·의복 — 가장 기본<br>
+② 안전: 신체 안전, 고용 안정, 질병 예방<br>
+③ 사회(소속·애정): 우정, 소속감, 사랑 → 비공식조직의 중요성과 연결<br>
+④ 존경: 자존감, 타인으로부터 인정, 지위<br>
+⑤ 자아실현: 잠재력 최대 발휘, 창의성 → 최상위<br>
+<strong>특성</strong>: 하위 욕구가 충족되어야 상위 욕구 발생 / 충족된 욕구는 더 이상 동기 역할 안 함<br>
+<strong>허즈버그와 연결</strong>: 1~2단계(생리·안전) = 위생요인 / 3~5단계 = 동기요인 영역
+</div>
 </div><div class="concept" id="p5-28">
 <div class="concept-title"><span class="cnum">개념 28</span>알더퍼 ERG이론</div>
 <div class="table-wrap"><table><thead><tr><th>욕구</th><th>영어</th><th>매슬로우 대응</th></tr></thead><tbody><tr><td>존재(E)</td><td>Existence</td><td>생리·안전</td></tr><tr><td>관계(R)</td><td>Relatedness</td><td>사회·존경 일부</td></tr><tr><td>성장(G)</td><td>Growth</td><td>자아실현·존경 일부</td></tr></tbody></table></div><div class="tip">★ 매슬로우와 차이: 동시에 여러 욕구 작용 가능 / 좌절-퇴행 과정 추가</div>
+<div class="theory-note">📖 <strong>ERG vs 매슬로우 핵심 차이</strong><br>
+• 매슬로우: 욕구 충족 → 상위 욕구로 순차 이동 (일방향)<br>
+• 알더퍼 ERG: 상위 욕구 좌절 → 하위 욕구로 <u>퇴행</u> 가능 (좌절-퇴행 원리)<br>
+• ERG: 여러 욕구가 <u>동시에</u> 활성화될 수 있음 (매슬로우는 한 번에 하나)<br>
+<strong>시험 포인트</strong>: ERG의 G(성장)욕구 = 매슬로우의 자아실현·존경 욕구에 해당
+</div>
 </div><div class="concept" id="p5-29">
 <div class="concept-title"><span class="cnum">개념 29</span>허즈버그 2요인이론</div>
 <div class="vis-wrap"><img src="images/VIS-017_허즈버그2요인.jpg" alt="허즈버그 2요인 비교" loading="eager"><p class="vis-cap">허즈버그 2요인 비교</p></div><div class="table-wrap"><table><thead><tr><th>요인</th><th>내용</th><th>효과</th></tr></thead><tbody><tr><td><strong>동기요인</strong></td><td>성취감·인정감·도전감·책임감·성장·일 자체</td><td>만족 증가</td></tr><tr><td><strong>위생요인</strong></td><td><strong>임금</strong>·복지후생·대인관계·감독·작업환경</td><td>불만족 감소</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>임금 = 위생요인</strong> ← 동기요인으로 착각 (단골 빈출)</div>
+<div class="theory-note">📖 <strong>2요인 이론 핵심 원리</strong><br>
+• 허즈버그의 발견: "만족의 반대 = 불만족" 이 아니다!<br>
+  → 만족을 만드는 요인(동기요인) ≠ 불만족을 없애는 요인(위생요인)<br>
+• <strong>동기요인 없음</strong>: 만족 감소 (중립) — 불만족 아님<br>
+• <strong>위생요인 좋음</strong>: 불만족 제거 (중립) — 만족 아님<br>
+• <strong>실무 의미</strong>: 급여만 올려줘도 동기부여가 안 된다 → 성취감·책임감·인정 등 내재적 요인이 필요<br>
+<strong>위생요인 전체 목록</strong>: 급여·복리후생·회사정책·상사와의 관계·작업환경·직업안정성
+</div>
+<div class="quiz-ex">
+<div class="qe-title">📋 기출 예시</div>
+<div class="qe-q">Q. 허즈버그 이론에서 임금(급여)은 어디에 해당하는가?</div>
+<div class="qe-a">A. <strong>위생요인</strong> — 급여를 올려도 동기부여 안 됨, 낮으면 불만족만 해소</div>
+<div class="qe-q">Q. 동기요인에 해당하지 않는 것은? ① 성취감 ② 책임감 ③ 급여 ④ 승진</div>
+<div class="qe-a">A. ③ 급여 (급여는 위생요인)</div>
+</div>
 </div><div class="concept" id="p5-30">
 <div class="concept-title"><span class="cnum">개념 30</span>아담스 공정성이론</div>
 <div class="tip">★ 자신의 투입/산출 비율을 타인과 비교 → 불균형 인지 시 동기유발</div><div class="trap">⚠️ 함정 주의: <strong>과정이론</strong>임 — 내용이론으로 착각 금지</div>
@@ -396,9 +573,27 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
 <div class="part-body"><div class="concept" id="p6-32">
 <div class="concept-title"><span class="cnum">개념 32</span>교육 vs 훈련 — 반대로 외우는 함정</div>
 <div class="table-wrap"><table><thead><tr><th>구분</th><th>강조점</th><th>기간</th></tr></thead><tbody><tr><td><strong>교육</strong></td><td><strong>개인</strong> 목표 강조</td><td>장기적</td></tr><tr><td><strong>훈련</strong></td><td><strong>조직</strong> 목표 강조</td><td>단기적</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>'교육 = 조직목표 강조'</strong> → ❌ 가장 자주 틀리는 함정</div>
+<div class="theory-note">📖 <strong>교육·훈련·개발 3가지 구별</strong><br>
+• <strong>교육(Education)</strong>: 개인의 전인적 성장, 장기적, 일반적 능력 향상 → 개인 목표<br>
+• <strong>훈련(Training)</strong>: 특정 직무에 필요한 기술·지식 습득, 단기적 → 조직 목표<br>
+• <strong>개발(Development)</strong>: 미래를 위한 잠재능력 계발, 장기적 → 조직의 장기 목표<br>
+<strong>암기법</strong>: 교육=개인·장기 / 훈련=조직·단기 → 정반대처럼 느껴지므로 반드시 확인
+</div>
+<div class="quiz-ex">
+<div class="qe-title">📋 기출 예시</div>
+<div class="qe-q">Q. 교육과 훈련의 차이에서 조직 목표를 강조하는 것은?</div>
+<div class="qe-a">A. <strong>훈련</strong> (교육은 개인 목표 강조 — 반대로 외우는 함정!)</div>
+</div>
 </div><div class="concept" id="p6-33">
 <div class="concept-title"><span class="cnum">개념 33</span>OJT vs Off JT</div>
 <div class="vis-wrap"><img src="images/VIS-015_OJT_OffJT비교.jpg" alt="OJT vs Off JT 비교" loading="eager"><p class="vis-cap">OJT vs Off JT 비교</p></div><div class="table-wrap"><table><thead><tr><th>구분</th><th>장소</th><th>특징</th><th>한계</th></tr></thead><tbody><tr><td><strong>OJT</strong></td><td>직장 내</td><td>직속상사 지도·실제적</td><td><strong>통일된 훈련 곤란</strong></td></tr><tr><td><strong>Off JT</strong></td><td>직장 외</td><td>연수원·양성소</td><td>소규모 기업 실시 어려움</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: '많은 인원에게 통일된 훈련 = OJT' → ❌ <strong>Off JT</strong></div>
+<div class="theory-note">📖 <strong>OJT vs Off JT 장단점 비교</strong><br>
+• <strong>OJT 장점</strong>: 직무와 직결, 개인별 맞춤 지도, 별도 시설 불필요<br>
+• <strong>OJT 단점</strong>: 통일된 훈련 곤란, 지도자의 역량에 의존, 업무 방해<br>
+• <strong>Off JT 장점</strong>: 체계적·통일적 교육, 다수 동시 교육, 전문 강사 활용<br>
+• <strong>Off JT 단점</strong>: 비용 많이 소요, 소규모 기업 실시 어려움, 실무와 괴리<br>
+<strong>멘토링·코칭</strong>: OJT의 대표적 형태 (개인 지도 방식)
+</div>
 </div><div class="concept" id="p6-34">
 <div class="concept-title"><span class="cnum">개념 34</span>교수설계 단계</div>
 <div class="step-box">3단계: 분석 → 설계 및 개발 → 평가<br>5단계: 분석 → 설계 → 개발 → <strong>실행</strong> → 평가</div><div class="trap">⚠️ 함정 주의: <strong>'수행목표 명세화' = 설계단계</strong> — 분석단계 아님</div>
@@ -408,9 +603,26 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
 </div><div class="concept" id="p6-36">
 <div class="concept-title"><span class="cnum">개념 36</span>주요 교육기법</div>
 <div class="table-wrap"><table><thead><tr><th>기법</th><th>핵심</th></tr></thead><tbody><tr><td><strong>브레인스토밍</strong></td><td>오즈본 창안, <strong>질보다 양</strong> 우선, 비판 금지, 7명</td></tr><tr><td>밀봉토의법(6-6방식)</td><td>6명이 각자 1분씩, 합계 6분</td></tr><tr><td>명목집단법(NGT)</td><td>서면으로 대안 제시, 토론·비평 금지</td></tr><tr><td>시그니피컨트법</td><td><strong>유사성 비교</strong>로 아이디어 발견</td></tr><tr><td>바이오닉스법</td><td>자연계·동식물 관찰로 아이디어 발견</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>'브레인스토밍 = 질 우선'</strong> → ❌ <strong>양 우선</strong></div>
+<div class="theory-note">📖 <strong>브레인스토밍 4원칙</strong><br>
+① <strong>비판 금지</strong>: 아이디어에 대한 평가·비판 절대 불가<br>
+② <strong>자유분방</strong>: 터무니없는 아이디어도 환영<br>
+③ <strong>양 우선</strong>: 많은 아이디어가 좋은 아이디어<br>
+④ <strong>편승·결합</strong>: 타인의 아이디어를 발전·결합 가능<br>
+<strong>창안자</strong>: 오즈본(Osborn) / 적정 인원: <u>7명</u> / 소집단(일반): 10명 내외<br>
+<strong>NGT(명목집단법)</strong>: 서면으로 아이디어 제출, 대면 토론 없음 → 지배적 구성원의 영향 차단
+</div>
 </div><div class="concept" id="p6-37">
 <div class="concept-title"><span class="cnum">개념 37</span>인사평가 오류</div>
 <div class="table-wrap"><table><thead><tr><th>오류</th><th>내용</th></tr></thead><tbody><tr><td><strong>후광효과(Halo)</strong></td><td>한 특성의 인상이 전체 평가에 영향</td></tr><tr><td><strong>관대화 경향</strong></td><td>평가결과가 한쪽으로 치우치는 경향</td></tr><tr><td>상동적 오류</td><td>사회집단(지역·학교 등) 기준 평가</td></tr><tr><td>투사</td><td>자기 특성을 타인에게 전가</td></tr><tr><td><strong>상관적 편견</strong></td><td>관련 없는 평가 항목들 사이에 <strong>관련이 있다고 인식</strong>하는 편향 ← 2024.12 출제</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: '집단 한쪽 치우침 = 후광효과' → ❌ <strong>관대화 경향</strong></div><div class="trap">⚠️ 함정 주의: 상관적 편견 = 관련 없는 항목을 독립적으로만 평가 → ❌ (오히려 관련짓는 오류)</div>
+<div class="theory-note">📖 <strong>오류별 핵심 정의 완전 정리</strong><br>
+• <strong>후광효과(Halo Effect)</strong>: 한 가지 특성(예: 외모)이 인상 → 전체 평가에 영향. "하나 좋으면 다 좋아 보임"<br>
+• <strong>관대화 경향(Leniency)</strong>: 평가자가 피평가자를 실제보다 높게 평가하는 경향<br>
+• <strong>중앙화 경향(Central tendency)</strong>: 평가를 극단을 피해 중간으로만 모으는 경향<br>
+• <strong>상동적 오류(Stereotyping)</strong>: 개인을 소속 집단의 고정관념으로 평가 (지역·학교·성별 등)<br>
+• <strong>투사(Projection)</strong>: 자신의 단점·감정을 타인에게 전가<br>
+• <strong>상관적 편견(Logical error)</strong>: 서로 무관한 평가 항목인데 관련 있다고 인식해서 연동 평가<br>
+<strong>2024.12 기출 포인트</strong>: "상관적 편견 = 독립 평가" → ❌ 오히려 연동 평가가 오류의 본질
+</div>
 </div><div class="concept" id="p6-38">
 <div class="concept-title"><span class="cnum">개념 38</span>직무 관련 서류</div>
 <div class="table-wrap"><table><thead><tr><th>서류</th><th>초점</th></tr></thead><tbody><tr><td><strong>직무기술서</strong></td><td>직무 내용 자체</td></tr><tr><td><strong>직무명세서</strong></td><td>직무수행에 필요한 <strong>인적요건</strong> (교육·능력·자격)</td></tr></tbody></table></div>
@@ -429,9 +641,28 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
 </div><div class="concept" id="p7-41">
 <div class="concept-title"><span class="cnum">개념 41</span>순응 — 빛 환경 변화</div>
 <div class="vis-wrap"><img src="images/VIS-011_암순응명순응그래프.jpg" alt="암순응 vs 명순응 시간 비교" loading="eager"><p class="vis-cap">암순응 vs 명순응 시간 비교</p></div><div class="table-wrap"><table><thead><tr><th>구분</th><th>방향</th><th>시간</th></tr></thead><tbody><tr><td><strong>암순응</strong></td><td>밝음 → 어둠</td><td>완전순응 <strong>30분 이상</strong></td></tr><tr><td><strong>명순응</strong></td><td>어둠 → 밝음</td><td><strong>수초~1분</strong> (빠름)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 암순응이 훨씬 느리다 — 터널 진입 후 위험한 이유</div>
+<div class="theory-note">📖 <strong>터널 진입 위험과 순응</strong><br>
+• 밝은 외부 → 어두운 터널 진입: <strong>암순응</strong> 필요 → 30분 이상 소요 → 터널 진입 직후 <u>일시적 실명</u> 상태<br>
+• 터널 탈출 → 밝은 외부: <strong>명순응</strong> → 수초~1분 이내 완료<br>
+• <strong>결론</strong>: 터널 진입 시 더 위험 → 속도 감속 필요<br>
+<strong>시험 함정</strong>: "명순응 시간 > 암순응 시간" → ❌ 반대! 암순응이 훨씬 오래 걸림
+</div>
 </div><div class="concept" id="p7-42">
 <div class="concept-title"><span class="cnum">개념 42</span>정지거리 공식</div>
 <div class="vis-wrap"><img src="images/VIS-009_정지거리도해.jpg" alt="정지거리 도해" loading="eager"><p class="vis-cap">정지거리 도해</p></div><div class="step-box">정지거리 = <strong>공주거리</strong>(위험인지→브레이크 작동 전) + <strong>제동거리</strong>(브레이크→완전정지)</div><div class="trap">⚠️ 함정 주의: 스키드마크 = 제동 시 타이어 잠김 → <strong>속도 추정</strong> 가능 (차량 추진력 파악 ❌)</div>
+<div class="theory-note">📖 <strong>정지거리 계산 공식</strong><br>
+<strong>정지거리 = 공주거리 + 제동거리</strong><br>
+• <strong>공주거리</strong> = 속도(m/s) × 공주시간(0.75~1초) — 브레이크 밟기 전 이동 거리<br>
+• <strong>제동거리</strong> = V² / (2μg) — 속도의 <u>제곱에 비례</u>, 마찰계수에 <u>반비례</u><br>
+<strong>핵심 포인트</strong>: 속도 2배 → 제동거리 <u>4배</u> (속도 제곱에 비례!)<br>
+• 공주거리 = 인적 요인 / 제동거리 = 물적(노면·차량) 요인<br>
+<strong>스키드마크</strong>: 제동 중 타이어가 잠겨 노면에 남은 흔적 → 사고 전 속도 <u>역추정</u>에 활용
+</div>
+<div class="quiz-ex">
+<div class="qe-title">📋 기출 예시</div>
+<div class="qe-q">Q. 속도가 2배 빨라지면 제동거리는 몇 배가 되는가?</div>
+<div class="qe-a">A. <strong>4배</strong> (제동거리는 속도의 제곱에 비례)</div>
+</div>
 </div><div class="concept" id="p7-43">
 <div class="concept-title"><span class="cnum">개념 43</span>마찰계수 (μ)</div>
 <div class="table-wrap"><table><thead><tr><th>노면</th><th>μ 값</th></tr></thead><tbody><tr><td>건조 노면</td><td>0.8 ~ 0.9</td></tr><tr><td><strong>젖은 노면</strong></td><td><strong>0.5 ~ 0.7</strong></td></tr><tr><td>얼어 있는 노면</td><td>0.2 이하</td></tr></tbody></table></div>
@@ -462,9 +693,22 @@ tr.hl td { background:#f5f0ff; font-weight:bold; }
 </div><div class="concept" id="p8-48">
 <div class="concept-title"><span class="cnum">개념 48</span>사고요인 배열형 3가지</div>
 <div class="vis-wrap"><img src="images/VIS-014_사고요인배열형3종.jpg" alt="사고요인 배열형 3종" loading="eager"><p class="vis-cap">사고요인 배열형 3종</p></div><div class="step-box">혼합형 · 연쇄형 · 집중형</div><div class="trap">⚠️ 함정 주의: <strong>'복합형'은 배열형에 없다</strong> — 단골 함정</div>
+<div class="theory-note">📖 <strong>3가지 배열형 상세</strong><br>
+• <strong>연쇄형</strong>: 원인 A → B → C → 사고 (일렬로 연결, 도미노 이론과 유사)<br>
+• <strong>집중형</strong>: 여러 원인이 하나의 사고에 집중 (부채꼴 수렴)<br>
+• <strong>혼합형</strong>: 연쇄형과 집중형이 혼합된 형태<br>
+<strong>없는 것</strong>: 복합형·단순형·개별형 → 시험에서 오답 선택지로 출제
+</div>
 </div><div class="concept" id="p8-49">
 <div class="concept-title"><span class="cnum">개념 49</span>분석 방법 구분</div>
 <div class="table-wrap"><table><thead><tr><th>분석 방법</th><th>유형</th></tr></thead><tbody><tr><td>사례적 분석</td><td>개별적 사고분석·교통환경분석·운전자적성분석·차량안전도분석</td></tr><tr><td>통계적 분석</td><td>노선별·차종별·조직별 분석</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: '노선별 분석 = 사례적 분석' → ❌ <strong>통계적 분석</strong></div>
+<div class="theory-note">📖 <strong>분석 방법 상세 비교</strong><br>
+• <strong>사례적 분석</strong>: 개별 사고를 깊이 파고드는 질적 분석<br>
+  → 개별적 사고분석 / 교통환경분석 / 운전자 적성분석 / 차량 안전도 분석<br>
+• <strong>통계적 분석</strong>: 다수의 사고 데이터를 집계·분류하는 양적 분석<br>
+  → 노선별·차종별·시간대별·지역별 분석<br>
+<strong>구별 키워드</strong>: 개별 깊이 파악 = 사례적 / 노선·차종·조직 집계 = 통계적
+</div>
 </div><div class="concept" id="p8-50">
 <div class="concept-title"><span class="cnum">개념 50</span>노선 평가 구간 단위</div>
 <div class="tip">★ 100m · 500m · 1,000m</div><div class="trap">⚠️ 함정 주의: <strong>1,500m는 없음</strong></div>
