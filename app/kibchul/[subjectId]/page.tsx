@@ -110,6 +110,11 @@ export default function KibchulPage() {
 
   const startQuiz = useCallback((session: KibchulSession, mode: QuizMode, shuffled: boolean) => {
     let qs = [...session.questions];
+    // 손상된 문항 제거: 빈 보기가 있거나 질문이 너무 짧은 경우
+    qs = qs.filter(q =>
+      q.question.trim().length > 5 &&
+      q.choices.every(c => c.trim().length > 0)
+    );
     if (shuffled) qs = shuffle(qs);
     setQuiz({
       questions: qs,
@@ -273,7 +278,7 @@ function SessionSelectScreen({
           </div>
           <div>
             <h1 className="text-lg font-bold text-gray-800">{subject!.name}</h1>
-            <p className="text-sm text-gray-500">총 {sessions.reduce((s, ss) => s + ss.questions.length, 0)}문제 · {sessions.length}개 회차</p>
+            <p className="text-sm text-gray-500">총 {sessions.reduce((s, ss) => s + ss.questions.filter(q => q.question.trim().length > 5 && q.choices.every(c => c.trim().length > 0)).length, 0)}문제 · {sessions.length}개 회차</p>
           </div>
         </div>
 
@@ -300,7 +305,7 @@ function SessionSelectScreen({
         {/* 회차별 목록 */}
         <h2 className="text-sm font-semibold text-gray-500 mb-3 px-1">회차별 문제</h2>
         <div className="flex flex-col gap-3">
-          {sessions.map(sess => {
+          {sessions.filter(sess => sess.questions.filter(q => q.question.trim().length > 5 && q.choices.every(c => c.trim().length > 0)).length > 0).map(sess => {
             const stat = getSessionStat(currentSubjectId, sess.id);
             const pct = stat ? Math.round((stat.correct / stat.total) * 100) : null;
             return (
@@ -309,7 +314,7 @@ function SessionSelectScreen({
                   <div>
                     <p className="font-semibold text-gray-800">{sess.label}</p>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <p className="text-sm text-gray-500">{sess.questions.length}문제</p>
+                      <p className="text-sm text-gray-500">{sess.questions.filter(q => q.question.trim().length > 5 && q.choices.every(c => c.trim().length > 0)).length}문제</p>
                       {pct !== null && (
                         <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                           pct >= 60 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'
