@@ -44,6 +44,25 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .summary-bar { background:#78350f; color:#fff; text-align:center; padding:10px; font-size:.85em; margin-bottom:16px; border-radius:8px; }
 .highlight { background:#fef08a; border-radius:2px; }
 
+/* 이론 해설 박스 */
+.theory-note { background:#f0f7ff; border-left:4px solid #2563eb; padding:10px 14px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#1e3a5f; }
+.theory-note strong { color:#1d4ed8; }
+
+/* 기출 예시 박스 */
+.quiz-ex { background:#f0fdf4; border-left:4px solid #16a34a; padding:10px 14px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.88em; color:#14532d; }
+.quiz-ex .qe-title { font-weight:bold; color:#15803d; margin-bottom:4px; }
+.quiz-ex .qe-q { margin:4px 0 2px; }
+.quiz-ex .qe-a { font-weight:bold; color:#166534; }
+.quiz-ex .qe-wrong { color:#dc2626; text-decoration:line-through; }
+
+/* 비교 하이라이트 박스 */
+.compare-box { display:grid; gap:6px; margin:8px 0; }
+.compare-box.col2 { grid-template-columns: 1fr 1fr; }
+.cbox-item { background:#f8f8f8; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px; font-size:.88em; }
+.cbox-item .cbox-head { font-weight:bold; color:#4c1d95; margin-bottom:4px; font-size:.92em; }
+@media(max-width:600px){ .compare-box.col2{ grid-template-columns:1fr; } }
+
+
   .print-btn { display:inline-flex; align-items:center; gap:4px; background:#fff; color:#4c1d95; border:none; border-radius:6px; padding:5px 12px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:700; margin-left:6px; transition:background .2s; }
   .print-btn:hover { background:#ede9fe; }
   @media(min-width:1400px){ .container{ max-width:1440px; } .toc{ width:160px; } .content{ min-width:0; } }
@@ -271,45 +290,93 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="part-title" onclick="togglePart(this)">PART 1. 총론 — 철도 개념·분류·역사<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p1-01">
 <div class="concept-title"><span class="cnum">개념 01</span>철도 특징 비해당</div>
-<div class="table-wrap"><table><thead><tr><th>철도 특징 O</th><th>철도 특징 X</th></tr></thead><tbody><tr><td>신속성·신뢰성·안정성·친환경성·경제성<br>에너지효율성·대량수송성·장거리성·편리성</td><td><strong>기동성 ❌</strong> (자동차 특징)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>기동성</strong> = 자동차 특징 ← 철도 특징으로 교체 함정</div></div><div class="concept" id="p1-02">
+<div class="table-wrap"><table><thead><tr><th>철도 특징 O</th><th>철도 특징 X</th></tr></thead><tbody><tr><td>신속성·신뢰성·안정성·친환경성·경제성<br>에너지효율성·대량수송성·장거리성·편리성</td><td><strong>기동성 ❌</strong> (자동차 특징)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>기동성</strong> = 자동차 특징 ← 철도 특징으로 교체 함정</div>
+<div class="theory-note"><strong>이론 배경:</strong> 철도는 정해진 레일 위만 운행하므로 원하는 곳으로 자유롭게 이동하는 <strong>기동성이 없습니다</strong>. 이것이 자동차와의 핵심 차이점이며, 시험에서 가장 자주 나오는 함정입니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 철도의 특징으로 옳지 않은 것은?</div><div class="qe-a">정답: 기동성 (자동차의 특징)</div><div class="qe-wrong">오답함정: "에너지효율성이 없다"는 오답</div></div>
+</div><div class="concept" id="p1-02">
 <div class="concept-title"><span class="cnum">개념 02</span>철도 법제상 분류 비해당</div>
-<p><strong>국유철도 / 지방철도 / 경편철도 / 전용철도</strong></p><div class="trap">⚠️ 함정 주의: <strong>공영철도</strong> → 법제상 분류 아님</div></div><div class="concept" id="p1-03">
+<p><strong>국유철도 / 지방철도 / 경편철도 / 전용철도</strong></p><div class="trap">⚠️ 함정 주의: <strong>공영철도</strong> → 법제상 분류 아님</div>
+<div class="theory-note"><strong>이론 배경:</strong> 철도사업법상 분류는 소유·운영 주체에 따라 <strong>국유·지방·경편·전용</strong> 4종으로 나뉩니다. 공영철도는 일반적 표현이지 법제상 공식 분류 명칭이 아닙니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 철도 법제상 분류에 해당하지 않는 것은?</div><div class="qe-a">정답: 공영철도</div><div class="qe-wrong">오답함정: "전용철도가 법제상 분류에 없다"는 오답</div></div>
+</div><div class="concept" id="p1-03">
 <div class="concept-title"><span class="cnum">개념 03</span>수송수요 예측방법 4종 + 비해당</div>
-<div class="table-wrap"><table><thead><tr><th>방법</th><th>설명</th></tr></thead><tbody><tr><td>시계열분석법</td><td>시간적 경과에 따른 과거 변동 통계</td></tr><tr><td>요인분석법</td><td>요인변수와 수요 관계 분석</td></tr><tr><td>OD표 작성법</td><td>출발지-도착지 교통량 행렬</td></tr><tr><td>중력모델법</td><td>교통량 ∝ 수요량 / <strong>거리에 반비례</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>선로이용률</strong> → 예측방법 아님 (선로용량 산정 지표)</div><div class="trap">⚠️ 함정 주의: 중력모델 거리: 반비례 ← 비례로 교체 함정</div></div><div class="concept" id="p1-04">
+<div class="table-wrap"><table><thead><tr><th>방법</th><th>설명</th></tr></thead><tbody><tr><td>시계열분석법</td><td>시간적 경과에 따른 과거 변동 통계</td></tr><tr><td>요인분석법</td><td>요인변수와 수요 관계 분석</td></tr><tr><td>OD표 작성법</td><td>출발지-도착지 교통량 행렬</td></tr><tr><td>중력모델법</td><td>교통량 ∝ 수요량 / <strong>거리에 반비례</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>선로이용률</strong> → 예측방법 아님 (선로용량 산정 지표)</div><div class="trap">⚠️ 함정 주의: 중력모델 거리: 반비례 ← 비례로 교체 함정</div>
+<div class="theory-note"><strong>이론 배경:</strong> 수송수요 예측방법 4종 중 <strong>중력모델법</strong>은 물리학의 만유인력을 교통에 적용한 것입니다. 거리가 멀수록 수요가 감소(반비례)합니다. "비례"로 바꾸는 함정에 주의합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 출발지-도착지 교통량을 행렬 형태로 나타내는 예측방법은?</div><div class="qe-a">정답: OD표 작성법</div><div class="qe-wrong">오답함정: "선로이용률"을 예측방법으로 포함하는 오답</div></div>
+</div><div class="concept" id="p1-04">
 <div class="concept-title"><span class="cnum">개념 04</span>철도 역사 연도</div>
-<div class="table-wrap"><table><thead><tr><th>사건</th><th>연도</th><th>함정</th></tr></thead><tbody><tr><td>세계 최초 여객철도 (영국 리버풀~맨체스터)</td><td><strong>1830년</strong></td><td>1835년 교체</td></tr><tr><td>우리나라 최초 철도 (경인선)</td><td><strong>1899년</strong></td><td>1898·1900 교체</td></tr><tr><td>경부선 전구간 개통</td><td><strong>1905년</strong></td><td>1903·1907 교체</td></tr></tbody></table></div></div><div class="concept" id="p1-05">
+<div class="table-wrap"><table><thead><tr><th>사건</th><th>연도</th><th>함정</th></tr></thead><tbody><tr><td>세계 최초 여객철도 (영국 리버풀~맨체스터)</td><td><strong>1830년</strong></td><td>1835년 교체</td></tr><tr><td>우리나라 최초 철도 (경인선)</td><td><strong>1899년</strong></td><td>1898·1900 교체</td></tr><tr><td>경부선 전구간 개통</td><td><strong>1905년</strong></td><td>1903·1907 교체</td></tr></tbody></table></div>
+<div class="theory-note"><strong>이론 배경:</strong> 세계 최초 여객철도(1830년 영국 리버풀~맨체스터선)와 우리나라 최초 철도(1899년 경인선)의 연도를 정확히 암기해야 합니다. 연도 숫자를 교체하는 함정이 자주 출제됩니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 우리나라 최초 철도인 경인선이 개통된 연도는?</div><div class="qe-a">정답: 1899년</div><div class="qe-wrong">오답함정: "1898년" 또는 "1900년"으로 혼동하는 오답</div></div>
+</div><div class="concept" id="p1-05">
 <div class="concept-title"><span class="cnum">개념 05</span>수송 서비스 개량 vs 수송력 증강</div>
-<div class="table-wrap"><table><thead><tr><th>구분</th><th>예시</th><th>비해당</th></tr></thead><tbody><tr><td><strong>수송 서비스 개량</strong></td><td>역 냉난방화, 에스컬레이터, 장애자시설 확충</td><td></td></tr><tr><td><strong>수송력 증강</strong></td><td>복선화, 전철화, 차량 증차</td><td><strong>철도관련법령 정비 ❌</strong></td></tr></tbody></table></div></div></div></div><div class="part" id="p2">
+<div class="table-wrap"><table><thead><tr><th>구분</th><th>예시</th><th>비해당</th></tr></thead><tbody><tr><td><strong>수송 서비스 개량</strong></td><td>역 냉난방화, 에스컬레이터, 장애자시설 확충</td><td></td></tr><tr><td><strong>수송력 증강</strong></td><td>복선화, 전철화, 차량 증차</td><td><strong>철도관련법령 정비 ❌</strong></td></tr></tbody></table></div>
+<div class="theory-note"><strong>이론 배경:</strong> 수송 서비스 개량은 <strong>기존 시설의 편의성</strong>을 높이는 것(에스컬레이터 등), 수송력 증강은 <strong>운반 능력</strong> 자체를 늘리는 것(복선화 등)입니다. 법령 정비는 어느 쪽에도 해당하지 않습니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 수송력 증강 방법에 해당하지 않는 것은?</div><div class="qe-a">정답: 철도관련법령 정비</div><div class="qe-wrong">오답함정: "에스컬레이터 설치"를 수송력 증강으로 답하는 오답</div></div>
+</div></div></div><div class="part" id="p2">
 <div class="part-title" onclick="togglePart(this)">PART 2. 차량<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p2-06">
 <div class="concept-title"><span class="cnum">개념 06</span>철도 종류 분류</div>
-<div class="vis-wrap"><img src="images/VIS-027_철도종류분류.jpg" alt="철도 종류 분류 구조도" loading="eager"><p class="vis-cap">철도 종류 분류 구조도</p></div><div class="table-wrap"><table><thead><tr><th>종류</th><th>구동방식</th><th>구배한도/특징</th></tr></thead><tbody><tr><td><strong>점착(마찰)철도</strong></td><td>차륜-레일 마찰력</td><td>마찰계수 0.10~0.25 / 구배한도 20~50%</td></tr><tr><td><strong>치궤조(치차)철도</strong></td><td>Rack레일+치차</td><td>급구배 운전 가능</td></tr><tr><td><strong>강색철도</strong></td><td>강선(와이어) 견인</td><td>평균구배 100~200%</td></tr><tr><td><strong>모노레일</strong></td><td>고무타이어</td><td>급구배·급곡선 용이</td></tr></tbody></table></div></div><div class="concept" id="p2-07">
+<div class="vis-wrap"><img src="images/VIS-027_철도종류분류.jpg" alt="철도 종류 분류 구조도" loading="eager"><p class="vis-cap">철도 종류 분류 구조도</p></div><div class="table-wrap"><table><thead><tr><th>종류</th><th>구동방식</th><th>구배한도/특징</th></tr></thead><tbody><tr><td><strong>점착(마찰)철도</strong></td><td>차륜-레일 마찰력</td><td>마찰계수 0.10~0.25 / 구배한도 20~50%</td></tr><tr><td><strong>치궤조(치차)철도</strong></td><td>Rack레일+치차</td><td>급구배 운전 가능</td></tr><tr><td><strong>강색철도</strong></td><td>강선(와이어) 견인</td><td>평균구배 100~200%</td></tr><tr><td><strong>모노레일</strong></td><td>고무타이어</td><td>급구배·급곡선 용이</td></tr></tbody></table></div>
+<div class="theory-note"><strong>이론 배경:</strong> 점착철도는 차륜-레일 마찰력으로 구동하는 일반 철도입니다. <strong>치궤조(치차)철도</strong>는 산악 급구배 구간에서 Rack 레일과 치차(톱니바퀴)의 맞물림으로 등반합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 급구배 구간 운전에 사용하는 구동 방식은?</div><div class="qe-a">정답: 치궤조(치차)철도 — Rack 레일+치차</div><div class="qe-wrong">오답함정: "점착철도가 급구배에 적합하다"는 오답</div></div>
+</div><div class="concept" id="p2-07">
 <div class="concept-title"><span class="cnum">개념 07</span>전기방식 비교</div>
-<div class="table-wrap"><table><thead><tr><th>방식</th><th>대표</th><th>특징</th></tr></thead><tbody><tr><td><strong>교류 25,000V</strong></td><td>국철 전기철도</td><td>점착성능 우수, 소형이어도 대량 견인</td></tr><tr><td>직류 1,500V</td><td>구형 도시철도</td><td>터널 단면 작음, 통신유도장애 적음</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>직류 25,000V</strong> → 없음. 교류 25,000V가 국철 표준</div></div><div class="concept" id="p2-08">
+<div class="table-wrap"><table><thead><tr><th>방식</th><th>대표</th><th>특징</th></tr></thead><tbody><tr><td><strong>교류 25,000V</strong></td><td>국철 전기철도</td><td>점착성능 우수, 소형이어도 대량 견인</td></tr><tr><td>직류 1,500V</td><td>구형 도시철도</td><td>터널 단면 작음, 통신유도장애 적음</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>직류 25,000V</strong> → 없음. 교류 25,000V가 국철 표준</div>
+<div class="theory-note"><strong>이론 배경:</strong> 교류 25,000V는 변압기로 전압 변환이 쉬워 변전소 간격을 넓힐 수 있습니다. <strong>직류 25,000V는 존재하지 않습니다</strong>. 교류=25,000V, 직류=1,500V로 구분해서 외웁니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 국철 전기철도의 표준 전기방식은?</div><div class="qe-a">정답: 교류 25,000V</div><div class="qe-wrong">오답함정: "직류 25,000V"라고 답하는 오답</div></div>
+</div><div class="concept" id="p2-08">
 <div class="concept-title"><span class="cnum">개념 08</span>집전장치 비해당</div>
-<p><strong>집전장치 O:</strong> 팬터그래프 / 트롤리 폴 / 뷰겔 / 집전슈</p><div class="vis-wrap"><img src="images/VIS-034_집전장치종류비교.jpg" alt="집전장치 종류 비교" loading="eager"><p class="vis-cap">집전장치 종류 비교</p></div><div class="trap">⚠️ 함정 주의: <strong>축전지</strong> → 집전장치 아님 (전력 저장장치)</div></div><div class="concept" id="p2-09">
+<p><strong>집전장치 O:</strong> 팬터그래프 / 트롤리 폴 / 뷰겔 / 집전슈</p><div class="vis-wrap"><img src="images/VIS-034_집전장치종류비교.jpg" alt="집전장치 종류 비교" loading="eager"><p class="vis-cap">집전장치 종류 비교</p></div><div class="trap">⚠️ 함정 주의: <strong>축전지</strong> → 집전장치 아님 (전력 저장장치)</div>
+<div class="theory-note"><strong>이론 배경:</strong> 집전장치는 <strong>전차선으로부터 전력을 받아</strong> 차량에 공급하는 장치입니다. 축전지는 전력을 저장하는 장치로, 집전이 아닌 저장 기능이므로 집전장치가 아닙니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 집전장치의 종류가 아닌 것은?</div><div class="qe-a">정답: 축전지 (전력 저장장치)</div><div class="qe-wrong">오답함정: "팬터그래프가 집전장치가 아니다"라는 오답</div></div>
+</div><div class="concept" id="p2-09">
 <div class="concept-title"><span class="cnum">개념 09</span>제동·공전 핵심</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>철도 제동방식</td><td><strong>공기제동</strong></td><td>유압 아닌 공기압</td></tr><tr><td>점착력과 제동력</td><td>점착력 <strong>≥</strong> 제동력</td><td>>, ≤, < 교체</td></tr><tr><td>공전 방지</td><td>레일 모래 / 기관차 정비 / 선로보수</td><td><strong>출발 급가속</strong> = 공전 유발 ❌</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 출발 시 급가속 → 인장력 최대화 ❌ → 공전 <strong>유발</strong> (방지법 아님)</div></div><div class="concept" id="p2-10">
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th><th>함정</th></tr></thead><tbody><tr><td>철도 제동방식</td><td><strong>공기제동</strong></td><td>유압 아닌 공기압</td></tr><tr><td>점착력과 제동력</td><td>점착력 <strong>≥</strong> 제동력</td><td>>, ≤, < 교체</td></tr><tr><td>공전 방지</td><td>레일 모래 / 기관차 정비 / 선로보수</td><td><strong>출발 급가속</strong> = 공전 유발 ❌</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 출발 시 급가속 → 인장력 최대화 ❌ → 공전 <strong>유발</strong> (방지법 아님)</div>
+<div class="theory-note"><strong>이론 배경:</strong> 철도 제동은 <strong>공기압(압축공기)</strong>을 이용합니다. 점착력이 제동력보다 크거나 같아야 차바퀴가 미끄러지지 않고 제동됩니다. 출발 시 급가속은 공전을 방지하는 것이 아니라 유발합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 공전 방지 방법으로 적절하지 않은 것은?</div><div class="qe-a">정답: 출발 시 급가속 (공전 유발)</div><div class="qe-wrong">오답함정: "레일에 모래를 뿌린다"를 오답으로 착각하는 경우</div></div>
+</div><div class="concept" id="p2-10">
 <div class="concept-title"><span class="cnum">개념 10</span>모노레일 특징·문제점</div>
-<div class="table-wrap"><table><thead><tr><th>특징(장점)</th><th>문제점</th></tr></thead><tbody><tr><td>소음·진동·대기오염 <strong>거의 없음</strong></td><td>분기장치 복잡, 작동시간 김</td></tr><tr><td>고무타이어 → 급구배·급곡선 용이</td><td>타 교통기관과 승환 어려움</td></tr><tr><td>지하철 대비 건설비 싸고 공기 짧음</td><td>차량고장 시 피난 시간 오래 걸림</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: '소음·진동·대기오염 많다' → 틀림. <strong>거의 없음</strong></div></div></div></div><div class="part" id="p3">
+<div class="table-wrap"><table><thead><tr><th>특징(장점)</th><th>문제점</th></tr></thead><tbody><tr><td>소음·진동·대기오염 <strong>거의 없음</strong></td><td>분기장치 복잡, 작동시간 김</td></tr><tr><td>고무타이어 → 급구배·급곡선 용이</td><td>타 교통기관과 승환 어려움</td></tr><tr><td>지하철 대비 건설비 싸고 공기 짧음</td><td>차량고장 시 피난 시간 오래 걸림</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: '소음·진동·대기오염 많다' → 틀림. <strong>거의 없음</strong></div>
+<div class="theory-note"><strong>이론 배경:</strong> 모노레일은 고무타이어로 주행하여 <strong>소음·진동·대기오염이 거의 없습니다</strong>. 단, 분기장치가 복잡하고 고장 시 승객 피난에 시간이 걸리는 단점이 있습니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 모노레일의 특징으로 옳지 않은 것은?</div><div class="qe-a">정답: 소음·진동·대기오염이 많다 (실제로는 거의 없음)</div><div class="qe-wrong">오답함정: "급곡선 통과가 어렵다"는 오답 (실제로 용이함)</div></div>
+</div></div></div><div class="part" id="p3">
 <div class="part-title" onclick="togglePart(this)">PART 3. 선로<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p3-11">
 <div class="concept-title"><span class="cnum">개념 11</span>선로용량 수치</div>
-<div class="table-wrap"><table><thead><tr><th>종류</th><th>수치</th><th>함정</th></tr></thead><tbody><tr><td>단선</td><td>약 <strong>80회</strong>/일</td><td>100회 교체</td></tr><tr><td>복선</td><td>약 <strong>240회</strong>/일</td><td>200회 교체</td></tr><tr><td>전차전용 복선</td><td><strong>70~100회</strong></td><td></td></tr><tr><td>선로이용률 표준</td><td><strong>60%</strong></td><td>80% 교체</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>용량 종류</th><th>용도</th></tr></thead><tbody><tr><td>한계용량</td><td>기존선 수송능력 한계 판단</td></tr><tr><td>실용용량</td><td>실제 운용 기준</td></tr><tr><td>경제용량</td><td>최저 수송원가가 되는 열차횟수</td></tr></tbody></table></div></div><div class="concept" id="p3-12">
+<div class="table-wrap"><table><thead><tr><th>종류</th><th>수치</th><th>함정</th></tr></thead><tbody><tr><td>단선</td><td>약 <strong>80회</strong>/일</td><td>100회 교체</td></tr><tr><td>복선</td><td>약 <strong>240회</strong>/일</td><td>200회 교체</td></tr><tr><td>전차전용 복선</td><td><strong>70~100회</strong></td><td></td></tr><tr><td>선로이용률 표준</td><td><strong>60%</strong></td><td>80% 교체</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>용량 종류</th><th>용도</th></tr></thead><tbody><tr><td>한계용량</td><td>기존선 수송능력 한계 판단</td></tr><tr><td>실용용량</td><td>실제 운용 기준</td></tr><tr><td>경제용량</td><td>최저 수송원가가 되는 열차횟수</td></tr></tbody></table></div>
+<div class="theory-note"><strong>이론 배경:</strong> 선로용량은 하루 동안 해당 구간을 운행할 수 있는 최대 열차 횟수입니다. <strong>선로이용률 표준은 60%</strong>로, 100% 사용 시 어떤 돌발 상황에도 대처하기 어렵습니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 복선 선로의 하루 운행 가능 열차 횟수는 약 몇 회인가?</div><div class="qe-a">정답: 약 240회</div><div class="qe-wrong">오답함정: "약 200회"로 혼동하는 오답</div></div>
+</div><div class="concept" id="p3-12">
 <div class="concept-title"><span class="cnum">개념 12</span>건축한계 vs 차량한계</div>
-<div class="vis-wrap"><img src="images/VIS-033_건축한계차량한계.jpg" alt="건축한계 vs 차량한계" loading="eager"><p class="vis-cap">건축한계 vs 차량한계</p></div><div class="table-wrap"><table><thead><tr><th>구분</th><th>의미</th><th>수치</th></tr></thead><tbody><tr><td><strong>건축한계</strong></td><td>건조물 설치 불가 범위</td><td>폭 4.2m, 높이 5.15m</td></tr><tr><td><strong>차량한계</strong></td><td>차량 크기 제한 범위</td><td></td></tr></tbody></table></div></div><div class="concept" id="p3-13">
+<div class="vis-wrap"><img src="images/VIS-033_건축한계차량한계.jpg" alt="건축한계 vs 차량한계" loading="eager"><p class="vis-cap">건축한계 vs 차량한계</p></div><div class="table-wrap"><table><thead><tr><th>구분</th><th>의미</th><th>수치</th></tr></thead><tbody><tr><td><strong>건축한계</strong></td><td>건조물 설치 불가 범위</td><td>폭 4.2m, 높이 5.15m</td></tr><tr><td><strong>차량한계</strong></td><td>차량 크기 제한 범위</td><td></td></tr></tbody></table></div>
+<div class="theory-note"><strong>이론 배경:</strong> 차량한계는 차량이 초과하면 안 되는 최대 크기 기준이고, 건축한계는 구조물이 침범하면 안 되는 공간 기준입니다. <strong>반드시 건축한계 &gt; 차량한계</strong> 관계가 성립합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 건축한계와 차량한계 중 크기가 더 큰 것은?</div><div class="qe-a">정답: 건축한계 (폭 4.2m, 높이 5.15m)</div><div class="qe-wrong">오답함정: "차량한계가 더 크다"는 오답</div></div>
+</div><div class="concept" id="p3-13">
 <div class="concept-title"><span class="cnum">개념 13</span>CTC vs ATC ⚠️ 핵심 함정</div><div class="vis-wrap"><img src="images/VIS-040_CTC_ATC비교도해.png" alt="CTC vs ATC 기능 비교 도해" loading="eager"><p class="vis-cap">CTC vs ATC 기능 비교 도해</p></div>
-<div class="table-wrap"><table><thead><tr><th>시스템</th><th>기능</th><th>함정</th></tr></thead><tbody><tr><td><strong>CTC</strong> (열차집중제어)</td><td>원격조작·감시 / 인력절약 / 평균속도 향상 / 선로용량 극대화</td><td>자동제동과 혼동</td></tr><tr><td><strong>ATC</strong> (자동열차제어)</td><td>열차속도 높아지면 <strong>자동으로 제동</strong></td><td>CTC로 교체 함정</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>열차속도 높아지면 자동제동</strong> = ATC (CTC와 혼동 — 최빈출)</div></div><div class="concept" id="p3-14">
+<div class="table-wrap"><table><thead><tr><th>시스템</th><th>기능</th><th>함정</th></tr></thead><tbody><tr><td><strong>CTC</strong> (열차집중제어)</td><td>원격조작·감시 / 인력절약 / 평균속도 향상 / 선로용량 극대화</td><td>자동제동과 혼동</td></tr><tr><td><strong>ATC</strong> (자동열차제어)</td><td>열차속도 높아지면 <strong>자동으로 제동</strong></td><td>CTC로 교체 함정</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>열차속도 높아지면 자동제동</strong> = ATC (CTC와 혼동 — 최빈출)</div>
+<div class="theory-note"><strong>이론 배경:</strong> CTC(열차집중제어)는 관제사가 <strong>원격으로 신호·전철기를 조작</strong>하는 시스템이고, ATC(열차자동제어)는 허용 속도 초과 시 <strong>자동으로 제동</strong>을 거는 시스템입니다. 이름이 비슷해 자주 혼동됩니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 열차 속도가 허용 속도를 초과할 때 자동으로 제동을 거는 시스템은?</div><div class="qe-a">정답: ATC (열차자동제어장치)</div><div class="qe-wrong">오답함정: "CTC"로 혼동하는 오답</div></div>
+</div><div class="concept" id="p3-14">
 <div class="concept-title"><span class="cnum">개념 14</span>정거장 종류 비해당</div>
-<div class="table-wrap"><table><thead><tr><th>정거장 종류</th><th>기능</th></tr></thead><tbody><tr><td>역</td><td>여객 승강, 화물 적하</td></tr><tr><td>조차장</td><td>차량 입환·조성</td></tr><tr><td>신호장</td><td>열차 교행 또는 대피</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>신호소</strong> → 정거장 아님 (신호장과 구별)</div></div><div class="concept" id="p3-28">
+<div class="table-wrap"><table><thead><tr><th>정거장 종류</th><th>기능</th></tr></thead><tbody><tr><td>역</td><td>여객 승강, 화물 적하</td></tr><tr><td>조차장</td><td>차량 입환·조성</td></tr><tr><td>신호장</td><td>열차 교행 또는 대피</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>신호소</strong> → 정거장 아님 (신호장과 구별)</div>
+<div class="theory-note"><strong>이론 배경:</strong> 정거장의 종류는 역·조차장·신호장입니다. <strong>신호소는 정거장이 아닙니다</strong>. 신호장(교행·대피 기능)과 신호소(신호 취급 장소)를 이름으로 혼동하지 않도록 주의합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 정거장 종류에 해당하지 않는 것은?</div><div class="qe-a">정답: 신호소</div><div class="qe-wrong">오답함정: "신호장이 정거장이 아니다"라는 오답</div></div>
+</div><div class="concept" id="p3-28">
 <div class="concept-title"><span class="cnum">개념 28</span>슬랙·캔트 ⚠️ 곡선 구간 핵심</div>
 <div class="table-wrap"><table><thead><tr><th>구분</th><th>정의</th><th>목적</th><th>함정</th></tr></thead><tbody><tr><td><strong>슬랙(Slack)</strong></td><td>곡선 구간에서 <strong>궤간을 넓히는</strong> 것</td><td>바퀴 밀림(플랜지 압력) 감소</td><td>좁힌다 ❌</td></tr><tr><td><strong>캔트(Cant)</strong></td><td>곡선 구간에서 <strong>바깥쪽 레일</strong>을 높이는 것</td><td>원심력 상쇄, 탈선 방지</td><td>안쪽 레일 ❌</td></tr></tbody></table></div>
 <div class="trap">⚠️ 함정 주의: 캔트는 <strong>바깥쪽</strong> 레일을 높임 — 안쪽 레일로 교체 함정</div>
 <div class="tip">★ 곡선이 급할수록 / 속도가 빠를수록 → 슬랙·캔트 모두 크게 적용</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 곡선 구간에서 차량은 원심력으로 바깥쪽으로 쏠립니다. <strong>캔트</strong>는 바깥쪽 레일을 높여 원심력을 상쇄하고, <strong>슬랙</strong>은 궤간을 넓혀 차륜 플랜지 압력을 줄입니다. 공학적 원리로 이해하면 혼동이 없습니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 캔트(Cant)에서 높이는 레일은?</div><div class="qe-a">정답: 바깥쪽 레일 (외궤)</div><div class="qe-wrong">오답함정: "안쪽 레일을 높인다"는 오답</div></div>
 </div><div class="concept" id="p3-29">
 <div class="concept-title"><span class="cnum">개념 29</span>완화곡선</div>
 <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>정의</td><td>직선과 원곡선 사이에 삽입하는 <strong>점이(漸移) 구간</strong></td></tr><tr><td>목적</td><td>승차감 향상 / 급격한 원심력 변화 방지 / 탈선 위험 감소</td></tr><tr><td>효과</td><td>캔트·슬랙이 <strong>서서히</strong> 변화 (급변 없음)</td></tr><tr><td>종류</td><td><strong>클로소이드 곡선</strong> (가장 많이 사용) / 3차 포물선</td></tr></tbody></table></div>
 <div class="trap">⚠️ 함정 주의: 완화곡선 없으면 직선→원곡선 진입 시 원심력 급변 → 승차감 불량·탈선 위험</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 완화곡선 없이 직선에서 원곡선으로 갑자기 진입하면 <strong>원심력이 순간적으로 급변</strong>하여 탈선 위험과 승차감 불량이 발생합니다. 클로소이드 곡선이 가장 널리 사용됩니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 완화곡선이 없을 때 발생하는 문제는?</div><div class="qe-a">정답: 직선→원곡선 진입 시 원심력 급변 → 승차감 불량·탈선 위험</div><div class="qe-wrong">오답함정: "완화곡선 없어도 문제없다"는 오답</div></div>
 </div></div></div><div class="part" id="p4">
 <div class="part-title" onclick="togglePart(this)">PART 4. 궤도·레일·분기기<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p4-30">
@@ -317,43 +384,88 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="table-wrap"><table><thead><tr><th>구성요소</th><th>역할</th><th>재질·형태</th></tr></thead><tbody><tr><td><strong>레일</strong></td><td>차량 하중 지지 + 주행 안내</td><td>고강도 강철 / 평저레일(60kg 주류)</td></tr><tr><td><strong>침목</strong></td><td>레일 고정 + 하중 분산</td><td>PC침목(콘크리트) 주류 / 목침목·합성침목</td></tr><tr><td><strong>도상</strong></td><td>하중을 지반에 전달 + 배수</td><td>자갈도상(표준) / 콘크리트도상(고속선)</td></tr></tbody></table></div>
 <div class="tip">★ 암기법: <strong>레-침-도</strong> (위에서 아래 순서) / "레침도로 외워라"</div>
 <div class="trap">⚠️ 함정 주의: 도상 = 자갈층 (레일·침목과 역할 혼동 주의)</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 궤도는 위에서 아래로 <strong>레일→침목→도상</strong> 순서로 구성됩니다. 각 요소가 하중을 단계적으로 분산하여 지반에 전달하는 구조입니다. "레침도" 순으로 암기합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 궤도 구조 3요소를 위에서 아래 순으로 쓰시오.</div><div class="qe-a">정답: 레일 → 침목 → 도상</div><div class="qe-wrong">오답함정: "도상→침목→레일" 순으로 역순 답하는 오답</div></div>
 </div><div class="concept" id="p4-31">
 <div class="concept-title"><span class="cnum">개념 31</span>궤간 ⚠️ 수치 암기</div>
 <div class="table-wrap"><table><thead><tr><th>종류</th><th>수치</th><th>사용 국가·노선</th><th>함정</th></tr></thead><tbody><tr><td><strong>표준궤간</strong></td><td><strong>1,435mm</strong></td><td>우리나라 일반철도·지하철, 대부분의 국제 철도</td><td>1,520mm 교체</td></tr><tr><td><strong>광궤</strong></td><td>1,435mm <strong>초과</strong></td><td>러시아 (1,520mm), 스페인 일부</td><td></td></tr><tr><td><strong>협궤</strong></td><td>1,435mm <strong>미만</strong></td><td>산악·산업용 철도</td><td></td></tr></tbody></table></div>
 <div class="trap">⚠️ 함정 주의: <strong>1,435mm = 표준궤간</strong> / 1,520mm = 러시아 광궤 (표준궤간 아님)</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 표준궤간 <strong>1,435mm</strong>는 영국 조지 스티븐슨이 설계한 규격에서 유래합니다. 1,435mm보다 넓으면 광궤(러시아 1,520mm), 좁으면 협궤입니다. 1,520mm를 표준으로 혼동하지 않습니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 표준궤간의 규격 수치는?</div><div class="qe-a">정답: 1,435mm</div><div class="qe-wrong">오답함정: "1,520mm"라고 답하는 오답 (러시아 광궤)</div></div>
 </div><div class="concept" id="p4-15">
 <div class="concept-title"><span class="cnum">개념 15</span>레일 종류 + 용접</div>
-<div class="vis-wrap"><img src="images/VIS-031_레일종류단면비교.jpg" alt="레일 종류 단면 비교" loading="eager"><p class="vis-cap">레일 종류 단면 비교</p></div><div class="table-wrap"><table><thead><tr><th>레일</th><th>특징</th></tr></thead><tbody><tr><td><strong>평저 레일</strong></td><td>굽힘강도·마모·횡압 안정성 우수 → <strong>철도에서 주로 사용</strong></td></tr><tr><td>N레일</td><td>높이 커서 단면 2차 모멘트 효율화</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>용접 방법</th><th>특징</th></tr></thead><tbody><tr><td><strong>① 플래시 버트 용접</strong></td><td>효율 <strong>최고</strong> (공장 자동화)</td></tr><tr><td>② 가스압접</td><td></td></tr><tr><td>③ 테르미트 용접</td><td>산화철+알루미늄, <strong>현장</strong>에서 직접</td></tr><tr><td>④ 엔크로즈드 아크 용접</td><td></td></tr></tbody></table></div></div><div class="concept" id="p4-16">
+<div class="vis-wrap"><img src="images/VIS-031_레일종류단면비교.jpg" alt="레일 종류 단면 비교" loading="eager"><p class="vis-cap">레일 종류 단면 비교</p></div><div class="table-wrap"><table><thead><tr><th>레일</th><th>특징</th></tr></thead><tbody><tr><td><strong>평저 레일</strong></td><td>굽힘강도·마모·횡압 안정성 우수 → <strong>철도에서 주로 사용</strong></td></tr><tr><td>N레일</td><td>높이 커서 단면 2차 모멘트 효율화</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>용접 방법</th><th>특징</th></tr></thead><tbody><tr><td><strong>① 플래시 버트 용접</strong></td><td>효율 <strong>최고</strong> (공장 자동화)</td></tr><tr><td>② 가스압접</td><td></td></tr><tr><td>③ 테르미트 용접</td><td>산화철+알루미늄, <strong>현장</strong>에서 직접</td></tr><tr><td>④ 엔크로즈드 아크 용접</td><td></td></tr></tbody></table></div>
+<div class="theory-note"><strong>이론 배경:</strong> 평저레일은 I자 단면으로 <strong>굽힘강도·마모·횡압 안정성</strong>이 모두 우수합니다. 용접 방법 중 플래시 버트 용접은 공장에서 자동화로 시행해 효율이 가장 높고, 테르미트 용접은 현장에서 직접 시행합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 레일 용접 방법 중 효율이 가장 높은 것은?</div><div class="qe-a">정답: 플래시 버트 용접 (공장 자동화)</div><div class="qe-wrong">오답함정: "테르미트 용접이 효율 최고"라는 오답</div></div>
+</div><div class="concept" id="p4-16">
 <div class="concept-title"><span class="cnum">개념 16</span>장대레일 + 복진</div>
-<div class="vis-wrap"><img src="images/VIS-036_장대레일부동구간.jpg" alt="장대레일 부동구간" loading="eager"><p class="vis-cap">장대레일 부동구간</p></div><div class="vis-wrap"><img src="images/VIS-037_복진현상도해.jpg" alt="복진 현상 방향 도해" loading="eager"><p class="vis-cap">복진 현상 방향 도해</p></div><div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>장대레일 정의</td><td><strong>200m 이상</strong> 레일</td></tr><tr><td>부동구간</td><td>레일 중심부 — 체결력+도상저항력이 신축 구속</td></tr><tr><td>복진 정의</td><td>열차 주행·온도변화로 레일이 <strong>전후방향</strong>으로 이동</td></tr><tr><td>재설정</td><td>체결장치 풀기 → 레일 가열(28℃) → 재체결</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 레일 통과톤수: <strong>2~5억 톤</strong> ← 10억 톤 교체 함정</div></div><div class="concept" id="p4-17">
+<div class="vis-wrap"><img src="images/VIS-036_장대레일부동구간.jpg" alt="장대레일 부동구간" loading="eager"><p class="vis-cap">장대레일 부동구간</p></div><div class="vis-wrap"><img src="images/VIS-037_복진현상도해.jpg" alt="복진 현상 방향 도해" loading="eager"><p class="vis-cap">복진 현상 방향 도해</p></div><div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>장대레일 정의</td><td><strong>200m 이상</strong> 레일</td></tr><tr><td>부동구간</td><td>레일 중심부 — 체결력+도상저항력이 신축 구속</td></tr><tr><td>복진 정의</td><td>열차 주행·온도변화로 레일이 <strong>전후방향</strong>으로 이동</td></tr><tr><td>재설정</td><td>체결장치 풀기 → 레일 가열(28℃) → 재체결</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 레일 통과톤수: <strong>2~5억 톤</strong> ← 10억 톤 교체 함정</div>
+<div class="theory-note"><strong>이론 배경:</strong> 장대레일(200m 이상)은 이음매를 줄여 <strong>승차감 향상, 소음 감소</strong>의 효과가 있습니다. 복진은 열차 반복하중·온도 변화로 레일이 진행 방향으로 밀리는 현상으로, 체결장치와 도상저항력으로 방지합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 장대레일의 정의 기준 길이는?</div><div class="qe-a">정답: 200m 이상</div><div class="qe-wrong">오답함정: "100m 이상"으로 혼동하는 오답</div></div>
+</div><div class="concept" id="p4-17">
 <div class="concept-title"><span class="cnum">개념 17</span>침목 비교</div><div class="vis-wrap"><img src="images/VIS-041_침목비교카드.png" alt="목침목 vs PC침목 비교 카드" loading="eager"><p class="vis-cap">목침목 vs PC침목 비교 카드</p></div>
-<div class="table-wrap"><table><colgroup><col style="width:1500px"><col style="width:3000px"><col style="width:3000px"><col style="width:2560px"></colgroup><thead><tr><th>구분</th><th>장점</th><th>단점</th><th>함정</th></tr></thead><tbody><tr><td><strong>목침목</strong></td><td>탄성·완충성 큼 / 전기절연도 큼</td><td><strong>부식 우려</strong> (6개월~1년 건조+방부처리)</td><td>부식 없다 ❌</td></tr><tr><td><strong>PC침목</strong></td><td>내구년한 김 / 궤도안정</td><td><strong>전기절연도 낮음</strong></td><td>절연도 높다 ❌</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>PC침목 검사</th><th>주기</th></tr></thead><tbody><tr><td>본선</td><td>연 <strong>1회</strong> 이상</td></tr><tr><td>측선</td><td><strong>2년 1회</strong> 이상</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: PC침목 측선 검사: 2년 1회 ← 1년 1회 교체</div></div><div class="concept" id="p4-18">
+<div class="table-wrap"><table><colgroup><col style="width:1500px"><col style="width:3000px"><col style="width:3000px"><col style="width:2560px"></colgroup><thead><tr><th>구분</th><th>장점</th><th>단점</th><th>함정</th></tr></thead><tbody><tr><td><strong>목침목</strong></td><td>탄성·완충성 큼 / 전기절연도 큼</td><td><strong>부식 우려</strong> (6개월~1년 건조+방부처리)</td><td>부식 없다 ❌</td></tr><tr><td><strong>PC침목</strong></td><td>내구년한 김 / 궤도안정</td><td><strong>전기절연도 낮음</strong></td><td>절연도 높다 ❌</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>PC침목 검사</th><th>주기</th></tr></thead><tbody><tr><td>본선</td><td>연 <strong>1회</strong> 이상</td></tr><tr><td>측선</td><td><strong>2년 1회</strong> 이상</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: PC침목 측선 검사: 2년 1회 ← 1년 1회 교체</div>
+<div class="theory-note"><strong>이론 배경:</strong> 목침목은 탄성·완충성이 크고 <strong>전기절연도가 높아</strong> 궤도회로 전류 누설을 방지합니다. PC침목은 내구년한이 길지만 콘크리트 특성상 <strong>전기절연도가 낮습니다</strong>.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. PC침목의 측선 검사 주기는?</div><div class="qe-a">정답: 2년 1회 이상</div><div class="qe-wrong">오답함정: "1년 1회"로 혼동하는 오답</div></div>
+</div><div class="concept" id="p4-18">
 <div class="concept-title"><span class="cnum">개념 18</span>분기기 종류</div>
-<div class="vis-wrap"><img src="images/VIS-032_분기기구성구조도.jpg" alt="분기기 구성 부품 구조도" loading="eager"><p class="vis-cap">분기기 구성 부품 구조도</p></div><div class="table-wrap"><table><thead><tr><th>종류</th><th>특징</th></tr></thead><tbody><tr><td><strong>탄성분기기</strong></td><td>텅 레일+리드 레일 일체화 → 힐 이음매부 없음</td></tr><tr><td><strong>탈선분기기</strong></td><td>신호기 오인 시 차량 고의 탈선 → 충돌 방지</td></tr><tr><td><strong>다이아몬드 크로싱</strong></td><td>두 선로가 평면교차하는 개소</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 조립 크로싱 마모 → 용접육성으로 원형복귀 <strong>가능</strong> (교체 불필요)</div></div></div></div><div class="part" id="p5">
+<div class="vis-wrap"><img src="images/VIS-032_분기기구성구조도.jpg" alt="분기기 구성 부품 구조도" loading="eager"><p class="vis-cap">분기기 구성 부품 구조도</p></div><div class="table-wrap"><table><thead><tr><th>종류</th><th>특징</th></tr></thead><tbody><tr><td><strong>탄성분기기</strong></td><td>텅 레일+리드 레일 일체화 → 힐 이음매부 없음</td></tr><tr><td><strong>탈선분기기</strong></td><td>신호기 오인 시 차량 고의 탈선 → 충돌 방지</td></tr><tr><td><strong>다이아몬드 크로싱</strong></td><td>두 선로가 평면교차하는 개소</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 조립 크로싱 마모 → 용접육성으로 원형복귀 <strong>가능</strong> (교체 불필요)</div>
+<div class="theory-note"><strong>이론 배경:</strong> 분기기는 열차를 다른 선로로 전환하는 장치입니다. <strong>탈선분기기</strong>는 신호 오인 사고를 예방하기 위해 의도적으로 차량을 탈선시키는 안전장치입니다. 다이아몬드 크로싱은 두 선로가 평면 교차하는 지점입니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 두 선로가 평면교차하는 분기기의 명칭은?</div><div class="qe-a">정답: 다이아몬드 크로싱</div><div class="qe-wrong">오답함정: "탄성분기기"라고 답하는 오답</div></div>
+</div></div></div><div class="part" id="p5">
 <div class="part-title" onclick="togglePart(this)">PART 5. 선로설비·정거장설비<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p5-19">
 <div class="concept-title"><span class="cnum">개념 19</span>건널목 3종 분류 ⚠️ 최빈출</div>
-<div class="vis-wrap"><img src="images/VIS-026_건널목3종비교표.jpg" alt="건널목 3종 비교표" loading="eager"><p class="vis-cap">건널목 3종 비교표</p></div><div class="table-wrap"><table><thead><tr><th>종류</th><th>설비</th><th>인원</th></tr></thead><tbody><tr><td><strong>1종</strong></td><td>차단기 + 경보기 + 표지</td><td>주야간 작동 또는 안내원 근무</td></tr><tr><td><strong>2종</strong></td><td>경보기 + 표지만</td><td><strong>무인</strong> (간수 불필요)</td></tr><tr><td><strong>3종</strong></td><td>교통안전표지판만</td><td>무인</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>2종 = 차단기 없음, 경보기+표지만, 무인</strong></div><div class="tip">★ 건널목 호륜레일 간격: 직선구간 본선과 <strong>65mm</strong> (안전레일 180mm와 혼동 주의)</div></div><div class="concept" id="p5-20">
+<div class="vis-wrap"><img src="images/VIS-026_건널목3종비교표.jpg" alt="건널목 3종 비교표" loading="eager"><p class="vis-cap">건널목 3종 비교표</p></div><div class="table-wrap"><table><thead><tr><th>종류</th><th>설비</th><th>인원</th></tr></thead><tbody><tr><td><strong>1종</strong></td><td>차단기 + 경보기 + 표지</td><td>주야간 작동 또는 안내원 근무</td></tr><tr><td><strong>2종</strong></td><td>경보기 + 표지만</td><td><strong>무인</strong> (간수 불필요)</td></tr><tr><td><strong>3종</strong></td><td>교통안전표지판만</td><td>무인</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>2종 = 차단기 없음, 경보기+표지만, 무인</strong></div><div class="tip">★ 건널목 호륜레일 간격: 직선구간 본선과 <strong>65mm</strong> (안전레일 180mm와 혼동 주의)</div>
+<div class="theory-note"><strong>이론 배경:</strong> 건널목은 도로와 철도가 평면으로 교차하는 지점입니다. <strong>2종=경보기+표지(차단기 없음), 무인</strong>이 핵심 함정 포인트입니다. 1종이 가장 안전하고 3종이 가장 단순합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 차단기 없이 경보기와 표지만 설치된 건널목은 몇 종인가?</div><div class="qe-a">정답: 2종 건널목</div><div class="qe-wrong">오답함정: "1종이 경보기만 있다"는 오답</div></div>
+</div><div class="concept" id="p5-20">
 <div class="concept-title"><span class="cnum">개념 20</span>선로 4종 비교 ⚠️ 핵심 함정</div>
-<div class="vis-wrap"><img src="images/VIS-028_선로4종비교.jpg" alt="선로 4종 비교" loading="eager"><p class="vis-cap">선로 4종 비교</p></div><div class="table-wrap"><table><thead><tr><th>선로</th><th>목적</th></tr></thead><tbody><tr><td><strong>대피선</strong></td><td>추월·대피·장시간 정차</td></tr><tr><td><strong>안전측선</strong></td><td>2개 이상 열차 동시진입 시 <strong>충돌 방지</strong></td></tr><tr><td><strong>피난측선</strong></td><td><strong>급구배</strong>에서 역행차량 충돌 방지</td></tr><tr><td><strong>인상선</strong></td><td>차량 입환 시 사용</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>안전측선 ≠ 피난측선</strong> — 안전측선=동시진입 / 피난측선=급구배 역행</div></div><div class="concept" id="p5-21">
+<div class="vis-wrap"><img src="images/VIS-028_선로4종비교.jpg" alt="선로 4종 비교" loading="eager"><p class="vis-cap">선로 4종 비교</p></div><div class="table-wrap"><table><thead><tr><th>선로</th><th>목적</th></tr></thead><tbody><tr><td><strong>대피선</strong></td><td>추월·대피·장시간 정차</td></tr><tr><td><strong>안전측선</strong></td><td>2개 이상 열차 동시진입 시 <strong>충돌 방지</strong></td></tr><tr><td><strong>피난측선</strong></td><td><strong>급구배</strong>에서 역행차량 충돌 방지</td></tr><tr><td><strong>인상선</strong></td><td>차량 입환 시 사용</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>안전측선 ≠ 피난측선</strong> — 안전측선=동시진입 / 피난측선=급구배 역행</div>
+<div class="theory-note"><strong>이론 배경:</strong> 선로 종류별 목적: <strong>안전측선=동시진입 충돌 방지, 피난측선=급구배 역행차량 충돌 방지</strong>. 이름이 비슷해 자주 혼동됩니다. 대피선은 추월·대피·장시간 정차 목적입니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 급구배에서 역행하는 차량의 충돌을 방지하기 위한 선로는?</div><div class="qe-a">정답: 피난측선</div><div class="qe-wrong">오답함정: "안전측선"으로 혼동하는 오답</div></div>
+</div><div class="concept" id="p5-21">
 <div class="concept-title"><span class="cnum">개념 21</span>정거장 형식</div>
-<div class="vis-wrap"><img src="images/VIS-035_정거장형식비교.jpg" alt="정거장 형식 비교" loading="eager"><p class="vis-cap">정거장 형식 비교</p></div><div class="table-wrap"><table><thead><tr><th>형식</th><th>특징</th></tr></thead><tbody><tr><td><strong>상대식</strong></td><td>단선 중간역, 장래 확장 용이, 상하열차 동시착발 안전</td></tr><tr><td><strong>섬식</strong></td><td>승강장이 섬처럼 가운데 위치</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>섬식</strong> = 승강장 형태 (차막이 종류에 포함시키면 오답)</div></div><div class="concept" id="p5-22">
+<div class="vis-wrap"><img src="images/VIS-035_정거장형식비교.jpg" alt="정거장 형식 비교" loading="eager"><p class="vis-cap">정거장 형식 비교</p></div><div class="table-wrap"><table><thead><tr><th>형식</th><th>특징</th></tr></thead><tbody><tr><td><strong>상대식</strong></td><td>단선 중간역, 장래 확장 용이, 상하열차 동시착발 안전</td></tr><tr><td><strong>섬식</strong></td><td>승강장이 섬처럼 가운데 위치</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>섬식</strong> = 승강장 형태 (차막이 종류에 포함시키면 오답)</div>
+<div class="theory-note"><strong>이론 배경:</strong> <strong>상대식</strong>은 상·하행 선로 양쪽에 승강장이 각각 위치하는 형태이고, <strong>섬식</strong>은 승강장이 선로 중앙에 섬처럼 위치합니다. 각 형식의 장단점도 함께 기억합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 승강장이 선로 중간에 섬처럼 위치하는 정거장 형식은?</div><div class="qe-a">정답: 섬식 정거장</div><div class="qe-wrong">오답함정: "상대식"으로 혼동하는 오답</div></div>
+</div><div class="concept" id="p5-22">
 <div class="concept-title"><span class="cnum">개념 22</span>안전레일 vs 호륜레일 간격 ⚠️</div><div class="vis-wrap"><img src="images/VIS-042_안전레일호륜레일간격도해.png" alt="안전레일 vs 호륜레일 간격 도해" loading="eager"><p class="vis-cap">안전레일 vs 호륜레일 간격 도해</p></div>
-<div class="table-wrap"><table><thead><tr><th>종류</th><th>용도</th><th>간격</th></tr></thead><tbody><tr><td><strong>안전레일</strong></td><td>고가부 탈선 시 피해 최소화</td><td>본선과 최대 <strong>180mm</strong></td></tr><tr><td><strong>호륜레일</strong></td><td>건널목 구간 차륜 유도</td><td>직선 본선과 <strong>65mm</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 안전레일 '65mm' → 틀림. <strong>180mm</strong> (65mm는 호륜레일)</div></div></div></div><div class="part" id="p6">
+<div class="table-wrap"><table><thead><tr><th>종류</th><th>용도</th><th>간격</th></tr></thead><tbody><tr><td><strong>안전레일</strong></td><td>고가부 탈선 시 피해 최소화</td><td>본선과 최대 <strong>180mm</strong></td></tr><tr><td><strong>호륜레일</strong></td><td>건널목 구간 차륜 유도</td><td>직선 본선과 <strong>65mm</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 안전레일 '65mm' → 틀림. <strong>180mm</strong> (65mm는 호륜레일)</div>
+<div class="theory-note"><strong>이론 배경:</strong> 안전레일은 고가 구간에서 <strong>탈선 시 낙하를 방지</strong>하는 장치(본선과 최대 180mm), 호륜레일은 건널목에서 차륜을 <strong>올바른 방향으로 안내</strong>하는 장치(본선과 65mm)입니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 안전레일과 본선 레일 사이의 최대 간격은?</div><div class="qe-a">정답: 180mm</div><div class="qe-wrong">오답함정: "65mm"라고 답하는 오답 (65mm=호륜레일)</div></div>
+</div></div></div><div class="part" id="p6">
 <div class="part-title" onclick="togglePart(this)">PART 6. 선로보수<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p6-23">
 <div class="concept-title"><span class="cnum">개념 23</span>선로순회검사 주기</div>
-<div class="table-wrap"><table><thead><tr><th>담당자</th><th>주기</th><th>함정</th></tr></thead><tbody><tr><td>선로관리원</td><td>매일 1회 이상</td><td></td></tr><tr><td><strong>보선장</strong></td><td><strong>주 1회</strong> 이상</td><td>주 2회 교체</td></tr><tr><td>분소장</td><td>월 1회 이상</td><td></td></tr><tr><td>소장</td><td>필요시</td><td></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 보선장 <strong>주 1회</strong> ← 주 2회 교체 함정</div></div><div class="concept" id="p6-24">
+<div class="table-wrap"><table><thead><tr><th>담당자</th><th>주기</th><th>함정</th></tr></thead><tbody><tr><td>선로관리원</td><td>매일 1회 이상</td><td></td></tr><tr><td><strong>보선장</strong></td><td><strong>주 1회</strong> 이상</td><td>주 2회 교체</td></tr><tr><td>분소장</td><td>월 1회 이상</td><td></td></tr><tr><td>소장</td><td>필요시</td><td></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 보선장 <strong>주 1회</strong> ← 주 2회 교체 함정</div>
+<div class="theory-note"><strong>이론 배경:</strong> 선로는 열차 하중·온도 변화·기상 조건으로 지속적으로 변형됩니다. <strong>선로관리원=매일, 보선장=주 1회, 분소장=월 1회, 소장=필요시</strong>. 보선장을 "주 2회"로 바꾸는 함정이 자주 출제됩니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 보선장의 선로순회검사 주기는?</div><div class="qe-a">정답: 주 1회 이상</div><div class="qe-wrong">오답함정: "주 2회 이상"이라는 오답</div></div>
+</div><div class="concept" id="p6-24">
 <div class="concept-title"><span class="cnum">개념 24</span>유간검사 + 기계화 효과</div>
-<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>유간검사 시기</td><td>여름·겨울 <strong>이전에</strong> 연 2회</td></tr><tr><td>기계화 효과</td><td>작업능률 향상 / 균질 작업 / 열차상간 시간활용도 <strong>향상</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 유간검사: '가장 큰 시기에 시행' → 틀림. <strong>이전에</strong> 실시</div><div class="trap">⚠️ 함정 주의: 기계화: 시간활용도 '저하' → 틀림. <strong>향상</strong></div></div></div></div><div class="part" id="p7">
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>유간검사 시기</td><td>여름·겨울 <strong>이전에</strong> 연 2회</td></tr><tr><td>기계화 효과</td><td>작업능률 향상 / 균질 작업 / 열차상간 시간활용도 <strong>향상</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 유간검사: '가장 큰 시기에 시행' → 틀림. <strong>이전에</strong> 실시</div><div class="trap">⚠️ 함정 주의: 기계화: 시간활용도 '저하' → 틀림. <strong>향상</strong></div>
+<div class="theory-note"><strong>이론 배경:</strong> 유간(遊間)은 레일 이음매의 틈새입니다. 여름에는 열팽창으로 유간이 좁아지고 겨울에는 수축으로 넓어지므로, <strong>계절이 오기 이전에</strong> 미리 검사합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 유간검사는 언제 실시하는가?</div><div class="qe-a">정답: 여름·겨울 이전에 연 2회</div><div class="qe-wrong">오답함정: "가장 더운 시기(여름)에 실시"라는 오답</div></div>
+</div></div></div><div class="part" id="p7">
 <div class="part-title" onclick="togglePart(this)">PART 7. 신호기 분류 ⚠️ 최빈출<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p7-25">
 <div class="concept-title"><span class="cnum">개념 25</span>구조상 vs 조작상 분류</div>
-<div class="vis-wrap"><img src="images/VIS-029_신호기분류체계.jpg" alt="신호기 분류 체계 트리" loading="eager"><p class="vis-cap">신호기 분류 체계 트리</p></div><div class="table-wrap"><table><thead><tr><th>분류 기준</th><th>종류</th></tr></thead><tbody><tr><td><strong>구조상</strong></td><td>완목(기계)식 / 색등식 / 등열식</td></tr><tr><td><strong>조작상</strong></td><td>수동 / 자동 / 반자동</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>수동식</strong> = 조작상 분류 (구조상 분류 아님) — 기출 반복</div></div><div class="concept" id="p7-26">
+<div class="vis-wrap"><img src="images/VIS-029_신호기분류체계.jpg" alt="신호기 분류 체계 트리" loading="eager"><p class="vis-cap">신호기 분류 체계 트리</p></div><div class="table-wrap"><table><thead><tr><th>분류 기준</th><th>종류</th></tr></thead><tbody><tr><td><strong>구조상</strong></td><td>완목(기계)식 / 색등식 / 등열식</td></tr><tr><td><strong>조작상</strong></td><td>수동 / 자동 / 반자동</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>수동식</strong> = 조작상 분류 (구조상 분류 아님) — 기출 반복</div>
+<div class="theory-note"><strong>이론 배경:</strong> 신호기 구조상 분류는 외형(완목식·색등식·등열식), 조작상 분류는 작동 방법(수동·자동·반자동)입니다. <strong>"수동식"은 조작상 분류</strong>이며, 구조상 분류에 포함한다는 함정이 기출에 반복됩니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 수동식 신호기는 어느 분류에 해당하는가?</div><div class="qe-a">정답: 조작상 분류</div><div class="qe-wrong">오답함정: "구조상 분류"라는 오답</div></div>
+</div><div class="concept" id="p7-26">
 <div class="concept-title"><span class="cnum">개념 26</span>주신호기 vs 종속신호기</div>
-<div class="table-wrap"><table><thead><tr><th>구분</th><th>종류</th></tr></thead><tbody><tr><td><strong>주신호기</strong></td><td>장내·출발·폐색·유도·입환·엄호</td></tr><tr><td><strong>종속신호기</strong></td><td><strong>원방·통과·중계</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>원방·통과·중계 = 종속신호기</strong> ← 주신호기로 교체 함정</div></div><div class="concept" id="p7-27">
+<div class="table-wrap"><table><thead><tr><th>구분</th><th>종류</th></tr></thead><tbody><tr><td><strong>주신호기</strong></td><td>장내·출발·폐색·유도·입환·엄호</td></tr><tr><td><strong>종속신호기</strong></td><td><strong>원방·통과·중계</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>원방·통과·중계 = 종속신호기</strong> ← 주신호기로 교체 함정</div>
+<div class="theory-note"><strong>이론 배경:</strong> 주신호기는 독립적으로 운전 명령을 내리고, 종속신호기는 주신호기를 <strong>예고·보조</strong>합니다. 원방신호기는 장내신호기를 예고하는 종속신호기입니다. 종속신호기 3종(원방·통과·중계)을 반드시 외웁니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 원방·통과·중계 신호기의 분류는?</div><div class="qe-a">정답: 종속신호기</div><div class="qe-wrong">오답함정: "주신호기에 포함된다"는 오답</div></div>
+</div><div class="concept" id="p7-27">
 <div class="concept-title"><span class="cnum">개념 27</span>위식 신호기</div><div class="vis-wrap"><img src="images/VIS-043_위식신호기표시구간도해.png" alt="위식 신호기 3위식·4위식 표시 구간 도해" loading="eager"><p class="vis-cap">위식 신호기 3위식·4위식 표시 구간 도해</p></div>
-<div class="table-wrap"><table><thead><tr><th>종류</th><th>표시 구간</th></tr></thead><tbody><tr><td><strong>3위식</strong></td><td>앞 <strong>2구간</strong> 상태 표시 (정지·주의·진행)</td></tr><tr><td><strong>4위식</strong></td><td>앞 <strong>3구간</strong> 상태 표시</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 3위식 = 앞 <strong>2구간</strong> ← '앞 3구간' 교체 함정</div></div></div></div></div>
+<div class="table-wrap"><table><thead><tr><th>종류</th><th>표시 구간</th></tr></thead><tbody><tr><td><strong>3위식</strong></td><td>앞 <strong>2구간</strong> 상태 표시 (정지·주의·진행)</td></tr><tr><td><strong>4위식</strong></td><td>앞 <strong>3구간</strong> 상태 표시</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 3위식 = 앞 <strong>2구간</strong> ← '앞 3구간' 교체 함정</div>
+<div class="theory-note"><strong>이론 배경:</strong> 위식(位式)은 신호기가 표시하는 <strong>앞쪽 구간 수</strong>를 의미합니다. 3위식은 앞 2구간, 4위식은 앞 3구간 상태를 표시합니다. "3위식=앞 3구간"으로 바꾸는 함정이 자주 출제됩니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 3위식 신호기가 표시하는 앞쪽 구간 수는?</div><div class="qe-a">정답: 2구간 (정지·주의·진행 3가지 현시로 앞 2구간 표시)</div><div class="qe-wrong">오답함정: "3구간"이라고 답하는 오답</div></div>
+</div></div></div></div>
 </div>
 <script>
 function togglePart(el){

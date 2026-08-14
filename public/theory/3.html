@@ -192,6 +192,25 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
   /* 하이라이트 색상 유지 */
   .highlight { background: #ff0 !important;
     print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+
+/* 이론 해설 박스 */
+.theory-note { background:#f0f7ff; border-left:4px solid #2563eb; padding:10px 14px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#1e3a5f; }
+.theory-note strong { color:#1d4ed8; }
+
+/* 기출 예시 박스 */
+.quiz-ex { background:#f0fdf4; border-left:4px solid #16a34a; padding:10px 14px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.88em; color:#14532d; }
+.quiz-ex .qe-title { font-weight:bold; color:#15803d; margin-bottom:4px; }
+.quiz-ex .qe-q { margin:4px 0 2px; }
+.quiz-ex .qe-a { font-weight:bold; color:#166534; }
+.quiz-ex .qe-wrong { color:#dc2626; text-decoration:line-through; }
+
+/* 비교 하이라이트 박스 */
+.compare-box { display:grid; gap:6px; margin:8px 0; }
+.compare-box.col2 { grid-template-columns: 1fr 1fr; }
+.cbox-item { background:#f8f8f8; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px; font-size:.88em; }
+.cbox-item .cbox-head { font-weight:bold; color:#4c1d95; margin-bottom:4px; font-size:.92em; }
+@media(max-width:600px){ .compare-box.col2{ grid-template-columns:1fr; } }
+
   .cnum { background: #eee !important;
     print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 
@@ -237,11 +256,17 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><b>무인운전</b></td><td>사람이 열차 안에서 직접 운전 안 함 → 관제실 원격조종</td></tr>
 </table></div>
 <div class="tip">완급차 구성 암기: "제압차수" (제동통+압력계+차장변+수제동기)</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 열차운전규칙의 핵심 용어들은 시험에 직접 출제됩니다. 특히 <strong>정거장</strong>(여객·화물·교행 기능)과 <strong>완급차</strong> 구성 요소 암기가 중요합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 완급차에 반드시 있어야 하는 장치 4가지를 쓰시오.</div><div class="qe-a">정답: 관통제동기용 제동통 / 압력계 / 차장변 / 수제동기 ("제압차수" 암기)</div><div class="qe-wrong">오답함정: "수동조작장치"를 포함한다고 쓰는 오답</div></div>
 </div><div class="concept" id="C-02"><div class="concept-title"><span class="cnum">C-02</span>동력차 연결 위치 + 열차 안전 확보</div>
 <div class="step-box"><b>동력차 원칙:</b> 열차 맨 앞 연결<br>
 <b>예외:</b> ① 기관차 2개 이상·맨 앞에서 제어 ② 보조기관차 ③ 선로·열차 고장<br>
 ④ 구원·제설·공사·시험운전열차 ⑤ 정거장↔측선 운전 ⑥ 기타 특별 사유</div>
 <div class="step-box"><b>열차 안전 확보 3가지:</b> 폐색 / 열차제어장치 / 시계운전</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 동력차를 맨 앞에 연결하는 원칙은 기관사가 <strong>전방 시야</strong>를 확보하고 긴급 상황에 즉각 대응하기 위함입니다. 예외 6가지가 있어 시험에 자주 출제됩니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 열차 안전 확보 3가지 방법을 쓰시오.</div><div class="qe-a">정답: 폐색 / 열차제어장치 / 시계운전</div><div class="qe-wrong">오답함정: "신호기"를 독립된 방법으로 쓰는 오답</div></div>
 </div><div class="concept" id="C-03"><div class="concept-title"><span class="cnum">C-03</span>여객열차 연결제한</div>
 <div class="step-box">
 원칙: 여객열차에 화차 연결 금지 (예외: 회송 또는 특별 사유)<br><br>
@@ -250,6 +275,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 • 파손차량, 무동력기관차, 2량 이상에 무게 부담한 화차 → 여객열차 연결 금지
 </div>
 <div class="trap">여객열차에 동력기관차 연결 금지 ❌ → 동력기관차는 연결 가능</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 여객열차에 화차를 연결하면 충격·진동 등 <strong>승객 안전</strong>에 위협이 됩니다. 단, 회송 목적이나 특별 사유는 예외입니다. 화차 연결 위치(앞·뒤만 가능)도 함께 기억하세요.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 여객열차에 화차를 연결하는 경우 화차의 위치 제한은?</div><div class="qe-a">정답: 객차 중간에는 연결 금지 (앞 또는 뒤에만 연결)</div><div class="qe-wrong">오답함정: "어느 위치든 무방하다"는 오답</div></div>
 </div><div class="concept" id="C-04"><div class="concept-title"><span class="cnum">C-04</span>동시 진출입 기준 ★★★</div>
 <div class="vis-wrap"><img src="images/VIS-064_동시진출입기준수치카드.jpg" alt="열차 동시진출입 여유거리 기준 (VIS-064)"><div class="caption">열차 동시진출입 여유거리 기준 (VIS-064)</div></div>
 <div class="table-wrap"><table>
@@ -260,12 +288,18 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 </table></div>
 <div class="trap">동차·전동차 150m ↔ 동일방향 100m 숫자 교체 함정 주의!</div>
 <div class="tip">예외: 안전측선 설치 / 서행유도 / 단행기관차 운행</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 동시 진출입은 두 열차가 동일 정거장에 동시에 진출·입하는 것입니다. <strong>충돌 위험</strong>이 있으므로 방향·차종별 여유거리 기준을 엄격히 규정합니다. 200m/150m/100m 세 수치 암기 필수입니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 동차·전동차가 다른 방향에서 동시 진입할 때 최소 여유거리는?</div><div class="qe-a">정답: 150m 이상 (출발신호기·정차위치로부터)</div><div class="qe-wrong">오답함정: 200m(일반열차 기준)로 혼동하는 오답</div></div>
 </div><div class="concept" id="C-05"><div class="concept-title"><span class="cnum">C-05</span>퇴행운전 · 정거장 외 정차</div>
 <div class="table-wrap"><table><tr><th>항목</th><th>원칙</th><th>예외</th></tr>
 <tr><td><b>퇴행운전</b></td><td>불가</td><td>선로·전차선로·차량 고장 / 구원·제설·공사열차 / 보조기관차 / 특별 사유</td></tr>
 <tr><td><b>정거장 외 정차</b></td><td>금지</td><td>1/30 이상 급경사 진입 전 / 정지신호 / 철도사고 발생·우려 / 안전상 부득이</td></tr>
 </table></div>
 <div class="trap">정거장 외 정차 예외 ≠ 분기기 제한속도 초과 운행</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 퇴행운전은 진행 방향과 반대로 이동하는 것으로, <strong>후방 시야 확보가 어려워</strong> 충돌 위험이 증가합니다. 선로·차량 고장, 구원열차 등 특수 상황에서만 예외를 인정합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 정거장 외 정차 예외 사유로 옳지 않은 것은?</div><div class="qe-a">정답: 분기기 제한속도 초과 운행 (정차 허용 사유 아님)</div><div class="qe-wrong">오답함정: "1/30 이상 급경사 진입 전"을 오답으로 착각하는 경우</div></div>
 </div></div></div><div class="part" id="part2"><div class="part-title" onclick="togglePart(this)"><span>PART 2. 폐색방식 ★★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-06"><div class="concept-title"><span class="cnum">C-06</span>폐색방식 전체 분류</div>
 <div class="vis-wrap"><img src="images/VIS-061_폐색방식8종분류표.jpg" alt="폐색방식 8종 분류표 (VIS-061)"><div class="caption">폐색방식 8종 분류표 (VIS-061)</div></div>
 <div class="table-wrap"><table>
@@ -273,6 +307,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><b>상용폐색</b></td><td>자동폐색식 / 연동폐색식 / 차내신호폐색식 / 통표폐색식</td><td><b>자연차통</b></td></tr>
 <tr><td><b>대용폐색</b></td><td>통신식 / 지도통신식 / 지도식 / 지령식</td><td><b>통지지지</b></td></tr>
 </table></div>
+
+<div class="theory-note"><strong>이론 배경:</strong> <strong>폐색(閉塞)</strong>이란 하나의 구간에 하나의 열차만 진입할 수 있도록 막는 방식입니다. 상용폐색이 불가능할 때 대용폐색으로 전환합니다. 8종을 모두 외워야 합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 상용폐색 4종을 모두 쓰시오.</div><div class="qe-a">정답: 자동폐색식 / 연동폐색식 / 차내신호폐색식 / 통표폐색식 (자연차통)</div><div class="qe-wrong">오답함정: "지도통신식"을 상용폐색에 포함하는 오답</div></div>
 </div><div class="concept" id="C-07"><div class="concept-title"><span class="cnum">C-07</span>각 폐색방식 핵심 포인트</div>
 <div class="table-wrap"><table>
 <tr><th>폐색방식</th><th>핵심 내용</th></tr>
@@ -286,6 +323,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><b>지령식</b></td><td>① 관제 감시 가능 + ② 통신장치 정상 → 관제 승인으로 시행</td></tr>
 </table></div>
 <div class="trap">통표폐색식 = 단선 전용 / '복선 사용 가능' 함정 주의!</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 통표폐색식은 <strong>실물 통표를 기관사가 직접 소지</strong>해야 구간에 진입할 수 있습니다. 물리적 증표 방식으로 단선 전용이며, 복선에는 사용하지 않습니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 폐색방식 중 단선 전용으로만 사용되는 방식은?</div><div class="qe-a">정답: 통표폐색식</div><div class="qe-wrong">오답함정: "복선에서도 사용 가능하다"는 오답</div></div>
 </div><div class="concept" id="C-08"><div class="concept-title"><span class="cnum">C-08</span>지도표 vs 지도권 기입사항 ★★★</div>
 <div class="table-wrap"><table>
 <tr><th>항목</th><th>기입사항</th></tr>
@@ -293,6 +333,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr class="hl"><td><b>지도권</b></td><td>사용구간 + 사용열차 + 발행일자 + 지도표 번호</td></tr>
 </table></div>
 <div class="trap">지도표에 기관사 이름 기입 ❌ → 포함되지 않음</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 지도표는 <strong>구간 통과 자격을 증명하는 공식 서류</strong>입니다. 구간(양끝역명), 유효성(발행일자), 열차(번호) 세 가지가 핵심 기입사항입니다. 기관사 이름이나 역장 서명은 포함되지 않습니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 지도표에 기입하는 사항 3가지를 쓰시오.</div><div class="qe-a">정답: 구간 양끝 정거장명 / 발행일자 / 사용열차번호</div><div class="qe-wrong">오답함정: "기관사 이름"을 기입사항으로 쓰는 오답</div></div>
 </div><div class="concept" id="C-09"><div class="concept-title"><span class="cnum">C-09</span>시계운전 방식</div>
 <div class="table-wrap"><table>
 <tr><th>구분</th><th>방식</th></tr>
@@ -300,6 +343,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><b>단선운전</b></td><td>지도격시법, 전령법</td></tr>
 </table></div>
 <div class="tip">복선=격시+전령 / 단선=지도격시+전령 (지도격시는 단선 전용)</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 시계운전은 <strong>신호기 없이</strong> 운전 시격이나 선도 요원에 의존하는 방식입니다. 복선은 격시법+전령법, 단선은 지도격시법+전령법을 사용합니다. 지도격시법은 단선 전용입니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 시계운전 방식 중 단선 전용으로만 사용되는 방법은?</div><div class="qe-a">정답: 지도격시법</div><div class="qe-wrong">오답함정: "격시법이 단선에서도 쓰인다"는 오답</div></div>
 </div></div></div><div class="part" id="part3"><div class="part-title" onclick="togglePart(this)"><span>PART 3. 신호기 체계 ★★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-10"><div class="concept-title"><span class="cnum">C-10</span>상치신호기 분류</div>
 <div class="table-wrap"><table>
 <tr><th>분류</th><th>신호기 (암기)</th></tr>
@@ -307,6 +353,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><b>종속신호기</b></td><td>원방 / 통과 / 중계 — 암기: <b>"원통중"</b></td></tr>
 <tr><td><b>신호부속기</b></td><td>진로표시기 / 진로예고기 / 진로개통표시기</td></tr>
 </table></div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 상치신호기는 일정 장소에 <strong>고정 설치</strong>된 신호기입니다. 주신호기(6종)가 직접 운전 명령을 내리고, 종속신호기(3종)는 주신호기를 보조합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 주신호기 6종을 모두 쓰시오.</div><div class="qe-a">정답: 장내 / 출발 / 폐색 / 엄호 / 유도 / 입환 (장출폐엄유입)</div><div class="qe-wrong">오답함정: "원방신호기"를 주신호기에 포함하는 오답</div></div>
 </div><div class="concept" id="C-11"><div class="concept-title"><span class="cnum">C-11</span>신호기 기본원칙 (정위) ★★★</div>
 <div class="vis-wrap"><img src="images/VIS-062_신호기정위비교암기카드.jpg" alt="신호기 정위 비교 암기카드 (VIS-062)"><div class="caption">신호기 정위 비교 암기카드 (VIS-062)</div></div>
 <div class="table-wrap"><table>
@@ -323,6 +372,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 </table></div>
 <div class="trap">유도신호기 기본 = 정지신호 ❌ → <b>현시없음</b> (정지 아님!)</div>
 <div class="trap">원방신호기 기본 = 진행신호 ❌ → <b>주의신호</b></div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 정위(定位)란 신호기의 <strong>평상시 기본 위치</strong>입니다. 대부분 정지가 정위이지만, 자동폐색신호기=진행, 원방신호기=주의, 유도신호기=현시없음은 반드시 외워야 합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 유도신호기의 정위(기본 현시)는 무엇인가?</div><div class="qe-a">정답: 신호를 현시하지 아니한다 (현시없음)</div><div class="qe-wrong">오답함정: "정지신호"라고 답하는 오답</div></div>
 </div><div class="concept" id="C-12"><div class="concept-title"><span class="cnum">C-12</span>신호현시 방식 (색등식)</div>
 <div class="table-wrap"><table>
 <tr><th>현시</th><th>신호 종류</th><th>색</th></tr>
@@ -331,6 +383,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><b>3현시</b></td><td>정지·주의·진행</td><td>적·황·녹</td></tr>
 <tr><td><b>2현시</b></td><td>정지·진행</td><td>적·녹</td></tr>
 </table></div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 현시 단계가 많을수록 더 세밀한 속도 제어가 가능합니다. <strong>5현시</strong>는 정지·경계·주의·감속·진행 5단계로, 경계신호는 황색등 2개(황황)로 표시됩니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 5현시에서 경계신호에 해당하는 색은?</div><div class="qe-a">정답: 황황(등황색 2개 동시 점등)</div><div class="qe-wrong">오답함정: "황색 1개"로 답하는 오답</div></div>
 </div><div class="concept" id="C-13"><div class="concept-title"><span class="cnum">C-13</span>수신호 현시방법</div>
 <div class="table-wrap"><table>
 <tr><th>신호</th><th>주간</th><th>야간</th></tr>
@@ -339,6 +394,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><b>진행신호</b></td><td>녹색기 (없으면 한 팔 높이 듦)</td><td>녹색등</td></tr>
 </table></div>
 <div class="trap">수신호에 감속신호 있음 ❌ → 수신호 = 정지·서행·진행 3종뿐</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 수신호는 신호기 고장이나 비상 상황에서 사용하는 보조 신호입니다. <strong>수신호는 3종만 있습니다</strong> — 정지, 서행, 진행. 감속신호는 수신호에 없습니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 수신호 종류로 올바른 것은?</div><div class="qe-a">정답: 정지 / 서행 / 진행 3종</div><div class="qe-wrong">오답함정: "감속신호"를 수신호에 포함하는 오답</div></div>
 </div><div class="concept" id="C-14"><div class="concept-title"><span class="cnum">C-14</span>임시신호기 3종 ★★★</div>
 <div class="vis-wrap"><img src="images/VIS-066_임시신호기3종비교표.jpg" alt="임시신호기 3종 비교표 (VIS-066)"><div class="caption">임시신호기 3종 비교표 (VIS-066)</div></div>
 <div class="table-wrap"><table>
@@ -348,6 +406,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr class="hl"><td><b>서행해제신호기</b></td><td>서행 구역 진출</td><td><b>백색테두리+녹색 원판</b></td><td>녹색등</td></tr>
 </table></div>
 <div class="trap">서행해제신호기 주간 = 백색원판 ❌ → <b>녹색 원판</b></div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 임시신호기는 선로 공사 구간에 순서대로 설치됩니다: <strong>서행예고 → 서행 → 서행해제</strong>. 색 구분이 중요합니다 — 서행신호기=등황색, 서행해제=녹색.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 서행해제신호기의 주간 현시(색)는?</div><div class="qe-a">정답: 백색테두리+녹색 원판</div><div class="qe-wrong">오답함정: "백색 원판"이라고 답하는 오답</div></div>
 </div><div class="concept" id="C-15"><div class="concept-title"><span class="cnum">C-15</span>입환전호 ★★★</div>
 <div class="vis-wrap"><img src="images/VIS-063_입환전호비교카드.jpg" alt="입환전호 비교카드 (VIS-063)"><div class="caption">입환전호 비교카드 (VIS-063)</div></div>
 <div class="table-wrap"><table>
@@ -358,6 +419,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 </table></div>
 <div class="trap">오너라=상하, 가거라=좌우 ❌ → 오너라=<b>좌우</b>, 가거라=<b>상하</b> (반대 함정!)</div>
 <div class="tip">도시철도: 오너라=접근전호 / 가거라=퇴거전호 (동작 동일)</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 입환전호는 차량 이동 방향을 알리는 신호입니다. <strong>오너라=좌우, 가거라=상하</strong>를 반드시 기억하세요. 반대로 외우면 100% 틀립니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 오너라전호(접근전호)의 주간 방법은?</div><div class="qe-a">정답: 녹색기를 좌우로 흔듦</div><div class="qe-wrong">오답함정: "위아래로 흔든다"는 오답 (위아래=가거라)</div></div>
 </div><div class="concept" id="C-16"><div class="concept-title"><span class="cnum">C-16</span>제한신호 추정 원칙</div>
 <div class="step-box">
 1. 신호 현시 없거나 불명확 → <b>정지신호로 간주</b><br>
@@ -365,6 +429,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 &nbsp;&nbsp;&nbsp;&nbsp;단, 사전에 통보가 있으면 → <b>통보된 신호에 따름</b>
 </div>
 <div class="trap">사전통보 있어도 정지신호로 간주 ❌ → 통보된 신호에 따름</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 불명확한 신호를 <strong>정지로 간주</strong>하는 것은 "가장 안전한 해석" 원칙입니다. 단, 사전 통보가 있으면 통보된 신호를 따릅니다. 이 예외가 시험 함정으로 자주 출제됩니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 상치신호기와 수신호의 현시가 다를 때 따르는 원칙은?</div><div class="qe-a">정답: 더 제한적인 쪽(수신호)에 따름. 단, 사전 통보가 있으면 통보된 신호에 따름</div><div class="qe-wrong">오답함정: "항상 수신호를 따른다"는 오답</div></div>
 </div></div></div><div class="part" id="part4"><div class="part-title" onclick="togglePart(this)"><span>PART 4. 열차제어장치 (ATS·ATC·ATP) ★★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-17"><div class="concept-title"><span class="cnum">C-17</span>열차제어장치 분류</div>
 <div class="table-wrap"><table>
 <tr><th>장치</th><th>명칭</th><th>기능</th></tr>
@@ -373,6 +440,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><b>ATP</b></td><td>열차자동방호장치</td><td>ATC 기능 + 필요 시 자동제동으로 목표지점 정지</td></tr>
 </table></div>
 <div class="tip">ATS→정지만 / ATC→감속+정지+속도표시 / ATP→ATC+자동제동</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> ATS→ATC→ATP 순으로 기능이 강화됩니다. <strong>ATS=정지만, ATC=속도 연속 제어+차내 표시, ATP=목표지점 자동정지</strong>. ATC와 ATP의 차이가 자주 출제됩니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 차량 내부에 허용속도를 실시간으로 표시하는 열차제어장치는?</div><div class="qe-a">정답: ATC (열차자동제어장치)</div><div class="qe-wrong">오답함정: "ATS"로 혼동하는 오답</div></div>
 </div></div></div><div class="part" id="part5"><div class="part-title" onclick="togglePart(this)"><span>PART 5. 도시철도운전규칙 ★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-18"><div class="concept-title"><span class="cnum">C-18</span>주요 정의 비교 — 공작물 vs 인공구조물</div>
 <div class="table-wrap"><table>
 <tr><th>규칙</th><th>전차선로 정의</th></tr>
@@ -380,6 +450,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr class="hl"><td><b>도시철도운전규칙</b></td><td>전차선 및 이를 지지하는 <b>인공구조물</b></td></tr>
 </table></div>
 <div class="trap">도시철도에서도 "공작물" ❌ → 도시철도 = <b>인공구조물</b></div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 동일한 전차선로라도 적용 규칙에 따라 용어가 다릅니다. 철도차량운전규칙=<strong>공작물</strong>, 도시철도운전규칙=<strong>인공구조물</strong>. 이 차이를 묻는 문제가 자주 출제됩니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 도시철도운전규칙에서 전차선로는 전차선과 이를 지지하는 무엇인가?</div><div class="qe-a">정답: 인공구조물</div><div class="qe-wrong">오답함정: "공작물"이라고 답하는 오답</div></div>
 </div><div class="concept" id="C-19"><div class="concept-title"><span class="cnum">C-19</span>점검 주기 ★★★</div>
 <div class="table-wrap"><table>
 <tr><th>설비</th><th>점검 주기</th></tr>
@@ -389,11 +462,17 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td>운전보안장치</td><td>일정한 주기</td></tr>
 </table></div>
 <div class="trap">운전보안장치 매일 점검 ❌ → 매일은 선로·전차선로만</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 선로와 전차선로를 <strong>매일</strong> 점검하는 것은 열차 운행의 핵심 인프라이기 때문입니다. 운전보안장치는 전자장비로서 "일정한 주기"로 관리합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 도시철도에서 매일 1회 이상 순회점검해야 하는 설비 2가지는?</div><div class="qe-a">정답: 선로 / 전차선로</div><div class="qe-wrong">오답함정: "운전보안장치도 매일 점검"이라는 오답</div></div>
 </div><div class="concept" id="C-20"><div class="concept-title"><span class="cnum">C-20</span>비상제동거리 ★★★</div>
 <div class="step-box" style="font-size:1.1em; text-align:center; padding:16px;">
 도시철도 비상제동거리 = <b>600미터 이하</b>
 </div>
 <div class="trap">비상제동거리 400m ❌ → <b>600m</b></div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 비상제동거리는 비상 브레이크 작동 후 완전 정차까지의 거리입니다. 도시철도는 지하 구간이 많고 열차 간격이 짧아 <strong>600m 이내</strong>를 요구합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 도시철도의 비상제동거리 기준은?</div><div class="qe-a">정답: 600미터 이하</div><div class="qe-wrong">오답함정: "400m"로 혼동하는 오답</div></div>
 </div><div class="concept" id="C-21"><div class="concept-title"><span class="cnum">C-21</span>수신호 위치 비교 ★★★</div>
 <div class="table-wrap"><table>
 <tr><th>규칙</th><th>선로 지장 시 정지수신호 위치</th></tr>
@@ -401,6 +480,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr class="hl"><td><b>도시철도운전규칙</b></td><td>지장지점으로부터 <b>100m 이상</b></td></tr>
 </table></div>
 <div class="trap">도시철도 수신호 200m 이상 ❌ → <b>100m 이상</b></div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 도시철도는 일반철도보다 열차 속도 범위가 좁고 지하 구간이 많아 선로 지장 시 정지수신호 위치가 <strong>100m</strong>로 단축됩니다. 일반철도(200m)와 비교해 외웁니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 도시철도운전규칙상 선로 지장 시 정지수신호 설치 위치는?</div><div class="qe-a">정답: 지장지점으로부터 100m 이상</div><div class="qe-wrong">오답함정: "200m 이상"으로 답하는 오답 (200m=철도차량운전규칙)</div></div>
 </div><div class="concept" id="C-22"><div class="concept-title"><span class="cnum">C-22</span>신설·개조 후 시험운전 + 대용폐색</div>
 <div class="table-wrap"><table>
 <tr><th>항목</th><th>내용</th></tr>
@@ -408,6 +490,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td>기간 단축</td><td>운행 중 구간 확장·이설은 전문가 안전진단 후 단축 가능</td></tr>
 <tr><td>도시철도 대용폐색</td><td>폐색장치·차내신호장치 고장 → 관제사(관제업무종사자)가 <b>지령식</b>으로 폐색구간 열차 진입 지시</td></tr>
 </table></div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 신설·개조된 설비는 실제 운행 전 <strong>1개월 이상 시험운전</strong>으로 안전성을 검증합니다. 도시철도 대용폐색은 지령식으로, 관제사가 지시합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 도시철도에서 폐색장치 고장 시 사용하는 대용폐색 방식은?</div><div class="qe-a">정답: 지령식 (관제사가 지시)</div><div class="qe-wrong">오답함정: "지도통신식"으로 혼동하는 오답</div></div>
 </div></div></div><div class="part" id="part6"><div class="part-title" onclick="togglePart(this)"><span>PART 6. 운전이론 ★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-23"><div class="concept-title"><span class="cnum">C-23</span>제동 종류</div>
 <div class="table-wrap"><table>
 <tr><th>제동 방식</th><th>특징</th></tr>
@@ -418,6 +503,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 </table></div>
 <div class="trap">자연제동 ❌ → 정식 제동방식 없음</div>
 <div class="tip">발전제동 단점: ① 전기회로 복잡 ② 속도 저하 시 제동력 약화</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 발전제동은 전동기를 발전기로 전환해 제동력을 얻지만, <strong>속도가 낮아질수록 발전량이 감소</strong>해 제동력이 약해집니다. 회생제동은 발생 전기를 계통에 반환하여 에너지를 절약합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 발전제동의 단점 2가지는?</div><div class="qe-a">정답: 전기회로 복잡 / 속도 저하 시 제동력 약화</div><div class="qe-wrong">오답함정: "발전제동은 단점이 없다"는 오답</div></div>
 </div><div class="concept" id="C-24"><div class="concept-title"><span class="cnum">C-24</span>동력집중식 vs 동력분산식 ★★★</div>
 <div class="vis-wrap"><img src="images/VIS-065_동력집중분산식비교표.jpg" alt="동력집중식 vs 동력분산식 비교 (VIS-065)"><div class="caption">동력집중식 vs 동력분산식 비교 (VIS-065)</div></div>
 <div class="table-wrap"><table>
@@ -426,6 +514,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr class="hl"><td><b>동력분산식</b></td><td>소음 적음, 가속성능 우수, 에너지 효율 높음</td><td>전기동차, 디젤동차, <b>ITX 열차계열</b></td></tr>
 </table></div>
 <div class="trap">ITX-새마을 = 동력집중식 ❌ → <b>동력분산식</b></div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 동력분산식은 각 차량에 동력이 분산되어 <strong>가속 성능이 우수</strong>합니다. ITX 계열은 동력분산식으로, 단거리 고빈도 운행에 적합합니다. KTX-산천도 동력분산식입니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. ITX-새마을의 동력 방식은?</div><div class="qe-a">정답: 동력분산식</div><div class="qe-wrong">오답함정: "동력집중식"이라는 오답</div></div>
 </div><div class="concept" id="C-25"><div class="concept-title"><span class="cnum">C-25</span>관절대차 · 고정축거</div>
 <div class="table-wrap"><table>
 <tr><th>항목</th><th>내용</th></tr>
@@ -433,6 +524,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><b>고정축거</b></td><td>한 대차 내 양 차축 중심 사이의 거리 / 짧게 하면 → 곡선통과 원활</td></tr>
 </table></div>
 <div class="trap">관절대차 단점 = 곡선통과 불량 ❌ → 곡선통과는 오히려 우수</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 관절대차는 인접 차량이 대차를 공유하여 차량 수를 줄이고 승차감을 향상시킵니다. <strong>고정축거가 짧을수록</strong> 대차가 곡선에서 더 자유롭게 회전할 수 있어 통과 성능이 향상됩니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 고정축거를 짧게 할 때 얻는 이점은?</div><div class="qe-a">정답: 곡선통과 성능 향상</div><div class="qe-wrong">오답함정: "관절대차는 곡선통과 불량하다"는 오답</div></div>
 </div><div class="concept" id="C-26"><div class="concept-title"><span class="cnum">C-26</span>공주거리 · 제동거리 계산 ★★</div>
 <div class="table-wrap"><table>
 <tr><th>항목</th><th>계산식</th></tr>
@@ -441,6 +535,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><b>전제동거리</b></td><td>열차가 정지할 때까지 이동한 전체 거리</td></tr>
 </table></div>
 <div class="tip">예) 제동초속도 20m/s, 공주시간 3초 → 공주거리 = 20 × 3 = <b>60m</b></div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 공주거리는 제동 조작 후 <strong>실제 제동력이 발생하기 전까지</strong> 이동한 거리입니다. 기관사 반응시간과 제동계통 응답시간이 포함됩니다. 계산식: 초기속도 × 공주시간.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 제동초속도 30m/s, 공주시간 2초일 때 공주거리는?</div><div class="qe-a">정답: 60m (30m/s × 2초)</div><div class="qe-wrong">오답함정: "제동거리와 같다"는 오답</div></div>
 </div><div class="concept" id="C-27"><div class="concept-title"><span class="cnum">C-27</span>피뢰기 · 운행도표</div>
 <div class="table-wrap"><table>
 <tr><th>항목</th><th>내용</th></tr>
@@ -448,6 +545,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><b>운행도표 종류</b></td><td>1시간목 / 10분목 / 2분목 / 1분목 (30분목 없음!)</td></tr>
 </table></div>
 <div class="trap">운행도표 "30분목" ❌ → 없는 것</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 피뢰기는 낙뢰·스위칭 서지 등 <strong>이상전압을 접지로 방전</strong>하여 전차선로와 전기설비를 보호합니다. 운행도표는 열차 운행 계획의 그래프 표현입니다. 30분목은 없습니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 운행도표의 종류 중 존재하지 않는 것은?</div><div class="qe-a">정답: 30분목 (1시간목·10분목·2분목·1분목만 있음)</div><div class="qe-wrong">오답함정: "30분목도 있다"는 오답</div></div>
 </div></div></div>
   </div>
 </div>

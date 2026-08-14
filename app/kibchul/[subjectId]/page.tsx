@@ -10,10 +10,12 @@ import {
   KibchulSession,
 } from '@/lib/kibchul-data';
 
-// localStorage 키
+// ─────────────────────────────────────────
+// localStorage 키 & 타입 정의
+// ─────────────────────────────────────────
 const LS_WRONG = 'kibchul_wrong';
+const LS_STATS = 'kibchul_stats';
 
-// 오답 저장 구조
 interface WrongEntry {
   subjectId: number;
   sessionId: string;
@@ -26,31 +28,45 @@ interface WrongEntry {
   savedAt: string;
 }
 
-function loadWrong(): WrongEntry[] {
-  try {
-    return JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
-  } catch {
-    return [];
-  }
+export interface StatEntry {
+  subjectId: number;
+  sessionId: string;
+  correct: number;
+  total: number;
+  timestamp: string;
 }
 
+// ─── 오답 ───
+function loadWrong(): WrongEntry[] {
+  try { return JSON.parse(localStorage.getItem(LS_WRONG) || '[]'); } catch { return []; }
+}
 function saveWrong(entries: WrongEntry[]) {
   localStorage.setItem(LS_WRONG, JSON.stringify(entries));
 }
-
 function addWrong(entry: WrongEntry) {
   const all = loadWrong();
-  // 중복 제거 (같은 questionId가 있으면 갱신)
   const filtered = all.filter(e => e.questionId !== entry.questionId);
   saveWrong([...filtered, entry]);
 }
-
 function removeWrong(questionId: string) {
-  const all = loadWrong().filter(e => e.questionId !== questionId);
-  saveWrong(all);
+  saveWrong(loadWrong().filter(e => e.questionId !== questionId));
 }
 
-// 문제 shuffle
+// ─── 통계 ───
+function loadStats(): StatEntry[] {
+  try { return JSON.parse(localStorage.getItem(LS_STATS) || '[]'); } catch { return []; }
+}
+function addStat(entry: StatEntry) {
+  const all = loadStats();
+  // 같은 subjectId+sessionId 최신 1개만 유지
+  const filtered = all.filter(e => !(e.subjectId === entry.subjectId && e.sessionId === entry.sessionId));
+  localStorage.setItem(LS_STATS, JSON.stringify([...filtered, entry]));
+}
+function getSessionStat(subjectId: number, sessionId: string): StatEntry | null {
+  return loadStats().find(e => e.subjectId === subjectId && e.sessionId === sessionId) ?? null;
+}
+
+// ─── shuffle ───
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -60,7 +76,7 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-type Screen = 'subject_select' | 'session_select' | 'quiz' | 'result';
+type Screen = 'session_select' | 'quiz' | 'result';
 type QuizMode = 'practice' | 'exam';
 
 interface QuizState {
@@ -73,6 +89,9 @@ interface QuizState {
   sessionId: string;
 }
 
+// ─────────────────────────────────────────
+// 메인 페이지
+// ─────────────────────────────────────────
 export default function KibchulPage() {
   const params = useParams();
   const router = useRouter();
@@ -89,7 +108,6 @@ export default function KibchulPage() {
     setWrongCount(loadWrong().filter(e => e.subjectId === subjectIdParam).length);
   }, [subjectIdParam]);
 
-  // 세션 선택 → 퀴즈 시작
   const startQuiz = useCallback((session: KibchulSession, mode: QuizMode, shuffled: boolean) => {
     let qs = [...session.questions];
     if (shuffled) qs = shuffle(qs);
@@ -105,15 +123,14 @@ export default function KibchulPage() {
     setScreen('quiz');
   }, [subjectIdParam]);
 
-  // 오답만 풀기
   const startWrongOnly = useCallback((mode: QuizMode) => {
     const wrongs = loadWrong().filter(e => e.subjectId === subjectIdParam);
     if (wrongs.length === 0) return;
     const qs: KibchulQuestion[] = wrongs.map(w => ({
       id: w.questionId,
       question: w.question,
-      choices: w.choices as [string,string,string,string],
-      answer: w.answer as 1|2|3|4,
+      choices: w.choices as [string, string, string, string],
+      answer: w.answer as 1 | 2 | 3 | 4,
       explanation: w.explanation,
     }));
     setQuiz({
@@ -151,6 +168,9 @@ export default function KibchulPage() {
         allSubjects={KIBCHUL_SUBJECTS}
         currentSubjectId={subjectIdParam}
         onSubjectChange={(id) => router.push(`/kibchul/${id}`)}
+        onGoStats={() => router.push('/kibchul/stats')}
+        onGoExam={() => router.push('/kibchul/exam')}
+        onGoWrong={() => router.push('/kibchul/wrong')}
       />
     );
   }
@@ -164,10 +184,7 @@ export default function KibchulPage() {
           setWrongCount(loadWrong().filter(e => e.subjectId === subjectIdParam).length);
           setScreen('result');
         }}
-        onBack={() => {
-          setScreen('session_select');
-          setQuiz(null);
-        }}
+        onBack={() => { setScreen('session_select'); setQuiz(null); }}
       />
     );
   }
@@ -179,10 +196,7 @@ export default function KibchulPage() {
         quiz={quiz}
         correct={correct}
         onRetry={() => setScreen('quiz')}
-        onBack={() => {
-          setScreen('session_select');
-          setQuiz(null);
-        }}
+        onBack={() => { setScreen('session_select'); setQuiz(null); }}
         subjectId={subjectIdParam}
       />
     );
@@ -197,6 +211,7 @@ export default function KibchulPage() {
 function SessionSelectScreen({
   subject, sessions, wrongCount, onStart, onStartWrong, onBack,
   allSubjects, currentSubjectId, onSubjectChange,
+  onGoStats, onGoExam, onGoWrong,
 }: {
   subject: ReturnType<typeof getSubjectById>;
   sessions: KibchulSession[];
@@ -207,14 +222,28 @@ function SessionSelectScreen({
   allSubjects: typeof KIBCHUL_SUBJECTS;
   currentSubjectId: number;
   onSubjectChange: (id: number) => void;
+  onGoStats: () => void;
+  onGoExam: () => void;
+  onGoWrong: () => void;
 }) {
   return (
     <div className="min-h-full bg-orange-50">
-      {/* 브레드크럼 */}
+      {/* 브레드크럼 + 유틸 버튼 */}
       <div className="px-4 py-3 flex items-center gap-2 text-sm border-b border-orange-100 bg-white">
         <button onClick={onBack} className="text-orange-400 hover:text-orange-600 transition">← 대시보드</button>
         <span className="text-gray-300">|</span>
         <span className="font-medium text-gray-700">📋 기출문제</span>
+        <div className="ml-auto flex gap-2">
+          <button onClick={onGoExam} className="px-2.5 py-1 rounded-lg bg-orange-100 text-orange-700 text-xs font-semibold hover:bg-orange-200 transition">
+            📝 전체 시험
+          </button>
+          <button onClick={onGoStats} className="px-2.5 py-1 rounded-lg bg-blue-100 text-blue-700 text-xs font-semibold hover:bg-blue-200 transition">
+            📊 통계
+          </button>
+          <button onClick={onGoWrong} className="px-2.5 py-1 rounded-lg bg-red-100 text-red-700 text-xs font-semibold hover:bg-red-200 transition">
+            📒 오답노트
+          </button>
+        </div>
       </div>
 
       {/* 과목 탭 */}
@@ -257,16 +286,10 @@ function SessionSelectScreen({
                 <p className="text-sm text-red-500">{wrongCount}문제 오답 저장됨</p>
               </div>
               <div className="flex gap-2">
-                <button
-                  onClick={() => onStartWrong('practice')}
-                  className="px-3 py-1.5 bg-red-600 text-white text-xs font-bold rounded-lg hover:bg-red-700 transition"
-                >
+                <button onClick={() => onStartWrong('practice')} className="px-3 py-1.5 bg-red-600 text-white text-xs font-bold rounded-lg hover:bg-red-700 transition">
                   연습
                 </button>
-                <button
-                  onClick={() => onStartWrong('exam')}
-                  className="px-3 py-1.5 bg-gray-700 text-white text-xs font-bold rounded-lg hover:bg-gray-800 transition"
-                >
+                <button onClick={() => onStartWrong('exam')} className="px-3 py-1.5 bg-gray-700 text-white text-xs font-bold rounded-lg hover:bg-gray-800 transition">
                   시험
                 </button>
               </div>
@@ -277,36 +300,40 @@ function SessionSelectScreen({
         {/* 회차별 목록 */}
         <h2 className="text-sm font-semibold text-gray-500 mb-3 px-1">회차별 문제</h2>
         <div className="flex flex-col gap-3">
-          {sessions.map(sess => (
-            <div key={sess.id} className="bg-white rounded-2xl shadow-sm p-5">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-semibold text-gray-800">{sess.label}</p>
-                  <p className="text-sm text-gray-500 mt-0.5">{sess.questions.length}문제</p>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => onStart(sess, 'practice', false)}
-                    className="px-3 py-1.5 bg-orange-500 text-white text-xs font-bold rounded-lg hover:bg-orange-600 transition"
-                  >
-                    연습
-                  </button>
-                  <button
-                    onClick={() => onStart(sess, 'practice', true)}
-                    className="px-3 py-1.5 bg-orange-100 text-orange-700 text-xs font-bold rounded-lg hover:bg-orange-200 transition"
-                  >
-                    셔플
-                  </button>
-                  <button
-                    onClick={() => onStart(sess, 'exam', true)}
-                    className="px-3 py-1.5 bg-gray-700 text-white text-xs font-bold rounded-lg hover:bg-gray-800 transition"
-                  >
-                    시험
-                  </button>
+          {sessions.map(sess => {
+            const stat = getSessionStat(currentSubjectId, sess.id);
+            const pct = stat ? Math.round((stat.correct / stat.total) * 100) : null;
+            return (
+              <div key={sess.id} className="bg-white rounded-2xl shadow-sm p-5">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-semibold text-gray-800">{sess.label}</p>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <p className="text-sm text-gray-500">{sess.questions.length}문제</p>
+                      {pct !== null && (
+                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                          pct >= 60 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'
+                        }`}>
+                          최근 {pct}점
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button onClick={() => onStart(sess, 'practice', false)} className="px-3 py-1.5 bg-orange-500 text-white text-xs font-bold rounded-lg hover:bg-orange-600 transition">
+                      연습
+                    </button>
+                    <button onClick={() => onStart(sess, 'practice', true)} className="px-3 py-1.5 bg-orange-100 text-orange-700 text-xs font-bold rounded-lg hover:bg-orange-200 transition">
+                      셔플
+                    </button>
+                    <button onClick={() => onStart(sess, 'exam', true)} className="px-3 py-1.5 bg-gray-700 text-white text-xs font-bold rounded-lg hover:bg-gray-800 transition">
+                      시험
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <p className="text-xs text-center text-gray-400 mt-6">연습: 즉시 해설 · 시험: 마지막에 채점 · 오답은 자동 저장</p>
@@ -332,16 +359,15 @@ function QuizScreen({
   const isPractice = quiz.mode === 'practice';
 
   const handleSelect = (idx: number) => {
-    if (isPractice && revealed) return; // 이미 확인됨
-    if (!isPractice && selected !== null) return; // 시험모드는 한번만
+    if (isPractice && revealed) return;
+    if (!isPractice && selected !== null) return;
 
     const newSelected = [...quiz.selected];
     newSelected[quiz.currentIdx] = idx;
 
-    let newRevealed = [...quiz.revealed];
+    const newRevealed = [...quiz.revealed];
     if (isPractice) {
       newRevealed[quiz.currentIdx] = true;
-      // 오답이면 저장
       if (idx !== q.answer) {
         addWrong({
           subjectId: quiz.subjectId,
@@ -355,7 +381,6 @@ function QuizScreen({
           savedAt: new Date().toISOString(),
         });
       } else {
-        // 정답이면 오답 목록에서 제거
         removeWrong(q.id);
       }
     }
@@ -367,7 +392,6 @@ function QuizScreen({
     if (quiz.currentIdx < quiz.questions.length - 1) {
       setQuiz(prev => prev ? { ...prev, currentIdx: prev.currentIdx + 1 } : null);
     } else {
-      // 시험모드: 마지막에 오답 저장
       if (!isPractice) {
         quiz.questions.forEach((question, i) => {
           const sel = quiz.selected[i];
@@ -404,33 +428,25 @@ function QuizScreen({
 
   return (
     <div className="min-h-full bg-gray-50">
-      {/* 헤더 */}
       <div className="bg-white border-b border-gray-200 px-4 py-3 flex items-center gap-3">
         <button onClick={onBack} className="text-gray-400 hover:text-gray-600 text-sm">← 목록</button>
         <div className="flex-1">
           <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-orange-500 rounded-full transition-all"
-              style={{ width: `${progress}%` }}
-            />
+            <div className="h-full bg-orange-500 rounded-full transition-all" style={{ width: `${progress}%` }} />
           </div>
         </div>
-        <span className="text-sm text-gray-500 font-medium shrink-0">
-          {quiz.currentIdx + 1} / {quiz.questions.length}
-        </span>
+        <span className="text-sm text-gray-500 font-medium shrink-0">{quiz.currentIdx + 1} / {quiz.questions.length}</span>
         <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${isPractice ? 'bg-orange-100 text-orange-700' : 'bg-gray-700 text-white'}`}>
           {isPractice ? '연습' : '시험'}
         </span>
       </div>
 
       <div className="max-w-2xl mx-auto px-4 py-5">
-        {/* 문제 */}
         <div className="bg-white rounded-2xl shadow-sm p-5 mb-4">
           <p className="text-xs text-orange-500 font-medium mb-2">Q{quiz.currentIdx + 1}</p>
           <p className="text-gray-800 text-base leading-relaxed font-medium">{q.question}</p>
         </div>
 
-        {/* 선택지 */}
         <div className="flex flex-col gap-2 mb-4">
           {q.choices.map((choice, idx) => {
             const optNum = idx + 1;
@@ -451,22 +467,15 @@ function QuizScreen({
                 onClick={() => handleSelect(optNum)}
                 className={`w-full text-left px-4 py-3.5 rounded-xl border-2 transition-all text-sm leading-snug ${btnClass}`}
               >
-                <span className="font-bold mr-2 text-gray-400">
-                  {['①', '②', '③', '④'][idx]}
-                </span>
+                <span className="font-bold mr-2 text-gray-400">{['①', '②', '③', '④'][idx]}</span>
                 {choice}
-                {isPractice && revealed && isCorrect && (
-                  <span className="ml-2 text-green-600 font-bold">✓</span>
-                )}
-                {isPractice && revealed && isSelected && !isCorrect && (
-                  <span className="ml-2 text-red-500 font-bold">✗</span>
-                )}
+                {isPractice && revealed && isCorrect && <span className="ml-2 text-green-600 font-bold">✓</span>}
+                {isPractice && revealed && isSelected && !isCorrect && <span className="ml-2 text-red-500 font-bold">✗</span>}
               </button>
             );
           })}
         </div>
 
-        {/* 해설 (연습모드 정답 확인 후) */}
         {isPractice && revealed && q.explanation && (
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4">
             <p className="text-xs font-semibold text-amber-700 mb-1">💡 해설</p>
@@ -474,7 +483,6 @@ function QuizScreen({
           </div>
         )}
 
-        {/* 네비게이션 */}
         <div className="flex gap-2">
           <button
             onClick={goPrev}
@@ -486,7 +494,7 @@ function QuizScreen({
           <button
             onClick={goNext}
             disabled={!canGoNext}
-            className={`flex-2 flex-1 py-3 rounded-xl text-white text-sm font-bold disabled:opacity-30 transition ${
+            className={`flex-1 py-3 rounded-xl text-white text-sm font-bold disabled:opacity-30 transition ${
               isLast ? 'bg-orange-700 hover:bg-orange-800' : 'bg-orange-500 hover:bg-orange-600'
             }`}
           >
@@ -519,6 +527,20 @@ function ResultScreen({
     .map((q, i) => ({ q, selected: quiz.selected[i] }))
     .filter(({ q, selected }) => selected !== q.answer);
 
+  // 통계 저장 (회차 전체 완료 시)
+  useEffect(() => {
+    if (quiz.sessionId !== 'wrong_only') {
+      addStat({
+        subjectId,
+        sessionId: quiz.sessionId,
+        correct,
+        total,
+        timestamp: new Date().toISOString(),
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="min-h-full bg-orange-50">
       <div className="px-4 py-3 flex items-center gap-2 text-sm border-b border-orange-100 bg-white">
@@ -526,7 +548,6 @@ function ResultScreen({
       </div>
 
       <div className="max-w-2xl mx-auto px-4 py-6">
-        {/* 점수 카드 */}
         <div className={`rounded-2xl shadow-sm p-8 text-center mb-5 ${passed ? 'bg-green-50' : 'bg-white'}`}>
           <div className="text-5xl font-black mb-2 text-gray-800">{pct}점</div>
           <p className="text-gray-500 mb-4">{correct} / {total} 정답</p>
@@ -535,7 +556,6 @@ function ResultScreen({
           </div>
         </div>
 
-        {/* 오답 목록 */}
         {wrongItems.length > 0 && (
           <div className="bg-white rounded-2xl shadow-sm p-5 mb-4">
             <button
@@ -554,24 +574,20 @@ function ResultScreen({
                 {wrongItems.map(({ q, selected }, i) => (
                   <div key={q.id} className="border border-gray-100 rounded-xl p-4">
                     <p className="text-sm font-medium text-gray-800 mb-2">
-                      <span className="text-orange-500 font-bold mr-1">Q</span>
-                      {q.question}
+                      <span className="text-orange-500 font-bold mr-1">Q</span>{q.question}
                     </p>
                     {q.choices.map((ch, idx) => (
                       <div key={idx} className={`text-xs py-1 px-2 rounded mb-0.5 ${
                         idx + 1 === q.answer ? 'bg-green-100 text-green-800 font-medium' :
-                        idx + 1 === selected ? 'bg-red-100 text-red-700' :
-                        'text-gray-500'
+                        idx + 1 === selected ? 'bg-red-100 text-red-700' : 'text-gray-500'
                       }`}>
-                        {['①','②','③','④'][idx]} {ch}
+                        {['①', '②', '③', '④'][idx]} {ch}
                         {idx + 1 === q.answer && ' ✓'}
                         {idx + 1 === selected && idx + 1 !== q.answer && ' ✗'}
                       </div>
                     ))}
                     {q.explanation && (
-                      <p className="text-xs text-amber-700 bg-amber-50 rounded p-2 mt-2">
-                        💡 {q.explanation}
-                      </p>
+                      <p className="text-xs text-amber-700 bg-amber-50 rounded p-2 mt-2">💡 {q.explanation}</p>
                     )}
                   </div>
                 ))}
@@ -581,10 +597,7 @@ function ResultScreen({
         )}
 
         <div className="flex flex-col gap-2">
-          <button
-            onClick={onBack}
-            className="w-full py-3.5 bg-orange-600 text-white rounded-2xl font-bold text-sm hover:bg-orange-700 transition"
-          >
+          <button onClick={onBack} className="w-full py-3.5 bg-orange-600 text-white rounded-2xl font-bold text-sm hover:bg-orange-700 transition">
             다른 회차 풀기
           </button>
         </div>

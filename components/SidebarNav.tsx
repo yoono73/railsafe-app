@@ -181,7 +181,7 @@ export default function SidebarNav() {
                 key={s.id}
                 href={`/kibchul/${s.id}`}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
-                  pathname.startsWith(`/kibchul/${s.id}`)
+                  pathname === `/kibchul/${s.id}`
                     ? 'bg-orange-100 text-orange-800 font-semibold'
                     : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
                 }`}
@@ -190,6 +190,40 @@ export default function SidebarNav() {
                 <span className="truncate">{s.name}</span>
               </Link>
             ))}
+            <div className="h-px bg-gray-100 my-1 mx-1" />
+            <Link
+              href="/kibchul/exam"
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
+                pathname.startsWith('/kibchul/exam')
+                  ? 'bg-orange-100 text-orange-800 font-semibold'
+                  : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
+              }`}
+            >
+              <span>📝</span>
+              <span>전체 시험</span>
+            </Link>
+            <Link
+              href="/kibchul/stats"
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
+                pathname.startsWith('/kibchul/stats')
+                  ? 'bg-orange-100 text-orange-800 font-semibold'
+                  : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
+              }`}
+            >
+              <span>📊</span>
+              <span>정답률 통계</span>
+            </Link>
+            <Link
+              href="/kibchul/wrong"
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
+                pathname.startsWith('/kibchul/wrong')
+                  ? 'bg-orange-100 text-orange-800 font-semibold'
+                  : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
+              }`}
+            >
+              <span>📒</span>
+              <span>기출 오답노트</span>
+            </Link>
           </div>
         )}
 

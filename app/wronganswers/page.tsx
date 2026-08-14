@@ -4,6 +4,14 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
+const LS_WRONG = 'kibchul_wrong';
+function getKibchulWrongCount(): number {
+  try {
+    const arr = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
+    return Array.isArray(arr) ? arr.length : 0;
+  } catch { return 0; }
+}
+
 const subjectNames: Record<number, string> = {
   1: '교통안전관리론', 2: '교통안전법', 3: '열차운전',
   4: '철도공학', 5: '철도산업기본법', 6: '철도신호', 7: '철도안전법'
@@ -23,6 +31,11 @@ export default function WrongAnswersPage() {
   const [stats, setStats] = useState<SubjectStat[]>([]);
   const [loading, setLoading] = useState(true);
   const [total, setTotal] = useState(0);
+  const [kibchulWrongCount, setKibchulWrongCount] = useState(0);
+
+  useEffect(() => {
+    setKibchulWrongCount(getKibchulWrongCount());
+  }, []);
 
   useEffect(() => {
     async function fetchStats() {
@@ -87,13 +100,28 @@ export default function WrongAnswersPage() {
       <div className="max-w-2xl mx-auto px-4 py-6">
 
         {/* 요약 카드 */}
-        <div className="bg-white rounded-2xl shadow-sm p-6 mb-6 flex items-center gap-4">
+        <div className="bg-white rounded-2xl shadow-sm p-6 mb-4 flex items-center gap-4">
           <div className="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center text-2xl">📒</div>
           <div>
             <p className="text-sm text-gray-500">총 오답 문제</p>
             <p className="text-3xl font-bold text-red-600">{total}<span className="text-base font-normal text-gray-500 ml-1">문제</span></p>
           </div>
         </div>
+
+        {/* 기출문제 오답 연동 카드 */}
+        {kibchulWrongCount > 0 && (
+          <div
+            onClick={() => router.push('/kibchul/wrong')}
+            className="bg-orange-50 border border-orange-200 rounded-2xl p-4 mb-4 flex items-center gap-4 cursor-pointer hover:bg-orange-100 transition"
+          >
+            <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-xl shrink-0">📋</div>
+            <div className="flex-1">
+              <p className="font-semibold text-orange-800 text-sm">기출문제 오답노트</p>
+              <p className="text-xs text-orange-500 mt-0.5">{kibchulWrongCount}문제 오답 저장됨</p>
+            </div>
+            <span className="text-orange-400 text-sm shrink-0">→</span>
+          </div>
+        )}
 
         {total === 0 ? (
           <div className="bg-white rounded-2xl shadow-sm p-10 text-center">
