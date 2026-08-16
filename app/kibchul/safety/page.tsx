@@ -13,6 +13,29 @@ const PART_LABEL: Record<number, string> = {
   3: 'PART 3 · 2025 후기 기반',
 };
 const SAVE_KEY = 'safety_exam_progress';
+const LS_WRONG = 'kibchul_wrong';
+const SAFETY_SUBJECT_ID = 99;
+
+function saveWrongEntry(q: SafetyQuestion, selected: number) {
+  try {
+    const existing = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
+    const alreadyExists = existing.some((e: { questionId: string }) => e.questionId === q.id);
+    if (alreadyExists) return;
+    const entry = {
+      subjectId: SAFETY_SUBJECT_ID,
+      sessionId: PART_LABEL[q.part] ?? `PART ${q.part}`,
+      questionId: q.id,
+      question: q.question,
+      choices: q.choices,
+      answer: q.answer,
+      selected,
+      explanation: q.explanation ?? '',
+      caution: q.caution ?? '',
+      savedAt: new Date().toISOString(),
+    };
+    localStorage.setItem(LS_WRONG, JSON.stringify([...existing, entry]));
+  } catch {}
+}
 
 type Mode = 'home' | 'quiz' | 'result';
 type FilterGrade = 'ALL' | 'S' | 'A+' | 'A' | 'B';
@@ -124,11 +147,9 @@ export default function SafetyExamPage() {
     if (selected === null) return;
     setRevealed(true);
     const q = questions[current];
-    setAnswers(prev => [...prev, {
-      qid: q.id,
-      selected,
-      correct: selected === q.answer,
-    }]);
+    const correct = selected === q.answer;
+    setAnswers(prev => [...prev, { qid: q.id, selected, correct }]);
+    if (!correct) saveWrongEntry(q, selected);
   };
 
   const handleNext = () => {

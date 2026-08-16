@@ -15,8 +15,11 @@ interface WrongEntry {
   answer: number;
   selected: number;
   explanation: string;
+  caution?: string;
   savedAt: string;
 }
+
+const SAFETY_SUBJECT = { id: 99, name: '철도안전법 기출', icon: '🚦' };
 
 function loadWrong(): WrongEntry[] {
   try { return JSON.parse(localStorage.getItem(LS_WRONG) || '[]'); } catch { return []; }
@@ -56,7 +59,8 @@ export default function KibchulWrongPage() {
     : wrongs;
 
   // 과목별 개수
-  const countBySubject = KIBCHUL_SUBJECTS.map(s => ({
+  const allSubjects = [...KIBCHUL_SUBJECTS, SAFETY_SUBJECT];
+  const countBySubject = allSubjects.map(s => ({
     subject: s,
     count: wrongs.filter(e => e.subjectId === s.id).length,
   }));
@@ -90,7 +94,11 @@ export default function KibchulWrongPage() {
                 // 오답이 1개 과목에만 있으면 해당 과목으로, 복수면 뒤로
                 const subjectIds = [...new Set(wrongs.map(e => e.subjectId))];
                 if (subjectIds.length === 1) {
-                  router.push(`/kibchul/${subjectIds[0]}`);
+                  if (subjectIds[0] === 99) {
+                    router.push('/kibchul/safety');
+                  } else {
+                    router.push(`/kibchul/${subjectIds[0]}`);
+                  }
                 } else {
                   router.back();
                 }
@@ -141,8 +149,8 @@ export default function KibchulWrongPage() {
               {filtered
                 .sort((a, b) => b.savedAt.localeCompare(a.savedAt))
                 .map(entry => {
-                  const subjectInfo = KIBCHUL_SUBJECTS.find(s => s.id === entry.subjectId);
-                  const sessionLabel = subjectInfo?.sessions.find(ss => ss.id === entry.sessionId)?.label ?? entry.sessionId;
+                  const subjectInfo = allSubjects.find(s => s.id === entry.subjectId);
+                  const sessionLabel = (subjectInfo as { sessions?: { id: string; label: string }[] })?.sessions?.find(ss => ss.id === entry.sessionId)?.label ?? entry.sessionId;
                   const isExpanded = expandedId === entry.questionId;
 
                   return (
@@ -186,6 +194,11 @@ export default function KibchulWrongPage() {
                           {entry.explanation && (
                             <div className="mt-3 bg-amber-50 rounded-xl p-3">
                               <p className="text-xs text-amber-700 leading-relaxed">💡 {entry.explanation}</p>
+                            </div>
+                          )}
+                          {entry.caution && (
+                            <div className="mt-2 bg-orange-50 rounded-xl p-3">
+                              <p className="text-xs text-orange-700 leading-relaxed">⚠️ {entry.caution}</p>
                             </div>
                           )}
 
