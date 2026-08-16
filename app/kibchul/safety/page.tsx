@@ -12,6 +12,7 @@ const PART_LABEL: Record<number, string> = {
   2: 'PART 2 · 2025.06 복기·빈출',
   3: 'PART 3 · 2025 후기 기반',
 };
+const SAVE_KEY = 'safety_exam_progress';
 
 type Mode = 'home' | 'quiz' | 'result';
 type FilterGrade = 'ALL' | 'S' | 'A+' | 'A' | 'B';
@@ -23,6 +24,16 @@ interface Answer {
   correct: boolean;
 }
 
+interface SavedProgress {
+  questionIds: string[];
+  current: number;
+  answers: Answer[];
+  filterGrade: FilterGrade;
+  filterPart: FilterPart;
+  shuffleQ: boolean;
+  savedAt: string;
+}
+
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -30,6 +41,19 @@ function shuffle<T>(arr: T[]): T[] {
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
+}
+
+function saveProgress(data: SavedProgress) {
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(data)); } catch {}
+}
+function loadProgress(): SavedProgress | null {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+function clearProgress() {
+  try { localStorage.removeItem(SAVE_KEY); } catch {}
 }
 
 // ─── 메인 컴포넌트 ──────────────────────────────────────────────
@@ -45,6 +69,16 @@ export default function SafetyExamPage() {
   const [revealed, setRevealed] = useState(false);
   const [answers, setAnswers] = useState<Answer[]>([]);
 
+  const [savedProgress, setSavedProgress] = useState<SavedProgress | null>(null);
+
+  // 마운트 시 저장된 진행상태 확인
+  useEffect(() => {
+    const p = loadProgress();
+    if (p && p.questionIds.length > 0 && p.current < p.questionIds.length) {
+      setSavedProgress(p);
+    }
+  }, []);
+
   // 필터링
   const filtered = SAFETY_EXAM.filter(q => {
     const g = filterGrade === 'ALL' || q.grade === filterGrade;
@@ -59,8 +93,27 @@ export default function SafetyExamPage() {
     setSelected(null);
     setRevealed(false);
     setAnswers([]);
+    setSavedProgress(null);
+    clearProgress();
     setMode('quiz');
   }, [filtered, shuffleQ]);
+
+  // 이어풀기
+  const resumeQuiz = useCallback(() => {
+    if (!savedProgress) return;
+    const qMap = new Map(SAFETY_EXAM.map(q => [q.id, q]));
+    const pool = savedProgress.questionIds.map(id => qMap.get(id)).filter(Boolean) as SafetyQuestion[];
+    setQuestions(pool);
+    setCurrent(savedProgress.current);
+    setSelected(null);
+    setRevealed(false);
+    setAnswers(savedProgress.answers);
+    setFilterGrade(savedProgress.filterGrade);
+    setFilterPart(savedProgress.filterPart);
+    setShuffleQ(savedProgress.shuffleQ);
+    setSavedProgress(null);
+    setMode('quiz');
+  }, [savedProgress]);
 
   const handleSelect = (idx: number) => {
     if (revealed) return;
@@ -79,10 +132,22 @@ export default function SafetyExamPage() {
   };
 
   const handleNext = () => {
-    if (current + 1 >= questions.length) {
+    const nextIdx = current + 1;
+    if (nextIdx >= questions.length) {
+      clearProgress();
       setMode('result');
     } else {
-      setCurrent(c => c + 1);
+      // 진행상태 저장
+      saveProgress({
+        questionIds: questions.map(q => q.id),
+        current: nextIdx,
+        answers: [...answers],
+        filterGrade,
+        filterPart,
+        shuffleQ,
+        savedAt: new Date().toISOString(),
+      });
+      setCurrent(nextIdx);
       setSelected(null);
       setRevealed(false);
     }
@@ -101,6 +166,30 @@ export default function SafetyExamPage() {
           <div style={{ fontSize: '.85em', opacity: .85 }}>2024.12 공개복원 · 2025.06 복기·빈출 · 2025 합격후기 재구성</div>
           <div style={{ fontSize: '.78em', opacity: .7, marginTop: 6 }}>법령 기준: 철도안전법 [2026.3.3 시행], 시행령·시행규칙 [2026.3.24 시행]</div>
         </div>
+
+        {/* 이어풀기 배너 */}
+        {savedProgress && (
+          <div style={{ background: '#eff6ff', border: '2px solid #3b82f6', borderRadius: 10, padding: '14px 18px', marginBottom: 20 }}>
+            <div style={{ fontWeight: 'bold', color: '#1d4ed8', marginBottom: 6 }}>📌 이어서 풀기 가능</div>
+            <div style={{ fontSize: '.85em', color: '#374151', marginBottom: 10 }}>
+              {savedProgress.current}번째 문제까지 완료 · 총 {savedProgress.questionIds.length}문항 ·
+              정답 {savedProgress.answers.filter(a => a.correct).length}/{savedProgress.answers.length}
+              <span style={{ color: '#6b7280', marginLeft: 6 }}>
+                ({new Date(savedProgress.savedAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })} 저장)
+              </span>
+            </div>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button onClick={resumeQuiz}
+                style={{ flex: 2, padding: '10px', background: '#1d4ed8', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer', fontSize: '.92em' }}>
+                ▶ 이어서 풀기 ({savedProgress.current + 1}번 문제부터)
+              </button>
+              <button onClick={() => { clearProgress(); setSavedProgress(null); }}
+                style={{ flex: 1, padding: '10px', background: '#fff', color: '#6b7280', border: '1px solid #d1d5db', borderRadius: 8, cursor: 'pointer', fontSize: '.88em' }}>
+                삭제
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* 주의 안내 */}
         <div style={{ background: '#fff8e1', border: '1px solid #f59e0b', borderRadius: 8, padding: '12px 16px', marginBottom: 20, fontSize: '.85em', color: '#78350f' }}>
@@ -124,7 +213,7 @@ export default function SafetyExamPage() {
 
         {/* 필터 */}
         <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 10, padding: '16px 20px', marginBottom: 20 }}>
-          <div style={{ fontWeight: 'bold', marginBottom: 12 }}>📋 문제 선택</div>
+          <div style={{ fontWeight: 'bold', marginBottom: 12 }}>📋 새로 시작</div>
           <div style={{ marginBottom: 12 }}>
             <div style={{ fontSize: '.85em', color: '#555', marginBottom: 6 }}>등급 필터</div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -159,7 +248,7 @@ export default function SafetyExamPage() {
 
         <button onClick={startQuiz} disabled={filtered.length === 0}
           style={{ width: '100%', padding: '14px', background: filtered.length === 0 ? '#d1d5db' : '#dc2626', color: '#fff', border: 'none', borderRadius: 10, fontSize: '1.05em', fontWeight: 'bold', cursor: filtered.length === 0 ? 'default' : 'pointer' }}>
-          {filtered.length > 0 ? `🚀 ${filtered.length}문항 시작` : '문항 없음'}
+          {filtered.length > 0 ? `🚀 ${filtered.length}문항 새로 시작` : '문항 없음'}
         </button>
       </div>
     );
@@ -214,7 +303,7 @@ export default function SafetyExamPage() {
         </div>
 
         <div style={{ display: 'flex', gap: 10, marginTop: 20 }}>
-          <button onClick={() => setMode('home')}
+          <button onClick={() => { clearProgress(); setMode('home'); }}
             style={{ flex: 1, padding: '12px', background: '#6b7280', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer' }}>
             ← 홈으로
           </button>
