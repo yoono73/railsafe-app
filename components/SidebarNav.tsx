@@ -192,6 +192,17 @@ export default function SidebarNav() {
             ))}
             <div className="h-px bg-gray-100 my-1 mx-1" />
             <Link
+              href="/kibchul/safety"
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
+                pathname.startsWith('/kibchul/safety')
+                  ? 'bg-red-100 text-red-800 font-semibold'
+                  : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
+              }`}
+            >
+              <span>⚖️</span>
+              <span>철도안전법 기출 78</span>
+            </Link>
+            <Link
               href="/kibchul/exam"
               className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
                 pathname.startsWith('/kibchul/exam')
