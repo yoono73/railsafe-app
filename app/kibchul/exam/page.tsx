@@ -1,11 +1,23 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { KIBCHUL_SUBJECTS, KibchulQuestion } from '@/lib/kibchul-data';
 
 const LS_WRONG = 'kibchul_wrong';
 const LS_STATS = 'kibchul_stats';
+const LS_EXAM_PROGRESS = 'kibchul_exam_progress';
+
+// ─── 이어하기 ───
+function saveExamProgress(exam: ExamState) {
+  try { localStorage.setItem(LS_EXAM_PROGRESS, JSON.stringify(exam)); } catch { /* ignore */ }
+}
+function loadExamProgress(): ExamState | null {
+  try { const d = localStorage.getItem(LS_EXAM_PROGRESS); return d ? JSON.parse(d) : null; } catch { return null; }
+}
+function clearExamProgress() {
+  localStorage.removeItem(LS_EXAM_PROGRESS);
+}
 
 // ─────────────────────────────────────────
 // 타입 & 유틸
@@ -115,8 +127,15 @@ export default function ExamPage() {
   const router = useRouter();
   const [screen, setScreen] = useState<Screen>('select');
   const [exam, setExam] = useState<ExamState | null>(null);
+  const [savedExam, setSavedExam] = useState<ExamState | null>(null);
+
+  useEffect(() => {
+    setSavedExam(loadExamProgress());
+  }, []);
 
   const startExam = useCallback((sessionId: string, sessionLabel: string) => {
+    clearExamProgress();
+    setSavedExam(null);
     const questions = buildExamQuestions(sessionId);
     if (questions.length === 0) return;
     setExam({
@@ -130,7 +149,14 @@ export default function ExamPage() {
   }, []);
 
   if (screen === 'select') {
-    return <SelectScreen onStart={startExam} onBack={() => router.back()} />;
+    return (
+      <SelectScreen
+        onStart={startExam}
+        onBack={() => router.back()}
+        savedExam={savedExam}
+        onResume={(e) => { setExam(e); setScreen('quiz'); }}
+      />
+    );
   }
 
   if (screen === 'quiz' && exam) {
@@ -138,8 +164,17 @@ export default function ExamPage() {
       <QuizScreen
         exam={exam}
         setExam={setExam}
-        onFinish={() => setScreen('result')}
-        onBack={() => { setScreen('select'); setExam(null); }}
+        onFinish={() => {
+          clearExamProgress();
+          setSavedExam(null);
+          setScreen('result');
+        }}
+        onBack={() => {
+          saveExamProgress(exam);
+          setSavedExam(exam);
+          setScreen('select');
+          setExam(null);
+        }}
       />
     );
   }
@@ -148,7 +183,12 @@ export default function ExamPage() {
     return (
       <ResultScreen
         exam={exam}
-        onBack={() => { setScreen('select'); setExam(null); }}
+        onBack={() => {
+          clearExamProgress();
+          setSavedExam(null);
+          setScreen('select');
+          setExam(null);
+        }}
       />
     );
   }
@@ -160,10 +200,12 @@ export default function ExamPage() {
 // 세션 선택 화면
 // ─────────────────────────────────────────
 function SelectScreen({
-  onStart, onBack,
+  onStart, onBack, savedExam, onResume,
 }: {
   onStart: (sessionId: string, label: string) => void;
   onBack: () => void;
+  savedExam?: ExamState | null;
+  onResume?: (exam: ExamState) => void;
 }) {
   const sessions = getAvailableSessions();
 
@@ -176,6 +218,25 @@ function SelectScreen({
       </div>
 
       <div className="max-w-2xl mx-auto px-4 py-6">
+
+        {/* 이어하기 배너 */}
+        {savedExam && onResume && (
+          <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-5 flex items-center justify-between">
+            <div>
+              <p className="font-semibold text-blue-700 text-sm">⏸ 이어서 풀기</p>
+              <p className="text-xs text-blue-500 mt-0.5">
+                {savedExam.sessionLabel} · {savedExam.currentIdx + 1}/{savedExam.questions.length}번째 문제
+              </p>
+            </div>
+            <button
+              onClick={() => onResume(savedExam)}
+              className="px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl hover:bg-blue-700 transition shrink-0"
+            >
+              이어하기 →
+            </button>
+          </div>
+        )}
+
         <div className="bg-white rounded-2xl shadow-sm p-5 mb-6">
           <h1 className="text-base font-bold text-gray-800 mb-1">회차별 전체 시험 모드</h1>
           <p className="text-sm text-gray-500">특정 회차의 전 과목 문제를 한 번에 풀고 총점·과락 여부를 확인합니다.</p>

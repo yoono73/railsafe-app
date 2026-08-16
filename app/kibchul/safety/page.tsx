@@ -174,6 +174,33 @@ export default function SafetyExamPage() {
     }
   };
 
+  // 홈으로 돌아갈 때 진행상태 저장
+  const handleGoHome = () => {
+    // 풀기 시작한 경우에만 저장
+    if (questions.length > 0 && (current > 0 || answers.length > 0 || revealed)) {
+      // 정답 확인 후 홈으로 → current+1 저장 (다음 문제부터 이어서)
+      // 정답 확인 전 홈으로 → current 저장 (같은 문제부터 이어서)
+      const saveIdx = revealed ? current + 1 : current;
+      // 저장할 answers: revealed면 현재 문제 답이 포함된 최신 상태
+      const saveAnswers = revealed ? answers : answers;
+      if (saveIdx < questions.length) {
+        saveProgress({
+          questionIds: questions.map(q => q.id),
+          current: saveIdx,
+          answers: saveAnswers,
+          filterGrade,
+          filterPart,
+          shuffleQ,
+          savedAt: new Date().toISOString(),
+        });
+      } else {
+        // 마지막 문제까지 다 풀었으면 저장 불필요
+        clearProgress();
+      }
+    }
+    setMode('home');
+  };
+
   const q = questions[current];
   const correctCount = answers.filter(a => a.correct).length;
 
@@ -345,7 +372,7 @@ export default function SafetyExamPage() {
     <div style={{ maxWidth: 720, margin: '0 auto', padding: '16px' }}>
       {/* 진행 */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-        <button onClick={() => setMode('home')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6b7280', fontSize: '.85em' }}>← 홈</button>
+        <button onClick={handleGoHome} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6b7280', fontSize: '.85em' }}>← 홈</button>
         <span style={{ fontSize: '.85em', color: '#555' }}>{current + 1} / {questions.length}</span>
       </div>
       <div style={{ background: '#e5e7eb', borderRadius: 99, height: 6, marginBottom: 16 }}>

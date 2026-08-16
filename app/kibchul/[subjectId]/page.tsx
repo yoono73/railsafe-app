@@ -16,6 +16,18 @@ import {
 const LS_WRONG = 'kibchul_wrong';
 const LS_STATS = 'kibchul_stats';
 
+// ─── 이어하기 ───
+function lsQuizKey(subjectId: number) { return `kibchul_quiz_${subjectId}`; }
+function saveQuizProgress(subjectId: number, quiz: QuizState) {
+  try { localStorage.setItem(lsQuizKey(subjectId), JSON.stringify(quiz)); } catch { /* ignore */ }
+}
+function loadQuizProgress(subjectId: number): QuizState | null {
+  try { const d = localStorage.getItem(lsQuizKey(subjectId)); return d ? JSON.parse(d) : null; } catch { return null; }
+}
+function clearQuizProgress(subjectId: number) {
+  localStorage.removeItem(lsQuizKey(subjectId));
+}
+
 interface WrongEntry {
   subjectId: number;
   sessionId: string;
@@ -103,12 +115,16 @@ export default function KibchulPage() {
   const [screen, setScreen] = useState<Screen>('session_select');
   const [quiz, setQuiz] = useState<QuizState | null>(null);
   const [wrongCount, setWrongCount] = useState(0);
+  const [savedProgress, setSavedProgress] = useState<QuizState | null>(null);
 
   useEffect(() => {
     setWrongCount(loadWrong().filter(e => e.subjectId === subjectIdParam).length);
+    setSavedProgress(loadQuizProgress(subjectIdParam));
   }, [subjectIdParam]);
 
   const startQuiz = useCallback((session: KibchulSession, mode: QuizMode, shuffled: boolean) => {
+    clearQuizProgress(subjectIdParam);
+    setSavedProgress(null);
     let qs = [...session.questions];
     // 손상된 문항 제거: 빈 보기가 있거나 질문이 너무 짧은 경우
     qs = qs.filter(q =>
@@ -129,6 +145,8 @@ export default function KibchulPage() {
   }, [subjectIdParam]);
 
   const startWrongOnly = useCallback((mode: QuizMode) => {
+    clearQuizProgress(subjectIdParam);
+    setSavedProgress(null);
     const wrongs = loadWrong().filter(e => e.subjectId === subjectIdParam);
     if (wrongs.length === 0) return;
     const qs: KibchulQuestion[] = wrongs.map(w => ({
@@ -176,6 +194,8 @@ export default function KibchulPage() {
         onGoStats={() => router.push('/kibchul/stats')}
         onGoExam={() => router.push('/kibchul/exam')}
         onGoWrong={() => router.push('/kibchul/wrong')}
+        savedProgress={savedProgress}
+        onResume={(p) => { setQuiz(p); setScreen('quiz'); }}
       />
     );
   }
@@ -186,10 +206,20 @@ export default function KibchulPage() {
         quiz={quiz}
         setQuiz={setQuiz}
         onFinish={() => {
+          clearQuizProgress(subjectIdParam);
+          setSavedProgress(null);
           setWrongCount(loadWrong().filter(e => e.subjectId === subjectIdParam).length);
           setScreen('result');
         }}
-        onBack={() => { setScreen('session_select'); setQuiz(null); }}
+        onBack={() => {
+          // wrong_only는 저장 안 함, 나머지는 현재 진행상태 저장
+          if (quiz && quiz.sessionId !== 'wrong_only') {
+            saveQuizProgress(subjectIdParam, quiz);
+            setSavedProgress(quiz);
+          }
+          setScreen('session_select');
+          setQuiz(null);
+        }}
       />
     );
   }
@@ -201,7 +231,12 @@ export default function KibchulPage() {
         quiz={quiz}
         correct={correct}
         onRetry={() => setScreen('quiz')}
-        onBack={() => { setScreen('session_select'); setQuiz(null); }}
+        onBack={() => {
+          clearQuizProgress(subjectIdParam);
+          setSavedProgress(null);
+          setScreen('session_select');
+          setQuiz(null);
+        }}
         subjectId={subjectIdParam}
       />
     );
@@ -217,6 +252,7 @@ function SessionSelectScreen({
   subject, sessions, wrongCount, onStart, onStartWrong, onBack,
   allSubjects, currentSubjectId, onSubjectChange,
   onGoStats, onGoExam, onGoWrong,
+  savedProgress, onResume,
 }: {
   subject: ReturnType<typeof getSubjectById>;
   sessions: KibchulSession[];
@@ -230,6 +266,8 @@ function SessionSelectScreen({
   onGoStats: () => void;
   onGoExam: () => void;
   onGoWrong: () => void;
+  savedProgress?: QuizState | null;
+  onResume?: (p: QuizState) => void;
 }) {
   return (
     <div className="min-h-full bg-orange-50">
@@ -281,6 +319,26 @@ function SessionSelectScreen({
             <p className="text-sm text-gray-500">총 {sessions.reduce((s, ss) => s + ss.questions.filter(q => q.question.trim().length > 5 && q.choices.every(c => c.trim().length > 0)).length, 0)}문제 · {sessions.length}개 회차</p>
           </div>
         </div>
+
+        {/* 이어하기 배너 */}
+        {savedProgress && onResume && (
+          <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-4 flex items-center justify-between">
+            <div>
+              <p className="font-semibold text-blue-700 text-sm">⏸ 이어서 풀기</p>
+              <p className="text-xs text-blue-500 mt-0.5">
+                {sessions.find(s => s.id === savedProgress.sessionId)?.label ?? savedProgress.sessionId}
+                {' '}· {savedProgress.currentIdx + 1}/{savedProgress.questions.length}번째 문제
+                {' '}· {savedProgress.mode === 'practice' ? '연습' : '시험'} 모드
+              </p>
+            </div>
+            <button
+              onClick={() => onResume(savedProgress)}
+              className="px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl hover:bg-blue-700 transition shrink-0"
+            >
+              이어하기 →
+            </button>
+          </div>
+        )}
 
         {/* 오답 복습 */}
         {wrongCount > 0 && (
