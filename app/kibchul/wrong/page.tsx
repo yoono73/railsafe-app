@@ -20,6 +20,7 @@ interface WrongEntry {
 }
 
 const SAFETY_SUBJECT = { id: 99, name: '철도안전법 기출', icon: '🚦' };
+const INDUSTRY_SUBJECT = { id: 100, name: '철도산업발전기본법 기출', icon: '🚄' };
 
 function loadWrong(): WrongEntry[] {
   try { return JSON.parse(localStorage.getItem(LS_WRONG) || '[]'); } catch { return []; }
@@ -59,7 +60,7 @@ export default function KibchulWrongPage() {
     : wrongs;
 
   // 과목별 개수
-  const allSubjects = [...KIBCHUL_SUBJECTS, SAFETY_SUBJECT];
+  const allSubjects = [...KIBCHUL_SUBJECTS, SAFETY_SUBJECT, INDUSTRY_SUBJECT];
   const countBySubject = allSubjects.map(s => ({
     subject: s,
     count: wrongs.filter(e => e.subjectId === s.id).length,

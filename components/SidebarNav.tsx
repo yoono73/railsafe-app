@@ -189,6 +189,19 @@ export default function SidebarNav() {
                   <span>{s.icon}</span>
                   <span className="truncate">{s.name}</span>
                 </Link>
+                {s.id === 5 && (
+                  <Link
+                    href="/kibchul/industry"
+                    className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
+                      pathname.startsWith('/kibchul/industry')
+                        ? 'bg-indigo-100 text-indigo-800 font-semibold'
+                        : 'text-gray-400 hover:bg-gray-50 hover:text-indigo-700'
+                    }`}
+                  >
+                    <span>└</span>
+                    <span>기출 106문항 CBT</span>
+                  </Link>
+                )}
                 {s.id === 7 && (
                   <Link
                     href="/kibchul/safety"
