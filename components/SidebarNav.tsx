@@ -177,31 +177,34 @@ export default function SidebarNav() {
         {openSection === 'kibchul' && (
           <div className="ml-4 flex flex-col gap-0.5">
             {subjects.map(s => (
-              <Link
-                key={s.id}
-                href={`/kibchul/${s.id}`}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
-                  pathname === `/kibchul/${s.id}`
-                    ? 'bg-orange-100 text-orange-800 font-semibold'
-                    : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
-                }`}
-              >
-                <span>{s.icon}</span>
-                <span className="truncate">{s.name}</span>
-              </Link>
+              <div key={s.id}>
+                <Link
+                  href={`/kibchul/${s.id}`}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
+                    pathname === `/kibchul/${s.id}`
+                      ? 'bg-orange-100 text-orange-800 font-semibold'
+                      : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
+                  }`}
+                >
+                  <span>{s.icon}</span>
+                  <span className="truncate">{s.name}</span>
+                </Link>
+                {s.id === 7 && (
+                  <Link
+                    href="/kibchul/safety"
+                    className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
+                      pathname.startsWith('/kibchul/safety')
+                        ? 'bg-red-100 text-red-800 font-semibold'
+                        : 'text-gray-400 hover:bg-gray-50 hover:text-red-700'
+                    }`}
+                  >
+                    <span>└</span>
+                    <span>기출 78문항 CBT</span>
+                  </Link>
+                )}
+              </div>
             ))}
             <div className="h-px bg-gray-100 my-1 mx-1" />
-            <Link
-              href="/kibchul/safety"
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
-                pathname.startsWith('/kibchul/safety')
-                  ? 'bg-red-100 text-red-800 font-semibold'
-                  : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
-              }`}
-            >
-              <span>⚖️</span>
-              <span>철도안전법 기출 78</span>
-            </Link>
             <Link
               href="/kibchul/exam"
               className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
