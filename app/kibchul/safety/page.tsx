@@ -344,17 +344,22 @@ export default function SafetyExamPage() {
       {/* 선지 */}
       {q.choices.map((c, i) => {
         const idx = i + 1;
-        let bg = '#fff', border = '#e5e7eb', color = '#1f2937';
+        let bg = '#fff', border = '#e5e7eb', color = '#1f2937', icon = '', fontWeight: 'normal' | 'bold' = 'normal';
         if (revealed) {
-          if (idx === q.answer) { bg = '#dcfce7'; border = '#16a34a'; color = '#14532d'; }
-          else if (idx === selected) { bg = '#fee2e2'; border = '#dc2626'; color = '#7f1d1d'; }
+          if (idx === q.answer) {
+            bg = '#166534'; border = '#14532d'; color = '#fff'; icon = '✅ '; fontWeight = 'bold';
+          } else if (idx === selected) {
+            bg = '#7f1d1d'; border = '#991b1b'; color = '#fff'; icon = '❌ '; fontWeight = 'bold';
+          } else {
+            bg = '#f3f4f6'; border = '#e5e7eb'; color = '#9ca3af';
+          }
         } else if (selected === idx) {
-          bg = '#fef9c3'; border = '#ca8a04'; color = '#78350f';
+          bg = '#fef9c3'; border = '#ca8a04'; color = '#78350f'; fontWeight = 'bold';
         }
         return (
           <button key={idx} onClick={() => handleSelect(idx)}
-            style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 16px', marginBottom: 8, background: bg, border: `2px solid ${border}`, borderRadius: 8, cursor: revealed ? 'default' : 'pointer', color, fontSize: '.92em', lineHeight: 1.5, transition: 'all .15s' }}>
-            <span style={{ fontWeight: 'bold', marginRight: 8 }}>{idx}.</span>{c}
+            style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 16px', marginBottom: 8, background: bg, border: `2px solid ${border}`, borderRadius: 8, cursor: revealed ? 'default' : 'pointer', color, fontSize: '.92em', lineHeight: 1.5, transition: 'all .15s', fontWeight }}>
+            <span style={{ fontWeight: 'bold', marginRight: 4 }}>{icon}{idx}.</span>{c}
           </button>
         );
       })}
