@@ -86,7 +86,15 @@ export default function KibchulWrongPage() {
           </div>
           {wrongs.length > 0 && (
             <button
-              onClick={() => router.push('/kibchul/1')}
+              onClick={() => {
+                // 오답이 1개 과목에만 있으면 해당 과목으로, 복수면 뒤로
+                const subjectIds = [...new Set(wrongs.map(e => e.subjectId))];
+                if (subjectIds.length === 1) {
+                  router.push(`/kibchul/${subjectIds[0]}`);
+                } else {
+                  router.back();
+                }
+              }}
               className="ml-auto px-4 py-2 bg-orange-500 text-white rounded-xl text-sm font-semibold hover:bg-orange-600 transition"
             >
               오답 복습 →

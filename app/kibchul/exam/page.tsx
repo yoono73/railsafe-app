@@ -82,15 +82,17 @@ function getAvailableSessions(): { id: string; label: string; subjectCount: numb
     });
 }
 
-// 특정 세션의 전 과목 문제 수집
+// 특정 세션의 전 과목 문제 수집 (손상 문항 필터 포함)
 function buildExamQuestions(sessionId: string): FlatQuestion[] {
   const result: FlatQuestion[] = [];
   KIBCHUL_SUBJECTS.forEach(s => {
     const sess = s.sessions.find(ss => ss.id === sessionId);
     if (sess) {
-      sess.questions.forEach(q => {
-        result.push({ subjectId: s.id, subjectName: s.name, subjectIcon: s.icon, q });
-      });
+      sess.questions
+        .filter(q => q.question.trim().length > 5 && q.choices.every(c => c.trim().length > 0))
+        .forEach(q => {
+          result.push({ subjectId: s.id, subjectName: s.name, subjectIcon: s.icon, q });
+        });
     }
   });
   return result;
