@@ -215,6 +215,19 @@ export default function SidebarNav() {
                     <span>기출 106문항 CBT</span>
                   </Link>
                 )}
+                {s.id === 6 && (
+                  <Link
+                    href="/kibchul/signal"
+                    className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
+                      pathname.startsWith('/kibchul/signal')
+                        ? 'bg-blue-100 text-blue-800 font-semibold'
+                        : 'text-gray-400 hover:bg-gray-50 hover:text-blue-700'
+                    }`}
+                  >
+                    <span>└</span>
+                    <span>기출 200문항 CBT</span>
+                  </Link>
+                )}
                 {s.id === 7 && (
                   <Link
                     href="/kibchul/safety"
