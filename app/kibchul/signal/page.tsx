@@ -5,7 +5,7 @@ import { SIGNAL_EXAM, SignalQuestion, SIGNAL_PART_LABEL, SignalPart } from '@/li
 
 // ─── 상수 ──────────────────────────────────────────────────────
 const GRADE_COLOR: Record<string, string> = {
-  'A+': '#d97706', A: '#2563eb', B: '#6b7280',
+  S: '#dc2626', 'A+': '#d97706', A: '#2563eb',
 };
 const SAVE_KEY = 'signal_exam_progress';
 const LS_WRONG = 'kibchul_wrong';
@@ -33,7 +33,7 @@ function saveWrongEntry(q: SignalQuestion, selected: number) {
 }
 
 type Mode = 'home' | 'quiz' | 'result';
-type FilterGrade = 'ALL' | 'A+' | 'A' | 'B';
+type FilterGrade = 'ALL' | 'S' | 'A+' | 'A';
 type FilterPart = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
 interface Answer {
@@ -231,13 +231,14 @@ export default function SignalExamPage() {
 
         {/* 등급 통계 카드 */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10, marginBottom: 16 }}>
-          {(['A+', 'A', 'B'] as FilterGrade[]).map(g => {
+          {(['S', 'A+', 'A'] as FilterGrade[]).map(g => {
             const cnt = SIGNAL_EXAM.filter(q => q.grade === g).length;
+            const gradeLabel = g === 'S' ? '최빈출' : g === 'A+' ? '빈출' : '법령';
             return (
               <div key={g} style={{ background: '#fff', border: `2px solid ${GRADE_COLOR[g]}`, borderRadius: 8, padding: '10px 8px', textAlign: 'center' }}>
                 <div style={{ color: GRADE_COLOR[g], fontWeight: 'bold', fontSize: '1.1em' }}>{g}</div>
                 <div style={{ fontSize: '1.4em', fontWeight: 'bold' }}>{cnt}</div>
-                <div style={{ fontSize: '.75em', color: '#666' }}>문항</div>
+                <div style={{ fontSize: '.7em', color: '#666' }}>{gradeLabel}</div>
               </div>
             );
           })}
@@ -248,7 +249,7 @@ export default function SignalExamPage() {
           {PARTS.map(p => {
             const cnt = SIGNAL_EXAM.filter(q => q.part === p).length;
             const label = SIGNAL_PART_LABEL[p];
-            const shortLabel = label.split(':')[1]?.trim().substring(0, 8) ?? `PART ${p}`;
+            const shortLabel = label.substring(0, 7);
             return (
               <div key={p} style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 8, padding: '8px 4px', textAlign: 'center' }}>
                 <div style={{ fontSize: '.7em', color: '#2563eb', fontWeight: 'bold', marginBottom: 2 }}>P{p}</div>
@@ -267,7 +268,7 @@ export default function SignalExamPage() {
           <div style={{ marginBottom: 12 }}>
             <div style={{ fontSize: '.85em', color: '#555', marginBottom: 6 }}>등급 필터</div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              {(['ALL', 'A+', 'A', 'B'] as FilterGrade[]).map(g => (
+              {(['ALL', 'S', 'A+', 'A'] as FilterGrade[]).map(g => (
                 <button key={g} onClick={() => setFilterGrade(g)}
                   style={{ padding: '5px 14px', borderRadius: 6, border: `2px solid ${filterGrade === g ? (GRADE_COLOR[g] ?? '#2563eb') : '#d1d5db'}`, background: filterGrade === g ? (GRADE_COLOR[g] ?? '#2563eb') : '#fff', color: filterGrade === g ? '#fff' : '#374151', fontWeight: filterGrade === g ? 'bold' : 'normal', cursor: 'pointer', fontSize: '.9em' }}>
                   {g} {g !== 'ALL' ? `(${SIGNAL_EXAM.filter(q => q.grade === g).length})` : `(${SIGNAL_EXAM.length})`}
@@ -328,7 +329,7 @@ export default function SignalExamPage() {
         </div>
 
         {/* 등급별 성취 */}
-        {(['A+', 'A', 'B'] as const).map(g => {
+        {(['S', 'A+', 'A'] as const).map(g => {
           const qs = questions.filter(q => q.grade === g);
           if (!qs.length) return null;
           const ans = answers.filter(a => qs.some(q => q.id === a.qid));
@@ -350,7 +351,7 @@ export default function SignalExamPage() {
             const ans = answers.filter(a => qs.some(q => q.id === a.qid));
             const cor = ans.filter(a => a.correct).length;
             const pct2 = ans.length ? Math.round((cor / ans.length) * 100) : 0;
-            const shortLabel = SIGNAL_PART_LABEL[p].split(':')[1]?.trim().substring(0, 12) ?? `PART ${p}`;
+            const shortLabel = SIGNAL_PART_LABEL[p].substring(0, 12);
             return (
               <div key={p} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '4px 0', borderBottom: p < 8 ? '1px solid #f3f4f6' : 'none' }}>
                 <span style={{ fontSize: '.85em', color: '#555' }}>P{p} {shortLabel}</span>
@@ -367,7 +368,7 @@ export default function SignalExamPage() {
             ? <div style={{ color: '#15803d', fontWeight: 'bold', padding: '16px', background: '#fff', borderRadius: 8, textAlign: 'center' }}>모두 정답입니다! 🎉</div>
             : answers.filter(a => !a.correct).map(a => {
               const q2 = questions.find(q => q.id === a.qid)!;
-              const shortLabel = SIGNAL_PART_LABEL[q2.part].split(':')[1]?.trim().substring(0, 10) ?? '';
+              const shortLabel = SIGNAL_PART_LABEL[q2.part].substring(0, 10);
               return (
                 <div key={a.qid} style={{ background: '#fff', border: '1px solid #fca5a5', borderRadius: 8, padding: '12px 14px', marginBottom: 10 }}>
                   <div style={{ fontSize: '.8em', color: '#2563eb', marginBottom: 4 }}>
