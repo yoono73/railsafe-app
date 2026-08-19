@@ -220,12 +220,12 @@ export default function SidebarNav() {
                     href="/kibchul/signal"
                     className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
                       pathname.startsWith('/kibchul/signal')
-                        ? 'bg-blue-100 text-blue-800 font-semibold'
-                        : 'text-gray-400 hover:bg-gray-50 hover:text-blue-700'
+                        ? 'bg-indigo-100 text-indigo-800 font-semibold'
+                        : 'text-gray-400 hover:bg-gray-50 hover:text-indigo-700'
                     }`}
                   >
                     <span>└</span>
-                    <span>기출 200문항 CBT</span>
+                    <span>기출·복원 280문항 CBT</span>
                   </Link>
                 )}
                 {s.id === 7 && (
