@@ -34,6 +34,7 @@ export default function KibchulWrongPage() {
   const [mounted, setMounted] = useState(false);
   const [filterSubject, setFilterSubject] = useState<number | null>(null);
   const [migrateStatus, setMigrateStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
+  const [migrateError, setMigrateError] = useState<string>('');
 
   useEffect(() => {
     setWrongs(loadWrong());
@@ -82,6 +83,7 @@ export default function KibchulWrongPage() {
                 setMigrateStatus('loading');
                 const result = await migrateLocalToServer();
                 if (result.error) {
+                  setMigrateError(result.error);
                   setMigrateStatus('error');
                 } else {
                   setMigrateStatus('done');
@@ -94,7 +96,11 @@ export default function KibchulWrongPage() {
           )}
           {migrateStatus === 'loading' && <span className="text-xs text-gray-400">업로드 중...</span>}
           {migrateStatus === 'done' && <span className="text-xs text-green-600">✓ 서버 저장 완료</span>}
-          {migrateStatus === 'error' && <span className="text-xs text-red-400">⚠ 로그인 후 이용</span>}
+          {migrateStatus === 'error' && (
+            <span className="text-xs text-red-400" title={migrateError}>
+              {migrateError === '로그인 필요' ? '⚠ 로그인 후 이용' : '⚠ SQL 미실행 또는 오류'}
+            </span>
+          )}
           {wrongs.length > 0 && (
             <button onClick={clearAll} className="text-xs text-gray-400 hover:text-red-500 transition">
               전체 삭제
