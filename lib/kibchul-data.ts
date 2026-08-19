@@ -1,5 +1,11 @@
 // lib/kibchul-data.ts
 // 철도교통안전관리자 기출문제 데이터 — 금지 문자(U+6790) 0건 보장
+//
+// ⚠️ 문제 ID 불변 규칙 ⚠️
+// 이 파일의 문제 id(예: 's1_2024_12_001')는 절대 변경 금지.
+// 서버 kibchul_attempts 테이블이 이 id로 사용자 오답을 추적함.
+// 문제 텍스트·답·해설 수정 → OK / 신규 문항 추가 → OK
+// 기존 id 변경 → 과거 오답 매칭 깨져 사용자 학습 이력 유실됨.
 
 export interface KibchulQuestion {
   id: string;

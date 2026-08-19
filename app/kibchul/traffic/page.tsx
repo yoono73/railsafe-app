@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { TRAFFIC_EXAM, TrafficQuestion, TRAFFIC_PART_LABEL, TrafficPart } from '@/lib/traffic-exam-data';
+import { saveAttempt } from '@/lib/kibchul-attempts';
 // Part 5 = OX 함정 변환 (종합)
 
 // ─── 상수 ──────────────────────────────────────────────────────
@@ -30,6 +31,7 @@ function saveWrongEntry(q: TrafficQuestion, selected: number) {
       savedAt: new Date().toISOString(),
     };
     localStorage.setItem(LS_WRONG, JSON.stringify([...existing, entry]));
+    saveAttempt({ subject_id: TRAFFIC_SUBJECT_ID, session_id: entry.sessionId, kibchul_qid: q.id, is_correct: false, selected, answer: q.answer }).catch(() => {});
   } catch {}
 }
 

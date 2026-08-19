@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { KIBCHUL_SUBJECTS, KibchulQuestion } from '@/lib/kibchul-data';
+import { saveAttempt } from '@/lib/kibchul-attempts';
 
 const LS_WRONG = 'kibchul_wrong';
 const LS_STATS = 'kibchul_stats';
@@ -337,6 +338,7 @@ function QuizScreen({
             explanation: fq.q.explanation,
             savedAt: new Date().toISOString(),
           });
+          saveAttempt({ subject_id: fq.subjectId, session_id: exam.sessionId, kibchul_qid: fq.q.id, is_correct: false, selected: sel, answer: fq.q.answer }).catch(() => {});
         }
         grouped.set(fq.subjectId, g);
       });

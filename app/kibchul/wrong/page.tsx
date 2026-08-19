@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { KIBCHUL_SUBJECTS } from '@/lib/kibchul-data';
+import { migrateLocalToServer } from '@/lib/kibchul-attempts';
 
 const LS_WRONG = 'kibchul_wrong';
 
@@ -32,6 +33,7 @@ export default function KibchulWrongPage() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const [filterSubject, setFilterSubject] = useState<number | null>(null);
+  const [migrateStatus, setMigrateStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
 
   useEffect(() => {
     setWrongs(loadWrong());
@@ -73,11 +75,32 @@ export default function KibchulWrongPage() {
         <button onClick={() => router.back()} className="text-orange-400 hover:text-orange-600 transition">← 뒤로</button>
         <span className="text-gray-300">|</span>
         <span className="font-medium text-gray-700">📒 기출 오답노트</span>
-        {wrongs.length > 0 && (
-          <button onClick={clearAll} className="ml-auto text-xs text-gray-400 hover:text-red-500 transition">
-            전체 삭제
-          </button>
-        )}
+        <div className="ml-auto flex items-center gap-3">
+          {migrateStatus === 'idle' && (
+            <button
+              onClick={async () => {
+                setMigrateStatus('loading');
+                const result = await migrateLocalToServer();
+                if (result.error) {
+                  setMigrateStatus('error');
+                } else {
+                  setMigrateStatus('done');
+                }
+              }}
+              className="text-xs text-blue-500 hover:text-blue-700 transition border border-blue-200 rounded-lg px-2 py-1"
+            >
+              ☁️ 서버로 올리기
+            </button>
+          )}
+          {migrateStatus === 'loading' && <span className="text-xs text-gray-400">업로드 중...</span>}
+          {migrateStatus === 'done' && <span className="text-xs text-green-600">✓ 서버 저장 완료</span>}
+          {migrateStatus === 'error' && <span className="text-xs text-red-400">⚠ 로그인 후 이용</span>}
+          {wrongs.length > 0 && (
+            <button onClick={clearAll} className="text-xs text-gray-400 hover:text-red-500 transition">
+              전체 삭제
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="max-w-2xl mx-auto px-4 py-6">

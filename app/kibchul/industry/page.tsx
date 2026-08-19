@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { INDUSTRY_EXAM, IndustryQuestion, INDUSTRY_PART_LABEL, Part } from '@/lib/industry-exam-data';
+import { saveAttempt } from '@/lib/kibchul-attempts';
 
 // ─── 상수 ──────────────────────────────────────────────────────
 const GRADE_COLOR: Record<string, string> = {
@@ -29,6 +30,7 @@ function saveWrongEntry(q: IndustryQuestion, selected: number) {
       savedAt: new Date().toISOString(),
     };
     localStorage.setItem(LS_WRONG, JSON.stringify([...existing, entry]));
+    saveAttempt({ subject_id: INDUSTRY_SUBJECT_ID, session_id: entry.sessionId, kibchul_qid: q.id, is_correct: false, selected, answer: q.answer }).catch(() => {});
   } catch {}
 }
 

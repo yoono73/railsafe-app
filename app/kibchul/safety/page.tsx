@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { SAFETY_EXAM, SafetyQuestion } from '@/lib/safety-exam-data';
+import { saveAttempt } from '@/lib/kibchul-attempts';
 
 // ─── 상수 ──────────────────────────────────────────────────────
 const GRADE_COLOR: Record<string, string> = {
@@ -34,6 +35,7 @@ function saveWrongEntry(q: SafetyQuestion, selected: number) {
       savedAt: new Date().toISOString(),
     };
     localStorage.setItem(LS_WRONG, JSON.stringify([...existing, entry]));
+    saveAttempt({ subject_id: SAFETY_SUBJECT_ID, session_id: entry.sessionId, kibchul_qid: q.id, is_correct: false, selected, answer: q.answer }).catch(() => {});
   } catch {}
 }
 
