@@ -115,6 +115,21 @@ export default function IndustryExamPage() {
     })();
   }, []);
 
+  // 퀴즈 진행 중 자동저장 (브라우저 뒤로가기 대응)
+  useEffect(() => {
+    if (mode === 'quiz' && questions.length > 0) {
+      saveProgress({
+        questionIds: questions.map(q => q.id),
+        current,
+        answers,
+        filterGrade,
+        filterPart,
+        shuffleQ,
+        savedAt: new Date().toISOString(),
+      });
+    }
+  }, [mode, questions, current, answers, filterGrade, filterPart, shuffleQ]);
+
   // 필터링
   const filtered = INDUSTRY_EXAM.filter(q => {
     const g = filterGrade === 'ALL' || q.grade === filterGrade;
