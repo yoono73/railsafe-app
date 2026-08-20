@@ -373,9 +373,19 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 </div><div class="concept" id="p3-29">
 <div class="concept-title"><span class="cnum">개념 29</span>완화곡선</div>
 <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>정의</td><td>직선과 원곡선 사이에 삽입하는 <strong>점이(漸移) 구간</strong></td></tr><tr><td>목적</td><td>승차감 향상 / 급격한 원심력 변화 방지 / 탈선 위험 감소</td></tr><tr><td>효과</td><td>캔트·슬랙이 <strong>서서히</strong> 변화 (급변 없음)</td></tr><tr><td>종류</td><td><strong>클로소이드 곡선</strong> (가장 많이 사용) / 3차 포물선</td></tr></tbody></table></div>
+<div class="vis-wrap"><img src="images/VIS-076_완화곡선클로소이드도해.png" alt="완화곡선(클로소이드) 구조 도해" loading="eager"><p class="vis-cap">직선 → 완화곡선(클로소이드) → 원곡선 전이 구조</p></div>
+<div class="theory-note">
+<strong>📐 그림 읽는 법 — 3구간으로 나눠서 이해</strong><br><br>
+<strong>① 직선 구간</strong>: 레일이 수평으로 놓여 있고 캔트·슬랙 = 0. 원심력 없음.<br><br>
+<strong>② 완화곡선 구간 (클로소이드)</strong>: 직선과 원곡선 사이에 삽입되는 <em>점이 구간</em>.<br>
+- 그림의 막대그래프(↑ 서서히 높아짐)가 이걸 보여줌 → <strong>캔트·슬랙이 0에서 서서히 증가</strong>하여 원곡선의 최종값까지 부드럽게 연결됨.<br>
+- 열차가 이 구간을 지나는 동안 원심력이 <em>점진적으로</em> 커지므로 승객은 충격 없이 자연스럽게 느낌.<br><br>
+<strong>③ 원곡선 구간</strong>: 일정 반경(r)으로 계속 휘어지는 구간. 캔트·슬랙 최대값 유지.<br><br>
+<strong>🔴 완화곡선이 없으면? (우측 상단 빨간 박스)</strong><br>
+직선에서 원곡선으로 <em>바로</em> 연결되면 캔트가 순간적으로 최대값으로 변하고 원심력이 <strong>급변</strong> → 승객이 급격히 바깥쪽으로 쏠림 → 탈선 위험.<br><br>
+<strong>핵심 요약</strong>: 완화곡선은 "충격 완충제"다. 직선의 느긋함과 원곡선의 급격함 사이를 <em>부드럽게 이어주는 다리</em> 역할.
+</div>
 <div class="trap">⚠️ 함정 주의: 완화곡선 없으면 직선→원곡선 진입 시 원심력 급변 → 승차감 불량·탈선 위험</div>
-
-<div class="theory-note"><strong>이론 배경:</strong> 완화곡선 없이 직선에서 원곡선으로 갑자기 진입하면 <strong>원심력이 순간적으로 급변</strong>하여 탈선 위험과 승차감 불량이 발생합니다. 클로소이드 곡선이 가장 널리 사용됩니다.</div>
 <div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 완화곡선이 없을 때 발생하는 문제는?</div><div class="qe-a">정답: 직선→원곡선 진입 시 원심력 급변 → 승차감 불량·탈선 위험</div><div class="qe-wrong">오답함정: "완화곡선 없어도 문제없다"는 오답</div></div>
 </div></div></div><div class="part" id="p4">
 <div class="part-title" onclick="togglePart(this)">PART 4. 궤도·레일·분기기<span class="arrow">▲</span></div>
@@ -507,6 +517,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr class="hl"><td><strong>단점</strong></td><td>급구배·급곡선 불리, 축중 집중</td><td>유지보수 복잡, 비용 높음</td></tr>
 <tr><td><strong>점착력</strong></td><td>동력축 집중 → 점착 취약</td><td>다축 분산 → 점착 유리</td></tr>
 </tbody></table></div>
+<div class="vis-wrap"><img src="images/VIS-065_동력집중분산식비교표.jpg" alt="동력집중식 vs 동력분산식 비교표" loading="eager"><p class="vis-cap">동력집중식 vs 동력분산식 비교</p></div>
 <div class="trap">⚠️ 함정 주의: 급구배·급곡선 → <strong>동력분산식</strong> 유리 (집중식은 불리)</div>
 <div class="theory-note"><strong>이론 배경:</strong> 동력분산식은 동력차가 여러 칸에 나뉘어 각 차축에서 견인력을 만들기 때문에, 점착력이 분산되어 급구배 노선에 적합합니다. 동력집중식은 기관차에만 동력이 있어 구조가 단순하지만 점착 한계가 존재합니다.</div>
 <div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 급구배 노선에 유리한 동력방식은?</div><div class="qe-a">정답: 동력분산식 (다축 점착 분산)</div><div class="qe-wrong">오답함정: "동력집중식"으로 답하는 경우</div></div>
