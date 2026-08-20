@@ -122,6 +122,13 @@ export default function KibchulPage() {
     setSavedProgress(loadQuizProgress(subjectIdParam));
   }, [subjectIdParam]);
 
+  // 퀴즈 진행 중 자동 저장 (답 선택·페이지 이동 시 모두 보존)
+  useEffect(() => {
+    if (quiz && screen === 'quiz' && quiz.sessionId !== 'wrong_only') {
+      saveQuizProgress(subjectIdParam, quiz);
+    }
+  }, [quiz, screen, subjectIdParam]);
+
   const startQuiz = useCallback((session: KibchulSession, mode: QuizMode, shuffled: boolean) => {
     clearQuizProgress(subjectIdParam);
     setSavedProgress(null);
