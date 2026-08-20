@@ -133,7 +133,10 @@ export default function TrafficExamPage() {
   }, [savedProgress]);
 
   const handleSelect = (idx: number) => {
-    if (revealed) return;
+    if (revealed) {
+      setRevealed(false);
+      setAnswers(prev => prev.filter(a => a.qid !== questions[current].id));
+    }
     setSelected(idx);
   };
 

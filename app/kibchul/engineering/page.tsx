@@ -139,11 +139,14 @@ export default function EngineeringCBTPage() {
   const q = questions[current];
 
   const handleSelect = useCallback((idx: number) => {
-    if (selected !== null) return;
+    // 재선택 허용 — answers 배열에서 기존 항목 교체
     setSelected(idx);
     setShowExpl(true);
     const correct = idx === q.answer;
-    const newAnswers = [...answers, { qid: String(q.id), selected: idx, correct }];
+    const newAnswers = [
+      ...answers.filter(a => a.qid !== String(q.id)),
+      { qid: String(q.id), selected: idx, correct },
+    ];
     setAnswers(newAnswers);
     if (!correct) saveWrongEntry(q, idx);
     saveProgress({
@@ -153,7 +156,7 @@ export default function EngineeringCBTPage() {
       filterGrade, filterPart, shuffleQ,
       savedAt: new Date().toISOString(),
     });
-  }, [selected, q, answers, questions, current, filterGrade, filterPart, shuffleQ]);
+  }, [q, answers, questions, current, filterGrade, filterPart, shuffleQ]);
 
   const handleNext = useCallback(() => {
     if (current + 1 >= questions.length) {

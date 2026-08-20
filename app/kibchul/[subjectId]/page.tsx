@@ -422,15 +422,15 @@ function QuizScreen({
   const isPractice = quiz.mode === 'practice';
 
   const handleSelect = (idx: number) => {
-    if (isPractice && revealed) return;
-    if (!isPractice && selected !== null) return;
-
+    // 연습/시험 모두 언제든 재선택 허용
     const newSelected = [...quiz.selected];
     newSelected[quiz.currentIdx] = idx;
 
     const newRevealed = [...quiz.revealed];
     if (isPractice) {
       newRevealed[quiz.currentIdx] = true;
+      // 재선택 시 오답 추적 갱신 (기존 제거 후 재평가)
+      removeWrong(q.id);
       if (idx !== q.answer) {
         addWrong({
           subjectId: quiz.subjectId,
@@ -443,8 +443,6 @@ function QuizScreen({
           explanation: q.explanation,
           savedAt: new Date().toISOString(),
         });
-      } else {
-        removeWrong(q.id);
       }
     }
 
@@ -487,7 +485,7 @@ function QuizScreen({
 
   const progress = ((quiz.currentIdx + 1) / quiz.questions.length) * 100;
   const isLast = quiz.currentIdx === quiz.questions.length - 1;
-  const canGoNext = isPractice ? revealed : selected !== null;
+  const canGoNext = selected !== null; // 선택만 하면 항상 다음 가능
 
   return (
     <div className="min-h-full bg-gray-50">

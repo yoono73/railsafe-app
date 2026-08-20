@@ -141,7 +141,11 @@ export default function SafetyExamPage() {
   }, [savedProgress]);
 
   const handleSelect = (idx: number) => {
-    if (revealed) return;
+    // 정답 확인 후에도 재선택 허용 → reveal 초기화
+    if (revealed) {
+      setRevealed(false);
+      setAnswers(prev => prev.filter(a => a.qid !== questions[current].id));
+    }
     setSelected(idx);
   };
 

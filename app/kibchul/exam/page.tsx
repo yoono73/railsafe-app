@@ -307,7 +307,6 @@ function QuizScreen({
   const isNewSubject = !prevFq || prevFq.subjectId !== fq.subjectId;
 
   const handleSelect = (optNum: number) => {
-    if (selected !== null) return;
     const newSelected = [...exam.selected];
     newSelected[exam.currentIdx] = optNum;
     setExam(prev => prev ? { ...prev, selected: newSelected } : null);
