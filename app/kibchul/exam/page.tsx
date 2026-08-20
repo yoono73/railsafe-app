@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { KIBCHUL_SUBJECTS, KibchulQuestion } from '@/lib/kibchul-data';
-import { saveAttempt } from '@/lib/kibchul-attempts';
+import { saveAttempt, removeAttempt } from '@/lib/kibchul-attempts';
 
 const LS_WRONG = 'kibchul_wrong';
 const LS_STATS = 'kibchul_stats';
@@ -325,6 +325,7 @@ function QuizScreen({
         if (sel === fq.q.answer) {
           g.correct++;
           removeWrong(fq.q.id);
+          removeAttempt(fq.q.id).catch(() => {});
         } else if (sel !== null) {
           addWrong({
             subjectId: fq.subjectId,

@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { engineeringQuestions, PART_NAMES, EnggQuestion, EnggPart, EnggGrade, SAVE_KEY } from '@/lib/engineering-exam-data';
-import { saveAttempt } from '@/lib/kibchul-attempts';
+import { saveAttempt, removeAttempt, loadWrongAttempts } from '@/lib/kibchul-attempts';
 
 const ENGG_SUBJECT_ID = 400;
 const LS_WRONG = 'kibchul_wrong';
@@ -91,10 +91,27 @@ export default function EngineeringCBTPage() {
   const [hasSaved, setHasSaved] = useState(false);
   const [choiceOrder, setChoiceOrder] = useState<number[]>([0,1,2,3]);
 
-  // 이어풀기 감지
+  // 이어풀기 감지 + Supabase 오답 동기화
   useEffect(() => {
     const saved = loadProgress();
     if (saved) setHasSaved(true);
+    (async () => {
+      const { data } = await loadWrongAttempts(ENGG_SUBJECT_ID);
+      if (!data.length) return;
+      const qMap = new Map(engineeringQuestions.map(q => [String(q.id), q]));
+      const fromServer = data.flatMap(r => {
+        const q = qMap.get(r.kibchul_qid);
+        if (!q) return [];
+        return [{ subjectId: ENGG_SUBJECT_ID, sessionId: r.session_id ?? '', questionId: r.kibchul_qid,
+          question: q.question, choices: [...q.choices], answer: r.answer ?? q.answer,
+          selected: r.selected ?? 0, explanation: q.explanation ?? '',
+          savedAt: new Date().toISOString() }];
+      });
+      if (!fromServer.length) return;
+      const existing: { subjectId: number }[] = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
+      const others = existing.filter(e => e.subjectId !== ENGG_SUBJECT_ID);
+      localStorage.setItem(LS_WRONG, JSON.stringify([...others, ...fromServer]));
+    })();
   }, []);
 
   const getFiltered = useCallback(() => {
@@ -149,6 +166,7 @@ export default function EngineeringCBTPage() {
     ];
     setAnswers(newAnswers);
     if (!correct) saveWrongEntry(q, idx);
+    else removeAttempt(String(q.id)).catch(() => {});
     saveProgress({
       questionIds: questions.map(q => q.id),
       current,

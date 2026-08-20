@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { TRAFFIC_EXAM, TrafficQuestion, TRAFFIC_PART_LABEL, TrafficPart } from '@/lib/traffic-exam-data';
-import { saveAttempt } from '@/lib/kibchul-attempts';
+import { saveAttempt, removeAttempt, loadWrongAttempts } from '@/lib/kibchul-attempts';
 // Part 5 = OX 함정 변환 (종합)
 
 // ─── 상수 ──────────────────────────────────────────────────────
@@ -96,6 +96,23 @@ export default function TrafficExamPage() {
     if (p && p.questionIds.length > 0 && p.current < p.questionIds.length) {
       setSavedProgress(p);
     }
+    (async () => {
+      const { data } = await loadWrongAttempts(TRAFFIC_SUBJECT_ID);
+      if (!data.length) return;
+      const qMap = new Map(TRAFFIC_EXAM.map(q => [q.id, q]));
+      const fromServer = data.flatMap(r => {
+        const q = qMap.get(r.kibchul_qid);
+        if (!q) return [];
+        return [{ subjectId: TRAFFIC_SUBJECT_ID, sessionId: r.session_id ?? '', questionId: r.kibchul_qid,
+          question: q.question, choices: [...q.choices], answer: r.answer ?? q.answer,
+          selected: r.selected ?? 0, explanation: q.explanation ?? '', caution: q.caution ?? '',
+          savedAt: new Date().toISOString() }];
+      });
+      if (!fromServer.length) return;
+      const existing: { subjectId: number }[] = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
+      const others = existing.filter(e => e.subjectId !== TRAFFIC_SUBJECT_ID);
+      localStorage.setItem(LS_WRONG, JSON.stringify([...others, ...fromServer]));
+    })();
   }, []);
 
   const filtered = TRAFFIC_EXAM.filter(q => {
@@ -147,6 +164,7 @@ export default function TrafficExamPage() {
     const correct = selected === q.answer;
     setAnswers(prev => [...prev, { qid: q.id, selected, correct }]);
     if (!correct) saveWrongEntry(q, selected);
+    else removeAttempt(q.id).catch(() => {});
   };
 
   const handleNext = () => {
