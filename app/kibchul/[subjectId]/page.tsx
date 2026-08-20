@@ -9,6 +9,7 @@ import {
   KibchulQuestion,
   KibchulSession,
 } from '@/lib/kibchul-data';
+import { createClient } from '@/lib/supabase/client';
 
 // ─────────────────────────────────────────
 // localStorage 키 & 타입 정의
@@ -48,7 +49,7 @@ export interface StatEntry {
   timestamp: string;
 }
 
-// ─── 오답 ───
+// ─── 오답 (localStorage + Supabase 동기화) ───
 function loadWrong(): WrongEntry[] {
   try { return JSON.parse(localStorage.getItem(LS_WRONG) || '[]'); } catch { return []; }
 }
@@ -62,6 +63,36 @@ function addWrong(entry: WrongEntry) {
 }
 function removeWrong(questionId: string) {
   saveWrong(loadWrong().filter(e => e.questionId !== questionId));
+}
+
+// Supabase 동기화 (fire-and-forget, 로그인 사용자만)
+async function syncAttempt(entry: WrongEntry, isCorrect: boolean) {
+  try {
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    await supabase.from('kibchul_attempts').upsert({
+      user_id: user.id,
+      subject_id: entry.subjectId,
+      session_id: entry.sessionId,
+      kibchul_qid: entry.questionId,
+      is_correct: isCorrect,
+      selected: isCorrect ? null : entry.selected,
+      answer: entry.answer,
+    }, { onConflict: 'user_id,kibchul_qid' });
+  } catch { /* ignore */ }
+}
+
+async function syncCorrect(questionId: string) {
+  try {
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    await supabase.from('kibchul_attempts')
+      .update({ is_correct: true, selected: null })
+      .eq('user_id', user.id)
+      .eq('kibchul_qid', questionId);
+  } catch { /* ignore */ }
 }
 
 // ─── 통계 ───
@@ -118,8 +149,53 @@ export default function KibchulPage() {
   const [savedProgress, setSavedProgress] = useState<QuizState | null>(null);
 
   useEffect(() => {
+    // localStorage 우선 로드 (즉시)
     setWrongCount(loadWrong().filter(e => e.subjectId === subjectIdParam).length);
     setSavedProgress(loadQuizProgress(subjectIdParam));
+
+    // Supabase에서 오답 동기화 (로그인 사용자 — 다기기 동기화)
+    (async () => {
+      try {
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+
+        const { data } = await supabase
+          .from('kibchul_attempts')
+          .select('kibchul_qid, is_correct, selected, answer, session_id')
+          .eq('user_id', user.id)
+          .eq('subject_id', subjectIdParam);
+        if (!data) return;
+
+        // kibchul_qid → 문제 객체 맵
+        const sessions = getSessionsBySubject(subjectIdParam);
+        const qMap = new Map(sessions.flatMap(s => s.questions).map(q => [q.id, q]));
+
+        // Supabase 기준으로 이 과목 오답 재구성
+        const fromServer: WrongEntry[] = data
+          .filter(r => !r.is_correct)
+          .flatMap(r => {
+            const q = qMap.get(r.kibchul_qid);
+            if (!q) return [];
+            return [{
+              subjectId: subjectIdParam,
+              sessionId: r.session_id ?? '',
+              questionId: r.kibchul_qid,
+              question: q.question,
+              choices: [...q.choices],
+              answer: (r.answer ?? q.answer) as 1 | 2 | 3 | 4,
+              selected: r.selected ?? 0,
+              explanation: q.explanation,
+              savedAt: new Date().toISOString(),
+            }];
+          });
+
+        // 다른 과목 오답(localStorage)은 유지하고 이 과목만 교체
+        const others = loadWrong().filter(e => e.subjectId !== subjectIdParam);
+        saveWrong([...others, ...fromServer]);
+        setWrongCount(fromServer.length);
+      } catch { /* ignore */ }
+    })();
   }, [subjectIdParam]);
 
   // 퀴즈 진행 중 자동 저장 (답 선택·페이지 이동 시 모두 보존)
@@ -439,7 +515,7 @@ function QuizScreen({
       // 재선택 시 오답 추적 갱신 (기존 제거 후 재평가)
       removeWrong(q.id);
       if (idx !== q.answer) {
-        addWrong({
+        const entry: WrongEntry = {
           subjectId: quiz.subjectId,
           sessionId: quiz.sessionId,
           questionId: q.id,
@@ -449,7 +525,11 @@ function QuizScreen({
           selected: idx,
           explanation: q.explanation,
           savedAt: new Date().toISOString(),
-        });
+        };
+        addWrong(entry);
+        syncAttempt(entry, false); // Supabase 동기화 (fire-and-forget)
+      } else {
+        syncCorrect(q.id); // 정답 처리 (Supabase)
       }
     }
 
@@ -464,7 +544,7 @@ function QuizScreen({
         quiz.questions.forEach((question, i) => {
           const sel = quiz.selected[i];
           if (sel !== null && sel !== question.answer) {
-            addWrong({
+            const entry: WrongEntry = {
               subjectId: quiz.subjectId,
               sessionId: quiz.sessionId,
               questionId: question.id,
@@ -474,9 +554,12 @@ function QuizScreen({
               selected: sel,
               explanation: question.explanation,
               savedAt: new Date().toISOString(),
-            });
+            };
+            addWrong(entry);
+            syncAttempt(entry, false); // Supabase 동기화
           } else if (sel === question.answer) {
             removeWrong(question.id);
+            syncCorrect(question.id); // 정답 처리
           }
         });
       }
