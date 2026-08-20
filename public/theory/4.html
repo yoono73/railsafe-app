@@ -502,6 +502,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><strong>제한기울기</strong></td><td>열차 운행 시 최대 허용 기울기</td><td>선종별 상이</td></tr>
 <tr class="hl"><td><strong>구배저항</strong> (계산)</td><td>R = W × i (kg)</td><td>W=열차중량(t), i=기울기(‰)</td></tr>
 </tbody></table></div>
+<div class="vis-wrap"><img src="images/VIS-074_구배체계수치비교도해.png" alt="구배(기울기) 체계 수치 비교 도해" loading="eager"><p class="vis-cap">일반선 25‰ vs 고속선 35‰ 구배 비교</p></div>
 <div class="step-box">📐 계산 예시: 총중량 500t 열차, 기울기 10‰ → 구배저항 = 500 × 10 = 5,000 kg</div>
 <div class="trap">⚠️ 함정 주의: 고속선 최대기울기 <strong>35‰</strong> (일반선 25‰와 혼동 주의)</div>
 <div class="theory-note"><strong>이론 배경:</strong> 기울기(구배)는 수평거리 1000m에 대한 높이차(m)를 ‰로 표현합니다. 상구배는 열차 진행 방향이 오르막이므로 저항으로 작용하고, 하구배는 가속 작용합니다. 구배저항 R = W×i (W: 열차중량 ton, i: 기울기 ‰)로 계산합니다.</div>
@@ -532,6 +533,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><strong>공기저항</strong></td><td>속도²에 비례</td><td>고속일수록 지배적</td></tr>
 <tr class="hl"><td><strong>주행저항</strong></td><td>곡선+구배+출발+공기 합계</td><td>견인력 &gt; 주행저항 → 가속</td></tr>
 </tbody></table></div>
+<div class="vis-wrap"><img src="images/VIS-075_주행저항4종합산도해.png" alt="주행저항 4종 합산 도해" loading="eager"><p class="vis-cap">곡선·구배·출발·공기저항 합산 구조</p></div>
 <div class="step-box">📐 곡선저항 계산: 반경 350m → R = 700/350 = 2 kg/t (열차 1t당 2kg 저항)</div>
 <div class="trap">⚠️ 함정 주의: 곡선저항은 반경에 <strong>반비례</strong> (반경 클수록 저항 작음)</div>
 <div class="theory-note"><strong>이론 배경:</strong> 열차는 곡선·구배·공기·기계마찰 등의 저항을 받습니다. 곡선저항 R=700/r 공식에서 반경(r)이 작을수록 저항이 커집니다. 공기저항은 속도의 제곱에 비례하므로 고속운전에서 지배적입니다. 견인력이 주행저항 합을 초과해야 열차가 가속됩니다.</div>
