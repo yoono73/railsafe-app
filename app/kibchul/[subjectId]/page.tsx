@@ -9,7 +9,7 @@ import {
   KibchulQuestion,
   KibchulSession,
 } from '@/lib/kibchul-data';
-import { createClient } from '@/lib/supabase/client';
+import { saveAttempt, removeAttempt, loadWrongAttempts } from '@/lib/kibchul-attempts';
 
 // ─────────────────────────────────────────
 // localStorage 키 & 타입 정의
@@ -65,35 +65,6 @@ function removeWrong(questionId: string) {
   saveWrong(loadWrong().filter(e => e.questionId !== questionId));
 }
 
-// Supabase 동기화 (fire-and-forget, 로그인 사용자만)
-async function syncAttempt(entry: WrongEntry, isCorrect: boolean) {
-  try {
-    const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-    await supabase.from('kibchul_attempts').upsert({
-      user_id: user.id,
-      subject_id: entry.subjectId,
-      session_id: entry.sessionId,
-      kibchul_qid: entry.questionId,
-      is_correct: isCorrect,
-      selected: isCorrect ? null : entry.selected,
-      answer: entry.answer,
-    }, { onConflict: 'user_id,kibchul_qid' });
-  } catch { /* ignore */ }
-}
-
-async function syncCorrect(questionId: string) {
-  try {
-    const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-    await supabase.from('kibchul_attempts')
-      .update({ is_correct: true, selected: null })
-      .eq('user_id', user.id)
-      .eq('kibchul_qid', questionId);
-  } catch { /* ignore */ }
-}
 
 // ─── 통계 ───
 function loadStats(): StatEntry[] {
@@ -155,46 +126,31 @@ export default function KibchulPage() {
 
     // Supabase에서 오답 동기화 (로그인 사용자 — 다기기 동기화)
     (async () => {
-      try {
-        const supabase = createClient();
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) return;
+      const { data } = await loadWrongAttempts(subjectIdParam);
+      if (!data.length) return;
 
-        const { data } = await supabase
-          .from('kibchul_attempts')
-          .select('kibchul_qid, is_correct, selected, answer, session_id')
-          .eq('user_id', user.id)
-          .eq('subject_id', subjectIdParam);
-        if (!data) return;
+      const sessions = getSessionsBySubject(subjectIdParam);
+      const qMap = new Map(sessions.flatMap(s => s.questions).map(q => [q.id, q]));
 
-        // kibchul_qid → 문제 객체 맵
-        const sessions = getSessionsBySubject(subjectIdParam);
-        const qMap = new Map(sessions.flatMap(s => s.questions).map(q => [q.id, q]));
+      const fromServer: WrongEntry[] = data.flatMap(r => {
+        const q = qMap.get(r.kibchul_qid);
+        if (!q) return [];
+        return [{
+          subjectId: subjectIdParam,
+          sessionId: r.session_id ?? '',
+          questionId: r.kibchul_qid,
+          question: q.question,
+          choices: [...q.choices],
+          answer: (r.answer ?? q.answer) as 1 | 2 | 3 | 4,
+          selected: r.selected ?? 0,
+          explanation: q.explanation,
+          savedAt: new Date().toISOString(),
+        }];
+      });
 
-        // Supabase 기준으로 이 과목 오답 재구성
-        const fromServer: WrongEntry[] = data
-          .filter(r => !r.is_correct)
-          .flatMap(r => {
-            const q = qMap.get(r.kibchul_qid);
-            if (!q) return [];
-            return [{
-              subjectId: subjectIdParam,
-              sessionId: r.session_id ?? '',
-              questionId: r.kibchul_qid,
-              question: q.question,
-              choices: [...q.choices],
-              answer: (r.answer ?? q.answer) as 1 | 2 | 3 | 4,
-              selected: r.selected ?? 0,
-              explanation: q.explanation,
-              savedAt: new Date().toISOString(),
-            }];
-          });
-
-        // 다른 과목 오답(localStorage)은 유지하고 이 과목만 교체
-        const others = loadWrong().filter(e => e.subjectId !== subjectIdParam);
-        saveWrong([...others, ...fromServer]);
-        setWrongCount(fromServer.length);
-      } catch { /* ignore */ }
+      const others = loadWrong().filter(e => e.subjectId !== subjectIdParam);
+      saveWrong([...others, ...fromServer]);
+      setWrongCount(fromServer.length);
     })();
   }, [subjectIdParam]);
 
@@ -527,9 +483,9 @@ function QuizScreen({
           savedAt: new Date().toISOString(),
         };
         addWrong(entry);
-        syncAttempt(entry, false); // Supabase 동기화 (fire-and-forget)
+        saveAttempt({ subject_id: entry.subjectId, session_id: entry.sessionId, kibchul_qid: entry.questionId, is_correct: false, selected: entry.selected, answer: entry.answer }).catch(() => {});
       } else {
-        syncCorrect(q.id); // 정답 처리 (Supabase)
+        removeAttempt(q.id).catch(() => {});
       }
     }
 
@@ -556,10 +512,10 @@ function QuizScreen({
               savedAt: new Date().toISOString(),
             };
             addWrong(entry);
-            syncAttempt(entry, false); // Supabase 동기화
+            saveAttempt({ subject_id: entry.subjectId, session_id: entry.sessionId, kibchul_qid: entry.questionId, is_correct: false, selected: entry.selected, answer: entry.answer }).catch(() => {});
           } else if (sel === question.answer) {
             removeWrong(question.id);
-            syncCorrect(question.id); // 정답 처리
+            removeAttempt(question.id).catch(() => {});
           }
         });
       }
