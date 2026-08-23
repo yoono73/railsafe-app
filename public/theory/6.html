@@ -581,11 +581,45 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="theory-note"><strong>이론 배경: </strong>열차제어시스템 7종: <strong>ATS</strong>=신호 과속 시 정지, <strong>ATC</strong>=속도 자동 제어, <strong>ATO</strong>=운전 전과정 자동화(출입문 포함), <strong>ATP</strong>=과속·신호모진 방지, <strong>CTC</strong>=집중 제어, <strong>CBTC</strong>=무선 통신 기반(궤도회로 불필요).</div>
 <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 무선통신 기반으로 궤도회로 없이 운영 가능한 시스템은?</div><div class="qe-a">정답: CBTC (Communication Based Train Control)</div><div class="qe-wrong">오답함정: ATC — ATC는 궤도회로로 속도정보를 수신</div></div>
 </div><div class="concept">
-  <div class="concept-title"><span class="cnum">28</span>CTC 주요 기능·비해당</div>
-  <p><strong>CTC 효과 ✅</strong>: 열차운행계획 수립 / 신호설비 감시 / 진로 자동제어 / 운행상황 표시</p><div class="trap">⚠️ 함정 주의: <strong>열차운행계획관리의 문서화</strong> → CTC 효과 아님 ★</div><div class="trap">⚠️ 함정 주의: <strong>전력손실 감소</strong> → CTC 효과 아님 ★</div><div class="trap">⚠️ 함정 주의: <strong>LCP</strong> → 현장역 설치 장치 (CTC 사령실 장치 아님) ★</div><p style='margin:6px 0'><strong>CTC 기반 폐색장치</strong>: <strong>자동폐색장치</strong></p><p><strong>CTC 데이터 전송 방식</strong>: <strong>반이중 방식</strong> (동시 양방향 불가)</p>
+  <div class="concept-title"><span class="cnum">28</span>CTC — 열차집중제어장치 ★★★ 빈출</div>
+  <div class="explain-note">
+<strong>💡 CTC가 왜 필요한가?</strong><br>
+CTC 이전: 각 역마다 역무원이 신호기·선로전환기를 직접 조작 → 수십 개 역에 수십 명 필요<br>
+CTC 이후: <strong>1개 중앙 사령실</strong>에서 수십 개 역을 동시에 감시·원격 제어 → 인력 절감, 고밀도 운전 가능<br><br>
+<strong>흐름: 사령실 → [통신선] → 현장역 LCP → [연동장치] → 신호기·선로전환기</strong><br>
+CTC가 명령을 내려도 실제 안전조건 확인(충돌방지)은 <strong>연동장치</strong>가 담당
+  </div>
+  <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody>
+<tr><td><strong>정의</strong></td><td>Centralized Traffic Control — 일정 구간 열차·신호·선로전환을 중앙 사령실에서 원격 집중 제어</td></tr>
+<tr><td><strong>구성요소</strong></td><td>TCC(자동제어장치) / MSC(운영관리장치) / 열차운행 상황 표시장치</td></tr>
+<tr><td><strong>LCP 역할</strong></td><td>CTC 명령 → 연동장치·ATC로 전송 / 현장 설비 표시정보 → CTC로 전송</td></tr>
+<tr><td><strong>LCP 설치위치</strong></td><td><strong>현장역</strong> ★ (CTC 사령실 아님)</td></tr>
+<tr><td><strong>기반 폐색장치</strong></td><td><strong>자동폐색장치</strong></td></tr>
+<tr><td><strong>데이터 전송</strong></td><td><strong>반이중 방식</strong> (동시 양방향 불가)</td></tr>
+</tbody></table></div>
 
-<div class="theory-note"><strong>이론 배경: </strong><strong>CTC</strong>는 여러 역의 신호기·선로전환기를 원격 집중 제어. 운행 계획 수립·진로 자동 제어·신호설비 감시가 주요 효과. 문서화·전력절감은 CTC 효과 아님. <strong>LCP</strong>는 현장역 설치 장치.</div>
+<div class="table-wrap"><table><thead><tr><th>CTC 효과 ✅ (해당)</th><th>비해당 ❌ (함정)</th></tr></thead><tbody>
+<tr><td>열차운행경비 절감</td><td rowspan="2"><strong>열차속도 높아지면 자동 제동</strong> ← ATC·ATS 기능 ★★</td></tr>
+<tr><td>열차 평균운행속도 향상</td></tr>
+<tr><td>선로용량 극대화</td><td><strong>열차운행계획관리의 문서화</strong></td></tr>
+<tr><td>열차 고밀도화 기여</td><td><strong>전력손실 감소</strong></td></tr>
+<tr><td>진로 자동제어·신호설비 감시</td><td></td></tr>
+</tbody></table></div>
+
+<div class="table-wrap"><table><thead><tr><th>CTC vs TMS 비교</th><th>CTC</th><th>TMS</th></tr></thead><tbody>
+<tr><td><strong>풀네임</strong></td><td>Centralized Traffic Control</td><td>Train Management System</td></tr>
+<tr><td><strong>핵심</strong></td><td>여러 역 신호·진로 <strong>원격 제어</strong></td><td>운행현황·계획·지연 <strong>종합 관리</strong></td></tr>
+<tr><td><strong>포인트</strong></td><td>현장 신호설비를 직접 제어</td><td>운행 정보를 관리·조정</td></tr>
+</tbody></table></div>
+
+<div class="trap">⚠️ 함정 최빈출: <strong>CTC 효과와 관계없는 것</strong> = "열차속도 높아지면 자동 제동" (ATC/ATS 기능) ★★★</div>
+<div class="trap">⚠️ 함정: <strong>LCP</strong> = CTC 사령실 장치 → ❌ <strong>현장역</strong> 설치</div>
+<div class="trap">⚠️ 함정: <strong>CTC가 진로 명령 내려도</strong> 안전 최종 확인은 <strong>연동장치</strong>가 담당</div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>CTC</strong>는 1개소 사령실에서 수십 개 역을 직접 제어 — 신호·선로전환기 원격 조작. <strong>TCC·MSC·표시장치</strong>로 구성. LCP는 사령실↔현장 연결 장치이며 현장역에 설치. CTC는 제어 명령만 내리고, 실제 안전조건 충족 여부는 <strong>연동장치</strong>가 검증한다.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시 ★★★ 최빈출</div><div class="qe-q">Q. 열차집중제어장치(CTC)의 효과와 관계없는 것은?<br>① 열차운행경비를 절감시킨다 &nbsp; ② 열차의 평균운행속도를 향상시킨다<br>③ 선로용량을 극대화할 수 있다 &nbsp; ④ 열차속도가 높아지면 자동으로 제동시킬 수 있다</div><div class="qe-a">정답: ④ — 속도 과속 시 자동 제동은 ATC·ATS 기능. CTC는 원격 집중 제어 시스템</div><div class="qe-wrong">오답함정: ③ 선로용량 극대화 — 이것은 CTC 효과에 해당. ③을 고르면 오답</div></div>
 <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. CTC 데이터 전송 방식은?</div><div class="qe-a">정답: 반이중 방식 (동시 양방향 불가)</div><div class="qe-wrong">오답함정: 전이중 방식 — 전이중은 동시 양방향 가능하지만 CTC는 반이중</div></div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. CTC 사령실에서 현장 설비로 명령을 전달하는 현장역 장치는?</div><div class="qe-a">정답: LCP (현장역 설치)</div><div class="qe-wrong">오답함정: CTC 사령실에 설치된 장치 — LCP는 사령실이 아닌 현장역에 설치</div></div>
 </div><div class="concept">
   <div class="concept-title"><span class="cnum">29</span>ATS 지상자·ATP 지상장치·TTC</div>
   <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>ATS 지상자 이격 거리</td><td><strong>400mm 이상</strong></td></tr><tr><td>속도조사식 설치위치</td><td>우측 <strong>300mm ± 10mm</strong></td></tr></tbody></table></div><p style='margin:6px 0'><strong>ATP 지상장치 구성요소 ✅</strong>: 고정정보전송장치 / 선로변제어유니트 / 가변정보전송장치</p><div class="trap">⚠️ 함정 주의: <strong>프로그래밍 장치</strong> → ATP 지상장치 구성요소 아님</div><p style='margin:6px 0'><strong>TTC(열차종합제어) 구성요소</strong>: 표시반 / 제어용콘솔 / 데이터전송장치</p><div class="trap">⚠️ 함정 주의: <strong>연동장치</strong> = TTC 구성요소 아님</div><p style='margin:6px 0'><strong>발리스(Balise)</strong>: ATP에서 현장정보를 열차로 전송하는 장치</p>
