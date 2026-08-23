@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { SAFETY_EXAM, SafetyQuestion } from '@/lib/safety-exam-data';
-import { saveAttempt, removeAttempt, loadWrongAttempts } from '@/lib/kibchul-attempts';
+import { saveAttempt } from '@/lib/kibchul-attempts';
 
 // ─── 상수 ──────────────────────────────────────────────────────
 const GRADE_COLOR: Record<string, string> = {
@@ -96,45 +96,13 @@ export default function SafetyExamPage() {
 
   const [savedProgress, setSavedProgress] = useState<SavedProgress | null>(null);
 
-  // 마운트 시 저장된 진행상태 확인 + Supabase 오답 동기화
+  // 마운트 시 저장된 진행상태 확인
   useEffect(() => {
     const p = loadProgress();
     if (p && p.questionIds.length > 0 && p.current < p.questionIds.length) {
       setSavedProgress(p);
     }
-    (async () => {
-      const { data } = await loadWrongAttempts(SAFETY_SUBJECT_ID);
-      if (!data.length) return;
-      const qMap = new Map(SAFETY_EXAM.map(q => [q.id, q]));
-      const fromServer = data.flatMap(r => {
-        const q = qMap.get(r.kibchul_qid);
-        if (!q) return [];
-        return [{ subjectId: SAFETY_SUBJECT_ID, sessionId: r.session_id ?? '', questionId: r.kibchul_qid,
-          question: q.question, choices: [...q.choices], answer: r.answer ?? q.answer,
-          selected: r.selected ?? 0, explanation: q.explanation ?? '', caution: q.caution ?? '',
-          savedAt: new Date().toISOString() }];
-      });
-      if (!fromServer.length) return;
-      const existing: { subjectId: number }[] = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
-      const others = existing.filter(e => e.subjectId !== SAFETY_SUBJECT_ID);
-      localStorage.setItem(LS_WRONG, JSON.stringify([...others, ...fromServer]));
-    })();
   }, []);
-
-  // 퀴즈 진행 중 자동저장 (브라우저 뒤로가기 대응)
-  useEffect(() => {
-    if (mode === 'quiz' && questions.length > 0) {
-      saveProgress({
-        questionIds: questions.map(q => q.id),
-        current,
-        answers,
-        filterGrade,
-        filterPart,
-        shuffleQ,
-        savedAt: new Date().toISOString(),
-      });
-    }
-  }, [mode, questions, current, answers, filterGrade, filterPart, shuffleQ]);
 
   // 필터링
   const filtered = SAFETY_EXAM.filter(q => {
@@ -173,11 +141,7 @@ export default function SafetyExamPage() {
   }, [savedProgress]);
 
   const handleSelect = (idx: number) => {
-    // 정답 확인 후에도 재선택 허용 → reveal 초기화
-    if (revealed) {
-      setRevealed(false);
-      setAnswers(prev => prev.filter(a => a.qid !== questions[current].id));
-    }
+    if (revealed) return;
     setSelected(idx);
   };
 
@@ -188,7 +152,6 @@ export default function SafetyExamPage() {
     const correct = selected === q.answer;
     setAnswers(prev => [...prev, { qid: q.id, selected, correct }]);
     if (!correct) saveWrongEntry(q, selected);
-    else removeAttempt(q.id).catch(() => {});
   };
 
   const handleNext = () => {

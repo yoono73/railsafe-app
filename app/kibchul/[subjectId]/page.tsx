@@ -9,7 +9,6 @@ import {
   KibchulQuestion,
   KibchulSession,
 } from '@/lib/kibchul-data';
-import { saveAttempt, removeAttempt, loadWrongAttempts } from '@/lib/kibchul-attempts';
 
 // ─────────────────────────────────────────
 // localStorage 키 & 타입 정의
@@ -49,7 +48,7 @@ export interface StatEntry {
   timestamp: string;
 }
 
-// ─── 오답 (localStorage + Supabase 동기화) ───
+// ─── 오답 ───
 function loadWrong(): WrongEntry[] {
   try { return JSON.parse(localStorage.getItem(LS_WRONG) || '[]'); } catch { return []; }
 }
@@ -64,7 +63,6 @@ function addWrong(entry: WrongEntry) {
 function removeWrong(questionId: string) {
   saveWrong(loadWrong().filter(e => e.questionId !== questionId));
 }
-
 
 // ─── 통계 ───
 function loadStats(): StatEntry[] {
@@ -120,46 +118,9 @@ export default function KibchulPage() {
   const [savedProgress, setSavedProgress] = useState<QuizState | null>(null);
 
   useEffect(() => {
-    // localStorage 우선 로드 (즉시)
     setWrongCount(loadWrong().filter(e => e.subjectId === subjectIdParam).length);
     setSavedProgress(loadQuizProgress(subjectIdParam));
-
-    // Supabase에서 오답 동기화 (로그인 사용자 — 다기기 동기화)
-    (async () => {
-      const { data } = await loadWrongAttempts(subjectIdParam);
-      if (!data.length) return;
-
-      const sessions = getSessionsBySubject(subjectIdParam);
-      const qMap = new Map(sessions.flatMap(s => s.questions).map(q => [q.id, q]));
-
-      const fromServer: WrongEntry[] = data.flatMap(r => {
-        const q = qMap.get(r.kibchul_qid);
-        if (!q) return [];
-        return [{
-          subjectId: subjectIdParam,
-          sessionId: r.session_id ?? '',
-          questionId: r.kibchul_qid,
-          question: q.question,
-          choices: [...q.choices],
-          answer: (r.answer ?? q.answer) as 1 | 2 | 3 | 4,
-          selected: r.selected ?? 0,
-          explanation: q.explanation,
-          savedAt: new Date().toISOString(),
-        }];
-      });
-
-      const others = loadWrong().filter(e => e.subjectId !== subjectIdParam);
-      saveWrong([...others, ...fromServer]);
-      setWrongCount(fromServer.length);
-    })();
   }, [subjectIdParam]);
-
-  // 퀴즈 진행 중 자동 저장 (답 선택·페이지 이동 시 모두 보존)
-  useEffect(() => {
-    if (quiz && screen === 'quiz' && quiz.sessionId !== 'wrong_only') {
-      saveQuizProgress(subjectIdParam, quiz);
-    }
-  }, [quiz, screen, subjectIdParam]);
 
   const startQuiz = useCallback((session: KibchulSession, mode: QuizMode, shuffled: boolean) => {
     clearQuizProgress(subjectIdParam);
@@ -461,17 +422,17 @@ function QuizScreen({
   const isPractice = quiz.mode === 'practice';
 
   const handleSelect = (idx: number) => {
-    // 연습/시험 모두 언제든 재선택 허용
+    if (isPractice && revealed) return;
+    if (!isPractice && selected !== null) return;
+
     const newSelected = [...quiz.selected];
     newSelected[quiz.currentIdx] = idx;
 
     const newRevealed = [...quiz.revealed];
     if (isPractice) {
       newRevealed[quiz.currentIdx] = true;
-      // 재선택 시 오답 추적 갱신 (기존 제거 후 재평가)
-      removeWrong(q.id);
       if (idx !== q.answer) {
-        const entry: WrongEntry = {
+        addWrong({
           subjectId: quiz.subjectId,
           sessionId: quiz.sessionId,
           questionId: q.id,
@@ -481,11 +442,9 @@ function QuizScreen({
           selected: idx,
           explanation: q.explanation,
           savedAt: new Date().toISOString(),
-        };
-        addWrong(entry);
-        saveAttempt({ subject_id: entry.subjectId, session_id: entry.sessionId, kibchul_qid: entry.questionId, is_correct: false, selected: entry.selected, answer: entry.answer }).catch(() => {});
+        });
       } else {
-        removeAttempt(q.id).catch(() => {});
+        removeWrong(q.id);
       }
     }
 
@@ -500,7 +459,7 @@ function QuizScreen({
         quiz.questions.forEach((question, i) => {
           const sel = quiz.selected[i];
           if (sel !== null && sel !== question.answer) {
-            const entry: WrongEntry = {
+            addWrong({
               subjectId: quiz.subjectId,
               sessionId: quiz.sessionId,
               questionId: question.id,
@@ -510,12 +469,9 @@ function QuizScreen({
               selected: sel,
               explanation: question.explanation,
               savedAt: new Date().toISOString(),
-            };
-            addWrong(entry);
-            saveAttempt({ subject_id: entry.subjectId, session_id: entry.sessionId, kibchul_qid: entry.questionId, is_correct: false, selected: entry.selected, answer: entry.answer }).catch(() => {});
+            });
           } else if (sel === question.answer) {
             removeWrong(question.id);
-            removeAttempt(question.id).catch(() => {});
           }
         });
       }
@@ -531,7 +487,7 @@ function QuizScreen({
 
   const progress = ((quiz.currentIdx + 1) / quiz.questions.length) * 100;
   const isLast = quiz.currentIdx === quiz.questions.length - 1;
-  const canGoNext = selected !== null; // 선택만 하면 항상 다음 가능
+  const canGoNext = isPractice ? revealed : selected !== null;
 
   return (
     <div className="min-h-full bg-gray-50">

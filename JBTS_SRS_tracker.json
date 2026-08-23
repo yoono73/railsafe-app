@@ -1,193 +1,21 @@
 {
-  "last_updated": "2026-08-22",
+  "last_updated": "2026-08-12",
   "topics": {
-    "C01": {
-      "name": "감리원 업무범위",
-      "importance": 5,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "C02": {
-      "name": "설계도서/공사계획서",
-      "importance": 4,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "C03": {
-      "name": "공사원가 계산",
-      "importance": 5,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "C04": {
-      "name": "접지 수치",
-      "importance": 5,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "C05": {
-      "name": "인증(초고속/홈네트워크)",
-      "importance": 3,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "C06": {
-      "name": "가용성/RAS 계산",
-      "importance": 5,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "C07": {
-      "name": "감리결과 통보/배치기준",
-      "importance": 4,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "C08": {
-      "name": "신안관경",
-      "importance": 4,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "C09": {
-      "name": "유지보수(PM/CM/예측)",
-      "importance": 3,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "C10": {
-      "name": "설계단계 감리",
-      "importance": 3,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "C11": {
-      "name": "단계별 감리업무",
-      "importance": 5,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "T01": {
-      "name": "NMS",
-      "importance": 4,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "T02": {
-      "name": "ARQ",
-      "importance": 4,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "T03": {
-      "name": "SNMP",
-      "importance": 5,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "T04": {
-      "name": "OTDR",
-      "importance": 4,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    },
-    "T05": {
-      "name": "ICMP",
-      "importance": 3,
-      "correct_streak": 0,
-      "total_correct": 0,
-      "total_wrong": 0,
-      "last_result": null,
-      "last_tested": null,
-      "next_review": "2026-08-12",
-      "history": []
-    }
-  },
-  "pending_session": {
-    "date": "2026-08-22",
-    "topics": [
-      "C01",
-      "C03",
-      "C04",
-      "C06"
-    ],
-    "status": "awaiting_user_scores",
-    "sheet": "JBTS_daily_2026-08-22.html",
-    "note": "무인 실행 - 사용자 채점 미입력, streak 미변경"
+    "C01": {"name": "감리원 업무범위", "importance": 5, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "C02": {"name": "설계도서/공사계획서", "importance": 4, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "C03": {"name": "공사원가 계산", "importance": 5, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "C04": {"name": "접지 수치", "importance": 5, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "C05": {"name": "인증(초고속/홈네트워크)", "importance": 3, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "C06": {"name": "가용성/RAS 계산", "importance": 5, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "C07": {"name": "감리결과 통보/배치기준", "importance": 4, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "C08": {"name": "신안관경", "importance": 4, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "C09": {"name": "유지보수(PM/CM/예측)", "importance": 3, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "C10": {"name": "설계단계 감리", "importance": 3, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "C11": {"name": "단계별 감리업무", "importance": 5, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "T01": {"name": "NMS", "importance": 4, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "T02": {"name": "ARQ", "importance": 4, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "T03": {"name": "SNMP", "importance": 5, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "T04": {"name": "OTDR", "importance": 4, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
+    "T05": {"name": "ICMP", "importance": 3, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []}
   }
 }
