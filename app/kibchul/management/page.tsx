@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { managementQuestions, MgmtQuestion } from '@/lib/management-exam-data';
-import { saveAttempt, removeAttempt, loadWrongAttempts } from '@/lib/kibchul-attempts';
+import { saveAttempt, removeAttempt, loadWrongAttempts, saveCBTProgress, loadCBTProgress, clearCBTProgress } from '@/lib/kibchul-attempts';
 
 const MGMT_SUBJECT_ID = 200;
 const LS_WRONG = 'kibchul_wrong';
@@ -74,6 +74,16 @@ function shuffle<T>(arr: T[]): T[] {
 
 function saveProgress(data: SavedProgress) {
   try { localStorage.setItem(SAVE_KEY, JSON.stringify(data)); } catch {}
+  // 클라우드 동기화 (로그인 시) — 기기 간 이어풀기
+  saveCBTProgress({
+    subject_id: MGMT_SUBJECT_ID,
+    question_ids: data.questionIds.map(String),
+    current_index: data.current,
+    answers: data.answers,
+    filter_grade: data.filterGrade,
+    filter_part: data.filterPart,
+    shuffle_q: data.shuffleQ,
+  }).catch(() => {});
 }
 function loadProgress(): SavedProgress | null {
   try {
@@ -83,6 +93,7 @@ function loadProgress(): SavedProgress | null {
 }
 function clearProgress() {
   try { localStorage.removeItem(SAVE_KEY); } catch {}
+  clearCBTProgress(MGMT_SUBJECT_ID).catch(() => {});
 }
 
 export default function ManagementCBTPage() {
@@ -101,9 +112,26 @@ export default function ManagementCBTPage() {
   const [choiceOrder, setChoiceOrder] = useState<number[]>([0, 1, 2, 3]);
 
   useEffect(() => {
-    const saved = loadProgress();
-    if (saved) setHasSaved(true);
+    // localStorage 즉시 확인
+    const local = loadProgress();
+    if (local) setHasSaved(true);
     (async () => {
+      // 클라우드 진행상황 확인 (기기 간 이어풀기)
+      const cloud = await loadCBTProgress(MGMT_SUBJECT_ID);
+      if (cloud && cloud.question_ids.length > 0) {
+        // 클라우드 데이터를 localStorage에도 씀 (오프라인 대비)
+        const synced: SavedProgress = {
+          questionIds: cloud.question_ids.map(Number),
+          current: cloud.current_index,
+          answers: cloud.answers,
+          filterGrade: cloud.filter_grade as FilterGrade,
+          filterPart: cloud.filter_part as FilterPart,
+          shuffleQ: cloud.shuffle_q,
+          savedAt: new Date().toISOString(),
+        };
+        try { localStorage.setItem(SAVE_KEY, JSON.stringify(synced)); } catch {}
+        setHasSaved(true);
+      }
       const { data } = await loadWrongAttempts(MGMT_SUBJECT_ID);
       if (!data.length) return;
       const qMap = new Map(managementQuestions.map(q => [String(q.id), q]));

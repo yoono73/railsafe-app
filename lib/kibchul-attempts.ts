@@ -105,6 +105,82 @@ export async function loadWrongAttempts(subject_id?: number): Promise<{
   }
 }
 
+// ─── CBT 진행상황 클라우드 저장/로드/삭제 ────────────────────────
+// cbt_progress 테이블 사용: user_id + subject_id UNIQUE upsert
+// 비로그인 시 no-op (localStorage 단독 동작)
+
+export interface CBTProgressPayload {
+  subject_id: number;
+  question_ids: string[];
+  current_index: number;
+  answers: { qid: string; selected: number; correct: boolean }[];
+  filter_grade: string;
+  filter_part: number;
+  shuffle_q: boolean;
+}
+
+export async function saveCBTProgress(payload: CBTProgressPayload): Promise<void> {
+  try {
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    await supabase.from('cbt_progress').upsert({
+      user_id: user.id,
+      subject_id: payload.subject_id,
+      question_ids: payload.question_ids,
+      current_index: payload.current_index,
+      answers: payload.answers,
+      filter_grade: payload.filter_grade,
+      filter_part: payload.filter_part,
+      shuffle_q: payload.shuffle_q,
+      saved_at: new Date().toISOString(),
+    }, { onConflict: 'user_id,subject_id' });
+  } catch (e) {
+    console.error('[kibchul-attempts] saveCBTProgress:', e);
+  }
+}
+
+export async function loadCBTProgress(subject_id: number): Promise<CBTProgressPayload | null> {
+  try {
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return null;
+    const { data, error } = await supabase
+      .from('cbt_progress')
+      .select('question_ids, current_index, answers, filter_grade, filter_part, shuffle_q')
+      .eq('user_id', user.id)
+      .eq('subject_id', subject_id)
+      .maybeSingle();
+    if (error || !data) return null;
+    return {
+      subject_id,
+      question_ids: data.question_ids ?? [],
+      current_index: data.current_index ?? 0,
+      answers: data.answers ?? [],
+      filter_grade: data.filter_grade ?? 'ALL',
+      filter_part: data.filter_part ?? 0,
+      shuffle_q: data.shuffle_q ?? true,
+    };
+  } catch (e) {
+    console.error('[kibchul-attempts] loadCBTProgress:', e);
+    return null;
+  }
+}
+
+export async function clearCBTProgress(subject_id: number): Promise<void> {
+  try {
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    await supabase.from('cbt_progress')
+      .delete()
+      .eq('user_id', user.id)
+      .eq('subject_id', subject_id);
+  } catch (e) {
+    console.error('[kibchul-attempts] clearCBTProgress:', e);
+  }
+}
+
 // ─── 로컬 → 서버 이관 (최초 1회) ───────────────────────────────
 export async function migrateLocalToServer(): Promise<{ count: number; error?: string }> {
   try {
