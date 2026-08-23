@@ -189,6 +189,32 @@ export default function SidebarNav() {
                   <span>{s.icon}</span>
                   <span className="truncate">{s.name}</span>
                 </Link>
+                {s.id === 1 && (
+                  <Link
+                    href="/kibchul/management"
+                    className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
+                      pathname.startsWith('/kibchul/management')
+                        ? 'bg-blue-100 text-blue-800 font-semibold'
+                        : 'text-gray-400 hover:bg-gray-50 hover:text-blue-700'
+                    }`}
+                  >
+                    <span>└</span>
+                    <span>기출·복원 120문항 CBT</span>
+                  </Link>
+                )}
+                {s.id === 4 && (
+                  <Link
+                    href="/kibchul/engineering"
+                    className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
+                      pathname.startsWith('/kibchul/engineering')
+                        ? 'bg-amber-100 text-amber-800 font-semibold'
+                        : 'text-gray-400 hover:bg-gray-50 hover:text-amber-700'
+                    }`}
+                  >
+                    <span>└</span>
+                    <span>기출·복원 127문항 CBT</span>
+                  </Link>
+                )}
                 {s.id === 2 && (
                   <Link
                     href="/kibchul/traffic"
