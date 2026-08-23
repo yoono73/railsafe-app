@@ -166,7 +166,15 @@ export default function ManagementCBTPage() {
   const handleSelect = useCallback((idx: number) => {
     if (showExpl) return;
     setSelected(idx);
-  }, [showExpl]);
+    // 선택 즉시 저장 — 이어풀기 대응
+    saveProgress({
+      questionIds: questions.map(q => q.id),
+      current,
+      answers,
+      filterGrade, filterPart, shuffleQ,
+      savedAt: new Date().toISOString(),
+    });
+  }, [showExpl, questions, current, answers, filterGrade, filterPart, shuffleQ]);
 
   const handleReveal = useCallback(() => {
     if (selected === null || showExpl) return;
