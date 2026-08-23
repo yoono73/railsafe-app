@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { SAFETY_EXAM, SafetyQuestion } from '@/lib/safety-exam-data';
-import { saveAttempt } from '@/lib/kibchul-attempts';
+import { saveAttempt, removeAttempt, loadWrongAttempts } from '@/lib/kibchul-attempts';
 
 // ─── 상수 ──────────────────────────────────────────────────────
 const GRADE_COLOR: Record<string, string> = {
@@ -12,6 +12,7 @@ const PART_LABEL: Record<number, string> = {
   1: 'PART 1 · 2024.12 공개복원',
   2: 'PART 2 · 2025.06 복기·빈출',
   3: 'PART 3 · 2025 후기 기반',
+  4: 'PART 4 · 2025~2026 최신기출',
 };
 const SAVE_KEY = 'safety_exam_progress';
 const LS_WRONG = 'kibchul_wrong';
@@ -41,7 +42,7 @@ function saveWrongEntry(q: SafetyQuestion, selected: number) {
 
 type Mode = 'home' | 'quiz' | 'result';
 type FilterGrade = 'ALL' | 'S' | 'A+' | 'A' | 'B';
-type FilterPart = 0 | 1 | 2 | 3;
+type FilterPart = 0 | 1 | 2 | 3 | 4;
 
 interface Answer {
   qid: string;
@@ -96,13 +97,45 @@ export default function SafetyExamPage() {
 
   const [savedProgress, setSavedProgress] = useState<SavedProgress | null>(null);
 
-  // 마운트 시 저장된 진행상태 확인
+  // 마운트 시 저장된 진행상태 확인 + Supabase 오답 동기화
   useEffect(() => {
     const p = loadProgress();
     if (p && p.questionIds.length > 0 && p.current < p.questionIds.length) {
       setSavedProgress(p);
     }
+    (async () => {
+      const { data } = await loadWrongAttempts(SAFETY_SUBJECT_ID);
+      if (!data.length) return;
+      const qMap = new Map(SAFETY_EXAM.map(q => [q.id, q]));
+      const fromServer = data.flatMap(r => {
+        const q = qMap.get(r.kibchul_qid);
+        if (!q) return [];
+        return [{ subjectId: SAFETY_SUBJECT_ID, sessionId: r.session_id ?? '', questionId: r.kibchul_qid,
+          question: q.question, choices: [...q.choices], answer: r.answer ?? q.answer,
+          selected: r.selected ?? 0, explanation: q.explanation ?? '', caution: q.caution ?? '',
+          savedAt: new Date().toISOString() }];
+      });
+      if (!fromServer.length) return;
+      const existing: { subjectId: number }[] = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
+      const others = existing.filter(e => e.subjectId !== SAFETY_SUBJECT_ID);
+      localStorage.setItem(LS_WRONG, JSON.stringify([...others, ...fromServer]));
+    })();
   }, []);
+
+  // 퀴즈 진행 중 자동저장 (브라우저 뒤로가기 대응)
+  useEffect(() => {
+    if (mode === 'quiz' && questions.length > 0) {
+      saveProgress({
+        questionIds: questions.map(q => q.id),
+        current,
+        answers,
+        filterGrade,
+        filterPart,
+        shuffleQ,
+        savedAt: new Date().toISOString(),
+      });
+    }
+  }, [mode, questions, current, answers, filterGrade, filterPart, shuffleQ]);
 
   // 필터링
   const filtered = SAFETY_EXAM.filter(q => {
@@ -141,7 +174,11 @@ export default function SafetyExamPage() {
   }, [savedProgress]);
 
   const handleSelect = (idx: number) => {
-    if (revealed) return;
+    // 정답 확인 후에도 재선택 허용 → reveal 초기화
+    if (revealed) {
+      setRevealed(false);
+      setAnswers(prev => prev.filter(a => a.qid !== questions[current].id));
+    }
     setSelected(idx);
   };
 
@@ -152,6 +189,7 @@ export default function SafetyExamPage() {
     const correct = selected === q.answer;
     setAnswers(prev => [...prev, { qid: q.id, selected, correct }]);
     if (!correct) saveWrongEntry(q, selected);
+    else removeAttempt(q.id).catch(() => {});
   };
 
   const handleNext = () => {
@@ -278,7 +316,7 @@ export default function SafetyExamPage() {
           <div style={{ marginBottom: 12 }}>
             <div style={{ fontSize: '.85em', color: '#555', marginBottom: 6 }}>PART 필터</div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              {([0, 1, 2, 3] as FilterPart[]).map(p => (
+              {([0, 1, 2, 3, 4] as FilterPart[]).map(p => (
                 <button key={p} onClick={() => setFilterPart(p)}
                   style={{ padding: '5px 14px', borderRadius: 6, border: `2px solid ${filterPart === p ? '#7f1d1d' : '#d1d5db'}`, background: filterPart === p ? '#7f1d1d' : '#fff', color: filterPart === p ? '#fff' : '#374151', fontWeight: filterPart === p ? 'bold' : 'normal', cursor: 'pointer', fontSize: '.88em' }}>
                   {p === 0 ? `전체 (${SAFETY_EXAM.length})` : `P${p} (${SAFETY_EXAM.filter(q => q.part === p).length})`}
@@ -384,9 +422,10 @@ export default function SafetyExamPage() {
       {/* 문제 카드 */}
       <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: '20px', marginBottom: 16, boxShadow: '0 1px 4px rgba(0,0,0,.06)' }}>
         {/* 뱃지 */}
-        <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+        <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
           <span style={{ background: GRADE_COLOR[q.grade], color: '#fff', borderRadius: 4, padding: '2px 8px', fontSize: '.78em', fontWeight: 'bold' }}>{q.grade}등급</span>
           <span style={{ background: '#f3f4f6', color: '#555', borderRadius: 4, padding: '2px 8px', fontSize: '.78em' }}>P{q.part}</span>
+          {q.source && <span style={{ background: '#eff6ff', color: '#1d4ed8', borderRadius: 4, padding: '2px 8px', fontSize: '.78em' }}>📅 {q.source}</span>}
         </div>
         <div style={{ fontSize: '1em', lineHeight: 1.7, fontWeight: 500 }}>{q.question}</div>
       </div>
