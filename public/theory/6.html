@@ -437,11 +437,15 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 • <strong>열차 있음</strong>: 차축이 좌우 레일을 전기적으로 연결(단락)시킴 → 전류가 계전기 대신 차축을 통해 흐름 → 계전기 <strong>낙하(OFF)</strong> = "열차 있음" 감지<br>
 • <strong>Fail-safe</strong>: 레일 단선 고장도 계전기 낙하 → "열차 있음"으로 처리 → 안전 방향<br>
 <br>
-한마디로: <strong>계전기 ON = 안전, 계전기 OFF = 위험(열차 있음 또는 고장)</strong>
+한마디로: <strong>계전기 ON = 안전, 계전기 OFF = 위험(열차 있음 또는 고장)</strong><br><br>
+<strong>★ 차축단락(短絡, Short Circuit)</strong>: 차륜과 차축이 두 레일을 전기적으로 연결하여 궤도회로 수신 상태를 변화시키는 현상.<br>
+→ 이 현상을 이용해 열차 존재를 자동 감지한다. <strong>궤도회로 감지의 핵심 원리.</strong><br>
+→ 단락이 발생하면 전류가 계전기 대신 차축을 통해 흐름 → 계전기 <strong>낙하(OFF)</strong> = "열차 있음" 신호
 </div>
   <div class="vis-wrap"><img src="images/VIS-042_궤도회로종류비교.jpg" alt="궤도회로 6종 비교 및 핵심부품 도해" loading="eager"><p class="vis-cap">궤도회로 6종 비교 및 핵심부품 도해</p></div><div class="table-wrap"><table><thead><tr><th>종류</th><th>특징</th></tr></thead><tbody><tr><td><strong>직류(DC) 궤도회로</strong></td><td>직류 전원 / 교류전철구간 <strong>사용 불가</strong> ★</td></tr><tr><td><strong>교류(AC) 궤도회로</strong></td><td>비전철구간·직류전철구간에서 사용</td></tr><tr><td><strong>정류 궤도회로</strong></td><td>교류를 정류한 맥류 사용</td></tr><tr><td><strong>코드(Code) 궤도회로</strong></td><td>코드(부호)로 전류 단속. 코드계전기·복조기 사용</td></tr><tr><td><strong>AF 궤도회로</strong></td><td><strong>가청주파수(AF)</strong> 사용. 고속 <strong>200km/h 이상</strong>. 차내 제동거리 전달</td></tr><tr><td><strong>고압임펄스 궤도회로</strong></td><td>교류 <strong>25,000V</strong> 전철구간. <strong>임피던스본드</strong> 사용. 외란에 강함 ★</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: DC 궤도회로 = 교류전철구간 <strong>사용 불가</strong> ← 가능하다고 교체 함정</div>
 
 <div class="theory-note"><strong>이론 배경: </strong>궤도회로는 레일에 전류를 흘려 차축 단락으로 열차 존재를 자동 감지. <strong>DC 궤도회로</strong>는 교류전철구간 사용 불가. <strong>AF 궤도회로</strong>는 가청주파수로 200km/h 이상 고속 구간에 적합.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시 ★ 빈출</div><div class="qe-q">Q. 차륜과 차축이 두 레일을 전기적으로 연결하여 궤도회로 수신 상태를 변화시키는 현상은?</div><div class="qe-a">정답: <strong>차축단락</strong> — 열차가 레일에 올라서면 좌우 레일이 차축을 통해 전기적으로 연결됨 → 계전기 낙하(OFF) → 열차 감지</div><div class="qe-wrong">오답함정: "궤도회로 단선" — 단선은 레일이 끊기는 것, 차축단락과 다름</div></div>
 <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. DC 궤도회로를 사용할 수 없는 구간은?</div><div class="qe-a">정답: 교류전철구간</div><div class="qe-wrong">오답함정: 직류전철구간 — DC 궤도회로는 직류전철구간에서 사용 가능</div></div>
 </div><div class="concept">
   <div class="concept-title"><span class="cnum">17</span>핵심 부품 4종</div>

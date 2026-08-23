@@ -664,6 +664,28 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="theory-note"><strong>이론 배경:</strong> 견인정수는 기관차 한 량이 특정 선로 조건에서 최대로 견인할 수 있는 차량 수 또는 중량의 기준값입니다. 제한기울기(가장 급한 구배)를 기준으로 산출하며, 기관차 자체 중량은 포함하지 않습니다.</div>
 <div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 주어진 선로조건에서 기관차 1량이 견인할 수 있는 피견인 차량 중량의 기준값은?</div><div class="qe-a">정답: 견인정수</div><div class="qe-wrong">오답함정: "견인력"으로 혼동하는 오답</div></div>
 </div>
+<div class="concept" id="p8-38">
+<div class="concept-title"><span class="cnum">개념 38</span>속도프로파일 — 열차 속도 곡선 ⚠️ 빈출</div>
+<div class="explain-note">
+<strong>💡 속도프로파일(Speed Profile)이란?</strong><br>
+열차 운행 시 <strong>각 지점(위치)에서 허용되는 최고 속도</strong>를 연결한 곡선. "이 지점에서는 이 속도까지만 내세요"를 그래프로 나타낸 것.<br><br>
+<strong>왜 필요한가?</strong><br>
+• 곡선구간 → 캔트·슬랙 때문에 속도 제한<br>
+• 정거장 접근 → 감속 필요<br>
+• 구배(경사) → 속도 변화 발생<br>
+• 이 모든 제약을 통합하면 <strong>위치(거리)–속도 그래프</strong> = 속도프로파일
+</div>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody>
+<tr><td><strong>정의</strong></td><td>열차의 <strong>운행 위치에 따른 허용 최고속도 곡선</strong>. 선로 조건(곡선·구배·제한속도)을 반영</td></tr>
+<tr><td><strong>ATC와의 관계</strong></td><td>ATC 시스템이 속도프로파일을 기준으로 <strong>과속 시 자동 제동</strong> 적용</td></tr>
+<tr><td><strong>구성 요소</strong></td><td>목표속도(Target Speed) + 제한속도(Speed Restriction) + 감속곡선</td></tr>
+<tr><td><strong>용도</strong></td><td>열차 자동운전(ATO) · ATC · ETCS 등에서 속도 관리 기준으로 사용</td></tr>
+</tbody></table></div>
+<div class="trap">⚠️ 함정 주의: 속도프로파일 = <strong>위치(거리)별 허용속도 곡선</strong> ← 시간별 속도 변화 그래프와 혼동 금지</div>
+<div class="theory-note"><strong>이론 배경:</strong> 속도프로파일은 열차 운행 중 선로 각 지점의 허용 최고속도를 사전에 계산하여 연결한 곡선입니다. ATC(자동열차제어)는 이 프로파일을 기준으로 속도 초과 시 자동 제동을 걸며, 고속철도·ETCS 환경에서 핵심 안전 기준으로 사용됩니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시 ★</div><div class="qe-q">Q. 열차 운행 시 각 위치(거리)에 따른 허용 최고속도를 연결한 곡선을 무엇이라 하는가?</div><div class="qe-a">정답: 속도프로파일(Speed Profile)</div><div class="qe-wrong">오답함정: "운행도표" — 운행도표는 시간별 열차 운행 계획표, 속도프로파일과 다름</div></div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. ATC 시스템에서 속도 관리의 기준이 되는 것은?</div><div class="qe-a">정답: 속도프로파일 — 선로 각 지점의 허용 최고속도 곡선을 기준으로 과속 시 자동 제동</div><div class="qe-wrong">오답함정: "운행계획표" — ATC는 운행계획이 아닌 속도프로파일 기준으로 작동</div></div>
+</div>
 </div></div>
 </div>
 </div>
