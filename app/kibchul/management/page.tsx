@@ -164,15 +164,20 @@ export default function ManagementCBTPage() {
   const q = questions[current];
 
   const handleSelect = useCallback((idx: number) => {
+    if (showExpl) return;
     setSelected(idx);
+  }, [showExpl]);
+
+  const handleReveal = useCallback(() => {
+    if (selected === null || showExpl) return;
     setShowExpl(true);
-    const correct = idx === q.answer;
+    const correct = selected === q.answer;
     const newAnswers = [
       ...answers.filter(a => a.qid !== String(q.id)),
-      { qid: String(q.id), selected: idx, correct },
+      { qid: String(q.id), selected, correct },
     ];
     setAnswers(newAnswers);
-    if (!correct) saveWrongEntry(q, idx);
+    if (!correct) saveWrongEntry(q, selected);
     else removeAttempt(String(q.id)).catch(() => {});
     saveProgress({
       questionIds: questions.map(q => q.id),
@@ -181,7 +186,7 @@ export default function ManagementCBTPage() {
       filterGrade, filterPart, shuffleQ,
       savedAt: new Date().toISOString(),
     });
-  }, [q, answers, questions, current, filterGrade, filterPart, shuffleQ]);
+  }, [selected, showExpl, q, answers, questions, current, filterGrade, filterPart, shuffleQ]);
 
   const handleNext = useCallback(() => {
     if (current + 1 >= questions.length) {
@@ -384,13 +389,20 @@ export default function ManagementCBTPage() {
           </div>
         )}
 
-        {/* 다음 버튼 */}
-        {showExpl && (
-          <button onClick={handleNext}
-            style={{ width: '100%', padding: 14, background: '#0c4a6e', color: '#fff', border: 'none', borderRadius: 10, fontSize: '1em', fontWeight: 'bold', cursor: 'pointer' }}>
-            {current + 1 >= questions.length ? '결과 보기 →' : '다음 문제 →'}
-          </button>
-        )}
+        {/* 정답 확인 / 다음 버튼 */}
+        <div style={{ marginTop: 4 }}>
+          {!showExpl ? (
+            <button onClick={handleReveal} disabled={selected === null}
+              style={{ width: '100%', padding: 14, background: selected === null ? '#d1d5db' : '#0c4a6e', color: '#fff', border: 'none', borderRadius: 10, fontSize: '1em', fontWeight: 'bold', cursor: selected === null ? 'default' : 'pointer' }}>
+              정답 확인
+            </button>
+          ) : (
+            <button onClick={handleNext}
+              style={{ width: '100%', padding: 14, background: '#059669', color: '#fff', border: 'none', borderRadius: 10, fontSize: '1em', fontWeight: 'bold', cursor: 'pointer' }}>
+              {current + 1 >= questions.length ? '결과 보기 →' : '다음 문제 →'}
+            </button>
+          )}
+        </div>
       </div>
     );
   }
