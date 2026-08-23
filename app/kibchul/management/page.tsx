@@ -368,7 +368,7 @@ export default function ManagementCBTPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
           <span style={{ fontSize: '.82em', color: '#6b7280' }}>{current + 1} / {questions.length}</span>
           <span style={{ fontSize: '.82em', color: '#6b7280' }}>정답 {correctCount}개</span>
-          <button onClick={() => { clearProgress(); setMode('home'); }}
+          <button onClick={() => { setHasSaved(true); setMode('home'); }}
             style={{ fontSize: '.8em', color: '#6b7280', background: 'none', border: '1px solid #e5e7eb', borderRadius: 6, padding: '3px 10px', cursor: 'pointer' }}>나가기</button>
         </div>
 
