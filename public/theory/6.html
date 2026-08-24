@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>철도신호 핵심정리</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#f5f7fa; color:#1a1a2e; font-size:15px; line-height:1.7; }
+.site-header { background:linear-gradient(135deg,#78350f,#92400e); color:#fff; padding:5px 16px 4px; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.3); }
+.site-header h1 { font-size:1.05em; }
+.site-header .meta { font-size:.75em; opacity:.8; margin-top:1px; }
+.search-bar { display:flex; gap:8px; margin-top:3px; }
+.search-bar input { flex:1; padding:3px 10px; border-radius:6px; border:none; font-size:.9em; font-family:inherit; }
+.search-bar button { padding:3px 10px; background:#fff; color:#78350f; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:.85em; }
+.container { display:flex; max-width:1200px; margin:0 auto; }
+.toc { width:160px; flex-shrink:0; padding:20px 10px; position:sticky; top:54px; height:calc(100vh - 54px); overflow-y:auto; font-size:.80em; }
+.toc h2 { font-size:.95em; color:#555; margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid #ddd; }
+.toc ul { list-style:none; }
+.toc li { margin:3px 0; }
+.toc a { color:#444; text-decoration:none; display:block; padding:3px 6px; border-radius:4px; transition:background .15s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.toc a:hover { background:#fef3c7; color:#78350f; }
+.toc .toc-part { font-weight:bold; color:#78350f; margin-top:10px; font-size:.88em; }
+.content { flex:1; padding:20px 20px 60px; min-width:0; }
+.part { margin-bottom:10px; }
+.part-title { background:#78350f; color:#fff; padding:10px 16px; border-radius:8px 8px 0 0; font-size:1.05em; font-weight:bold; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+.part-title:hover { background:#92400e; }
+.part-body { border:1px solid #fbbf24; border-top:none; border-radius:0 0 8px 8px; background:#fff; padding:0 16px 10px; }
+.concept { margin:14px 0 6px; padding-bottom:14px; border-bottom:1px solid #fef3c7; }
+.concept:last-child { border-bottom:none; }
+.concept-title { font-size:1em; font-weight:bold; color:#92400e; margin-bottom:8px; padding:4px 0; }
+.concept-title .cnum { background:#fef3c7; color:#78350f; border-radius:4px; padding:1px 7px; font-size:.85em; margin-right:6px; }
+table { width:100%; border-collapse:collapse; margin:8px 0; font-size:.9em; }
+th { background:#78350f; color:#fff; padding:7px 10px; text-align:left; font-size:.88em; }
+td { padding:6px 10px; border-bottom:1px solid #e8edf3; vertical-align:top; }
+tr:nth-child(even) td { background:#fffbf0; }
+tr.hl td { background:#fff3e0; font-weight:bold; }
+.trap { background:#fff3e0; border-left:4px solid #e65100; padding:8px 12px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#bf360c; }
+.tip { background:#e8f5e9; border-left:4px solid #2e7d32; padding:8px 12px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#1b5e20; }
+.step-box { background:#fef3c7; border:1px solid #fbbf24; padding:8px 14px; border-radius:6px; margin:8px 0; font-size:.9em; }
+.vis-wrap { margin:12px 0; background:#fffbf0; border:1px solid #fbbf24; border-radius:8px; padding:10px; text-align:center; }
+.vis-wrap img { max-width:100%; height:auto; border-radius:4px; }
+.vis-cap { font-size:.8em; color:#777; margin-top:6px; }
+.summary-bar { background:#78350f; color:#fff; text-align:center; padding:10px; font-size:.85em; margin-bottom:16px; border-radius:8px; }
+.highlight { background:#fef08a; border-radius:2px; }
+.theory-note { background:#f0f7ff; border-left:4px solid #2563eb; padding:10px 14px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#1e3a5f; }
+.theory-note strong { color:#1d4ed8; }
+.explain-note { background:#f3e8ff; border-left:4px solid #7c3aed; padding:10px 14px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#3b0764; }
+.explain-note strong { color:#6d28d9; }
+.quiz-ex { background:#f0fdf4; border-left:4px solid #16a34a; padding:10px 14px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.88em; color:#14532d; }
+.quiz-ex .qe-title { font-weight:bold; color:#15803d; margin-bottom:4px; }
+.quiz-ex .qe-q { margin:4px 0 2px; }
+.quiz-ex .qe-a { font-weight:bold; color:#166534; }
+.quiz-ex .qe-wrong { display:block; background:#fee2e2; border-left:3px solid #dc2626; color:#b91c1c; padding:5px 10px; margin:6px 0; border-radius:4px; font-size:0.88em; }
+.compare-box { display:grid; gap:6px; margin:8px 0; }
+.compare-box.col2 { grid-template-columns: 1fr 1fr; }
+.cbox-item { background:#f8f8f8; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px; font-size:.88em; }
+.cbox-item .cbox-head { font-weight:bold; color:#4c1d95; margin-bottom:4px; font-size:.92em; }
+@media(max-width:600px){ .compare-box.col2{ grid-template-columns:1fr; } }
+
+  .print-btn { display:inline-flex; align-items:center; gap:4px; background:#fff; color:#4c1d95; border:none; border-radius:6px; padding:5px 12px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:700; margin-left:6px; transition:background .2s; }
+  .print-btn:hover { background:#ede9fe; }
+  @media(min-width:1400px){ .container{ max-width:1440px; } .toc{ width:160px; } .content{ min-width:0; } }
+  @media(max-width:768px){ .toc{display:none;} .content{padding:12px 10px 40px;} table{font-size:.82em;} }
+
+/* 모바일 테이블 가로 스크롤 방지 */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
+
+  .print-btn { display:inline-flex; align-items:center; gap:4px; background:#fff; color:#4c1d95; border:none; border-radius:6px; padding:5px 12px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:700; margin-left:6px; transition:background .2s; }
+  .print-btn:hover { background:#ede9fe; }
+  @media(max-width:768px){
+  .content table { min-width: 480px; }
+}
+
+/* ===== 모바일 목차 드로어 ===== */
+#toc-toggle-btn {
+  display: none;
+}
+@media(max-width:900px) {
+  .toc { display: none !important; }
+  #toc-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: fixed;
+    bottom: 88px; /* MobileNav 위 */
+    left: 14px;
+    z-index: 200;
+    background: #4c1d95;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 8px 16px 8px 12px;
+    font-size: .85em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(76,29,149,.45);
+    font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
+  }
+  #toc-toggle-btn:active { background: #6d28d9; }
+  #toc-drawer {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 80vw;
+    max-width: 300px;
+    background: #fff;
+    z-index: 500;
+    overflow-y: auto;
+    padding: 16px 12px 80px;
+    box-shadow: 4px 0 20px rgba(0,0,0,.25);
+    transform: translateX(-110%);
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
+    font-size: .85em;
+  }
+  #toc-drawer.open { transform: translateX(0); }
+  #toc-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 499;
+  }
+  #toc-overlay.open { display: block; }
+  #toc-drawer-close {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ede9fe;
+  }
+  #toc-drawer-close span { font-weight: bold; color: #4c1d95; font-size: 1em; }
+  #toc-drawer-close button {
+    background: none; border: none; font-size: 1.3em;
+    cursor: pointer; color: #777; padding: 2px 6px;
+  }
+  #toc-drawer .toc { display: flex !important; flex-direction: column; position: static; height: auto; width: 100%; }
+  #toc-drawer .toc ul li a { padding: 5px 8px; display: block; border-radius: 4px; color: #333; text-decoration: none; }
+  #toc-drawer .toc ul li a:active { background: #ede9fe; }
+  #toc-drawer .toc .toc-part a { color: #4c1d95; font-weight: bold; }
+}
+
+/* ===== 교육 TTS 버튼 ===== */
+.tts-edu-btn { display:inline-flex; align-items:center; gap:5px; background:#7c3aed; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px; transition:background .2s; }
+.tts-edu-btn:hover { background:#6d28d9; }
+.tts-edu-btn:disabled { opacity:.6; cursor:wait; }
+.tts-edu-btn.playing { background:#059669; }
+/* ===== 보충강의 TTS 버튼 ===== */
+.tts-supp-btn { display:inline-flex; align-items:center; gap:5px; background:#0891b2; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px 8px; transition:background .2s; }
+.tts-supp-btn:hover { background:#0e7490; }
+.tts-supp-btn:disabled { opacity:.6; cursor:wait; }
+.tts-supp-btn.playing { background:#047857; }
+
+/* ===== 전체강의 듣기 버튼 ===== */
+#play-all-btn {
+  display: none;
+}
+@media(max-width:900px) {
+  #play-all-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: fixed;
+    bottom: 88px;
+    right: 14px;
+    z-index: 200;
+    background: #059669;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 8px 16px 8px 12px;
+    font-size: .85em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(5,150,105,.45);
+    font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
+  }
+  #play-all-btn.playing { background: #dc2626; }
+  #play-all-btn:active { background: #047857; }
+}
+
+/* ===== 전체강의 데스크탑 버튼 ===== */
+.play-all-desktop-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #059669;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 14px 5px 12px;
+  font-size: .82em;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
+  transition: background .2s;
+}
+.play-all-desktop-btn:hover { background: #047857; }
+.play-all-desktop-btn.playing { background: #dc2626; }
+@media(max-width:900px) {
+  .play-all-desktop-btn { display: none; }
+}
+
+/* ===== 프린트 전용 스타일 ===== */
+@media print {
+
+  /* 인쇄 시 overflow 강제 해제 */
+  html, body { overflow: visible !important; height: auto !important; }
+  /* 화면 전용 요소 숨기기 */
+  .site-header, .toc, #play-all-btn, #toc-toggle-btn,
+  #toc-overlay, #toc-drawer, .tts-edu-btn, .tts-supp-btn,
+  .play-all-desktop-btn, .print-btn, button { display: none !important; }
+
+  /* 레이아웃 단순화 */
+  body { font-size: 10.5pt; background: #fff; color: #000; line-height: 1.6; }
+  .container { display: block; max-width: 100%; }
+  .content { padding: 0; }
+
+  /* 모든 파트 펼치기 */
+  .part-body { display: block !important; }
+
+  /* 파트 제목 색상 유지 */
+  .part-title { background: #444 !important; color: #fff !important;
+    print-color-adjust: exact; -webkit-print-color-adjust: exact;
+    border-radius: 0 !important; font-size: 10.5pt; padding: 6px 12px;
+    break-after: avoid; page-break-after: avoid; }
+  .part-title .arrow { display: none; }
+
+  /* 개념 블록 — 페이지 넘어가도 됨 (표·이미지만 안 잘림) */
+  .concept { border-bottom: 1px solid #ddd; padding-bottom: 8pt; margin-bottom: 6pt; }
+  .concept-title { page-break-after: avoid; break-after: avoid;
+    font-size: 10.5pt; font-weight: bold; }
+
+  /* 표 — 페이지 경계 안 잘림 */
+  table { page-break-inside: avoid; break-inside: avoid;
+    width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 4pt 0; }
+  tr { page-break-inside: avoid; break-inside: avoid; }
+  th { background: #555 !important; color: #fff !important;
+    print-color-adjust: exact; -webkit-print-color-adjust: exact;
+    padding: 4px 8px; }
+  td { padding: 4px 8px; border-bottom: 1px solid #ccc; }
+
+  /* 이미지 — 페이지 경계 안 잘림 */
+  .vis-wrap { page-break-inside: avoid; break-inside: avoid; }
+  img { max-width: 100%; max-height: 110mm; width: auto; page-break-inside: avoid; break-inside: avoid; }
+
+  /* 경고·팁·단계 박스 */
+  .trap, .tip, .step-box {
+    page-break-inside: avoid; break-inside: avoid;
+    border-left-width: 3px; padding: 5px 10px; margin: 4pt 0; }
+
+  /* PART 시작 전 약간의 여백 */
+  .part { margin-bottom: 10pt; }
+
+  /* 상단 요약바 */
+  .summary-bar { background: #555 !important; color: #fff !important;
+    print-color-adjust: exact; -webkit-print-color-adjust: exact;
+    font-size: 9pt; padding: 5px 10px; border-radius: 0; margin-bottom: 8pt; }
+
+  /* 하이라이트 색상 유지 */
+  .highlight { background: #ff0 !important;
+    print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .cnum { background: #eee !important;
+    print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+
+  /* 페이지 여백 */
+  @page { margin: 15mm 12mm; }
+}
+</style>
+</head>
+<body>
+<div class="site-header">
+  <h1>🚦 철도신호 핵심정리</h1>
+  <div class="meta">철도교통안전관리자 | 15 PARTS · 44개 핵심개념 · VIS-038~048</div>
+  <div class="search-bar"><input id="q" placeholder="개념 검색 (Enter)"><button onclick="search()">검색</button>
+    <button class="print-btn" onclick="window.print()">🖨️ 인쇄</button>
+    <button class="play-all-desktop-btn" id="play-all-desktop" onclick="playAllTTS()">🎧 전체강의</button>
+  </div>
+</div>
+<div class="container">
+  <nav class="toc"><h2>목차</h2><ul><li><a href="#p1" class="toc-part">PART 1. 철도신호 기본 개념</a></li><li><a href="#p2" class="toc-part">PART 2. 신호기 구조상·조작상 분류</a></li><li><a href="#p3" class="toc-part">PART 3. 신호기 기능별 분류 (주·종속·임시)</a></li><li><a href="#p4" class="toc-part">PART 4. 신호기 정위 & 확인거리</a></li><li><a href="#p5" class="toc-part">PART 5. 선로전환기 분류·계통도</a></li><li><a href="#p6" class="toc-part">PART 6. 궤도회로</a></li><li><a href="#p7" class="toc-part">PART 7. 계전기 종류</a></li><li><a href="#p8" class="toc-part">PART 8. 폐색 방식</a></li><li><a href="#p9" class="toc-part">PART 9. 연동장치</a></li><li><a href="#p10" class="toc-part">PART 10. 열차제어시스템</a></li><li><a href="#p11" class="toc-part">PART 11. 건널목 보안장치</a></li><li><a href="#p12" class="toc-part">PART 12. 검지장치 종류</a></li><li><a href="#p13" class="toc-part">PART 13. 고속철도 신호 핵심</a></li><li><a href="#p14" class="toc-part">PART 14. 핵심 수치 통합 암기</a></li><li><a href="#p15" class="toc-part">PART 15. 신유형 대비 (이동폐색·DMI·KTCS)</a></li></ul></nav>
+  <div class="content">
+    <div class="summary-bar">철도신호 — 15 PARTS | 44개 핵심개념 | VIS-038~048 (11개 이미지) | 함정패턴 6유형 | 신유형 7개념 추가</div>
+    <div class="part" id="p1">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 1. 철도신호 기본 개념 <span class="arrow">▲</span>
+  </div>
+  <div class="part-body"><div class="concept">
+  <div class="concept-title"><span class="cnum">01</span>신호·전호·표지 구분</div>
+  <div class="table-wrap"><table><thead><tr><th>용어</th><th>수단</th><th>목적</th></tr></thead><tbody><tr><td><strong>신호</strong></td><td>형상·색·음</td><td>열차 운행 조건을 <strong>기관사에게 지시</strong>. 현시 기구=신호기</td></tr><tr><td><strong>전호(Sign)</strong></td><td>몸짓·기구·음향</td><td><strong>관계자 상호간</strong> 의지 전달 (출발·비상·입환전호)</td></tr><tr><td><strong>표지</strong></td><td>표시물</td><td>위치·방향·조건을 <strong>표시</strong> (고정 정보)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 전호 = 기관사에게 지시 → ❌ / 전호 = <strong>관계자 상호간</strong></div>
+
+<div class="theory-note"><strong>이론 배경: </strong>신호는 기계설비(신호기)가 열차에 지시를 내리는 것, 전호는 직원 상호 간 의사 전달, 표지는 위치·조건을 고정 표시한다.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 역무원이 기관사에게 출발 지시를 내리는 것은?</div><div class="qe-a">정답: 전호 (사람이 사람에게 전달 = 전호)</div><div class="qe-wrong">오답함정: 신호 — 신호는 기계설비가 열차에 내리는 지시</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">02</span>철도신호의 목적</div>
+  <p><strong>궁극적 목적</strong>: 열차의 <strong>안전운행 확보</strong> ★</p><p><strong>최우선 사항</strong>: <strong>절대안전</strong> ★</p>
+
+<div class="theory-note"><strong>이론 배경: </strong>철도신호의 궁극적 목적은 열차 충돌·탈선을 방지하여 <strong>안전운행을 확보</strong>하는 것이다. 모든 신호 설비는 이 목적을 위해 존재하며, 최우선 사항은 <strong>절대안전</strong>이다.</div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">02-1</span>지상신호 vs 차내신호 & 차내신호 유형 4종 ★★ 빈출</div>
+  <div class="table-wrap"><table><thead><tr><th>구분</th><th>지상신호</th><th>차내신호</th></tr></thead><tbody>
+    <tr><td><strong>표시 위치</strong></td><td>선로변 신호기 (외부)</td><td>운전실 내 표시기 (내부)</td></tr>
+    <tr><td><strong>확인 방법</strong></td><td>기관사가 육안으로 외부 확인</td><td>운전실에서 계기 확인</td></tr>
+    <tr><td><strong>적합 환경</strong></td><td>저속·일반구간</td><td><strong>고속·고밀도 구간</strong> ★</td></tr>
+    <tr><td><strong>장점</strong></td><td>구조 단순</td><td>속도 제한 없음, 가시거리 불필요</td></tr>
+  </tbody></table></div>
+  <div class="table-wrap"><table><thead><tr><th>차내신호 종류 (철도차량운전규칙 제83조)</th><th>의미</th><th>속도 기준</th></tr></thead><tbody>
+    <tr><td><strong>정지신호</strong></td><td>즉시 정지하여야 하는 신호</td><td>0 km/h</td></tr>
+    <tr><td><strong>15신호</strong></td><td>15 km/h 이하로 서행하는 신호</td><td>15 km/h 이하</td></tr>
+    <tr><td><strong>진행신호</strong></td><td>최고속도로 진행할 수 있는 신호</td><td>최고속도</td></tr>
+    <tr><td><strong>야드신호</strong></td><td>차량기지(야드) 내 저속 진행 허가</td><td><strong>25 km/h 이하</strong>(구내)</td></tr>
+  </tbody></table></div>
+  <div class="table-wrap"><table><thead><tr><th>관련 법규</th><th>내용</th></tr></thead><tbody>
+    <tr><td><strong>철도차량운전규칙 제83조</strong></td><td>차내신호의 종류: 정지·15·진행·야드 4종</td></tr>
+    <tr><td><strong>철도차량운전규칙 제84조</strong></td><td>차내신호 사용구간에서 지상신호기는 종속</td></tr>
+    <tr><td><strong>철도차량운전규칙 제85조</strong></td><td>고속·고밀도 운전에서 차내신호 방식의 장점: 가시거리 불필요, 속도 제한 없음</td></tr>
+  </tbody></table></div>
+  <div class="trap">⚠️ 함정 주의: 차내신호 = 4종(정지·15·진행·야드) ← 종류 수·이름 교체 함정 주의</div>
+  <div class="trap">⚠️ 함정 주의: <strong>야드신호 = 25 km/h 이하</strong> — "저속"이라고만 표기하면 오답. 정확한 수치(25km/h) 명시 필요</div>
+  <div class="trap">⚠️ 함정 주의: <strong>고속·고밀도 구간</strong>에 적합한 것은 <strong>차내신호</strong> (지상신호 아님)</div>
+  <div class="trap">⚠️ 함정 주의: <strong>제한적 신호 우선 원칙</strong> — 둘 이상의 신호가 충돌하거나 불명확한 경우, 더 안전·제한적인 상태(정지 방향)를 우선 적용</div>
+  <div class="theory-note"><strong>이론 배경: </strong>고속운전에서 지상신호는 기관사가 확인하기 어렵고 시인 거리도 부족. <strong>차내신호</strong>는 운전실에서 직접 표시되므로 속도 제한 없이 운용 가능. 철도차량운전규칙 제83조에서 정지·15·진행·야드 4종을 규정.</div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시 ★ 빈출</div><div class="qe-q">Q. 차내신호의 종류가 아닌 것은?<br>① 정지신호 &nbsp; ② 15신호 &nbsp; ③ 진행신호 &nbsp; ④ 서행신호</div><div class="qe-a">정답: ④ 서행신호 — 차내신호는 정지·15·진행·야드 4종. 서행신호는 지상신호(임시신호기)</div><div class="qe-wrong">오답함정: 야드신호 누락 — 야드신호도 차내신호 4종에 포함됨</div></div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 고속·고밀도 운전에서 차내신호 방식의 장점은?</div><div class="qe-a">정답: 가시거리 불필요·속도 제한 없음 — 지상신호는 고속에서 확인이 어려우나 차내신호는 운전실 직접 표시</div><div class="qe-wrong">오답함정: 설비 단순 — 차내신호 설비는 지상신호보다 복잡. 장점은 고속 대응 가능성</div></div>
+</div></div>
+</div><div class="part" id="p2">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 2. 신호기 구조상·조작상 분류 <span class="arrow">▲</span>
+  </div>
+  <div class="part-body"><div class="concept">
+  <div class="concept-title"><span class="cnum">03</span>구조상 분류 3종</div>
+  <div class="table-wrap"><table><thead><tr><th>종류</th><th>현시 방법</th><th>특징</th></tr></thead><tbody><tr><td><strong>완목식 신호기</strong></td><td>주간=완목 위치·형태 / 야간=등색</td><td><strong>주야간 현시방법 다름</strong> ★</td></tr><tr><td><strong>색등식 신호기</strong></td><td>색등으로 현시</td><td>주야간 동일. 단등형(미사용)/다등형</td></tr><tr><td><strong>등열식 신호기</strong></td><td>2개 이상 백색등 배열</td><td><strong>유도·중계신호기</strong>에 사용</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>완목식만</strong> 주야간 현시방법이 다름. 색등식·등열식은 주야간 <strong>동일</strong></div>
+
+<div class="explain-note">
+<strong>💡 "현시(現示)"란?</strong><br>
+신호기가 기관사에게 <strong>지금 상태를 눈으로 보여주는 것</strong>입니다.<br>
+예) 빨간 등 → "정지", 초록 등 → "진행" — 이렇게 색이나 형태로 정보를 전달하는 행위가 '현시'.<br><br>
+• <strong>완목식</strong>: 낮에는 막대기(완목)의 각도·형태로, 밤에는 색등으로 → <strong>낮과 밤이 다름</strong> (오래된 방식)<br>
+• <strong>색등식</strong>: 낮밤 구분 없이 항상 적·황·녹 색등으로 → <strong>주야간 동일</strong>, 현재 가장 많이 사용<br>
+• <strong>등열식</strong>: 여러 개 흰색 등의 배열 패턴으로 표시 → <strong>유도·중계신호기 전용</strong>
+</div>
+<div class="theory-note"><strong>이론 배경: </strong><strong>완목식</strong>만 주간(완목 위치·형태)과 야간(등색)의 현시 방법이 다르다. 색등식·등열식은 주야간 동일. 등열식은 유도·중계신호기에 전용으로 사용된다.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 주야간 현시 방법이 서로 다른 신호기는?</div><div class="qe-a">정답: 완목식 신호기</div><div class="qe-wrong">오답함정: 색등식 — 색등식은 주야간 동일하게 색등으로 현시</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">04</span>조작상 분류 3종</div>
+  <div class="table-wrap"><table><thead><tr><th>종류</th><th>작동 방식</th><th>사용 구간</th></tr></thead><tbody><tr><td><strong>수동신호기</strong></td><td>신호취급자가 레버 조작</td><td>비자동구간</td></tr><tr><td><strong>자동신호기</strong></td><td>궤도회로로 자동 현시 / <strong>취급자 조작 불가</strong></td><td>자동폐색구간 <strong>폐색신호기</strong></td></tr><tr><td><strong>반자동신호기</strong></td><td>자동현시 + 취급자 조작 가능</td><td>자동폐색구간 <strong>장내·출발신호기</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>폐색신호기 = 자동</strong> / 장내·출발 = <strong>반자동</strong> (혼동 주의)</div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>자동신호기</strong>는 궤도회로가 자동 현시하며 취급자 조작 불가. <strong>반자동신호기</strong>는 자동 현시가 기본이지만 취급자 조작도 가능. 폐색신호기=자동, 장내·출발=반자동.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 자동폐색구간 폐색신호기의 조작상 분류는?</div><div class="qe-a">정답: 자동신호기</div><div class="qe-wrong">오답함정: 반자동신호기 — 반자동신호기는 장내·출발신호기에 해당</div></div>
+</div></div>
+</div><div class="part" id="p3">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 3. 신호기 기능별 분류 (주·종속·임시) <span class="arrow">▲</span>
+  </div>
+  <div class="part-body"><div class="concept">
+  <div class="concept-title"><span class="cnum">05</span>주신호기 6종</div>
+  <div class="vis-wrap"><img src="images/VIS-038_신호기기능별분류트리.jpg" alt="신호기 기능별 분류 계층 트리" loading="eager"><p class="vis-cap">신호기 기능별 분류 계층 트리</p></div><div class="table-wrap"><table><thead><tr><th>종류</th><th>기능</th><th>설치 위치</th></tr></thead><tbody><tr><td><strong>장내신호기</strong></td><td>정거장 구내 진입 가부 지시</td><td>대향 100m / 배향 60m</td></tr><tr><td><strong>출발신호기</strong></td><td>정거장 출발 가부 지시</td><td>출발선 시점</td></tr><tr><td><strong>폐색신호기</strong></td><td>폐색구간 진입 가부 지시</td><td>폐색구간 시작점</td></tr><tr><td><strong>엄호신호기</strong></td><td>평면교차분기·특수시설 통과 열차 진입 가부</td><td>특수지점 앞</td></tr><tr><td><strong>유도신호기</strong></td><td>장내신호기 정지 시에도 예외 진입 허용</td><td>장내신호기에 부속</td></tr><tr><td><strong>입환신호기</strong></td><td>입환차량 진입 가부</td><td>입환 구역</td></tr></tbody></table></div><div class="tip">★ <strong>유도신호기 정위 = 소등(무현시)</strong> — 평상시 꺼져 있음 ★</div><div class="tip">★ <strong>폐색신호기 정위</strong>: 복선=<strong>진행</strong> / 단선=<strong>정지</strong></div>
+
+<div class="theory-note"><strong>이론 배경: </strong>주신호기 6종 역할: <strong>장내</strong>=역 진입, <strong>출발</strong>=역 출발, <strong>폐색</strong>=구간 경계, <strong>엄호</strong>=특수지점 보호, <strong>유도</strong>=예외 진입 허용(정위=소등), <strong>입환</strong>=입환 작업.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 장내신호기 정지 현시 중에도 예외적으로 진입을 허용하는 신호기는?</div><div class="qe-a">정답: 유도신호기</div><div class="qe-wrong">오답함정: 폐색신호기 — 폐색신호기는 구간 경계 신호기, 예외 진입 허용 기능 없음</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">06</span>종속신호기 3종</div>
+  <div class="table-wrap"><table><thead><tr><th>종류</th><th>기능</th><th>특징</th></tr></thead><tbody><tr><td><strong>원방신호기</strong></td><td>장내신호기 현시 <strong>예고</strong></td><td>비자동구간 / <strong>정위=주의</strong></td></tr><tr><td><strong>통과신호기</strong></td><td>기계식 장내신호기 하단에서 통과 여부 지시</td><td>기계식에만 사용</td></tr><tr><td><strong>중계신호기</strong></td><td>주신호기 현시상태 예고·중계</td><td><strong>등열식</strong> 사용</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>중계신호기 = 종속신호기</strong> (주신호기 아님), <strong>임시신호기도 아님</strong> ★★</div>
+
+<div class="theory-note"><strong>이론 배경: </strong>종속신호기는 주신호기에 종속되어 <strong>예고·중계 역할</strong>만 하며 열차를 독립적으로 제어하지 않는다. <strong>중계신호기</strong>는 종속신호기이며 임시신호기와 혼동하지 않아야 한다.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 중계신호기는 어느 분류에 속하는가?</div><div class="qe-a">정답: 종속신호기</div><div class="qe-wrong">오답함정: 임시신호기 — 임시신호기는 서행예고·서행·서행해제 3종</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">07</span>임시신호기 3종 ★ 비해당 자주 출제</div>
+  <p><strong>서행예고신호기 / 서행신호기 / 서행해제신호기</strong></p><div class="trap">⚠️ 함정 주의: <strong>중계신호기는 임시신호기가 아님</strong> ★</div><div class="tip">★ 임시신호기 비해당 = <strong>중계신호기</strong> — 매 회 출제</div>
+
+<div class="theory-note"><strong>이론 배경: </strong>임시신호기는 공사·장애 등 임시 상황에서 서행 구간을 표시하는 3종(서행예고·서행·서행해제)으로만 구성. <strong>중계신호기</strong>는 종속신호기이므로 임시신호기 비해당으로 매회 출제된다.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 임시신호기에 해당하지 않는 것은?</div><div class="qe-a">정답: 중계신호기 (임시신호기 3종: 서행예고·서행·서행해제)</div><div class="qe-wrong">오답함정: 서행신호기 — 서행신호기는 임시신호기 3종 중 하나</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">08</span>신호부속기 & 운영상 분류</div>
+  <p><strong>진로표시기</strong>: 장내·출발·입환신호기에 부속</p><div class="table-wrap"><table><thead><tr><th>진로 수</th><th>진로표시기 종류</th></tr></thead><tbody><tr><td>3진로 이하</td><td><strong>등렬식</strong></td></tr><tr><td>4진로 이상</td><td><strong>문자식</strong></td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>구분</th><th>해당 신호기</th><th>정지 현시 시</th></tr></thead><tbody><tr><td><strong>절대신호기</strong></td><td>장내·출발·엄호·유도·입환</td><td><strong>절대 정지</strong></td></tr><tr><td><strong>허용신호기</strong></td><td>자동폐색구간 폐색신호기</td><td>일단정지 후 <strong>서행 가능</strong></td></tr></tbody></table></div>
+
+<div class="theory-note"><strong>이론 배경: </strong>진로표시기는 신호기에 부속, 3진로 이하=등렬식, 4진로 이상=문자식. <strong>절대신호기</strong>는 정지 현시 시 절대 정지, <strong>허용신호기</strong>(자동폐색 폐색신호기)는 일단정지 후 서행 가능.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 자동폐색구간 폐색신호기는 절대신호기인가, 허용신호기인가?</div><div class="qe-a">정답: 허용신호기 (일단정지 후 서행 가능)</div><div class="qe-wrong">오답함정: 절대신호기 — 장내·출발·엄호·유도·입환신호기가 절대신호기</div></div>
+</div></div>
+</div><div class="part" id="p4">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 4. 신호기 정위 & 확인거리 <span class="arrow">▲</span>
+  </div>
+  <div class="part-body"><div class="concept">
+  <div class="concept-title"><span class="cnum">09</span>신호기 정위 암기표 ★ 핵심</div>
+  <div class="vis-wrap"><img src="images/VIS-039_신호기정위암기카드.jpg" alt="신호기 정위 상태 암기카드" loading="eager"><p class="vis-cap">신호기 정위 상태 암기카드</p></div><div class="table-wrap"><table><thead><tr><th>신호기</th><th>정위 상태</th><th>비고</th></tr></thead><tbody><tr><td>장내·출발·입환·엄호</td><td><strong>정지</strong></td><td></td></tr><tr class="hl"><td><strong>유도신호기</strong></td><td><strong>소등(무현시)</strong></td><td>정지 아님! ★</td></tr><tr><td>폐색신호기 (복선)</td><td><strong>진행</strong></td><td></td></tr><tr><td>폐색신호기 (단선)</td><td><strong>정지</strong></td><td></td></tr><tr class="hl"><td><strong>원방신호기</strong></td><td><strong>주의</strong></td><td>진행 아님! ★</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 유도신호기 정위 = '정지' → ❌ <strong>소등(무현시)</strong></div><div class="trap">⚠️ 함정 주의: 원방신호기 정위 = '정지' → ❌ <strong>주의</strong></div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>정위</strong>는 평상시 신호기의 기본 상태. 3가지 예외: <strong>복선 폐색신호기=진행</strong>, <strong>원방신호기=주의</strong>, <strong>유도신호기=소등(무현시)</strong>. 이 3가지 예외가 시험 핵심.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 원방신호기의 정위 상태는?</div><div class="qe-a">정답: 주의</div><div class="qe-wrong">오답함정: 정지 또는 진행 — 원방신호기는 장내신호기를 예고하므로 주의가 정위</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">10</span>신호기 확인거리</div>
+  <div class="table-wrap"><table><thead><tr><th>신호기 종류</th><th>확인거리</th><th>비고</th></tr></thead><tbody><tr><td>장내·출발·폐색·엄호</td><td><strong>600m 이상</strong></td><td>★</td></tr><tr><td>입환·중계신호기·주신호용 진로표시기</td><td><strong>200m 이상</strong></td><td></td></tr><tr><td>유도신호기·입환신호용 진로표시기</td><td><strong>100m 이상</strong></td><td></td></tr><tr><td>장내신호기 <strong>대향</strong> 방향</td><td><strong>100m 이상</strong></td><td></td></tr><tr><td>장내신호기 <strong>배향</strong> 방향</td><td><strong>60m 이상</strong></td><td></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 장내 '배향 600m' → ❌ 배향은 <strong>60m</strong>, 대향은 <strong>100m</strong></div>
+
+<div class="theory-note"><strong>이론 배경: </strong>확인거리는 기관사가 제동에 필요한 시간을 벌 수 있도록 신호기를 충분히 먼 거리에서 확인하도록 규정한 최소 거리. 주요 신호기 <strong>600m</strong>, 입환·중계 <strong>200m</strong>, 유도 <strong>100m</strong>, 장내 대향 100m, 배향 60m.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 장내신호기 배향 방향 확인거리는?</div><div class="qe-a">정답: 60m 이상</div><div class="qe-wrong">오답함정: 600m — 600m는 장내신호기 일반 확인거리, 배향은 60m·대향은 100m</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">11</span>특수신호 3종 ★</div>
+  <div class="table-wrap"><table><thead><tr><th>종류</th><th>방법</th></tr></thead><tbody><tr><td><strong>발뢰신호</strong></td><td>레일에 설치 → 차륜이 밟으면 뇌관 폭발</td></tr><tr><td><strong>발염신호</strong></td><td>신호염관의 적색화염</td></tr><tr><td><strong>발광신호</strong></td><td>특수신호 발광기에 의한 적색등 움직임</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>발폭신호</strong> → 존재하지 않음 (비해당 답으로 자주 출제) ★</div>
+
+<div class="theory-note"><strong>이론 배경: </strong>특수신호는 비상 상황에서 전방 열차에 위험을 알리는 비상 신호. <strong>발뢰</strong>(뇌관 폭발), <strong>발염</strong>(적색화염), <strong>발광</strong>(적색등 움직임) 3종만 존재. 발폭신호는 규정에 없는 허구 항목.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 특수신호의 종류에 해당하지 않는 것은?</div><div class="qe-a">정답: 발폭신호 (존재하지 않음)</div><div class="qe-wrong">오답함정: 발뢰신호 — 발뢰신호는 특수신호 3종 중 하나</div></div>
+</div></div>
+</div><div class="part" id="p5">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 5. 선로전환기 분류·계통도 <span class="arrow">▲</span>
+  </div>
+  <div class="part-body"><div class="concept">
+  <div class="concept-title"><span class="cnum">12</span>구조별 5종 & 동력별 분류</div>
+  <div class="vis-wrap"><img src="images/VIS-044_선로전환기분류체계트리.jpg" alt="선로전환기 분류체계 트리" loading="eager"><p class="vis-cap">선로전환기 분류체계 트리</p></div><div class="table-wrap"><table><thead><tr><th>종류</th><th>특징</th></tr></thead><tbody><tr><td><strong>보통 선로전환기</strong></td><td>텅레일 2개, 좌·우 2개 분기</td></tr><tr><td><strong>탈선 선로전환기</strong></td><td>과주 시 의도적 탈선. <strong>안전측선에 사용</strong></td></tr><tr><td><strong>가동크로싱부 선로전환기</strong></td><td>노스레일+텅레일 동시 이동 / <strong>결선부 제거</strong> / <strong>고속철도</strong> ★</td></tr><tr><td><strong>삼지선로전환기</strong></td><td>텅레일 4개, 좌·중·우 3개 분기</td></tr><tr><td><strong>전기선로전환기</strong></td><td>전동기 이용 전환</td></tr></tbody></table></div><div class="explain-note"><strong>💡 텅레일(Tongue Rail) — 선로전환기의 핵심 가동부</strong><br><strong>텅레일(尖端軌條)</strong>: 분기기에서 기본레일(스톡레일)에 밀착하거나 이탈하는 <strong>가동식 뾰족한 레일</strong>. 보통 선로전환기는 텅레일 2개로 좌·우 방향 분기를 담당. 텅레일이 한쪽 기본레일에 밀착되면 그 방향으로 진로가 개통됨.<br>• 텅레일 끝(첨단)으로 열차 진입 → <strong>대향(탈선 위험)</strong><br>• 텅레일 넓은 쪽에서 진입 → <strong>배향(할출 위험)</strong></div><div class="trap">⚠️ 함정 주의: <strong>가동크로싱 = 결선부 제거</strong> (생성 아님!) ★</div><div class="trap">⚠️ 함정 주의: <strong>수동 선로전환기</strong> = 전환수 분류 아님 → <strong>동력 분류</strong></div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>가동크로싱부 선로전환기</strong>는 분기부 결선부(크로싱)를 가동 구조로 만들어 레일 단절 없이 고속 통과 가능. 핵심은 결선부 <strong>제거</strong>(생성 아님). 고속철도 전용.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 가동크로싱부 선로전환기의 특징으로 맞는 것은?</div><div class="qe-a">정답: 결선부 제거</div><div class="qe-wrong">오답함정: 결선부 생성 — 결선부를 없애는 것이 핵심</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">13</span>전환수·정위 결정법</div>
+  <div class="table-wrap"><table><thead><tr><th>전환수 분류</th><th>1버튼으로 전환하는 수</th></tr></thead><tbody><tr><td><strong>단동</strong></td><td>1대</td></tr><tr><td><strong>쌍동</strong></td><td>2대</td></tr><tr><td><strong>삼동</strong></td><td>3대</td></tr></tbody></table></div><p style='margin:8px 0'><strong>정위 결정법</strong> (우선순위 순)</p><div class="table-wrap"><table><thead><tr><th>우선순위</th><th>결정 방향</th></tr></thead><tbody><tr><td>본선·본선 또는 측선·측선</td><td><strong>주요 방향</strong></td></tr><tr><td>단선 상하본선</td><td><strong>열차가 진입하는 방향</strong></td></tr><tr><td>본선·측선</td><td><strong>본선 방향</strong></td></tr><tr><td>본선(측선)·안전측선</td><td><strong>안전측선 방향</strong></td></tr><tr><td>탈선선로전환기</td><td><strong>탈선시키는 방향</strong></td></tr></tbody></table></div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>전환수</strong>: 버튼 1번 조작으로 동시 전환되는 선로전환기 수(단동=1대, 쌍동=2대, 삼동=3대). <strong>정위</strong>는 가장 안전한 기본 방향으로 안전측선·탈선 방향이 최우선.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 본선과 안전측선이 분기되는 곳에서 선로전환기 정위는?</div><div class="qe-a">정답: 안전측선 방향</div><div class="qe-wrong">오답함정: 본선 방향 — 본선·측선 분기 시 본선이 정위이나 안전측선이 있으면 우선</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">14</span>전기선로전환기 계통도 ★</div>
+  <div class="vis-wrap"><img src="images/VIS-045_전기선로전환기계통도.jpg" alt="전기선로전환기 계통도 8단계" loading="eager"><p class="vis-cap">전기선로전환기 계통도 8단계</p></div><div class="step-box">제어버튼 → 제어계전기 → 전동기 → 마찰연축기 → 감속기어장치 → 전환쇄정장치 → 회로제어기 → 표시</div><div class="table-wrap"><table><thead><tr><th>부품</th><th>내용</th></tr></thead><tbody><tr><td><strong>전동기</strong></td><td>콘덴서 기동형 <strong>유도</strong>전동기, 단상 4극 ★</td></tr><tr><td><strong>전환쇄정장치</strong></td><td>해정·전환·쇄정 <strong>3작용</strong> 수행</td></tr><tr><td><strong>마찰클러치</strong></td><td>여름=<strong>강하게</strong>, 겨울=<strong>약하게</strong> ★ (직관 반대!)</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 전동기 = <strong>콘덴서기동형 유도전동기</strong> (동기전동기 아님, 교류NS형도 동일) ★</div>
+
+<div class="explain-note">
+<strong>💡 전기선로전환기 8단계 — 각 단계의 역할</strong><br>
+① <strong>제어버튼</strong>: 운전취급자가 누름<br>
+② <strong>제어계전기</strong>: 전원 회로 연결·차단 (자기유지 계전기)<br>
+③ <strong>전동기</strong>: 콘덴서기동형 유도전동기가 회전력 생성<br>
+④ <strong>마찰클러치(마찰연축기)</strong>: 과부하 시 미끄러져 기계 보호 (이물질·장애물로 인한 과부하 방지)<br>
+⑤ <strong>감속기어장치</strong>: 고속 회전 → 저속 고토크로 변환 (선로전환기 전환에 강한 힘 필요)<br>
+⑥ <strong>전환쇄정장치</strong>: 해정 → 전환 → 쇄정 3작용<br>
+⑦ <strong>회로제어기</strong>: 전환 완료 감지 → 전동기 전원 차단<br>
+⑧ <strong>표시</strong>: 표시등 점등 (쇄정 완료 확인)
+</div>
+<div class="explain-note">
+<strong>💡 마찰클러치 여름=강 / 겨울=약 — 왜 직관과 반대인가?</strong><br>
+마찰클러치는 <strong>"일정 힘 이상 걸리면 미끄러지는(슬립) 보호장치"</strong>입니다.<br>
+"강하게" = 버티는 힘이 커서 더 큰 힘도 전달 / "약하게" = 작은 힘에도 슬립하여 기계 보호<br><br>
+• <strong>여름(강하게)</strong>: 고온으로 레일이 팽창 → 포인트 레일이 주레일에 더 세게 밀착 → 전환 시 저항(마찰)이 커짐 → 클러치를 <strong>강하게</strong> 설정해야 충분한 힘이 전달되어 전환 가능<br>
+• <strong>겨울(약하게)</strong>: 결빙으로 포인트 레일이 얼어붙을 수 있음 → 무리하게 전환 시 갑자기 큰 저항 발생 → 클러치를 <strong>약하게</strong> 설정하면 이 순간 슬립하여 전동기·기어 파손 방지<br><br>
+<strong>기억법</strong>: "여름=강=힘껏 밀어야 전환됨" / "겨울=약=얼어있을 때 무리하면 부서짐"
+</div>
+<div class="explain-note"><strong>💡 전환 검지(Indication Check) — "전환이 제대로 됐나?" 확인 기능</strong><br><strong>전환 검지</strong>: 선로전환기가 명령된 끝 위치(정위 또는 반위)까지 완전히 전환됐는지 확인하는 기능.<br>• 전환쇄정장치 내 회로제어기가 전환 완료 시 전동기 전원을 차단하고 표시등 점등<br>• <strong>전환 미완료(중간 위치)</strong> = 표시등 미점등 → 신호기 진행 현시 불가 (Fail-safe)<br>• 이물질·레일 틈 등으로 전환 불완전 시 → 검지 회로 열림 → 전원 차단 → 경보<br><strong>기출 포인트</strong>: "선로전환기가 끝 위치에 있어야만 신호기 진행 현시 가능" = 전환 검지의 역할</div>
+<div class="theory-note"><strong>이론 배경: </strong>전기선로전환기 8단계: 제어버튼→제어계전기→전동기→마찰연축기→감속기어→전환쇄정→회로제어기→표시. <strong>마찰클러치</strong>는 여름에 강하게, 겨울에 약하게 — 직관과 반대.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 전기선로전환기 전동기의 종류는?</div><div class="qe-a">정답: 콘덴서 기동형 유도전동기</div><div class="qe-wrong">오답함정: 동기전동기 — 유도전동기 사용</div></div>
+<div class="quiz-ex"><div class="qe-title">기출 예시 ★ 틀린 것 유형</div><div class="qe-q">Q. NS형 전기선로전환기의 마찰클러치에 대한 설명으로 <u>틀린</u> 것은?<br>① 강하게 조정하면 전동기 정지 시 충격이 크고 공전 시 슬립 전류가 크게 된다<br>② 마찰클러치의 조정은 여름에는 약하게, 겨울에는 강하게 한다<br>③ 전동기가 회전 또는 정지할 때 기어에 충격을 주지 않도록 흡수한다<br>④ 첨단에 이물질이 끼거나 쇄정간이 걸릴 때 전동기를 보호한다</div><div class="qe-a">정답: ② — 여름=<strong>강하게</strong>, 겨울=<strong>약하게</strong>가 맞음. ②는 반대로 서술하여 틀린 내용</div><div class="qe-wrong">오답함정: ③ "기어 충격 흡수" — 이것은 맞는 설명이므로 정답 아님</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">15</span>선로전환기 전환시간·대향·배향</div>
+  <div class="table-wrap"><table><thead><tr><th>종류</th><th>전환시간</th><th>함정</th></tr></thead><tbody><tr><td><strong>NS형</strong></td><td><strong>6초 이하</strong></td><td>7초 교체</td></tr><tr><td><strong>NS-AM형</strong></td><td><strong>7초 이하</strong></td><td>6초 교체</td></tr><tr><td><strong>MJ81형</strong></td><td><strong>5초 이하</strong> ★</td><td>6·7초 교체</td></tr><tr><td><strong>차상선로전환기</strong></td><td><strong>2초 이하</strong></td><td></td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>구분</th><th>위험</th></tr></thead><tbody><tr><td><strong>대향</strong> (뾰족한 쪽으로 진입)</td><td><strong>탈선</strong> 우려</td></tr><tr><td><strong>배향</strong> (넓은 쪽에서 진입)</td><td><strong>할출</strong> 우려</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>대향=할출</strong> → ❌ / <strong>대향=탈선</strong>, <strong>배향=할출</strong></div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>대향</strong>은 텅레일 뾰족한 끝쪽으로 진입하여 <strong>탈선</strong> 위험, <strong>배향</strong>은 넓은 쪽에서 진입하여 <strong>할출</strong>(레일 벌어짐) 위험. 방향-위험 교체 함정 빈출.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 선로전환기 배향 통과 시 우려되는 위험은?</div><div class="qe-a">정답: 할출</div><div class="qe-wrong">오답함정: 탈선 — 탈선은 대향 통과 시 위험, 배향은 할출</div></div>
+</div></div>
+</div><div class="part" id="p6">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 6. 궤도회로 <span class="arrow">▲</span>
+  </div>
+  <div class="part-body"><div class="concept">
+  <div class="concept-title"><span class="cnum">16</span>궤도회로 종류 6종</div>
+  <div class="explain-note">
+<strong>💡 궤도회로 기본 원리 — 어떻게 열차를 감지하는가?</strong><br>
+<strong>차축(車軸)</strong> = 열차 바퀴를 좌우로 연결하는 쇠막대. 왼쪽 바퀴와 오른쪽 바퀴를 이어주는 금속 축입니다.<br><br>
+레일 두 개를 전선처럼 활용합니다:<br>
+• <strong>정상(열차 없음)</strong>: 한쪽 레일에 전류 보냄 → 레일 끝 계전기 → 반대쪽 레일로 복귀 → 계전기 <strong>여자(ON)</strong> = "구간 비어있음"<br>
+• <strong>열차 있음</strong>: 차축이 좌우 레일을 전기적으로 연결(단락)시킴 → 전류가 계전기 대신 차축을 통해 흐름 → 계전기 <strong>낙하(OFF)</strong> = "열차 있음" 감지<br>
+• <strong>Fail-safe</strong>: 레일 단선 고장도 계전기 낙하 → "열차 있음"으로 처리 → 안전 방향<br>
+<br>
+한마디로: <strong>계전기 ON = 안전, 계전기 OFF = 위험(열차 있음 또는 고장)</strong><br><br>
+<strong>★ 차축단락(短絡, Shunting)</strong>: 차륜과 차축이 두 레일을 전기적으로 연결하여 궤도회로 수신 상태를 변화시키는 현상.<br>
+→ 이 현상을 이용해 열차 존재를 자동 감지한다. <strong>궤도회로 감지의 핵심 원리.</strong><br>
+→ 단락이 발생하면 전류가 계전기 대신 차축을 통해 흐름 → 계전기 <strong>낙하(OFF)</strong> = "열차 있음" 신호<br><br>
+<strong>궤도회로 구성 핵심 용어</strong><br>
+• <strong>절연이음매(Insulated Joint)</strong>: 인접 궤도회로 구간 경계에 설치하는 절연체. 전기적으로 구간을 분리하여 신호전류가 인접 구간으로 새지 않도록 한다.<br>
+• <strong>도상저항(Ballast Resistance)</strong>: 레일과 대지(침목·도상) 사이의 절연 저항. 값이 낮아지면(누설 전류 증가) 궤도회로 감도 저하 → <strong>불평형 원인</strong>. 우천·오염 시 저하.<br>
+&nbsp;&nbsp;→ <strong>도상저항 저하 시 현상</strong>: 궤도회로에 누설전류 증가 → 수신단 전압 불안정 → <strong>궤도회로 불평형(감도 저하)</strong> → 열차 미검지(가점유) 위험 ★ 빈출<br>
+• <strong>궤도계전기 여자(Energized, ON)</strong>: 열차 없음(비점유) 상태 → 정상 운행 허가<br>
+• <strong>궤도계전기 낙하(De-energized, OFF)</strong>: 열차 있음(점유) 또는 고장 상태 → 정지 지시 (Fail-safe)
+</div>
+  <div class="vis-wrap"><img src="images/VIS-042_궤도회로종류비교.jpg" alt="궤도회로 6종 비교 및 핵심부품 도해" loading="eager"><p class="vis-cap">궤도회로 6종 비교 및 핵심부품 도해</p></div><div class="table-wrap"><table><thead><tr><th>종류</th><th>특징</th></tr></thead><tbody><tr><td><strong>직류(DC) 궤도회로</strong></td><td>직류 전원 / 교류전철구간 <strong>사용 불가</strong> ★</td></tr><tr><td><strong>교류(AC) 궤도회로</strong></td><td>비전철구간·직류전철구간에서 사용</td></tr><tr><td><strong>정류 궤도회로</strong></td><td>교류를 정류한 맥류 사용</td></tr><tr><td><strong>코드(Code) 궤도회로</strong></td><td>코드(부호)로 전류 단속. 코드계전기·복조기 사용</td></tr><tr><td><strong>AF 궤도회로</strong></td><td><strong>가청주파수(AF)</strong> 사용. 고속 <strong>200km/h 이상</strong>. 차내 제동거리 전달</td></tr><tr><td><strong>고압임펄스 궤도회로</strong></td><td>교류 <strong>25,000V</strong> 전철구간. <strong>임피던스본드</strong> 사용. 외란에 강함 ★</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: DC 궤도회로 = 교류전철구간 <strong>사용 불가</strong> ← 가능하다고 교체 함정</div>
+
+<div class="theory-note"><strong>이론 배경: </strong>궤도회로는 레일에 전류를 흘려 차축 단락으로 열차 존재를 자동 감지. <strong>DC 궤도회로</strong>는 교류전철구간 사용 불가. <strong>AF 궤도회로</strong>는 가청주파수로 200km/h 이상 고속 구간에 적합.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시 ★ 빈출</div><div class="qe-q">Q. 차륜과 차축이 두 레일을 전기적으로 연결하여 궤도회로 수신 상태를 변화시키는 현상은?</div><div class="qe-a">정답: <strong>차축단락</strong> — 열차가 레일에 올라서면 좌우 레일이 차축을 통해 전기적으로 연결됨 → 계전기 낙하(OFF) → 열차 감지</div><div class="qe-wrong">오답함정: "궤도회로 단선" — 단선은 레일이 끊기는 것, 차축단락과 다름</div></div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. DC 궤도회로를 사용할 수 없는 구간은?</div><div class="qe-a">정답: 교류전철구간</div><div class="qe-wrong">오답함정: 직류전철구간 — DC 궤도회로는 직류전철구간에서 사용 가능</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">17</span>핵심 부품 4종</div>
+  <div class="table-wrap"><table><thead><tr><th>부품</th><th>기능</th></tr></thead><tbody><tr><td><strong>임피던스 본드</strong></td><td>귀선전류(전차전류) <strong>통과</strong> / 신호전류 <strong>차단</strong> ★</td></tr><tr><td><strong>한류장치</strong></td><td>차축 단락 시 <strong>과전류 제한</strong>. 직류=가변저항, 교류=저항 또는 리액터 ★</td></tr><tr><td><strong>보상콘덴서</strong></td><td>궤도회로 주파수 레벨 감쇄 보상</td></tr><tr><td><strong>가상선(LF)</strong></td><td>운행방향 관계없이 일정 임피던스 유지</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 임피던스 본드 = <strong>전류 분리</strong>(귀선↔신호) / 한류장치 = <strong>과전류 제한</strong> — 혼동 금지</div>
+
+<div class="explain-note">
+<strong>💡 임피던스 본드 — 귀선전류와 신호전류를 왜 분리해야 하나?</strong><br><br>
+<strong>귀선전류(歸線電流)</strong> = 전차선에서 전동차로 공급된 전력이 모터를 돌린 후 레일을 통해 변전소로 돌아오는 전류. 수백~수천 암페어(A)의 대전류.<br>
+<strong>신호전류</strong> = 궤도회로 감지용 전류. 수십~수백 밀리암페어(mA)의 미약한 전류.<br><br>
+<strong>문제</strong>: 두 전류가 같은 레일을 흐르면 → 수천 A 귀선전류가 수십 mA 신호전류를 덮어버림 → 계전기가 정상/열차있음 구분 불가<br><br>
+<strong>임피던스 본드의 해결 방식</strong>:<br>
+• 구조: 레일 중간에 설치된 코일(인덕터). 직류(DC)=저항 작음, 교류(AC)=저항 큼<br>
+• <strong>귀선전류(직류 또는 저주파)</strong>: 임피던스 본드 코일을 쉽게 통과 → 변전소로 복귀 ✅<br>
+• <strong>신호전류(교류 고주파)</strong>: 임피던스 본드에서 큰 저항(임피던스)을 만남 → 차단 → 신호 구간 내에 머뭄 ✅<br>
+→ 두 전류가 같은 레일을 흐르면서도 서로 간섭하지 않게 분리됨<br><br>
+<strong>💡 한류장치 — 차축 단락 시 왜 과전류가 발생하는가?</strong><br>
+• 정상 상태: 궤도회로 전류는 레일 → 계전기(저항 있음) → 복귀 경로를 거침<br>
+• 차축 단락 시: 차축이 좌우 레일을 연결 → <strong>계전기(저항)를 우회하는 지름길 생성</strong> → 전류가 저항 없이 급격히 증가(단락 = 저항 거의 0 = 전류 폭등)<br>
+• 한류장치(저항 또는 리액터): 이 과전류를 제한하여 계전기·전원장치 보호
+</div>
+<div class="theory-note"><strong>이론 배경: </strong><strong>임피던스 본드</strong>는 귀선전류(전차전류) 통과, 신호전류 차단하여 두 전류를 분리. <strong>한류장치</strong>는 차축 단락 시 과전류로부터 기기를 보호 — 두 가지 기능을 혼동하지 않아야 한다.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 차축 단락 시 과전류를 제한하는 부품은?</div><div class="qe-a">정답: 한류장치</div><div class="qe-wrong">오답함정: 임피던스 본드 — 임피던스 본드는 전류 분리 기능</div></div>
+<div class="quiz-ex"><div class="qe-title">기출 예시 ★ 실제 출제 형식</div><div class="qe-q">Q. 열차의 차축에 의하여 궤도회로가 단락되었을 경우 전원 장치에 과다한 전류가 흐르는 것을 제한하기 위한 장치는?<br>① 임피던스본드 &nbsp; ② 레일본드 &nbsp; ③ 절연장치 &nbsp; ④ 한류장치</div><div class="qe-a">정답: ④ 한류장치 — 궤도 리액터·궤도 저항자로 과전류 제한</div><div class="qe-wrong">오답함정: ① 임피던스본드 — 임피던스본드는 귀선전류 통과+신호전류 차단(전류 분리) 장치. 과전류 제한 기능 없음</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">18</span>사구간 & 불평형 원인</div>
+  <p><strong>사구간</strong>: 차축이 점유해도 궤도계전기가 작동하지 않는 구간</p><div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>허용 최대 길이</td><td><strong>7m 이하</strong> ★</td></tr><tr><td>발생 장소</td><td>터널 / 선로 분기교차지점 / 크로싱 부분</td></tr><tr><td>비해당</td><td><strong>교량 ❌</strong> — 사구간 발생 장소 아님</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 사구간 = <strong>7m 이하</strong> ← 5m·10m로 교체 함정</div><div class="trap">⚠️ 함정 주의: 궤도회로 불평형 원인: <strong>열차 운행장애</strong> = 원인 아님 ★</div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>사구간</strong>은 레일 절연 불가 구조(크로싱·분기부·터널)에서 발생, 차축이 있어도 궤도계전기가 반응하지 않는 구간. 허용 최대 <strong>7m 이하</strong>. 교량은 사구간 발생 장소가 아님.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 궤도회로 사구간의 허용 최대 길이는?</div><div class="qe-a">정답: 7m 이하</div><div class="qe-wrong">오답함정: 5m 또는 10m — 숫자 교체 함정 주의</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">19</span>UM71C형 무절연궤도회로 (고속철도 전용)</div>
+  <div class="explain-note">
+<strong>💡 일반 궤도회로 vs 무절연 궤도회로 — 구간 분리 방법의 차이</strong><br>
+<strong>일반(절연) 궤도회로</strong>: 인접 구간 경계에 <strong>절연이음매(Insulated Joint)</strong>를 물리적으로 설치하여 전류를 차단. 유지보수 부담 있음, 고속에서 충격·소음 발생.<br><br>
+<strong>무절연 궤도회로(Jointless Track Circuit)</strong>: 절연이음매 없이 인접 구간에 <strong>서로 다른 반송주파수</strong>를 사용하여 전기적으로 구간을 분리. 레일이 물리적으로 연속되어 고속철도에 적합.<br>
+→ <strong>대표 방식: UM71C형</strong> (고속철도 전용. 보상콘덴서+동조유닛으로 구성)
+  </div>
+  <div class="table-wrap"><table><thead><tr><th>구분</th><th>일반 궤도회로</th><th>무절연 궤도회로</th></tr></thead><tbody>
+    <tr><td><strong>구간 분리</strong></td><td>절연이음매 (물리적)</td><td>반송주파수 차이 (전기적)</td></tr>
+    <tr><td><strong>레일 연속성</strong></td><td>끊김</td><td><strong>유지 ★</strong></td></tr>
+    <tr><td><strong>고속 적합성</strong></td><td>부적합 (충격)</td><td><strong>적합 ★</strong></td></tr>
+    <tr><td><strong>유지보수</strong></td><td>이음매 교체 필요</td><td>간편</td></tr>
+    <tr><td><strong>대표 방식</strong></td><td>직류·교류 일반 방식</td><td><strong>UM71C</strong></td></tr>
+  </tbody></table></div>
+  <div class="trap">⚠️ 함정 주의: 무절연 궤도회로 = 절연이음매 있음 → ❌ / 무절연 = 절연이음매 <strong>없음</strong>, 주파수로 분리</div>
+  <div class="table-wrap"><table><thead><tr><th>부품</th><th>기능</th></tr></thead><tbody><tr><td><strong>보상용 콘덴서</strong></td><td>인덕턴스 상쇄 → 직렬공진 → 신호감쇠 감소 → <strong>궤도회로 길이 연장</strong></td></tr><tr><td><strong>동조유닛(TU)</strong></td><td>특정 주파수 통과/차단 → 인접 궤도회로 간섭 방지</td></tr><tr><td><strong>매칭유닛</strong></td><td>임피던스 정합 → 전송손실 최소화</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>전압안정기</strong> = 고압임펄스 궤도회로 구성요소 (UM71C 아님) ★</div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>UM71C형</strong>은 고속철도 전용 무절연궤도회로. <strong>보상용 콘덴서</strong>가 레일 인덕턴스를 상쇄하여 직렬공진을 유도, 신호 감쇠를 줄여 궤도회로 길이를 연장. 동조유닛은 인접 구간 간섭 방지.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. UM71C형에서 궤도회로 길이를 연장하는 부품은?</div><div class="qe-a">정답: 보상용 콘덴서</div><div class="qe-wrong">오답함정: 전압안정기 — 전압안정기는 고압임펄스 궤도회로 구성요소</div></div>
+</div></div>
+</div><div class="part" id="p7">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 7. 계전기 종류 <span class="arrow">▲</span>
+  </div>
+  <div class="part-body"><div class="concept">
+  <div class="concept-title"><span class="cnum">20</span>계전기 6종 분류</div>
+  <div class="table-wrap"><table><thead><tr><th>종류</th><th>동작 특성</th><th>용도</th></tr></thead><tbody><tr><td><strong>자기유지 계전기</strong></td><td>여자전류 차단 후에도 상태 유지</td><td><strong>전기선로전환기 제어계전기</strong> (DC24M)</td></tr><tr><td><strong>완동 계전기</strong></td><td>전압 인가 후 일정 시간 후 동작 (지연 동작)</td><td></td></tr><tr><td><strong>완방 계전기</strong></td><td>전류 차단 후 일정 시간 후 낙하 (지연 복귀)</td><td></td></tr><tr><td><strong>무극선조 계전기</strong></td><td>자속 극성 관계없이 동작</td><td>궤도반응·전철쇄정</td></tr><tr><td><strong>유극 3위식 계전기</strong></td><td>N/R/Open 3가지 상태</td><td>전기연동장치 전철표시계전기(KR)</td></tr><tr><td><strong>선조계전기</strong></td><td>N접점·R접점 보유, DC 24V</td><td>일반적 직류계전기</td></tr></tbody></table></div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>자기유지 계전기</strong>는 여자전류가 끊겨도 상태 유지, 전기선로전환기 제어에 적합. <strong>완동</strong>은 동작 지연, <strong>완방</strong>은 복귀 지연 계전기로 각각 용도가 다르다.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 전기선로전환기 제어계전기(DC24M)의 종류는?</div><div class="qe-a">정답: 자기유지 계전기</div><div class="qe-wrong">오답함정: 완동 계전기 — 완동 계전기는 동작 지연용</div></div>
+</div></div>
+</div><div class="part" id="p8">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 8. 폐색 방식 <span class="arrow">▲</span>
+  </div>
+  <div class="part-body"><div class="concept">
+  <div class="concept-title"><span class="cnum">21</span>상용폐색 6종 비교</div>
+  <div class="vis-wrap"><img src="images/VIS-040_폐색방식6종비교표.jpg" alt="폐색방식 6종 비교표" loading="eager"><p class="vis-cap">폐색방식 6종 비교표</p></div><div class="table-wrap"><table><thead><tr><th>방식</th><th>특징</th><th>비고</th></tr></thead><tbody><tr><td><strong>고정폐색</strong></td><td>물리적으로 고정된 폐색구간</td><td></td></tr><tr><td><strong>이동폐색</strong></td><td>선행열차 위치 기반 가변 구간 / <strong>열차시격 단축·수송력 증강</strong> ★</td><td></td></tr><tr><td><strong>연동폐색</strong></td><td>역간 1폐색 / 신호기+폐색 <strong>단일화</strong> / <strong>상대방 역 전원</strong> 사용 ★</td><td>복선·단선</td></tr><tr><td><strong>자동폐색</strong></td><td>궤도회로로 열차 자동검지 → 폐색신호기 자동제어 / <strong>운행횟수 증가</strong> ★</td><td>단선·복선</td></tr><tr><td><strong>차내신호폐색</strong></td><td>운전실 표시기에 현시. ATC 연계</td><td></td></tr><tr><td><strong>통표폐색</strong></td><td>통표(증표) 기계 사용</td><td><strong>단선 전용</strong> ★</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>통표폐색 = 단선 전용</strong> — 복선구간 사용 불가 ★</div><div class="trap">⚠️ 함정 주의: <strong>연동폐색 전원 = 상대방 역 전원</strong> (자역 전원 아님) ★</div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>폐색</strong>은 한 구간에 한 열차만 운행하게 하는 원칙. <strong>통표폐색</strong>은 통표(증표) 소지가 구간 진입 조건이므로 단선 전용. <strong>연동폐색</strong>은 상대방 역 전원을 사용한다.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 단선 전용으로 복선에서 사용할 수 없는 폐색 방식은?</div><div class="qe-a">정답: 통표폐색식</div><div class="qe-wrong">오답함정: 연동폐색식 — 연동폐색식은 복선·단선 모두 사용 가능</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">22</span>대용폐색 3종</div>
+  <div class="table-wrap"><table><thead><tr><th>방식</th><th>조건</th></tr></thead><tbody><tr><td><strong>통신식</strong></td><td>관제사·기관사 무전 가능 시</td></tr><tr><td><strong>지도통신식</strong></td><td>관제사·기관사 무전 불가 시</td></tr><tr><td><strong>지도식</strong></td><td>특별한 경우</td></tr></tbody></table></div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>대용폐색</strong>은 상용폐색 고장·불능 시 임시로 사용. 무선통신 가능 여부에 따라 <strong>통신식</strong>(무선 가능), <strong>지도통신식</strong>(무선 불가), <strong>지도식</strong>(특별한 경우)으로 구분한다.</div>
+</div></div>
+</div><div class="part" id="p9">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 9. 연동장치 <span class="arrow">▲</span>
+  </div>
+  <div class="part-body"><div class="concept">
+  <div class="concept-title"><span class="cnum">23</span>연동장치 3종류</div>
+  <div class="explain-note">
+<strong>💡 연동장치가 왜 필요한가?</strong><br>
+열차가 역에 진입하려면 두 가지가 동시에 맞아야 합니다:<br>
+① 선로전환기가 올바른 방향으로 놓여 있을 것<br>
+② 신호기가 진행(청색/녹색) 현시를 할 것<br><br>
+<strong>연동 없다면</strong>: 취급자가 실수로 선로전환기 방향이 틀린 채로 진행 신호를 내면 → 열차 탈선<br>
+<strong>연동 있다면</strong>: 선로전환기가 완전히 올바른 방향으로 쇄정(잠금)되기 전까지 → 신호기가 절대 진행을 현시 못함 → 자동 안전 보장<br><br>
+쉽게 말해: <strong>"포인트 잠금 확인 없이는 신호등 초록불 켜지지 않는 시스템"</strong>
+</div>
+  <p>신호기·선로전환기·궤도회로를 상호 연동하여 <strong>Fail-safe</strong> 실현</p><div class="table-wrap"><table><thead><tr><th>종류</th><th>특징</th></tr></thead><tbody><tr><td><strong>기계연동장치</strong></td><td>레버 조작. 기기 간 연쇄 기계적 이루어짐. 궤도회로와는 연쇄 ❌</td></tr><tr><td><strong>전기연동장치</strong></td><td>레버·버튼 집중. 계전기군에 의한 전기적 연쇄</td></tr><tr><td><strong>전자연동장치</strong></td><td>계전기 로직을 전자 논리회로+컴퓨터+소프트웨어로 구성</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>전자연동장치 구성요소</strong>: 표시제어부/광통신부/연동논리부 / <strong>LDTS ❌</strong></div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>연동장치</strong>는 신호기가 진행을 현시하기 전에 선로전환기가 올바른 방향으로 쇄정되어야 한다는 <strong>Fail-safe 원칙</strong>을 실현. <strong>기계연동장치</strong>는 궤도회로와 연쇄 불가.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 전자연동장치 구성요소에 해당하지 않는 것은?</div><div class="qe-a">정답: LDTS (구성요소: 표시제어부·광통신부·연동논리부)</div><div class="qe-wrong">오답함정: 연동논리부 — 연동논리부는 전자연동장치 핵심 구성요소</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">24</span>진로 설정 방식</div>
+  <div class="table-wrap"><table><thead><tr><th>방식</th><th>특징</th></tr></thead><tbody><tr><td><strong>진로정자식</strong></td><td>각 진로마다 1개 레버</td></tr><tr><td><strong>단독정자식</strong></td><td>선로전환기 개별 전환 후 신호레버로 진로 구성</td></tr><tr><td><strong>진로선별식</strong></td><td>출발점+도착점 버튼 2개 취급 → 자동 진로 선택 / <strong>회로 간소화·접점 절약</strong> ★</td></tr></tbody></table></div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>진로선별식</strong>은 출발점·도착점 버튼 2개만 누르면 시스템이 자동으로 최적 진로를 선택. 취급이 간단하고 회로 접점이 절약되어 현대 연동장치에서 주로 사용된다.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 출발점과 도착점 버튼 2개 취급으로 자동 진로를 선택하는 방식은?</div><div class="qe-a">정답: 진로선별식</div><div class="qe-wrong">오답함정: 진로정자식 — 진로정자식은 각 진로마다 1개 레버가 필요</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">25</span>쇄정 종류 4가지 + 비해당</div>
+  <div class="explain-note">
+<strong>💡 쇄정 개념 먼저 — "갑"과 "을"이 연결된 두 선로전환기</strong><br>
+역 구내에는 선로전환기(포인트)가 여러 개 있고, 서로 연동되어 있습니다.<br>
+<strong>갑(甲)</strong> = 첫 번째 선로전환기, <strong>을(乙)</strong> = 두 번째 선로전환기<br>
+<strong>정위(正位)</strong> = 평상시 기본 방향(주로 직선), <strong>반위(反位)</strong> = 바꾼 방향(분기)<br><br>
+쇄정이란: <strong>"갑이 특정 방향으로 전환되면, 을은 특정 위치에서 꼼짝도 못하게 잠근다"</strong><br>
+→ 이유: 충돌 방지. 갑이 한 방향을 쓰고 있을 때 을이 멋대로 바뀌면 위험<br><br>
+<strong>★ 핵심 질문: "을이 어떤 위치로 잠기는가?"</strong><br><br>
+① <strong>정위쇄정</strong>: 갑 → 반위로 전환 시 → 을은 <strong>정위(기본방향)로 잠김</strong><br>
+&nbsp;&nbsp;&nbsp;예) 갑이 분기 방향으로 열차를 보내는 동안 → 을은 무조건 직선(정위) 고정<br><br>
+② <strong>반위쇄정</strong>: 을이 이미 반위 상태일 때, 갑도 → 반위로 전환 시 → 을은 <strong>반위인 채로 잠김</strong><br>
+&nbsp;&nbsp;&nbsp;예) 을이 이미 분기 방향으로 바뀐 상태에서 → 갑까지 분기로 전환되면 → 을은 그 분기 위치(반위)에서 잠김<br><br>
+③ <strong>정반위쇄정</strong>: 갑 → 반위로 전환 시 → 을은 <strong>정위든 반위든 현재 위치 그대로 잠김</strong><br>
+&nbsp;&nbsp;&nbsp;예) 갑이 반위로 가면 을은 지금 어떤 위치에 있든 그 자리에서 못 움직임<br>
+&nbsp;&nbsp;&nbsp;→ 정위쇄정+반위쇄정 두 경우를 동시에 포함 (가장 강한 쇄정)<br><br>
+④ <strong>조건부쇄정</strong>: 다른 조건(버튼·신호 등)이 충족될 때만 잠금 적용<br><br>
+<strong>비해당 → 연속쇄정</strong>: 이런 종류 자체가 존재하지 않음 (시험에서 "해당 없음" 정답으로 출제)
+</div>
+  <div class="table-wrap"><table><thead><tr><th>종류</th><th>잠기는 위치</th><th>조건</th></tr></thead><tbody><tr><td><strong>정위쇄정</strong></td><td>을 → <strong>정위</strong>로 잠김</td><td>갑→반위 시</td></tr><tr><td><strong>반위쇄정</strong></td><td>을 → <strong>반위</strong>로 잠김</td><td>을이 이미 반위 + 갑→반위 시</td></tr><tr><td><strong>정반위쇄정</strong></td><td>을 → <strong>현재 위치 그대로</strong> 잠김</td><td>갑→반위 시 (정위·반위 무관)</td></tr><tr><td><strong>조건부쇄정</strong></td><td>조건에 따라</td><td>다른 버튼·조건 충족 시만</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>연속쇄정</strong> = 쇄정 종류에 없음 (비해당) ★</div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>쇄정</strong>은 잘못된 조작으로 선로전환기·신호기가 변환되지 않도록 잠그는 안전 장치. 공식 종류는 정위·반위·정반위·조건부쇄정 4가지. <strong>연속쇄정</strong>은 존재하지 않는 비해당 항목.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 쇄정의 종류에 해당하지 않는 것은?</div><div class="qe-a">정답: 연속쇄정 (존재하지 않음)</div><div class="qe-wrong">오답함정: 조건부쇄정 — 조건부쇄정은 4종 중 하나</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">26</span>접근쇄정 해정시분 ★</div>
+  <div class="explain-note">
+<strong>💡 접근쇄정이란?</strong><br>
+열차가 신호기 쪽으로 <strong>접근 중</strong>일 때, 안전을 위해 선로전환기를 자동으로 <strong>잠그는 것</strong>.<br>
+"이 열차가 오는 동안은 아무도 전환기 건드리지 마!" → 그게 접근쇄정.<br><br>
+<strong>그럼 왜 해정(잠금 해제)이 되냐?</strong><br>
+① <strong>열차가 통과 완료</strong> → 궤도회로 개방 → 계전기 여자 → "이제 열차 없음" 확인 → 자동 해정<br>
+② <strong>진로 취소</strong>됐는데 열차가 아직 가까이 있을 때 → 즉시 해정하면 위험! → <strong>일정 시간(해정시분) 동안 잠금 유지</strong> 후 해정<br><br>
+<strong>해정시분이 필요한 이유</strong>: 진로 취소 직후 선로전환기를 즉시 바꾸면, 접근 중인 열차가 갑자기 바뀐 분기에 진입 → 탈선 위험. 그래서 최소 90초(장내) 또는 30초(출발·입환)는 잠금을 유지하다가 해정함.
+  </div>
+  <div class="vis-wrap"><img src="images/VIS-047_접근쇄정해정시분비교카드.jpg" alt="접근쇄정 해정시분 비교카드" loading="eager"><p class="vis-cap">접근쇄정 해정시분 비교카드</p></div><div class="table-wrap"><table><thead><tr><th>신호기</th><th>해정시분</th><th>함정</th></tr></thead><tbody><tr><td><strong>장내신호기</strong></td><td><strong>90초 ± 10%</strong></td><td>30초 교체</td></tr><tr><td><strong>출발·입환신호기</strong></td><td><strong>30초 ± 10%</strong></td><td>90초 교체</td></tr><tr><td><strong>보류쇄정</strong></td><td>접근쇄정에 준함 → 장내 기준 <strong>90초</strong></td><td></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 장내 = <strong>90초</strong>, 출발·입환 = <strong>30초</strong> — 숫자 교체 함정 빈출</div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>접근쇄정 해정시분</strong>은 열차 접근 후 진로 취소 시 선로전환기를 잠그는 최소 시간. 장내 <strong>90초±10%</strong>, 출발·입환 <strong>30초±10%</strong>. 두 숫자를 교체하는 함정이 빈출.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 출발신호기 접근쇄정 해정시분은?</div><div class="qe-a">정답: 30초 ± 10%</div><div class="qe-wrong">오답함정: 90초 — 90초는 장내신호기의 해정시분</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">26-1</span>진로쇄정(Route Locking) ★ 빈출</div>
+  <div class="explain-note">
+<strong>💡 진로쇄정 — 열차가 지나가는 동안은 진로를 바꿀 수 없다</strong><br>
+<strong>진로쇄정(Route Locking)</strong>: 열차에 진로(루트)를 설정한 후, 그 열차가 안전하게 통과를 완료할 때까지 해당 진로의 선로전환기·신호기 등 설비가 변경되지 않도록 <strong>자동으로 잠그는 기능</strong>.<br><br>
+<strong>왜 필요한가?</strong><br>
+• 열차가 분기구간을 통과하는 도중에 선로전환기가 전환되면 → 탈선·충돌 위험<br>
+• 따라서 열차가 진로를 완전히 통과하기 전까지는 설비 변경을 물리적으로 금지<br><br>
+<strong>해정(잠금 해제) 조건</strong>:<br>
+① 열차가 해당 진로 전체를 통과하여 궤도회로 개방 확인<br>
+② 또는 접근쇄정 해정시분 경과 후 (취소 시)
+  </div>
+  <div class="table-wrap"><table><thead><tr><th>구분</th><th>진로쇄정</th><th>접근쇄정</th></tr></thead><tbody>
+    <tr><td><strong>목적</strong></td><td>통과 중 설비 변경 방지</td><td>접근 중 선로전환기 잠금</td></tr>
+    <tr><td><strong>작동 시점</strong></td><td>진로 설정 직후</td><td>열차 접근 시</td></tr>
+    <tr><td><strong>해정 조건</strong></td><td>열차 통과 완료</td><td>통과 완료 또는 해정시분 경과</td></tr>
+  </tbody></table></div>
+  <div class="trap">⚠️ 함정 주의: 진로쇄정 ≠ 쇄정 4종(정위·반위·정반위·조건부) — 진로쇄정은 별개 개념 (연동장치의 안전 기능)</div>
+  <div class="theory-note"><strong>이론 배경: </strong>진로쇄정은 연동장치의 핵심 안전 기능. 열차가 진로를 완전히 통과할 때까지 관련 설비를 잠가 오조작을 원천 차단. 접근쇄정과 함께 연동장치 안전성의 양대 기둥.</div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 열차에 진로를 설정한 후 그 열차가 통과를 완료할 때까지 설비가 변경되지 않도록 잠그는 기능은?</div><div class="qe-a">정답: 진로쇄정(Route Locking)</div><div class="qe-wrong">오답함정: 접근쇄정 — 접근쇄정은 접근 시 잠금, 진로쇄정은 진로 설정 후 통과 완료까지 잠금</div></div>
+</div></div>
+</div><div class="part" id="p10">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 10. 열차제어시스템 <span class="arrow">▲</span>
+  </div>
+  <div class="part-body"><div class="concept">
+  <div class="concept-title"><span class="cnum">27</span>7대 시스템 비교 ★ 핵심</div>
+  <div class="vis-wrap"><img src="images/VIS-041_열차제어시스템비교.jpg" alt="ATS/ATC/ATO/ATP/CTC/CBTC 비교" loading="eager"><p class="vis-cap">ATS/ATC/ATO/ATP/CTC/CBTC 비교</p></div><div class="table-wrap"><table><thead><tr><th>시스템</th><th>풀네임</th><th>핵심 기능</th></tr></thead><tbody><tr><td><strong>ATS</strong></td><td>Automatic Train Stop</td><td>신호 과속 시 <strong>자동 제동</strong> 적용</td></tr><tr><td><strong>ATC</strong></td><td>Automatic Train Control</td><td>궤도회로 속도정보 수신 → 최대 지정속도 초과 시 자동 제동</td></tr><tr><td><strong>ATO</strong></td><td>Automatic Train Operation</td><td>출발·가속·주행·감속·정위치정차·<strong>출입문</strong> 자동 제어</td></tr><tr><td><strong>ATP</strong></td><td>Automatic Train Protection</td><td>신호모진·과속 방지. 열차간격조정·비상정지 제어</td></tr><tr><td><strong>ATS(S)</strong></td><td>Automatic Train Supervision</td><td>열차 운행상황 통제·감시. <strong>ATR 기능 포함</strong></td></tr><tr><td><strong>CTC</strong></td><td>Centralized Traffic Control</td><td>일괄 원격 조작. 열차 위치 집중 감시·제어</td></tr><tr><td><strong>CBTC</strong></td><td>Communication Based Train Control</td><td><strong>무선통신</strong> 기반. 궤도회로 <strong>불필요</strong>. 유지비 <strong>감소</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: ATO = <strong>지상신호 제어는 하지 않음</strong> (출발·가속·주행·감속·정위치·출입문만)</div><div class="trap">⚠️ 함정 주의: CBTC = 유지비 <strong>감소</strong> (증가 아님) ★</div>
+<div class="trap">⚠️ 함정 주의: <strong>ATS</strong>=불연속(지점) 경보/제동 / <strong>ATC</strong>=연속 속도감시·제동 — 연속/불연속 혼동 빈출</div>
+
+<div class="table-wrap"><table><thead><tr><th>ATP와 ATO의 계층 관계 ★★ 빈출</th><th>설명</th></tr></thead><tbody>
+  <tr><td><strong>ATP (안전 기반)</strong></td><td>하위 레이어. 허용속도·신호모진 감시. <strong>ATO 없이도 동작 가능</strong></td></tr>
+  <tr><td><strong>ATO (자동운전)</strong></td><td>상위 레이어. <strong>ATP 위에서 동작</strong>. ATP가 없으면 ATO 단독 운행 불가 ★</td></tr>
+  <tr><td><strong>관계</strong></td><td>ATO가 자동운전 → ATP가 안전 감시 → 위반 시 ATP가 자동 제동 개입</td></tr>
+</tbody></table></div>
+
+<div class="table-wrap"><table><thead><tr><th colspan="2">운행권한 (MA: Movement Authority) ★ 신유형</th></tr></thead><tbody>
+  <tr><td><strong>정의</strong></td><td>지상(RBC·관제)이 열차에 부여하는 <strong>진행 허가 거리</strong> — "여기까지 진행해도 안전하다"는 권한</td></tr>
+  <tr><td><strong>사용처</strong></td><td>CBTC·KTCS-2/3·이동폐색 시스템 — 실시간으로 갱신됨</td></tr>
+  <tr><td><strong>DMI 표시</strong></td><td>기관사 화면에 <strong>허가거리(Target Distance)</strong>로 표시</td></tr>
+  <tr><td><strong>만료 시</strong></td><td>열차는 MA 끝 지점 전에 반드시 정지 (Fail-safe)</td></tr>
+</tbody></table></div>
+<div class="trap">⚠️ 함정 주의: ATP 없이 ATO만으로 자동운행 → ❌ / <strong>ATO는 반드시 ATP 위에서 동작</strong> ★★</div>
+
+<div class="theory-note"><strong>이론 배경: </strong>열차제어시스템 7종: <strong>ATS</strong>=불연속(지점) 경보/제동, <strong>ATC</strong>=연속 속도감시·제동, <strong>ATO</strong>=운전 전과정 자동화(ATP 위에서 동작), <strong>ATP</strong>=과속·신호모진 방지(ATO의 안전 기반), <strong>CTC</strong>=집중 제어, <strong>CBTC</strong>=무선통신 기반. <strong>운행권한(MA)</strong>은 이동폐색 시스템의 핵심 개념 — 지상이 열차에 부여하는 진행 허가 거리.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 무선통신 기반으로 궤도회로 없이 운영 가능한 시스템은?</div><div class="qe-a">정답: CBTC (Communication Based Train Control)</div><div class="qe-wrong">오답함정: ATC — ATC는 궤도회로로 속도정보를 수신</div></div>
+<div class="quiz-ex"><div class="qe-title">기출 예시 ★★</div><div class="qe-q">Q. ATO와 ATP의 관계에 대한 설명으로 옳은 것은?<br>① ATO가 ATP 위에서 동작한다 &nbsp; ② ATP가 ATO 위에서 동작한다 &nbsp; ③ 둘은 독립적으로 동작한다</div><div class="qe-a">정답: ① ATO가 ATP 위에서 동작 — ATO(자동운전)는 ATP(안전방호) 위에 올라타는 구조. ATP 없이 ATO 단독 운행 불가</div><div class="qe-wrong">오답함정: ② ATP가 ATO 위에서 — ATP는 하위(안전 기반), ATO가 상위(자동운전)</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">28</span>CTC — 열차집중제어장치 ★★★ 빈출</div>
+  <div class="explain-note">
+<strong>💡 CTC가 왜 필요한가?</strong><br>
+CTC 이전: 각 역마다 역무원이 신호기·선로전환기를 직접 조작 → 수십 개 역에 수십 명 필요<br>
+CTC 이후: <strong>1개 중앙 사령실</strong>에서 수십 개 역을 동시에 감시·원격 제어 → 인력 절감, 고밀도 운전 가능<br><br>
+<strong>흐름: 사령실 → [통신선] → 현장역 LCP → [연동장치] → 신호기·선로전환기</strong><br>
+CTC가 명령을 내려도 실제 안전조건 확인(충돌방지)은 <strong>연동장치</strong>가 담당
+  </div>
+  <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody>
+<tr><td><strong>정의</strong></td><td>Centralized Traffic Control — 일정 구간 열차·신호·선로전환을 중앙 사령실에서 원격 집중 제어</td></tr>
+<tr><td><strong>구성요소</strong></td><td>TCC(자동제어장치) / MSC(운영관리장치) / 열차운행 상황 표시장치</td></tr>
+<tr><td><strong>LCP 역할</strong></td><td>CTC 명령 → 연동장치·ATC로 전송 / 현장 설비 표시정보 → CTC로 전송</td></tr>
+<tr><td><strong>LCP 설치위치</strong></td><td><strong>현장역</strong> ★ (CTC 사령실 아님)</td></tr>
+<tr><td><strong>기반 폐색장치</strong></td><td><strong>자동폐색장치</strong></td></tr>
+<tr><td><strong>데이터 전송</strong></td><td><strong>반이중 방식</strong> (동시 양방향 불가)</td></tr>
+</tbody></table></div>
+
+<div class="table-wrap"><table><thead><tr><th>CTC 효과 ✅ (해당)</th><th>비해당 ❌ (함정)</th></tr></thead><tbody>
+<tr><td>열차운행경비 절감</td><td rowspan="2"><strong>열차속도 높아지면 자동 제동</strong> ← ATC·ATS 기능 ★★</td></tr>
+<tr><td>열차 평균운행속도 향상</td></tr>
+<tr><td>선로용량 극대화</td><td><strong>열차운행계획관리의 문서화</strong></td></tr>
+<tr><td>열차 고밀도화 기여</td><td><strong>전력손실 감소</strong></td></tr>
+<tr><td>진로 자동제어·신호설비 감시</td><td></td></tr>
+</tbody></table></div>
+
+<div class="table-wrap"><table><thead><tr><th>CTC vs TMS 비교</th><th>CTC</th><th>TMS</th></tr></thead><tbody>
+<tr><td><strong>풀네임</strong></td><td>Centralized Traffic Control</td><td>Train Management System</td></tr>
+<tr><td><strong>핵심</strong></td><td>여러 역 신호·진로 <strong>원격 제어</strong></td><td>운행현황·계획·지연 <strong>종합 관리</strong></td></tr>
+<tr><td><strong>포인트</strong></td><td>현장 신호설비를 직접 제어</td><td>운행 정보를 관리·조정</td></tr>
+</tbody></table></div>
+
+<div class="trap">⚠️ 함정 최빈출: <strong>CTC 효과와 관계없는 것</strong> = "열차속도 높아지면 자동 제동" (ATC/ATS 기능) ★★★</div>
+<div class="trap">⚠️ 함정: <strong>LCP</strong> = CTC 사령실 장치 → ❌ <strong>현장역</strong> 설치</div>
+<div class="trap">⚠️ 함정: <strong>CTC가 진로 명령 내려도</strong> 안전 최종 확인은 <strong>연동장치</strong>가 담당</div>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>CTC</strong>는 1개소 사령실에서 수십 개 역을 직접 제어 — 신호·선로전환기 원격 조작. <strong>TCC·MSC·표시장치</strong>로 구성. LCP는 사령실↔현장 연결 장치이며 현장역에 설치. CTC는 제어 명령만 내리고, 실제 안전조건 충족 여부는 <strong>연동장치</strong>가 검증한다.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시 ★★★ 최빈출</div><div class="qe-q">Q. 열차집중제어장치(CTC)의 효과와 관계없는 것은?<br>① 열차운행경비를 절감시킨다 &nbsp; ② 열차의 평균운행속도를 향상시킨다<br>③ 선로용량을 극대화할 수 있다 &nbsp; ④ 열차속도가 높아지면 자동으로 제동시킬 수 있다</div><div class="qe-a">정답: ④ — 속도 과속 시 자동 제동은 ATC·ATS 기능. CTC는 원격 집중 제어 시스템</div><div class="qe-wrong">오답함정: ③ 선로용량 극대화 — 이것은 CTC 효과에 해당. ③을 고르면 오답</div></div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. CTC 데이터 전송 방식은?</div><div class="qe-a">정답: 반이중 방식 (동시 양방향 불가)</div><div class="qe-wrong">오답함정: 전이중 방식 — 전이중은 동시 양방향 가능하지만 CTC는 반이중</div></div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. CTC 사령실에서 현장 설비로 명령을 전달하는 현장역 장치는?</div><div class="qe-a">정답: LCP (현장역 설치)</div><div class="qe-wrong">오답함정: CTC 사령실에 설치된 장치 — LCP는 사령실이 아닌 현장역에 설치</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">29</span>ATS 지상자·ATP 지상장치·TTC</div>
+  <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>ATS 지상자 이격 거리</td><td><strong>400mm 이상</strong></td></tr><tr><td>속도조사식 설치위치</td><td>우측 <strong>300mm ± 10mm</strong></td></tr></tbody></table></div><p style='margin:6px 0'><strong>ATP 지상장치 구성요소 ✅</strong>: 고정정보전송장치 / 선로변제어유니트 / 가변정보전송장치</p><div class="trap">⚠️ 함정 주의: <strong>프로그래밍 장치</strong> → ATP 지상장치 구성요소 아님</div><p style='margin:6px 0'><strong>TTC(열차종합제어) 구성요소</strong>: 표시반 / 제어용콘솔 / 데이터전송장치</p><div class="trap">⚠️ 함정 주의: <strong>연동장치</strong> = TTC 구성요소 아님</div><p style='margin:6px 0'><strong>발리스(Balise)</strong>: ATP에서 현장정보를 열차로 전송하는 장치</p>
+
+<div class="theory-note"><strong>이론 배경: </strong><strong>발리스(Balise)</strong>는 선로에 설치된 무선 응답기로 ATP 지상 정보를 차상장치에 전달. <strong>LCP</strong>는 현장역 설치(CTC 사령실 아님). ATS 지상자 이격 400mm, 속도조사식 우측 300mm±10mm 구분 필수.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. ATP 지상장치 구성요소에 해당하지 않는 것은?</div><div class="qe-a">정답: 프로그래밍 장치 (구성요소: 고정정보전송장치·선로변제어유니트·가변정보전송장치)</div><div class="qe-wrong">오답함정: 가변정보전송장치 — ATP 지상장치 구성요소</div></div>
+</div></div>
+</div><div class="part" id="p11">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 11. 건널목 보안장치 <span class="arrow">▲</span>
+  </div>
+  <div class="part-body"><div class="concept">
+  <div class="concept-title"><span class="cnum">30</span>경보 장치 수치 암기표</div>
+  <div class="vis-wrap"><img src="images/VIS-046_건널목경보장치수치암기카드.jpg" alt="건널목 경보장치 핵심 수치 암기카드" loading="eager"><p class="vis-cap">건널목 경보장치 핵심 수치 암기카드</p></div><div class="table-wrap"><table><thead><tr><th>항목</th><th>수치</th><th>함정(오답)</th></tr></thead><tbody><tr><td>직립형 경보등 점멸</td><td><strong>분당 40 ± 10회</strong></td><td>60회 ❌</td></tr><tr><td>경보종 타종수</td><td><strong>분당 70~100회</strong></td><td>60~90회 ❌</td></tr><tr><td>경보종 코일 전류 허용 범위</td><td>정격값의 <strong>± 10%</strong> 이내</td><td>±5% ❌</td></tr><tr><td>전동차단기 제어전압</td><td>정격값의 <strong>0.9~1.2배</strong></td><td>0.8~1.1배 ❌</td></tr><tr><td>전동차단기 차단봉 위치</td><td>궤도중심~차단봉 <strong>2.8m</strong></td><td>3m/2m ❌</td></tr><tr class="hl"><td>전동차단기 <strong>하강 시간</strong></td><td><strong>8초 ± 2초</strong> ★★</td><td>20초 이하 ❌</td></tr><tr><td>전동차단기 상승 시간</td><td><strong>12초 이하</strong></td><td>8초 ❌</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 하강 시간 = <strong>8초 ± 2초</strong> ← '20초 이내' 교체 함정 빈출 ★</div>
+
+<div class="theory-note"><strong>이론 배경: </strong>건널목 경보장치 수치는 보행자·차량의 안전한 대피 시간 확보를 위해 엄격히 규정. 차단기 <strong>하강 8초±2초</strong>는 빠른 차단, <strong>상승 12초 이하</strong>는 충분한 개방 시간 보장.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 전동차단기 하강 시간의 기준은?</div><div class="qe-a">정답: 8초 ± 2초</div><div class="qe-wrong">오답함정: 20초 이내 또는 12초 이하 — 20초는 없는 기준, 12초 이하는 상승 시간</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">31</span>건널목 제어 방식·전동차단기 구성</div>
+  <p><strong>자동신호구간</strong> = <strong>궤도회로식</strong> (자동 경보제어)</p><p><strong>역구내 건널목</strong> = <strong>자동제어</strong> 기본 (불가피 시에만 수동)</p><div class="trap">⚠️ 함정 주의: '역구내=수동→자동 순' → ❌ <strong>자동이 기본</strong></div><p style='margin:8px 0'><strong>전동차단기 구성요소</strong>: 마찰연축기 / 직류직권전동기 / 감속치차</p><div class="trap">⚠️ 함정 주의: <strong>전압검지장치</strong> = 전동차단기 구성요소 아님</div>
+
+<div class="theory-note"><strong>이론 배경: </strong>역구내 건널목도 <strong>자동제어가 기본 원칙</strong>이며 불가피한 경우에만 수동 제어. 전동차단기는 <strong>직류직권전동기</strong>로 구동되며 마찰연축기·감속치차로 구성. 전압검지장치는 구성요소 아님.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 전동차단기의 구성요소에 해당하지 않는 것은?</div><div class="qe-a">정답: 전압검지장치 (구성요소: 마찰연축기·직류직권전동기·감속치차)</div><div class="qe-wrong">오답함정: 마찰연축기 — 전동차단기 구성요소</div></div>
+</div></div>
+</div><div class="part" id="p12">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 12. 검지장치 종류 <span class="arrow">▲</span>
+  </div>
+  <div class="part-body"><div class="concept">
+  <div class="concept-title"><span class="cnum">32</span>검지장치 9종류</div>
+  <div class="table-wrap"><table><thead><tr><th>장치</th><th>검지 대상·특징</th></tr></thead><tbody><tr><td><strong>끌림검지장치</strong></td><td>차량 하부 끌림 물체. 기지~고속선 진입부, 약 <strong>60km 간격</strong></td></tr><tr><td><strong>강우검지장치</strong></td><td>집중호우·연속강우 → 노반 붕괴 방지</td></tr><tr><td><strong>적설검지장치</strong></td><td>선로변 적설량</td></tr><tr><td><strong>기상검지장치</strong></td><td>풍향·풍속·강우량·적설량 통합</td></tr><tr><td><strong>지장물검지장치</strong></td><td>낙석·토사·차량 침범</td></tr><tr><td><strong>건널목 지장물 검지장치</strong></td><td>건널목 지장물 → 경고등 발광</td></tr><tr><td><strong>차축온도검지장치(HBD)</strong></td><td>차축 온도</td></tr><tr><td><strong>레일온도검지장치(RTCP)</strong></td><td>혹서기 레일 장출 방지</td></tr><tr><td><strong>터널경보장치(TACB)</strong></td><td>터널 내 보수자 보호</td></tr></tbody></table></div><div class="tip">★ <strong>풍속 검지</strong> = <strong>기상검지장치</strong> (건널목 정시간 제어기와 무관)</div>
+
+<div class="theory-note"><strong>이론 배경: </strong>검지장치는 외부 위험 요소를 자동 감지. <strong>끌림검지장치</strong>는 차량 하부 끌림 물체 감지, 기지~고속선 진입부에 <strong>약 60km 간격</strong> 설치. 기상검지장치는 풍향·풍속·강우·적설 통합 감지.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 끌림검지장치의 설치 간격은?</div><div class="qe-a">정답: 약 60km 간격</div><div class="qe-wrong">오답함정: 10km 간격 — 끌림검지는 60km 간격</div></div>
+</div></div>
+</div><div class="part" id="p13">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 13. 고속철도 신호 핵심 <span class="arrow">▲</span>
+  </div>
+  <div class="part-body"><div class="concept">
+  <div class="concept-title"><span class="cnum">33</span>열차제어정보 전송 방식 ★</div>
+  <div class="vis-wrap"><img src="images/VIS-043_고속철도연속불연속정보.jpg" alt="고속철도 연속정보 vs 불연속정보 비교" loading="eager"><p class="vis-cap">고속철도 연속정보 vs 불연속정보 비교</p></div><div class="table-wrap"><table><thead><tr><th>구분</th><th>전송 장치</th><th>전송 내용</th></tr></thead><tbody><tr><td><strong>연속정보</strong></td><td><strong>궤도회로</strong></td><td>속도정보·구배정보·목표거리·선구별·에러검색</td></tr><tr class="hl"><td><strong>불연속정보</strong></td><td><strong>루프케이블</strong></td><td><strong>절대정지제어</strong>·전차선사구간·터널진출입</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>절대정지제어</strong> = <strong>루프케이블(불연속정보)</strong> — 궤도회로 연속정보 아님 ★</div><div class="trap">⚠️ 함정 주의: 폐색구간 내 속도정보 = <strong>연속정보(궤도회로)</strong> — 불연속정보 아님</div>
+
+<div class="theory-note"><strong>이론 배경: </strong>고속철도 제어정보 전송: <strong>궤도회로(연속정보)</strong>=속도·구배 등 주행 정보, <strong>루프케이블(불연속정보)</strong>=절대정지·전차선사구간 등 특수 구간 정보. 절대정지제어는 루프케이블로 전달됨에 주의.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 절대정지제어 정보를 전송하는 장치는?</div><div class="qe-a">정답: 루프케이블 (불연속정보)</div><div class="qe-wrong">오답함정: 궤도회로 — 궤도회로는 연속정보(속도·구배) 전송 담당</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">34</span>고속철도 선로전환기·고장감시·보수자</div>
+  <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>고속철도 분기기</td><td>F18 이상: <strong>노스 가동형 선로전환기</strong> (TGV·경부고속선 사용) ★</td></tr><tr><td>고장감시 정상 색상</td><td><strong>녹색</strong> (고장=적색)</td></tr><tr><td>고장감시 고장 색상</td><td><strong>적색</strong></td></tr><tr><td>LCP 설치 위치</td><td><strong>현장역</strong> (CTC 사령실 아님) ★</td></tr><tr><td>보수자 선로횡단 소요시간</td><td><strong>20초</strong> (시소계전기 설정)</td></tr><tr><td>고속선 장내 접근쇄정 해정시분</td><td><strong>90초</strong></td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 고장감시: '정상=적색, 고장=녹색' → ❌ <strong>반대로 출제 주의</strong></div><div class="trap">⚠️ 함정 주의: LCP = CTC 사령실 장치 → ❌ <strong>현장역 설치</strong></div>
+
+<div class="theory-note"><strong>이론 배경: </strong>고속철도(F18 이상 분기기)는 <strong>노스 가동형 선로전환기</strong>를 사용하여 고속 통과 시 소음·충격 최소화. 고장감시 <strong>녹색=정상, 적색=고장</strong>. <strong>LCP</strong>는 현장역 설치 장치(CTC 사령실 아님).</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 고장감시에서 정상 상태를 나타내는 색상은?</div><div class="qe-a">정답: 녹색</div><div class="qe-wrong">오답함정: 적색 — 적색은 고장 상태, 정상은 녹색</div></div>
+</div></div>
+</div><div class="part" id="p14">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 14. 핵심 수치 통합 암기 <span class="arrow">▲</span>
+  </div>
+  <div class="part-body"><div class="concept">
+  <div class="concept-title"><span class="cnum">35</span>신호기 확인거리 & 사구간</div>
+  <div class="table-wrap"><table><thead><tr><th>항목</th><th>수치</th><th>함정</th></tr></thead><tbody><tr><td>장내·출발·폐색·엄호 확인거리</td><td><strong>600m 이상</strong></td><td></td></tr><tr><td>입환·중계신호기 확인거리</td><td><strong>200m 이상</strong></td><td></td></tr><tr><td>유도신호기 확인거리</td><td><strong>100m 이상</strong></td><td></td></tr><tr><td>장내 대향 거리</td><td><strong>100m 이상</strong></td><td></td></tr><tr><td>장내 배향 거리</td><td><strong>60m 이상</strong></td><td></td></tr><tr><td>사구간 허용 길이</td><td><strong>7m 이하</strong></td><td>5m·10m 교체</td></tr></tbody></table></div>
+
+<div class="theory-note"><strong>이론 배경: </strong>PART 14는 핵심 수치 통합 암기 파트. 시험에서 수치는 서로 교체되는 함정으로 출제. 사구간 <strong>7m</strong>, 확인거리 600m·200m·100m·60m 구분, 사구간·전환시간·접근쇄정을 짝지어 외워야 한다.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 입환신호기와 중계신호기의 확인거리는?</div><div class="qe-a">정답: 200m 이상</div><div class="qe-wrong">오답함정: 600m — 600m는 장내·출발·폐색·엄호 신호기 기준</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">36</span>선로전환기 전환시간 & 접근쇄정</div>
+  <div class="table-wrap"><table><thead><tr><th>항목</th><th>수치</th><th>함정</th></tr></thead><tbody><tr><td>NS형 전환시간</td><td><strong>6초 이하</strong></td><td></td></tr><tr><td>NS-AM형 전환시간</td><td><strong>7초 이하</strong></td><td></td></tr><tr><td>MJ81형 전환시간</td><td><strong>5초 이하</strong> ★</td><td>6·7초 교체</td></tr><tr><td>차상선로전환기 전환시간</td><td><strong>2초 이하</strong></td><td></td></tr><tr><td>장내신호기 접근쇄정 해정</td><td><strong>90초 ± 10%</strong></td><td>30초 교체</td></tr><tr><td>출발·입환신호기 접근쇄정 해정</td><td><strong>30초 ± 10%</strong></td><td>90초 교체</td></tr><tr><td>보수자 선로횡단 소요시간</td><td><strong>20초</strong></td><td></td></tr><tr><td>끌림검지장치 설치 간격</td><td><strong>60km</strong> 간격</td><td></td></tr></tbody></table></div>
+
+<div class="theory-note"><strong>이론 배경: </strong>선로전환기 전환시간: <strong>MJ81형이 5초로 가장 빠름</strong>. NS형=6초, NS-AM형=7초. 접근쇄정 해정시분은 장내 90초, 출발·입환 30초로 3배 차이. 이 두 수치 교체 함정이 빈출.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. MJ81형 선로전환기 전환시간은?</div><div class="qe-a">정답: 5초 이하</div><div class="qe-wrong">오답함정: 6초 또는 7초 — 6초는 NS형, 7초는 NS-AM형</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">37</span>건널목·기타 수치</div>
+  <div class="vis-wrap"><img src="images/VIS-048_철도신호핵심수치통합암기표.jpg" alt="철도신호 핵심 수치 통합 암기표" loading="eager"><p class="vis-cap">철도신호 핵심 수치 통합 암기표</p></div><div class="table-wrap"><table><thead><tr><th>항목</th><th>수치</th><th>함정</th></tr></thead><tbody><tr><td>경보등 점멸</td><td><strong>40 ± 10회</strong>/분</td><td>60회 교체</td></tr><tr><td>경보종 타종수</td><td><strong>70~100회</strong>/분</td><td>60~90회 교체</td></tr><tr><td>경보종 코일 전류</td><td>정격 <strong>± 10%</strong></td><td></td></tr><tr><td>차단기 제어전압</td><td>정격 <strong>0.9~1.2배</strong></td><td></td></tr><tr><td>차단봉 위치</td><td>궤도중심~ <strong>2.8m</strong></td><td>3m/2m</td></tr><tr><td>차단기 <strong>하강 시간</strong></td><td><strong>8초 ± 2초</strong> ★</td><td>20초 교체</td></tr><tr><td>차단기 상승 시간</td><td><strong>12초 이하</strong></td><td></td></tr><tr><td>ATS 지상자 이격</td><td><strong>400mm 이상</strong></td><td>300mm</td></tr><tr><td>속도조사식 설치위치</td><td>우측 <strong>300mm ± 10mm</strong></td><td></td></tr></tbody></table></div>
+
+<div class="theory-note"><strong>이론 배경: </strong>ATS 관련 수치 교체 함정 빈출. <strong>ATS 지상자 400mm</strong>와 <strong>속도조사식 300mm</strong>를 혼동하지 않도록 주의. 차단기 하강(8초±2초)과 상승(12초 이하) 시간도 반드시 구분.</div>
+<div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. ATS 지상자 이격 거리는?</div><div class="qe-a">정답: 400mm 이상</div><div class="qe-wrong">오답함정: 300mm — 300mm는 속도조사식 설치위치 기준</div></div>
+</div></div>
+</div>
+<div class="part" id="p15">
+  <div class="part-title" onclick="togglePart(this)">
+    PART 15. 신유형 대비 — 이동폐색·DMI·KTCS·Fail-safe <span class="arrow">▲</span>
+  </div>
+  <div class="part-body">
+
+<div class="concept">
+  <div class="concept-title"><span class="cnum">38</span>Fail-safe 원칙 ★★★ 신유형</div>
+  <p><strong>Fail-safe</strong>: 시스템 고장(Fail) 시 반드시 <strong>안전한 상태(Safe)</strong>로 이행하는 설계 원칙</p>
+  <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody>
+    <tr><td><strong>핵심 원칙</strong></td><td>고장 = 정지 방향으로 동작 / 신호 소멸 = 가장 제한적인 현시</td></tr>
+    <tr><td><strong>구체 적용</strong></td><td>신호기 고장 → 자동 <strong>정지 현시</strong> / 궤도회로 단선 → <strong>열차 있음</strong>으로 처리</td></tr>
+    <tr><td><strong>연동장치와 연계</strong></td><td>선로전환기 전환 미완료 → 신호기 진행 현시 불가 (연동장치가 Fail-safe 실현)</td></tr>
+    <tr><td><strong>비해당 (함정)</strong></td><td>Fail-safe = 고장 시 '작동 유지' → ❌ / 반드시 <strong>안전 방향(정지)</strong>으로 이행</td></tr>
+  </tbody></table></div>
+  <div class="trap">⚠️ 함정 주의: Fail-safe = '고장 시에도 계속 동작' → ❌ / <strong>고장 시 안전한 상태(정지)로 이행</strong></div>
+  <div class="theory-note"><strong>이론 배경: </strong>철도신호의 모든 설계는 Fail-safe가 기본. 궤도회로 전류가 끊기면 '점유'로 판단(더 안전한 쪽 선택). 신호기 전원 이상 시 정지 현시. 이 원칙이 자동폐색·연동장치의 근거.</div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 철도신호 설비에서 Fail-safe란?</div><div class="qe-a">정답: 고장 발생 시 안전한 상태(정지)로 이행하는 설계 원칙</div><div class="qe-wrong">오답함정: 고장 시에도 정상 동작 유지 — Fail-safe는 정상 동작이 아닌 안전(정지) 방향으로 이행</div></div>
+</div>
+
+<div class="concept">
+  <div class="concept-title"><span class="cnum">39</span>고정폐색 vs 이동폐색 ★★★ 신유형</div>
+  <div class="compare-box col2">
+    <div class="cbox-item"><div class="cbox-head">고정폐색 (Fixed Block)</div>
+      <p>물리적으로 고정된 폐색구간 설정<br>궤도회로 단위로 구간 분리<br>선행열차 위치와 무관하게 구간 점유 여부로 판단<br>열차 사이 최소 간격 = 폐색구간 길이</p>
+    </div>
+    <div class="cbox-item"><div class="cbox-head">이동폐색 (Moving Block)</div>
+      <p>선행열차 실제 위치 기반 <strong>가변</strong> 폐색구간<br>후속열차 = 선행열차 실제 제동거리 + 안전간격만큼 뒤에서 추종<br><strong>열차시격 단축·선로용량 증가</strong> ★<br>궤도회로 불필요 → <strong>CBTC와 연계</strong></p>
+    </div>
+  </div>
+  <div class="table-wrap"><table><thead><tr><th>비교항목</th><th>고정폐색</th><th>이동폐색</th></tr></thead><tbody>
+    <tr><td>구간 단위</td><td>고정 (궤도회로)</td><td>가변 (열차 위치 기반)</td></tr>
+    <tr><td>최소 간격</td><td>폐색구간 1개 이상</td><td>제동거리 + 안전간격</td></tr>
+    <tr><td>수송용량</td><td>낮음</td><td><strong>높음</strong> ★</td></tr>
+    <tr><td>연계 시스템</td><td>ATS, ATC, ATP</td><td><strong>CBTC, KTCS-2/3</strong></td></tr>
+  </tbody></table></div>
+  <div class="trap">⚠️ 함정 주의: 이동폐색 = 궤도회로 필요 → ❌ / 이동폐색은 궤도회로 <strong>불필요</strong>(무선통신 기반)</div>
+  <div class="explain-note"><strong>💡 이동폐색 실현의 3대 필수 정보 ★ 빈출</strong><br>이동폐색이 작동하려면 지상 제어장치가 후속열차에 다음 3가지 정보를 실시간으로 수신·처리해야 함:<br>① <strong>실시간 열차 위치</strong> — 선행열차의 현재 위치(차상에서 전송)<br>② <strong>열차 속도</strong> — 선행열차의 현재 속도(제동 여유 계산에 필요)<br>③ <strong>안전 제동 관련 정보</strong> — 열차 제동 성능(최대 제동력, 제동 거리 계산)<br><br>이 3가지를 기반으로 지상이 후속열차에 <strong>운행권한(MA, Movement Authority)</strong>을 부여 → 진행 허가 거리가 동적으로 갱신됨.</div>
+  <div class="theory-note"><strong>이론 배경: </strong>이동폐색은 선행열차가 이동하면 후속열차 허용 구간도 자동 확장. CBTC 기반으로 실현. 도시철도 혼잡 구간 수송력 증대에 핵심.</div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 열차 시격 단축과 수송력 증대 효과가 있는 폐색 방식은?</div><div class="qe-a">정답: 이동폐색 (Moving Block)</div><div class="qe-wrong">오답함정: 자동폐색 — 자동폐색은 고정폐색 방식, 이동폐색만큼 시격 단축 안 됨</div></div>
+</div>
+
+<div class="concept">
+  <div class="concept-title"><span class="cnum">40</span>안전간격·제동거리·운전시격·선로용량 ★★★ 신유형</div>
+  <div class="table-wrap"><table><thead><tr><th>용어</th><th>정의</th><th>비고</th></tr></thead><tbody>
+    <tr><td><strong>안전간격</strong></td><td>선행열차 후미~후속열차 전두의 최소 거리</td><td>Fail-safe 기준 거리</td></tr>
+    <tr><td><strong>제동거리</strong></td><td>제동을 가하기 시작해서 완전 정지까지의 거리</td><td>속도↑ → 제동거리↑ (제곱 비례)</td></tr>
+    <tr><td><strong>운전시격</strong></td><td>동일 선로에서 연속 열차 간 <strong>시간</strong> 간격</td><td>단위: 분 / 이동폐색으로 단축</td></tr>
+    <tr><td><strong>선로용량</strong></td><td>단위 시간당 운행 가능 열차 수</td><td>운전시격 단축 → 선로용량 증가 ★</td></tr>
+  </tbody></table></div>
+  <div class="step-box">선로용량 증가 방법: 이동폐색 도입 → 운전시격 단축 → 단위 시간당 열차 수 ↑</div>
+  <div class="trap">⚠️ 함정 주의: 운전시격 = 거리 간격 → ❌ / 운전시격은 <strong>시간</strong> 간격 (단위: 분)</div>
+  <div class="theory-note"><strong>이론 배경: </strong>제동거리는 속도의 제곱에 비례(V²/2a). 안전간격은 최소 제동거리 이상 확보. 이동폐색은 실시간 위치로 안전간격을 최소화하여 운전시격·선로용량 최적화.</div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 동일 선로에서 연속 열차 간 시간 간격을 무엇이라 하는가?</div><div class="qe-a">정답: 운전시격</div><div class="qe-wrong">오답함정: 안전간격 — 안전간격은 거리 기준, 운전시격은 시간 기준</div></div>
+</div>
+
+<div class="concept">
+  <div class="concept-title"><span class="cnum">41</span>DMI (차내표시장치) ★★★ 신유형</div>
+  <p><strong>DMI</strong>: Driver Machine Interface — 기관사와 열차제어시스템 간 <strong>인터페이스 장치</strong></p>
+  <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody>
+    <tr><td><strong>표시 정보</strong></td><td>허용속도 / 목표속도 / 현재속도 / 제동 요구 / 진행 허가 거리</td></tr>
+    <tr><td><strong>설치 위치</strong></td><td>운전실 (차상)</td></tr>
+    <tr><td><strong>연계 시스템</strong></td><td>ATP, ETCS(KTCS), CBTC — 모든 현대 열차제어에 기본 탑재</td></tr>
+    <tr><td><strong>KTCS 연계</strong></td><td>KTCS-2/3에서 DMI로 이동폐색 정보·허가거리 표시</td></tr>
+  </tbody></table></div>
+  <div class="trap">⚠️ 함정 주의: DMI = 지상 설비 → ❌ / DMI는 <strong>차상(운전실) 장치</strong></div>
+  <div class="theory-note"><strong>이론 배경: </strong>DMI는 차상제어장치(OBC)로부터 정보를 받아 기관사에게 시각적으로 표시. 허용속도 초과 시 경고, ATP 자동 제동 전 사전 통보 역할.</div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 기관사에게 허용속도·목표속도 등을 표시하는 차상 장치는?</div><div class="qe-a">정답: DMI (Driver Machine Interface)</div><div class="qe-wrong">오답함정: 발리스 — 발리스는 지상 정보 전송 장치, DMI는 차상 표시 장치</div></div>
+</div>
+
+<div class="concept">
+  <div class="concept-title"><span class="cnum">42</span>KTCS-2 / KTCS-3 / LTE-R ★★★ 신유형</div>
+  <div class="table-wrap"><table><thead><tr><th>시스템</th><th>풀네임</th><th>핵심 특징</th></tr></thead><tbody>
+    <tr><td><strong>KTCS-2</strong></td><td>Korean Train Control System Level 2</td><td>발리스+RBC 무선. 고정폐색. KTX 등 고속선 적용</td></tr>
+    <tr><td><strong>KTCS-3</strong></td><td>Korean Train Control System Level 3</td><td><strong>이동폐색</strong>. 궤도회로 불필요. 차상 위치 실시간 전송. <strong>최고 수준</strong> ★</td></tr>
+    <tr><td><strong>LTE-R</strong></td><td>LTE-Railway</td><td>철도 전용 LTE 무선통신. KTCS-3·CBTC의 <strong>통신 인프라</strong></td></tr>
+  </tbody></table></div>
+  <div class="table-wrap"><table><thead><tr><th>비교</th><th>KTCS-2</th><th>KTCS-3</th></tr></thead><tbody>
+    <tr><td>폐색 방식</td><td>고정폐색</td><td><strong>이동폐색</strong> ★</td></tr>
+    <tr><td>궤도회로</td><td>필요 (열차 점유 감지)</td><td><strong>불필요</strong> ★ (차상 GPS+LTE-R)</td></tr>
+    <tr><td>위치 확인</td><td>발리스(지점)</td><td><strong>LTE-R 연속 위치 전송</strong> ★</td></tr>
+    <tr><td>통신 방식</td><td>GSM-R / LTE-R</td><td><strong>LTE-R 전용</strong></td></tr>
+    <tr><td>자동운전(ATO)</td><td>부분 가능</td><td><strong>완전 자동운전 지원</strong> ★</td></tr>
+    <tr><td>지상설비 의존</td><td>높음 (궤도회로 필요)</td><td><strong>최소화</strong> (차상 중심) ★</td></tr>
+    <tr><td>운행권한(MA)</td><td>RBC에서 부여</td><td><strong>LTE-R로 실시간 갱신</strong></td></tr>
+  </tbody></table></div>
+  <div class="trap">⚠️ 함정 주의: KTCS-3 = 고정폐색 → ❌ / KTCS-3은 <strong>이동폐색</strong></div>
+  <div class="trap">⚠️ 함정 주의: KTCS-3 = 궤도회로 없음 ≠ 위치검지 없음 — <strong>LTE-R 연속 전송</strong>으로 위치 파악</div>
+  <div class="trap">⚠️ 함정 주의: LTE-R = 열차제어시스템 → ❌ / LTE-R은 <strong>통신 인프라</strong> (KTCS·CBTC 기반)</div>
+  <div class="theory-note"><strong>이론 배경: </strong>KTCS-2는 지상 궤도회로+발리스로 위치 확인, 고정폐색. KTCS-3은 차상에서 LTE-R로 연속 위치 전송, 궤도회로 불필요, 이동폐색 + 완전 자동운전 지원. Level 숫자가 높을수록 지상설비 의존도 낮아짐.</div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 이동폐색 방식을 채택하여 궤도회로가 불필요한 한국형 열차제어시스템은?</div><div class="qe-a">정답: KTCS-3</div><div class="qe-wrong">오답함정: KTCS-2 — KTCS-2는 고정폐색, 궤도회로 필요</div></div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시 ★ 신경향</div><div class="qe-q">Q. KTCS-3에서 궤도회로가 없어도 열차 위치를 파악할 수 있는 이유는?</div><div class="qe-a">정답: LTE-R을 통해 차상에서 실시간으로 연속 위치 정보를 전송하기 때문</div><div class="qe-wrong">오답함정: 위치검지 불가 — 궤도회로 없음과 위치검지 불가는 다름. KTCS-3은 차상 중심으로 위치 파악</div></div>
+</div>
+
+<div class="concept">
+  <div class="concept-title"><span class="cnum">43</span>가점유·분로불량·레일절손 ★★ 신유형</div>
+  <div class="table-wrap"><table><thead><tr><th>현상</th><th>원인</th><th>결과</th></tr></thead><tbody>
+    <tr><td><strong>가점유 (Shunt Failure)</strong></td><td>차축 분로저항 과대 (도상절연불량·레일 녹 등)</td><td>열차가 있어도 궤도회로 <strong>무점유(Free)</strong>로 표시 → 위험</td></tr>
+    <tr><td><strong>분로불량</strong></td><td>차축과 레일 접촉 불량, 레일면 산화</td><td>궤도계전기 낙하 불량 → 안전사고 위험</td></tr>
+    <tr><td><strong>레일절손 검지</strong></td><td>궤도회로 전류 단절</td><td>즉시 <strong>열차 있음(점유)</strong>으로 처리 (Fail-safe)</td></tr>
+  </tbody></table></div>
+  <div class="trap">⚠️ 함정 주의: 가점유 = 열차가 없는데 점유 표시 → ❌ / 가점유는 열차가 <strong>있는데</strong> 무점유로 표시 (더 위험)</td></div>
+  <div class="theory-note"><strong>이론 배경: </strong><strong>가점유</strong>는 분로저항이 지나치게 커서 차축 단락 효과가 미미해 열차를 감지 못 함. <strong>레일절손</strong>은 궤도회로 개방이므로 Fail-safe에 따라 점유 처리.</div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 열차가 존재함에도 궤도회로가 무점유로 표시되는 현상은?</div><div class="qe-a">정답: 가점유 (분로불량에 의한 차축 단락 불량)</div><div class="qe-wrong">오답함정: 레일절손 — 레일절손은 궤도회로 단선으로 점유 표시됨 (가점유와 반대)</div></div>
+</div>
+
+<div class="concept">
+  <div class="concept-title"><span class="cnum">44</span>측면방호·전자연동장치 심화 ★★ 신유형</div>
+  <p><strong>측면방호(Flank Protection)</strong>: 진로 측면에서 다른 열차가 침범하지 못하도록 방호하는 연동 기능</p>
+  <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody>
+    <tr><td><strong>측면방호 목적</strong></td><td>평면교차 진로에서 측면 충돌 방지</td></tr>
+    <tr><td><strong>구현 방법</strong></td><td>측면방호 선로전환기를 탈선 방향으로 쇄정 / 엄호신호기 정지 현시 유지</td></tr>
+  </tbody></table></div>
+  <p style="margin:10px 0 4px"><strong>전자연동장치 구성요소 ✅ 재확인</strong></p>
+  <div class="table-wrap"><table><thead><tr><th>구성요소</th><th>기능</th></tr></thead><tbody>
+    <tr><td><strong>연동논리부</strong></td><td>진로 쇄정·해정 논리 처리 (소프트웨어)</td></tr>
+    <tr><td><strong>표시제어부</strong></td><td>신호기·선로전환기 상태 표시 및 제어</td></tr>
+    <tr><td><strong>광통신부</strong></td><td>현장기기와 데이터 고속 전송</td></tr>
+  </tbody></table></div>
+  <div class="trap">⚠️ 함정 주의: 전자연동장치 비해당 = <strong>LDTS</strong> / <strong>계전기군</strong>(전기연동장치 구성요소)</div>
+  <div class="theory-note"><strong>이론 배경: </strong><strong>측면방호</strong>는 진로 설정 시 자동으로 측면 열차 침입을 차단. 전자연동장치는 계전기 없이 소프트웨어로 연동논리 구현 — 유지보수 단순화·신뢰성 향상.</div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 전자연동장치의 구성요소가 아닌 것은?</div><div class="qe-a">정답: LDTS (구성요소: 연동논리부·표시제어부·광통신부)</div><div class="qe-wrong">오답함정: 광통신부 — 광통신부는 전자연동장치의 핵심 구성요소</div></div>
+</div>
+
+<div class="concept">
+  <div class="concept-title"><span class="cnum">45</span>CBTC 세부 — 양방향 통신·Fail-safe·ATO 연계 ★★★ 빈출</div>
+  <div class="explain-note">
+<strong>💡 CBTC(Communication Based Train Control) 핵심 원리</strong><br>
+기존 ATC: 궤도회로(레일)로 열차 위치 파악 → 속도코드 레일에 흘림 → 열차 수신<br>
+CBTC: <strong>무선통신(Wi-Fi·LTE)</strong>으로 열차↔지상 실시간 양방향 정보 교환 → 궤도회로 불필요<br>
+→ 열차 위치를 차상에서 직접 계산하여 지상에 전송 → 지상은 전체 열차 위치를 파악하여 이동폐색 실현
+  </div>
+  <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody>
+    <tr><td><strong>통신 특성</strong></td><td><strong>양방향(Bidirectional)</strong> 무선통신 필수 — 단방향 아님 ★★</td></tr>
+    <tr><td><strong>전송 정보</strong></td><td>열차 위치·속도·상태 ↔ 운행권한(MA)·속도제한·진로정보</td></tr>
+    <tr><td><strong>ATP 연계</strong></td><td>지상 RBC(Radio Block Centre)에서 MA 부여 → ATP가 수신하여 속도·거리 감시</td></tr>
+    <tr><td><strong>ATO 연계</strong></td><td>ATP 위에서 ATO가 자동출발·가속·감속·정위치정차 자동 수행</td></tr>
+    <tr><td><strong>이동폐색 구현</strong></td><td>실시간 위치 기반 MA 갱신 → 선행열차 이동 시 후속열차 허가거리 확장</td></tr>
+    <tr><td><strong>짧은 운전시격</strong></td><td>고정폐색 대비 열차 간격 최소화 → 수송용량 대폭 증가 ★</td></tr>
+    <tr><td><strong>통신두절 시</strong></td><td><strong>안전측(정지)</strong>으로 이행 — Fail-safe 원칙 ★</td></tr>
+    <tr><td><strong>통신지연 대응</strong></td><td>최대 허용 지연 내 MA 갱신 / 초과 시 자동 감속·정지</td></tr>
+    <tr><td><strong>지상 제어장치</strong></td><td>RBC(Radio Block Centre) — 지상에서 모든 열차 MA를 계산·부여</td></tr>
+  </tbody></table></div>
+  <div class="trap">⚠️ 함정 주의: CBTC = <strong>양방향 통신</strong> — 단방향이라는 선지는 항상 오답 ★★</div>
+  <div class="trap">⚠️ 함정 주의: CBTC ≠ 이동폐색 — CBTC가 이동폐색을 <strong>구현하는 수단</strong>이지 동의어 아님</div>
+  <div class="trap">⚠️ 함정 주의: CTC와 CBTC 약어 혼동 최빈출 — C가 붙어도 <strong>전혀 다른 시스템</strong> (CTC=원격집중제어, CBTC=무선열차제어)</div>
+  <div class="trap">⚠️ 함정 주의: 통신두절 시 열차 계속 운행 → ❌ / 통신두절 = <strong>안전측(정지)</strong>으로 이행</div>
+  <div class="theory-note"><strong>이론 배경: </strong>CBTC는 차상에서 실시간 위치를 파악하여 무선으로 지상(RBC)에 전송, RBC는 각 열차에 MA(운행권한)를 부여. ATP가 MA 범위 감시, ATO가 그 위에서 자동운전. 통신두절 시 Fail-safe 원칙으로 안전측(정지) 이행.</div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시 ★★</div><div class="qe-q">Q. CBTC 시스템에서 열차 운행 중 지상과의 통신이 두절된 경우 어떻게 동작하는가?</div><div class="qe-a">정답: Fail-safe 원칙에 따라 안전측(정지 방향)으로 이행</div><div class="qe-wrong">오답함정: 마지막 수신 MA로 계속 운행 — 통신두절 시 MA 만료 후 반드시 정지</div></div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. CBTC에서 지상이 각 열차에 부여하는 진행 허가 거리를 무엇이라 하는가?</div><div class="qe-a">정답: 운행권한 (MA: Movement Authority)</div><div class="qe-wrong">오답함정: 운전시격 — 운전시격은 시간 간격. MA는 거리 기반 진행 허가</div></div>
+</div><div class="concept">
+  <div class="concept-title"><span class="cnum">46</span>속도프로파일(Speed Profile) & 차상제어장치(OBC) ★★ 신유형</div>
+  <div class="explain-note">
+<strong>💡 속도프로파일(Speed Profile) — 열차가 따라야 할 구간별 속도 기준</strong><br>
+<strong>속도프로파일</strong>: 구간별 허용속도와 제동곡선을 반영하여, 열차가 안전하게 운행하기 위해 따라야 할 <strong>구간별 목표속도 기준</strong>.<br><br>
+• 노선의 곡선·경사·신호기·정차역 등을 반영해 미리 계산<br>
+• ATC/ATP는 열차가 속도프로파일을 초과하지 않도록 감시·제동<br>
+• DMI를 통해 기관사에게 허용속도·목표속도로 표시됨<br>
+• CBTC·KTCS에서는 MA(운행권한) 갱신 시 속도프로파일도 동적 갱신<br><br>
+<strong>💡 차상제어장치(OBC, On-Board Computer)</strong><br>
+<strong>차상제어장치(OBC)</strong>: 열차에 탑재되어 위치 계산·MA 처리·ATP 감시·ATO 제어 등을 담당하는 <strong>열차 탑재형 핵심 제어 컴퓨터</strong>.<br>
+• DMI에 정보를 보내 기관사에게 표시<br>
+• 지상 RBC와 무선 통신하여 MA 수신·위치 전송<br>
+• ATP·ATO 기능을 차상에서 실행하는 핵심 주체
+  </div>
+  <div class="table-wrap"><table><thead><tr><th>용어</th><th>정의</th><th>역할</th></tr></thead><tbody>
+    <tr><td><strong>속도프로파일</strong></td><td>구간별 허용속도+제동곡선 반영 목표속도 기준</td><td>ATC/ATP 감시 기준, DMI 표시 기준</td></tr>
+    <tr><td><strong>차상제어장치(OBC)</strong></td><td>열차 탑재 핵심 제어 컴퓨터</td><td>위치계산·MA처리·ATP·ATO·DMI 제어</td></tr>
+    <tr><td><strong>MA (운행권한)</strong></td><td>지상이 열차에 부여하는 진행 허가 거리</td><td>이동폐색 실현의 핵심 명령</td></tr>
+  </tbody></table></div>
+  <div class="trap">⚠️ 함정 주의: 속도프로파일 = 고정값 → ❌ / CBTC에서는 MA 갱신 시 <strong>동적으로 갱신</strong>됨</div>
+  <div class="trap">⚠️ 함정 주의: 차상제어장치(OBC) ≠ DMI — OBC가 계산·제어, DMI는 기관사에게 <strong>표시</strong>만 담당</div>
+  <div class="theory-note"><strong>이론 배경: </strong>속도프로파일은 ATP/ATC의 감시 기준이자 DMI 표시 데이터. OBC(차상제어장치)가 RBC로부터 MA를 수신해 속도프로파일을 계산하고 DMI에 표시. 이동폐색에서는 MA가 실시간 갱신되므로 속도프로파일도 동적으로 변한다.</div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 구간별 허용속도와 제동곡선을 반영해 열차가 따라야 할 속도 기준을 무엇이라 하는가?</div><div class="qe-a">정답: 속도프로파일(Speed Profile)</div><div class="qe-wrong">오답함정: 운행권한(MA) — MA는 진행 허가 거리, 속도프로파일은 구간별 목표속도 기준</div></div>
+  <div class="quiz-ex"><div class="qe-title">기출 예시</div><div class="qe-q">Q. 열차에 탑재되어 위치 계산·MA 처리·ATP·ATO를 담당하는 장치는?</div><div class="qe-a">정답: 차상제어장치(OBC, On-Board Computer)</div><div class="qe-wrong">오답함정: DMI — DMI는 표시 장치. OBC가 계산·처리를 담당하고 DMI에 표시</div></div>
+</div>
+
+  </div>
+</div>
+  </div>
+</div>
+<script>
+function togglePart(el){
+  const body=el.nextElementSibling; const arrow=el.querySelector('.arrow');
+  if(body.style.display==='none'){body.style.display='block';arrow.textContent='▲';}
+  else{body.style.display='none';arrow.textContent='▼';}
+}
+function search(){
+  const q=document.getElementById('q').value.trim().toLowerCase();
+  document.querySelectorAll('.highlight').forEach(e=>{const p=e.parentNode;p.replaceChild(document.createTextNode(e.textContent),e);p.normalize();});
+  if(!q)return;
+  function walk(node){
+    if(node.nodeType===3){
+      const idx=node.textContent.toLowerCase().indexOf(q);
+      if(idx>=0){const span=document.createElement('span');span.className='highlight';
+        const b=document.createTextNode(node.textContent.slice(0,idx));
+        const m=document.createTextNode(node.textContent.slice(idx,idx+q.length));
+        const a=document.createTextNode(node.textContent.slice(idx+q.length));
+        span.appendChild(m);node.parentNode.insertBefore(b,node);node.parentNode.insertBefore(span,node);
+        node.parentNode.insertBefore(a,node);node.parentNode.removeChild(node);}
+    } else if(node.nodeType===1&&!['SCRIPT','STYLE'].includes(node.tagName)){Array.from(node.childNodes).forEach(walk);}
+  }
+  document.querySelectorAll('.part-body').forEach(b=>{walk(b);if(b.querySelector('.highlight'))b.style.display='block';});
+}
+document.addEventListener('DOMContentLoaded',()=>{document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')search();});});
+</script>
+<button id="play-all-btn" onclick="playAllTTS()">🎧 전체강의</button>
+<button id="toc-toggle-btn" onclick="openTocDrawer()" aria-label="목차 열기">📋 목차</button>
+<div id="toc-overlay" onclick="closeTocDrawer()"></div>
+<div id="toc-drawer"><div id="toc-drawer-header"><span>목차</span><button onclick="closeTocDrawer()">✕</button></div><nav id="toc-drawer-nav" class="toc"></nav></div>
+<script>
+// 모바일 목차 드로어
+function openTocDrawer() {
+  var mainToc = document.querySelector('.container .toc');
+  var drawerNav = document.getElementById('toc-drawer-nav');
+  if (mainToc && drawerNav) {
+    drawerNav.innerHTML = mainToc.innerHTML;
+    // 링크 클릭 시 드로어 닫기
+    drawerNav.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() { closeTocDrawer(); });
+    });
+  }
+  document.getElementById('toc-drawer').classList.add('open');
+  document.getElementById('toc-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeTocDrawer() {
+  document.getElementById('toc-drawer').classList.remove('open');
+  document.getElementById('toc-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+<script>
+
+// ===== 교육 강의 TTS 플레이어 =====
+var _eduAudio = null;
+function playEduTTS(text, btn) {
+  if (_eduAudio && !_eduAudio.paused) {
+    _eduAudio.pause(); _eduAudio = null;
+    btn.textContent = '⭐ 중요 강의 듣기';
+    btn.classList.remove('playing'); return;
+  }
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
+  })
+  .then(function(r) { return r.blob(); })
+  .then(function(blob) {
+    var url = URL.createObjectURL(blob);
+    _eduAudio = new Audio(url);
+    _eduAudio.play();
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
+    _eduAudio.onended = function() {
+      btn.textContent = '⭐ 중요 강의 듣기'; btn.classList.remove('playing'); _eduAudio = null;
+    };
+  })
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
+}
+
+var EDU6 = {
+  '05': `신호기 종류입니다. 종류별 역할을 함께 외워야 해요. 장내신호기는 역으로 들어오는 열차에게 진입해도 되는지 알려주는 신호기입니다. 역 입구에 있어요. 출발신호기는 역을 출발하는 열차에게 출발해도 되는지 알려줍니다. 역 출구 쪽에 있어요. 폐색신호기는 폐색구간 경계에 설치됩니다. 각 구간의 진입 가능 여부를 알려줍니다. 색 현시는 이렇습니다. 녹색은 진행, 속도 제한 없이 가도 됩니다. 황색은 주의, 속도를 줄이며 다음 신호기를 준비하세요. 적색은 정지, 멈추세요. 시험에서 자주 나오는 패턴! 진행 신호 현시 색은? 녹색! 주의 신호는? 황색! 역 입구에서 열차 진입을 허가하는 신호기는? 장내 신호기! 들어올 때 장내, 나갈 때 출발, 구간 경계에 폐색. 이렇게 연결하면 됩니다!`,
+  '21': `폐색이 뭔지부터 짚고 갑니다. 폐색은 열차 충돌 방지를 위해 특정 구간에 한 번에 하나의 열차만 진입하도록 하는 방식입니다. 구간을 잠근다는 뜻이에요. 상용폐색과 대용폐색 두 가지로 나뉩니다. 상용폐색은 정상 운영 시 사용하는 방식입니다. 자동폐색식, 연동폐색식, 통표폐색식, 지도통신식 등이 있어요. 자동폐색은 궤도회로로 열차 위치를 자동 감지하여 신호기가 자동으로 작동합니다. 대용폐색은 상용폐색이 고장났을 때 사용하는 임시 방식입니다. 지도식, 지령식, 전령법이 있어요. 시험 포인트! 궤도회로를 이용해 자동으로 구간을 관리하는 폐색 방식은? 자동폐색식! 상용폐색이 불가능할 때 사용하는 폐색은? 대용폐색! 폐색의 목적은 하나입니다. 하나의 구간에 하나의 열차. 이 원칙을 지키기 위한 모든 방법이 폐색 방식이에요!`,
+  '27': `ATS, ATP, ATC, 세 개 한 번에 정리합니다. 알파벳 하나 차이인데 완전히 다른 장치예요. ATS는 열차 자동 정지 장치입니다. Automatic Train Stop. 열차가 정지 신호를 무시하고 지나치면 자동으로 브레이크를 걸어 정지시킵니다. 기능이 단순해요. 정지 신호 위반 시 강제 정지. 그게 전부입니다. ATP는 열차 자동 방호 장치입니다. Automatic Train Protection. ATS보다 한 단계 높은 수준이에요. 허용 속도를 지속적으로 계산하고, 초과하면 자동 제동합니다. 앞 열차와의 간격, 선로 조건까지 고려해요. ATC는 열차 자동 제어 장치입니다. Automatic Train Control. 가장 상위 개념이에요. 속도 제어를 넘어서 열차 운행 전체를 자동으로 제어합니다. 정리합니다. ATS = 정지 신호 위반 시 강제 정지. ATP = 허용 속도 초과 시 자동 제동. ATC = 전체 운행 자동 제어. Stop, Protection, Control 순서로 기억하세요!`,
+  '01': `신호, 전호, 표지, 이 세 가지는 반드시 구분해야 합니다. 시험에서 섞어 놓으면 꼭 틀려요. 신호는 기계나 설비가 열차에 내리는 지시입니다. 신호기, 표지판이 아니라 실제로 열차 운행을 제어하는 명령이에요. 출발해도 좋다, 정지해라. 이런 게 신호입니다. 전호는 사람이 사람에게 전달하는 신호예요. 역무원이 기관사에게 깃발이나 손으로 신호를 보내는 게 전호입니다. 기계가 아닌 사람! 표지는 장소, 시설물의 상태를 나타내는 고정 표시입니다. 속도 제한 표지, 선로 번호 표지 같은 것들이에요. 시험 함정! 역무원이 기관사에게 출발 신호를 보내는 것은 신호인가 전호인가? 전호입니다! 사람이 사람에게 보내는 것은 전호. 신호기가 현시하는 것이 신호. 이 구분 꼭 기억하세요!`,
+  '07': `임시신호기 3종입니다. 서행신호기, 서행예고신호기, 서행해제신호기. 각각의 모양과 색을 외워야 해요. 서행신호기는 현재 구간에서 서행하라는 신호입니다. 주간에는 등황색 원판 위에 흑색 역삼각형 3개. 야간에는 등황색 등 3개. 서행예고신호기는 앞으로 서행 구간이 나온다고 미리 알려줍니다. 주간에는 백색 원판 위에 흑색 삼각형. 서행해제신호기는 서행 구간이 끝났다는 표시입니다. 주간에는 녹색 원판 하나. 함정! 서행신호기와 서행해제신호기 색을 바꿔 출제합니다. 서행은 등황색, 서행해제는 녹색! 등황색=서행 중, 녹색=해제! 이렇게 연결하세요. 서행예고는 가운데, 주간에 백색 원판. 3종 모두 이름+색+모양 세트로 외우세요!`,
+  '09': `신호기 정위, 철도신호에서 가장 많이 나옵니다. 정위는 평상시 신호기가 놓여 있는 기본 위치예요. 신호기별 정위를 한 번에 정리합니다. 정지가 정위인 신호기들! 장내신호기, 출발신호기, 입환신호기. 이 세 개는 정지가 정위예요. 역으로 들어오고 나가는 신호기는 평소에 다 정지! 예외! 자동폐색신호기 정위는 진행입니다. 자동폐색은 진행이 정위! 반드시 기억하세요. 또 하나의 예외! 원방신호기 정위는 주의입니다. 진행도 정지도 아닌 주의. 특수한 경우! 유도신호기 정위는 현시없음입니다. 현시가 없다! 정리합니다. 대부분 = 정지 정위. 자동폐색 = 진행 정위. 원방신호기 = 주의 정위. 유도신호기 = 현시없음. 이 세 가지 예외만 집중해서 외우세요!`,
+  '14': `전기선로전환기 계통도입니다. 선로전환기를 전기로 제어하는 장치예요. 구성 요소가 시험에 나옵니다. 전동기가 핵심입니다. 전기 에너지를 기계 운동으로 바꿔서 선로전환기를 움직여요. 전환 완료를 확인하는 표시기도 있습니다. 전환이 완료됐는지 관제실에 알려줘요. 쇄정장치는 열차가 통과하는 동안 선로전환기가 움직이지 않도록 잠가줍니다. 이게 핵심 안전 장치예요. 전환 중간에 멈추면 어떻게 되나? 신호기가 정지를 현시해서 열차를 멈춰요. 시험 포인트! 전기선로전환기에서 안전을 담당하는 장치는? 쇄정장치! 전환 완료를 알리는 장치는? 표시기! 전동기 = 전환, 쇄정장치 = 잠금, 표시기 = 확인. 세 가지 역할을 연결해서 외우세요!`,
+  '25': `쇄정의 종류, 4가지를 구분해야 합니다. 쇄정은 선로전환기나 신호기가 잘못 움직이지 않도록 잠그는 것이에요. 첫 번째, 정위쇄정입니다. 한 기기가 반위로 전환될 때 연관 기기를 정위로 잠가요. 두 번째, 반위쇄정입니다. 한 기기가 반위일 때 연관 기기도 반위로 잠가요. 세 번째, 정반위쇄정입니다. 한 기기가 반위로 전환될 때 연관 기기를 정위나 반위 어느 쪽으로든 잠가요. 네 번째, 조건부쇄정입니다. 다른 취급 조건이 충족될 때만 쇄정이 해제돼요. 시험 함정! 비해당 문제가 나와요. 쇄정의 종류에 해당하지 않는 것은? 연속쇄정이라는 말을 끼워 넣어요. 연속쇄정은 존재하지 않습니다! 정위쇄정, 반위쇄정, 정반위쇄정, 조건부쇄정. 이 4가지가 쇄정의 종류입니다!`,
+};
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.cnum').forEach(function(cnumEl) {
+    var num = cnumEl.textContent.trim().replace(/^[^0-9A-Z]*/,'').replace(/[^0-9A-Z-].*/,'');
+    if (!EDU6[num]) return;
+    var title = cnumEl.closest('.concept-title');
+    if (!title) return;
+    if (title.querySelector('.tts-edu-btn')) return;
+    var btn = document.createElement('button');
+    btn.className = 'tts-edu-btn';
+    btn.textContent = '⭐ 중요 강의 듣기';
+    var script = EDU6[num];
+    btn.onclick = function() { playEduTTS(script, btn); };
+    title.insertAdjacentElement('afterend', btn);
+  });
+});
+</script>
+
+<script>
+// ===== 보충강의 TTS 플레이어 =====
+var _suppAudio6 = null;
+function playSuppTTS6(text, btn) {
+  if (_suppAudio6 && !_suppAudio6.paused) {
+    _suppAudio6.pause(); _suppAudio6 = null;
+    btn.textContent = '📚 보충강의';
+    btn.classList.remove('playing'); return;
+  }
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, voiceId: 'sQ3a15DhENXU8pKTHlcc'})
+  })
+  .then(function(r) { return r.blob(); })
+  .then(function(blob) {
+    var url = URL.createObjectURL(blob);
+    _suppAudio6 = new Audio(url);
+    _suppAudio6.play();
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
+    _suppAudio6.onended = function() {
+      btn.textContent = '📚 보충강의'; btn.classList.remove('playing'); _suppAudio6 = null;
+    };
+  })
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
+}
+
+var EDU6_SUPP = {
+  '01': `신호의 의의와 목적입니다. 신호는 열차 운행의 안전과 효율을 위해 시각, 청각, 촉각으로 정보를 전달하는 수단이에요. 신호의 종류는 신호, 표지, 전호로 구분합니다. 신호는 열차나 차량 운전에 직접 관계되는 지시입니다. 표지는 선로의 상태, 위험 지점 등을 나타내는 고정 표시예요. 전호는 직원들 간의 통신 수단으로 사용하는 신호입니다. 시험 함정! 열차 출발 지시는 신호인가 전호인가요? 신호입니다! 역무원이 기관사에게 손을 흔들어 보내는 것은? 전호입니다! 신호는 기계나 장치가 열차에 지시, 전호는 사람이 사람에게 전달. 이렇게 구분하세요. 신호-표지-전호, 세 가지 종류 꼭 외우세요!`,
+  '03': `신호기 분류입니다. 신호기는 종류가 많아요. 목적에 따라 분류합니다. 주신호기는 열차 운행을 직접 지시하는 신호기예요. 장내신호기, 출발신호기, 폐색신호기, 엄호신호기, 유도신호기, 입환신호기가 주신호기입니다. 종속신호기는 주신호기에 종속되어 예고 역할을 해요. 원방신호기, 통과신호기, 중계신호기가 종속신호기입니다. 신호기 설치 위치도 중요해요. 장내신호기는 역 구내로 들어오는 입구에 설치합니다. 출발신호기는 역 출구 쪽에 설치해요. 시험 함정! 폐색신호기는 주신호기인가 종속신호기인가? 주신호기입니다! 원방신호기는? 종속신호기입니다! 예고 역할을 하기 때문에 종속신호기예요. 장내-출발-폐색-엄호-유도-입환이 주신호기. 원방-통과-중계가 종속신호기. 이 구분을 기억하세요!`,
+  '07': `진로표시기입니다. 출발신호기나 입환신호기에 부속되어 열차가 진행할 방향을 표시해요. 여러 선로 중 어디로 갈지 알려주는 장치입니다. 진로표시기 숫자 현시가 시험에 나와요. 번호로 진로를 표시합니다. 1번 선로, 2번 선로 이런 식으로요. 진로표시기와 신호기의 관계! 신호기가 진행을 현시할 때 함께 어느 방향으로 가야 하는지를 알려줘요. 신호기가 정지를 현시하면 진로표시기는 작동하지 않아요. 시험 포인트! 진로표시기의 역할은? 열차가 진행할 방향 표시! 어디에 부속되나요? 출발신호기 또는 입환신호기! 진로표시기는 방향 안내, 신호기가 진행일 때만 작동합니다. 기억하세요!`,
+  '11': `궤도회로 원리입니다. 궤도회로는 두 레일 사이에 전류를 흘려 열차의 위치를 자동으로 감지하는 장치예요. 열차가 선로에 진입하면 열차 차축이 두 레일을 단락시켜요. 단락이 되면 전류가 차단되거나 변화해요. 이 변화를 감지해서 열차 있음을 판단합니다. 궤도회로의 장점은 자동으로 열차 위치를 감지한다는 거예요. 사람이 확인하지 않아도 돼요. 자동폐색식의 핵심 기술이에요. 시험 함정! 궤도회로가 단락되면 열차가 있다는 의미인가요? 맞습니다! 단락 = 열차 존재! 단락이 없으면? 선로 비어있음! 궤도회로의 단락 원리로 열차 위치를 감지. 이 원리가 자동폐색의 기반입니다!`,
+  '14': `선로전환기 종류입니다. 선로전환기는 열차 진로를 바꾸는 장치예요. 종류가 여러 가지입니다. 보통 선로전환기는 스프링 없이 직접 전환해요. 스프링 선로전환기는 열차가 통과하면 자동으로 원래 위치로 돌아와요. 안전 측면에서 유리해요. 탈선 선로전환기는 차량을 의도적으로 탈선시켜 다른 차량과 충돌을 막는 안전 장치예요. 긴급 상황에서 사용합니다. 선로전환기 잠금 방식도 중요해요. 전기잠금은 전기 신호로 잠그는 방식, 기계잠금은 기계적으로 잠가요. 시험 함정! 스프링 선로전환기의 특징은? 열차 통과 후 자동 복귀! 탈선 선로전환기 목적은? 충돌 방지! 탈선이라는 단어 때문에 위험한 것처럼 보여도 안전 장치예요.`,
+  '17': `연동장치입니다. 신호기, 선로전환기, 궤도회로를 연결해서 서로 조건을 맞춰 작동하게 하는 장치예요. 예를 들어, 선로전환기가 올바른 방향으로 잠겨 있어야만 진행 신호가 켜져요. 신호기와 선로전환기가 연동되는 거예요. 연동장치의 목적은 안전한 진로를 확보하는 것입니다. 잘못된 진로에 신호가 켜지는 사고를 막아요. 연동장치 종류는 기계식, 전기식, 전자식이 있어요. 현재는 전자식 연동장치가 주류예요. 시험 포인트! 연동장치의 핵심 기능은? 신호기와 선로전환기의 상호 조건 제어! 연동장치가 없으면? 잘못된 진로에 진행 신호가 켜질 수 있어요. 연동장치 = 신호와 선로전환기의 안전 연계 시스템, 이렇게 기억하세요!`,
+  '24': `ATO와 ATP 심화입니다. 열차 자동화 시스템입니다. ATO는 Automatic Train Operation, 열차 자동 운전 장치예요. 출발, 가속, 감속, 정위치 정차까지 자동으로 해요. 기관사 없이 자동으로 운전할 수 있어요. 지하철 무인 운전이 여기에 해당합니다. ATP는 Automatic Train Protection, 열차 자동 방호 장치예요. 열차가 허용 속도를 초과하면 자동으로 브레이크를 걸어요. ATO와 ATP의 관계는 ATO가 자동 운전하고, ATP가 안전을 보호해요. 함께 쓰이는 경우가 많아요. 구분 포인트! ATO는 운전 자동화, ATP는 안전 방호. ATO는 운전사를 대신, ATP는 과속을 막아요. CBTC는 무선 통신 기반의 열차 제어 시스템이에요. 지하철에 많이 사용돼요. ATO 운전 자동화, ATP 안전 방호, CBTC 무선 제어. 세 개 구분하세요!`,
+};
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.cnum').forEach(function(cnumEl) {
+    var num = cnumEl.textContent.trim().replace(/^[^0-9A-Z]*/,'').replace(/[^0-9A-Z-].*/,'');
+    if (!EDU6_SUPP[num]) return;
+    var title = cnumEl.closest('.concept-title');
+    if (!title) return;
+    if (title.querySelector('.tts-supp-btn')) return;
+    var btn = document.createElement('button');
+    btn.className = 'tts-supp-btn';
+    btn.textContent = '📚 보충강의';
+    var script = EDU6_SUPP[num];
+    btn.onclick = function() { playSuppTTS6(script, btn); };
+    title.insertAdjacentElement('afterend', btn);
+  });
+});
+</script>
+
+<script>
+// ===== 전체강의 듣기 (prefetch로 강의 사이 간격 최소화) =====
+var _allAudio = null;
+var _allQueue = [];
+var _allIndex = 0;
+var _allPlaying = false;
+var _allCache = {}; // index -> blobUrl (prefetch 캐시)
+var _warmupTimer = null; // BT A2DP 워밍업 타이머
+
+function _allBtns() {
+  return [document.getElementById('play-all-btn'), document.getElementById('play-all-desktop')];
+}
+function _allSetLabel(text) {
+  _allBtns().forEach(function(b){ if(b) b.textContent = text; });
+}
+function _allSetPlaying(on) {
+  _allBtns().forEach(function(b){ if(!b) return; on ? b.classList.add('playing') : b.classList.remove('playing'); });
+}
+
+function playAllTTS() {
+  if (_allPlaying) {
+    if (_allAudio) { _allAudio.pause(); _allAudio = null; }
+    _allPlaying = false; _allQueue = []; _allIndex = 0;
+    Object.values(_allCache).forEach(function(u){ try{URL.revokeObjectURL(u);}catch(e){} });
+    _allCache = {};
+    _allSetLabel('🎧 전체강의'); _allSetPlaying(false);
+    _stopKeepAlive(); _stopHeartbeat();
+    if (_warmupTimer) { clearTimeout(_warmupTimer); _warmupTimer = null; }
+    return;
+  }
+  var eduObj = (typeof EDU1!=='undefined'?EDU1:
+                typeof EDU2!=='undefined'?EDU2:
+                typeof EDU3!=='undefined'?EDU3:
+                typeof EDU4!=='undefined'?EDU4:
+                typeof EDU5!=='undefined'?EDU5:
+                typeof EDU6!=='undefined'?EDU6:
+                typeof EDU7!=='undefined'?EDU7:{});
+  _allQueue = Object.values(eduObj);
+  if (!_allQueue.length) return;
+  _allIndex = 0; _allPlaying = true; _allCache = {};
+  _allSetPlaying(true);
+  // 첫 트랙 + 다음 트랙 미리 로드
+  _allPrefetch(0); _allPrefetch(1);
+  _ensureCtx().then(function() { _startKeepAlive(); _startHeartbeat(); _warmupTimer = setTimeout(function() { _warmupTimer = null; _allPlayNext(); }, 700); });
+}
+
+// index 번 트랙을 백그라운드 fetch해서 캐시에 저장
+function _allPrefetch(idx) {
+  if (idx < 0 || idx >= _allQueue.length || _allCache[idx] !== undefined) return;
+  _allCache[idx] = null; // 로딩 중 표시 (null = 진행중)
+  fetch('/api/tts', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({text:_allQueue[idx], voiceId:'sQ3a15DhENXU8pKTHlcc'})
+  }).then(function(r){ return r.blob(); })
+    .then(function(blob){ _allCache[idx] = URL.createObjectURL(blob); })
+    .catch(function(){ _allCache[idx] = 'error'; });
+}
+
+// ── 볼륨 균일화 (GainNode + DynamicsCompressor) ──
+// 작은 소리 키우고 큰 소리 눌러서 차 오디오에서도 균일하게
+var _audioCtx = null;
+var _debugLogs = [];
+function _debugAppend(name, ct) {
+  try {
+    var now = new Date();
+    var hh = ('0'+now.getHours()).slice(-2);
+    var mm = ('0'+now.getMinutes()).slice(-2);
+    var ss = ('0'+now.getSeconds()).slice(-2);
+    var ms = ('00'+now.getMilliseconds()).slice(-3);
+    var ctx = _audioCtx ? _audioCtx.state : '-';
+    var entry = hh+':'+mm+':'+ss+'.'+ms+' | '+name+' | T'+(_allIndex+1)+'/'+(_allQueue.length||'?')+' | ct='+ct+'s | ctx='+ctx;
+    _debugLogs.push(entry);
+    if (_debugLogs.length > 60) _debugLogs.shift();
+    _debugPanelRefresh();
+  } catch(e) {}
+}
+function _debugPanelRefresh() {
+  var panel = document.getElementById('_dbgPanel');
+  if (!panel || panel.style.display === 'none') return;
+  var body = document.getElementById('_dbgBody');
+  if (!body) return;
+  body.innerHTML = _debugLogs.slice().reverse().map(function(l) {
+    return '<div style="border-bottom:1px solid #333;padding:3px 2px;">'+l+'</div>';
+  }).join('');
+}
+// 차 블루투스 환경에서 AudioContext suspend 자동 복구
+function _ensureCtx() {
+  if (!_audioCtx) {
+    _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    _audioCtx.onstatechange = function() {
+      if (_audioCtx.state === 'suspended') _audioCtx.resume();
+    };
+  }
+  return _audioCtx.state === 'suspended' ? _audioCtx.resume() : Promise.resolve();
+}
+document.addEventListener('visibilitychange', function() {
+  if (_audioCtx && _audioCtx.state === 'suspended') _audioCtx.resume();
+});
+var _keepAliveNode = null;
+function _startKeepAlive() {
+  if (_keepAliveNode || !_audioCtx) return;
+  try {
+    var osc = _audioCtx.createOscillator();
+    var g   = _audioCtx.createGain();
+    osc.frequency.value = 150; g.gain.value = 0.00001; // 150Hz 극소음 — A2DP 스트림 유지용 (BT cold-start 대응)
+    osc.connect(g); g.connect(_audioCtx.destination);
+    osc.start();
+    _keepAliveNode = { osc: osc, gain: g };
+  } catch(e) {}
+}
+function _stopKeepAlive() {
+  if (!_keepAliveNode) return;
+  try { _keepAliveNode.osc.stop(); _keepAliveNode.gain.disconnect(); } catch(e) {}
+  _keepAliveNode = null;
+}
+// 500ms 박동 — 재생 중 AudioContext 일시정지 즉시 복구 (블루투스 mid-track 끊김 방지)
+var _heartbeatTimer = null;
+function _startHeartbeat() {
+  if (_heartbeatTimer) return;
+  _heartbeatTimer = setInterval(function() {
+    if (!_audioCtx || !_allPlaying) return;
+    if (_audioCtx.state === 'suspended') _audioCtx.resume();
+  }, 500);
+}
+function _stopHeartbeat() {
+  if (_heartbeatTimer) { clearInterval(_heartbeatTimer); _heartbeatTimer = null; }
+}
+function _playBoosted(url, onended) {
+  var audio = new Audio(url);
+  var graph = null;
+  var _progressTimer = null;
+  var _lastCT = -1, _stuckTicks = 0;
+  var _doneCalled = false; // 중복 호출 방지
+
+  function _cleanup() {
+    if (_progressTimer) { clearInterval(_progressTimer); _progressTimer = null; }
+    if (!graph) return;
+    try { graph.makeup.disconnect(); graph.comp.disconnect();
+          graph.gain.disconnect(); graph.src.disconnect(); } catch(e) {}
+    graph = null;
+  }
+  function _done() {
+    if (_doneCalled) return; _doneCalled = true;
+    _cleanup(); onended && onended();
+  }
+  // 차량 진단용 — 버튼에 최근 이벤트+시각 노출 (차에서 끊기면 폰 화면으로 확인)
+  function _logEvt(name) {
+    try {
+      var t = Math.round(audio.currentTime || 0);
+      _allSetLabel('⏸ ' + (_allIndex+1) + '/' + _allQueue.length + ' [' + name + '@' + t + 's]');
+      _debugAppend(name, t);
+    } catch(e) {}
+  }
+
+  _ensureCtx().then(function() {
+    try {
+      var src  = _audioCtx.createMediaElementSource(audio);
+      var gain = _audioCtx.createGain();
+      gain.gain.value = 3.0;                // 볼륨 유지
+      var comp = _audioCtx.createDynamicsCompressor();
+      comp.threshold.value = -10;
+      comp.knee.value      = 6;
+      comp.ratio.value     = 8;
+      comp.attack.value    = 0.003;
+      comp.release.value   = 0.08;
+      var makeup = _audioCtx.createGain();
+      makeup.gain.value = 1.3;
+      src.connect(gain); gain.connect(comp);
+      comp.connect(makeup); makeup.connect(_audioCtx.destination);
+      graph = { src: src, gain: gain, comp: comp, makeup: makeup };
+    } catch(e) {}
+    audio.play().catch(function() { _logEvt('play-fail'); _done(); });
+
+    // 진행 감시 — 2초마다 체크
+    // paused 상태도 누적 (이전 버그: paused면 리셋해서 watchdog 영원히 안 터졌음)
+    _progressTimer = setInterval(function() {
+      if (!_allPlaying || audio.ended) { _cleanup(); return; }
+      if (!audio.paused) {
+        if (audio.currentTime === _lastCT) {
+          _stuckTicks++;
+          if (_stuckTicks >= 7) { // 14s 재생 중 정체 → 강제 이동
+            _logEvt('stuck');
+            try { audio.pause(); } catch(e) {}
+            _done();
+          }
+        } else { _lastCT = audio.currentTime; _stuckTicks = 0; }
+      } else {
+        // paused: onpause retry 중이지만 장기 멈춤도 감시 (이전엔 여기서 리셋해서 교착)
+        _stuckTicks++;
+        if (_stuckTicks >= 10) { // 20s paused 교착 → 강제 이동
+          _logEvt('pause-stuck');
+          _done();
+        }
+      }
+    }, 2000);
+  });
+
+  // AVRCP pause → 최대 5회 재시도. 5회 소진 시 강제 다음 트랙 (이전 버그: 소진 후 교착)
+  audio.onpause = function() {
+    if (!_allPlaying || audio.ended) return;
+    _logEvt('pause');
+    var _ref = audio, _tries = 0;
+    function _resume() {
+      if (!_allPlaying || _ref.ended || !_ref.paused) return;
+      _ensureCtx().then(function() {
+        _ref.play().catch(function() {
+          _tries++;
+          if (_tries < 5) {
+            setTimeout(_resume, 300 + _tries * 100);
+          } else {
+            _logEvt('retry-fail'); // 5회 소진 → 다음 트랙 강제
+            _done();
+          }
+        });
+      });
+    }
+    setTimeout(_resume, 200);
+  };
+
+  // stalled: 버퍼 공급 중단 (blob 잘림·네트워크·AudioContext 문제)
+  // 이전에 핸들러 없어서 stalled 발생 시 영구 교착 — 3s 후 강제 이동
+  audio.onstalled = function() {
+    _logEvt('stalled');
+    setTimeout(function() {
+      if (!_allPlaying || audio.ended || (!audio.paused && audio.currentTime !== _lastCT)) return;
+      _done();
+    }, 3000);
+  };
+
+  // abort / emptied: 비정상 종료 — 즉시 다음 트랙
+  audio.onabort   = function() { _logEvt('abort');   _done(); };
+  audio.onemptied = function() { _logEvt('emptied'); if (!audio.ended) _done(); };
+
+  audio.onended = function() { _done(); };
+  audio.onerror = function() { _logEvt('error'); _done(); };
+  return audio;
+}
+
+function _allPlayNext() {
+  if (!_allPlaying || _allIndex >= _allQueue.length) {
+    _allPlaying = false; _allQueue = []; _allIndex = 0;
+    _allSetLabel('🎧 전체강의'); _allSetPlaying(false);
+    _stopHeartbeat(); _stopKeepAlive();
+    return;
+  }
+  _allSetLabel('⏸ ' + (_allIndex+1) + '/' + _allQueue.length);
+  // 미리 다음+1, 다음+2 트랙 prefetch
+  _allPrefetch(_allIndex + 1); _allPrefetch(_allIndex + 2); _allPrefetch(_allIndex + 3);
+
+  function tryPlay() {
+    if (!_allPlaying) return;
+    var cached = _allCache[_allIndex];
+    if (cached === undefined || cached === null) {
+      setTimeout(tryPlay, 50); return;
+    }
+    if (cached === 'error') { _allIndex++; _allPlayNext(); return; }
+    _allAudio = _playBoosted(cached, function(){ _allIndex++; _allPlayNext(); });
+  }
+  tryPlay();
+}
+</script>
+
+<script>
+// 인쇄 전: lazy 이미지 강제 로드 + overflow 해제
+window.onbeforeprint = function() {
+  document.body.style.overflow = '';
+  document.querySelectorAll('img').forEach(function(img) {
+    img.loading = 'eager';
+    if (!img.complete || img.naturalWidth === 0) {
+      var s = img.src; img.src = ''; img.src = s;
+    }
+  });
+};
+</script>
+<!-- TTS Debug Panel -->
+<button id="_dbgToggle" onclick="(function(){var p=document.getElementById('_dbgPanel');var v=p.style.display!=='none';p.style.display=v?'none':'block';if(!v)_debugPanelRefresh();})()" style="position:fixed;bottom:8px;right:8px;z-index:9999;background:#1a1a1a;color:#00ff88;border:1px solid #00ff88;padding:5px 10px;font-size:12px;font-family:monospace;border-radius:4px;opacity:0.9;cursor:pointer;-webkit-tap-highlight-color:transparent;">&#128269;LOG</button>
+<div id="_dbgPanel" style="display:none;position:fixed;bottom:36px;right:0;width:100vw;max-width:440px;height:260px;background:#111;color:#00ff88;font-family:monospace;font-size:11px;z-index:9998;overflow:hidden;border-top:2px solid #00ff88;box-shadow:-2px -2px 8px rgba(0,255,136,0.2);">
+  <div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:#1a1a1a;border-bottom:1px solid #333;">
+    <span style="flex:1;font-weight:bold;font-size:12px;">&#9679; TTS Debug Log</span>
+    <button onclick="if(navigator.clipboard){navigator.clipboard.writeText(_debugLogs.join('\n')).then(function(){alert('Copied '+_debugLogs.length+' lines');});}else{alert(_debugLogs.join('\n'));}" style="background:#222;color:#00ff88;border:1px solid #00ff88;padding:3px 8px;font-size:11px;font-family:monospace;cursor:pointer;border-radius:2px;">COPY</button>
+    <button onclick="_debugLogs=[];_debugPanelRefresh();" style="background:#222;color:#ff5555;border:1px solid #ff5555;padding:3px 8px;font-size:11px;font-family:monospace;cursor:pointer;border-radius:2px;">CLR</button>
+    <button onclick="document.getElementById('_dbgPanel').style.display='none';" style="background:#222;color:#aaa;border:1px solid #555;padding:3px 8px;font-size:11px;font-family:monospace;cursor:pointer;border-radius:2px;">X</button>
+  </div>
+  <div id="_dbgBody" style="height:220px;overflow-y:auto;padding:4px 8px;line-height:1.5;"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --primary: 263 83% 35%;
+  --primary-foreground: 0 0% 100%;
+}
+
+body {
+  @apply bg-white text-zinc-900 antialiased;
+}

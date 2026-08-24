@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정보통신기사 실기 — 2026-08-15 SRS 훈련</title>
+<style>
+  body { background:#f8f9fa; color:#1a1a1a; font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif; line-height:1.65; margin:0; padding:24px; }
+  .wrap { max-width:860px; margin:0 auto; }
+  h1 { font-size:22px; margin:0 0 4px; }
+  .sub { color:#555; font-size:14px; margin-bottom:24px; }
+  .card { background:#fff; border:1px solid #e3e6ea; border-radius:10px; padding:20px 22px; margin-bottom:18px; }
+  .tag { display:inline-block; background:#eef3ff; color:#1a49b8; font-size:12px; font-weight:700; padding:3px 9px; border-radius:12px; margin-right:8px; }
+  .type { display:inline-block; background:#fff3e0; color:#a35b00; font-size:12px; padding:3px 9px; border-radius:12px; }
+  h2 { font-size:17px; margin:12px 0 10px; }
+  .q { background:#f4f6f8; border-left:4px solid #1a49b8; padding:12px 14px; border-radius:0 6px 6px 0; margin:10px 0 14px; }
+  details { border-top:1px dashed #ccc; padding-top:12px; }
+  summary { cursor:pointer; font-weight:700; color:#1a49b8; font-size:14px; }
+  ol, ul { margin:10px 0; padding-left:22px; }
+  .key { background:#fffbe6; border:1px solid #ffe08a; border-radius:6px; padding:10px 12px; margin-top:12px; font-size:14px; }
+  table { border-collapse:collapse; width:100%; margin-top:10px; font-size:14px; }
+  th, td { border:1px solid #dde1e6; padding:7px 9px; text-align:left; }
+  th { background:#f1f3f5; }
+  code { background:#f1f3f5; padding:2px 5px; border-radius:4px; }
+  .foot { color:#555; font-size:13px; margin-top:26px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📘 오늘의 SRS 훈련 — 2026년 8월 15일</h1>
+  <div class="sub">전 토픽 기한 도래(next_review 2026-08-12), 오답 이력 없음 → importance 5 중 4개 선정: <b>C01 · C04 · C06 · T03</b></div>
+
+  <div class="card">
+    <span class="tag">C01</span><span class="type">서술·열거형</span>
+    <h2>감리원 업무범위</h2>
+    <div class="q">Q1. 정보통신공사 감리원의 업무범위를 <b>5가지</b> 쓰시오. (각 2점, 10점)</div>
+    <details><summary>▶ 모범답안 보기</summary>
+      <p>아래 10가지 중 <b>어느 5가지</b>를 써도 정답:</p>
+      <ol>
+        <li>공사계획 및 공정표 검토</li>
+        <li>시공상세도면 검토·확인</li>
+        <li>설계도서의 현장 적합성 검토</li>
+        <li>공사가 설계도서대로 시공되는지의 확인</li>
+        <li>시공 진척상황(공정) 조사</li>
+        <li>사용자재의 규격 및 품질 검토·검사</li>
+        <li>재해예방 및 안전관리 지도</li>
+        <li>설계변경에 관한 사항 검토</li>
+        <li>하도급의 타당성 검토</li>
+        <li>준공도서 검토 및 준공확인</li>
+      </ol>
+      <div class="key">🔑 암기: <b>계획–도면–적합–준수–진척 / 자재–안전–변경–하도급–준공</b> (앞 5 = 착공 전, 뒤 5 = 시공~준공)</div>
+    </details>
+  </div>
+
+  <div class="card">
+    <span class="tag">C04</span><span class="type">수치암기형</span>
+    <h2>접지 / 절연저항 수치</h2>
+    <div class="q">
+      Q2. 다음 빈칸의 수치를 쓰시오.<br>
+      ① 정보통신설비 접지저항 일반 기준: (　　)Ω 이하<br>
+      ② 회선수 100회선 이하 등 예외 시: (　　)Ω 이하<br>
+      ③ ①의 경우 접지선 굵기: 지름 (　　)mm 이상<br>
+      ④ ②의 경우 접지선 굵기: 지름 (　　)mm 이상<br>
+      ⑤ 절연저항 측정전압 및 기준값: (　　)V DC → (　　)MΩ 이상
+    </div>
+    <details><summary>▶ 모범답안 보기</summary>
+      <table>
+        <tr><th>구분</th><th>접지저항</th><th>접지선 굵기</th></tr>
+        <tr><td>일반</td><td><b>10Ω 이하</b></td><td>지름 <b>2.6mm</b> 이상</td></tr>
+        <tr><td>예외(100회선 이하 등)</td><td><b>100Ω 이하</b></td><td>지름 <b>1.6mm</b> 이상</td></tr>
+      </table>
+      <p>⑤ 절연저항: <b>500V DC</b> 측정 → <b>10MΩ 이상</b></p>
+      <div class="key">🔑 <b>10Ω↔2.6mm / 100Ω↔1.6mm</b> 짝으로 암기. 저항 기준이 <u>느슨</u>해지면 전선도 <u>가늘어진다</u>. 절연은 "오백 볼트로 재서 십 메가".</div>
+    </details>
+  </div>
+
+  <div class="card">
+    <span class="tag">C06</span><span class="type">계산형</span>
+    <h2>가용성 / RAS</h2>
+    <div class="q">
+      Q3. 어떤 통신장비가 1년(8,760시간) 운용 중 <b>4회</b> 고장이 발생하였다. 총 정상동작시간은 <b>8,720시간</b>, 총 수리시간은 <b>40시간</b>이다.<br>
+      ① MTBF ② MTTR ③ 가용성 A[%] (소수 셋째자리까지) ④ RAS의 R·A·S가 각각 무엇이며 어떤 지표로 표현되는지 쓰시오.
+    </div>
+    <details><summary>▶ 모범답안 보기</summary>
+      <ul>
+        <li>① MTBF = 정상동작시간 합계 ÷ 고장횟수 = 8,720 ÷ 4 = <b>2,180시간</b></li>
+        <li>② MTTR = 총수리시간 합계 ÷ 고장횟수 = 40 ÷ 4 = <b>10시간</b></li>
+        <li>③ A = MTBF ÷ (MTBF + MTTR) × 100 = 2,180 ÷ 2,190 × 100 = <b>99.543%</b></li>
+        <li>④ <b>R</b>eliability(신뢰성) → MTBF / <b>A</b>vailability(가용성) → MTBF/(MTBF+MTTR) / <b>S</b>erviceability(보수성) → MTTR</li>
+      </ul>
+      <div class="key">🔑 함정 주의: MTBF 분자는 <u>총 운용시간이 아니라 정상동작시간</u>. 가용성 향상 = MTBF↑(이중화·예방보전) + MTTR↓(모듈화·원격감시·예비품 확보).</div>
+    </details>
+  </div>
+
+  <div class="card">
+    <span class="tag">T03</span><span class="type">열거·빈칸형</span>
+    <h2>SNMP</h2>
+    <div class="q">
+      Q4. SNMP에 대하여 답하시오.<br>
+      ① SNMP 메시지(PDU) 5가지를 쓰고 각각의 방향(관리자→에이전트 / 에이전트→관리자)을 표시하시오.<br>
+      ② 사용하는 전송계층 프로토콜과 포트번호는? (일반 / Trap)<br>
+      ③ 에이전트가 관리자에게 <u>능동적으로</u> 보고하는 메시지는?
+    </div>
+    <details><summary>▶ 모범답안 보기</summary>
+      <table>
+        <tr><th>메시지</th><th>방향</th><th>기능</th></tr>
+        <tr><td>GetRequest</td><td>관리자 → 에이전트</td><td>특정 MIB 객체 값 요청</td></tr>
+        <tr><td>GetNextRequest</td><td>관리자 → 에이전트</td><td>다음 객체 값 요청(테이블 순회)</td></tr>
+        <tr><td>SetRequest</td><td>관리자 → 에이전트</td><td>객체 값 설정·변경</td></tr>
+        <tr><td>GetResponse</td><td>에이전트 → 관리자</td><td>요청에 대한 응답</td></tr>
+        <tr><td>Trap</td><td>에이전트 → 관리자</td><td>이벤트 발생 시 비동기 통보</td></tr>
+      </table>
+      <p>② <b>UDP</b> 사용 — 일반 메시지 <b>161번</b>, Trap <b>162번</b>. 계층은 <b>응용(Application) 계층</b>.<br>
+      ③ <b>Trap</b> (유일한 에이전트 주도 단방향 메시지)</p>
+      <div class="key">🔑 NMS 4요소도 함께: <b>관리 스테이션(Manager) + 에이전트 + MIB + SNMP(프로토콜)</b>. 계층구조 <b>NE → EMS → NMS</b>.</div>
+    </details>
+  </div>
+
+  <div class="foot">
+    ⏭️ 다음 세션 예정: C03(공사원가), C11(단계별 감리), T01·T02·T04 등 잔여 기한 도래 토픽<br>
+    📅 총 16개 토픽 중 기한 도래 16개 / 오늘 출제 4개 / 보존 12개
+  </div>
+</div>
+</body>
+</html>
