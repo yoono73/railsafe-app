@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   allRailwayKingQuestions,
   ch81Questions,
@@ -173,7 +174,8 @@ async function storageClearProgress(): Promise<void> {
 }
 
 // ─── 메인 컴포넌트 ─────────────────────────────────────────────────
-export default function RailwayKingPage() {
+function RailwayKingInner() {
+  const searchParams = useSearchParams();
   const [mode, setMode] = useState<Mode>('home');
   const [subMode, setSubMode] = useState<SubMode>('기출변형');
   const [chapterFilter, setChapterFilter] = useState<ChapterFilter>('ALL');
@@ -209,6 +211,20 @@ export default function RailwayKingPage() {
       setInitDone(true);
     })();
   }, []);
+
+  // URL ?m= 파라미터로 모드 자동 진입
+  useEffect(() => {
+    if (!initDone) return;
+    const m = searchParams.get('m');
+    if (m === 'quiz') startNew('기출변형', 'ALL');
+    else if (m === 'wrong') startNew('오답풀기', 'ALL');
+    else if (m === 'new') {
+      setSubMode('신유형');
+      setMode('quiz'); // 신유형 화면 진입 (quiz 모드에서 신유형 처리)
+    }
+    // m 없으면 홈 화면 유지
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initDone]);
 
   const getPool = useCallback(async (sm: SubMode, cf: ChapterFilter): Promise<RailwayKingQuestion[]> => {
     if (sm === '오답풀기') {
@@ -626,5 +642,28 @@ export default function RailwayKingPage() {
     );
   }
 
+  // 신유형 모드 (데이터 없음)
+  if (mode === 'quiz' && subMode === '신유형' && questions.length === 0) {
+    return (
+      <div style={{ maxWidth:720, margin:'0 auto', padding:'40px 16px', fontFamily:'Malgun Gothic, sans-serif', background:'#fff', textAlign:'center' }}>
+        <div style={{ fontSize:'3em', marginBottom:16 }}>✨</div>
+        <div style={{ fontWeight:'bold', fontSize:'1.2em', marginBottom:8 }}>신유형문제 준비 중</div>
+        <div style={{ color:'#6b7280', marginBottom:24 }}>철도왕 신유형 문제가 곧 업데이트됩니다.</div>
+        <button onClick={goHome}
+          style={{ padding:'10px 28px', background:'#1d4ed8', color:'#fff', border:'none', borderRadius:10, fontWeight:'bold', cursor:'pointer' }}>
+          홈으로
+        </button>
+      </div>
+    );
+  }
+
   return null;
+}
+
+export default function RailwayKingPage() {
+  return (
+    <Suspense fallback={<div style={{ display:'flex', justifyContent:'center', alignItems:'center', minHeight:'50vh', fontFamily:'Malgun Gothic, sans-serif', color:'#6b7280' }}>불러오는 중...</div>}>
+      <RailwayKingInner />
+    </Suspense>
+  );
 }

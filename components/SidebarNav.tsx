@@ -1,8 +1,39 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
+
+// useSearchParams를 사용하는 부분을 별도 컴포넌트로 분리 (Suspense 바운더리 처리)
+function RailwayKingMenus({ pathname }: { pathname: string }) {
+  const searchParams = useSearchParams();
+  return (
+    <div className="pl-2 border-l border-amber-200 ml-7 mt-0.5 mb-0.5 flex flex-col gap-0.5">
+      <div className="text-[10px] text-amber-600 font-bold px-1 py-0.5">👑 철도왕</div>
+      {[
+        { m: 'quiz',  label: '기출변형문제' },
+        { m: 'new',   label: '신유형문제' },
+        { m: 'wrong', label: '오답문제 풀기' },
+      ].map(item => {
+        const isActive = pathname.startsWith('/kibchul/engineering/railway-king') && searchParams.get('m') === item.m;
+        return (
+          <Link
+            key={item.m}
+            href={`/kibchul/engineering/railway-king?m=${item.m}`}
+            className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+              isActive
+                ? 'bg-amber-100 text-amber-800 font-semibold'
+                : 'text-gray-400 hover:bg-gray-50 hover:text-amber-700'
+            }`}
+          >
+            <span className="text-[10px]">└</span>
+            <span>{item.label}</span>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
 
 const subjects = [
   { id: 1, name: '교통안전관리론', icon: '📊' },
@@ -84,18 +115,25 @@ export default function SidebarNav() {
         {openSection === 'theory' && (
           <div className="ml-4 flex flex-col gap-0.5">
             {subjects.map(s => (
-              <Link
-                key={s.id}
-                href={`/theory/${s.id}`}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
-                  pathname.startsWith(`/theory/${s.id}`)
-                    ? 'bg-purple-100 text-purple-800 font-semibold'
-                    : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
-                }`}
-              >
-                <span>{s.icon}</span>
-                <span className="truncate">{s.name}</span>
-              </Link>
+              <div key={s.id}>
+                <Link
+                  href={`/theory/${s.id}`}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
+                    pathname.startsWith(`/theory/${s.id}`)
+                      ? 'bg-purple-100 text-purple-800 font-semibold'
+                      : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'
+                  }`}
+                >
+                  <span>{s.icon}</span>
+                  <span className="truncate">{s.name}</span>
+                </Link>
+                {/* 철도공학 아래 철도왕 3개 메뉴 */}
+                {s.id === 4 && (
+                  <Suspense fallback={null}>
+                    <RailwayKingMenus pathname={pathname} />
+                  </Suspense>
+                )}
+              </div>
             ))}
           </div>
         )}
@@ -203,30 +241,17 @@ export default function SidebarNav() {
                   </Link>
                 )}
                 {s.id === 4 && (
-                  <>
-                    <Link
-                      href="/kibchul/engineering"
-                      className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
-                        pathname === '/kibchul/engineering'
-                          ? 'bg-amber-100 text-amber-800 font-semibold'
-                          : 'text-gray-400 hover:bg-gray-50 hover:text-amber-700'
-                      }`}
-                    >
-                      <span>└</span>
-                      <span>기출·복원 127문항 CBT</span>
-                    </Link>
-                    <Link
-                      href="/kibchul/engineering/railway-king"
-                      className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
-                        pathname.startsWith('/kibchul/engineering/railway-king')
-                          ? 'bg-amber-100 text-amber-800 font-semibold'
-                          : 'text-gray-400 hover:bg-gray-50 hover:text-amber-700'
-                      }`}
-                    >
-                      <span>└</span>
-                      <span>👑 철도왕 기출변형 CBT</span>
-                    </Link>
-                  </>
+                  <Link
+                    href="/kibchul/engineering"
+                    className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
+                      pathname === '/kibchul/engineering'
+                        ? 'bg-amber-100 text-amber-800 font-semibold'
+                        : 'text-gray-400 hover:bg-gray-50 hover:text-amber-700'
+                    }`}
+                  >
+                    <span>└</span>
+                    <span>기출·복원 127문항 CBT</span>
+                  </Link>
                 )}
                 {s.id === 2 && (
                   <Link
