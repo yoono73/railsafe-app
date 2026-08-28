@@ -203,17 +203,30 @@ export default function SidebarNav() {
                   </Link>
                 )}
                 {s.id === 4 && (
-                  <Link
-                    href="/kibchul/engineering"
-                    className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
-                      pathname.startsWith('/kibchul/engineering')
-                        ? 'bg-amber-100 text-amber-800 font-semibold'
-                        : 'text-gray-400 hover:bg-gray-50 hover:text-amber-700'
-                    }`}
-                  >
-                    <span>└</span>
-                    <span>기출·복원 127문항 CBT</span>
-                  </Link>
+                  <>
+                    <Link
+                      href="/kibchul/engineering"
+                      className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
+                        pathname === '/kibchul/engineering'
+                          ? 'bg-amber-100 text-amber-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-amber-700'
+                      }`}
+                    >
+                      <span>└</span>
+                      <span>기출·복원 127문항 CBT</span>
+                    </Link>
+                    <Link
+                      href="/kibchul/engineering/railway-king"
+                      className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
+                        pathname.startsWith('/kibchul/engineering/railway-king')
+                          ? 'bg-amber-100 text-amber-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-amber-700'
+                      }`}
+                    >
+                      <span>└</span>
+                      <span>👑 철도왕 기출변형 CBT</span>
+                    </Link>
+                  </>
                 )}
                 {s.id === 2 && (
                   <Link
