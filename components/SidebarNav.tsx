@@ -51,6 +51,7 @@ export default function SidebarNav() {
   // 현재 경로에 맞는 섹션 자동 열림
   const getInitialSection = (): 'theory' | 'story' | 'cbt' | 'kibchul' | null => {
     if (pathname.startsWith('/theory')) return 'theory';
+    if (pathname.startsWith('/quiz')) return 'theory';
     if (pathname.startsWith('/story')) return 'story';
     if (pathname.startsWith('/cbt')) return 'cbt';
     if (pathname.startsWith('/kibchul')) return 'kibchul';
@@ -141,41 +142,35 @@ export default function SidebarNav() {
                   <span>{s.icon}</span>
                   <span className="truncate">{s.name}</span>
                 </Link>
-                {/* 철도공학(id=4) 아래 기출변형·신유형 앵커 링크 */}
+                {/* 철도공학(id=4) 아래 기출변형·신유형 독립 페이지 링크 */}
                 {s.id === 4 && (
                   <div className="pl-2 border-l border-amber-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
                     <Link
-                      href="/theory/4#quiz-kibchul"
-                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-gray-400 hover:bg-gray-50 hover:text-amber-700 transition-colors"
+                      href="/quiz/4"
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+                        pathname.startsWith('/quiz/4')
+                          ? 'bg-amber-100 text-amber-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-amber-700'
+                      }`}
                     >
                       <span className="text-[10px]">└</span>
-                      <span>📝 기출변형문제</span>
-                    </Link>
-                    <Link
-                      href="/theory/4#quiz-newtype"
-                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-gray-400 hover:bg-gray-50 hover:text-purple-700 transition-colors"
-                    >
-                      <span className="text-[10px]">└</span>
-                      <span>🆕 신유형 예상문제</span>
+                      <span>📝 기출·신유형 문제</span>
                     </Link>
                   </div>
                 )}
-                {/* 교통안전법(id=2) 아래 기출변형·신유형 앵커 링크 */}
+                {/* 교통안전법(id=2) 아래 기출변형·신유형 독립 페이지 링크 */}
                 {s.id === 2 && (
                   <div className="pl-2 border-l border-green-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
                     <Link
-                      href="/theory/2#quiz-kibchul"
-                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-gray-400 hover:bg-gray-50 hover:text-green-700 transition-colors"
+                      href="/quiz/2"
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+                        pathname.startsWith('/quiz/2')
+                          ? 'bg-green-100 text-green-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-green-700'
+                      }`}
                     >
                       <span className="text-[10px]">└</span>
-                      <span>📝 기출변형문제</span>
-                    </Link>
-                    <Link
-                      href="/theory/2#quiz-newtype"
-                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-gray-400 hover:bg-gray-50 hover:text-purple-700 transition-colors"
-                    >
-                      <span className="text-[10px]">└</span>
-                      <span>🆕 신유형 예상문제</span>
+                      <span>📝 기출·신유형 문제</span>
                     </Link>
                   </div>
                 )}

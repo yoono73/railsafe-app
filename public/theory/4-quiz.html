@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>철도공학 기출변형·신유형 문제</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { margin:0; padding:16px; background:#f8f9fa; font-family:'Malgun Gothic','맑은 고딕',sans-serif; font-size:14px; line-height:1.7; color:#1a1a2e; }
+.part { margin-bottom:10px; }
+.part-title { background:#78350f; color:#fff; padding:10px 16px; border-radius:8px 8px 0 0; font-size:1.05em; font-weight:bold; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+.part-title:hover { background:#92400e; }
+.part-body { border:1px solid #fbbf24; border-top:none; border-radius:0 0 8px 8px; background:#fff; padding:0 16px 10px; }
+.qbank-item { border:1px solid #fde68a; border-radius:8px; padding:12px 14px; margin:10px 0; background:#fffbeb; }
+.qbank-num { font-size:.78em; font-weight:bold; color:#92400e; background:#fde68a; border-radius:4px; padding:1px 8px; margin-right:6px; }
+.qbank-tag { font-size:.75em; background:#fff3cd; color:#856404; border-radius:4px; padding:1px 7px; margin-left:4px; }
+.qbank-q { font-weight:bold; color:#1a1a2e; margin:6px 0 8px; font-size:.95em; }
+.qbank-choices { list-style:none; margin:0 0 8px; padding:0; }
+.qbank-choices li { padding:4px 10px 4px 24px; position:relative; color:#374151; font-size:.9em; cursor:pointer; border-radius:4px; transition:background .15s; margin:2px 0; }
+.qbank-choices li:hover { background:#fef9c3; }
+.qbank-choices li::before { content:attr(data-num); position:absolute; left:6px; color:#6b7280; font-size:.85em; }
+.qbank-choices li.ans-correct { background:#d1fae5; color:#065f46; font-weight:bold; }
+.qbank-choices li.ans-wrong { background:#fee2e2; color:#991b1b; text-decoration:line-through; }
+.qbank-reveal { border:none; background:#fde68a; color:#78350f; font-size:.82em; padding:4px 12px; border-radius:6px; cursor:pointer; font-family:inherit; font-weight:bold; }
+.qbank-reveal:hover { background:#fbbf24; }
+.qbank-explain { display:none; margin-top:8px; background:#fffbeb; border-left:3px solid #f59e0b; padding:7px 10px; border-radius:0 6px 6px 0; font-size:.87em; color:#78350f; }
+.qbank-wrong-note { display:block; background:#fee2e2; border-left:3px solid #dc2626; color:#b91c1c; padding:4px 8px; margin:4px 0; border-radius:4px; font-size:.9em; }
+.qbank-item.new-type { background:#faf5ff; border-color:#ddd6fe; }
+.qbank-num.new-type { background:#ede9fe; color:#5b21b6; }
+</style>
+</head>
+<body>
+<h2 style="color:#92400e;font-size:1.1em;margin-bottom:12px">🚆 철도공학 기출변형·신유형 문제</h2>
+<div class="part" id="quiz-kibchul" style="margin-top:12px">
+<div class="part-title" onclick="togglePart(this)" style="background:#92400e">
+  📝 기출변형문제 <span style="font-size:.8em;opacity:.85">· 철도공학 대표 15문항</span>
+  <span class="arrow">▲</span>
+</div>
+<div class="part-body" style="display:block; padding:14px 16px;">
+
+<div class="qbank-item">
+  <span class="qbank-num">Q01</span><span class="qbank-tag">최빈출</span>
+  <div class="qbank-q">철도의 특징으로 옳지 않은 것은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">신속성과 신뢰성이 높다</li>
+    <li data-num="②">대량수송과 에너지 효율이 높다</li>
+    <li data-num="③">기동성이 뛰어나 원하는 곳을 자유롭게 이동할 수 있다</li>
+    <li data-num="④">친환경성과 안전성이 높다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 기동성은 자동차의 특징이다. 철도는 정해진 레일 위만 운행하므로 기동성이 없다.
+    <span class="qbank-wrong-note">⚠️ 함정: "에너지효율성이 낮다"는 오답 — 철도는 에너지효율성이 높다.</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q02</span><span class="qbank-tag">법제</span>
+  <div class="qbank-q">철도의 법제상 분류에 해당하지 않는 것은?</div>
+  <ul class="qbank-choices" data-answer="4">
+    <li data-num="①">국유철도</li>
+    <li data-num="②">전용철도</li>
+    <li data-num="③">경편철도</li>
+    <li data-num="④">공영철도</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ④ 공영철도는 일반적 표현이지 법제상 공식 분류 명칭이 아니다. 법제상 분류는 국유·지방·경편·전용 4종이다.
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q03</span><span class="qbank-tag">수송수요</span>
+  <div class="qbank-q">수송수요 예측방법에 해당하지 않는 것은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">시계열분석법</li>
+    <li data-num="②">선로이용률법</li>
+    <li data-num="③">OD표 작성법</li>
+    <li data-num="④">중력모델법</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 선로이용률은 선로용량 산정 지표이지, 수송수요 예측방법이 아니다.
+    수송수요 예측방법: 시계열분석법·요인분석법·OD표 작성법·중력모델법
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q04</span><span class="qbank-tag">캔트·슬랙</span>
+  <div class="qbank-q">곡선구간에서 캔트(Cant)가 부족할 때 나타나는 현상은?</div>
+  <ul class="qbank-choices" data-answer="1">
+    <li data-num="①">외측 레일에 횡압이 증가하고 탈선 위험이 높아진다</li>
+    <li data-num="②">내측 레일에 횡압이 증가하고 탈선 위험이 높아진다</li>
+    <li data-num="③">승차감은 나빠지지만 탈선 위험은 없다</li>
+    <li data-num="④">캔트 부족은 고속 열차에서는 문제가 없다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ① 캔트 부족 → 원심력에 의해 외측(바깥쪽) 레일에 횡압 증가 → 탈선 위험 증가.
+    <span class="qbank-wrong-note">⚠️ 캔트 과다 → 내측 레일 과부하, 저속 불안정 (반대 방향임에 주의)</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q05</span><span class="qbank-tag">건축한계</span>
+  <div class="qbank-q">건축한계와 차량한계에 대한 설명으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">건축한계는 차량한계보다 작다</li>
+    <li data-num="②">건축한계는 차량이 안전하게 운행할 수 있도록 지장물을 설치하지 않는 공간이다</li>
+    <li data-num="③">차량한계는 선로구조물의 최소 공간 기준이다</li>
+    <li data-num="④">건축한계와 차량한계는 동일한 개념이다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 건축한계: 차량이 안전 통행할 수 있도록 지장물 설치를 금지한 공간(건축물·설비 등 진입 금지 구역).
+    차량한계: 차량 단면의 최대 허용 크기. 건축한계 &gt; 차량한계 (여유 공간 존재).
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q06</span><span class="qbank-tag">CTC·ATC</span>
+  <div class="qbank-q">CTC(열차집중제어장치)에 대한 설명으로 옳지 않은 것은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">여러 역의 신호·선로 전환기를 중앙에서 원격 제어한다</li>
+    <li data-num="②">열차 위치를 중앙제어소에서 실시간으로 파악할 수 있다</li>
+    <li data-num="③">CTC는 열차에 속도를 자동으로 제어하는 기능이 있다</li>
+    <li data-num="④">일반 철도에서 다수 역을 통합 관제하는 데 사용된다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 자동 속도제어는 ATC(자동열차제어장치)의 기능이다.
+    CTC: 중앙에서 다수 역을 원격 통합 제어(신호·선로전환기).
+    ATC: 열차 속도를 자동으로 제어하며 과속 시 자동 제동.
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q07</span><span class="qbank-tag">건널목</span>
+  <div class="qbank-q">건널목의 종류 중 경보기만 설치하고 차단기는 없는 것은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">제1종 건널목</li>
+    <li data-num="②">제2종 건널목</li>
+    <li data-num="③">제3종 건널목</li>
+    <li data-num="④">제4종 건널목</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 제2종 건널목: 경보기만 설치 (차단기 없음).
+    제1종: 차단기+경보기+간수. 제3종: 경보기·차단기 없이 표지만.
+    <span class="qbank-wrong-note">⚠️ 최빈출: 1·2·3종 구분이 자주 출제됨</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q08</span><span class="qbank-tag">선로 4종</span>
+  <div class="qbank-q">본선(本線)에 대한 설명으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="1">
+    <li data-num="①">열차 운전에 상용하는 선로로 열차 운행의 주요 경로이다</li>
+    <li data-num="②">열차나 차량을 일시 유치하거나 입환하는 데 사용하는 선로이다</li>
+    <li data-num="③">본선 이외의 선로를 총칭하며 측선이라고도 한다</li>
+    <li data-num="④">두 노선이 만나는 역에서 방향 전환을 위한 선로이다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ① 본선: 열차 운전에 상용(常用)하는 주요 선로.
+    ② 측선(유치선·입환선). 측선은 본선 이외 모든 선로.
+    <span class="qbank-wrong-note">⚠️ 함정: "부본선"(2선 이상의 본선 중 보조역할)을 본선으로 혼동하지 말 것</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q09</span><span class="qbank-tag">RAMS</span>
+  <div class="qbank-q">RAMS의 4요소에 해당하지 않는 것은?</div>
+  <ul class="qbank-choices" data-answer="4">
+    <li data-num="①">신뢰성(Reliability)</li>
+    <li data-num="②">가용성(Availability)</li>
+    <li data-num="③">유지보수성(Maintainability)</li>
+    <li data-num="④">경제성(Economy)</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ④ RAMS = Reliability(신뢰성) · Availability(가용성) · Maintainability(유지보수성) · Safety(안전성).
+    경제성(Economy)은 RAMS 4요소가 아니다.
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q10</span><span class="qbank-tag">동력방식</span>
+  <div class="qbank-q">동력분산 방식(EMU)의 장점으로 옳지 않은 것은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">기동·제동 성능이 우수하다</li>
+    <li data-num="②">축중이 작아 선로에 미치는 충격이 적다</li>
+    <li data-num="③">유지보수가 동력집중식보다 간단하다</li>
+    <li data-num="④">고장 시 나머지 동력으로 운행 계속이 가능하다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 동력분산식은 동력장치가 여러 차량에 분산되어 있어 유지보수가 더 복잡하고 어렵다.
+    유지보수 간단 → 동력집중식(기관차 견인)의 장점이다.
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q11</span><span class="qbank-tag">레일</span>
+  <div class="qbank-q">장대레일(Long Rail)에 대한 설명으로 옳지 않은 것은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">이음매가 없거나 적어 승차감이 향상된다</li>
+    <li data-num="②">온도 변화에 따른 복진 현상이 발생하지 않는다</li>
+    <li data-num="③">소음·진동이 줄어들고 유지보수 비용이 감소한다</li>
+    <li data-num="④">레일에 온도응력이 발생하므로 좌굴 방지 대책이 필요하다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 장대레일은 온도 변화에 따른 열팽창으로 복진(레일 이동 현상)이 발생하며, 좌굴 위험도 있다.
+    이것이 장대레일의 단점이다.
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q12</span><span class="qbank-tag">분기기</span>
+  <div class="qbank-q">분기기의 구성요소가 아닌 것은?</div>
+  <ul class="qbank-choices" data-answer="4">
+    <li data-num="①">포인트(전철기)</li>
+    <li data-num="②">리드(Lead)</li>
+    <li data-num="③">크로싱(Crossing)</li>
+    <li data-num="④">침목(Sleeper)</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ④ 침목은 궤도 구조의 구성요소이지 분기기의 구성요소가 아니다.
+    분기기 3요소: 포인트(전철기) · 리드(Lead) · 크로싱(Crossing)
+    <span class="qbank-wrong-note">⚠️ 최빈출: 분기기 3요소 암기 필수</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q13</span><span class="qbank-tag">주행저항</span>
+  <div class="qbank-q">열차의 주행저항 중 출발저항에 대한 설명으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="1">
+    <li data-num="①">정지 상태에서 열차가 움직이기 시작할 때 발생하는 저항이다</li>
+    <li data-num="②">속도의 제곱에 비례하여 증가하는 공기저항이다</li>
+    <li data-num="③">경사 구간에서 발생하는 구배저항이다</li>
+    <li data-num="④">곡선 구간에서 발생하는 저항이다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ① 출발저항: 정지→출발 시 정지마찰력 극복에 필요한 저항. 속도 증가 후에는 소멸.
+    ②공기저항(v²비례), ③구배저항, ④곡선저항은 별도의 저항 종류이다.
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q14</span><span class="qbank-tag">폐색방식</span>
+  <div class="qbank-q">통표폐색식에 대한 설명으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">신호기 현시에 의해 자동으로 폐색구간을 관리하는 방식이다</li>
+    <li data-num="②">전화기로 양 역 역장이 협의 후 서면 통보로 운전 허가를 주는 방식이다</li>
+    <li data-num="③">1구간 1개의 통표(토큰)를 소지한 열차만 그 구간을 운행할 수 있는 방식이다</li>
+    <li data-num="④">열차 검지장치를 이용해 자동으로 폐색구간을 제어하는 방식이다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 통표폐색식: 각 구간마다 1개의 통표(토큰)를 발행하고, 그 통표를 소지한 열차만 해당 구간 운행 허용.
+    ①자동폐색식, ②지도통신식, ④자동폐색식.
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q15</span><span class="qbank-tag">신호보안</span>
+  <div class="qbank-q">ATP(자동열차방호장치)와 ATS(자동열차정지장치)의 차이로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">ATS는 속도를 자동으로 제어하고, ATP는 신호 위반 시 열차를 자동 정지시킨다</li>
+    <li data-num="②">ATP는 연속적으로 속도를 감시·제어하고, ATS는 신호 위반 시 자동 정지만 한다</li>
+    <li data-num="③">ATP와 ATS는 동일한 기능을 하며 명칭만 다르다</li>
+    <li data-num="④">ATS는 고속철도 전용이고, ATP는 일반철도 전용이다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② ATP: 지속적(연속) 속도 감시·자동제어 — 더 안전하고 고기능. ATS: 신호 위반(적신호 통과) 시 자동 정지 — 점속 감시.
+    <span class="qbank-wrong-note">⚠️ ATP ⊃ ATS (ATP가 ATS보다 상위 개념)</span>
+  </div>
+</div>
+
+</div><!-- .part-body -->
+</div><!-- #quiz-kibchul -->
+
+<div class="part" id="quiz-newtype" style="margin-top:8px">
+<div class="part-title" onclick="togglePart(this)" style="background:#5b21b6">
+  🆕 신유형 예상문제 <span style="font-size:.8em;opacity:.85">· 10문항</span>
+  <span class="arrow">▲</span>
+</div>
+<div class="part-body" style="display:block; padding:14px 16px;">
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N01</span><span class="qbank-tag">민간투자</span>
+  <div class="qbank-q">민간투자 방식 중 BTL(Build-Transfer-Lease)에 대한 설명으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="1">
+    <li data-num="①">민간이 건설 후 소유권을 정부에 이전하고, 정부가 시설을 임차하여 민간에 임대료를 지급한다</li>
+    <li data-num="②">민간이 건설 후 소유권을 정부에 이전하고, 통행료 수입으로 투자비를 회수한다</li>
+    <li data-num="③">민간이 건설·소유·운영하다가 일정 기간 후 국가에 이전하는 방식이다</li>
+    <li data-num="④">정부가 건설하고 민간에 임대하여 운영하는 방식이다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ① BTL: 민간 건설 → 정부에 소유권 이전 → 정부가 임대료 지급(사용자 수익이 불안정한 학교·군시설 등에 적용).
+    ②는 BTO(Build-Transfer-Operate): 사용자 요금으로 회수.
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N02</span><span class="qbank-tag">견인정수</span>
+  <div class="qbank-q">견인정수(牽引定數)에 대한 설명으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">열차 1편성의 최대 좌석 수를 나타내는 수치이다</li>
+    <li data-num="②">기관차가 견인할 수 있는 최대 속도를 나타낸다</li>
+    <li data-num="③">기관차 1량이 특정 구간에서 견인할 수 있는 최대 화차 환산량수이다</li>
+    <li data-num="④">1개 폐색구간에서 운행 가능한 최대 열차 수이다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 견인정수: 특정 선구(구배·곡선 등 선로 조건)에서 기관차 1량이 견인할 수 있는 최대 화차 환산 량수.
+    선구별로 구배저항 등을 고려해 산정한다.
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N03</span><span class="qbank-tag">궤간</span>
+  <div class="qbank-q">우리나라 일반철도의 표준궤간은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">1,000mm</li>
+    <li data-num="②">1,435mm</li>
+    <li data-num="③">1,520mm</li>
+    <li data-num="④">1,676mm</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 표준궤간: 1,435mm (우리나라 일반철도·고속철도 공통).
+    협궤: 1,000mm 이하. 광궤: 1,520mm(러시아), 1,676mm(인도).
+    <span class="qbank-wrong-note">⚠️ 1,435mm 암기 필수 — 수치 변형 출제 빈번</span>
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N04</span><span class="qbank-tag">궤도좌굴</span>
+  <div class="qbank-q">궤도좌굴(Track Buckling)의 주요 원인으로 가장 거리가 먼 것은?</div>
+  <ul class="qbank-choices" data-answer="4">
+    <li data-num="①">하절기 레일 온도 상승으로 인한 압축력 증가</li>
+    <li data-num="②">도상 횡저항력 부족</li>
+    <li data-num="③">장대레일 구간의 온도응력 집중</li>
+    <li data-num="④">동절기 레일 수축으로 인한 이음매 간격 증가</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ④ 동절기 레일 수축으로 이음매 간격 증가는 레일 파단·단선 원인이지, 좌굴(압축에 의한 변형)과는 반대 현상이다.
+    궤도좌굴: 고온 → 압축력 → 레일이 옆으로 휘어지는 현상.
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N05</span><span class="qbank-tag">사행동</span>
+  <div class="qbank-q">철도 차량의 사행동(蛇行動, Hunting)에 대한 설명으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="1">
+    <li data-num="①">차량이 좌우로 진동하며 뱀처럼 움직이는 현상으로 고속에서 심화된다</li>
+    <li data-num="②">차량이 상하로 진동하는 현상으로 레일 이음매에서 발생한다</li>
+    <li data-num="③">곡선 구간에서 차량이 외측으로 쏠리는 현상이다</li>
+    <li data-num="④">차량이 전후 방향으로 흔들리는 현상으로 제동 시 발생한다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ① 사행동: 차륜의 테이퍼(원뿔형 단면) 때문에 고속 주행 시 좌우 진동이 증폭되어 뱀처럼 움직이는 현상.
+    임계속도 초과 시 자려진동으로 불안정해짐.
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N06</span><span class="qbank-tag">슬래브궤도</span>
+  <div class="qbank-q">슬래브궤도(Slab Track)의 특징으로 옳지 않은 것은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">자갈도상이 필요 없어 유지보수가 적다</li>
+    <li data-num="②">소음·진동 차단을 위한 방진장치가 필요하다</li>
+    <li data-num="③">초기 건설비용이 자갈도상 궤도보다 저렴하다</li>
+    <li data-num="④">고속철도 터널 구간에 많이 사용된다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 슬래브궤도는 초기 건설비용이 자갈도상 궤도보다 비싸다. 다만 유지보수 비용이 적어 장기적으로 유리하다.
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N07</span><span class="qbank-tag">신호기 분류</span>
+  <div class="qbank-q">신호기의 조작상 분류에 해당하지 않는 것은?</div>
+  <ul class="qbank-choices" data-answer="4">
+    <li data-num="①">자동신호기</li>
+    <li data-num="②">반자동신호기</li>
+    <li data-num="③">수동신호기(종사원 조작)</li>
+    <li data-num="④">완목신호기</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ④ 완목신호기는 구조상 분류(형태·외관 기준)에 해당한다.
+    조작상 분류: 자동·반자동·수동(종사원 조작).
+    구조상 분류: 완목식·색등식·등열식 등.
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N08</span><span class="qbank-tag">고속선 제원</span>
+  <div class="qbank-q">우리나라 고속선(고속철도 전용선)의 설계속도 기준은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">200km/h</li>
+    <li data-num="②">250km/h</li>
+    <li data-num="③">350km/h</li>
+    <li data-num="④">400km/h</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 우리나라 고속선 설계속도: 350km/h (영업최고속도 300km/h).
+    <span class="qbank-wrong-note">⚠️ 설계속도(350) ≠ 영업최고속도(300) 구분 필수</span>
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N09</span><span class="qbank-tag">온도축력</span>
+  <div class="qbank-q">장대레일의 온도축력(온도응력)에 대한 설명으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">온도가 상승하면 레일에 인장력이 발생한다</li>
+    <li data-num="②">온도가 상승하면 레일에 압축력이 발생하고, 하강하면 인장력이 발생한다</li>
+    <li data-num="③">레일 길이가 길수록 온도축력은 작아진다</li>
+    <li data-num="④">온도축력은 레일 단면적에 반비례한다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 장대레일: 고온 → 팽창하려 하지만 도상에 구속 → 압축력 발생(좌굴 위험).
+    저온 → 수축하려 하지만 구속 → 인장력 발생(레일 파단 위험).
+    온도축력 P = E × A × α × ΔT (단면적에 비례, 길이와 무관)
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N10</span><span class="qbank-tag">속도프로파일</span>
+  <div class="qbank-q">열차 속도프로파일에서 타행(惰行, Coasting) 구간에 대한 설명으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="4">
+    <li data-num="①">동력을 최대로 투입하여 가속하는 구간이다</li>
+    <li data-num="②">제동력을 최대로 투입하여 감속하는 구간이다</li>
+    <li data-num="③">일정 속도를 유지하기 위해 동력과 제동을 균형 있게 조절하는 구간이다</li>
+    <li data-num="④">동력을 끊고 관성으로 주행하는 구간으로 에너지 절약 효과가 있다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ④ 타행(코스팅): 동력 차단 후 관성으로만 주행. 저항에 의해 서서히 감속.
+    에너지 절약 구간. 속도프로파일: 기동가속 → 타행 → 제동 순서.
+  </div>
+</div>
+
+</div><!-- .part-body -->
+</div><!-- #quiz-newtype -->
+<script>
+function revealAnswer(btn){
+  var item=btn.closest('.qbank-item');
+  var ul=item.querySelector('.qbank-choices');
+  var ans=parseInt(ul.dataset.answer,10);
+  ul.querySelectorAll('li').forEach(function(li,i){
+    if(i+1===ans) li.classList.add('ans-correct');
+    else li.classList.add('ans-wrong');
+  });
+  var exp=item.querySelector('.qbank-explain');
+  exp.style.display='block';
+  btn.style.display='none';
+}
+function togglePart(el){
+  const body=el.nextElementSibling; const arrow=el.querySelector('.arrow');
+  if(body.style.display==='none'){body.style.display='block';arrow.textContent='▲';}
+  else{body.style.display='none';arrow.textContent='▼';}
+}
+</script>
+</body>
+</html>
