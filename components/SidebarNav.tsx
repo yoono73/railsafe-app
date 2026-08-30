@@ -141,6 +141,12 @@ export default function SidebarNav() {
                   <span>{s.icon}</span>
                   <span className="truncate">{s.name}</span>
                 </Link>
+                {/* 철도공학(id=4) 아래 철도왕 메뉴 */}
+                {s.id === 4 && (
+                  <Suspense fallback={null}>
+                    <RailwayKingMenus pathname={pathname} />
+                  </Suspense>
+                )}
                 {/* 교통안전법(id=2) 아래 기출변형·신유형 앵커 링크 */}
                 {s.id === 2 && (
                   <div className="pl-2 border-l border-green-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
