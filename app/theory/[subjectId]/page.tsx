@@ -1,6 +1,6 @@
 'use client';
 import { useParams, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const subjects = [
   { id: 1, name: '교통안전관리론', icon: '📊' },
@@ -23,6 +23,15 @@ export default function TheoryPage() {
   const router = useRouter();
   const subjectId = Number(params.subjectId);
   const isValid = VALID_IDS.includes(subjectId);
+
+  // URL 해시(#quiz-kibchul 등)를 감지해서 iframe에 전달
+  const [urlHash, setUrlHash] = useState('');
+  useEffect(() => {
+    setUrlHash(window.location.hash);
+    const onHashChange = () => setUrlHash(window.location.hash);
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
 
   // 유효하지 않은 ID → 대시보드로 리다이렉트
   useEffect(() => {
@@ -89,7 +98,7 @@ export default function TheoryPage() {
 
       {/* 핵심정리 HTML iframe — flex-1로 뷰포트 맞춤, 내부 스크롤 */}
       <iframe
-        src={`/theory/${subjectId}.html`}
+        src={`/theory/${subjectId}.html${urlHash}`}
         className="flex-1 w-full border-none min-h-0"
         title={`${subjectNames[subjectId]} 핵심정리`}
         loading="lazy"
