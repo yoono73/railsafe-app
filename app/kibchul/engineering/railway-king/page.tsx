@@ -212,17 +212,14 @@ function RailwayKingInner() {
     })();
   }, []);
 
-  // URL ?m= 파라미터로 모드 자동 진입
+  // URL ?m= 파라미터로 홈 화면 subMode 미리 선택 (자동 시작 안 함)
   useEffect(() => {
     if (!initDone) return;
     const m = searchParams.get('m');
-    if (m === 'quiz') startNew('기출변형', 'ALL');
-    else if (m === 'wrong') startNew('오답풀기', 'ALL');
-    else if (m === 'new') {
-      setSubMode('신유형');
-      setMode('quiz'); // 신유형 화면 진입 (quiz 모드에서 신유형 처리)
-    }
-    // m 없으면 홈 화면 유지
+    if (m === 'quiz') setSubMode('기출변형');
+    else if (m === 'wrong') setSubMode('오답풀기');
+    else if (m === 'new') setSubMode('신유형');
+    // mode는 'home' 유지 — 홈 화면에서 시작 버튼 클릭
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initDone]);
 
