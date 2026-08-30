@@ -1,12 +1,19 @@
--- 철도용어: concepts 테이블 term_* 필드 6개 추가
-ALTER TABLE concepts
-  ADD COLUMN IF NOT EXISTS term_ko         VARCHAR(200),
-  ADD COLUMN IF NOT EXISTS term_en         VARCHAR(300),
-  ADD COLUMN IF NOT EXISTS term_abbr       VARCHAR(50),
-  ADD COLUMN IF NOT EXISTS term_definition TEXT,
-  ADD COLUMN IF NOT EXISTS term_section    VARCHAR(50),
-  ADD COLUMN IF NOT EXISTS term_subsection VARCHAR(50);
+-- 철도용어 사전: terms 테이블 신규 생성
+CREATE TABLE IF NOT EXISTS terms (
+  id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  term_ko         VARCHAR(200) NOT NULL,
+  term_en         VARCHAR(300),
+  term_abbr       VARCHAR(50),
+  term_definition TEXT,
+  term_section    VARCHAR(50)  NOT NULL,
+  term_subsection VARCHAR(50)  NOT NULL,
+  source_html     VARCHAR(20),
+  memo            TEXT,
+  created_at      TIMESTAMPTZ DEFAULT NOW()
+);
 
-CREATE INDEX IF NOT EXISTS idx_concepts_term_section
-  ON concepts (term_section, term_subsection)
-  WHERE term_section IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_terms_section
+  ON terms (term_section, term_subsection);
+
+CREATE INDEX IF NOT EXISTS idx_terms_ko
+  ON terms (term_ko);

@@ -1,17 +1,20 @@
 /** 철도용어 타입 정의 */
 
 export interface Term {
-  /** concepts.id — 기존 UUID 재사용 */
+  /** terms.id — UUID PK */
   id: string;
-  /** 기존 concept_code 그대로 사용 */
-  concept_code: string;
-  subject_id: number;
   term_ko: string;
   term_en?: string | null;
   term_abbr?: string | null;
   term_definition?: string | null;
+  /** 대분류 slug */
   term_section: string;
+  /** 중분류 slug */
   term_subsection: string;
+  /** 출처 HTML 파일 (예: "4.html") — 선택 */
+  source_html?: string | null;
+  memo?: string | null;
+  created_at?: string | null;
 }
 
 export interface TermSectionMeta {
