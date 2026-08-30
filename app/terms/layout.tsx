@@ -3,11 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import SidebarNav from '@/components/SidebarNav';
 import MobileNav from '@/components/MobileNav';
 
-export default async function TermsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function TermsLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
@@ -29,7 +25,6 @@ export default async function TermsLayout({
           </form>
         </div>
       </header>
-
       <div className="flex flex-1 overflow-hidden min-h-0">
         <SidebarNav />
         <MobileNav />
