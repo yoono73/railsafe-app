@@ -141,6 +141,25 @@ export default function SidebarNav() {
                   <span>{s.icon}</span>
                   <span className="truncate">{s.name}</span>
                 </Link>
+                {/* 교통안전법(id=2) 아래 기출변형·신유형 앵커 링크 */}
+                {s.id === 2 && (
+                  <div className="pl-2 border-l border-green-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
+                    <Link
+                      href="/theory/2#quiz-kibchul"
+                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-gray-400 hover:bg-gray-50 hover:text-green-700 transition-colors"
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>📝 기출변형문제</span>
+                    </Link>
+                    <Link
+                      href="/theory/2#quiz-newtype"
+                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-gray-400 hover:bg-gray-50 hover:text-purple-700 transition-colors"
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>🆕 신유형 예상문제</span>
+                    </Link>
+                  </div>
+                )}
               </div>
             ))}
           </div>
