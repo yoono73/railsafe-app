@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { INDUSTRY_EXAM, IndustryQuestion, INDUSTRY_PART_LABEL, Part } from '@/lib/industry-exam-data';
-import { saveAttempt } from '@/lib/kibchul-attempts';
+import { saveAttempt, removeAttempt, loadWrongAttempts } from '@/lib/kibchul-attempts';
 
 // ─── 상수 ──────────────────────────────────────────────────────
 const GRADE_COLOR: Record<string, string> = {
@@ -36,7 +36,7 @@ function saveWrongEntry(q: IndustryQuestion, selected: number) {
 
 type Mode = 'home' | 'quiz' | 'result';
 type FilterGrade = 'ALL' | 'S' | 'A+' | 'A';
-type FilterPart = 0 | 1 | 2 | 3 | 4;
+type FilterPart = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 interface Answer {
   qid: string;
@@ -90,13 +90,45 @@ export default function IndustryExamPage() {
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [savedProgress, setSavedProgress] = useState<SavedProgress | null>(null);
 
-  // 마운트 시 저장된 진행상태 확인
+  // 마운트 시 저장된 진행상태 확인 + Supabase 오답 동기화
   useEffect(() => {
     const p = loadProgress();
     if (p && p.questionIds.length > 0 && p.current < p.questionIds.length) {
       setSavedProgress(p);
     }
+    (async () => {
+      const { data } = await loadWrongAttempts(INDUSTRY_SUBJECT_ID);
+      if (!data.length) return;
+      const qMap = new Map(INDUSTRY_EXAM.map(q => [q.id, q]));
+      const fromServer = data.flatMap(r => {
+        const q = qMap.get(r.kibchul_qid);
+        if (!q) return [];
+        return [{ subjectId: INDUSTRY_SUBJECT_ID, sessionId: r.session_id ?? '', questionId: r.kibchul_qid,
+          question: q.question, choices: [...q.choices], answer: r.answer ?? q.answer,
+          selected: r.selected ?? 0, explanation: q.explanation ?? '', caution: q.caution ?? '',
+          savedAt: new Date().toISOString() }];
+      });
+      if (!fromServer.length) return;
+      const existing: { subjectId: number }[] = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
+      const others = existing.filter(e => e.subjectId !== INDUSTRY_SUBJECT_ID);
+      localStorage.setItem(LS_WRONG, JSON.stringify([...others, ...fromServer]));
+    })();
   }, []);
+
+  // 퀴즈 진행 중 자동저장 (브라우저 뒤로가기 대응)
+  useEffect(() => {
+    if (mode === 'quiz' && questions.length > 0) {
+      saveProgress({
+        questionIds: questions.map(q => q.id),
+        current,
+        answers,
+        filterGrade,
+        filterPart,
+        shuffleQ,
+        savedAt: new Date().toISOString(),
+      });
+    }
+  }, [mode, questions, current, answers, filterGrade, filterPart, shuffleQ]);
 
   // 필터링
   const filtered = INDUSTRY_EXAM.filter(q => {
@@ -135,7 +167,10 @@ export default function IndustryExamPage() {
   }, [savedProgress]);
 
   const handleSelect = (idx: number) => {
-    if (revealed) return;
+    if (revealed) {
+      setRevealed(false);
+      setAnswers(prev => prev.filter(a => a.qid !== questions[current].id));
+    }
     setSelected(idx);
   };
 
@@ -146,6 +181,7 @@ export default function IndustryExamPage() {
     const correct = selected === q.answer;
     setAnswers(prev => [...prev, { qid: q.id, selected, correct }]);
     if (!correct) saveWrongEntry(q, selected);
+    else removeAttempt(q.id).catch(() => {});
   };
 
   const handleNext = () => {
@@ -250,8 +286,8 @@ export default function IndustryExamPage() {
         </div>
 
         {/* PART 통계 */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8, marginBottom: 24 }}>
-          {([1, 2, 3, 4] as Part[]).map(p => {
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8, marginBottom: 24 }}>
+          {([1, 2, 3, 4, 5, 6] as Part[]).map(p => {
             const cnt = INDUSTRY_EXAM.filter(q => q.part === p).length;
             const label = INDUSTRY_PART_LABEL[p];
             return (
@@ -289,7 +325,7 @@ export default function IndustryExamPage() {
                 style={{ padding: '5px 14px', borderRadius: 6, border: `2px solid ${filterPart === 0 ? '#312e81' : '#d1d5db'}`, background: filterPart === 0 ? '#312e81' : '#fff', color: filterPart === 0 ? '#fff' : '#374151', fontWeight: filterPart === 0 ? 'bold' : 'normal', cursor: 'pointer', fontSize: '.88em' }}>
                 전체 ({INDUSTRY_EXAM.length})
               </button>
-              {([1, 2, 3, 4] as Part[]).map(p => (
+              {([1, 2, 3, 4, 5, 6] as Part[]).map(p => (
                 <button key={p} onClick={() => setFilterPart(p)}
                   style={{ padding: '5px 14px', borderRadius: 6, border: `2px solid ${filterPart === p ? '#312e81' : '#d1d5db'}`, background: filterPart === p ? '#312e81' : '#fff', color: filterPart === p ? '#fff' : '#374151', fontWeight: filterPart === p ? 'bold' : 'normal', cursor: 'pointer', fontSize: '.88em' }}>
                   P{p} ({INDUSTRY_EXAM.filter(q => q.part === p).length})
