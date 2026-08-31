@@ -6,7 +6,11 @@
  *   definition_short, visual_type, confusing_terms
  *
  * termCode: UUID가 아닌 concept_code 사용
+ * visual_type: 'TEXT' | 'VIS_GROUP' | 'VIS_SINGLE' | 'REUSE' | 'HOLD'
+ * confusing_terms: concept_code 배열 (용어명 아님) / Supabase: text[]
  */
+
+export type VisualType = 'TEXT' | 'VIS_GROUP' | 'VIS_SINGLE' | 'REUSE' | 'HOLD';
 
 export interface Term {
   /** concepts.concept_code — 문자열 코드 PK */
@@ -23,10 +27,10 @@ export interface Term {
   term_order?: number | null;
   /** 한 줄 요약 정의 (시험용) */
   definition_short?: string | null;
-  /** 시각 자료 유형 (table / formula / diagram / null) */
-  visual_type?: string | null;
-  /** 혼동하기 쉬운 관련 용어 */
-  confusing_terms?: string | null;
+  /** 시각 자료 유형 */
+  visual_type?: VisualType | null;
+  /** 혼동하기 쉬운 관련 용어의 concept_code 배열 (Supabase: text[]) */
+  confusing_terms?: string[] | null;
   /** 출처 HTML 파일 (예: "4.html") */
   source_html?: string | null;
   memo?: string | null;
@@ -44,50 +48,53 @@ export interface TermSubsectionMeta {
   label: string;
 }
 
-/** 4개 절 × 4개 중분류 = 16개 */
+/**
+ * 4절 / 16개 중분류 — 철도개론 제1장 목차 기준
+ * 제1절 5개 + 제2절 4개 + 제3절 3개 + 제4절 4개 = 16개
+ */
 export const TERM_SECTIONS: TermSectionMeta[] = [
   {
-    slug: 'track',
-    label: '선로·시설',
-    icon: '🛤️',
-    subsections: [
-      { slug: 'rail-structure', label: '레일·선로 구조' },
-      { slug: 'curve-grade',   label: '곡선·구배·부대시설' },
-      { slug: 'bridge-tunnel', label: '교량·터널·토공' },
-      { slug: 'station',       label: '역·시설물' },
-    ],
-  },
-  {
-    slug: 'vehicle',
-    label: '차량·전기',
+    slug: 'train-operation',
+    label: '열차·차량 및 열차운영',
     icon: '🚆',
     subsections: [
-      { slug: 'traction',     label: '동력·견인·전기방식' },
-      { slug: 'brake',        label: '제동 장치' },
-      { slug: 'car-body',     label: '차체·대차·연결기' },
-      { slug: 'performance',  label: '차량성능·저항' },
+      { slug: 'train-vehicle',   label: '열차 및 차량' },
+      { slug: 'track-station',   label: '선로 및 정거장' },
+      { slug: 'operation-mode',  label: '운전방식 및 운전형태' },
+      { slug: 'signal-control',  label: '신호 및 제어' },
+      { slug: 'safety-device',   label: '안전장치 및 운전보안' },
     ],
   },
   {
-    slug: 'signal',
-    label: '신호·운전',
+    slug: 'brake-block',
+    label: '제동·속도·폐색·제어',
+    icon: '🛑',
+    subsections: [
+      { slug: 'brake-speed',       label: '제동장치 및 운전속도' },
+      { slug: 'block-safety',      label: '폐색 및 열차 간 안전 확보' },
+      { slug: 'drive-control',     label: '운전제어 및 관제' },
+      { slug: 'coupling-consist',  label: '차량 연결 및 편성' },
+    ],
+  },
+  {
+    slug: 'signal-switch',
+    label: '신호기·선로전환기·운전보안설비',
     icon: '🚦',
     subsections: [
-      { slug: 'signal-device', label: '신호기·폐색방식' },
-      { slug: 'protection',    label: '열차방호·ATC·ATS' },
-      { slug: 'driving',       label: '운전 기초·운행계획' },
-      { slug: 'incident',      label: '사고·장애 대응' },
+      { slug: 'signal-type',       label: '신호기 및 신호' },
+      { slug: 'switch-shunting',   label: '선로전환기 및 입환' },
+      { slug: 'safety-equipment',  label: '운전보안설비' },
     ],
   },
   {
-    slug: 'regulation',
-    label: '법규·안전',
-    icon: '📋',
+    slug: 'control-metro',
+    label: '관제운영·운전명령·도시철도',
+    icon: '🏙️',
     subsections: [
-      { slug: 'safety-law',   label: '철도안전법 용어' },
-      { slug: 'industry-law', label: '철도산업기본법 용어' },
-      { slug: 'traffic-law',  label: '교통안전법 용어' },
-      { slug: 'standard',     label: '기술 기준·규격' },
+      { slug: 'control-operation', label: '관제운영' },
+      { slug: 'order-timetable',   label: '운전명령 및 시격표' },
+      { slug: 'metro-specific',    label: '도시철도 특화 용어' },
+      { slug: 'unmanned',          label: '무인운전' },
     ],
   },
 ];
