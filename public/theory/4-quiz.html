@@ -6,31 +6,47 @@
 <title>철도공학 기출변형·신유형 문제</title>
 <style>
 * { box-sizing:border-box; margin:0; padding:0; }
-body { margin:0; padding:16px; background:#f8f9fa; font-family:'Malgun Gothic','맑은 고딕',sans-serif; font-size:14px; line-height:1.7; color:#1a1a2e; }
+body { margin:0; padding:16px; background:#f8f9fa; font-family:'Malgun Gothic','맑은 고딕',sans-serif; font-size:16px; line-height:1.75; color:#1a1a2e; }
 .part { margin-bottom:10px; }
-.part-title { background:#78350f; color:#fff; padding:10px 16px; border-radius:8px 8px 0 0; font-size:1.05em; font-weight:bold; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+.part-title { background:#78350f; color:#fff; padding:10px 16px; border-radius:8px 8px 0 0; font-size:1.1em; font-weight:bold; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
 .part-title:hover { background:#92400e; }
 .part-body { border:1px solid #fbbf24; border-top:none; border-radius:0 0 8px 8px; background:#fff; padding:0 16px 10px; }
-.qbank-item { border:1px solid #fde68a; border-radius:8px; padding:12px 14px; margin:10px 0; background:#fffbeb; }
-.qbank-num { font-size:.78em; font-weight:bold; color:#92400e; background:#fde68a; border-radius:4px; padding:1px 8px; margin-right:6px; }
-.qbank-tag { font-size:.75em; background:#fff3cd; color:#856404; border-radius:4px; padding:1px 7px; margin-left:4px; }
-.qbank-q { font-weight:bold; color:#1a1a2e; margin:6px 0 8px; font-size:.95em; }
-.qbank-choices { list-style:none; margin:0 0 8px; padding:0; }
-.qbank-choices li { padding:4px 10px 4px 24px; position:relative; color:#374151; font-size:.9em; cursor:pointer; border-radius:4px; transition:background .15s; margin:2px 0; }
-.qbank-choices li:hover { background:#fef9c3; }
-.qbank-choices li::before { content:attr(data-num); position:absolute; left:6px; color:#6b7280; font-size:.85em; }
+.qbank-item { border:1px solid #fde68a; border-radius:8px; padding:14px 16px; margin:12px 0; background:#fffbeb; }
+.qbank-num { font-size:.88em; font-weight:bold; color:#92400e; background:#fde68a; border-radius:4px; padding:1px 8px; margin-right:6px; }
+.qbank-tag { font-size:.85em; background:#fff3cd; color:#856404; border-radius:4px; padding:1px 7px; margin-left:4px; }
+.qbank-q { font-weight:bold; color:#1a1a2e; margin:8px 0 10px; font-size:1.05em; }
+.qbank-choices { list-style:none; margin:0 0 10px; padding:0; }
+.qbank-choices li { padding:6px 10px 6px 28px; position:relative; color:#374151; font-size:1em; cursor:pointer; border-radius:4px; transition:background .15s; margin:3px 0; }
+.qbank-choices li:hover:not(.ans-correct):not(.ans-wrong) { background:#fef9c3; }
+.qbank-choices li::before { content:attr(data-num); position:absolute; left:8px; color:#6b7280; font-size:.9em; }
+.qbank-choices li.selected { background:#dbeafe; border:1px solid #93c5fd; color:#1d4ed8; font-weight:bold; }
 .qbank-choices li.ans-correct { background:#d1fae5; color:#065f46; font-weight:bold; }
 .qbank-choices li.ans-wrong { background:#fee2e2; color:#991b1b; text-decoration:line-through; }
-.qbank-reveal { border:none; background:#fde68a; color:#78350f; font-size:.82em; padding:4px 12px; border-radius:6px; cursor:pointer; font-family:inherit; font-weight:bold; }
+.qbank-reveal { border:none; background:#fde68a; color:#78350f; font-size:.92em; padding:6px 16px; border-radius:6px; cursor:pointer; font-family:inherit; font-weight:bold; }
 .qbank-reveal:hover { background:#fbbf24; }
-.qbank-explain { display:none; margin-top:8px; background:#fffbeb; border-left:3px solid #f59e0b; padding:7px 10px; border-radius:0 6px 6px 0; font-size:.87em; color:#78350f; }
-.qbank-wrong-note { display:block; background:#fee2e2; border-left:3px solid #dc2626; color:#b91c1c; padding:4px 8px; margin:4px 0; border-radius:4px; font-size:.9em; }
+.qbank-explain { display:none; margin-top:10px; background:#fffbeb; border-left:3px solid #f59e0b; padding:9px 12px; border-radius:0 6px 6px 0; font-size:.97em; color:#78350f; }
+.qbank-wrong-note { display:block; background:#fee2e2; border-left:3px solid #dc2626; color:#b91c1c; padding:5px 10px; margin:5px 0; border-radius:4px; font-size:1em; }
 .qbank-item.new-type { background:#faf5ff; border-color:#ddd6fe; }
 .qbank-num.new-type { background:#ede9fe; color:#5b21b6; }
+/* 오답 재도전 바 */
+#wrong-bar { display:none; align-items:center; gap:10px; background:#fee2e2; border:1px solid #fca5a5; border-radius:8px; padding:10px 16px; margin-bottom:14px; flex-wrap:wrap; }
+#wrong-count-badge { background:#ef4444; color:#fff; border-radius:20px; padding:2px 10px; font-weight:bold; font-size:.9em; }
+.wrong-mode-btn { border:none; border-radius:6px; padding:6px 14px; font-size:.92em; cursor:pointer; font-weight:bold; font-family:inherit; transition:background .15s; }
+#btn-wrong-only { background:#ef4444; color:#fff; }
+#btn-wrong-only:hover { background:#dc2626; }
+#btn-reset-all { background:#e2e8f0; color:#374151; }
+#btn-reset-all:hover { background:#cbd5e1; }
 </style>
 </head>
 <body>
-<h2 style="color:#92400e;font-size:1.1em;margin-bottom:12px">🚆 철도공학 기출변형·신유형 문제</h2>
+<h2 style="color:#92400e;font-size:1.15em;margin-bottom:10px">🚆 철도공학 기출변형·신유형 문제</h2>
+<!-- 오답 재도전 바 -->
+<div id="wrong-bar">
+  <span>❌ 틀린 문제</span>
+  <span id="wrong-count-badge">0</span>개
+  <button class="wrong-mode-btn" id="btn-wrong-only" onclick="toggleWrongMode()">틀린 문제만 보기</button>
+  <button class="wrong-mode-btn" id="btn-reset-all" onclick="resetAllItems()">전체 초기화</button>
+</div>
 <div class="part" id="quiz-kibchul" style="margin-top:12px">
 <div class="part-title" onclick="togglePart(this)" style="background:#92400e">
   📝 기출변형문제 <span style="font-size:.8em;opacity:.85">· 철도공학 대표 15문항</span>
@@ -456,22 +472,97 @@ body { margin:0; padding:16px; background:#f8f9fa; font-family:'Malgun Gothic','
 </div><!-- .part-body -->
 </div><!-- #quiz-newtype -->
 <script>
+/* ===== 오답 추적 ===== */
+var wrongIds = new Set();
+var wrongModeOn = false;
+
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.qbank-item').forEach(function(item, i){
+    item.dataset.qid = String(i);
+    item.querySelectorAll('.qbank-choices li').forEach(function(li){
+      li.addEventListener('click', function(){
+        if(li.classList.contains('ans-correct') || li.classList.contains('ans-wrong')) return;
+        item.querySelectorAll('.qbank-choices li').forEach(function(l){ l.classList.remove('selected'); });
+        li.classList.add('selected');
+      });
+    });
+  });
+});
+
 function revealAnswer(btn){
-  var item=btn.closest('.qbank-item');
-  var ul=item.querySelector('.qbank-choices');
-  var ans=parseInt(ul.dataset.answer,10);
-  ul.querySelectorAll('li').forEach(function(li,i){
-    if(i+1===ans) li.classList.add('ans-correct');
+  var item = btn.closest('.qbank-item');
+  var ul = item.querySelector('.qbank-choices');
+  var ans = parseInt(ul.dataset.answer, 10);
+  var lis = ul.querySelectorAll('li');
+  var selected = ul.querySelector('li.selected');
+  var selectedIdx = selected ? Array.from(lis).indexOf(selected) + 1 : 0;
+
+  lis.forEach(function(li, i){
+    if(i+1 === ans) li.classList.add('ans-correct');
     else li.classList.add('ans-wrong');
   });
-  var exp=item.querySelector('.qbank-explain');
-  exp.style.display='block';
-  btn.style.display='none';
+
+  item.querySelector('.qbank-explain').style.display = 'block';
+  btn.style.display = 'none';
+
+  if(selectedIdx !== ans){
+    wrongIds.add(item.dataset.qid);
+  } else {
+    wrongIds.delete(item.dataset.qid);
+  }
+  updateWrongBar();
 }
+
+function updateWrongBar(){
+  var bar = document.getElementById('wrong-bar');
+  document.getElementById('wrong-count-badge').textContent = wrongIds.size;
+  bar.style.display = wrongIds.size > 0 ? 'flex' : 'none';
+  if(wrongModeOn) applyWrongMode();
+}
+
+function toggleWrongMode(){
+  wrongModeOn = !wrongModeOn;
+  var btn = document.getElementById('btn-wrong-only');
+  if(wrongModeOn){
+    btn.textContent = '✅ 전체 문제 보기';
+    btn.style.background = '#16a34a';
+    document.querySelectorAll('.part-body').forEach(function(pb){ pb.style.display = 'block'; });
+  } else {
+    btn.textContent = '틀린 문제만 보기';
+    btn.style.background = '#ef4444';
+  }
+  applyWrongMode();
+}
+
+function applyWrongMode(){
+  document.querySelectorAll('.qbank-item').forEach(function(item){
+    item.style.display = (wrongModeOn && !wrongIds.has(item.dataset.qid)) ? 'none' : '';
+  });
+}
+
+function resetAllItems(){
+  if(!confirm('모든 문제를 초기화하시겠습니까?')) return;
+  document.querySelectorAll('.qbank-item').forEach(function(item){
+    item.querySelectorAll('.qbank-choices li').forEach(function(li){
+      li.classList.remove('ans-correct','ans-wrong','selected');
+    });
+    item.querySelector('.qbank-explain').style.display = 'none';
+    var btn = item.querySelector('.qbank-reveal');
+    if(btn) { btn.style.display = ''; }
+    item.style.display = '';
+  });
+  wrongIds.clear();
+  wrongModeOn = false;
+  var modeBtn = document.getElementById('btn-wrong-only');
+  modeBtn.textContent = '틀린 문제만 보기';
+  modeBtn.style.background = '#ef4444';
+  updateWrongBar();
+}
+
 function togglePart(el){
-  const body=el.nextElementSibling; const arrow=el.querySelector('.arrow');
-  if(body.style.display==='none'){body.style.display='block';arrow.textContent='▲';}
-  else{body.style.display='none';arrow.textContent='▼';}
+  const body = el.nextElementSibling; const arrow = el.querySelector('.arrow');
+  if(body.style.display === 'none'){ body.style.display = 'block'; arrow.textContent = '▲'; }
+  else { body.style.display = 'none'; arrow.textContent = '▼'; }
 }
 </script>
 </body>
