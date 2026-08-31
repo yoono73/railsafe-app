@@ -22,11 +22,12 @@ export default function TermsSubsectionPage() {
     setLoading(true);
     const supabase = createClient();
     supabase
-      .from('terms')
+      .from('concepts')
       .select('*')
       .eq('term_section', section)
       .eq('term_subsection', subsection)
-      .order('term_ko')
+      .order('term_order', { ascending: true, nullsFirst: false })
+      .order('term_ko', { ascending: true })
       .then(({ data }) => {
         setTerms((data as Term[]) || []);
         setLoading(false);
@@ -81,8 +82,8 @@ export default function TermsSubsectionPage() {
           ) : (
             terms.map((term) => (
               <Link
-                key={term.id}
-                href={`/terms/${section}/${subsection}/${term.id}`}
+                key={term.concept_code}
+                href={`/terms/${section}/${subsection}/${term.concept_code}`}
                 className="block bg-white rounded-xl border border-gray-100 shadow-sm px-4 py-3 mb-2 hover:border-purple-200 hover:shadow transition-all"
               >
                 <div className="flex items-baseline gap-2 flex-wrap">
@@ -94,8 +95,10 @@ export default function TermsSubsectionPage() {
                     <span className="text-xs text-gray-400">{term.term_en}</span>
                   )}
                 </div>
-                {term.term_definition && (
-                  <p className="text-xs text-gray-500 mt-1 line-clamp-2">{term.term_definition}</p>
+                {(term.definition_short || term.term_definition) && (
+                  <p className="text-xs text-gray-500 mt-1 line-clamp-2">
+                    {term.definition_short || term.term_definition}
+                  </p>
                 )}
               </Link>
             ))

@@ -11,7 +11,7 @@ export default function TermsIndexPage() {
           <span>📖</span> 철도용어 사전
         </h1>
         <p className="text-xs text-gray-400 mt-0.5">
-          철도교통안전관리자 시험 핵심 용어 — 5대 분류 · 13개 중분류
+          철도교통안전관리자 시험 핵심 용어 — 4대 분류 · 16개 중분류
         </p>
       </div>
       <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl">

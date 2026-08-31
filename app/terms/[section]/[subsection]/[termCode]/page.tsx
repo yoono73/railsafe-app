@@ -21,9 +21,9 @@ export default function TermDetailPage() {
   useEffect(() => {
     const supabase = createClient();
     supabase
-      .from('terms')
+      .from('concepts')
       .select('*')
-      .eq('id', termCode)
+      .eq('concept_code', termCode)
       .single()
       .then(({ data }) => {
         setTerm(data as Term | null);
@@ -94,10 +94,22 @@ export default function TermDetailPage() {
                   <p className="text-sm font-mono text-purple-600">{term.term_abbr}</p>
                 </div>
               )}
+              {term.definition_short && (
+                <div className="bg-purple-50 rounded-lg px-3 py-2 border border-purple-100">
+                  <p className="text-xs text-purple-500 mb-1">한 줄 정의</p>
+                  <p className="text-sm text-purple-800 font-medium">{term.definition_short}</p>
+                </div>
+              )}
               {term.term_definition && (
                 <div>
-                  <p className="text-xs text-gray-400 mb-1">정의</p>
+                  <p className="text-xs text-gray-400 mb-1">상세 정의</p>
                   <p className="text-sm text-gray-700 leading-relaxed">{term.term_definition}</p>
+                </div>
+              )}
+              {term.confusing_terms && (
+                <div className="bg-orange-50 rounded-lg px-3 py-2 border border-orange-100">
+                  <p className="text-xs text-orange-500 mb-1">⚠️ 혼동 주의</p>
+                  <p className="text-xs text-orange-700">{term.confusing_terms}</p>
                 </div>
               )}
               {term.memo && (
