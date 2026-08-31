@@ -132,20 +132,6 @@ export default function SidebarNav() {
           <div className="ml-4 flex flex-col gap-0.5">
             {subjects.map(s => (
               <div key={s.id}>
-                {/* 철도공학(id=4) 앞에 철도용어 삽입 */}
-                {s.id === 4 && (
-                  <Link
-                    href="/terms"
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
-                      pathname.startsWith('/terms')
-                        ? 'bg-teal-100 text-teal-800 font-semibold'
-                        : 'text-gray-500 hover:bg-gray-50 hover:text-teal-700'
-                    }`}
-                  >
-                    <span>📖</span>
-                    <span className="truncate">철도용어</span>
-                  </Link>
-                )}
                 <Link
                   href={`/theory/${s.id}`}
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
