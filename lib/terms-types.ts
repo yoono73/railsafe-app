@@ -29,6 +29,13 @@ export interface Term {
   definition_short?: string | null;
   /** 시각 자료 유형 */
   visual_type?: VisualType | null;
+  /**
+   * 대표 이미지 ID (visuals 테이블 PK, nullable UUID).
+   * 상세 화면에서 대표 이미지 1장을 빠르게 렌더링하기 위한 용도.
+   * 다대다 관계는 향후 concept_visuals 테이블에서 처리.
+   * FK는 visuals 테이블 생성 시 추가 예정.
+   */
+  primary_visual_id?: string | null;
   /** 혼동하기 쉬운 관련 용어의 concept_code 배열 (Supabase: text[]) */
   confusing_terms?: string[] | null;
   /** 출처 HTML 파일 (예: "4.html") */
