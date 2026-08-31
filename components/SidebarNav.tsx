@@ -143,23 +143,7 @@ export default function SidebarNav() {
                   <span>{s.icon}</span>
                   <span className="truncate">{s.name}</span>
                 </Link>
-                {/* 철도공학(id=4) 아래 기출변형·신유형 독립 페이지 링크 */}
-                {s.id === 4 && (
-                  <div className="pl-2 border-l border-amber-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
-                    <Link
-                      href="/quiz/4"
-                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
-                        pathname.startsWith('/quiz/4')
-                          ? 'bg-amber-100 text-amber-800 font-semibold'
-                          : 'text-gray-400 hover:bg-gray-50 hover:text-amber-700'
-                      }`}
-                    >
-                      <span className="text-[10px]">└</span>
-                      <span>📝 기출·신유형 문제</span>
-                    </Link>
-                  </div>
-                )}
-                {/* 교통안전법(id=2) 아래 기출변형·신유형 독립 페이지 링크 */}
+                {/* 교통안전법(id=2) 아래 기출·신유형 링크 */}
                 {s.id === 2 && (
                   <div className="pl-2 border-l border-green-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
                     <Link
@@ -175,8 +159,45 @@ export default function SidebarNav() {
                     </Link>
                   </div>
                 )}
+                {/* 철도공학(id=4) 아래 기출·신유형 링크 */}
+                {s.id === 4 && (
+                  <div className="pl-2 border-l border-amber-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
+                    <Link
+                      href="/quiz/4"
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+                        pathname.startsWith('/quiz/4')
+                          ? 'bg-amber-100 text-amber-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-amber-700'
+                      }`}
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>📝 기출·신유형 문제</span>
+                    </Link>
+                  </div>
+                )}
+                {/* 철도산업기본법(id=5) 아래 기출 CBT 링크 */}
+                {s.id === 5 && (
+                  <div className="pl-2 border-l border-indigo-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
+                    <Link
+                      href="/kibchul/industry"
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+                        pathname.startsWith('/kibchul/industry')
+                          ? 'bg-indigo-100 text-indigo-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-indigo-700'
+                      }`}
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>📝 기출 106문항 CBT</span>
+                    </Link>
+                  </div>
+                )}
               </div>
             ))}
+            {/* 철도왕 교재 CBT */}
+            <div className="h-px bg-gray-100 my-1 mx-1" />
+            <Suspense fallback={null}>
+              <RailwayKingMenus pathname={pathname} />
+            </Suspense>
           </div>
         )}
 
@@ -412,7 +433,7 @@ export default function SidebarNav() {
           오답노트
         </Link>
 
-        {/* 오답노트 — 북마크 */}
+        {/* 북마크 */}
         <Link
           href="/bookmarks"
           className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
