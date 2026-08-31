@@ -1,21 +1,303 @@
 {
-  "last_updated": "2026-08-12",
+  "last_updated": "2026-08-31",
   "topics": {
-    "C01": {"name": "감리원 업무범위", "importance": 5, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "C02": {"name": "설계도서/공사계획서", "importance": 4, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "C03": {"name": "공사원가 계산", "importance": 5, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "C04": {"name": "접지 수치", "importance": 5, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "C05": {"name": "인증(초고속/홈네트워크)", "importance": 3, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "C06": {"name": "가용성/RAS 계산", "importance": 5, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "C07": {"name": "감리결과 통보/배치기준", "importance": 4, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "C08": {"name": "신안관경", "importance": 4, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "C09": {"name": "유지보수(PM/CM/예측)", "importance": 3, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "C10": {"name": "설계단계 감리", "importance": 3, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "C11": {"name": "단계별 감리업무", "importance": 5, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "T01": {"name": "NMS", "importance": 4, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "T02": {"name": "ARQ", "importance": 4, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "T03": {"name": "SNMP", "importance": 5, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "T04": {"name": "OTDR", "importance": 4, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []},
-    "T05": {"name": "ICMP", "importance": 3, "correct_streak": 0, "total_correct": 0, "total_wrong": 0, "last_result": null, "last_tested": null, "next_review": "2026-08-12", "history": []}
-  }
+    "C01": {
+      "name": "감리원 업무범위",
+      "importance": 5,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "C02": {
+      "name": "설계도서/공사계획서",
+      "importance": 4,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "C03": {
+      "name": "공사원가 계산",
+      "importance": 5,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "C04": {
+      "name": "접지 수치",
+      "importance": 5,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "C05": {
+      "name": "인증(초고속/홈네트워크)",
+      "importance": 3,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "C06": {
+      "name": "가용성/RAS 계산",
+      "importance": 5,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "C07": {
+      "name": "감리결과 통보/배치기준",
+      "importance": 4,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "C08": {
+      "name": "신안관경",
+      "importance": 4,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "C09": {
+      "name": "유지보수(PM/CM/예측)",
+      "importance": 3,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "C10": {
+      "name": "설계단계 감리",
+      "importance": 3,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "C11": {
+      "name": "단계별 감리업무",
+      "importance": 5,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "T01": {
+      "name": "NMS",
+      "importance": 4,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "T02": {
+      "name": "ARQ",
+      "importance": 4,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "T03": {
+      "name": "SNMP",
+      "importance": 5,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "T04": {
+      "name": "OTDR",
+      "importance": 4,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    },
+    "T05": {
+      "name": "ICMP",
+      "importance": 3,
+      "correct_streak": 0,
+      "total_correct": 0,
+      "total_wrong": 0,
+      "last_result": null,
+      "last_tested": null,
+      "next_review": "2026-08-12",
+      "history": []
+    }
+  },
+  "pending_sessions": [
+    {
+      "date": "2026-08-22",
+      "topics": [
+        "C01",
+        "C03",
+        "C04",
+        "C06"
+      ],
+      "status": "awaiting_user_scores",
+      "sheet": "JBTS_daily_2026-08-22.html",
+      "note": "무인 실행 - 사용자 채점 미입력, streak 미변경"
+    },
+    {
+      "date": "2026-08-23",
+      "topics": [
+        "C11",
+        "T03",
+        "C02",
+        "C07"
+      ],
+      "status": "awaiting_user_scores",
+      "sheet": "JBTS_daily_2026-08-23.html",
+      "note": "무인 실행 - 사용자 채점 미입력, streak 미변경. 8/22 미채점분과 중복 회피 위해 중요도 높은 미출제 토픽으로 선정"
+    },
+    {
+      "date": "2026-08-24",
+      "topics": [
+        "C08",
+        "T01",
+        "T02",
+        "T04"
+      ],
+      "status": "awaiting_user_scores",
+      "sheet": "JBTS_daily_2026-08-24.html",
+      "note": "무인 실행 - 사용자 채점 미입력, streak 미변경. 8/22·8/23 미채점분과 중복 회피 위해 중요도 4 이상 미출제 토픽으로 선정. 미출제 잔여: C05, C09, C10, T05(모두 중요도 3)"
+    },
+    {
+      "date": "2026-08-25",
+      "topics": [
+        "C05",
+        "C09",
+        "C10",
+        "T05"
+      ],
+      "status": "awaiting_user_scores",
+      "sheet": "JBTS_daily_2026-08-25.html",
+      "note": "무인 실행 - 사용자 채점 미입력, streak 미변경. 마지막 미출제 4토픽 출제로 전체 16토픽 1순회 완료. 다음 세션(8/26)부터는 미출제 토픽이 없으므로 중요도 5 토픽(C01·C03·C04·C06·C11·T03) 재출제로 순환 예정."
+    },
+    {
+      "date": "2026-08-26",
+      "topics": [
+        "C01",
+        "C03",
+        "C04",
+        "C06"
+      ],
+      "status": "awaiting_user_scores",
+      "sheet": "JBTS_daily_2026-08-26.html",
+      "note": "무인 실행 - 사용자 채점 미입력, streak 미변경. 2순회 시작: 중요도 5 토픽 중 가장 오래된 출제분(8/22)인 C01·C03·C04·C06 재배정. 8/22와 동일 유형 회피 위해 출제형식 전면 교체(C01 서술+빈칸 / C03 역산형 / C04 현장판정형 / C06 서술+비교계산). 다음 세션(8/27) 예정: C11·T03 재출제 + 중요도 4 토픽."
+    },
+    {
+      "date": "2026-08-27",
+      "topics": [
+        "C11",
+        "T03",
+        "C02",
+        "C07"
+      ],
+      "status": "awaiting_user_scores",
+      "sheet": "JBTS_daily_2026-08-27.html",
+      "note": "무인 실행 - 사용자 채점 미입력, streak 미변경. 2순회 2일차: 8/23 배치(C11·T03·C02·C07) 재출제. 8/23과 동일 유형 회피 위해 형식 교체(C11 열거형→분류형 / T03 수치암기형→시나리오 판독형 / C02 빈칸형→열거·구분형 / C07 수치암기형→현장 적용형). 다음 세션(8/28) 예정: 채점 입력 시 오답 토픽 최우선, 미입력 시 8/24 배치(C08·T01·T02·T04) 유형 교체 재출제."
+    },
+    {
+      "date": "2026-08-28",
+      "topics": [
+        "C08",
+        "T01",
+        "T02",
+        "T04"
+      ],
+      "status": "awaiting_user_scores",
+      "sheet": "JBTS_daily_2026-08-28.html",
+      "note": "무인 실행 - 사용자 채점 미입력, streak 미변경. 2순회 3일차: 8/24 배치(C08·T01·T02·T04) 재출제. 8/24와 동일 유형 회피 위해 형식 전면 교체(C08 열거형→사례 분류형 / T01 서술+빈칸형→NE·EMS·NMS 계층구조 시나리오형+FCAPS / T02 서술비교형→계산형(Stop&Wait 효율·GBN/SR 재전송 개수) / T04 서술+파형해석형→수치 계산형(L=c·t/2n·손실계수)). 다음 세션(8/29) 예정: 채점 입력 시 오답 토픽 최우선, 미입력 시 8/25 배치(C05·C09·C10·T05) 유형 교체 재출제."
+    },
+    {
+      "date": "2026-08-29",
+      "topics": [
+        "C05",
+        "C09",
+        "C10",
+        "T05"
+      ],
+      "status": "awaiting_user_scores",
+      "sheet": "JBTS_daily_2026-08-29.html",
+      "note": "무인 실행 - 사용자 채점 미입력, streak 미변경. 2순회 4일차: 8/25 배치(C05·C09·C10·T05) 재출제로 2순회 1바퀴 완료(8/26~8/29). 8/25와 동일 유형 회피 위해 형식 전면 교체(C05 수치암기+빈칸형→현장 판정형(4개 현장 인증제도·등급·처리기간 판정) / C09 서술비교형→사례 분류형(6개 조치를 PM/CM/PdM 분류) / C10 열거형→단계 구분+빈칸형(설계단계 vs 시공단계 구분 + 설계도서 5가지·시공 4대관리 빈칸) / T05 서술+열거형→진단 시나리오 판독형(ping/tracert 출력 → ICMP 메시지 타입 판독)). 누적 미채점 8세션(8/22~8/29). 다음 세션(8/30) 예정: 채점 입력 시 오답 토픽 최우선, 미입력 시 3순회 시작으로 중요도 5 토픽(C01·C03·C04·C06) 3차 유형 교체 재출제."
+    },
+    {
+      "date": "2026-08-30",
+      "topics": [
+        "C01",
+        "C03",
+        "C04",
+        "C06"
+      ],
+      "status": "awaiting_user_scores",
+      "sheet": "JBTS_daily_2026-08-30.html",
+      "note": "무인 실행 - 사용자 채점 미입력, streak 미변경. 3순회 1일차: 중요도 5 토픽(C01·C03·C04·C06) 3차 재출제. 1순회(8/22)·2순회(8/26) 유형 모두 회피 위해 형식 전면 교체(C01 열거형·서술+빈칸형→업무범위 해당/비해당 판정형 8항목(직접시공·임의설계변경 오답 함정 포함) / C03 정산형·역산형→원가계산서 표 완성형(가~마, VAT·도급금액까지 68,799,500원) / C04 수치암기형·현장판정형→측정 판정+접지선 굵기 선정+단면적 환산 혼합형(A동 8Ω합격/B동 60Ω합격/C동 35Ω불합격) / C06 서술+비교계산→운용로그 산출형(MTBF 2185h·MTTR 5h·A 99.77%) + 2대 병렬 이중화 가용도 99.9995%·연간 다운타임 2.74분). 누적 미채점 9세션(8/22~8/30). 다음 세션(8/31) 예정: 채점 입력 시 오답 토픽 최우선, 미입력 시 8/27 배치(C11·T03·C02·C07) 3차 유형 교체 재출제."
+    },
+    {
+      "date": "2026-08-31",
+      "topics": [
+        "C11",
+        "T03",
+        "C02",
+        "C07"
+      ],
+      "status": "awaiting_user_scores",
+      "sheet": "JBTS_daily_2026-08-31.html",
+      "note": "무인 실행 - 사용자 채점 미입력, streak 미변경. 3순회 2일차: 8/27 배치(C11·T03·C02·C07) 3차 재출제. 1순회(8/23)·2순회(8/27) 유형 모두 회피 위해 형식 전면 교체(C11 열거형·분류형→감리일지 8건 단계판정(착공/시공/준공/인계인수) + 시공 4대관리 역매칭, 기성검사=준공단계·시공계획서검토=착공단계 함정 포함 / T03 수치암기형·시나리오 판독형→NMS 설정 오류 진단형 7항목 중 5개소 정정(TCP→UDP, 폴링포트 162→161, Trap포트 161→162, Trap방향 역전, GetResponse→GetNextRequest) + MIB·애플리케이션계층은 정답 항목 / C02 빈칸형·열거구분형→제출서류 접수 체크리스트 누락·비해당 판정형(설계도서 누락=공사계획서/비해당=감리원배치계획서, 공사계획서 누락=공정관리계획/비해당=하도급계약서) / C07 수치암기형·현장 적용형→4개 현장 등급 역산 + 완공 후 7일 통보기한 날짜계산(4.8억=초급 함정, 18억=중급)). 누적 미채점 10세션(8/22~8/31). 다음 세션(9/1) 예정: 채점 입력 시 오답 토픽 최우선, 미입력 시 8/28 배치(C08·T01·T02·T04) 3차 유형 교체 재출제."
+    }
+  ]
 }

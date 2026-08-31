@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정보통신기사 실기 — 2026-08-29 훈련지</title>
+<style>
+  body{background:#f8f9fa;color:#1a1a1a;font-family:-apple-system,'Malgun Gothic',sans-serif;
+       max-width:880px;margin:0 auto;padding:24px;line-height:1.7}
+  h1{font-size:22px;border-bottom:3px solid #2563eb;padding-bottom:10px}
+  .meta{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;font-size:14px}
+  .chip{display:inline-block;background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe;
+        font-size:13px;font-weight:700;padding:3px 10px;border-radius:99px;margin:3px 4px 3px 0}
+  .q{background:#fff;border:1px solid #e5e7eb;border-left:5px solid #2563eb;border-radius:8px;
+     padding:16px 20px;margin:18px 0}
+  .tag{display:inline-block;background:#dbeafe;color:#1e40af;font-size:12px;font-weight:700;
+       padding:2px 8px;border-radius:4px;margin-right:6px}
+  .type{display:inline-block;background:#fef3c7;color:#92400e;font-size:12px;padding:2px 8px;border-radius:4px}
+  .prompt{font-weight:700;font-size:16px;margin:10px 0}
+  .blank{border-bottom:1.5px solid #9ca3af;display:inline-block;min-width:90px}
+  .answerbox{border:1px dashed #ced4da;border-radius:8px;background:#fcfcfd;min-height:88px;
+             padding:10px 12px;color:#adb5bd;font-size:13px}
+  details{margin-top:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px}
+  summary{cursor:pointer;font-weight:700;color:#166534}
+  .key{background:#fff8e1;border-left:4px solid #f0b429;padding:9px 13px;margin-top:12px;font-size:14px}
+  .calc{background:#f4f7fb;border-radius:6px;padding:12px 14px;font-family:Consolas,Menlo,monospace;
+        font-size:13.5px;margin:8px 0;white-space:pre-line}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+  th,td{border:1px solid #e5e7eb;padding:6px 10px;text-align:left}
+  th{background:#f3f4f6}
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:14px}
+  code{background:#f3f4f6;padding:1px 5px;border-radius:3px;font-size:13px}
+  footer{color:#868e96;font-size:13px;text-align:center;margin:26px 0 8px}
+</style>
+</head>
+<body>
+
+<h1>📘 정보통신기사 실기 필답형 — 2026-08-29 (토)</h1>
+
+<div class="meta">
+  <b>오늘의 훈련 대상 4문제</b><br>
+  <span class="chip">C05 인증(초고속/홈네트워크)</span>
+  <span class="chip">C09 유지보수(PM/CM/예측)</span>
+  <span class="chip">C10 설계단계 감리</span>
+  <span class="chip">T05 ICMP</span>
+  <div style="color:#5c6570;font-size:13px;margin-top:8px">
+    선정 근거: 오답(wrong) 기록이 없어 전 토픽이 기한 도래 상태입니다. 2순회 4일차로,
+    8/28에 예고한 대로 <b>8/25 배치(C05·C09·C10·T05)</b>를 재배정했습니다.
+    <b>8/25와 동일 유형은 전부 회피</b>했습니다
+    (C05 수치암기+빈칸→<b>현장 판정형</b> / C09 서술비교형→<b>사례 분류형</b> /
+     C10 열거형→<b>단계 구분 + 빈칸형</b> / T05 서술+열거형→<b>진단 시나리오 판독형</b>).
+  </div>
+</div>
+
+<div class="note" style="margin-top:14px">
+  ⚠️ <b>8/22 · 8/23 · 8/24 · 8/25 · 8/26 · 8/27 · 8/28</b> 일곱 세션이 아직 채점 미입력 상태입니다.
+  streak가 0에 머물러 16토픽 전부 기한 도래로 남아 있습니다.
+  오늘 분까지 점수(예: <code>C05 4/5, C09 3/4, C10 정답, T05 2/4</code>)를 알려주시면
+  트래커에 일괄 반영하고 다음 복습일을 재계산하겠습니다.
+</div>
+
+<!-- ===== Q1 : C05 ===== -->
+<div class="q">
+  <span class="tag">C05</span><span class="type">현장 판정형</span>
+  <div class="prompt">
+    Q1. 아래 4개 현장의 인증 신청 건에 대하여, 각각 <b>①해당 인증 제도명</b>과
+    <b>②부여 가능한 등급 체계</b>, <b>③처리기간</b>을 판정하시오. (판정 근거 한 줄씩 포함, 배점 5)
+  </div>
+  <table>
+    <tr><th style="width:60px">구분</th><th>현장 상황</th></tr>
+    <tr><td>가</td><td>신축 공동주택 500세대. 세대단자함·구내배선(광 및 Cat6A)·집중구내통신실을 설계기준 이상으로 시공하고 건축주가 인증을 신청함.</td></tr>
+    <tr><td>나</td><td>동일 단지에서 홈게이트웨이·홈네트워크망(단지망/세대망)·원격검침·주차관제 연동설비를 갖추고 별도 인증을 신청함.</td></tr>
+    <tr><td>다</td><td>건축주가 "인증 신청 후 결과가 언제 나오느냐"고 물음.</td></tr>
+    <tr><td>라</td><td>건축주가 "두 인증의 최고 등급 명칭이 서로 다르냐"고 물음.</td></tr>
+  </table>
+  <div class="answerbox" style="margin-top:12px">✍ 여기에 답안을 작성하세요</div>
+
+  <details>
+    <summary>모범답안 보기</summary>
+    <p><b>가 — 초고속정보통신건물 인증</b><br>
+    근거: 구내통신선로설비·집중구내통신실·세대단자함 등 <b>건물 내 통신설비 성능</b>을 대상으로 하는 인증.<br>
+    등급: <b>특등급 · 1등급 · 2등급</b> (3단계).</p>
+
+    <p><b>나 — 지능형홈네트워크설비 인증</b><br>
+    근거: 홈게이트웨이·홈네트워크망·홈네트워크기기 등 <b>지능형 홈네트워크 설비</b>를 대상으로 하는 인증.<br>
+    등급: <b>특등급(AAA) · 1등급(AA) · 2등급(A)</b> — 역시 3단계.</p>
+
+    <p><b>다 — 처리기간</b>: 두 인증 모두 신청서 접수일부터 <b>20일 이내</b> 처리(심사·인증서 교부).</p>
+
+    <p><b>라 — 등급 체계 비교</b>: 두 인증 <b>모두 특등급·1등급·2등급의 동일한 3단계</b>로 운영된다.
+    즉 최고 등급은 양쪽 다 <b>특등급</b>이며 명칭이 다르지 않다.</p>
+
+    <table>
+      <tr><th>구분</th><th>초고속정보통신건물</th><th>지능형홈네트워크설비</th></tr>
+      <tr><td>대상</td><td>구내통신선로설비·구내통신실 등</td><td>홈게이트웨이·홈네트워크망·기기</td></tr>
+      <tr><td>등급</td><td>특 / 1 / 2 등급</td><td>특 / 1 / 2 등급</td></tr>
+      <tr><td>처리기간</td><td>20일 이내</td><td>20일 이내</td></tr>
+      <tr><td>신청 시기</td><td>건축물 준공(사용승인) 전</td><td>건축물 준공(사용승인) 전</td></tr>
+    </table>
+    <div class="key">🔑 <b>암기 핵심</b>: <b>"두 인증 = 특·1·2 / 20일"</b> — 등급 체계와 처리기간이 동일하다는 점이
+    함정으로 자주 출제된다. 등급을 "1·2·3등급"이나 처리기간을 "30일"로 쓰면 오답.</div>
+  </details>
+</div>
+
+<!-- ===== Q2 : C09 ===== -->
+<div class="q">
+  <span class="tag">C09</span><span class="type">사례 분류형</span>
+  <div class="prompt">
+    Q2. 아래 ㉠~㉥ 6개 현장 조치를 <b>예방보전(PM) / 사후보전(CM) / 예측보전(PdM)</b> 중 하나로 분류하고,
+    각 방식의 <b>정의를 한 줄</b>씩 쓰시오. (배점 6)
+  </div>
+  <table>
+    <tr><th style="width:44px">기호</th><th>현장 조치 내용</th></tr>
+    <tr><td>㉠</td><td>UPS 배터리를 3년 주기로 일괄 교체하는 계획을 수립·시행</td></tr>
+    <tr><td>㉡</td><td>광케이블 단선으로 통신이 두절되어 융착접속으로 긴급 복구</td></tr>
+    <tr><td>㉢</td><td>NMS로 라우터 CPU·온도 추이를 상시 감시하다 임계치 상승 추세를 근거로 교체 시점 결정</td></tr>
+    <tr><td>㉣</td><td>매월 정기 순회점검으로 접지저항·절연저항을 측정하고 기록</td></tr>
+    <tr><td>㉤</td><td>전원장치 고장으로 정지한 교환기를 부품 교체 후 재가동</td></tr>
+    <tr><td>㉥</td><td>OTDR 주기 측정으로 특정 접속점 손실이 서서히 증가하는 것을 확인하여 사전 재접속</td></tr>
+  </table>
+  <div class="answerbox" style="margin-top:12px">✍ 여기에 답안을 작성하세요</div>
+
+  <details>
+    <summary>모범답안 보기</summary>
+    <table>
+      <tr><th>기호</th><th>분류</th><th>판정 근거</th></tr>
+      <tr><td>㉠</td><td><b>예방보전(PM)</b></td><td>고장 전 <b>시간(주기) 기준</b>의 계획 교체</td></tr>
+      <tr><td>㉡</td><td><b>사후보전(CM)</b></td><td>고장 발생 <b>후</b> 복구</td></tr>
+      <tr><td>㉢</td><td><b>예측보전(PdM)</b></td><td><b>상태 모니터링·추세 분석</b>으로 시점 판단</td></tr>
+      <tr><td>㉣</td><td><b>예방보전(PM)</b></td><td>정기 점검·측정(계획된 주기 점검)</td></tr>
+      <tr><td>㉤</td><td><b>사후보전(CM)</b></td><td>고장 정지 후 수리·재가동</td></tr>
+      <tr><td>㉥</td><td><b>예측보전(PdM)</b></td><td>측정값의 <b>열화 추세</b>에 근거한 사전 조치</td></tr>
+    </table>
+
+    <p style="margin-top:12px"><b>각 방식의 정의</b></p>
+    <ul>
+      <li><b>예방보전(PM, Preventive Maintenance)</b>: 고장이 발생하기 <b>전에</b> 일정 주기로 점검·정비·교체를 실시하여 고장을 미연에 방지하는 보전 방식.</li>
+      <li><b>사후보전(CM, Corrective Maintenance)</b>: 설비가 고장·기능 정지한 <b>후에</b> 원인을 제거하고 수리·복구하는 보전 방식.</li>
+      <li><b>예측보전(PdM, Predictive Maintenance)</b>: 설비 상태를 <b>상시 모니터링·측정</b>하여 열화 추세를 분석하고 <b>고장 시점을 예측</b>해 최적 시기에 정비하는 방식.</li>
+    </ul>
+    <div class="key">🔑 <b>구분 키워드</b> — PM=<b>주기·계획</b>(3년마다, 매월 정기) / CM=<b>고장 후</b>(두절, 정지) /
+    PdM=<b>추세·감시</b>(모니터링, 서서히 증가). 문장에 시간표현이 있으면 PM, 과거 고장이 있으면 CM,
+    측정 데이터의 변화 추세가 있으면 PdM.</div>
+  </details>
+</div>
+
+<!-- ===== Q3 : C10 ===== -->
+<div class="q">
+  <span class="tag">C10</span><span class="type">단계 구분 + 빈칸형</span>
+  <div class="prompt">
+    Q3. 정보통신공사 감리업무에 대하여 답하시오. (배점 6)<br>
+    (1) 아래 ㉠~㉥ 업무를 <b>설계단계 감리</b>와 <b>시공단계 감리</b>로 구분하시오.<br>
+    (2) 이어지는 빈칸을 채우시오.
+  </div>
+  <table>
+    <tr><th style="width:44px">기호</th><th>업무 내용</th></tr>
+    <tr><td>㉠</td><td>설계기준 및 관계법령 적용의 적정성 검토</td></tr>
+    <tr><td>㉡</td><td>사용자재의 규격 검토 및 검사</td></tr>
+    <tr><td>㉢</td><td>기술계산서(부하·회선·전송손실 등)의 적정성 검토</td></tr>
+    <tr><td>㉣</td><td>공사 진척 상황의 조사 및 공정 관리</td></tr>
+    <tr><td>㉤</td><td>설계도서의 시공성·경제성 검토</td></tr>
+    <tr><td>㉥</td><td>재해예방 및 안전관리 지도</td></tr>
+  </table>
+  <p style="margin-top:12px"><b>(2) 빈칸 채우기</b></p>
+  <ul style="line-height:2.1">
+    <li>설계도서는 <span class="blank"></span>, 공사계획서, <span class="blank"></span>,
+        설계도면, <span class="blank"></span>의 5가지로 구성된다.</li>
+    <li>시공단계 감리의 4대 관리 항목은 시공관리 · <span class="blank"></span> ·
+        <span class="blank"></span> · <span class="blank"></span> 이다.</li>
+  </ul>
+  <div class="answerbox" style="margin-top:12px">✍ 여기에 답안을 작성하세요</div>
+
+  <details>
+    <summary>모범답안 보기</summary>
+    <p><b>(1) 단계 구분</b></p>
+    <table>
+      <tr><th>설계단계 감리</th><th>시공단계 감리</th></tr>
+      <tr><td>㉠ 설계기준·법령 적용 적정성 검토<br>㉢ 기술계산서 적정성 검토<br>㉤ 설계도서의 시공성·경제성 검토</td>
+          <td>㉡ 사용자재 규격 검토·검사<br>㉣ 공사 진척 조사·공정관리<br>㉥ 재해예방·안전관리 지도</td></tr>
+    </table>
+    <p style="font-size:14px;color:#5c6570">※ 판별 기준: <b>착공 전 도면·서류를 대상</b>으로 하면 설계단계,
+    <b>착공 후 현장·자재·인력을 대상</b>으로 하면 시공단계.</p>
+
+    <p style="margin-top:12px"><b>설계단계 감리업무 5가지(정리)</b><br>
+    ① 설계기준 및 관계법령 적용의 적정성 검토<br>
+    ② 설계도서(도면·시방서)의 적정성 및 상호 일치 여부 검토<br>
+    ③ 기술계산서의 적정성 검토<br>
+    ④ 설계변경 사항의 타당성 검토<br>
+    ⑤ 시공성·경제성(경제적 시공 가능 여부) 검토</p>
+
+    <p style="margin-top:12px"><b>(2) 빈칸 정답</b></p>
+    <ul>
+      <li>설계도서 5가지 = <b>설계설명서</b>, 공사계획서, <b>기술계산서</b>, 설계도면, <b>공사비명세서</b></li>
+      <li>시공단계 4대 관리 = 시공관리 · <b>공정관리</b> · <b>품질관리</b> · <b>안전관리</b></li>
+    </ul>
+    <div class="key">🔑 <b>암기</b> — 설계도서 "<b>설·계·기·도·명</b>"(설계설명서/공사계획서/기술계산서/설계도면/공사비명세서),
+    시공단계 "<b>시·공·품·안</b>". 2026-1회 기출에서 <b>시공단계 3가지</b>로 물었으므로 4개 중 3개를 쓰면 정답.</div>
+  </details>
+</div>
+
+<!-- ===== Q4 : T05 ===== -->
+<div class="q">
+  <span class="tag">T05</span><span class="type">진단 시나리오 판독형</span>
+  <div class="prompt">
+    Q4. 네트워크 장애 진단 중 아래와 같은 결과를 얻었다. 각 상황에서 발생한
+    <b>ICMP 메시지 종류</b>를 쓰고, <b>그 의미와 추정 원인</b>을 설명하시오. (배점 5)
+  </div>
+  <div class="calc">A) ping 10.10.20.5
+     → Reply from 10.10.20.5: bytes=32 time=2ms TTL=124
+
+B) ping 10.10.99.7
+     → Reply from 10.10.20.1: Destination host unreachable.
+
+C) tracert 8.8.8.8
+     → 1  1ms  192.168.0.1
+       2  *  *  *  (이후 응답 없음)
+     ※ 중간 홉에서 정상 표시되던 각 홉 정보는 무엇 때문에 표시되는가?
+
+D) 호스트가 게이트웨이 R1로 보낸 패킷에 대해, R1이
+   "해당 목적지는 같은 네트워크의 R2로 보내라"고 알려옴.</div>
+  <div class="answerbox" style="margin-top:12px">✍ 여기에 답안을 작성하세요</div>
+
+  <details>
+    <summary>모범답안 보기</summary>
+    <table>
+      <tr><th style="width:44px">구분</th><th>ICMP 메시지</th><th>의미 / 추정 원인</th></tr>
+      <tr><td>A</td><td><b>Echo Request(Type 8) / Echo Reply(Type 0)</b></td>
+          <td>도달성 확인 요청과 응답. 목적지까지 <b>정상 통신</b>. TTL 값으로 경유 라우터 수 추정 가능</td></tr>
+      <tr><td>B</td><td><b>Destination Unreachable(Type 3)</b></td>
+          <td>목적지에 <b>도달 불가</b>. 라우팅 경로 부재, 대상 호스트 다운, ARP 실패, 방화벽 차단 등</td></tr>
+      <tr><td>C</td><td><b>Time Exceeded(Type 11)</b></td>
+          <td><b>TTL이 0</b>이 되어 패킷을 폐기한 라우터가 송신자에게 보고 → tracert가 이 메시지로 홉별 경로를 표시.
+              2홉 이후 무응답은 해당 구간 장애 또는 ICMP 차단(방화벽)</td></tr>
+      <tr><td>D</td><td><b>Redirect(Type 5)</b></td>
+          <td>더 <b>적절한 경로(다른 게이트웨이)</b>가 있음을 알려 라우팅 테이블 수정을 유도</td></tr>
+    </table>
+
+    <p style="margin-top:12px"><b>ICMP 개요(서술용)</b><br>
+    ICMP(Internet Control Message Protocol)는 <b>IP 계층(네트워크 계층)</b>에서 동작하며,
+    IP가 제공하지 못하는 <b>오류 보고와 제어 메시지 전달</b>을 담당하는 프로토콜이다.
+    IP 헤더의 <b>프로토콜 번호 1</b>을 사용하며, 신뢰성·흐름제어는 제공하지 않는다.
+    주요 활용: <b>ping</b>(도달성·지연 측정), <b>traceroute/tracert</b>(경로 추적), 라우터 장애 진단.</p>
+    <div class="key">🔑 <b>4대 메시지 암기</b>: <b>Echo Request/Reply(8/0)</b> · <b>Destination Unreachable(3)</b> ·
+    <b>Time Exceeded(11)</b> · <b>Redirect(5)</b>.
+    "traceroute의 원리를 쓰시오" → <b>TTL을 1씩 증가시키며 보내고, 각 라우터가 되돌려주는 Time Exceeded로 경로를 파악</b>.</div>
+  </details>
+</div>
+
+<div class="note">
+  📌 <b>채점 반영 방법</b> — 채팅으로 <code>C05 4/5, C09 5/6, C10 정답, T05 3/5</code> 형식으로 알려주시면
+  트래커의 streak·다음 복습일을 계산해 반영합니다. 미입력 세션(8/22~8/29)은 한 번에 소급 반영 가능합니다.
+</div>
+
+<footer>정보통신기사 실기 필답형 — 에빙하우스 SRS 자동 훈련 · 2026-08-29 무인 실행</footer>
+
+</body>
+</html>

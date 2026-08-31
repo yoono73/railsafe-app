@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정보통신기사 실기 — 2026-08-28 훈련지</title>
+<style>
+  body{background:#f8f9fa;color:#1a1a1a;font-family:-apple-system,'Malgun Gothic',sans-serif;
+       max-width:880px;margin:0 auto;padding:24px;line-height:1.7}
+  h1{font-size:22px;border-bottom:3px solid #2563eb;padding-bottom:10px}
+  .meta{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;font-size:14px}
+  .chip{display:inline-block;background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe;
+        font-size:13px;font-weight:700;padding:3px 10px;border-radius:99px;margin:3px 4px 3px 0}
+  .q{background:#fff;border:1px solid #e5e7eb;border-left:5px solid #2563eb;border-radius:8px;
+     padding:16px 20px;margin:18px 0}
+  .tag{display:inline-block;background:#dbeafe;color:#1e40af;font-size:12px;font-weight:700;
+       padding:2px 8px;border-radius:4px;margin-right:6px}
+  .type{display:inline-block;background:#fef3c7;color:#92400e;font-size:12px;padding:2px 8px;border-radius:4px}
+  .prompt{font-weight:700;font-size:16px;margin:10px 0}
+  .blank{border-bottom:1.5px solid #9ca3af;display:inline-block;min-width:90px}
+  .answerbox{border:1px dashed #ced4da;border-radius:8px;background:#fcfcfd;min-height:88px;
+             padding:10px 12px;color:#adb5bd;font-size:13px}
+  details{margin-top:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px}
+  summary{cursor:pointer;font-weight:700;color:#166534}
+  .key{background:#fff8e1;border-left:4px solid #f0b429;padding:9px 13px;margin-top:12px;font-size:14px}
+  .calc{background:#f4f7fb;border-radius:6px;padding:12px 14px;font-family:Consolas,Menlo,monospace;
+        font-size:13.5px;margin:8px 0;white-space:pre-line}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+  th,td{border:1px solid #e5e7eb;padding:6px 10px;text-align:left}
+  th{background:#f3f4f6}
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:14px}
+  code{background:#f3f4f6;padding:1px 5px;border-radius:3px;font-size:13px}
+  footer{color:#868e96;font-size:13px;text-align:center;margin:26px 0 8px}
+</style>
+</head>
+<body>
+
+<h1>📘 정보통신기사 실기 필답형 — 2026-08-28 (금)</h1>
+
+<div class="meta">
+  <b>오늘의 훈련 대상 4문제</b><br>
+  <span class="chip">C08 신안관경</span>
+  <span class="chip">T01 NMS</span>
+  <span class="chip">T02 ARQ</span>
+  <span class="chip">T04 OTDR</span>
+  <div style="color:#5c6570;font-size:13px;margin-top:8px">
+    선정 근거: 오답(wrong) 기록이 없어 전 토픽이 기한 도래 상태입니다. 2순회 3일차로,
+    8/27에 예고한 대로 <b>8/24 배치(C08·T01·T02·T04)</b>를 재배정했습니다.
+    <b>8/24와 동일 유형은 전부 회피</b>했습니다
+    (C08 열거형→<b>사례 분류형</b> / T01 서술+빈칸→<b>계층구조 시나리오형</b> /
+     T02 서술비교형→<b>계산형</b> / T04 서술+파형해석→<b>수치 계산형</b>).
+  </div>
+</div>
+
+<div class="note" style="margin-top:14px">
+  ⚠️ <b>8/22 · 8/23 · 8/24 · 8/25 · 8/26 · 8/27</b> 여섯 세션이 아직 채점 미입력 상태입니다.
+  streak가 0에 머물러 16토픽 전부 기한 도래로 남아 있습니다.
+  오늘 분까지 점수(예: <code>C08 4/5, T01 3/4, T02 정답, T04 2/4</code>)를 알려주시면
+  트래커에 일괄 반영하고 다음 복습일을 재계산하겠습니다.
+</div>
+
+<!-- Q1 -->
+<div class="q">
+  <span class="tag">C08</span><span class="type">사례 분류형</span>
+  <div class="prompt">Q1. 아래는 어느 정보통신설비 구축 현장에서 적용한 8가지 조치이다.
+  각 조치를 <b>「신뢰성 · 안전성 · 관리성 · 경제성」 4대 요소</b> 중 하나로 분류하고,
+  4대 요소 각각의 <b>정의</b>를 한 줄로 쓰시오. (8점)</div>
+  <table>
+    <tr><th style="width:52px">번호</th><th>현장 조치</th><th style="width:110px">해당 요소</th></tr>
+    <tr><td>①</td><td>주요 통신장비를 이중화(Active-Standby)로 구성</td><td></td></tr>
+    <tr><td>②</td><td>통신실 접지저항을 10Ω 이하로 시공하고 SPD(피뢰기) 설치</td><td></td></tr>
+    <tr><td>③</td><td>NMS를 도입해 원격에서 장애를 감시·통보하도록 구성</td><td></td></tr>
+    <tr><td>④</td><td>표준시장단가를 적용하고 LCC(생애주기비용) 분석으로 자재 선정</td><td></td></tr>
+    <tr><td>⑤</td><td>장비 랙에 내진 브래킷을 설치</td><td></td></tr>
+    <tr><td>⑥</td><td>MTBF가 긴 등급의 부품으로 교체</td><td></td></tr>
+    <tr><td>⑦</td><td>모듈형 카드 구조를 채택해 MTTR을 단축</td><td></td></tr>
+    <tr><td>⑧</td><td>동일 규격 케이블을 일괄 구매하여 단가를 절감</td><td></td></tr>
+  </table>
+  <div class="answerbox" style="margin-top:10px">✍ 여기에 답안을 작성하세요</div>
+  <details><summary>모범답안 보기</summary>
+
+  <b>[분류]</b>
+  <table>
+    <tr><th>요소</th><th>해당 번호</th><th>정의(한 줄)</th></tr>
+    <tr><td><b>신뢰성</b><br>(Reliability)</td><td>①, ⑥</td>
+        <td>시스템이 고장 없이 규정된 기능을 지속 수행하는 성질. 척도 = <b>MTBF</b>, 수단 = 이중화·고신뢰 부품</td></tr>
+    <tr><td><b>안전성</b><br>(Safety)</td><td>②, ⑤</td>
+        <td>인명·설비를 전기적·물리적 위해로부터 보호하는 성질. 수단 = 접지·피뢰(SPD)·내진·방화</td></tr>
+    <tr><td><b>관리성</b><br>(Maintainability)</td><td>③, ⑦</td>
+        <td>고장 발생 시 신속히 발견·복구하고 운용을 쉽게 하는 성질. 척도 = <b>MTTR</b>, 수단 = 모듈화·원격감시(NMS)</td></tr>
+    <tr><td><b>경제성</b><br>(Economy)</td><td>④, ⑧</td>
+        <td>초기투자비와 운용비를 합한 <b>LCC</b>를 최소화하는 성질. 수단 = 표준시장단가·표준화·일괄구매</td></tr>
+  </table>
+
+  <div class="key">🔑 <b>암기 포인트</b> — <b>「신·안·관·경」</b><br>
+  신뢰성 = <b>MTBF·이중화</b> / 안전성 = <b>접지·피뢰·내진</b> / 관리성 = <b>MTTR·모듈화·원격</b> / 경제성 = <b>LCC·표준시장단가</b><br>
+  헷갈림 주의: <b>이중화는 신뢰성</b>(고장을 안 나게), <b>모듈화는 관리성</b>(고장 나면 빨리 고치게).
+  ⑥은 MTBF → 신뢰성, ⑦은 MTTR → 관리성으로 <b>척도로 구분</b>하면 틀리지 않습니다.</div>
+  </details>
+</div>
+
+<!-- Q2 -->
+<div class="q">
+  <span class="tag">T01</span><span class="type">계층구조 시나리오형</span>
+  <div class="prompt">Q2. 대규모 통신망의 관리체계는 <b>NE → EMS → NMS</b>의 3계층으로 구성된다.
+  아래 상황을 읽고 (1)~(4)에 답하시오. (6점)</div>
+  <div class="calc">[상황] 광전송장비(ROADM) 1대의 광모듈에서 수신레벨 저하 알람이 발생했다.
+장비 자신이 알람을 생성 → 제조사별 장비관리 서버가 이를 수집 →
+전사 통합 관리 서버가 타 벤더 장비 알람과 함께 하나의 화면에 표출하고
+전체 회선 관점의 영향도를 판단했다.</div>
+  <div style="font-size:15px">
+  (1) 상황의 밑줄 3단계에 해당하는 계층 명칭을 순서대로 쓰시오. (3점)<br>
+  (2) 이 3계층 구조를 <b>NE / EMS / NMS</b>로 나누어 쓸 때 각 계층의 역할을 1줄씩 쓰시오. (3점)<br>
+  (3) NMS의 <b>구성 4요소</b>를 쓰시오.<br>
+  (4) NMS가 수행하는 <b>관리기능 5가지(FCAPS)</b>를 쓰시오.
+  </div>
+  <div class="answerbox" style="margin-top:10px">✍ 여기에 답안을 작성하세요</div>
+  <details><summary>모범답안 보기</summary>
+
+  <b>(1)</b> ① <b>NE</b>(Network Element, 망요소) → ② <b>EMS</b>(Element Management System, 장비관리시스템)
+  → ③ <b>NMS</b>(Network Management System, 망관리시스템)
+
+  <b>(2) 계층별 역할</b>
+  <table>
+    <tr><th>계층</th><th>역할</th></tr>
+    <tr><td><b>NE</b></td><td>실제 통신장비 자체. 상태정보·알람을 <b>생성</b>하고 에이전트를 통해 상위로 보고</td></tr>
+    <tr><td><b>EMS</b></td><td>동일 벤더/동일 기종 장비군을 <b>개별 관리</b>. 알람 수집, 설정, 성능데이터 취합</td></tr>
+    <tr><td><b>NMS</b></td><td>다수 EMS를 통합해 <b>망 전체 관점</b>에서 감시·분석·정책 적용. 벤더 무관 통합 뷰 제공</td></tr>
+  </table>
+
+  <b>(3) NMS 구성 4요소</b><br>
+  ① <b>관리 스테이션</b>(Manager, NMS 서버) ② <b>에이전트</b>(Agent, 피관리 장비 내 SW)
+  ③ <b>MIB</b>(Management Information Base, 관리정보베이스) ④ <b>관리 프로토콜</b>(SNMP)
+
+  <b>(4) 관리기능 5가지 — FCAPS</b><br>
+  ① <b>F</b>ault(장애관리) ② <b>C</b>onfiguration(구성관리) ③ <b>A</b>ccounting(계정·과금관리)
+  ④ <b>P</b>erformance(성능관리) ⑤ <b>S</b>ecurity(보안관리)
+
+  <div class="key">🔑 <b>암기 포인트</b><br>
+  계층: <b>NE(만든다) → EMS(모은다) → NMS(합친다)</b><br>
+  4요소: <b>관리자 + 에이전트 + MIB + SNMP</b> ("사람 둘, 자료 하나, 말 하나")<br>
+  기능: <b>FCAPS</b> — 장애·구성·계정·성능·보안</div>
+  </details>
+</div>
+
+<!-- Q3 -->
+<div class="q">
+  <span class="tag">T02</span><span class="type">계산형</span>
+  <div class="prompt">Q3. 오류제어 방식인 ARQ에 관하여 아래에 답하시오. (7점)</div>
+  <div class="calc">[조건] 프레임 전송시간 Tf = 1 ms, 편도 전파지연 Tp = 2 ms
+       송신측 윈도우 크기 N = 7, 프레임은 0번부터 순차 전송
+       6번 프레임까지 전송한 시점에 <b>3번 프레임의 오류</b>가 확인됨</div>
+  <div style="font-size:15px">
+  (1) <b>Stop-and-Wait ARQ</b>의 전송효율(채널 이용률)을 구하시오. (2점)<br>
+  (2) <b>Go-Back-N ARQ</b> 적용 시 재전송되는 프레임 번호와 <b>개수</b>를 쓰시오. (2점)<br>
+  (3) <b>Selective Repeat ARQ</b> 적용 시 재전송되는 프레임 번호와 <b>개수</b>를 쓰시오. (1점)<br>
+  (4) (2)·(3)의 결과를 근거로 두 방식의 <b>장단점</b>을 각각 1줄로 쓰시오. (2점)
+  </div>
+  <div class="answerbox" style="margin-top:10px">✍ 여기에 답안을 작성하세요</div>
+  <details><summary>모범답안 보기</summary>
+
+  <b>(1) Stop-and-Wait 전송효율</b>
+  <div class="calc">U = Tf / (Tf + 2Tp)
+  = 1 / (1 + 2×2)
+  = 1 / 5 = 0.2 → <b>20 %</b></div>
+  ※ 1프레임 보내고 ACK를 기다리므로 왕복지연 2Tp가 그대로 낭비된다.
+  (참고: <code>a = Tp/Tf = 2</code> 로 두면 <code>U = 1/(1+2a)</code> 로도 계산 가능)
+
+  <b>(2) Go-Back-N</b><br>
+  오류난 3번 <b>이후 전부</b> 재전송 → <b>3, 4, 5, 6번 → 4개</b>
+
+  <b>(3) Selective Repeat</b><br>
+  오류난 <b>3번만</b> 재전송 → <b>1개</b>
+
+  <b>(4) 장단점</b>
+  <table>
+    <tr><th>방식</th><th>장점</th><th>단점</th></tr>
+    <tr><td><b>Go-Back-N</b></td><td>수신측 버퍼 불필요, 구조 단순</td><td>정상 프레임(4·5·6)까지 재전송 → 대역 낭비</td></tr>
+    <tr><td><b>Selective Repeat</b></td><td>오류 프레임만 재전송 → <b>전송효율 최고</b></td><td>수신측 버퍼·재정렬 필요 → 구현 복잡</td></tr>
+  </table>
+
+  <div class="key">🔑 <b>암기 포인트</b><br>
+  · Stop-and-Wait 효율 <b>U = Tf/(Tf+2Tp) = 1/(1+2a)</b> — <b>2Tp(왕복)</b>인 것 놓치지 말 것<br>
+  · 슬라이딩윈도우 효율 <b>U = N/(1+2a)</b> (단, N &lt; 1+2a 일 때. N ≥ 1+2a 이면 U=1)<br>
+  · 재전송 개수: <b>GBN = 오류번호부터 마지막까지</b>, <b>SR = 오류난 것 1개</b><br>
+  · 윈도우 크기 상한: GBN = <b>2ⁿ−1</b>, SR = <b>2ⁿ⁻¹</b> (n = 순서번호 비트수)</div>
+  </details>
+</div>
+
+<!-- Q4 -->
+<div class="q">
+  <span class="tag">T04</span><span class="type">수치 계산형</span>
+  <div class="prompt">Q4. OTDR로 광케이블 선로를 측정하였다. 아래에 답하시오. (7점)</div>
+  <div class="calc">[조건] 광섬유 코어 굴절률 n = 1.46, 진공중 광속 c = 3 × 10⁸ m/s
+       ① 단선 의심 지점에서 반사된 펄스의 <b>왕복 소요시간 t = 10 μs</b>
+       ② 기점에서 1.0 km 지점과 2.0 km 지점의 후방산란 레벨차 = <b>0.35 dB</b>
+       ③ 1.5 km 지점에서 계단형 레벨 하강 <b>0.10 dB</b> 관측</div>
+  <div style="font-size:15px">
+  (1) 단선(반사) 지점까지의 <b>거리</b>를 구하시오. (3점)<br>
+  (2) 이 광섬유의 <b>손실계수(dB/km)</b>를 구하시오. (2점)<br>
+  (3) 1.5 km 지점의 계단형 하강은 무엇을 의미하는가? (1점)<br>
+  (4) OTDR 파형에서 <b>프레넬 반사</b>가 나타나는 지점 2곳을 쓰시오. (1점)
+  </div>
+  <div class="answerbox" style="margin-top:10px">✍ 여기에 답안을 작성하세요</div>
+  <details><summary>모범답안 보기</summary>
+
+  <b>(1) 거리</b>
+  <div class="calc">광섬유 내 광속  v = c / n = (3×10⁸) / 1.46 = 2.0548×10⁸ m/s
+
+거리 L = (v × t) / 2        ← 왕복이므로 2로 나눔
+     = (2.0548×10⁸ × 10×10⁻⁶) / 2
+     = 2054.8 / 2
+     = <b>1027.4 m ≒ 1.03 km</b></div>
+  ※ 통합식: <b>L = c·t / (2n)</b> = (3×10⁸ × 10⁻⁵)/(2×1.46) = 3000/2.92 = <b>1027.4 m</b>
+
+  <b>(2) 손실계수</b>
+  <div class="calc">α = 레벨차 / 거리차 = 0.35 dB / (2.0 − 1.0) km = <b>0.35 dB/km</b></div>
+
+  <b>(3)</b> 반사 스파이크 없이 레벨만 계단형으로 떨어진 것 → <b>융착접속(Splice) 손실</b>
+  (접속손실 0.10 dB). 커넥터라면 프레넬 반사 스파이크를 동반한다.
+
+  <b>(4) 프레넬 반사 발생 지점</b> → ① <b>커넥터·기계식 접속점</b> ② <b>광섬유 끝단(단선·종단면)</b>
+
+  <div class="key">🔑 <b>암기 포인트</b><br>
+  · 거리공식 <b>L = c·t / (2n)</b> — <b>2로 나누는 것(왕복)</b>과 <b>n으로 나누는 것</b> 둘 다 필수<br>
+  · OTDR 파형 판독 3종<br>
+  &nbsp;&nbsp;— <b>완만한 우하향 경사</b> = 후방산란(레일리 산란) → 광섬유 고유손실<br>
+  &nbsp;&nbsp;— <b>뾰족한 스파이크</b> = 프레넬 반사 → 커넥터·끝단<br>
+  &nbsp;&nbsp;— <b>계단형 급락(스파이크 없음)</b> = 융착접속 손실 또는 과도 굽힘<br>
+  · OTDR 측정항목: <b>거리 · 손실 · 접속점 위치 · 단선 위치 · 반사감쇠량(ORL)</b><br>
+  · <b>데드존</b>: 반사 직후 측정 불가 구간 — 기점에 더미(펄스억제) 코드를 넣어 회피</div>
+  </details>
+</div>
+
+<div class="note">
+  📌 <b>내일(8/29) 예정</b> — 채점을 입력해 주시면 오답 토픽이 최우선으로 재출제됩니다.
+  미입력 시 8/25 배치(C05·C09·C10·T05)를 유형 교체하여 재출제합니다.
+</div>
+
+<footer>정보통신기사 실기 필답형 — 에빙하우스 SRS 자동 훈련 · 2026-08-28 생성</footer>
+
+</body>
+</html>

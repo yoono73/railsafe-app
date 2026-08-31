@@ -2770,22 +2770,6 @@ export const SIGNAL_EXAM: SignalQuestion[] = [
     ref: 'S7',
   },
   {
-    id: 'sig_175',
-    num: '175',
-    grade: 'S',
-    part: 7,
-    question: `다음 설명에 해당하는 용어·장치로 가장 적절한 것은? “KTCS-2는 궤도회로 검지를 활용하지만 KTCS-3는 궤도회로 미사용과 이동폐색을 핵심으로 한다.”`,
-    choices: [
-      `KTCS-3`,
-      `KTCS-2와 KTCS-3의 핵심 차이`,
-      `열차-지상 양방향 데이터`,
-      `KTCS-2의 궤도회로 역할`,
-    ],
-    answer: 2,
-    explanation: `KTCS-2는 궤도회로 검지를 활용하지만 KTCS-3는 궤도회로 미사용과 이동폐색을 핵심으로 한다.`,
-    ref: 'S7',
-  },
-  {
     id: 'sig_176',
     num: '176',
     grade: 'S',

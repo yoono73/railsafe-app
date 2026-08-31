@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정보통신기사 실기 — 2026-08-26 훈련지</title>
+<style>
+  body{background:#f8f9fa;color:#1a1a1a;font-family:-apple-system,'Malgun Gothic',sans-serif;
+       max-width:880px;margin:0 auto;padding:24px;line-height:1.7}
+  h1{font-size:22px;border-bottom:3px solid #2563eb;padding-bottom:10px}
+  .meta{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;font-size:14px}
+  .chip{display:inline-block;background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe;
+        font-size:13px;font-weight:700;padding:3px 10px;border-radius:99px;margin:3px 4px 3px 0}
+  .q{background:#fff;border:1px solid #e5e7eb;border-left:5px solid #2563eb;border-radius:8px;
+     padding:16px 20px;margin:18px 0}
+  .tag{display:inline-block;background:#dbeafe;color:#1e40af;font-size:12px;font-weight:700;
+       padding:2px 8px;border-radius:4px;margin-right:6px}
+  .type{display:inline-block;background:#fef3c7;color:#92400e;font-size:12px;padding:2px 8px;border-radius:4px}
+  .prompt{font-weight:700;font-size:16px;margin:10px 0}
+  .blank{border-bottom:1.5px solid #9ca3af;display:inline-block;min-width:80px}
+  .answerbox{border:1px dashed #ced4da;border-radius:8px;background:#fcfcfd;min-height:88px;
+             padding:10px 12px;color:#adb5bd;font-size:13px}
+  details{margin-top:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px}
+  summary{cursor:pointer;font-weight:700;color:#166534}
+  .key{background:#fff8e1;border-left:4px solid #f0b429;padding:9px 13px;margin-top:12px;font-size:14px}
+  .calc{background:#f4f7fb;border-radius:6px;padding:12px 14px;font-family:Consolas,Menlo,monospace;
+        font-size:13.5px;margin:8px 0;white-space:pre-line}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+  th,td{border:1px solid #e5e7eb;padding:6px 10px;text-align:left}
+  th{background:#f3f4f6}
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:14px}
+  code{background:#f3f4f6;padding:1px 5px;border-radius:3px;font-size:13px}
+  footer{color:#868e96;font-size:13px;text-align:center;margin:26px 0 8px}
+</style>
+</head>
+<body>
+
+<h1>📘 정보통신기사 실기 필답형 — 2026-08-26 (수)</h1>
+
+<div class="meta">
+  <b>오늘의 훈련 대상 4문제</b><br>
+  <span class="chip">C01 감리원 업무범위</span>
+  <span class="chip">C03 공사원가 계산</span>
+  <span class="chip">C04 접지 수치</span>
+  <span class="chip">C06 가용성 / RAS</span>
+  <div style="color:#5c6570;font-size:13px;margin-top:8px">
+    선정 근거: 오답(wrong) 기록 없음 → 전 토픽 기한 도래 상태. 8/25로 <b>전체 16토픽 1순회 완료</b>되어,
+    예고대로 <b>중요도 5 토픽 재출제 순환</b> 시작. 가장 오래된 출제분(8/22)인 C01·C03·C04·C06을 우선 배정.
+    단, <b>8/22와 동일 유형은 피하고 출제 형식을 전부 교체</b>했습니다.
+  </div>
+</div>
+
+<div class="note" style="margin-top:14px">
+  ⚠️ <b>8/22·8/23·8/24·8/25</b> 네 세션이 아직 채점 미입력 상태입니다. streak가 0에 머물러 16토픽 전부 기한 도래로 남아 있습니다.
+  오늘 분까지 점수(예: <code>C01 4/5, C03 정답, C04 3/5, C06 2/4</code>)를 알려주시면 트래커에 일괄 반영하고
+  다음 복습일을 재계산하겠습니다.
+</div>
+
+<!-- Q1 -->
+<div class="q">
+  <span class="tag">C01 감리원 업무범위</span><span class="type">서술형 + 빈칸형 · 5점</span>
+  <div class="prompt">
+    Q1. 감리원 업무에 관하여 답하시오.<br>
+    (1) 감리원 업무범위 중 <b>「자재」와 「안전」</b>에 해당하는 항목을 각각 1가지씩 쓰시오. (2점)<br>
+    (2) 빈칸 — 감리원은 공사가 <span class="blank">&nbsp;</span>대로 시공되는지를 확인하고,
+        공사 완료 시 <span class="blank">&nbsp;</span>의 검토 및 <span class="blank">&nbsp;</span>확인을 수행한다. (3점)
+  </div>
+  <div class="answerbox">답안 작성란</div>
+
+  <details><summary>모범답안 확인</summary>
+  <div>
+    <p><b>(1)</b></p>
+    <ul>
+      <li><b>자재</b> — 사용자재의 규격 검토 및 검사</li>
+      <li><b>안전</b> — 재해예방 및 안전관리</li>
+    </ul>
+    <p><b>(2)</b> ① <b>설계도서</b> ② <b>준공도서</b> ③ <b>준공</b></p>
+    <p style="margin-top:10px">참고 — 감리원 업무범위 10가지 전체:
+      ①공사계획·공정표 검토 ②시공상세도면 검토 ③설계도서의 현장적합성 확인 ④설계도서 준수 여부 확인
+      ⑤시공 진척상태 조사 ⑥사용자재 규격검토·검사 ⑦재해예방·안전관리 ⑧설계변경 검토
+      ⑨하도급 타당성 검토 ⑩준공도서 검토·준공확인</p>
+    <div class="key">
+      <b>암기 포인트</b> — “<b>계획·도면 → 자재 → 시공 → 안전 → 변경·하도급 → 준공</b>” 공사 흐름 순서.
+      항목을 지정해 묻는 유형(자재/안전/설계변경 등)이 나오면 <b>그 키워드가 들어간 항목만</b> 정확히 골라 쓴다.
+      답안은 반드시 <b>명사형 어구</b>로 끊어 쓸 것.
+    </div>
+  </div>
+  </details>
+</div>
+
+<!-- Q2 -->
+<div class="q">
+  <span class="tag">C03 공사원가 계산</span><span class="type">역산형(계산) · 5점</span>
+  <div class="prompt">
+    Q2. 어느 정보통신공사의 원가가 다음과 같다. <b>재료비</b>와 <b>총원가</b>를 각각 구하시오. (계산과정 포함)
+  </div>
+  <table>
+    <tr><th>노무비</th><td>50,000,000원</td><th>경비</th><td>20,000,000원</td></tr>
+    <tr><th>일반관리비율</th><td>6%</td><th>이윤율</th><td>15%</td></tr>
+    <tr><th>일반관리비</th><td colspan="3">9,000,000원</td></tr>
+  </table>
+  <div class="answerbox">답안 작성란</div>
+
+  <details><summary>모범답안 확인</summary>
+  <div>
+    <div class="calc">① 일반관리비 = 순공사원가 × 6% → 순공사원가 = 9,000,000 ÷ 0.06 = 150,000,000원
+
+② 순공사원가 = 재료비 + 노무비 + 경비
+   150,000,000 = 재료비 + 50,000,000 + 20,000,000
+   ∴ 재료비 = 80,000,000원
+
+③ 이윤 = (노무비 + 경비 + 일반관리비) × 15%
+   = (50,000,000 + 20,000,000 + 9,000,000) × 0.15
+   = 79,000,000 × 0.15 = 11,850,000원
+
+④ 총원가 = 순공사원가 + 일반관리비 + 이윤
+   = 150,000,000 + 9,000,000 + 11,850,000
+   ∴ 총원가 = 170,850,000원</div>
+    <table>
+      <tr><th>구분</th><th>답</th></tr>
+      <tr><td>재료비</td><td><b>80,000,000원</b></td></tr>
+      <tr><td>총원가</td><td><b>170,850,000원</b></td></tr>
+    </table>
+    <div class="key">
+      <b>암기 포인트</b> — <b>이윤 산정 기준에 재료비는 포함되지 않는다</b>(노무비+경비+일반관리비만).
+      이 함정이 역산형에서 가장 많이 틀리는 지점. 순서는 언제나
+      <code>순공사원가 → 일반관리비(6%) → 이윤(15%) → 총원가</code>.
+    </div>
+  </div>
+  </details>
+</div>
+
+<!-- Q3 -->
+<div class="q">
+  <span class="tag">C04 접지 수치</span><span class="type">현장 판정형(응용) · 5점</span>
+  <div class="prompt">
+    Q3. 다음 두 현장의 측정 결과에 대해 <b>적합/부적합을 판정</b>하고 그 <b>근거(기준값)</b>를 쓰시오.<br>
+    또한 부적합 항목의 <b>조치방안</b>을 1가지 이상 제시하시오.
+  </div>
+  <table>
+    <tr><th>구분</th><th>A 현장 (일반 국선단자함)</th><th>B 현장 (총 회선 80회선)</th></tr>
+    <tr><td>접지저항 측정값</td><td>25 Ω</td><td>80 Ω</td></tr>
+    <tr><td>접지선 굵기</td><td>1.6 mm</td><td>1.6 mm</td></tr>
+    <tr><td>절연저항 (500V DC 측정)</td><td>15 MΩ</td><td>6 MΩ</td></tr>
+  </table>
+  <div class="answerbox">답안 작성란</div>
+
+  <details><summary>모범답안 확인</summary>
+  <div>
+    <table>
+      <tr><th>항목</th><th>A 현장</th><th>B 현장</th></tr>
+      <tr><td>접지저항</td><td><b>부적합</b> — 일반 기준 <b>10Ω 이하</b>인데 25Ω</td><td><b>적합</b> — 100회선 이하 예외 적용 시 <b>100Ω 이하</b>, 80Ω</td></tr>
+      <tr><td>접지선 굵기</td><td><b>부적합</b> — 10Ω 접지는 <b>2.6mm 이상</b> 필요</td><td><b>적합</b> — 100Ω 접지는 <b>1.6mm 이상</b>이면 됨</td></tr>
+      <tr><td>절연저항</td><td><b>적합</b> — 500V DC에서 <b>10MΩ 이상</b>, 15MΩ</td><td><b>부적합</b> — 6MΩ으로 10MΩ 미만</td></tr>
+    </table>
+    <p><b>조치방안</b></p>
+    <ul>
+      <li>A 현장 접지저항 — 접지극 추가 매설(병렬 접지), 매설 심도 증가, 접지저항 저감제 사용, 접지판·메시 접지 적용</li>
+      <li>A 현장 접지선 — 접지선을 <b>2.6mm 이상</b> 동선으로 교체</li>
+      <li>B 현장 절연저항 — 케이블 피복 손상부·습기 유입부 확인 후 해당 구간 교체, 단자함 방습 조치 후 재측정</li>
+    </ul>
+    <div class="key">
+      <b>암기 포인트(세트로 외운다)</b><br>
+      • 접지저항 <b>10Ω 이하</b> → 접지선 <b>2.6mm 이상</b><br>
+      • 예외(<b>100회선 이하</b>) <b>100Ω 이하</b> → 접지선 <b>1.6mm 이상</b><br>
+      • 절연저항: <b>500V DC</b> 측정 → <b>10MΩ 이상</b><br>
+      “회선 수 → 접지저항 기준 → 접지선 굵기”가 연동된다는 점이 핵심.
+    </div>
+  </div>
+  </details>
+</div>
+
+<!-- Q4 -->
+<div class="q">
+  <span class="tag">C06 가용성 / RAS</span><span class="type">서술형 + 비교계산 · 5점</span>
+  <div class="prompt">
+    Q4. RAS에 관하여 답하시오.<br>
+    (1) <b>RAS의 3요소</b>를 쓰고 각각의 <b>대표 지표</b>를 함께 쓰시오. (3점)<br>
+    (2) 아래 두 시스템의 <b>가용성</b>을 각각 구하고 어느 쪽이 우수한지 판단하시오. (2점)
+  </div>
+  <table>
+    <tr><th>구분</th><th>시스템 甲</th><th>시스템 乙</th></tr>
+    <tr><td>MTBF</td><td>900 시간</td><td>2,400 시간</td></tr>
+    <tr><td>MTTR</td><td>3 시간</td><td>12 시간</td></tr>
+  </table>
+  <div class="answerbox">답안 작성란</div>
+
+  <details><summary>모범답안 확인</summary>
+  <div>
+    <p><b>(1) RAS 3요소</b></p>
+    <table>
+      <tr><th>요소</th><th>의미</th><th>대표 지표</th></tr>
+      <tr><td><b>R</b>eliability (신뢰성)</td><td>고장 없이 오래 동작하는 성질</td><td><b>MTBF</b> (평균고장간격)</td></tr>
+      <tr><td><b>A</b>vailability (가용성)</td><td>필요할 때 사용 가능한 비율</td><td><b>A = MTBF / (MTBF+MTTR) × 100%</b></td></tr>
+      <tr><td><b>S</b>erviceability (보수성)</td><td>고장 시 빠르게 복구하는 성질</td><td><b>MTTR</b> (평균수리시간)</td></tr>
+    </table>
+    <p><b>(2) 가용성 계산</b></p>
+    <div class="calc">甲 : A = 900 / (900 + 3) × 100 = 900 / 903 × 100 ≒ 99.67 %
+
+乙 : A = 2,400 / (2,400 + 12) × 100 = 2,400 / 2,412 × 100 ≒ 99.50 %
+
+∴ 甲(99.67%) > 乙(99.50%) → 가용성은 甲이 우수</div>
+    <p>판단 — 乙이 <b>신뢰성(MTBF)</b>은 더 높지만, <b>보수성(MTTR)</b>이 나빠 가용성은 甲이 앞선다.
+       가용성은 MTBF 단독이 아니라 <b>MTBF와 MTTR의 비</b>로 결정된다.</p>
+    <div class="key">
+      <b>암기 포인트</b> — MTBF = 총 정상동작시간 ÷ 고장횟수, MTTR = 총 수리시간 ÷ 고장횟수.
+      “<b>MTBF 큰 쪽이 무조건 가용성 우수</b>”가 아니라는 함정이 자주 출제된다.
+      답안에는 <b>수식 → 대입 → 백분율(소수 둘째자리)</b> 순서로 반드시 계산과정을 남길 것.
+    </div>
+  </div>
+  </details>
+</div>
+
+<footer>자동 생성 · 에빙하우스 SRS 훈련지 · 채점 결과를 알려주시면 다음 복습일이 재계산됩니다.</footer>
+
+</body>
+</html>

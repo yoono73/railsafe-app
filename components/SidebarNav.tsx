@@ -101,6 +101,21 @@ export default function SidebarNav() {
 
         <div className="h-px bg-gray-100 my-2" />
 
+        {/* 철도용어 사전 */}
+        <Link
+          href="/terms"
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+            pathname.startsWith('/terms')
+              ? 'bg-teal-100 text-teal-800'
+              : 'text-gray-600 hover:bg-gray-100'
+          }`}
+        >
+          <span className="text-base">📖</span>
+          철도용어
+        </Link>
+
+        <div className="h-px bg-gray-100 my-2" />
+
         {/* 핵심정리 */}
         <button
           onClick={() => toggle('theory')}

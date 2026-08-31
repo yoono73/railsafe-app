@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정보통신기사 실기 필답형 — 2026-08-22 훈련지</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    background: #f8f9fa; color: #1a1a1a; margin: 0; padding: 24px 16px;
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
+    line-height: 1.7;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; }
+  header {
+    background: #fff; border: 1px solid #e3e6ea; border-radius: 12px;
+    padding: 20px 24px; margin-bottom: 20px;
+  }
+  h1 { font-size: 20px; margin: 0 0 6px; }
+  .meta { color: #5c6570; font-size: 14px; margin: 0; }
+  .today { margin-top: 14px; font-size: 14px; }
+  .chip {
+    display: inline-block; background: #eef4ff; color: #1b4fa0;
+    border: 1px solid #cfe0ff; border-radius: 999px;
+    padding: 3px 11px; margin: 3px 4px 3px 0; font-size: 13px; font-weight: 600;
+  }
+  .card {
+    background: #fff; border: 1px solid #e3e6ea; border-radius: 12px;
+    padding: 20px 24px; margin-bottom: 18px;
+  }
+  .qhead { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+  .qno { font-weight: 700; font-size: 16px; color: #1b4fa0; }
+  .tag {
+    font-size: 12px; background: #f1f3f5; border: 1px solid #dee2e6;
+    border-radius: 6px; padding: 2px 8px; color: #495057;
+  }
+  .q { font-size: 15.5px; font-weight: 600; margin: 0 0 12px; }
+  .blank { border-bottom: 1.5px solid #adb5bd; display: inline-block; min-width: 70px; }
+  .answerbox {
+    border: 1px dashed #ced4da; border-radius: 8px; background: #fcfcfd;
+    min-height: 84px; padding: 10px 12px; color: #adb5bd; font-size: 13px;
+  }
+  details {
+    margin-top: 14px; border: 1px solid #e3e6ea; border-radius: 8px;
+    background: #fbfcfd; padding: 0;
+  }
+  summary {
+    cursor: pointer; padding: 10px 14px; font-weight: 700; font-size: 14px;
+    color: #1b4fa0; list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: "▶ "; font-size: 11px; }
+  details[open] summary::before { content: "▼ "; }
+  .ans { padding: 4px 18px 16px; font-size: 14.5px; }
+  .ans ol, .ans ul { padding-left: 22px; margin: 8px 0; }
+  .key {
+    background: #fff8e1; border-left: 4px solid #f0b429; border-radius: 4px;
+    padding: 10px 14px; margin-top: 12px; font-size: 14px;
+  }
+  .calc {
+    background: #f4f7fb; border-radius: 6px; padding: 12px 14px;
+    font-family: Consolas, Menlo, monospace; font-size: 13.5px; margin: 8px 0;
+    white-space: pre-line;
+  }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 14px; }
+  th, td { border: 1px solid #dee2e6; padding: 7px 10px; text-align: left; }
+  th { background: #f1f3f5; font-weight: 700; }
+  .note {
+    background: #fff; border: 1px solid #e3e6ea; border-left: 4px solid #1b4fa0;
+    border-radius: 8px; padding: 14px 18px; font-size: 14px; color: #343a40;
+  }
+  footer { color: #868e96; font-size: 13px; text-align: center; margin: 24px 0 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>정보통신기사 실기 필답형 — 에빙하우스 SRS 훈련지</h1>
+  <p class="meta">2026-08-22 (토) · 자동 생성 · 4문항 / 예상 소요 20분</p>
+  <div class="today">
+    <strong>오늘의 훈련 대상</strong><br>
+    <span class="chip">C01 감리원 업무범위</span>
+    <span class="chip">C03 공사원가 계산</span>
+    <span class="chip">C04 접지 수치</span>
+    <span class="chip">C06 가용성 / RAS</span>
+    <div style="color:#5c6570;font-size:13px;margin-top:8px;">
+      선정 근거: 오답 이력 없음 → 전 토픽 기한 도래(next_review 2026-08-12) 상태에서
+      importance 5 우선 4개 선정. 남은 importance 5 토픽(C11, T03)은 내일 배정.
+    </div>
+  </div>
+</header>
+
+<!-- Q1 -->
+<div class="card">
+  <div class="qhead"><span class="qno">문제 1</span><span class="tag">C01 감리원 업무범위</span><span class="tag">열거형 · 5점</span></div>
+  <p class="q">정보통신공사업법령상 <strong>감리원의 업무범위 5가지</strong>를 쓰시오. (각 1점)</p>
+  <div class="answerbox">답안 작성란</div>
+
+  <details><summary>모범답안 확인</summary>
+  <div class="ans">
+    <p>아래 10가지 중 <strong>어느 5가지</strong>를 써도 정답:</p>
+    <ol>
+      <li>공사계획 및 공정표 검토</li>
+      <li>시공상세도면 검토</li>
+      <li>설계도서의 현장 적합성 확인(검토·확인)</li>
+      <li>설계도서 준수 여부(공사가 설계도서대로 시공되는지) 확인</li>
+      <li>공사 진척(시공) 상태 조사</li>
+      <li>사용자재의 규격 검토 및 검사</li>
+      <li>재해예방 및 안전관리</li>
+      <li>설계변경에 관한 사항 검토</li>
+      <li>하도급의 타당성 검토</li>
+      <li>준공도서의 검토 및 준공확인</li>
+    </ol>
+    <div class="key">
+      <strong>암기 포인트</strong> — “계획·도면 → 자재 → 시공 → 안전 → 변경·하도급 → 준공” 순서로 공사 흐름을 따라가며 외운다.
+      답안은 <em>명사형 어구</em>로 끊어 쓰고, 5가지를 물으면 반드시 5개만 쓴다(초과 기재 시 감점 가능).
+    </div>
+  </div>
+  </details>
+</div>
+
+<!-- Q2 -->
+<div class="card">
+  <div class="qhead"><span class="qno">문제 2</span><span class="tag">C03 공사원가 계산</span><span class="tag">계산형 · 4점</span></div>
+  <p class="q">다음 조건에서 <strong>총원가</strong>를 구하시오. (계산과정 포함)</p>
+  <table>
+    <tr><th>재료비</th><td>40,000,000원</td><th>노무비</th><td>30,000,000원</td></tr>
+    <tr><th>경비</th><td>10,000,000원</td><th>일반관리비율</th><td>6%</td></tr>
+    <tr><th>이윤율</th><td>15%</td><th></th><td></td></tr>
+  </table>
+  <div class="answerbox">답안 작성란</div>
+
+  <details><summary>모범답안 확인</summary>
+  <div class="ans">
+    <div class="calc">① 순공사원가 = 재료비 + 노무비 + 경비
+   = 40,000,000 + 30,000,000 + 10,000,000 = 80,000,000원
+
+② 일반관리비 = 순공사원가 × 6%
+   = 80,000,000 × 0.06 = 4,800,000원
+
+③ 이윤 = (노무비 + 경비 + 일반관리비) × 15%
+   = (30,000,000 + 10,000,000 + 4,800,000) × 0.15
+   = 44,800,000 × 0.15 = 6,720,000원
+
+④ 총원가 = 순공사원가 + 일반관리비 + 이윤
+   = 80,000,000 + 4,800,000 + 6,720,000
+   = 91,520,000원</div>
+    <p><strong>답: 91,520,000원</strong></p>
+    <div class="key">
+      <strong>함정 주의</strong> — 이윤 산정 기준에 <u>재료비는 들어가지 않는다</u>.
+      “이윤 = (노무비 + 경비 + 일반관리비) × 이윤율”. 여기서 한 번 틀리면 총원가가 통째로 틀린다.
+      일반관리비는 <u>순공사원가 전체</u>(재료비 포함) 기준인 점과 대비해서 기억할 것.
+    </div>
+  </div>
+  </details>
+</div>
+
+<!-- Q3 -->
+<div class="card">
+  <div class="qhead"><span class="qno">문제 3</span><span class="tag">C04 접지 수치</span><span class="tag">빈칸/수치암기 · 5점</span></div>
+  <p class="q">다음 접지·절연 관련 기준의 빈칸을 채우시오.</p>
+  <ol>
+    <li>통신설비의 접지저항은 원칙적으로 <span class="blank"></span> Ω 이하로 한다.</li>
+    <li>선로설비 중 회선 수가 100회선 이하인 통신용 국선 접속설비 등은 <span class="blank"></span> Ω 이하로 할 수 있다.</li>
+    <li>접지저항 10 Ω 기준일 때 접지선은 동선 <span class="blank"></span> mm 이상을 사용한다.</li>
+    <li>접지저항 100 Ω 기준일 때 접지선은 동선 <span class="blank"></span> mm 이상을 사용한다.</li>
+    <li>절연저항 측정은 직류 <span class="blank"></span> V로 하며, 측정값은 <span class="blank"></span> MΩ 이상이어야 한다.</li>
+  </ol>
+  <div class="answerbox">답안 작성란</div>
+
+  <details><summary>모범답안 확인</summary>
+  <div class="ans">
+    <table>
+      <tr><th>항목</th><th>기준값</th></tr>
+      <tr><td>일반 접지저항</td><td><strong>10 Ω 이하</strong></td></tr>
+      <tr><td>예외(100회선 이하 등)</td><td><strong>100 Ω 이하</strong></td></tr>
+      <tr><td>접지선 굵기 (10 Ω 기준)</td><td><strong>2.6 mm 이상</strong> (동선)</td></tr>
+      <tr><td>접지선 굵기 (100 Ω 기준)</td><td><strong>1.6 mm 이상</strong> (동선)</td></tr>
+      <tr><td>절연저항 측정전압 / 기준</td><td><strong>DC 500 V / 10 MΩ 이상</strong></td></tr>
+    </table>
+    <div class="key">
+      <strong>암기 포인트</strong> — “<b>10Ω → 2.6mm</b> / <b>100Ω → 1.6mm</b>”는 <u>저항이 엄격할수록 전선이 굵다</u>로 연결해서 외운다.
+      절연저항은 “<b>오백 볼트로 재서 십 메가</b>” 리듬으로 암기.
+    </div>
+  </div>
+  </details>
+</div>
+
+<!-- Q4 -->
+<div class="card">
+  <div class="qhead"><span class="qno">문제 4</span><span class="tag">C06 가용성 / RAS</span><span class="tag">계산형 + 서술 · 4점</span></div>
+  <p class="q">어떤 통신시스템을 10,000시간 운용하는 동안 <strong>고장이 5회</strong> 발생하였고, <strong>총 수리시간은 50시간</strong>이었다.</p>
+  <ol>
+    <li>MTBF를 구하시오.</li>
+    <li>MTTR을 구하시오.</li>
+    <li>가용성(Availability)을 %로 구하시오.</li>
+    <li>RAS 3요소의 명칭과 각각의 대응 지표를 쓰시오.</li>
+  </ol>
+  <div class="answerbox">답안 작성란</div>
+
+  <details><summary>모범답안 확인</summary>
+  <div class="ans">
+    <div class="calc">정상동작시간 합계 = 10,000 − 50 = 9,950시간
+
+① MTBF = 정상동작시간 합계 ÷ 고장횟수
+   = 9,950 ÷ 5 = 1,990시간
+
+② MTTR = 총 수리시간 ÷ 고장횟수
+   = 50 ÷ 5 = 10시간
+
+③ 가용성 A = MTBF ÷ (MTBF + MTTR) × 100
+   = 1,990 ÷ (1,990 + 10) × 100
+   = 1,990 ÷ 2,000 × 100 = 99.5 [%]</div>
+    <p><strong>④ RAS 3요소</strong></p>
+    <table>
+      <tr><th>요소</th><th>의미</th><th>지표</th></tr>
+      <tr><td>Reliability (신뢰성)</td><td>고장 없이 오래 동작하는 성질</td><td>MTBF</td></tr>
+      <tr><td>Availability (가용성)</td><td>필요할 때 사용 가능한 비율</td><td>MTBF/(MTBF+MTTR)</td></tr>
+      <tr><td>Serviceability (보수성)</td><td>고장 시 빨리 복구되는 성질</td><td>MTTR</td></tr>
+    </table>
+    <div class="key">
+      <strong>함정 주의</strong> — MTBF 계산 시 분자는 <u>총 운용시간이 아니라 “정상동작시간 합계(총 운용시간 − 수리시간)”</u>다.
+      단, 문제에 “정상동작시간”이 직접 주어지면 그대로 사용. 시험에서는 총 운용시간만 주는 경우가 많으니 <b>먼저 수리시간을 빼는 습관</b>을 들일 것.
+    </div>
+  </div>
+  </details>
+</div>
+
+<div class="note">
+  <strong>채점 후 할 일</strong> — 각 문항 점수를 확인한 뒤 대화창에 “C01 4/5, C03 4/4, C04 3/5, C06 2/4” 형식으로 알려주면
+  SRS 트래커에 반영하여 다음 복습일을 재계산합니다. (정답 시 1일 → 3일 → 7일 → 14일 → 30일 / 오답 시 내일 재출제)
+</div>
+
+<footer>JBTS 에빙하우스 SRS · 자동 생성 훈련지</footer>
+</div>
+</body>
+</html>

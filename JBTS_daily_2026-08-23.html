@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정보통신기사 실기 — 2026-08-23 훈련지</title>
+<style>
+  body{background:#f8f9fa;color:#1a1a1a;font-family:-apple-system,'Malgun Gothic',sans-serif;
+       max-width:860px;margin:0 auto;padding:24px;line-height:1.7}
+  h1{font-size:22px;border-bottom:3px solid #2563eb;padding-bottom:10px}
+  .meta{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;font-size:14px}
+  .q{background:#fff;border:1px solid #e5e7eb;border-left:5px solid #2563eb;border-radius:8px;
+     padding:16px 20px;margin:18px 0}
+  .tag{display:inline-block;background:#dbeafe;color:#1e40af;font-size:12px;font-weight:700;
+       padding:2px 8px;border-radius:4px;margin-right:6px}
+  .type{display:inline-block;background:#fef3c7;color:#92400e;font-size:12px;padding:2px 8px;border-radius:4px}
+  .prompt{font-weight:700;font-size:16px;margin:10px 0}
+  .blank{border-bottom:1.5px solid #9ca3af;display:inline-block;min-width:80px}
+  textarea{width:100%;min-height:90px;border:1px solid #d1d5db;border-radius:6px;padding:8px;
+           font-family:inherit;font-size:14px;background:#fff}
+  details{margin-top:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px}
+  summary{cursor:pointer;font-weight:700;color:#166534}
+  .key{background:#fef2f2;border-left:4px solid #ef4444;padding:8px 12px;margin-top:10px;font-size:14px}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+  th,td{border:1px solid #e5e7eb;padding:6px 10px;text-align:left}
+  th{background:#f3f4f6}
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:14px}
+</style>
+</head>
+<body>
+
+<h1>📘 정보통신기사 실기 필답형 — 2026-08-23 (일)</h1>
+
+<div class="meta">
+  <b>오늘의 훈련 대상 4문제</b> — C11 단계별 감리업무 / T03 SNMP / C02 설계도서·공사계획서 / C07 감리결과 통보·배치기준<br>
+  선정 근거: 오답(wrong) 기록 없음 → 전 토픽 기한 도래 상태이므로 <b>중요도 순 + 미출제 토픽 우선</b>으로 선정.
+</div>
+
+<div class="note" style="margin-top:14px">
+  ⚠️ <b>8/22 세션(C01·C03·C04·C06)이 아직 채점 미입력</b> 상태입니다. 해당 4토픽은 여전히 기한 도래로 남아 있으니,
+  오늘 분을 푼 뒤 어제 훈련지도 채점해서 알려주시면 트래커에 함께 반영하겠습니다.
+</div>
+
+<!-- Q1 -->
+<div class="q">
+  <span class="tag">C11</span><span class="type">열거형</span>
+  <div class="prompt">Q1. 정보통신공사 감리에서 <b>시공단계 감리업무 4가지</b>를 쓰고, 각각을 한 줄로 설명하시오.
+  (2026년 1회 기출 — 3가지 형태로 출제됨)</div>
+  <textarea placeholder="답안 작성"></textarea>
+  <details><summary>모범답안 보기</summary>
+    <table>
+      <tr><th>업무</th><th>내용</th></tr>
+      <tr><td>① 시공관리</td><td>설계도서·시방서대로 시공되는지 확인, 시공상세도 검토·승인</td></tr>
+      <tr><td>② 공정관리</td><td>공정표 대비 진척도 확인, 지연 시 만회대책 수립·검토</td></tr>
+      <tr><td>③ 품질관리</td><td>자재 검수·시험, 규격 적합 여부 확인, 품질시험계획 검토</td></tr>
+      <tr><td>④ 안전관리</td><td>재해예방·안전관리대책 이행 확인, 안전점검 실시</td></tr>
+    </table>
+    <div class="key">🔑 <b>4단계 전체 흐름 암기</b> — 착공단계(착공신고서·시공계획서·인허가서류 검토) →
+    시공단계(시공·공정·품질·안전) → 준공단계(기성검사·사용전검사·준공계 검토확인) → 인계인수(시설물 인계인수 확인).
+    <br>「시·공·품·안」 4글자로 외울 것.</div>
+  </details>
+</div>
+
+<!-- Q2 -->
+<div class="q">
+  <span class="tag">T03</span><span class="type">서술+수치암기형</span>
+  <div class="prompt">Q2. SNMP의 <b>메시지 5가지</b>를 쓰고 각각의 방향(관리자↔에이전트)과 사용 <b>포트 번호</b>를 쓰시오.
+  또한 SNMP가 사용하는 <b>전송계층 프로토콜</b>과 <b>OSI 계층</b>을 쓰시오.</div>
+  <textarea placeholder="답안 작성"></textarea>
+  <details><summary>모범답안 보기</summary>
+    <table>
+      <tr><th>메시지</th><th>방향</th><th>포트</th><th>기능</th></tr>
+      <tr><td>GetRequest</td><td>관리자→에이전트</td><td>161</td><td>MIB 객체값 요청</td></tr>
+      <tr><td>GetNextRequest</td><td>관리자→에이전트</td><td>161</td><td>다음 객체값 순차 요청</td></tr>
+      <tr><td>SetRequest</td><td>관리자→에이전트</td><td>161</td><td>MIB 객체값 설정·변경</td></tr>
+      <tr><td>GetResponse</td><td>에이전트→관리자</td><td>161</td><td>요청에 대한 응답</td></tr>
+      <tr><td>Trap</td><td>에이전트→관리자</td><td><b>162</b></td><td>비동기 이벤트 통보(단방향)</td></tr>
+    </table>
+    <p>전송계층: <b>UDP</b> (비연결형, 오버헤드 최소) / OSI 계층: <b>응용(Application) 계층</b></p>
+    <div class="key">🔑 <b>Trap만 162, 나머지는 전부 161.</b> Trap = 에이전트가 먼저 보내는 유일한 단방향 메시지.
+    NMS 4요소(관리스테이션 + 에이전트 + MIB + SNMP)와 연결해서 기억할 것.</div>
+  </details>
+</div>
+
+<!-- Q3 -->
+<div class="q">
+  <span class="tag">C02</span><span class="type">빈칸형</span>
+  <div class="prompt">Q3. 다음 빈칸을 채우시오.<br>
+  ▸ 설계도서 5가지: 설계설명서 / <span class="blank"></span> / 기술계산서 / <span class="blank"></span> / 공사비명세서<br>
+  ▸ 공사계획서 5가지: 공사개요 / <span class="blank"></span> / 안전관리계획 / <span class="blank"></span> / <span class="blank"></span></div>
+  <textarea placeholder="답안 작성"></textarea>
+  <details><summary>모범답안 보기</summary>
+    <p><b>설계도서 5가지</b>: ①설계설명서 ②<b>공사계획서</b> ③기술계산서 ④<b>설계도면</b> ⑤공사비명세서</p>
+    <p><b>공사계획서 5가지</b>: ①공사개요 ②<b>공정관리계획</b> ③안전관리계획 ④<b>공사예정공정표</b> ⑤<b>환경관리계획</b></p>
+    <div class="key">🔑 설계도서 안에 <b>공사계획서가 포함</b>된다는 포함관계가 함정 포인트.
+    설계도서=「설·공·기·도·명」 / 공사계획서=「개·공정·안전·예정공정표·환경」</div>
+  </details>
+</div>
+
+<!-- Q4 -->
+<div class="q">
+  <span class="tag">C07</span><span class="type">수치암기형</span>
+  <div class="prompt">Q4. (1) 감리원은 공사 완공 후 <b>며칠 이내</b>에 감리결과를 발주자에게 통보해야 하는가?<br>
+  (2) 공사 규모별 <b>감리원 배치기준</b>을 등급별로 모두 쓰시오.</div>
+  <textarea placeholder="답안 작성"></textarea>
+  <details><summary>모범답안 보기</summary>
+    <p>(1) 공사 완공 후 <b>7일 이내</b> 발주자에게 감리결과 통보</p>
+    <table>
+      <tr><th>공사 규모(총 공사금액)</th><th>배치 감리원 등급</th></tr>
+      <tr><td>100억원 이상</td><td><b>특급감리원 (기술사)</b></td></tr>
+      <tr><td>70억원 이상 ~ 100억원 미만</td><td>특급감리원</td></tr>
+      <tr><td>30억원 이상 ~ 70억원 미만</td><td>고급감리원</td></tr>
+      <tr><td>5억원 이상 ~ 30억원 미만</td><td>중급감리원</td></tr>
+      <tr><td>5억원 미만</td><td>초급감리원</td></tr>
+    </table>
+    <div class="key">🔑 숫자 체인: <b>100(기술사) - 70(특급) - 30(고급) - 5(중급) - 5미만(초급)</b>, 통보는 <b>7일</b>.
+    C05 인증 처리기간 <b>20일 이내</b>와 헷갈리지 말 것.</div>
+  </details>
+</div>
+
+<div class="note">
+  ✍️ <b>채점 방법</b>: 답안 작성 후 각 문제의 「모범답안 보기」를 열어 자가 채점하고,
+  <b>“오늘 채점 결과: C11 4/4, T03 3/5, C02 5/5, C07 2/6”</b> 형식으로 알려주시면
+  SRS 트래커(정답 시 간격 확대 / 오답 시 내일 재출제)에 반영합니다.
+</div>
+
+</body>
+</html>

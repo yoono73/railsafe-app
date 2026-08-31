@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정보통신기사 실기 — 2026-08-24 훈련지</title>
+<style>
+  body{background:#f8f9fa;color:#1a1a1a;font-family:-apple-system,'Malgun Gothic',sans-serif;
+       max-width:860px;margin:0 auto;padding:24px;line-height:1.7}
+  h1{font-size:22px;border-bottom:3px solid #2563eb;padding-bottom:10px}
+  .meta{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;font-size:14px}
+  .q{background:#fff;border:1px solid #e5e7eb;border-left:5px solid #2563eb;border-radius:8px;
+     padding:16px 20px;margin:18px 0}
+  .tag{display:inline-block;background:#dbeafe;color:#1e40af;font-size:12px;font-weight:700;
+       padding:2px 8px;border-radius:4px;margin-right:6px}
+  .type{display:inline-block;background:#fef3c7;color:#92400e;font-size:12px;padding:2px 8px;border-radius:4px}
+  .prompt{font-weight:700;font-size:16px;margin:10px 0}
+  .blank{border-bottom:1.5px solid #9ca3af;display:inline-block;min-width:80px}
+  textarea{width:100%;min-height:90px;border:1px solid #d1d5db;border-radius:6px;padding:8px;
+           font-family:inherit;font-size:14px;background:#fff}
+  details{margin-top:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px}
+  summary{cursor:pointer;font-weight:700;color:#166534}
+  .key{background:#fef2f2;border-left:4px solid #ef4444;padding:8px 12px;margin-top:10px;font-size:14px}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+  th,td{border:1px solid #e5e7eb;padding:6px 10px;text-align:left}
+  th{background:#f3f4f6}
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:14px}
+  code{background:#f3f4f6;padding:1px 5px;border-radius:3px;font-size:13px}
+</style>
+</head>
+<body>
+
+<h1>📘 정보통신기사 실기 필답형 — 2026-08-24 (월)</h1>
+
+<div class="meta">
+  <b>오늘의 훈련 대상 4문제</b> — C08 신안관경 / T01 NMS / T02 ARQ / T04 OTDR<br>
+  선정 근거: 오답(wrong) 기록 없음 → 전 토픽 기한 도래 상태. 8/22·8/23 출제분과 중복을 피해
+  <b>중요도 4 이상 미출제 토픽</b>을 우선 선정.
+</div>
+
+<div class="note" style="margin-top:14px">
+  ⚠️ <b>8/22(C01·C03·C04·C06), 8/23(C11·T03·C02·C07) 두 세션이 아직 채점 미입력</b> 상태입니다.
+  streak가 올라가지 않아 해당 8토픽이 계속 기한 도래로 남아 있습니다.
+  오늘 분과 함께 점수(예: <code>C01 4/5, C03 정답, C06 2/4</code>)를 알려주시면 트래커에 일괄 반영하겠습니다.
+</div>
+
+<!-- Q1 -->
+<div class="q">
+  <span class="tag">C08</span><span class="type">열거형</span>
+  <div class="prompt">Q1. 정보통신설비 설계·구축 시 고려해야 할 <b>「신·안·관·경」 4대 요소</b>를 쓰고,
+  각 요소별 구체적 확보 방안을 2가지씩 제시하시오.</div>
+  <textarea placeholder="답안 작성"></textarea>
+  <details><summary>모범답안 보기</summary>
+    <table>
+      <tr><th>요소</th><th>의미</th><th>확보 방안</th></tr>
+      <tr><td>① 신뢰성</td><td>고장 없이 오래 동작</td><td>MTBF 향상, 이중화(장비·경로·전원) 구성</td></tr>
+      <tr><td>② 안전성</td><td>인명·설비 보호</td><td>접지, 피뢰(SPD), 내진 설계</td></tr>
+      <tr><td>③ 관리성</td><td>운용·복구 용이</td><td>MTTR 단축, 모듈화 설계, 원격감시(NMS)</td></tr>
+      <tr><td>④ 경제성</td><td>총비용 최적화</td><td>LCC(생애주기비용) 분석, 표준시장단가 적용</td></tr>
+    </table>
+    <div class="key">🔑 <b>「신-안-관-경」</b> 순서로 암기. 신뢰성=MTBF·이중화 / 안전성=접지·피뢰·내진 /
+    관리성=MTTR·모듈화·원격 / 경제성=LCC·표준시장단가.
+    <br>C06(가용성)과 연결: 신뢰성=MTBF, 관리성(보수성)=MTTR, 가용성=둘의 조합.</div>
+  </details>
+</div>
+
+<!-- Q2 -->
+<div class="q">
+  <span class="tag">T01</span><span class="type">서술형 + 빈칸형</span>
+  <div class="prompt">Q2. (1) <b>NMS(Network Management System)</b>를 정의하고 <b>구성 4요소</b>를 쓰시오.<br>
+  (2) 빈칸을 채우시오 — 통신망 관리 3계층은 개별 장비를 뜻하는 <span class="blank">&nbsp;</span>,
+  이를 묶어 관리하는 <span class="blank">&nbsp;</span>, 망 전체를 총괄하는 <span class="blank">&nbsp;</span> 순으로 구성된다.</div>
+  <textarea placeholder="답안 작성"></textarea>
+  <details><summary>모범답안 보기</summary>
+    <p><b>(1) 정의</b> — 네트워크를 구성하는 장비·회선·트래픽을 중앙에서 감시·제어·분석하여
+    장애를 예방하고 성능을 최적화하는 통합 네트워크 관리 시스템.</p>
+    <table>
+      <tr><th>구성 4요소</th><th>역할</th></tr>
+      <tr><td>① 관리 스테이션(Manager)</td><td>정보 수집·분석·제어 명령 발행, 운용자 인터페이스 제공</td></tr>
+      <tr><td>② 에이전트(Agent)</td><td>피관리 장비에 탑재, 상태정보 수집 및 Manager 명령 수행</td></tr>
+      <tr><td>③ MIB(관리정보베이스)</td><td>관리 대상 객체 정보를 트리 구조로 저장한 DB</td></tr>
+      <tr><td>④ 관리 프로토콜(SNMP)</td><td>Manager–Agent 간 정보 교환 규약</td></tr>
+    </table>
+    <p style="margin-top:10px"><b>(2)</b> NE(Network Element) → EMS(Element Management System) → NMS(Network Management System)</p>
+    <div class="key">🔑 FCAPS 5대 관리기능도 함께 암기 — <b>F</b>ault(장애) / <b>C</b>onfiguration(구성) /
+    <b>A</b>ccounting(계정) / <b>P</b>erformance(성능) / <b>S</b>ecurity(보안).
+    <br>T03 SNMP와 세트로 출제되는 경우가 많음.</div>
+  </details>
+</div>
+
+<!-- Q3 -->
+<div class="q">
+  <span class="tag">T02</span><span class="type">서술형(비교)</span>
+  <div class="prompt">Q3. <b>ARQ(Automatic Repeat reQuest)</b>의 개념을 쓰고,
+  <b>3가지 방식</b>을 동작원리·장단점 중심으로 비교 설명하시오.</div>
+  <textarea placeholder="답안 작성"></textarea>
+  <details><summary>모범답안 보기</summary>
+    <p><b>개념</b> — 수신측이 오류를 검출하면 NAK를 보내거나 ACK를 보내지 않아,
+    송신측이 해당 데이터를 <b>자동으로 재전송</b>하도록 하는 후진 오류정정(BEC) 방식의 오류제어 기법.</p>
+    <table>
+      <tr><th>방식</th><th>동작원리</th><th>장점</th><th>단점</th></tr>
+      <tr><td>① Stop-and-Wait</td><td>1프레임 전송 후 ACK 대기, 수신해야 다음 전송</td><td>구현 단순, 버퍼 최소</td><td>대기시간 길어 전송효율 최저</td></tr>
+      <tr><td>② Go-Back-N</td><td>오류 프레임 <b>이후 전부</b> 재전송</td><td>수신 버퍼 불필요, 구현 용이</td><td>정상 프레임까지 재전송 → 대역 낭비</td></tr>
+      <tr><td>③ Selective Repeat</td><td>오류 프레임 <b>만</b> 선택 재전송</td><td>전송효율 최고</td><td>수신측 버퍼·재정렬 필요, 구현 복잡</td></tr>
+    </table>
+    <div class="key">🔑 효율 순서 <b>Selective Repeat &gt; Go-Back-N &gt; Stop-and-Wait</b>,
+    복잡도는 그 반대. Adaptive ARQ(회선상태 따라 프레임 길이 가변)도 4번째로 언급 가능.
+    <br>비교 문제로 나오면 반드시 <b>표</b>로 작성할 것.</div>
+  </details>
+</div>
+
+<!-- Q4 -->
+<div class="q">
+  <span class="tag">T04</span><span class="type">서술형 + 파형해석</span>
+  <div class="prompt">Q4. <b>OTDR(광시간영역반사계)</b>의 측정 원리를 설명하고,
+  측정 가능한 항목 4가지 및 <b>파형에 나타나는 3가지 특징적 형상</b>이 각각 무엇을 의미하는지 쓰시오.</div>
+  <textarea placeholder="답안 작성"></textarea>
+  <details><summary>모범답안 보기</summary>
+    <p><b>원리</b> — 광섬유 한쪽 끝에서 광펄스를 입사시킨 뒤, 되돌아오는
+    <b>후방산란광(레일리 산란)</b>과 <b>프레넬 반사광</b>의 세기와 왕복 지연시간을 측정하여
+    거리별 손실 분포를 구하는 <b>단방향·비파괴</b> 측정 방식.
+    거리 계산: <code>L = (c × t) / (2n)</code></p>
+    <table>
+      <tr><th>측정 항목</th><th>파형 형상</th><th>의미</th></tr>
+      <tr><td>① 광선로 길이(거리)</td><td>완만한 우하향 <b>경사</b></td><td>후방산란 — 광섬유 고유 전송손실(dB/km)</td></tr>
+      <tr><td>② 전송손실·구간손실</td><td>위로 솟는 <b>스파이크</b></td><td>프레넬 반사 — 커넥터·기계적 접속점·개방 단면</td></tr>
+      <tr><td>③ 접속점(융착·커넥터) 손실</td><td>수직 <b>계단형 하강</b></td><td>융착접속 손실(반사 없는 손실 점)</td></tr>
+      <tr><td>④ 단선·결함 위치</td><td><b>급격한 드롭</b> 후 잡음</td><td>단선 또는 파단 지점</td></tr>
+    </table>
+    <div class="key">🔑 <b>데드존(Dead Zone)</b> 개념 필수 — 강한 반사 직후 측정 불가 구간.
+    근단 데드존 회피를 위해 <b>더미 광섬유(Launch Cable)</b> 사용.
+    <br>양방향 측정 후 평균 → 접속손실 오차(Gainer 현상) 보정.</div>
+  </details>
+</div>
+
+<div class="note" style="margin-top:24px">
+  📌 <b>채점 후 알려주실 것</b> — 각 문항 점수(예: <code>Q1 3/4, Q2 정답, Q3 2/4, Q4 오답</code>).
+  입력해주시면 SRS 트래커의 correct_streak·next_review를 계산해 갱신합니다.
+  <br>오답 토픽은 <b>다음날 즉시 재출제</b>, 정답 토픽은 1일 → 3일 → 7일 → 14일 → 30일 간격으로 늘어납니다.
+</div>
+
+</body>
+</html>

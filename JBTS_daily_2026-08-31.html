@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정보통신기사 실기 — 2026-08-31 훈련지</title>
+<style>
+  body{background:#f8f9fa;color:#1a1a1a;font-family:-apple-system,'Malgun Gothic',sans-serif;
+       max-width:880px;margin:0 auto;padding:24px;line-height:1.7}
+  h1{font-size:22px;border-bottom:3px solid #2563eb;padding-bottom:10px}
+  .meta{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;font-size:14px}
+  .chip{display:inline-block;background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe;
+        font-size:13px;font-weight:700;padding:3px 10px;border-radius:99px;margin:3px 4px 3px 0}
+  .q{background:#fff;border:1px solid #e5e7eb;border-left:5px solid #2563eb;border-radius:8px;
+     padding:16px 20px;margin:18px 0}
+  .tag{display:inline-block;background:#dbeafe;color:#1e40af;font-size:12px;font-weight:700;
+       padding:2px 8px;border-radius:4px;margin-right:6px}
+  .type{display:inline-block;background:#fef3c7;color:#92400e;font-size:12px;padding:2px 8px;border-radius:4px}
+  .prompt{font-weight:700;font-size:16px;margin:10px 0}
+  .blank{border-bottom:1.5px solid #9ca3af;display:inline-block;min-width:90px}
+  .answerbox{border:1px dashed #ced4da;border-radius:8px;background:#fcfcfd;min-height:88px;
+             padding:10px 12px;color:#adb5bd;font-size:13px}
+  details{margin-top:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px}
+  summary{cursor:pointer;font-weight:700;color:#166534}
+  .key{background:#fff8e1;border-left:4px solid #f0b429;padding:9px 13px;margin-top:12px;font-size:14px}
+  .calc{background:#f4f7fb;border-radius:6px;padding:12px 14px;font-family:Consolas,Menlo,monospace;
+        font-size:13.5px;margin:8px 0;white-space:pre-line}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+  th,td{border:1px solid #e5e7eb;padding:6px 10px;text-align:left}
+  th{background:#f3f4f6}
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:14px}
+  code{background:#f3f4f6;padding:1px 5px;border-radius:3px;font-size:13px}
+  footer{color:#868e96;font-size:13px;text-align:center;margin:26px 0 8px}
+</style>
+</head>
+<body>
+
+<h1>📘 정보통신기사 실기 필답형 — 2026-08-31 (월)</h1>
+
+<div class="meta">
+  <b>오늘의 훈련 대상 4문제</b><br>
+  <span class="chip">C11 단계별 감리업무</span>
+  <span class="chip">T03 SNMP</span>
+  <span class="chip">C02 설계도서/공사계획서</span>
+  <span class="chip">C07 감리결과 통보·배치기준</span>
+  <div style="color:#5c6570;font-size:13px;margin-top:8px">
+    선정 근거: 오답(wrong) 기록이 없어 전 토픽이 기한 도래 상태입니다. <b>3순회 2일차</b>로,
+    8/30에 예고한 대로 <b>8/27 배치(C11·T03·C02·C07)</b>를 재배정했습니다.
+    1순회(8/23)·2순회(8/27) 유형은 전부 회피했습니다
+    (C11 열거형·분류형 → <b>감리일지 단계판정 + 시공 4대관리 역매칭</b> /
+     T03 수치암기형·시나리오 판독형 → <b>NMS 설정 오류 진단(5개소 정정)</b> /
+     C02 빈칸형·열거구분형 → <b>제출서류 접수 체크리스트 누락 판정형</b> /
+     C07 수치암기형·현장 적용형 → <b>날짜 계산 + 등급 역산 표 완성형</b>).
+  </div>
+</div>
+
+<div class="note">
+  ⏱ <b>권장 시간 32분</b> — 문항당 8분. 답을 먼저 손으로 쓴 뒤에만 정답을 펼치세요.<br>
+  채점 후 <b>"오늘 점수: C11 n/m, T03 n/m, C02 n/m, C07 n/m"</b> 형식으로 알려주시면
+  트래커의 streak·다음 복습일을 반영합니다. (미입력 시 streak은 변동 없이 보존됩니다.)
+</div>
+
+<!-- ===================== Q1 : C11 ===================== -->
+<div class="q">
+  <span class="tag">C11</span><span class="type">단계 판정형 + 역매칭</span>
+  <div class="prompt">문제 1. 아래는 어느 정보통신공사 현장의 감리일지에서 발췌한 업무 8건이다.</div>
+
+  <table>
+    <tr><th style="width:34px">No</th><th>감리원이 수행한 업무</th><th style="width:150px">해당 감리 단계</th></tr>
+    <tr><td>①</td><td>수급인이 제출한 착공신고서와 현장기술자 자격증 사본을 대조·확인하였다</td><td></td></tr>
+    <tr><td>②</td><td>UTP Cat6 케이블의 납품 시험성적서를 검토하고 반입 자재를 육안·규격 검사하였다</td><td></td></tr>
+    <tr><td>③</td><td>총 공정의 60% 시점에서 기성부분에 대한 검사원을 접수하여 기성검사를 실시하였다</td><td></td></tr>
+    <tr><td>④</td><td>MDF실 접지저항을 측정하여 8Ω임을 확인하고 시험성과표에 기록하였다</td><td></td></tr>
+    <tr><td>⑤</td><td>준공도면·시험성적서·유지관리지침서를 정리하여 발주자와 운영부서에 넘겨주었다</td><td></td></tr>
+    <tr><td>⑥</td><td>수급인이 제출한 시공계획서 및 예정공정표의 적정성을 검토·확인하였다</td><td></td></tr>
+    <tr><td>⑦</td><td>사용전검사를 신청·입회하고 지적사항 보완 후 준공계를 검토하였다</td><td></td></tr>
+    <tr><td>⑧</td><td>고소작업 구간의 안전난간·개인보호구 착용 상태를 순회 점검하였다</td><td></td></tr>
+  </table>
+
+  <div class="prompt" style="margin-top:14px">(1) ①~⑧을 <b>착공단계 / 시공단계 / 준공단계 / 인계인수단계</b> 중 하나로 각각 분류하시오. (8점)</div>
+  <div class="prompt">(2) 위 8건 중 <b>시공단계</b>로 분류된 업무를 <b>시공관리·공정관리·품질관리·안전관리</b> 중 어디에 해당하는지 각각 짝지으시오. (3점)</div>
+  <div class="answerbox">답안 작성란</div>
+
+  <details><summary>▶ 모범답안 · 채점기준 (11점)</summary>
+
+  <p><b>(1) 단계 분류 — 각 1점</b></p>
+  <table>
+    <tr><th>번호</th><th>단계</th><th>판단 근거</th></tr>
+    <tr><td>①</td><td><b>착공단계</b></td><td>착공신고서·현장기술자 자격 등 착공 제출서류 검토</td></tr>
+    <tr><td>②</td><td><b>시공단계</b></td><td>사용자재 규격검토·검사 = 품질관리</td></tr>
+    <tr><td>③</td><td><b>준공단계</b></td><td>기성검사는 준공단계 업무 3가지 중 하나</td></tr>
+    <tr><td>④</td><td><b>시공단계</b></td><td>접지저항 측정·시험성과표 기록 = 품질관리(시험·검사)</td></tr>
+    <tr><td>⑤</td><td><b>인계인수단계</b></td><td>준공도서·시설물을 운영부서에 인계</td></tr>
+    <tr><td>⑥</td><td><b>착공단계</b></td><td>시공계획서·예정공정표 검토는 착공 시 서류검토</td></tr>
+    <tr><td>⑦</td><td><b>준공단계</b></td><td>사용전검사 + 준공계 검토·확인</td></tr>
+    <tr><td>⑧</td><td><b>시공단계</b></td><td>재해예방·안전점검 = 안전관리</td></tr>
+  </table>
+
+  <p style="margin-top:12px"><b>(2) 시공단계 4대 관리 역매칭 — ②④⑧ 각 1점</b></p>
+  <table>
+    <tr><th>번호</th><th>4대 관리</th></tr>
+    <tr><td>②</td><td><b>품질관리</b> (자재 규격검토·검사)</td></tr>
+    <tr><td>④</td><td><b>품질관리</b> (접지저항 시험·성과표 기록)</td></tr>
+    <tr><td>⑧</td><td><b>안전관리</b> (재해예방·순회 안전점검)</td></tr>
+  </table>
+
+  <div class="key">
+    🔑 <b>단계 구분 한 줄 암기</b><br>
+    <b>착공</b> = 아직 삽 안 뜸 → <u>서류 검토</u>(착공신고서·시공계획서·예정공정표·인허가서류 등 12가지)<br>
+    <b>시공</b> = 현장이 돌아감 → <u>시공·공정·품질·안전</u> 4대 관리 <span style="color:#b91c1c">[2026-1회 기출: 시공단계 3가지]</span><br>
+    <b>준공</b> = 끝내는 절차 → <u>기성검사 · 사용전검사 · 준공계 검토·확인</u><br>
+    <b>인계인수</b> = 넘겨줌 → <u>시설물·준공도서 인계인수 확인</u><br>
+    함정: <b>기성검사</b>는 공사 중간에 하지만 <b>준공단계</b> 업무로 분류한다. <b>시공계획서 검토</b>는 "시공"이라는 글자에 낚이지 말 것 — <b>착공단계</b>다.
+  </div>
+  </details>
+</div>
+
+<!-- ===================== Q2 : T03 ===================== -->
+<div class="q">
+  <span class="tag">T03</span><span class="type">설정 오류 진단형</span>
+  <div class="prompt">문제 2. 신입 엔지니어가 NMS-에이전트 연동을 위해 아래와 같이 설정·설계하였으나, 관리서버에서 장비 폴링과 장애 알람이 모두 동작하지 않는다.</div>
+
+  <div class="calc"># snmp-agent 설정 및 설계 메모
+(a) transport-protocol : TCP
+(b) polling(GetRequest) 수신 포트 : 162
+(c) Trap 송신 대상 포트 : 161
+(d) Trap 발생 방향 : 관리자(Manager) → 에이전트(Agent)
+(e) 순차 조회(테이블 워킹)용 메시지 : GetResponse
+(f) 관리객체 정의 저장소 : MIB
+(g) 프로토콜 계층 : 애플리케이션 계층</div>
+
+  <div class="prompt">(1) (a)~(g) 중 <b>잘못된 항목 5개</b>를 찾아 기호를 쓰고, 각각을 올바르게 정정하시오. (5점)</div>
+  <div class="prompt">(2) SNMP의 <b>메시지(PDU) 5가지</b>를 쓰고, 이 중 <b>에이전트가 관리자에게 능동적으로 보내는 단방향 메시지</b>는 무엇인지 쓰시오. (3점)</div>
+  <div class="prompt">(3) NMS의 <b>구성 4요소</b>를 쓰시오. (2점)</div>
+  <div class="answerbox">답안 작성란</div>
+
+  <details><summary>▶ 모범답안 · 채점기준 (10점)</summary>
+
+  <p><b>(1) 오류 5개소 정정 — 각 1점 (기호+정정 모두 맞아야 정답)</b></p>
+  <table>
+    <tr><th>기호</th><th>오류 내용</th><th>정정</th></tr>
+    <tr><td><b>(a)</b></td><td>TCP</td><td><b>UDP</b> — SNMP는 비연결형 UDP 사용(오버헤드 최소화)</td></tr>
+    <tr><td><b>(b)</b></td><td>폴링 수신 포트 162</td><td><b>161</b> — Get/GetNext/Set/GetResponse는 <b>161</b></td></tr>
+    <tr><td><b>(c)</b></td><td>Trap 포트 161</td><td><b>162</b> — Trap만 <b>162</b></td></tr>
+    <tr><td><b>(d)</b></td><td>Trap 방향 관리자→에이전트</td><td><b>에이전트 → 관리자</b> (단방향 능동 통보)</td></tr>
+    <tr><td><b>(e)</b></td><td>순차 조회에 GetResponse</td><td><b>GetNextRequest</b> — GetResponse는 응답용 메시지</td></tr>
+  </table>
+  <p style="font-size:13.5px;color:#444">※ (f) MIB, (g) 애플리케이션 계층은 <b>옳은 항목</b>이다. 이 둘을 오류로 지목하면 감점.</p>
+
+  <p style="margin-top:12px"><b>(2) 메시지 5가지 (2점) + 단방향 (1점)</b></p>
+  <table>
+    <tr><th>메시지</th><th>방향</th><th>포트</th><th>기능</th></tr>
+    <tr><td>GetRequest</td><td>관리자→에이전트</td><td>161</td><td>특정 관리객체 값 조회</td></tr>
+    <tr><td>GetNextRequest</td><td>관리자→에이전트</td><td>161</td><td>다음 객체 순차 조회(MIB 워킹)</td></tr>
+    <tr><td>SetRequest</td><td>관리자→에이전트</td><td>161</td><td>관리객체 값 설정·변경</td></tr>
+    <tr><td>GetResponse</td><td>에이전트→관리자</td><td>161</td><td>요청에 대한 응답</td></tr>
+    <tr><td><b>Trap</b></td><td><b>에이전트→관리자</b></td><td><b>162</b></td><td>장애·이벤트 <b>능동 통보</b></td></tr>
+  </table>
+  <p>→ 능동 단방향 메시지 = <b>Trap</b></p>
+
+  <p style="margin-top:12px"><b>(3) NMS 4요소 (2점)</b> — ① 관리 스테이션(Manager) ② 에이전트(Agent) ③ MIB(관리정보베이스) ④ SNMP(관리 프로토콜)</p>
+
+  <div class="key">
+    🔑 <b>포트 암기</b>: "<b>요청·응답은 161, 트랩만 162</b>" — 161이 4개, 162가 1개.<br>
+    🔑 <b>계층 구조</b>: NE → EMS → NMS (→ BSS/OSS). 🔑 <b>FCAPS</b>: 장애(F)·구성(C)·과금(A)·성능(P)·보안(S).
+  </div>
+  </details>
+</div>
+
+<!-- ===================== Q3 : C02 ===================== -->
+<div class="q">
+  <span class="tag">C02</span><span class="type">접수 체크리스트 누락 판정형</span>
+  <div class="prompt">문제 3. 발주자가 설계용역사로부터 아래와 같이 <b>설계도서</b>를 접수하였고, 수급인으로부터 <b>공사계획서</b>를 접수하였다.</div>
+
+  <table>
+    <tr><th style="width:50%">[접수함 A] 설계용역사 제출분</th><th>[접수함 B] 수급인 제출분</th></tr>
+    <tr>
+      <td>
+        • 설계설명서<br>
+        • 설계도면<br>
+        • 기술계산서<br>
+        • 공사비명세서<br>
+        • 감리원 배치계획서
+      </td>
+      <td>
+        • 공사개요<br>
+        • 안전관리계획<br>
+        • 공사예정공정표<br>
+        • 환경관리계획<br>
+        • 하도급 계약서 사본
+      </td>
+    </tr>
+  </table>
+
+  <div class="prompt" style="margin-top:12px">(1) [접수함 A]에서 <b>설계도서 5가지</b> 기준으로 <u>누락된 항목 1가지</u>와 <u>설계도서에 해당하지 않는 항목 1가지</u>를 쓰시오. (2점)</div>
+  <div class="prompt">(2) [접수함 B]에서 <b>공사계획서 5가지</b> 기준으로 <u>누락된 항목 1가지</u>와 <u>공사계획서에 해당하지 않는 항목 1가지</u>를 쓰시오. (2점)</div>
+  <div class="prompt">(3) <b>설계도서 5가지</b>와 <b>공사계획서 5가지</b>를 각각 모두 쓰시오. (4점)</div>
+  <div class="answerbox">답안 작성란</div>
+
+  <details><summary>▶ 모범답안 · 채점기준 (8점)</summary>
+
+  <p><b>(1) 설계도서 (2점)</b><br>
+  • 누락 : <b>공사계획서</b><br>
+  • 비해당 : <b>감리원 배치계획서</b> (발주자가 작성하는 감리 관련 서류로, 설계도서가 아님)</p>
+
+  <p><b>(2) 공사계획서 (2점)</b><br>
+  • 누락 : <b>공정관리계획</b><br>
+  • 비해당 : <b>하도급 계약서 사본</b> (하도급 타당성 검토 대상 서류이지 공사계획서 구성항목이 아님)</p>
+
+  <p><b>(3) 전체 열거 (각 0.4점, 총 4점)</b></p>
+  <table>
+    <tr><th>설계도서 5가지</th><th>공사계획서 5가지</th></tr>
+    <tr><td>① 설계설명서</td><td>① 공사개요</td></tr>
+    <tr><td>② 공사계획서</td><td>② 공정관리계획</td></tr>
+    <tr><td>③ 기술계산서</td><td>③ 안전관리계획</td></tr>
+    <tr><td>④ 설계도면</td><td>④ 공사예정공정표</td></tr>
+    <tr><td>⑤ 공사비명세서</td><td>⑤ 환경관리계획</td></tr>
+  </table>
+
+  <div class="key">
+    🔑 <b>설계도서</b> = "<b>설·공·기·도·명</b>" (설계설명서 · 공사계획서 · 기술계산서 · 설계도면 · 공사비명세서)<br>
+    🔑 <b>공사계획서</b> = "<b>개·공·안·예·환</b>" (공사개요 · 공정관리계획 · 안전관리계획 · 공사예정공정표 · 환경관리계획)<br>
+    함정: <b>공사계획서는 설계도서의 한 항목</b>이면서 그 자체가 5개 구성항목을 갖는 <b>이중 구조</b>다. 두 목록을 섞어 쓰면 오답.
+  </div>
+  </details>
+</div>
+
+<!-- ===================== Q4 : C07 ===================== -->
+<div class="q">
+  <span class="tag">C07</span><span class="type">날짜 계산 + 등급 역산 표 완성형</span>
+  <div class="prompt">문제 4. 한 감리업체가 아래 4개 현장의 감리원 배치와 감리결과 통보 업무를 맡고 있다.</div>
+
+  <table>
+    <tr><th style="width:60px">현장</th><th>총공사비</th><th>완공(준공)일</th><th>배치해야 할 감리원 등급</th><th>감리결과 통보 기한</th></tr>
+    <tr><td>가</td><td>128억원</td><td>2026-09-01(화)</td><td>(①)</td><td>(⑤)</td></tr>
+    <tr><td>나</td><td>82억원</td><td>2026-09-03(목)</td><td>(②)</td><td>(⑥)</td></tr>
+    <tr><td>다</td><td>41억원</td><td>2026-09-10(목)</td><td>(③)</td><td>(⑦)</td></tr>
+    <tr><td>라</td><td>4억 8천만원</td><td>2026-09-15(화)</td><td>(④)</td><td>(⑧)</td></tr>
+  </table>
+
+  <div class="prompt" style="margin-top:12px">(1) ①~④에 들어갈 <b>감리원 배치 등급</b>을 쓰시오. (특별한 자격요건이 있으면 함께 쓸 것) (4점)</div>
+  <div class="prompt">(2) ⑤~⑧에 들어갈 <b>감리결과 통보 기한(날짜)</b>을 쓰시오. (4점)</div>
+  <div class="prompt">(3) 총공사비 <b>18억원</b>인 현장에 배치할 등급과, 그 판단 근거가 되는 <b>금액 구간 5단계</b>를 모두 쓰시오. (3점)</div>
+  <div class="answerbox">답안 작성란</div>
+
+  <details><summary>▶ 모범답안 · 채점기준 (11점)</summary>
+
+  <p><b>(1) 배치 등급 (각 1점)</b></p>
+  <table>
+    <tr><th>현장</th><th>공사비</th><th>등급</th><th>근거</th></tr>
+    <tr><td>가</td><td>128억</td><td><b>특급감리원 (기술사 자격 보유자)</b></td><td>100억원 이상</td></tr>
+    <tr><td>나</td><td>82억</td><td><b>특급감리원</b></td><td>70억원 이상 ~ 100억원 미만</td></tr>
+    <tr><td>다</td><td>41억</td><td><b>고급감리원</b></td><td>30억원 이상 ~ 70억원 미만</td></tr>
+    <tr><td>라</td><td>4.8억</td><td><b>초급감리원</b></td><td>5억원 미만</td></tr>
+  </table>
+  <p style="font-size:13.5px;color:#b91c1c">※ 현장 라는 "5억 이상 → 중급"에 낚이기 쉬운 함정. <b>4.8억은 5억 미만이므로 초급</b>.</p>
+
+  <p style="margin-top:12px"><b>(2) 통보 기한 = 완공일로부터 7일 이내 (각 1점)</b></p>
+  <div class="calc">가 : 2026-09-01 + 7일 → 2026-09-08 까지
+나 : 2026-09-03 + 7일 → 2026-09-10 까지
+다 : 2026-09-10 + 7일 → 2026-09-17 까지
+라 : 2026-09-15 + 7일 → 2026-09-22 까지</div>
+
+  <p style="margin-top:12px"><b>(3) 18억원 현장 + 5단계 구간 (3점)</b></p>
+  <p>18억원 → <b>중급감리원</b> (5억원 이상 ~ 30억원 미만)</p>
+  <table>
+    <tr><th>총공사비 구간</th><th>배치 등급</th></tr>
+    <tr><td>100억원 이상</td><td>특급감리원 (<b>기술사</b>)</td></tr>
+    <tr><td>70억원 이상</td><td>특급감리원</td></tr>
+    <tr><td>30억원 이상</td><td>고급감리원</td></tr>
+    <tr><td>5억원 이상</td><td>중급감리원</td></tr>
+    <tr><td>5억원 미만</td><td>초급감리원</td></tr>
+  </table>
+
+  <div class="key">
+    🔑 <b>숫자 사슬</b>: <b>100 – 70 – 30 – 5</b> → 특(기술사) · 특 · 고 · 중 · 초<br>
+    🔑 <b>감리결과 통보 = 완공 후 7일 이내</b> (감리원 → 발주자). 인증 처리기간 <b>20일</b>(C05)과 헷갈리지 말 것.
+  </div>
+  </details>
+</div>
+
+<div class="note">
+  <b>📌 채점 후 알려주세요</b> — 예: <code>오늘 점수: C11 9/11, T03 7/10, C02 8/8, C07 6/11</code><br>
+  70% 미만은 오답 처리되어 <b>내일 즉시 재출제</b>, 70% 이상은 streak +1로 간격이 늘어납니다.<br>
+  <b>내일(9/1) 예정</b>: 채점 입력 시 오답 토픽 최우선 / 미입력 시 8/28 배치(C08·T01·T02·T04) 3차 유형 교체 재출제.
+</div>
+
+<footer>정보통신기사 실기 필답형 · 에빙하우스 SRS 자동 훈련 · 2026-08-31 생성</footer>
+</body>
+</html>
