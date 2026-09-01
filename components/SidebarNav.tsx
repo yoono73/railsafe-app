@@ -175,19 +175,19 @@ export default function SidebarNav() {
                     </Link>
                   </div>
                 )}
-                {/* 철도산업기본법(id=5) 아래 기출 CBT 링크 */}
+                {/* 철도산업기본법(id=5) 아래 철도왕 CBT 링크 */}
                 {s.id === 5 && (
-                  <div className="pl-2 border-l border-indigo-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
+                  <div className="pl-2 border-l border-emerald-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
                     <Link
-                      href="/kibchul/industry"
+                      href="/kibchul/engineering/railway-king?m=quiz&ch=ch53"
                       className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
-                        pathname.startsWith('/kibchul/industry')
-                          ? 'bg-indigo-100 text-indigo-800 font-semibold'
-                          : 'text-gray-400 hover:bg-gray-50 hover:text-indigo-700'
+                        pathname.startsWith('/kibchul/engineering/railway-king')
+                          ? 'bg-emerald-100 text-emerald-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-emerald-700'
                       }`}
                     >
                       <span className="text-[10px]">└</span>
-                      <span>📝 기출 106문항 CBT</span>
+                      <span>👑 철도왕 CBT (기출·신유형)</span>
                     </Link>
                   </div>
                 )}
