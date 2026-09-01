@@ -179,9 +179,9 @@ export default function SidebarNav() {
                 {s.id === 5 && (
                   <div className="pl-2 border-l border-emerald-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
                     <Link
-                      href="/kibchul/engineering/railway-king?m=quiz&ch=ch53"
+                      href="/quiz/5"
                       className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
-                        pathname.startsWith('/kibchul/engineering/railway-king')
+                        pathname.startsWith('/quiz/5')
                           ? 'bg-emerald-100 text-emerald-800 font-semibold'
                           : 'text-gray-400 hover:bg-gray-50 hover:text-emerald-700'
                       }`}
