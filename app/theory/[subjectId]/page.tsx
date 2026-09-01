@@ -101,7 +101,7 @@ export default function TheoryPage() {
         src={`/theory/${subjectId}.html${urlHash}`}
         className="flex-1 w-full border-none min-h-0"
         title={`${subjectNames[subjectId]} 핵심정리`}
-        loading="lazy"
+        loading="eager"
       />
     </div>
   );
