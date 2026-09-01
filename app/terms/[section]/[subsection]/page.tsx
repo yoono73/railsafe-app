@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { findSection, findSubsection, TERM_SECTIONS } from '@/lib/terms-types';
 import type { Term } from '@/lib/terms-types';
@@ -10,7 +9,7 @@ import { createClient } from '@/lib/supabase/client';
 /* subsection별 대표 이미지 */
 const SUBSECTION_IMAGES: Record<string, { src: string; alt: string }> = {
   'train-operation/track-station': {
-    src: '/theory/images/철도_선로_용어_관계도.png',
+    src: '/theory/images/railway-track-terms.png',
     alt: '철도 선로 용어 관계도',
   },
 };
@@ -81,55 +80,83 @@ export default function TermsSubsectionPage() {
       <div className="flex-1 overflow-y-auto p-4">
         <div className="max-w-3xl mx-auto">
 
-          {/* 대표 이미지 (subsection별 조건부) */}
+          {/* 대표 이미지 */}
           {heroImage && (
             <div className="mb-5 rounded-xl overflow-hidden border border-gray-100 shadow-sm bg-white">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={heroImage.src}
-                alt={heroImage.alt}
-                className="w-full h-auto"
-              />
+              <img src={heroImage.src} alt={heroImage.alt} className="w-full h-auto" />
             </div>
           )}
 
-          {/* 용어 카드 2열 그리드 */}
+          {/* 용어 카드 2열 그리드 — 상세 내용 전체 펼침 */}
           {loading ? (
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-4">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="bg-white rounded-xl border border-gray-100 shadow-sm px-4 py-3 animate-pulse">
-                  <div className="h-3 bg-gray-100 rounded w-1/3 mb-2" />
-                  <div className="h-2 bg-gray-50 rounded w-2/3" />
+                <div key={i} className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 animate-pulse space-y-3">
+                  <div className="h-4 bg-gray-100 rounded w-1/3" />
+                  <div className="h-3 bg-gray-50 rounded w-2/3" />
+                  <div className="h-10 bg-purple-50 rounded" />
                 </div>
               ))}
             </div>
           ) : terms.length === 0 ? (
-            <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-xs text-amber-700">
+            <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm text-amber-700">
               아직 등록된 용어가 없습니다.
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-4">
               {terms.map((term) => (
-                <Link
+                <div
                   key={term.concept_code}
-                  href={`/terms/${section}/${subsection}/${term.concept_code}`}
-                  className="block bg-white rounded-xl border border-gray-100 shadow-sm px-4 py-3 hover:border-purple-200 hover:shadow transition-all"
+                  className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 space-y-3"
                 >
-                  <div className="flex items-baseline gap-2 flex-wrap mb-1">
-                    <span className="font-medium text-gray-800 text-sm">{term.term_ko}</span>
-                    {term.term_abbr && (
-                      <span className="text-xs font-mono text-purple-500">{term.term_abbr}</span>
-                    )}
+                  {/* 용어명 */}
+                  <div>
+                    <p className="text-xs text-gray-400 mb-0.5">용어</p>
+                    <div className="flex items-baseline gap-2 flex-wrap">
+                      <span className="text-lg font-bold text-gray-800">{term.term_ko}</span>
+                      {term.term_abbr && (
+                        <span className="text-sm font-mono text-purple-500">{term.term_abbr}</span>
+                      )}
+                    </div>
                     {term.term_en && (
-                      <span className="text-xs text-gray-400">{term.term_en}</span>
+                      <p className="text-sm text-gray-400 mt-0.5">{term.term_en}</p>
                     )}
                   </div>
-                  {(term.definition_short || term.term_definition) && (
-                    <p className="text-xs text-gray-500 leading-relaxed">
-                      {term.definition_short || term.term_definition}
-                    </p>
+
+                  {/* 한 줄 정의 */}
+                  {term.definition_short && (
+                    <div className="bg-purple-50 rounded-lg px-3 py-2 border border-purple-100">
+                      <p className="text-xs text-purple-400 mb-0.5">한 줄 정의</p>
+                      <p className="text-sm text-purple-800 font-medium leading-relaxed">
+                        {term.definition_short}
+                      </p>
+                    </div>
                   )}
-                </Link>
+
+                  {/* 상세 정의 */}
+                  {term.term_definition && (
+                    <div>
+                      <p className="text-xs text-gray-400 mb-0.5">상세 정의</p>
+                      <p className="text-sm text-gray-700 leading-relaxed">{term.term_definition}</p>
+                    </div>
+                  )}
+
+                  {/* 혼동 주의 */}
+                  {term.confusing_terms && (
+                    <div className="bg-orange-50 rounded-lg px-3 py-2 border border-orange-100">
+                      <p className="text-xs text-orange-400 mb-0.5">⚠️ 혼동 주의</p>
+                      <p className="text-sm text-orange-700">{term.confusing_terms}</p>
+                    </div>
+                  )}
+
+                  {/* 메모 */}
+                  {term.memo && (
+                    <div className="bg-yellow-50 rounded-lg px-3 py-2 border border-yellow-100">
+                      <p className="text-sm text-yellow-700">{term.memo}</p>
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           )}
