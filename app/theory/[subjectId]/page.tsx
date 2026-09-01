@@ -26,6 +26,7 @@ export default function TheoryPage() {
 
   // URL 해시(#quiz-kibchul 등)를 감지해서 iframe에 전달
   const [urlHash, setUrlHash] = useState('');
+  const [cacheBuster] = useState(() => Date.now());
   useEffect(() => {
     setUrlHash(window.location.hash);
     const onHashChange = () => setUrlHash(window.location.hash);
@@ -98,7 +99,7 @@ export default function TheoryPage() {
 
       {/* 핵심정리 HTML iframe — flex-1로 뷰포트 맞춤, 내부 스크롤 */}
       <iframe
-        src={`/theory/${subjectId}.html${urlHash}`}
+        src={`/theory/${subjectId}.html?v=${cacheBuster}${urlHash}`}
         className="flex-1 w-full border-none min-h-0"
         title={`${subjectNames[subjectId]} 핵심정리`}
         loading="eager"
