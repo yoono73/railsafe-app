@@ -55,7 +55,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 
 /* ===== mobile-toc-drawer ===== */
 #toc-toggle-btn{display:none}
-@media(max-width:900px){
+@media(max-width:600px){
 .toc{display:none!important}
 #toc-toggle-btn{display:flex;align-items:center;gap:6px;position:fixed;bottom:72px;left:14px;z-index:200;background:#4c1d95;color:#fff;border:none;border-radius:24px;padding:8px 16px 8px 12px;font-size:.85em;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(76,29,149,.45);font-family:inherit}
 #toc-toggle-btn:active{background:#6d28d9}
@@ -590,6 +590,14 @@ document.addEventListener('DOMContentLoaded',()=>{
     });
     if(q) document.querySelectorAll('.part-body').forEach(b=>b.style.display='block');
   });
+  // TOC sticky top을 실제 헤더 높이에 맞게 동적 조정
+  const hdr=document.querySelector('.site-header');
+  const toc=document.querySelector('.toc');
+  if(hdr&&toc){
+    const h=hdr.offsetHeight;
+    toc.style.top=h+'px';
+    toc.style.height='calc(100vh - '+h+'px)';
+  }
 });
 </script>
 
