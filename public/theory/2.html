@@ -90,7 +90,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 #toc-toggle-btn {
   display: none;
 }
-@media(max-width:900px) {
+@media(max-width:600px) {
   .toc { display: none !important; }
   #toc-toggle-btn {
     display: flex;
@@ -2222,5 +2222,5 @@ window.onbeforeprint = function() {
   </div>
   <div id="_dbgBody" style="height:220px;overflow-y:auto;padding:4px 8px;line-height:1.5;"></div>
 </div>
-</body>
+<script>document.addEventListener("DOMContentLoaded",function(){var hdr=document.querySelector(".site-header");var toc=document.querySelector(".toc");if(hdr&&toc){var h=hdr.offsetHeight;toc.style.top=h+"px";toc.style.height="calc(100vh - "+h+"px)";}})</script></body>
 </html>
