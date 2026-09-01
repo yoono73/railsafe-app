@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>철도산업기본법 기출변형·신유형 문제</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { margin:0; padding:16px; background:#f8f9fa; font-family:'Malgun Gothic','맑은 고딕',sans-serif; font-size:16px; line-height:1.75; color:#1a1a2e; }
+h2 { color:#065f46; font-size:1.15em; margin-bottom:10px; }
+.part { margin-bottom:10px; }
+.part-title { background:#065f46; color:#fff; padding:10px 16px; border-radius:8px 8px 0 0; font-size:1.1em; font-weight:bold; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+.part-title:hover { background:#047857; }
+.part-body { border:1px solid #6ee7b7; border-top:none; border-radius:0 0 8px 8px; background:#fff; padding:0 16px 10px; }
+.qbank-item { border:1px solid #a7f3d0; border-radius:8px; padding:14px 16px; margin:12px 0; background:#f0fdf4; }
+.qbank-num { font-size:.88em; font-weight:bold; color:#065f46; background:#a7f3d0; border-radius:4px; padding:1px 8px; margin-right:6px; }
+.qbank-tag { font-size:.85em; background:#d1fae5; color:#065f46; border-radius:4px; padding:1px 7px; margin-left:4px; }
+.qbank-q { font-weight:bold; color:#1a1a2e; margin:8px 0 10px; font-size:1.05em; }
+.qbank-choices { list-style:none; margin:0 0 10px; padding:0; }
+.qbank-choices li { padding:6px 10px 6px 28px; position:relative; color:#374151; font-size:1em; cursor:pointer; border-radius:4px; transition:background .15s; margin:3px 0; }
+.qbank-choices li:hover:not(.ans-correct):not(.ans-wrong) { background:#d1fae5; }
+.qbank-choices li::before { content:attr(data-num); position:absolute; left:8px; color:#6b7280; font-size:.9em; }
+.qbank-choices li.selected { background:#dbeafe; border:1px solid #93c5fd; color:#1d4ed8; font-weight:bold; }
+.qbank-choices li.ans-correct { background:#d1fae5; color:#065f46; font-weight:bold; }
+.qbank-choices li.ans-wrong { background:#fee2e2; color:#991b1b; text-decoration:line-through; }
+.qbank-reveal { border:none; background:#6ee7b7; color:#065f46; font-size:.92em; padding:6px 16px; border-radius:6px; cursor:pointer; font-family:inherit; font-weight:bold; }
+.qbank-reveal:hover { background:#34d399; }
+.qbank-explain { display:none; margin-top:10px; background:#f0fdf4; border-left:3px solid #10b981; padding:9px 12px; border-radius:0 6px 6px 0; font-size:.97em; color:#065f46; }
+.qbank-wrong-note { display:block; background:#fee2e2; border-left:3px solid #dc2626; color:#b91c1c; padding:5px 10px; margin:5px 0; border-radius:4px; font-size:1em; }
+.qbank-item.new-type { background:#faf5ff; border-color:#ddd6fe; }
+.qbank-item.new-type .qbank-num { background:#ede9fe; color:#5b21b6; }
+#wrong-bar { display:none; align-items:center; gap:10px; background:#fee2e2; border:1px solid #fca5a5; border-radius:8px; padding:10px 16px; margin-bottom:14px; flex-wrap:wrap; }
+#wrong-count-badge { background:#ef4444; color:#fff; border-radius:20px; padding:2px 10px; font-weight:bold; font-size:.9em; }
+.wrong-mode-btn { border:none; border-radius:6px; padding:6px 14px; font-size:.92em; cursor:pointer; font-weight:bold; font-family:inherit; transition:background .15s; }
+#btn-wrong-only { background:#ef4444; color:#fff; }
+#btn-wrong-only:hover { background:#dc2626; }
+#btn-reset-all { background:#e2e8f0; color:#374151; }
+#btn-reset-all:hover { background:#cbd5e1; }
+</style>
+</head>
+<body>
+<h2>📋 철도산업기본법 기출변형·신유형 문제</h2>
+<div id="wrong-bar">
+  <span>❌ 틀린 문제</span>
+  <span id="wrong-count-badge">0</span>개
+  <button class="wrong-mode-btn" id="btn-wrong-only" onclick="toggleWrongMode()">틀린 문제만 보기</button>
+  <button class="wrong-mode-btn" id="btn-reset-all" onclick="resetAllItems()">전체 초기화</button>
+</div>
+
+<div class="part" id="quiz-kibchul" style="margin-top:12px">
+  <div class="part-title" onclick="togglePart('p-kibchul','arrow-kibchul')">
+    📋 기출변형 (19문항) <span id="arrow-kibchul">▼</span>
+  </div>
+  <div class="part-body" id="p-kibchul"></div>
+</div>
+
+<div class="part" id="quiz-new" style="margin-top:8px">
+  <div class="part-title" onclick="togglePart('p-new','arrow-new')" style="background:#5b21b6;">
+    ✨ 신유형 (11문항) <span id="arrow-new">▼</span>
+  </div>
+  <div class="part-body" id="p-new" style="border-color:#ddd6fe;"></div>
+</div>
+
+<script>
+const STORAGE_KEY = 'quiz5wrong';
+const NUMS = ['①','②','③','④'];
+
+const QUESTIONS = [
+  {num:1,q:'철도산업발전기본법의 제정 목적에 해당하지 않는 것은?',c:['철도산업의 공익적 기능과 경제적 성과의 강화','철도산업의 효율성 및 공익성의 향상','철도산업의 경쟁력을 높이고 발전기반을 조성','국민경제의 발전에 이바지함'],a:0,e:'제1조(목적): 이 법은 철도산업의 경쟁력을 높이고 발전기반을 조성함으로써 철도산업의 효율성 및 공익성의 향상과 국민경제의 발전에 이바지함을 목적으로 한다. "공익적 기능과 경제적 성과의 강화"는 목적 조항에 없다.',t:'kibchul'},
+  {num:2,q:'\'철도\'의 정의로 맞는 것은?',c:['철도차량을 운전하기 위한 궤도','철도차량을 운행하기 위한 노반','철도차량을 운행하기 위한 공작물로 구성된 시설','여객 또는 화물을 운송하는 데 필요한 철도시설과 철도차량 및 이와 관련된 운영·지원체계가 유기적으로 구성된 운송체계'],a:3,e:'제3조(정의) 1. "철도"라 함은 여객 또는 화물을 운송하는 데 필요한 철도시설과 철도차량 및 이와 관련된 운영·지원체계가 유기적으로 구성된 운송체계를 말한다.',t:'kibchul'},
+  {num:3,q:'철도산업발전기본법상 \'철도시설\'에 해당하지 않는 것은?',c:['철도경영연수 및 철도전문인력의 교육훈련을 위한 시설','철도의 전철전력설비, 정보통신설비, 신호 및 열차제어설비','철도차량을 제작하는 시설','철도의 선로, 역시설 및 철도운영을 위한 건축물·건축설비'],a:2,e:'제3조(정의) 철도시설은 선로, 역시설, 전철전력설비, 정보통신설비, 신호설비, 선로보수기지, 차량정비기지, 교육훈련시설, 연계운영시설 등이다. "철도차량을 제작하는 시설"은 철도시설이 아니라 제조업 시설이다.',t:'kibchul'},
+  {num:4,q:'철도산업발전기본법에서 정의한 철도차량을 모두 고르시오. (ㄱ.화차 ㄴ.객차 ㄷ.동력차 ㄹ.특수차)',c:['ㄱ','ㄴ, ㄷ, ㄹ','ㄱ, ㄷ','ㄱ, ㄴ, ㄷ, ㄹ'],a:3,e:'제3조(정의) 4. "철도차량"이라 함은 선로를 운행할 목적으로 제작된 동력차·객차·화차 및 특수차를 말한다. 4가지 모두 해당한다.',t:'kibchul'},
+  {num:5,q:'철도운영자가 영리목적의 영업활동과 관계없이 국가 또는 지방자치단체의 정책이나 공공목적 등을 위하여 제공하는 철도서비스를 말하는 용어는?',c:['무상서비스','무임승차','철도서비스','공익서비스'],a:3,e:'제3조(정의) 11. "공익서비스"라 함은 철도운영자가 영리목적의 영업활동과 관계없이 국가 또는 지방자치단체의 정책이나 공공목적 등을 위하여 제공하는 철도서비스를 말한다.',t:'kibchul'},
+  {num:6,q:'국가교통안전기본계획의 수립권자와 수립주기가 올바르게 짝지어진 것은?',c:['국토교통부장관 - 1년','국토교통부장관 - 5년','대통령 - 1년','대통령 - 5년'],a:1,e:'교통안전법 제15조: 국토교통부장관은 국가의 전반적인 교통안전수준의 향상을 도모하기 위하여 교통안전에 관한 기본계획을 5년 단위로 수립하여야 한다.',t:'kibchul'},
+  {num:7,q:'철도산업위원회의 위원 구성과 운영에 관한 설명으로 틀린 것은?',c:['철도산업위원회 위원장은 국토교통부장관이 된다.','위원회 및 분과위원회의 구성·기능 및 운영에 관하여 필요한 사항은 대통령령으로 정한다.','구성은 위원장을 포함 20인 이내로 구성한다.','위원회에 상정할 안건을 미리 검토하고 위원회가 위임한 안건을 심의하기 위하여 위원회에 분과위원회를 둔다.'],a:2,e:'제6조(철도산업위원회) ③ 위원회는 위원장을 포함한 25인 이내의 위원으로 구성한다. (20인이 아닌 25인이다)',t:'kibchul'},
+  {num:8,q:'철도산업위원회에 대한 설명으로 틀린 것은?',c:['철도산업위원회는 위원장을 포함한 25인 이내의 위원으로 구성한다.','위원의 임기는 5년으로 하되, 연임할 수 있다.','위원회 및 분과위원회의 구성·기능 및 운영에 관하여 필요한 사항은 대통령령으로 정한다.','철도산업에 관한 기본계획 및 중요정책 등을 심의·조정하기 위하여 국토교통부에 철도산업위원회를 둔다.'],a:1,e:'시행령 제6조: 위원의 임기는 2년으로 하되, 연임할 수 있다. (5년이 아니라 2년이다)',t:'kibchul'},
+  {num:9,q:'철도산업위원회 위원장으로 옳은 것은?',c:['국토교통부장관','대통령','국무총리','교통안전공단 이사장'],a:0,e:'제6조(철도산업위원회): 철도산업위원회의 위원장은 국토교통부장관이 된다.',t:'kibchul'},
+  {num:10,q:'실무위원회 구성으로 틀린 것은?',c:['실무위원회는 위원장을 포함한 20인 이내의 위원으로 구성한다.','위원장은 국토교통부장관이 된다.','위원회의 심의·조정사항과 위원회에서 위임한 사항의 실무적인 검토를 위하여 위원회에 실무위원회를 둔다.','실무위원회에 간사 1인을 두되, 간사는 국토교통부장관이 국토교통부소속 공무원 중에서 지명한다.'],a:1,e:'시행령 제10조(실무위원회의 구성 등) ③: 실무위원회의 위원장은 국토교통부장관이 국토교통부의 3급 공무원 또는 고위공무원단에 속하는 일반직공무원 중에서 지명한다. (국토교통부장관이 직접 위원장이 되는 것이 아니다)',t:'kibchul'},
+  {num:11,q:'실무위원회의 위원장은 누가 지정하는가?',c:['국토교통부장관','철도산업위원회 위원장','대통령','국무총리'],a:0,e:'시행령 제10조: 실무위원회의 위원장은 국토교통부장관이 국토교통부의 3급 공무원 또는 고위공무원단에 속하는 일반직공무원 중에서 지명한다.',t:'kibchul'},
+  {num:12,q:'철도산업정보화 기본계획에 포함되지 않는 것은?',c:['철도산업정보화의 여건 및 전망','철도산업정보의 유통 및 이용활성화에 관한 사항','철도산업정보의 수집 및 조사계획','철도산업 정보화 추진을 위한 내부·외부 기반 마련 관련 사항'],a:3,e:'시행령 제15조 철도산업정보화기본계획 포함 사항: 1.여건 및 전망, 2.목표 및 단계별 추진계획, 3.필요한 비용, 4.정보의 수집 및 조사계획, 5.유통 및 이용활성화, 6.기술개발 지원, 7.기타. "내부·외부 기반 마련"은 없다.',t:'kibchul'},
+  {num:13,q:'철도협회 설립 시 정관의 기재사항과 협회의 운영 등에 필요한 사항은 무엇으로 정하는가?',c:['대통령령','국토교통부령','법무부령','국가철도공단규정'],a:0,e:'제13조의2(협회의 설립) ⑥: 협회의 정관은 국토교통부장관의 인가를 받아야 하며, 정관의 기재사항과 협회의 운영 등에 필요한 사항은 대통령령으로 정한다.',t:'kibchul'},
+  {num:14,q:'철도서비스 품질평가의 절차 및 활용 등에 관하여 필요한 사항은 어떤 령으로 정하는가?',c:['행정안전부령','국토교통부령','대통령령','국무총리령'],a:1,e:'제15조(철도서비스의 품질개선 등): 철도서비스 품질평가의 절차 및 활용 등에 관하여 필요한 사항은 국토교통부령으로 정한다.',t:'kibchul'},
+  {num:15,q:'철도 이용자의 권익보호 시책에 해당하지 않는 것은?',c:['철도이용자의 생명·신체 및 재산상의 위해 방지','철도이용자의 불만 및 피해에 대한 신속·공정한 구제조치','철도이용자의 요금부담 완화 및 환급절차 개선','철도이용자의 권익보호를 위한 홍보·교육 및 연구'],a:2,e:'제16조(철도이용자의 권익보호 등) 시책: 1.홍보·교육 및 연구, 2.생명·신체·재산 위해 방지, 3.불만 및 피해 구제조치, 4.기타. "요금부담 완화 및 환급절차 개선"은 명시된 시책이 아니다.',t:'kibchul'},
+  {num:16,q:'철도산업 구조개혁 기본계획에 포함되어야 하는 내용이 아닌 것은?',c:['철도산업구조개혁의 추진방안에 관한 사항','철도안전관리 체계의 인증 및 점검절차에 관한 사항','철도산업구조개혁에 따른 대내외 여건조성에 관한 사항','철도산업구조개혁에 따른 자산·부채·인력 등에 관한 사항'],a:1,e:'제18조 구조개혁계획 포함 사항: 목표 및 기본방향, 추진방안, 소유 및 경영구조 개혁, 대내외 여건조성, 자산·부채·인력, 기관·단체 정비, 기타. "철도안전관리 체계의 인증 및 점검절차"는 포함 사항이 아니다.',t:'kibchul'},
+  {num:17,q:'철도시설관리자와 철도운영자가 협력이 필요한 사항에 대하여 정기적으로 작성 교환하도록 규정된 문서는 무엇인가?',c:['업무절차서','운영계획서','시설관리표준서','안전관리지침서'],a:0,e:'시행령 제23조(업무절차서의 교환 등): 철도시설관리자와 철도운영자는 상호협력이 필요한 분야에 대하여 업무절차서를 작성하여 정기적으로 교환하고, 변경 시 즉시 통보하여야 한다.',t:'kibchul'},
+  {num:18,q:'선로배분지침에 포함되어야 하는 사항이 아닌 것은?',c:['철도차량 정비인력의 배치기준에 관한 사항','지역간 열차와 지역내 열차에 대한 선로용량의 배분','선로의 유지보수·개량 및 건설을 위한 작업시간','철도차량의 안전운행에 관한 사항'],a:0,e:'시행령 제24조 선로배분지침 포함 사항: 1.여객/화물 열차 선로용량 배분, 2.지역간/지역내 열차 선로용량 배분, 3.유지보수·개량·건설 작업시간, 4.안전운행, 5.효율적 활용을 위해 필요한 사항. "정비인력 배치기준"은 포함되지 않는다.',t:'kibchul'},
+  {num:19,q:'철도시설관리권 내용 중 틀린 것은?',c:['철도시설관리권의 설정을 받은 자는 대통령령으로 정하는 바에 따라 국토교통부장관에게 등록하여야 한다.','철도시설관리권은 이를 용역권으로 본다.','저당권이 설정된 철도시설관리권은 그 저당권자의 동의가 없으면 처분할 수 없다.','철도시설관리권의 설정·변경·소멸 및 처분의 제한은 철도시설관리권등록부에 등록함으로써 효력이 발생한다.'],a:1,e:'제26조(철도시설관리권): 철도시설관리권은 물권(物權)으로 본다. 용역권이 아니라 물권이다.',t:'kibchul'},
+  {num:20,q:'[신유형] 철도시설에 해당하지 않는 것은?',c:['철도노선간 또는 다른 교통수단과의 연계운영에 필요한 시설','철도경영연수 및 철도전문인력의 교육훈련을 위한 시설','차량정비기지 및 차량유치시설','그 밖에 철도의 건설·유지보수 및 운영을 위한 시설로서 국토교통부령으로 정하는 시설'],a:3,e:'제3조(정의) "그 밖에 철도의 건설·유지보수 및 운영을 위한 시설"은 국토교통부령이 아닌 대통령령으로 정한다.',t:'new'},
+  {num:21,q:'[신유형] 철도시설에 해당하지 않는 것은?',c:['철도기술의 개발·시험 및 연구를 위한 시설','철도의 전철전력설비, 정보통신설비, 신호 및 열차제어설비','철도의 선로(선로에 부대되는 시설을 제외한다), 역시설','선로 및 철도차량을 보수·정비하기 위한 선로보수기지'],a:2,e:'제3조(정의): 철도의 선로에는 선로에 부대되는 시설을 포함한다. "제외한다"고 기술한 것이 틀렸다.',t:'new'},
+  {num:22,q:'[신유형] 철도운영에 해당하는 것을 모두 고르시오. (ㄱ.철도여객 및 화물운송 ㄴ.철도차량의 정비 및 열차의 운행관리 ㄷ.철도시설·철도차량 및 철도부지 등을 활용한 부대사업 개발 및 서비스)',c:['ㄱ','ㄴ','ㄴ, ㄷ','ㄱ, ㄴ, ㄷ'],a:3,e:'제3조(정의) 3. "철도운영"이라 함은 가.철도 여객 및 화물운송, 나.철도차량의 정비 및 열차의 운행관리, 다.철도시설·철도차량 및 철도부지 등을 활용한 부대사업 개발 및 서비스를 말한다. 셋 모두 해당한다.',t:'new'},
+  {num:23,q:'[신유형] 철도산업발전기본계획에 포함되어야 할 사항이 아닌 것은?',c:['철도기술의 개발 및 활용에 관한 사항','철도산업의 여건 및 동향전망에 관한 사항','철도종사자의 급여 체계 및 임금 수준에 관한 사항','철도산업 육성시책의 기본방향에 관한 사항'],a:2,e:'제5조 기본계획 포함 사항: 육성시책 기본방향, 여건 및 동향전망, 시설 투자·건설·유지보수 및 재원확보, 연계수송 및 사업조정, 운영체계 개선, 전문인력 양성, 기술개발 및 활용, 기타. "종사자 급여 체계 및 임금 수준"은 포함 사항이 아니다.',t:'new'},
+  {num:24,q:'[신유형] 철도산업발전기본법의 내용으로 틀린 것은?',c:['국가는 철도시설 투자를 추진하는 경우 사회적·환경적 편익을 고려하여야 한다.','국가는 철도산업 전문인력의 원활한 수급 및 철도산업의 발전을 위하여 특성화된 대학 등 교육기관을 운영·지원할 수 있다.','국가는 국민의 생명·신체 및 재산을 보호하기 위하여 철도안전에 필요한 법적·제도적 장치를 마련하고 이에 필요한 재원을 확보하도록 노력하여야 한다.','국가는 객관적이고 공정한 철도사고조사를 추진하기 위한 전담기구와 전문인력을 확보하여야 한다.'],a:1,e:'제10조(철도산업교육과정의 확대 등): 철도산업 전문인력의 원활한 수급 및 발전을 위해 특성화된 대학 등 교육기관을 운영·지원할 수 있는 주체는 "국가"가 아닌 "국토교통부장관"이다.',t:'new'},
+  {num:25,q:'[신유형] 철도산업위원회에 대한 설명으로 틀린 것은?',c:['위원회의 회의는 재적위원 과반수의 출석과 재적위원 과반수의 찬성으로 의결한다.','실무위원회는 위원장을 포함한 20인 이내의 위원으로 구성한다.','위원회에 간사 1인을 두되, 간사는 국토교통부장관이 국토교통부소속 공무원 중에서 지명한다.','철도산업에 관한 기본계획 및 중요정책 등을 심의·조정하기 위하여 국토교통부에 철도산업위원회를 둔다.'],a:0,e:'시행령 제8조(회의): 위원회의 회의는 재적위원 과반수의 출석과 출석위원 과반수의 찬성으로 의결한다. (재적위원 과반수 찬성이 아니라 출석위원 과반수 찬성이다)',t:'new'},
+  {num:26,q:'[신유형] 철도산업위원회가 심의·조정하는 사항이 아닌 것은?',c:['철도산업의 육성·발전에 관한 중요정책 사항','철도시설관리자와 철도운영자간 상호협력 및 조정에 관한 사항','철도산업구조개혁에 관한 중요정책 사항','그 밖에 철도산업에 관한 중요한 사항으로서 위원이 회의에 부치는 사항'],a:3,e:'제6조: 위원회 심의·조정 사항 중 7번째는 "그 밖에 철도산업에 관한 중요한 사항으로서 위원장이 회의에 부치는 사항"이다. 위원이 아닌 위원장이다.',t:'new'},
+  {num:27,q:'[신유형] 실무위원회의 위원장은?',c:['국토교통부장관이 국토교통부의 3급 공무원 또는 고위공무원단에 속하는 일반직공무원 중에서 지명한다.','국토교통부장관','대통령','국가철도공단의 임직원 중 국가철도공단 이사장이 지명하는 자 1인'],a:0,e:'시행령 제10조(실무위원회의 구성 등): 실무위원회의 위원장은 국토교통부장관이 국토교통부의 3급 공무원 또는 고위공무원단에 속하는 일반직공무원 중에서 지명한다.',t:'new'},
+  {num:28,q:'[신유형] 철도자산의 구분에 해당하지 않는 것은?',c:['시설자산','운영자산','관리자산','기타자산'],a:2,e:'제22조(철도자산의 구분): 철도자산은 1.운영자산, 2.시설자산, 3.기타자산으로 구분한다. "관리자산"은 없다.',t:'new'},
+  {num:29,q:'[신유형] 비상사태 시 국토교통부장관이 할 수 있는 조치가 아닌 것은?',c:['대체수송수단 및 수송로의 확보','철도서비스 인력의 투입','수송요금 인하 등에 관한 사항','철도이용의 제한 또는 금지'],a:2,e:'제36조(비상사태시 처분): 수송통제, 시설·차량 가동·조업, 대체수송수단 확보, 임시열차 편성·운행, 인력 투입, 철도이용 제한 또는 금지, 기타 대통령령 사항이 조치에 해당한다. "수송요금 인하"는 해당 조치가 아니다.',t:'new'},
+  {num:30,q:'[신유형] 철도운영자 등이 철도안전관리체계의 승인 또는 변경승인을 받아야 하는 경우 중, 철도노선의 신설 또는 개량에 해당하는 기준으로 옳은 것은?',c:['선로의 연장이 1km 이상이면서 역이 1개 이상인 경우','선로의 연장이 2km 이상이면서 역이 2개 이상인 경우','선로의 연장이 5km 이상이면서 역이 1개 이상인 경우','선로의 연장이 10km 이상이면서 역이 2개 이상인 경우'],a:1,e:'철도안전관리체계 승인 기준: 선로의 연장이 2km 이상이면서 역이 2개 이상인 경우 철도노선의 신설 또는 개량에 해당한다.',t:'new'},
+];
+
+let wrongSet = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'));
+let wrongOnlyMode = false;
+
+function saveWrong() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify([...wrongSet]));
+}
+
+function updateWrongBar() {
+  const bar = document.getElementById('wrong-bar');
+  const badge = document.getElementById('wrong-count-badge');
+  badge.textContent = wrongSet.size;
+  bar.style.display = wrongSet.size > 0 ? 'flex' : 'none';
+}
+
+function togglePart(bodyId, arrowId) {
+  const body = document.getElementById(bodyId);
+  const arrow = document.getElementById(arrowId);
+  const hidden = body.style.display === 'none';
+  body.style.display = hidden ? '' : 'none';
+  arrow.textContent = hidden ? '▼' : '▶';
+}
+
+function buildItem(q) {
+  const id = 'q' + q.num;
+  const isNew = q.t === 'new';
+  const div = document.createElement('div');
+  div.className = 'qbank-item' + (isNew ? ' new-type' : '');
+  div.id = id;
+  div.innerHTML = `
+    <div>
+      <span class="qbank-num">${q.num}번</span>
+      <span class="qbank-tag">${isNew ? '신유형' : '기출변형'}</span>
+    </div>
+    <div class="qbank-q">${q.q}</div>
+    <ul class="qbank-choices" id="choices${q.num}">
+      ${q.c.map((c,i)=>`<li data-num="${NUMS[i]}" data-idx="${i}" onclick="pick(${q.num},${i})">${c}</li>`).join('')}
+    </ul>
+    <button class="qbank-reveal" onclick="reveal(${q.num},${q.a},'${q.e.replace(/'/g,"\\'")}')">정답 확인</button>
+    <div class="qbank-explain" id="explain${q.num}"></div>
+  `;
+  return div;
+}
+
+function pick(num, idx) {
+  const ul = document.getElementById('choices'+num);
+  ul.querySelectorAll('li').forEach(li => li.classList.remove('selected'));
+  ul.querySelectorAll('li')[idx].classList.add('selected');
+}
+
+function reveal(num, ans, exp) {
+  const ul = document.getElementById('choices'+num);
+  const expEl = document.getElementById('explain'+num);
+  const items = ul.querySelectorAll('li');
+  let userSel = -1;
+  items.forEach((li,i) => { if(li.classList.contains('selected')) userSel = i; });
+
+  items.forEach((li,i) => {
+    if(i === ans) li.classList.add('ans-correct');
+    else if(i === userSel) li.classList.add('ans-wrong');
+    li.style.cursor = 'default';
+    li.onclick = null;
+  });
+
+  expEl.style.display = 'block';
+  expEl.textContent = '해설: ' + exp;
+
+  if(userSel === -1 || userSel !== ans) {
+    wrongSet.add(String(num));
+  } else {
+    wrongSet.delete(String(num));
+  }
+  saveWrong();
+  updateWrongBar();
+  markWrong();
+}
+
+function markWrong() {
+  document.querySelectorAll('.qbank-item').forEach(item => {
+    const num = item.id.replace('q','');
+    const note = item.querySelector('.qbank-wrong-note');
+    if(wrongSet.has(num)) {
+      if(!note) {
+        const n = document.createElement('span');
+        n.className = 'qbank-wrong-note';
+        n.textContent = '❌ 오답 기록됨';
+        item.appendChild(n);
+      }
+    } else {
+      if(note) note.remove();
+    }
+  });
+}
+
+function toggleWrongMode() {
+  wrongOnlyMode = !wrongOnlyMode;
+  const btn = document.getElementById('btn-wrong-only');
+  btn.textContent = wrongOnlyMode ? '전체 보기' : '틀린 문제만 보기';
+  document.querySelectorAll('.qbank-item').forEach(item => {
+    const num = item.id.replace('q','');
+    item.style.display = wrongOnlyMode ? (wrongSet.has(num) ? '' : 'none') : '';
+  });
+}
+
+function resetAllItems() {
+  if(!confirm('모든 오답 기록을 초기화합니까?')) return;
+  wrongSet.clear();
+  saveWrong();
+  updateWrongBar();
+  markWrong();
+  wrongOnlyMode = false;
+  document.getElementById('btn-wrong-only').textContent = '틀린 문제만 보기';
+  document.querySelectorAll('.qbank-item').forEach(item => {
+    item.style.display = '';
+    item.querySelectorAll('li').forEach(li => {
+      li.className = '';
+      li.style.cursor = 'pointer';
+    });
+    const expEl = item.querySelector('.qbank-explain');
+    if(expEl) { expEl.style.display = 'none'; expEl.textContent = ''; }
+  });
+  // Re-bind click events
+  document.querySelectorAll('.qbank-choices li').forEach(li => {
+    const num = li.closest('.qbank-item').id.replace('q','');
+    const idx = parseInt(li.dataset.idx);
+    li.onclick = () => pick(parseInt(num), idx);
+  });
+}
+
+// Build DOM
+const kibchulBody = document.getElementById('p-kibchul');
+const newBody = document.getElementById('p-new');
+QUESTIONS.forEach(q => {
+  if(q.t === 'kibchul') kibchulBody.appendChild(buildItem(q));
+  else newBody.appendChild(buildItem(q));
+});
+
+updateWrongBar();
+markWrong();
+</script>
+</body>
+</html>
