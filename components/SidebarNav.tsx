@@ -112,7 +112,7 @@ export default function SidebarNav() {
                   <span>{s.icon}</span>
                   <span className="truncate">{s.name}</span>
                 </Link>
-                {/* 교통안전법(id=2) 아래 기출·신유형 링크 */}
+                {/* 교통안전법(id=2) 아래 철도왕 문제 링크 */}
                 {s.id === 2 && (
                   <div className="pl-2 border-l border-green-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
                     <Link
@@ -124,11 +124,27 @@ export default function SidebarNav() {
                       }`}
                     >
                       <span className="text-[10px]">└</span>
-                      <span>📝 기출·신유형 문제</span>
+                      <span>👑 철도왕 문제(기출·신유형)</span>
                     </Link>
                   </div>
                 )}
-                {/* 철도공학(id=4) 아래 기출·신유형 링크 */}
+                {/* 열차운전(id=3) 아래 철도왕 문제 링크 */}
+                {s.id === 3 && (
+                  <div className="pl-2 border-l border-sky-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
+                    <Link
+                      href="/quiz/3"
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+                        pathname.startsWith('/quiz/3')
+                          ? 'bg-sky-100 text-sky-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-sky-700'
+                      }`}
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>👑 철도왕 문제(기출·신유형)</span>
+                    </Link>
+                  </div>
+                )}
+                {/* 철도공학(id=4) 아래 철도왕 문제 링크 */}
                 {s.id === 4 && (
                   <div className="pl-2 border-l border-amber-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
                     <Link
@@ -140,11 +156,11 @@ export default function SidebarNav() {
                       }`}
                     >
                       <span className="text-[10px]">└</span>
-                      <span>📝 기출·신유형 문제</span>
+                      <span>👑 철도왕 문제(기출·신유형)</span>
                     </Link>
                   </div>
                 )}
-                {/* 철도산업기본법(id=5) 아래 철도왕 CBT 링크 */}
+                {/* 철도산업기본법(id=5) 아래 철도왕 문제 링크 */}
                 {s.id === 5 && (
                   <div className="pl-2 border-l border-emerald-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
                     <Link
@@ -156,7 +172,7 @@ export default function SidebarNav() {
                       }`}
                     >
                       <span className="text-[10px]">└</span>
-                      <span>👑 철도왕 CBT (기출·신유형)</span>
+                      <span>👑 철도왕 문제(기출·신유형)</span>
                     </Link>
                   </div>
                 )}

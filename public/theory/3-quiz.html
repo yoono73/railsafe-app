@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>열차운전 철도왕 문제(기출·신유형)</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { margin:0; padding:16px; background:#f0f9ff; font-family:'Malgun Gothic','맑은 고딕',sans-serif; font-size:16px; line-height:1.75; color:#1a1a2e; }
+.part { margin-bottom:10px; }
+.part-title { background:#0c4a6e; color:#fff; padding:10px 16px; border-radius:8px 8px 0 0; font-size:1.1em; font-weight:bold; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+.part-title:hover { background:#0369a1; }
+.part-body { border:1px solid #7dd3fc; border-top:none; border-radius:0 0 8px 8px; background:#fff; padding:0 16px 10px; }
+.qbank-item { border:1px solid #bae6fd; border-radius:8px; padding:14px 16px; margin:12px 0; background:#f0f9ff; }
+.qbank-num { font-size:.88em; font-weight:bold; color:#0c4a6e; background:#bae6fd; border-radius:4px; padding:1px 8px; margin-right:6px; }
+.qbank-tag { font-size:.85em; background:#e0f2fe; color:#0369a1; border-radius:4px; padding:1px 7px; margin-left:4px; }
+.qbank-q { font-weight:bold; color:#1a1a2e; margin:8px 0 10px; font-size:1.05em; }
+.qbank-choices { list-style:none; margin:0 0 10px; padding:0; }
+.qbank-choices li { padding:6px 10px 6px 28px; position:relative; color:#374151; font-size:1em; cursor:pointer; border-radius:4px; transition:background .15s; margin:3px 0; }
+.qbank-choices li:hover:not(.ans-correct):not(.ans-wrong) { background:#e0f2fe; }
+.qbank-choices li::before { content:attr(data-num); position:absolute; left:8px; color:#6b7280; font-size:.9em; }
+.qbank-choices li.selected { background:#dbeafe; border:1px solid #93c5fd; color:#1d4ed8; font-weight:bold; }
+.qbank-choices li.ans-correct { background:#d1fae5; color:#065f46; font-weight:bold; }
+.qbank-choices li.ans-wrong { background:#fee2e2; color:#991b1b; text-decoration:line-through; }
+.qbank-reveal { border:none; background:#bae6fd; color:#0c4a6e; font-size:.92em; padding:6px 16px; border-radius:6px; cursor:pointer; font-family:inherit; font-weight:bold; }
+.qbank-reveal:hover { background:#7dd3fc; }
+.qbank-explain { display:none; margin-top:10px; background:#f0f9ff; border-left:3px solid #0369a1; padding:9px 12px; border-radius:0 6px 6px 0; font-size:.97em; color:#0c4a6e; }
+.qbank-wrong-note { display:block; background:#fee2e2; border-left:3px solid #dc2626; color:#b91c1c; padding:5px 10px; margin:5px 0; border-radius:4px; font-size:1em; }
+.qbank-item.new-type { background:#faf5ff; border-color:#ddd6fe; }
+.qbank-num.new-type { background:#ede9fe; color:#5b21b6; }
+/* 오답 재도전 바 */
+#wrong-bar { display:none; align-items:center; gap:10px; background:#fee2e2; border:1px solid #fca5a5; border-radius:8px; padding:10px 16px; margin-bottom:14px; flex-wrap:wrap; }
+#wrong-count-badge { background:#ef4444; color:#fff; border-radius:20px; padding:2px 10px; font-weight:bold; font-size:.9em; }
+.wrong-mode-btn { border:none; border-radius:6px; padding:6px 14px; font-size:.92em; cursor:pointer; font-weight:bold; font-family:inherit; transition:background .15s; }
+#btn-wrong-only { background:#ef4444; color:#fff; }
+#btn-wrong-only:hover { background:#dc2626; }
+#btn-reset-all { background:#e2e8f0; color:#374151; }
+#btn-reset-all:hover { background:#cbd5e1; }
+</style>
+</head>
+<body>
+<h2 style="color:#0c4a6e;font-size:1.15em;margin-bottom:10px">🚇 열차운전 철도왕 문제(기출·신유형)</h2>
+<!-- 오답 재도전 바 -->
+<div id="wrong-bar">
+  <span>❌ 틀린 문제</span>
+  <span id="wrong-count-badge">0</span>개
+  <button class="wrong-mode-btn" id="btn-wrong-only" onclick="toggleWrongMode()">틀린 문제만 보기</button>
+  <button class="wrong-mode-btn" id="btn-reset-all" onclick="resetAllItems()">전체 초기화</button>
+</div>
+
+<!-- PART 1: 철도차량운전규칙 기본 규정 -->
+<div class="part" id="quiz-kibchul" style="margin-top:12px">
+<div class="part-title" onclick="togglePart(this)" style="background:#0c4a6e">
+  📝 기출변형문제 <span style="font-size:.8em;opacity:.85">· 열차운전 대표 18문항</span>
+  <span class="arrow">▲</span>
+</div>
+<div class="part-body" style="display:block; padding:14px 16px;">
+
+<div class="qbank-item">
+  <span class="qbank-num">Q01</span><span class="qbank-tag">최빈출</span>
+  <div class="qbank-q">철도차량운전규칙에서 "열차"의 정의로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">선로를 운행할 목적으로 철도 운영자가 편성한 차량</li>
+    <li data-num="②">선로를 운행할 목적으로 조성된 철도차량</li>
+    <li data-num="③">동력차가 포함된 철도차량의 집합체</li>
+    <li data-num="④">여객 또는 화물을 수송하기 위해 운행하는 차량</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 열차 = 선로를 운행할 목적으로 조성된 철도차량 (철도차량운전규칙 제2조)<br>
+    <span class="qbank-wrong-note">⚠️ 함정: "조성된"이 핵심 표현. "편성된"·"결합된"은 오답.</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q02</span><span class="qbank-tag">최빈출</span>
+  <div class="qbank-q">동시 진출입이 금지되는 경우로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">단선구간에서 같은 방향으로 두 열차가 동시 진입하는 경우</li>
+    <li data-num="②">단선구간에서 서로 다른 방향으로 두 열차가 동시 진입하는 경우</li>
+    <li data-num="③">단선구간에서 한 열차가 진입할 때 다른 열차가 같은 방향으로 진출하는 경우</li>
+    <li data-num="④">복선구간에서 서로 다른 방향의 열차가 동시 통과하는 경우</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 단선구간에서 한 열차 진입 + 다른 열차 같은 방향 진출 → 동시 진출입 금지<br>
+    본선 진입 열차와 본선 진출 열차가 동일 방향이면 충돌 위험이 없어도 원칙적 금지.<br>
+    <span class="qbank-wrong-note">⚠️ 함정: 복선구간은 선로 분리로 원칙적으로 동시 진출입 가능.</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q03</span><span class="qbank-tag">빈출</span>
+  <div class="qbank-q">철도차량운전규칙상 동력차의 연결 위치 원칙으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="1">
+    <li data-num="①">열차의 맨 앞에 연결하는 것을 원칙으로 한다</li>
+    <li data-num="②">열차의 맨 뒤에 연결하는 것을 원칙으로 한다</li>
+    <li data-num="③">열차의 중간에 분산 연결하는 것을 원칙으로 한다</li>
+    <li data-num="④">열차의 앞과 뒤 양쪽에 연결하는 것을 원칙으로 한다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ① 동력차는 열차의 맨 앞에 연결하는 것을 원칙으로 한다.<br>
+    <span class="qbank-wrong-note">⚠️ 예외: 철도 운영자가 안전 확보 후 다르게 연결할 수 있음.</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q04</span><span class="qbank-tag">최빈출</span>
+  <div class="qbank-q">여객열차에 연결이 제한되는 차량으로 옳지 않은 것은?</div>
+  <ul class="qbank-choices" data-answer="4">
+    <li data-num="①">화약류를 적재한 화물차</li>
+    <li data-num="②">위험물을 적재한 화물차</li>
+    <li data-num="③">동물을 적재한 화물차</li>
+    <li data-num="④">우편물을 적재한 화물차</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ④ 우편물 적재 화물차는 여객열차에 연결 가능하다.<br>
+    제한 대상: 화약류, 위험물, 동물 적재 화물차 등.<br>
+    <span class="qbank-wrong-note">⚠️ 우편물·수하물 차량은 여객열차에 연결 허용.</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q05</span><span class="qbank-tag">빈출</span>
+  <div class="qbank-q">퇴행운전이 허용되는 경우로 옳지 않은 것은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">선로 장애로 전방 진행이 불가능한 경우</li>
+    <li data-num="②">열차 지연을 만회하기 위해 운전시각을 단축하려는 경우</li>
+    <li data-num="③">차량 고장으로 기지 또는 역까지 후퇴해야 하는 경우</li>
+    <li data-num="④">사고 발생으로 안전한 장소로 피난해야 하는 경우</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 시각 만회를 위한 퇴행운전은 허용되지 않는다.<br>
+    퇴행운전은 안전상 불가피한 경우에만 허용.<br>
+    <span class="qbank-wrong-note">⚠️ "지연 만회"·"시간 단축" 등 운영 편의 목적은 퇴행 사유 아님.</span>
+  </div>
+</div>
+
+<!-- PART 2: 폐색방식 -->
+<div class="qbank-item">
+  <span class="qbank-num">Q06</span><span class="qbank-tag">★★★최빈출</span>
+  <div class="qbank-q">열차 폐색방식 중 대용폐색방식에 해당하지 않는 것은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">지도통신식</li>
+    <li data-num="②">지도식</li>
+    <li data-num="③">자동폐색식</li>
+    <li data-num="④">통신식</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 자동폐색식은 상용폐색방식이다.<br>
+    대용폐색방식: 지도통신식, 지도식, 통신식, 전령법<br>
+    상용폐색방식: 자동폐색식, 연동폐색식, 통표폐색식, 차내신호폐색식<br>
+    <span class="qbank-wrong-note">⚠️ "자동"이 들어가면 상용폐색방식. 대용은 비상 시 사용.</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q07</span><span class="qbank-tag">★★★최빈출</span>
+  <div class="qbank-q">지도표에 기입해야 하는 사항이 아닌 것은?</div>
+  <ul class="qbank-choices" data-answer="4">
+    <li data-num="①">열차번호</li>
+    <li data-num="②">사용 구간</li>
+    <li data-num="③">발행 연월일</li>
+    <li data-num="④">열차 속도</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ④ 열차 속도는 지도표 기입 사항이 아니다.<br>
+    지도표 기입 사항: 열차번호, 사용 구간, 발행 연월일, 발행자 서명<br>
+    <span class="qbank-wrong-note">⚠️ 지도표 vs 지도권 기입 사항 구분 자주 출제됨.</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q08</span><span class="qbank-tag">빈출</span>
+  <div class="qbank-q">시계운전을 시행할 수 있는 조건으로 옳지 않은 것은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">열차 최고속도가 25km/h 이하인 경우</li>
+    <li data-num="②">모든 여객열차에 시계운전을 적용할 수 있는 경우</li>
+    <li data-num="③">선로를 확인하면서 운전할 수 있는 경우</li>
+    <li data-num="④">신호기가 없는 구간에서 운전하는 경우</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 시계운전은 모든 여객열차에 적용 불가. 최고속도 25km/h 이하 조건 충족 시에만 허용.<br>
+    <span class="qbank-wrong-note">⚠️ 시계운전 = 운전자가 선로를 직접 눈으로 확인하며 운전 (저속 구간 한정).</span>
+  </div>
+</div>
+
+<!-- PART 3: 신호기 체계 -->
+<div class="qbank-item">
+  <span class="qbank-num">Q09</span><span class="qbank-tag">★★★최빈출</span>
+  <div class="qbank-q">임시신호기의 종류가 아닌 것은?</div>
+  <ul class="qbank-choices" data-answer="4">
+    <li data-num="①">서행예고신호기</li>
+    <li data-num="②">서행신호기</li>
+    <li data-num="③">서행해제신호기</li>
+    <li data-num="④">진행신호기</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ④ 진행신호기는 상치신호기(주신호기)에 속한다.<br>
+    임시신호기 3종: 서행예고신호기, 서행신호기, 서행해제신호기<br>
+    <span class="qbank-wrong-note">⚠️ 임시신호기는 모두 "서행"과 관련. 진행/정지 신호는 상치신호기.</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q10</span><span class="qbank-tag">★★★최빈출</span>
+  <div class="qbank-q">신호기의 정위(기본위치)에 대한 설명으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="1">
+    <li data-num="①">출발신호기의 정위는 정지 현시이다</li>
+    <li data-num="②">폐색신호기의 정위는 정지 현시이다</li>
+    <li data-num="③">입환신호기의 정위는 진행 현시이다</li>
+    <li data-num="④">장내신호기의 정위는 진행 현시이다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ① 출발신호기 정위 = 정지 현시 (열차 출발 준비 전 기본값)<br>
+    폐색신호기 정위 = 진행 현시 / 장내신호기 정위 = 정지 현시 / 입환신호기 정위 = 정지 현시<br>
+    <span class="qbank-wrong-note">⚠️ 폐색신호기만 정위가 "진행"! 나머지는 정지가 기본값.</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q11</span><span class="qbank-tag">빈출</span>
+  <div class="qbank-q">색등식 신호기에서 진행 현시에 해당하는 색은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">적색</li>
+    <li data-num="②">녹색</li>
+    <li data-num="③">황색</li>
+    <li data-num="④">백색</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 녹색 = 진행 / 황색 = 주의(감속) / 적색 = 정지<br>
+    <span class="qbank-wrong-note">⚠️ 백색은 입환 진행 현시에 사용.</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q12</span><span class="qbank-tag">★★★최빈출</span>
+  <div class="qbank-q">입환전호에 대한 설명으로 옳지 않은 것은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">전진 전호: 녹색 등(또는 녹색기)을 머리 위로 크게 원형으로 흔든다</li>
+    <li data-num="②">정지 전호: 적색 등(또는 적색기)을 높이 들어 좌우로 크게 흔든다</li>
+    <li data-num="③">후진 전호: 녹색 등(또는 녹색기)을 좌우로 크게 흔든다</li>
+    <li data-num="④">완만히 전진: 녹색 등(또는 녹색기)을 위아래로 천천히 흔든다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 후진 전호는 녹색 등을 <strong>머리 위로 원형으로</strong> 흔드는 것이 아니라, 등을 <strong>45도 각도로 올려 크게 흔든다</strong>.<br>
+    좌우로 크게 흔드는 것은 정지 전호.<br>
+    <span class="qbank-wrong-note">⚠️ 전진/후진/완만/정지 각각의 방법을 정확히 암기해야 함.</span>
+  </div>
+</div>
+
+<!-- PART 4: 열차제어장치 -->
+<div class="qbank-item">
+  <span class="qbank-num">Q13</span><span class="qbank-tag">★★★최빈출</span>
+  <div class="qbank-q">ATS(자동열차정지장치)의 기능으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="1">
+    <li data-num="①">정지신호 현시 구간에 열차가 진입할 때 자동으로 제동을 체결한다</li>
+    <li data-num="②">열차의 속도를 자동으로 제어하여 허용속도 이하로 운전되도록 한다</li>
+    <li data-num="③">열차 위치를 실시간으로 추적하여 충돌을 방지한다</li>
+    <li data-num="④">운전자의 운전 조작 없이 자동으로 열차를 운행한다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ① ATS = 정지신호 무시 진입 시 자동 제동 체결 (경보 + 비상제동)<br>
+    ②는 ATC(자동열차제어장치), ③은 ATP(자동열차보호장치), ④는 ATO(자동열차운전장치)<br>
+    <span class="qbank-wrong-note">⚠️ ATS·ATC·ATP·ATO 기능 구분 자주 출제됨.</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q14</span><span class="qbank-tag">빈출</span>
+  <div class="qbank-q">ATC(자동열차제어장치)와 ATS(자동열차정지장치)의 차이로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">ATC는 정지신호 구간에서만 작동하고 ATS는 전 구간에서 속도를 제어한다</li>
+    <li data-num="②">ATC는 연속적으로 속도를 제어하고 ATS는 정지신호 구간 진입 시 제동을 체결한다</li>
+    <li data-num="③">ATC는 고속철도 전용, ATS는 도시철도 전용으로 사용된다</li>
+    <li data-num="④">ATC와 ATS는 동일한 기능이며 호칭만 다르다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② ATC: 연속적으로 허용속도 관리 (속도 초과 시 자동 감속)<br>
+    ATS: 정지신호 구간 진입 시에만 비상제동 체결<br>
+    <span class="qbank-wrong-note">⚠️ ATC가 더 발전된 방식으로 연속 제어 가능.</span>
+  </div>
+</div>
+
+<!-- PART 5: 도시철도운전규칙 -->
+<div class="qbank-item">
+  <span class="qbank-num">Q15</span><span class="qbank-tag">★★★최빈출</span>
+  <div class="qbank-q">도시철도운전규칙에서 비상제동거리의 기준으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">100m 이내</li>
+    <li data-num="②">500m 이내</li>
+    <li data-num="③">최고속도에서 비상제동 체결 후 600m 이내</li>
+    <li data-num="④">최고속도에서 비상제동 체결 후 1,000m 이내</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 도시철도운전규칙: 최고속도에서 비상제동 체결 후 600m 이내에서 정지해야 함.<br>
+    <span class="qbank-wrong-note">⚠️ 철도차량운전규칙(일반철도)과 도시철도운전규칙 수치 구분 중요.</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q16</span><span class="qbank-tag">★★★최빈출</span>
+  <div class="qbank-q">도시철도운전규칙에서 수신호를 현시해야 하는 거리로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="4">
+    <li data-num="①">50m 이상</li>
+    <li data-num="②">100m 이상</li>
+    <li data-num="③">150m 이상</li>
+    <li data-num="④">200m 이상</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ④ 도시철도운전규칙 제71조: 수신호 현시 거리 = 200m 이상<br>
+    ※ 철도왕 교재에 100m로 잘못 기재된 경우 있음 — 법령 원문 기준 200m가 정답.<br>
+    <span class="qbank-wrong-note">⚠️ 교재 오류 주의! 법령(도시철도운전규칙 제71조) = 200m 이상.</span>
+  </div>
+</div>
+
+<div class="qbank-item">
+  <span class="qbank-num">Q17</span><span class="qbank-tag">빈출</span>
+  <div class="qbank-q">도시철도 신설 또는 구조 개조 후 영업운행 전 시험운전 기간으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">30일 이상</li>
+    <li data-num="②">60일 이상</li>
+    <li data-num="③">90일 이상</li>
+    <li data-num="④">180일 이상</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 도시철도운전규칙 제9조: 시험운전 기간 = 60일 이상<br>
+    ※ 철도왕 교재에 1개월(30일)로 잘못 기재된 경우 있음 — 법령 기준 60일(2개월)이 정답.<br>
+    <span class="qbank-wrong-note">⚠️ 교재 오류 주의! 법령(도시철도운전규칙 제9조) = 60일(2개월).</span>
+  </div>
+</div>
+
+<!-- PART 6: 운전이론 -->
+<div class="qbank-item">
+  <span class="qbank-num">Q18</span><span class="qbank-tag">★★★최빈출</span>
+  <div class="qbank-q">동력집중식과 동력분산식 열차의 비교 설명으로 옳지 않은 것은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">동력집중식은 기관차가 모든 동력을 담당한다</li>
+    <li data-num="②">동력분산식은 여러 객차에 동력장치가 분산 배치된다</li>
+    <li data-num="③">동력분산식은 점착력이 낮아 고속운전에 불리하다</li>
+    <li data-num="④">동력분산식은 가감속 성능이 우수하여 도시철도에 많이 사용된다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 동력분산식은 여러 차축에 동력이 분산되어 점착력이 높고 고속운전에 유리하다.<br>
+    KTX 등 고속열차가 동력분산식을 채택한 이유.<br>
+    <span class="qbank-wrong-note">⚠️ "분산" = 점착력 높음 = 고속에 유리. 동력집중식은 대용량 화물에 유리.</span>
+  </div>
+</div>
+
+</div> <!-- part-body -->
+</div> <!-- part kibchul -->
+
+<!-- PART: 신유형 문제 -->
+<div class="part" id="quiz-new" style="margin-top:16px">
+<div class="part-title" onclick="togglePart(this)" style="background:#5b21b6">
+  ✨ 신유형 문제 <span style="font-size:.8em;opacity:.85">· 최신 출제경향 12문항</span>
+  <span class="arrow">▲</span>
+</div>
+<div class="part-body" style="display:block; padding:14px 16px;">
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N01</span><span class="qbank-tag" style="background:#ede9fe;color:#5b21b6">신유형</span>
+  <div class="qbank-q">다음 중 상용폐색방식에 해당하는 것끼리 묶인 것은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">지도통신식, 통신식</li>
+    <li data-num="②">자동폐색식, 연동폐색식</li>
+    <li data-num="③">지도식, 전령법</li>
+    <li data-num="④">지도통신식, 자동폐색식</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 상용폐색방식: 자동폐색식, 연동폐색식, 통표폐색식, 차내신호폐색식<br>
+    대용폐색방식: 지도통신식, 지도식, 통신식, 전령법<br>
+    <span class="qbank-wrong-note">⚠️ 상용=정상 운행 시 / 대용=비상 또는 고장 시 사용.</span>
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N02</span><span class="qbank-tag" style="background:#ede9fe;color:#5b21b6">신유형</span>
+  <div class="qbank-q">열차의 제동 거리 계산에서 "공주거리"란?</div>
+  <ul class="qbank-choices" data-answer="1">
+    <li data-num="①">운전자가 제동을 결정한 후 실제 제동력이 발생하기까지 열차가 이동한 거리</li>
+    <li data-num="②">제동이 완전히 걸린 상태에서 열차가 정지할 때까지 이동한 거리</li>
+    <li data-num="③">열차의 최고속도에서 0km/h까지 감속에 필요한 총 거리</li>
+    <li data-num="④">비상제동 체결 후 열차가 정지하는 거리</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ① 공주거리 = 운전자 반응 시간 동안 이동 거리 (제동력 미발생 상태)<br>
+    제동거리 = 제동력 발생 후 정지까지 이동 거리<br>
+    정지거리(=제동거리 전체) = 공주거리 + 제동거리<br>
+    <span class="qbank-wrong-note">⚠️ 공주거리(반응) + 제동거리(제동) = 정지거리. 계산 문제 자주 출제.</span>
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N03</span><span class="qbank-tag" style="background:#ede9fe;color:#5b21b6">신유형</span>
+  <div class="qbank-q">다음 설명이 가리키는 열차제어장치는?<br><em style="font-size:.95em;color:#374151;">"지상에 설치된 신호장치 없이 열차 간 직접 통신으로 안전 거리를 유지하며, 열차 밀도를 최대화할 수 있다."</em></div>
+  <ul class="qbank-choices" data-answer="4">
+    <li data-num="①">ATS(자동열차정지장치)</li>
+    <li data-num="②">ATC(자동열차제어장치)</li>
+    <li data-num="③">ATP(자동열차보호장치)</li>
+    <li data-num="④">CBTC(통신기반열차제어시스템)</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ④ CBTC(Communication-Based Train Control): 무선통신 기반 이동폐색 방식<br>
+    지상 고정 신호장치 불필요, 열차 간 실시간 통신으로 최소 간격 유지<br>
+    도시철도 효율화를 위해 최근 확대 적용 중<br>
+    <span class="qbank-wrong-note">⚠️ CBTC = 통신기반 = 이동폐색. 신유형 단골 출제.</span>
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N04</span><span class="qbank-tag" style="background:#ede9fe;color:#5b21b6">신유형</span>
+  <div class="qbank-q">열차운전 취급 중 "정거장 외 정차"가 허용되는 경우로 옳지 않은 것은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">전방 신호기가 정지 현시인 경우</li>
+    <li data-num="②">철도차량 고장 발생 시</li>
+    <li data-num="③">운전자가 피로하여 잠시 휴식이 필요한 경우</li>
+    <li data-num="④">긴급 안전 조치가 필요한 경우</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 운전자 피로는 정거장 외 정차 허용 사유가 아니다.<br>
+    허용 사유: 신호 정지 현시, 차량 고장, 긴급 안전 필요, 선로 장애 등 불가피한 경우<br>
+    <span class="qbank-wrong-note">⚠️ 편의 목적(피로·휴식 등)은 허용 사유 아님.</span>
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N05</span><span class="qbank-tag" style="background:#ede9fe;color:#5b21b6">신유형</span>
+  <div class="qbank-q">관절대차(articulated bogie)의 특징으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">각 차량이 독립된 대차를 가지며 연결이 용이하다</li>
+    <li data-num="②">인접한 두 차량이 하나의 대차를 공유하여 차량 수를 줄일 수 있다</li>
+    <li data-num="③">고속 운행 시 진동이 커서 고속철도에 사용이 어렵다</li>
+    <li data-num="④">대차 수가 많아 유지보수 비용이 증가한다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 관절대차: 인접 두 차량이 하나의 대차를 공유 → 대차 수 감소 → 경량화·저비용<br>
+    TGV(프랑스 고속열차), KTX 등에 채택<br>
+    <span class="qbank-wrong-note">⚠️ 관절대차 = 공유 = 대차 수 적음 = 고속에 유리.</span>
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N06</span><span class="qbank-tag" style="background:#ede9fe;color:#5b21b6">신유형</span>
+  <div class="qbank-q">열차의 폐색구간에 대한 설명으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">하나의 폐색구간에 2개 이상의 열차가 진입할 수 있다</li>
+    <li data-num="②">폐색구간의 길이는 열차 길이보다 반드시 짧아야 한다</li>
+    <li data-num="③">하나의 폐색구간에는 동시에 1개의 열차만 존재해야 한다</li>
+    <li data-num="④">폐색구간은 신호기 설치 위치와 무관하게 결정된다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 폐색의 원칙: 하나의 폐색구간에 동시에 1개 열차만 점유 가능<br>
+    이것이 폐색방식의 핵심 목적 — 열차 충돌 방지<br>
+    <span class="qbank-wrong-note">⚠️ 폐색 = 1구간 1열차 원칙. 이동폐색 방식에서는 전방 열차와의 거리 기준으로 변경됨.</span>
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N07</span><span class="qbank-tag" style="background:#ede9fe;color:#5b21b6">신유형</span>
+  <div class="qbank-q">도시철도운전규칙에서 정의하는 "공작물"과 "인공구조물"의 차이로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="1">
+    <li data-num="①">공작물은 사람이 제작한 모든 구조물이고, 인공구조물은 선로에 인접하거나 선로를 횡단하는 구조물이다</li>
+    <li data-num="②">공작물은 선로에 고정된 것이고, 인공구조물은 이동 가능한 것이다</li>
+    <li data-num="③">공작물과 인공구조물은 동일한 의미이다</li>
+    <li data-num="④">공작물은 지하에 설치된 것이고, 인공구조물은 지상에 설치된 것이다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ① 공작물: 사람이 제작한 구조물 전체 (광의)<br>
+    인공구조물: 선로에 인접하거나 선로를 횡단하는 교량·터널·육교 등 (협의)<br>
+    <span class="qbank-wrong-note">⚠️ 인공구조물 = 선로 관련 특정 구조물. 도시철도운전규칙 정의 암기 필요.</span>
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N08</span><span class="qbank-tag" style="background:#ede9fe;color:#5b21b6">신유형</span>
+  <div class="qbank-q">다음 중 수신호 방법으로 "정지"를 현시하는 방법은?</div>
+  <ul class="qbank-choices" data-answer="4">
+    <li data-num="①">녹색기를 머리 위로 천천히 원형으로 흔든다</li>
+    <li data-num="②">황색기를 좌우로 흔든다</li>
+    <li data-num="③">녹색기를 높이 든다</li>
+    <li data-num="④">적색기를 높이 들거나 좌우로 흔든다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ④ 정지 수신호: 적색기를 높이 들거나 좌우로 크게 흔든다<br>
+    진행 수신호: 녹색기를 높이 든다<br>
+    감속 수신호: 녹색기를 천천히 위아래로 흔든다<br>
+    <span class="qbank-wrong-note">⚠️ 적색=정지, 녹색=진행·감속 구분 암기.</span>
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N09</span><span class="qbank-tag" style="background:#ede9fe;color:#5b21b6">신유형</span>
+  <div class="qbank-q">다음 중 열차제동의 종류에 대한 설명으로 옳지 않은 것은?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">상용제동: 정상 운행 중 속도 조절을 위해 사용하는 제동</li>
+    <li data-num="②">비상제동: 운전자가 비상 핸들을 조작해야만 작동하는 제동</li>
+    <li data-num="③">발전제동: 주전동기를 발전기로 전환하여 제동력을 얻는 방식</li>
+    <li data-num="④">회생제동: 발전제동에서 발생한 전력을 전차선으로 돌려보내는 방식</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 비상제동은 자동 작동도 가능 (ATS·ATC 등 보안장치에 의해 자동 체결됨)<br>
+    운전자 조작 없이도 위험 상황 시 자동으로 비상제동이 체결됨<br>
+    <span class="qbank-wrong-note">⚠️ 비상제동 = 수동 조작만 가능 → 오답. 자동 체결도 포함됨.</span>
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N10</span><span class="qbank-tag" style="background:#ede9fe;color:#5b21b6">신유형</span>
+  <div class="qbank-q">도시철도 정기점검 주기에 대한 설명으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="3">
+    <li data-num="①">일상점검은 매주 1회 실시한다</li>
+    <li data-num="②">월간점검은 매 6개월마다 실시한다</li>
+    <li data-num="③">일상점검은 매일 운행 전·후에 실시한다</li>
+    <li data-num="④">연간점검은 매 2년마다 실시한다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ③ 일상점검: 매일 운행 전·후 실시 (일일점검)<br>
+    월간점검: 매월 1회 / 연간점검: 매년 1회<br>
+    <span class="qbank-wrong-note">⚠️ 도시철도운전규칙 점검 주기 수치 암기 필수.</span>
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N11</span><span class="qbank-tag" style="background:#ede9fe;color:#5b21b6">신유형</span>
+  <div class="qbank-q">제한속도 추정 원칙에 대한 설명으로 옳은 것은?</div>
+  <ul class="qbank-choices" data-answer="1">
+    <li data-num="①">신호가 불명확하거나 신호를 확인하지 못한 경우 정지신호로 간주한다</li>
+    <li data-num="②">신호가 불명확한 경우 주의신호로 간주하여 감속 운전한다</li>
+    <li data-num="③">전방 신호기가 꺼진 경우 진행신호로 간주하여 정상 운행한다</li>
+    <li data-num="④">신호 확인이 불가한 경우 운전자 판단으로 속도를 결정한다</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ① 제한속도 추정 원칙: 신호 불명확·미확인 시 → 가장 제한적인 신호(정지)로 간주<br>
+    안전 우선 원칙 — 불확실하면 최악(정지)으로 가정<br>
+    <span class="qbank-wrong-note">⚠️ "확인 못했다" = "정지신호"로 간주. 절대 진행 불가.</span>
+  </div>
+</div>
+
+<div class="qbank-item new-type">
+  <span class="qbank-num new-type">N12</span><span class="qbank-tag" style="background:#ede9fe;color:#5b21b6">신유형</span>
+  <div class="qbank-q">고정축거(rigid wheelbase)가 짧을수록 유리한 경우는?</div>
+  <ul class="qbank-choices" data-answer="2">
+    <li data-num="①">직선 고속 운행</li>
+    <li data-num="②">급곡선 통과</li>
+    <li data-num="③">제동 성능 향상</li>
+    <li data-num="④">차량 경량화</li>
+  </ul>
+  <button class="qbank-reveal" onclick="revealAnswer(this)">정답 확인</button>
+  <div class="qbank-explain">
+    ② 고정축거가 짧을수록 급곡선 통과에 유리 (차체 회전 각도 확보 용이)<br>
+    고정축거가 길수록 직선에서 안정적이나 곡선 통과 어려움<br>
+    <span class="qbank-wrong-note">⚠️ 짧은 축거 = 곡선 유리 / 긴 축거 = 직선 안정성 유리.</span>
+  </div>
+</div>
+
+</div> <!-- part-body new -->
+</div> <!-- part new -->
+
+<script>
+// ─── 오답 추적 ───────────────────────────
+const wrongSet = new Set();
+let wrongModeActive = false;
+
+function updateWrongBar() {
+  const bar = document.getElementById('wrong-bar');
+  const badge = document.getElementById('wrong-count-badge');
+  badge.textContent = wrongSet.size;
+  bar.style.display = wrongSet.size > 0 ? 'flex' : 'none';
+}
+
+// ─── 선택지 클릭 ─────────────────────────
+document.querySelectorAll('.qbank-choices').forEach(ul => {
+  ul.querySelectorAll('li').forEach(li => {
+    li.addEventListener('click', () => {
+      if (ul.dataset.revealed) return;
+      ul.querySelectorAll('li').forEach(l => l.classList.remove('selected'));
+      li.classList.add('selected');
+    });
+  });
+});
+
+// ─── 정답 확인 ────────────────────────────
+function revealAnswer(btn) {
+  const item = btn.closest('.qbank-item');
+  const ul = item.querySelector('.qbank-choices');
+  if (ul.dataset.revealed) return;
+  ul.dataset.revealed = '1';
+
+  const correct = parseInt(ul.dataset.answer, 10); // 1-based
+  const selected = ul.querySelector('li.selected');
+  const correctLi = ul.querySelectorAll('li')[correct - 1];
+
+  if (selected) {
+    const selectedIdx = Array.from(ul.querySelectorAll('li')).indexOf(selected) + 1;
+    if (selectedIdx === correct) {
+      selected.classList.remove('selected');
+      selected.classList.add('ans-correct');
+    } else {
+      selected.classList.remove('selected');
+      selected.classList.add('ans-wrong');
+      correctLi.classList.add('ans-correct');
+      // 오답 등록
+      const qnum = item.querySelector('.qbank-num').textContent.trim();
+      wrongSet.add(qnum);
+      updateWrongBar();
+    }
+  } else {
+    correctLi.classList.add('ans-correct');
+  }
+
+  const explain = item.querySelector('.qbank-explain');
+  explain.style.display = 'block';
+  btn.style.display = 'none';
+}
+
+// ─── 파트 토글 ────────────────────────────
+function togglePart(titleEl) {
+  const body = titleEl.nextElementSibling;
+  const arrow = titleEl.querySelector('.arrow');
+  if (body.style.display === 'none') {
+    body.style.display = 'block';
+    arrow.textContent = '▲';
+  } else {
+    body.style.display = 'none';
+    arrow.textContent = '▼';
+  }
+}
+
+// ─── 오답 모드 ────────────────────────────
+function toggleWrongMode() {
+  wrongModeActive = !wrongModeActive;
+  const btn = document.getElementById('btn-wrong-only');
+  btn.textContent = wrongModeActive ? '전체 보기' : '틀린 문제만 보기';
+  document.querySelectorAll('.qbank-item').forEach(item => {
+    const qnum = item.querySelector('.qbank-num').textContent.trim();
+    item.style.display = (!wrongModeActive || wrongSet.has(qnum)) ? '' : 'none';
+  });
+}
+
+// ─── 전체 초기화 ──────────────────────────
+function resetAllItems() {
+  wrongSet.clear();
+  wrongModeActive = false;
+  document.getElementById('btn-wrong-only').textContent = '틀린 문제만 보기';
+  updateWrongBar();
+  document.querySelectorAll('.qbank-item').forEach(item => {
+    item.style.display = '';
+    const ul = item.querySelector('.qbank-choices');
+    delete ul.dataset.revealed;
+    ul.querySelectorAll('li').forEach(li => {
+      li.classList.remove('selected', 'ans-correct', 'ans-wrong');
+    });
+    const explain = item.querySelector('.qbank-explain');
+    explain.style.display = 'none';
+    const btn = item.querySelector('.qbank-reveal');
+    btn.style.display = '';
+  });
+}
+</script>
+</body>
+</html>

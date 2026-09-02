@@ -4,18 +4,19 @@ import { useEffect } from 'react';
 
 const subjectNames: Record<number, string> = {
   2: '교통안전법',
+  3: '열차운전',
   4: '철도공학',
   5: '철도산업기본법',
 };
 
-// id=5: 철도왕 CBT ch53 임베드 (iframe)
 const IFRAME_SRC: Record<number, string> = {
   2: '/theory/2-quiz.html',
+  3: '/theory/3-quiz.html',
   4: '/theory/4-quiz.html',
   5: '/theory/5-quiz.html',
 };
 
-const VALID_IDS = [2, 4, 5];
+const VALID_IDS = [2, 3, 4, 5];
 
 export default function QuizPage() {
   const params = useParams();
@@ -40,9 +41,7 @@ export default function QuizPage() {
         </button>
         <span className="text-gray-200">›</span>
         <span className="font-medium text-gray-700">
-          {subjectId === 5
-            ? '철도산업기본법 — 철도왕 CBT (기출·신유형)'
-            : `${subjectNames[subjectId]} 기출·신유형 문제`}
+          {subjectNames[subjectId]} — 철도왕 문제(기출·신유형)
         </span>
       </div>
       <iframe
