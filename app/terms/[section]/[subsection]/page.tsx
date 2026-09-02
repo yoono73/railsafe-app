@@ -6,11 +6,17 @@ import { findSection, findSubsection, TERM_SECTIONS } from '@/lib/terms-types';
 import type { Term } from '@/lib/terms-types';
 import { createClient } from '@/lib/supabase/client';
 
-/* subsection별 대표 이미지 */
-const SUBSECTION_IMAGES: Record<string, { src: string; alt: string }> = {
+/* subsection별 대표 이미지 + 헤더 정보 */
+const SUBSECTION_IMAGES: Record<string, { src: string; alt: string; title?: string; description?: string }> = {
   'train-operation/track-station': {
     src: '/theory/images/railway-track-terms.png',
     alt: '철도 선로 용어 관계도',
+  },
+  'brake-block/block-safety': {
+    src: '/theory/images/폐색_방식_통합_관계도_인포그래픽.png',
+    alt: '폐색방식 통합 관계도 인포그래픽',
+    title: '폐색 및 열차 간 안전 확보',
+    description: '열차 간 충돌을 막기 위해 선로를 구간으로 나누고, 각 구간의 열차 진입을 통제하는 개념들입니다.',
   },
 };
 
@@ -79,9 +85,19 @@ export default function TermsSubsectionPage() {
 
       <div className="flex-1 overflow-y-auto">
 
-          {/* 대표 이미지 — 전체 너비, 여백 없음 */}
+          {/* 대표 이미지 + 헤더 */}
           {heroImage && (
             <div className="border-b border-gray-100 bg-white">
+              {(heroImage.title || heroImage.description) && (
+                <div className="px-6 pt-8 pb-2">
+                  {heroImage.title && (
+                    <h2 className="text-xl font-bold text-gray-800 mb-3">{heroImage.title}</h2>
+                  )}
+                  {heroImage.description && (
+                    <p className="text-sm text-gray-500 leading-relaxed mb-6">{heroImage.description}</p>
+                  )}
+                </div>
+              )}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={heroImage.src} alt={heroImage.alt} className="w-full h-auto" />
             </div>
