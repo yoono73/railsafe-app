@@ -352,7 +352,7 @@ export const managementQuestions: MgmtQuestion[] = [
     id: 43, part: 1, partName: '관리이론', grade: 'A', topic: '교통안전일반',
     question: '민간투자사업(PFI) 방식 중 민간이 시설을 건설하여 소유권을 정부에 이전한 후, 민간이 직접 운영하며 이용자로부터 사용료를 받아 투자비를 회수하는 방식은?',
     choices: ['BOO (Build-Own-Operate)', 'BOT (Build-Operate-Transfer)', 'BTL (Build-Transfer-Lease)', 'BTO (Build-Transfer-Operate)'],
-    answer: 4,
+    answer: 3,
     explanation: 'BTO(Build-Transfer-Operate): 건설→소유권 이전→민간 운영→사용료 징수. BTL(Build-Transfer-Lease): 건설→소유권 이전→정부가 임대료 지급. 2025.06.28 구로 후기에서 매슬로우와 함께 BTO·BTL 관련 문제가 출제됐다.',
     source: '기출복원',
   },
