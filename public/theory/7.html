@@ -52,6 +52,14 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .compare-box.col2 { grid-template-columns: 1fr 1fr; }
 .cbox-item { background:#f8f8f8; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px; font-size:.88em; }
 .cbox-item .cbox-head { font-weight:bold; color:#4c1d95; margin-bottom:4px; font-size:.92em; }
+/* 철도왕 교재 보충 박스 */
+.king-book-note { background:#fff8e1; border-left:4px solid #f57c00; padding:10px 14px; margin:10px 0; border-radius:0 6px 6px 0; font-size:.88em; color:#4e342e; }
+.king-book-note .kb-label { display:inline-block; background:#f57c00; color:#fff; border-radius:4px; padding:1px 8px; font-size:.82em; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
+.king-book-note strong { color:#bf360c; }
+.king-book-note ul { margin:4px 0 4px 16px; }
+.king-book-note li { margin:2px 0; }
+.king-book-note table { font-size:.88em; margin:6px 0; }
+.king-book-note th { background:#e65100; }
 @media(max-width:600px){ .compare-box.col2{ grid-template-columns:1fr; } }
 
   .print-btn { display:inline-flex; align-items:center; gap:4px; background:#fff; color:#4c1d95; border:none; border-radius:6px; padding:5px 12px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:700; margin-left:6px; transition:background .2s; }
@@ -292,6 +300,15 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class='trap'>❌ "철도산업 발전"은 이 법의 목적이 아님 (철도산업발전기본법)</div>
 <div class='trap'>❌ "중대한 운행장애 = 사망자 발생 AND 5억원 이상 (둘 다 충족)" → <b>OR 조건</b>, 어느 하나만 해당해도 중대한 운행장애</div>
 <div class='trap'>❌ "중대한 운행장애 = 사망자 발생" → <b>사상자(사망+부상)</b> 기준, 부상자 발생도 포함</div>
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span><br>
+<strong>운행장애 지연 기준 (제1조의4 — 지연 운행장애 유형)</strong>
+<div class="table-wrap"><table><tr><th>열차 종류</th><th>지연 기준</th></tr>
+<tr><td>고속철도·전기동차·전동열차</td><td><b>20분 이상</b> 지연</td></tr>
+<tr class='hl'><td>일반 여객열차</td><td><b>30분 이상</b> 지연</td></tr>
+<tr><td>화물열차·기타 열차</td><td><b>60분 이상</b> 지연</td></tr>
+</table></div>
+<b>추가 유형</b>: 관제 승인 없이 정차역을 통과하는 경우도 운행장애에 해당
+</div>
 <div class="table-wrap"><table><tr><th>용어</th><th>정의</th><th>함정</th></tr>
 <tr><td>철도사고</td><td>사망·부상 또는 물건 파손을 일으킨 사고</td><td></td></tr>
 <tr class='hl'><td>준사고</td><td>사고는 아니나 사고로 이어질 수 있었던 것</td><td>사고≠준사고</td></tr>
@@ -404,6 +421,17 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 </table></div>
 <div class='trap'>❌ 안전관리수준평가 = 의무 → <b>임의(할 수 있다)</b></div>
 <div class='trap'>❌ 과징금 납부기한 = 30일 → <b>20일</b> 이내</div>
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span><br>
+<strong>우수운영자 유효기간 · 지정취소</strong>
+<div class="table-wrap"><table><tr><th>구분</th><th>내용</th></tr>
+<tr class='hl'><td>유효기간</td><td>지정일부터 <b>2년</b></td></tr>
+<tr><td>필요적 취소 (제1호)</td><td>거짓·부정한 방법으로 지정 받은 경우 → <b>취소하여야 한다</b></td></tr>
+<tr><td>필요적 취소 (제2호)</td><td>안전관리체계 승인이 취소된 경우 → <b>취소하여야 한다</b></td></tr>
+<tr class='hl'><td>임의적 취소 (제3호)</td><td>그 밖에 우수운영자 지위 유지가 부적합한 경우 → <b>취소할 수 있다</b></td></tr>
+</table></div>
+<div class='trap'>❌ "우수운영자 유효기간 = 3년" → <b>2년</b></div>
+<div class='trap'>❌ "안전관리체계 취소 시 우수운영자 지정취소 = 임의적" → <b>필요적(하여야)</b></div>
+</div>
 <div class="theory-note">
   <strong>이론 배경 (제10조):</strong> 과징금은 사업 정지 처분 대신 부과하는 금전적 제재로, 최대 <strong>30억원</strong> 한도가 있습니다. 우수운영자 지정은 안전 우수 사업자를 장려하는 제도이며, 안전관리수준평가는 의무가 아닌 임의(할 수 있다) 규정입니다.
 </div>
@@ -456,6 +484,15 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr class='hl'><td>결격: 최저 나이</td><td><b>19세 미만</b></td><td></td></tr>
 </table></div>
 <div class='tip'>★ 암기법: 유효기간 10년 / 나머지 핵심 = 2년(결격·합격유효) + 15일(반납)</div>
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span><br>
+<strong>운전면허 갱신 요건 (3가지 중 하나 충족)</strong>
+<ul>
+<li>면허 유효기간(10년) 이내에 <b>6개월 이상</b> 해당 철도차량 운전 실적</li>
+<li>면허 유효기간(10년) 이내에 <b>2년 이상</b> 관제업무 또는 운전교육 훈련 종사</li>
+<li>국토교통부장관이 정한 교육을 <b>20시간 이상</b> 이수</li>
+</ul>
+<div class='trap'>❌ "갱신 요건 = 40시간 이상" → <b>20시간 이상</b> (관제자격증명 갱신 40시간과 혼동 주의)</div>
+</div>
 <div class="theory-note">
   <strong>이론 배경 (제11~17조):</strong> 운전면허 수치 5개를 한 묶음으로 외우세요. 유효기간 <strong>10년</strong>, 반납 기한 <strong>15일</strong>은 자주 틀리는 수치입니다. 결격 기간 <strong>2년</strong>은 취소 후 재취득 제한이며, 최저 나이 <strong>19세</strong>는 성인 기준과 다름에 주의하세요.
 </div>
@@ -493,6 +530,31 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class='trap'>❌ "제1종 전기차량 교육시간 = 340시간" → <b>470시간</b> (디젤과 순서 혼동 주의)</div>
 <div class='trap'>❌ "문답형에 주의력·민첩성 포함" → 문답형 = <b>인성검사만</b> (적합/부적합)</div>
 <div class='trap'>❌ "반응형 항목별 30점 미만이면 합격" → <b>항목별 30점 미만은 불합격</b> (합계 무관)</div>
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span><br>
+<strong>관제자격증명 종류 (2가지)</strong>
+<ul>
+<li><b>도시철도 관제자격증명</b></li>
+<li><b>철도 관제자격증명</b></li>
+</ul>
+<strong>관제자격증명 갱신 요건 (3가지 중 하나 충족)</strong>
+<ul>
+<li>갱신 전 <b>6개월 이상</b> 관제업무 종사</li>
+<li>갱신 전 <b>2년 이상</b> 관제업무 지도·교육 종사</li>
+<li>국토교통부장관이 정한 교육 <b>40시간 이상</b> 이수</li>
+</ul>
+<div class='trap'>❌ "관제자격증명 갱신 교육 = 20시간" → <b>40시간</b> (운전면허 갱신 20시간과 혼동 주의)</div>
+<div class='trap'>❌ "관제자격증명 = 3가지 종류" → <b>도시철도 관제 / 철도 관제 2가지만</b></div>
+</div>
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span><br>
+<strong>철도종사자 신체검사 종류 (3가지)</strong>
+<div class="table-wrap"><table><tr><th>종류</th><th>실시 시기</th></tr>
+<tr><td><b>최초 신체검사</b></td><td>해당 업무에 종사하기 전</td></tr>
+<tr class='hl'><td><b>정기 신체검사</b></td><td><b>2년</b>마다 (철도의사 면담 포함)</td></tr>
+<tr><td><b>특별 신체검사</b></td><td>철도사고 발생 후 / 신체 이상 의심 시</td></tr>
+</table></div>
+<div class='trap'>❌ "신체검사 = 운전적성검사" → 다른 제도 (신체검사 ≠ 운전적성검사)</div>
+<div class='trap'>❌ "정기 신체검사 주기 = 5년" → <b>2년마다</b></div>
+</div>
 <div class="theory-note">
   <strong>이론 배경 (제18조):</strong> 운전적성검사는 운전자의 신체·심리적 적합성을 주기적으로 확인하는 제도입니다. <strong>50세 이상</strong>은 체력 저하를 고려하여 정기검사 주기를 10년에서 5년으로 단축합니다. 관제 실무수습 <strong>100시간</strong>은 현장 적응을 위한 최소 기준입니다.
 </div>
@@ -565,6 +627,15 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class='trap'>❌ 인증정비조직 준수사항에 "이력 효과적 관리" 포함 → 준수사항 아님</div>
 <div class='trap'>❌ 이력 금지행위: "너무 많은 내용 입력" → 금지행위 아님</div>
 <div class='trap'>❌ "열차조성업무 종사자 직무교육 = 35시간" → <b>21시간</b> (기술자 보수훈련 35시간과 혼동)</div>
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span><br>
+<strong>정비조직 인증 — 신청기한 · 인증취소 기준</strong>
+<div class="table-wrap"><table><tr><th>항목</th><th>내용</th><th>함정</th></tr>
+<tr class='hl'><td>인증 신청 기한</td><td>철도 운영 개시 <b>60일 전</b>까지</td><td>90일 ❌ (안전관리체계는 90일)</td></tr>
+<tr><td>인증취소 사유 — 중대한 운행장애</td><td><b>사망자 발생</b> 또는 <b>5억원 이상</b> 재산피해</td><td>AND 조건 ❌</td></tr>
+</table></div>
+<div class='trap'>❌ "정비조직 인증 신청 = 90일 전" → <b>60일 전</b> (안전관리체계 90일과 구별!)</div>
+<div class='trap'>❌ "인증취소 중대한 운행장애 = 사망자 AND 5억 이상 동시 충족" → <b>OR 조건</b></div>
+</div>
 
 <p style="margin-top:10px;font-weight:bold;color:#dc2626;">📷 영상보안장치</p>
 <div class="table-wrap"><table><tr><th>항목</th><th>내용</th><th>함정</th></tr>
@@ -878,6 +949,15 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class='tip'>★ 암기: 최초 <b>20년</b> → 이후 <b>5년</b>마다</div>
 <div class='trap'>❌ "정밀안전진단 = 매 10년" → 최초 20년, 이후 5년</div>
 <div class='trap'>❌ "자체 진단 = 정밀안전진단" → 반드시 지정기관 실시</div>
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span><br>
+<strong>정밀안전진단 최초 시기 세부 (부칙 적용)</strong>
+<ul>
+<li><b>원칙</b>: 철도시설·차량 사용 개시 후 <b>20년</b> 경과 시</li>
+<li><b>부칙</b>: 2014.3.18(법 시행일) 이전 이미 20년 경과한 경우 → 법 시행 후 일정 기간 내 실시</li>
+<li>영업시운전 시작일을 사용 개시일로 봄</li>
+</ul>
+<div class='trap'>❌ "정밀안전진단 기준일 = 철도 건설 착공일" → <b>사용 개시일(영업시운전 시작일)</b> 기준</div>
+</div>
 <div class="theory-note">
   <strong>이론 배경 (제38조의5):</strong> 정밀안전진단은 노후화된 시설·차량의 안전성을 심층 점검하는 제도입니다. 최초 <strong>20년</strong> 후부터 의무화되며, 이후 <strong>5년</strong>마다 반복합니다. 자체 진단이 아닌 국토교통부장관이 지정한 전문 기관에서만 실시할 수 있습니다.
 </div>
@@ -901,6 +981,22 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class='tip'>★ 안전투자 공시 = <b>매년</b> 의무 / 공시 의무자 = <b>철도운영자</b>만 (제6조의2)</div>
 <div class='trap'>❌ "안전투자 공시 = 2년마다" → <b>매년</b></div>
 <div class='trap'>❌ "철도시설관리자도 공시 의무" → 제6조의2: <b>철도운영자만</b> 해당</div>
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span><br>
+<strong>안전투자 공시 7가지 항목</strong>
+<ol>
+<li>철도차량 교체</li>
+<li>철도시설 개량</li>
+<li>안전설비 설치</li>
+<li>교육·훈련</li>
+<li>연구·개발</li>
+<li>홍보</li>
+<li>그 밖의 안전 관련 사항</li>
+</ol>
+<strong>공시 기준 기간</strong>: 과거 3년 + 해당 연도 + 향후 2년 (총 6개년)<br>
+<strong>공시 기한</strong>: 매년 <b>5월 말</b>까지
+<div class='trap'>❌ "공시 항목 = 5가지 또는 10가지" → <b>7가지</b></div>
+<div class='trap'>❌ "공시 기한 = 3월 말" → <b>5월 말</b></div>
+</div>
 <div class="theory-note">
   <strong>이론 배경 (제6조의2):</strong> 안전투자 공시는 <strong>철도운영자</strong>가 안전에 얼마나 투자했는지를 <strong>매년</strong> 투명하게 공개하는 제도입니다. <strong>철도시설관리자는 공시 의무자가 아닙니다</strong>(제6조의2: "철도운영자는 … 공시하여야 한다"). 국토교통부장관이 대신 공시하지 않습니다. 미이행 시 과태료가 부과됩니다.
 </div>
