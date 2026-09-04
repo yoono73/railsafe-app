@@ -8,7 +8,6 @@ import {
   ch82Questions,
   ch83Questions,
   ch53Questions,
-  ch21Questions,
   CHAPTER_NAMES,
   RailwayKingQuestion,
   RailwayKingChapter,
@@ -32,7 +31,7 @@ const LS_PROGRESS = 'rkProgress'; // JSON
 
 type Mode = 'home' | 'quiz' | 'result';
 type SubMode = '기출변형' | '신유형' | '오답풀기';
-type ChapterFilter = 'ALL' | 'ch81' | 'ch82' | 'ch83' | 'ch53' | 'ch21';
+type ChapterFilter = 'ALL' | 'ch81' | 'ch82' | 'ch83' | 'ch53';
 
 interface AnswerRecord { qid: string; selected: number; correct: boolean; }
 
@@ -40,18 +39,13 @@ interface AnswerRecord { qid: string; selected: number; correct: boolean; }
 const ch53BasicQuestions = ch53Questions.filter(q => q.num <= 19);
 const ch53NewQuestions   = ch53Questions.filter(q => q.num >= 20);
 
-// ch21 섹션별 분리
-const ch21B1Questions  = ch21Questions.filter(q => q.num <= 23);
-const ch21B2Questions  = ch21Questions.filter(q => q.num >= 24 && q.num <= 42);
-const ch21B3Questions  = ch21Questions.filter(q => q.num >= 43 && q.num <= 105);
-const ch21NewQuestions = ch21Questions.filter(q => q.num >= 106);
 
 // chapterFilter ↔ filter_part 숫자 변환
 function cfToNum(cf: ChapterFilter): number {
-  return cf === 'ch81' ? 81 : cf === 'ch82' ? 82 : cf === 'ch83' ? 83 : cf === 'ch53' ? 53 : cf === 'ch21' ? 21 : 0;
+  return cf === 'ch81' ? 81 : cf === 'ch82' ? 82 : cf === 'ch83' ? 83 : cf === 'ch53' ? 53 : 0;
 }
 function numToCf(n: number): ChapterFilter {
-  return n === 81 ? 'ch81' : n === 82 ? 'ch82' : n === 83 ? 'ch83' : n === 53 ? 'ch53' : n === 21 ? 'ch21' : 'ALL';
+  return n === 81 ? 'ch81' : n === 82 ? 'ch82' : n === 83 ? 'ch83' : n === 53 ? 'ch53' : 'ALL';
 }
 
 function shuffle<T>(arr: T[]): T[] {
@@ -64,10 +58,10 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 const CHAPTER_COLOR: Record<string, string> = {
-  ch81: '#0891b2', ch82: '#7c3aed', ch83: '#d97706', ch53: '#059669', ch21: '#be185d',
+  ch81: '#0891b2', ch82: '#7c3aed', ch83: '#d97706', ch53: '#059669',
 };
 const CHAPTER_ICON: Record<string, string> = {
-  ch81: '🪨', ch82: '⚡', ch83: '🚂', ch53: '📋', ch21: '🚦',
+  ch81: '🪨', ch82: '⚡', ch83: '🚂', ch53: '📋',
 };
 
 // ─── 스토리지 헬퍼 ─────────────────────────────────────────────────
@@ -232,7 +226,7 @@ function RailwayKingInner() {
     if (m === 'quiz') setSubMode('기출변형');
     else if (m === 'wrong') setSubMode('오답풀기');
     else if (m === 'new') setSubMode('신유형');
-    if (ch && ['ALL','ch81','ch82','ch83','ch53','ch21'].includes(ch)) setChapterFilter(ch as ChapterFilter);
+    if (ch && ['ALL','ch81','ch82','ch83','ch53'].includes(ch)) setChapterFilter(ch as ChapterFilter);
     // mode는 'home' 유지 — 홈 화면에서 시작 버튼 클릭
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initDone]);
@@ -244,7 +238,6 @@ function RailwayKingInner() {
     }
     if (sm === '신유형') {
       if (cf === 'ch53') return ch53NewQuestions;
-      if (cf === 'ch21') return ch21NewQuestions;
       return ch53NewQuestions; // 기본값
     }
     // 기출변형
@@ -252,8 +245,7 @@ function RailwayKingInner() {
     if (cf === 'ch82') return ch82Questions;
     if (cf === 'ch83') return ch83Questions;
     if (cf === 'ch53') return ch53BasicQuestions;
-    if (cf === 'ch21') return [...ch21B1Questions, ...ch21B2Questions, ...ch21B3Questions];
-    // ALL: ch81+ch82+ch83 기출변형 (ch53·ch21 제외 — 별도 챕터로 선택)
+    // ALL: ch81+ch82+ch83 기출변형 (ch53 제외 — 별도 챕터로 선택)
     return [...ch81Questions, ...ch82Questions, ...ch83Questions];
   }, []);
 
@@ -362,7 +354,6 @@ function RailwayKingInner() {
             <span style={{ background:'rgba(255,255,255,.2)', borderRadius:20, padding:'3px 12px' }}>⚡ ch8.2 {ch82Questions.length}문항</span>
             <span style={{ background:'rgba(255,255,255,.2)', borderRadius:20, padding:'3px 12px' }}>🚂 ch8.3 {ch83Questions.length}문항</span>
             <span style={{ background:'rgba(255,255,255,.2)', borderRadius:20, padding:'3px 12px' }}>📋 ch5.3 {ch53Questions.length}문항</span>
-            <span style={{ background:'rgba(255,255,255,.2)', borderRadius:20, padding:'3px 12px' }}>🚦 ch2.1 {ch21Questions.length}문항</span>
             <span style={{ background:'rgba(255,255,255,.2)', borderRadius:20, padding:'3px 12px' }}>총 {total}문항</span>
           </div>
           <div style={{ marginTop:8, fontSize:'.75em', opacity:.65 }}>
@@ -393,7 +384,7 @@ function RailwayKingInner() {
             <div style={{ marginBottom:12 }}>
               <div style={{ fontSize:'.8em', color:'#6b7280', marginBottom:6 }}>챕터 선택</div>
               <div style={{ display:'flex', gap:6, flexWrap:'wrap' }}>
-                {(['ALL','ch81','ch82','ch83','ch53','ch21'] as ChapterFilter[]).map(cf => (
+                {(['ALL','ch81','ch82','ch83','ch53'] as ChapterFilter[]).map(cf => (
                   <button key={cf} onClick={() => setChapterFilter(cf)}
                     style={{
                       padding:'4px 12px', borderRadius:16, border:'1px solid', cursor:'pointer', fontSize:'.78em', fontWeight:'bold',
@@ -422,19 +413,12 @@ function RailwayKingInner() {
           <div style={{ background:'#fff', border:'2px solid #059669', borderRadius:12, padding:18 }}>
             <div style={{ fontWeight:'bold', fontSize:'1.05em', marginBottom:8, color:'#065f46' }}>✨ 신유형문제</div>
             <div style={{ fontSize:'.85em', color:'#374151', marginBottom:14 }}>
-              📋 철도산업발전기본법 신유형 {ch53NewQuestions.length}문항<br/>
-              🚦 교통안전관리론 신유형 {ch21NewQuestions.length}문항
+              철도산업발전기본법 신유형 {ch53NewQuestions.length}문항
             </div>
-            <div style={{ display:'flex', gap:8, flexWrap:'wrap' }}>
-              <button onClick={() => startNew('신유형', 'ch53')}
-                style={{ flex:1, padding:'11px', background:'#059669', color:'#fff', border:'none', borderRadius:10, fontWeight:'bold', cursor:'pointer', fontSize:'.85em' }}>
-                ✨ 철도산업기본법
-              </button>
-              <button onClick={() => startNew('신유형', 'ch21')}
-                style={{ flex:1, padding:'11px', background:'#be185d', color:'#fff', border:'none', borderRadius:10, fontWeight:'bold', cursor:'pointer', fontSize:'.85em' }}>
-                ✨ 교통안전관리론
-              </button>
-            </div>
+            <button onClick={() => startNew('신유형', 'ch53')}
+              style={{ width:'100%', padding:'11px', background:'#059669', color:'#fff', border:'none', borderRadius:10, fontWeight:'bold', cursor:'pointer', fontSize:'.95em' }}>
+              ✨ 신유형문제 시작
+            </button>
           </div>
 
           {/* 오답풀기 */}
@@ -468,7 +452,6 @@ function RailwayKingInner() {
             { ch: 'ch82' as RailwayKingChapter, cnt: ch82Questions.length, sub: '' },
             { ch: 'ch83' as RailwayKingChapter, cnt: ch83Questions.length, sub: '' },
             { ch: 'ch53' as RailwayKingChapter, cnt: ch53Questions.length, sub: `(기출변형 ${ch53BasicQuestions.length} + 신유형 ${ch53NewQuestions.length})` },
-            { ch: 'ch21' as RailwayKingChapter, cnt: ch21Questions.length, sub: `(B1 ${ch21B1Questions.length} + B2 ${ch21B2Questions.length} + B3 ${ch21B3Questions.length} + 신유형 ${ch21NewQuestions.length})` },
           ]).map(({ ch, cnt, sub }) => (
             <div key={ch} style={{ marginBottom:10, padding:'10px 14px', background:'#f9fafb', borderLeft:`4px solid ${CHAPTER_COLOR[ch]}`, borderRadius:'0 8px 8px 0' }}>
               <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
