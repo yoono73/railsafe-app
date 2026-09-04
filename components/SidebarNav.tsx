@@ -112,6 +112,22 @@ export default function SidebarNav() {
                   <span>{s.icon}</span>
                   <span className="truncate">{s.name}</span>
                 </Link>
+                {/* 교통안전관리론(id=1) 아래 철도왕 문제 링크 */}
+                {s.id === 1 && (
+                  <div className="pl-2 border-l border-pink-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
+                    <Link
+                      href="/quiz/1"
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+                        pathname.startsWith('/quiz/1')
+                          ? 'bg-pink-100 text-pink-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-pink-700'
+                      }`}
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>👑 철도왕 문제(기출·신유형)</span>
+                    </Link>
+                  </div>
+                )}
                 {/* 교통안전법(id=2) 아래 철도왕 문제 링크 */}
                 {s.id === 2 && (
                   <div className="pl-2 border-l border-green-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">

@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>교통안전관리론 기출변형·신유형 문제</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{margin:0;padding:16px;background:#f8f9fa;font-family:'Malgun Gothic','맑은 고딕',sans-serif;font-size:16px;line-height:1.75;color:#1a1a2e}
+h2{color:#9d174d;font-size:1.15em;margin-bottom:10px}
+.part{margin-bottom:10px}
+.part-title{background:#9d174d;color:#fff;padding:10px 16px;border-radius:8px 8px 0 0;font-size:1.1em;font-weight:bold;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.part-title:hover{background:#be185d}
+.part-body{border:1px solid #fbcfe8;border-top:none;border-radius:0 0 8px 8px;background:#fff;padding:0 16px 10px}
+.qbank-item{border:1px solid #fce7f3;border-radius:8px;padding:14px 16px;margin:12px 0;background:#fdf2f8}
+.qbank-num{font-size:.88em;font-weight:bold;color:#9d174d;background:#fbcfe8;border-radius:4px;padding:1px 8px;margin-right:6px}
+.qbank-q{font-weight:bold;color:#1a1a2e;margin:8px 0 10px;font-size:1.05em}
+.qbank-choices{list-style:none;margin:0 0 10px;padding:0}
+.qbank-choices li{padding:6px 10px 6px 28px;position:relative;color:#374151;font-size:1em;cursor:pointer;border-radius:4px;transition:background .15s;margin:3px 0}
+.qbank-choices li:hover:not(.ans-correct):not(.ans-wrong){background:#fce7f3}
+.qbank-choices li::before{content:attr(data-num);position:absolute;left:8px;color:#6b7280;font-size:.9em}
+.qbank-choices li.selected{background:#dbeafe;border:1px solid #93c5fd;color:#1d4ed8;font-weight:bold}
+.qbank-choices li.ans-correct{background:#d1fae5;color:#065f46;font-weight:bold}
+.qbank-choices li.ans-wrong{background:#fee2e2;color:#991b1b;text-decoration:line-through}
+.qbank-reveal{border:none;background:#fbcfe8;color:#9d174d;font-size:.92em;padding:6px 16px;border-radius:6px;cursor:pointer;font-family:inherit;font-weight:bold}
+.qbank-reveal:hover{background:#f9a8d4}
+.qbank-explain{display:none;margin-top:10px;background:#fdf2f8;border-left:3px solid #ec4899;padding:9px 12px;border-radius:0 6px 6px 0;font-size:.97em;color:#9d174d}
+.qbank-item.new-type{background:#faf5ff;border-color:#ddd6fe}
+.qbank-item.new-type .qbank-num{background:#ede9fe;color:#5b21b6}
+#wrong-bar{display:none;align-items:center;gap:10px;background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:10px 16px;margin-bottom:14px;flex-wrap:wrap}
+#wrong-count-badge{background:#ef4444;color:#fff;border-radius:20px;padding:2px 10px;font-weight:bold;font-size:.9em}
+.wrong-mode-btn{border:none;border-radius:6px;padding:6px 14px;font-size:.92em;cursor:pointer;font-weight:bold;font-family:inherit;transition:background .15s}
+#btn-wrong-only{background:#ef4444;color:#fff}
+#btn-wrong-only:hover{background:#dc2626}
+#btn-reset-all{background:#e2e8f0;color:#374151}
+#btn-reset-all:hover{background:#cbd5e1}
+</style>
+</head>
+<body>
+<h2>🚦 교통안전관리론 기출변형·신유형 문제</h2>
+<div id="wrong-bar">
+  <span>❌ 틀린 문제</span>
+  <span id="wrong-count-badge">0</span>개
+  <button class="wrong-mode-btn" id="btn-wrong-only" onclick="toggleWrongMode()">틀린 문제만 보기</button>
+  <button class="wrong-mode-btn" id="btn-reset-all" onclick="resetAllItems()">전체 초기화</button>
+</div>
+<div class="part">
+  <div class="part-title" onclick="togglePart(this)"><span>B1. 교통안전조직론·교육론 (23문항)</span><span>▼</span></div>
+  <div class="part-body" id="sec-b1"><div class="qbank-item" id="q1">
+  <span class="qbank-num">문제 1</span>
+  <p class="qbank-q">운전자 교육 중 개선 재교육이 아닌 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">연속위반</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">사고다발</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">부상복귀</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">태도불량</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 개선 재교육 대상: ①연속위반 ②사고다발 ④태도불량. 부상복귀는 복귀교육(질병·부상 후 복귀 시 실시) 대상이다.</div>
+</div>
+<div class="qbank-item" id="q2">
+  <span class="qbank-num">문제 2</span>
+  <p class="qbank-q">운전자 교육 1단계는?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">실제 도로 주행을 통한 기술 습득</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">교통법규에 대한 심화 이해</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">사고 사례 분석 및 평가 참여형 교육</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">학습자와 교관 간의 신뢰 기반 형성</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 운전자 교육 1단계는 학습자와 교관 간의 상호 신뢰관계 형성이 핵심이다.</div>
+</div>
+<div class="qbank-item" id="q3">
+  <span class="qbank-num">문제 3</span>
+  <p class="qbank-q">운전자 교육 4단계에 해당하지 않는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">교육의 참여</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">교육의 계획</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">교육의 실시</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">교육의 평가</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 운전자 교육은 ①계획→②실시→③평가→④피드백의 4단계이다. 교육의 참여는 절차 단계에 포함되지 않는다.</div>
+</div>
+<div class="qbank-item" id="q4">
+  <span class="qbank-num">문제 4</span>
+  <p class="qbank-q">조직화의 기본 원칙에 해당하지 않는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">목적의 명확성 원칙</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">권한과 책임의 균형 원칙</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">명령통일의 원칙</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">비공식화 원칙</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 조직화 원칙: 목적 명확성·권한책임 균형·명령통일·전문화·조정·통제 범위. 비공식화 원칙은 존재하지 않는다.</div>
+</div>
+<div class="qbank-item" id="q5">
+  <span class="qbank-num">문제 5</span>
+  <p class="qbank-q">집합교육에서 가장 일반적으로 활용되는 형태는?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">시범식 교육</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">강의식 교육</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">토론식 교육</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">실습식 교육</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 강의식 교육: 많은 인원을 대상으로 짧은 시간 내 전달할 수 있어 가장 일반적으로 활용된다.</div>
+</div>
+<div class="qbank-item" id="q6">
+  <span class="qbank-num">문제 6</span>
+  <p class="qbank-q">조직 내 계층 간 기능의 연결이 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">'중간경영자'의 경우 '인간적 기능'이 중요하다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">'최고경영자'의 경우 '통합적 기능'이 중요하다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">'중간관리자'의 경우 '관리적 기능'이 중요하다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">'하위경영자'의 경우 '기술적 기능'이 중요하다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] Katz 이론: 상위층=통합적 기능, 중간층=인간적 기능, 하위층=기술적 기능. 중간관리자의 핵심은 '인간적 기능'이다.</div>
+</div>
+<div class="qbank-item" id="q7">
+  <span class="qbank-num">문제 7</span>
+  <p class="qbank-q">최고관리층에게 요구되는 기능은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">운영적 기능</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">통제적 기능</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">기술적 기능</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">통합적 기능</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 최고경영자에게는 조직 전체를 아우르는 통합적 기능(개념적 기능)이 가장 중요하다.</div>
+</div>
+<div class="qbank-item" id="q8">
+  <span class="qbank-num">문제 8</span>
+  <p class="qbank-q">중간관리자의 역할로서 적절하지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">부서 간 의사소통을 조정하고 상하 간 연결 역할을 수행한다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">상위 경영층의 지시를 실행 가능한 계획으로 전환한다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">부하 직원의 근무태도와 성과를 관리한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">작업현장을 감독하는 일선 지도자</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 작업현장을 감독하는 일선 지도자는 하위 관리자에 해당한다.</div>
+</div>
+<div class="qbank-item" id="q9">
+  <span class="qbank-num">문제 9</span>
+  <p class="qbank-q">안전관리 과정 중 경영진에게 효과적인 안전대책을 제시하는 단계는?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">준비단계</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">설득단계</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">확립단계</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">실행단계</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 안전관리: 준비→설득→실행→확립. 설득 단계에서 경영진이 방향을 설정·주도한다.</div>
+</div>
+<div class="qbank-item" id="q10">
+  <span class="qbank-num">문제 10</span>
+  <p class="qbank-q">조직 내 직무들 간 관계와 업무 수행 방식이 어느 정도로 규정되어 있는가를 나타내는 조직 설계 요소는?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">공식화</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">복잡성</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">전문화</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">집권화</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 공식화: 직무 간 관계와 절차가 규칙·규정으로 얼마나 명확히 정해져 있는지를 의미한다.</div>
+</div>
+<div class="qbank-item" id="q11">
+  <span class="qbank-num">문제 11</span>
+  <p class="qbank-q">집단 간 갈등을 해소하기 위해 대면적 화합과 협의를 통해 해결하는 방법은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">문제해결법</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">회피법</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">타협법</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">강압법</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 문제해결법: 갈등 당사자들이 직접 대면하여 공통 목표를 찾는 협력적 접근법이다.</div>
+</div>
+<div class="qbank-item" id="q12">
+  <span class="qbank-num">문제 12</span>
+  <p class="qbank-q">교수설계 단계별 구분에서 '분析'에 포함되지 않는 요소는?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">필요도 분析</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">학습자 특성 분析</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">교수 프로그램 시청각 매체 및 보조자료 개발</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">수요분析</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 분析 단계: 학습자의 요구·과제·환경을 분析한다. 시청각 매체·보조자료 개발은 '설계 및 개발' 단계에 해당한다.</div>
+</div>
+<div class="qbank-item" id="q13">
+  <span class="qbank-num">문제 13</span>
+  <p class="qbank-q">교수설계 단계별 구분에서 '개발'에 포함되지 않는 요소는?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">교수학습 자료 제작</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">학습자의 요구 分析</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">평가도구 개발</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">시청각 보조자료 제작</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 개발 단계에는 교수학습 자료·시청각 매체·평가도구 제작이 포함된다. 학습자 요구 分析은 분析 단계다.</div>
+</div>
+<div class="qbank-item" id="q14">
+  <span class="qbank-num">문제 14</span>
+  <p class="qbank-q">공식집단의 성격에 해당하지 않는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">비가시적</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">제도적으로 구성된다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">효율성 중심 논리에 의해 조직된다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">규범과 절차로 정형화되어 있다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 공식집단은 제도적으로 구성되며 역할·규범이 표준화된다. 비가시적 특성은 비공식집단의 특징이다.</div>
+</div>
+<div class="qbank-item" id="q15">
+  <span class="qbank-num">문제 15</span>
+  <p class="qbank-q">비공식조직의 특징에 대한 설명으로 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">인위적으로 구성된다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">명확한 규칙이나 절차가 없다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">공식 목표가 뚜렷하지 않다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">공동 관심사나 정서적 유대가 중심이다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 비공식조직은 인간관계·친분으로 자연스럽게 형성된다. "인위적으로 구성된다"는 공식조직의 특성이다.</div>
+</div>
+<div class="qbank-item" id="q16">
+  <span class="qbank-num">문제 16</span>
+  <p class="qbank-q">개인이 자신의 능력이나 위치를 비교·평가할 때 기준이 되는 집단은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">동질집단</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">준거집단</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">목표지향집단</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">이해집단</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 준거집단: 개인이 가치관·태도·행동을 형성할 때 기준으로 삼는 집단이다.</div>
+</div>
+<div class="qbank-item" id="q17">
+  <span class="qbank-num">문제 17</span>
+  <p class="qbank-q">다음 설명 중 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">상관적 편견: 한 특성을 다른 특성과 연관시켜 잘못 판단하는 오류이다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">상동적 편견: 집단의 고정관념으로 개인을 판단하는 오류이다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">현혹효과: 한 가지 특성이 전체 평가에 영향을 미치는 오류이다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">투사: 타인의 특성을 객관적으로 평가하는 것이다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 투사: 자신의 성향·감정을 타인에게 전가하는 오류다. 객관적 평가와는 반대 개념이다.</div>
+</div>
+<div class="qbank-item" id="q18">
+  <span class="qbank-num">문제 18</span>
+  <p class="qbank-q">10명 내외로 이루어지는 소집단 학습방법에 포함되지 않는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">시나리오 학습</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">토의식 학습</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">워크숍</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">카운슬링</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 소집단 학습: 시나리오·토의·워크숍 등. 카운슬링은 개인 심리·정서 상담으로 소집단 학습 범주에 포함되지 않는다.</div>
+</div>
+<div class="qbank-item" id="q19">
+  <span class="qbank-num">문제 19</span>
+  <p class="qbank-q">운전 관련 지식은 충분하나 실무 수행 시 어려움을 겪는 경우 가장 효과적인 교육 방법은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">카운슬링</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">일상생활 지도</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">실무 실습</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">운행 그래프 分析</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 실무 실습: 실제 운전 환경에서 반복 훈련으로 지식과 행동을 연결하는 교육 방식이다.</div>
+</div>
+<div class="qbank-item" id="q20">
+  <span class="qbank-num">문제 20</span>
+  <p class="qbank-q">통제된 정서관리에 대한 설명으로 가장 적절한 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">자신의 감정을 억누르거나 부정하지 않고 있는 그대로 받아들이는 것을 중시한다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">업무 상황에 맞게 감정을 의도적으로 조절·통제하여 합리적인 행동을 유지한다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">상황에 따라 감정을 적극적으로 표현함으로써 대인관계를 원활히 한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">개인이 스스로 선택한 감정 표현을 존중하여 자율성을 강조한다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 통제된 정서관리: 업무 목적에 맞게 감정을 의도적으로 조절·통제하는 방식이다.</div>
+</div>
+<div class="qbank-item" id="q21">
+  <span class="qbank-num">문제 21</span>
+  <p class="qbank-q">교통안전조직이 가져야 할 특성이 아닌 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">안전업무를 단계별로 구분하고 역할과 권한을 명확히 해야 한다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">관계 기관 간 협력체계를 통해 통합적으로 대응해야 한다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">구성원은 전문지식을 갖추어 과학적 안전대책을 수립해야 한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">인간을 조직의 목적 달성을 위한 핵심적 수단으로 본다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 현대 안전관리는 인간을 보호 대상이자 이해관계자로 본다. 수단으로만 간주하는 것은 안전조직의 특성에 맞지 않는다.</div>
+</div>
+<div class="qbank-item" id="q22">
+  <span class="qbank-num">문제 22</span>
+  <p class="qbank-q">집단의 타성화 현상을 방지하기 위한 방법으로 보기 어려운 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">문제의식을 억제한다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">외부 전문가의 의견을 수렴한다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">구성원 간 자유로운 의사소통을 장려한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">직무 순환제나 워크숍을 통해 새로운 시각을 유도한다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 문제의식 억제는 오히려 오류 은폐와 집단사고를 심화시킨다.</div>
+</div>
+<div class="qbank-item" id="q23">
+  <span class="qbank-num">문제 23</span>
+  <p class="qbank-q">유사한 사례들을 근거로 원인 간 연관성을 分析하는 기법은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">체크리스트 방법</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">결함수분析(FTA) 방법</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">시그니피컨트 방법</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">브레인스토밍 방법</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 시그니피컨트(Significant) 방법: 유사한 사례를 비교하여 사고 원인 간의 관계를 分析하는 기법이다.</div>
+</div></div>
+</div>
+<div class="part">
+  <div class="part-title" onclick="togglePart(this)"><span>B2. 교통안전관리이론·연구론 (19문항)</span><span>▼</span></div>
+  <div class="part-body" id="sec-b2"><div class="qbank-item" id="q24">
+  <span class="qbank-num">문제 24</span>
+  <p class="qbank-q">자유롭게 의견과 아이디어를 제시하여 문제 해결 방안을 모색하는 기법은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">명목집단 기법</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">시나리오 플래닝</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">브레인스토밍</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">전문가패널 기법</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 브레인스토밍: 집단 문제 해결 기법. 자유로운 아이디어 제시로 창의적 해결책을 모색하며 비판 금지가 원칙이다.</div>
+</div>
+<div class="qbank-item" id="q25">
+  <span class="qbank-num">문제 25</span>
+  <p class="qbank-q">전문가의 의견을 반복적으로 수렴하여 합의된 예측이나 판단을 도출하는 의사결정 기법은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">브레인스토밍</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">시나리오 플래닝</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">델파이 기법</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">체크리스트 기법</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 델파이 기법: 전문가에게 익명으로 설문을 반복 실시하여 의견을 수렴·조정하는 예측기법이다.</div>
+</div>
+<div class="qbank-item" id="q26">
+  <span class="qbank-num">문제 26</span>
+  <p class="qbank-q">시몬즈 방식에 의한 비보험코스트 항목이 아닌 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">무상해사고</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">휴업상해</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">노후상해</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">구급조치상해</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 시몬즈 방식: 보험코스트(노후상해), 비보험코스트(무상해사고·휴업상해·구급조치상해)로 구분한다.</div>
+</div>
+<div class="qbank-item" id="q27">
+  <span class="qbank-num">문제 27</span>
+  <p class="qbank-q">후유장해 산정 방식 중 신체 기능저하 중심으로 객관적 의학 평가하는 방식은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">자동차손해배상법</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">맥브라이드</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">노동능력상실률 방식</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">AMA</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] AMA(미국의사협회): 신체 기능저하 중심으로 객관적 의학 평가하는 기준이다.</div>
+</div>
+<div class="qbank-item" id="q28">
+  <span class="qbank-num">문제 28</span>
+  <p class="qbank-q">인간행동에 영향을 주는 내적 요인이 아닌 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">인간관계</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">소질</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">심신상태</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">경력관계</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 내적 요인: 소질(판단력·주의력·반응속도), 심신상태(피로·음주·건강). 인간관계는 외적 요인이다.</div>
+</div>
+<div class="qbank-item" id="q29">
+  <span class="qbank-num">문제 29</span>
+  <p class="qbank-q">미래의 모든 편익과 비용을 현재가치로 환산하여 그 값이 같아지는 할인율을 구하는 경제성 분析 기법은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">초년도 수익률법</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">내부수익률법</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">순현재가치</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">비용편익分析</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 비용편익分析(B/C 分析): 미래에 발생할 모든 편익과 비용을 현재가치로 환산하여 비교하는 경제성 평가 기법이다.</div>
+</div>
+<div class="qbank-item" id="q30">
+  <span class="qbank-num">문제 30</span>
+  <p class="qbank-q">메이요가 강조한 조직 행동의 핵심 요인은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">고임금</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">공식적인 명령계통</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">사회·심리적 요인</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">낮은 업무강도</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 메이요: 호손실험을 통해 근로자의 행동은 임금보다 사회적 관계·심리적 만족에 더 큰 영향을 받음을 밝혔다.</div>
+</div>
+<div class="qbank-item" id="q31">
+  <span class="qbank-num">문제 31</span>
+  <p class="qbank-q">사이몬이 주장한 조직적 의사결정으로 연결이 옳은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">완전한 합리성-경제인</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">제한된 합리성-관리인</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">직관적 판단-감정인</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">무의식적 결정-자동인</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 사이몬: 제한된 합리성을 가진 관리인 개념 제시. 현실적 제약 속에서 만족할 수준의 결정을 내리는 인간형이다.</div>
+</div>
+<div class="qbank-item" id="q32">
+  <span class="qbank-num">문제 32</span>
+  <p class="qbank-q">쿤츠(Koontz)의 관리 이론에 해당되지 않는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">행동과학적 관리법</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">인간관계적 관리법</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">조직시스템적 관리법</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">통계적 관리법</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] Koontz: 과정적·경험적·인간행동적·의사결정적·시스템적 접근. 통계적 관리법은 Koontz의 이론 범주에 포함되지 않는다.</div>
+</div>
+<div class="qbank-item" id="q33">
+  <span class="qbank-num">문제 33</span>
+  <p class="qbank-q">사고 규모에 따라 손해액으로 나누는 이론은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">안전우선 이론</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">최소비용 이론</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">기대손실 이론</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">위험분산 이론</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 기대손실 이론: 사고 규모에 따라 손해액으로 나눔. 사고 발생 가능성과 손실 크기를 고려한다.</div>
+</div>
+<div class="qbank-item" id="q34">
+  <span class="qbank-num">문제 34</span>
+  <p class="qbank-q">존슨의 시스템 어프로치에 대한 설명으로 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">교통안전을 단순히 시스템 설계 자체로 한정하는 방법이다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">사고는 단일 원인보다는 여러 하위 요소 간 상호작용의 결과로 본다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">인간의 실수 가능성을 전제로 시스템을 설계하여 오류가 사고로 이어지지 않도록 한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">사고를 예방하기 위한 능동적이고 체계적인 접근을 강조한다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 존슨의 시스템 관점: 시스템 설계만으로 한정하지 않고 인간·환경·기술의 통합적 접근을 강조한다.</div>
+</div>
+<div class="qbank-item" id="q35">
+  <span class="qbank-num">문제 35</span>
+  <p class="qbank-q">피아제의 인지 발달 이론에 따른 각 단계의 설명 중 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">감각운동기: 감각과 운동을 통해 세상을 탐색하며 대상영속성을 획득하는 시기이다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">전조작기: 상징적 사고와 언어가 발달하지만 자기중심적 사고가 두드러지는 시기이다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">구체적 조작기: 보존 개념과 논리적 사고가 발달하나 구체적 사물에 한정되는 시기이다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">형식적 조작기: 추상적 사고와 가설적 사고는 불가능한 청소년기의 단계이다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 형식적 조작기(11세 이상): 추상적·가설적 사고가 가능한 시기이다. 불가능하다는 설명은 틀렸다.</div>
+</div>
+<div class="qbank-item" id="q36">
+  <span class="qbank-num">문제 36</span>
+  <p class="qbank-q">심리학자 캇츠에 따르면 개인이 자신을 강화하고 자아의 정체성을 형성하게 하는 태도의 기능은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">가치표현적 기능</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">인지적 기능</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">적응 기능</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">사회조정 기능</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 캇츠의 태도 기능 이론: 가치표현적 기능은 태도를 통해 자신의 핵심 가치나 자아 정체성을 표현·강화하는 기능이다.</div>
+</div>
+<div class="qbank-item" id="q37">
+  <span class="qbank-num">문제 37</span>
+  <p class="qbank-q">부품의 마모나 노화 등으로 인해 발생할 수 있는 우발적 고장의 확률과 관련된 이론은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">사고요인의 등치성</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">욕조곡선</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">브레인스토밍</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">집단의사결정</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 욕조곡선: 고장률과 시간의 관계를 보여주는 곡선으로 초기고장기-우발고장기-마모고장기의 세 구간으로 구분된다.</div>
+</div>
+<div class="qbank-item" id="q38">
+  <span class="qbank-num">문제 38</span>
+  <p class="qbank-q">제품의 사용 기간에 따라 고장률이 어떻게 변하는지를 나타낸 곡선은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">정규분포곡선</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">포아송곡선</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">지수분포곡선</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">욕조곡선</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 욕조곡선: 초기에 높고, 중간에 낮으며, 후반에 다시 높아지는 욕조 모양의 고장률 곡선이다.</div>
+</div>
+<div class="qbank-item" id="q39">
+  <span class="qbank-num">문제 39</span>
+  <p class="qbank-q">욕조곡선의 중간 부분에 관한 설명으로 옳은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">초기 고장기로 제조 결함 때문에 고장률이 높다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">우발 고장기로 고장률이 일정하고 낮으며 우연한 고장이 발생한다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">마모 고장기로 시간이 지날수록 고장률이 점차 높아진다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">전체 기간 동안 고장률은 일정하게 유지된다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 욕조곡선 중간 구간(우발고장기): 고장률이 일정하고 낮으며 우연한 고장만 발생하는 안정기다.</div>
+</div>
+<div class="qbank-item" id="q40">
+  <span class="qbank-num">문제 40</span>
+  <p class="qbank-q">하인리히의 재해 비율은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">1:10:100</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">1:29:300</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">1:25:250</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">1:50:500</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 하인리히의 법칙: 중대재해 1건 뒤에는 경미한 재해 29건, 무상해 사고 300건이 존재한다(1:29:300).</div>
+</div>
+<div class="qbank-item" id="q41">
+  <span class="qbank-num">문제 41</span>
+  <p class="qbank-q">하인리히의 법칙에 대한 설명으로 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">작은 이상 징후(아차사고)를 줄이면 큰 사고도 예방할 수 있다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">1:29:300 비율을 통해 사고 간 상관성을 설명한다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">예방보다는 사후대책에 집중한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">도미노 이론에 따라 사고 요인의 연쇄성을 강조한다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 하인리히 법칙은 예방 중심 안전관리를 강조한다. 사후대책 중심이라는 설명은 오답이다.</div>
+</div>
+<div class="qbank-item" id="q42">
+  <span class="qbank-num">문제 42</span>
+  <p class="qbank-q">교통안전교육 교수설계의 3단계 과정은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">分析→설계 및 개발→평가</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">계획→실행→평가</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">준비→교육→사후관리</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">요구분析→교수자 훈련→교육 후 보상</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 교수설계이론(ADDIE 모형): 分析→설계 및 개발→평가의 3단계로 진행된다.</div>
+</div></div>
+</div>
+<div class="part">
+  <div class="part-title" onclick="togglePart(this)"><span>B3. 교통안전관리일반상식 (63문항)</span><span>▼</span></div>
+  <div class="part-body" id="sec-b3"><div class="qbank-item" id="q43">
+  <span class="qbank-num">문제 43</span>
+  <p class="qbank-q">운전자가 정보를 수집하고 행동을 결정하며 실행 후 확인하는 과정은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">판단-인지-조작</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">인지-판단-조작</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">조작-인지-판단</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">판단-조작-인지</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 정보처리 과정: 인지(정보 수집)→판단(행동 결정)→조작(실행) 후 확인한다.</div>
+</div>
+<div class="qbank-item" id="q44">
+  <span class="qbank-num">문제 44</span>
+  <p class="qbank-q">교통안전표지에 해당하지 않는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">규제표지</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">지시표지</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">통제표지</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">주의표지</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 교통안전표지: 규제·지시·주의·보조표지 4종류. '통제표지'는 법적 분류에 포함되지 않는다.</div>
+</div>
+<div class="qbank-item" id="q45">
+  <span class="qbank-num">문제 45</span>
+  <p class="qbank-q">교통운용계획의 실행절차는?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">계획→조정→실시→통제</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">실시→계획→조정→통제</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">계획→실시→통제→조정</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">실시→조정→계획→통제</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 교통운용계획: 계획(Plan)→실시(Do)→통제(Control)→조정(Adjust) 절차(암기: 계실통조).</div>
+</div>
+<div class="qbank-item" id="q46">
+  <span class="qbank-num">문제 46</span>
+  <p class="qbank-q">민간이 건설 후 정부에 이전하고 정부가 임차 사용하다가 종료 후 귀속되는 민간투자사업 방식은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">BOT(Build-Operate-Transfer)</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">BTL(Build-Transfer-Lease)</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">BOO(Build-Own-Operate)</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">BTO(Build-Transfer-Operate)</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] BTL: 민간이 건설 후 정부에 이전하고, 정부가 임차해 사용료를 지급하는 민간투자사업이다.</div>
+</div>
+<div class="qbank-item" id="q47">
+  <span class="qbank-num">문제 47</span>
+  <p class="qbank-q">운전자가 브레이크를 작동시킨 순간부터 제동효과가 나타날 때까지의 경과 시간을 나타내는 용어는?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">반응시간</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">응답시간</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">공주시간</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">제동거리</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 공주시간: 브레이크를 조작한 뒤 실제 제동력이 유효하게 걸릴 때까지 걸리는 시간이다.</div>
+</div>
+<div class="qbank-item" id="q48">
+  <span class="qbank-num">문제 48</span>
+  <p class="qbank-q">공주시간에 대한 설명으로 옳은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">운전자가 제동을 결심해 브레이크를 조작한 뒤 실제 제동력이 유효하게 걸릴 때까지 걸리는 시간이다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">운전자가 제동을 결심하기 전까지 망설이는 시간이다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">차량의 제동장치가 완전히 작동한 뒤 정지할 때까지의 시간이다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">제동장치 내부 압력이 상승하는 데 걸리는 시간이다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 공주시간: 브레이크를 조작한 뒤 실제 제동력이 걸릴 때까지 걸리는 시간으로 제동거리와 구분해야 한다.</div>
+</div>
+<div class="qbank-item" id="q49">
+  <span class="qbank-num">문제 49</span>
+  <p class="qbank-q">사고로 인해 발생하는 공적비용에 해당하지 않는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">재난복구 및 행정처리비용</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">응급의료지원비</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">경찰·소방인력 투입비용</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">교통비</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 공적비용: 응급구조·의료지원·재난복구·행정조사 등 정부가 부담하는 사회적 비용. 교통비는 개인이 부담하는 사적비용이다.</div>
+</div>
+<div class="qbank-item" id="q50">
+  <span class="qbank-num">문제 50</span>
+  <p class="qbank-q">사고에 대한 공적비용이 아닌 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">도로복구비용</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">행정처리비용</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">사고 조사비용</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">개인치료비</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 사적비용(개인이 부담): 차량수리비, 개인치료비. 공적비용(정부가 부담): 공공의료비·도로복구·공무원 투입비용.</div>
+</div>
+<div class="qbank-item" id="q51">
+  <span class="qbank-num">문제 51</span>
+  <p class="qbank-q">교통사고 발생 시 당사자 직접적인 손실로 볼 수 없는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">운전자의 부상에 따른 치료비</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">차량 파손에 따른 수리비</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">차량의 연료손실</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">동승자의 사망에 따른 보상금</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 연료손실은 사고로 인한 부수적 손실(간접손실)로 분류된다.</div>
+</div>
+<div class="qbank-item" id="q52">
+  <span class="qbank-num">문제 52</span>
+  <p class="qbank-q">어린이 교통사고의 특성에 관한 설명으로 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">8~9시 사이에 어린이 사고가 가장 많이 발생한다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">어린이는 위험을 인식하기보다 호기심에 따라 행동하는 경향이 있다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">어린이는 갑자기 도로로 뛰어드는 행동을 보이기 쉽다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">시야가 좁고 판단력이 부족하여 거리와 속도 판단이 부정확하다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 어린이 교통사고는 하교시간대(16~17시)에 가장 많이 발생한다. 8~9시가 가장 많은 시간대는 아니다.</div>
+</div>
+<div class="qbank-item" id="q53">
+  <span class="qbank-num">문제 53</span>
+  <p class="qbank-q">어린이의 특징으로 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">직관적인 사고에 익숙하다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">주의집중시간이 짧다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">추상적인 것을 잘 이해한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">상황 변화에 쉽게 영향을 받는다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 어린이는 추상적 사고가 미숙하다. "추상적인 것을 잘 이해한다"는 어린이의 특성이 아니다.</div>
+</div>
+<div class="qbank-item" id="q54">
+  <span class="qbank-num">문제 54</span>
+  <p class="qbank-q">어린이의 특징이 아닌 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">위험 인식보다 호기심이 행동을 좌우한다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">판단력이 부족하고 모방행동이 적다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">속도와 거리 판단의 정확도가 떨어진다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">시야가 좁고 주의집중시간이 짧다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 어린이는 주변 행동을 쉽게 모방하는 특성이 있다. "모방행동이 적다"는 설명은 틀렸다.</div>
+</div>
+<div class="qbank-item" id="q55">
+  <span class="qbank-num">문제 55</span>
+  <p class="qbank-q">다음 중 노인의 교통특성으로 옳은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">반응속도가 빠르고 판단이 정확하다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">시야가 넓고 주의전환이 용이하다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">속도나 거리를 정확히 판단하는 능력이 감소한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">새로운 교통상황에 대한 적응력이 높다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 노인: 반응시간이 길고 속도와 거리 판단의 정확성이 감소한다.</div>
+</div>
+<div class="qbank-item" id="q56">
+  <span class="qbank-num">문제 56</span>
+  <p class="qbank-q">운전자의 특징이 아닌 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">피로 누적은 판단 능력 저하를 초래한다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">시각 의존도가 높아 주변 시야 확보가 중요하다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">주의가 분산되면 반응시간이 늘어난다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">다리가 팔보다 반응이 빠르다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 팔이 신경 전달 거리가 짧고 반응이 빠르다. "다리가 팔보다 반응이 빠르다"는 잘못되었다.</div>
+</div>
+<div class="qbank-item" id="q57">
+  <span class="qbank-num">문제 57</span>
+  <p class="qbank-q">IPDE 과정에 대한 설명으로 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">I: Identify</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">P: Predict</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">D: Detect</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">E: Execute</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] IPDE: Identify(식별)→Predict(예측)→Decide(결정)→Execute(수행). D는 Detect가 아닌 Decide(결정)이다.</div>
+</div>
+<div class="qbank-item" id="q58">
+  <span class="qbank-num">문제 58</span>
+  <p class="qbank-q">사고율 지표로 보기 어려운 항목은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">열차 1천 운행시간당 사고발생율</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">차량 1만 대당 운전사고발생율</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">교차로 진입차량 10만 대당 사고율</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">열차 1백만 차-km당 사고발생율</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 교차로 진입차량 10만 대당 사고율은 사고율 지표로 잘 사용하지 않는다.</div>
+</div>
+<div class="qbank-item" id="q59">
+  <span class="qbank-num">문제 59</span>
+  <p class="qbank-q">교통안전도 지표가 아닌 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">사고율</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">사상율</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">치사율</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">전손률</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 교통안전도 평가 주요 지표: 사고율·치사율·사상율·사고비용률. 전손률은 보험·재정 평가 지표이다.</div>
+</div>
+<div class="qbank-item" id="q60">
+  <span class="qbank-num">문제 60</span>
+  <p class="qbank-q">여러 자극 중 하나의 대상에만 선택적으로 집중하는 인지 과정을 의미하는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">주의의 배분</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">주의의 분산</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">주의의 집중</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">주의의 완화</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 주의의 집중: 여러 자극 중 하나의 대상에 인식 자원을 집중시키는 인지 과정이다.</div>
+</div>
+<div class="qbank-item" id="q61">
+  <span class="qbank-num">문제 61</span>
+  <p class="qbank-q">주의집중의 정의로 옳은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">주의산만과 동일한 개념이다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">모든 자극을 동등하게 처리하는 것이다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">불필요한 자극을 억제하고 목표 자극을 선택적으로 강화하는 것이다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">멀리 있는 대상이 항상 실제보다 크게 보이는 현상이다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 주의집중: 불필요한 자극을 억제하고 목표 자극을 선택적으로 강화하는 것이다.</div>
+</div>
+<div class="qbank-item" id="q62">
+  <span class="qbank-num">문제 62</span>
+  <p class="qbank-q">수송수요의 요인이 아닌 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">지역개발</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">인구</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">소득수준</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">차량 구조적 특성</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 수송수요 요인: 인구·소득수준·지역개발. 차량 구조적 특성은 수송공급 요인이다.</div>
+</div>
+<div class="qbank-item" id="q63">
+  <span class="qbank-num">문제 63</span>
+  <p class="qbank-q">교통사고 원인 중 발생 비율이 가장 높은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">기계적 요인</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">인적 요인</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">기술적 요인</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">자연적 요인</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 교통사고 원인의 90% 이상이 운전자 요인(인적 요인)이다.</div>
+</div>
+<div class="qbank-item" id="q64">
+  <span class="qbank-num">문제 64</span>
+  <p class="qbank-q">인간의 행동에 영향을 미치는 외부 환경요인에 해당하지 않는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">기후적 조건</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">사회적 조건</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">심리적 조건</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">제도적 조건</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 외적 환경요인: 자연적·제도적·기후적·사회적·물리적·시간적 조건. 심리적 조건은 내적 요인이다.</div>
+</div>
+<div class="qbank-item" id="q65">
+  <span class="qbank-num">문제 65</span>
+  <p class="qbank-q">교통사고 발생의 주요 원인은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">배치차량의 선정</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">사회적 환경</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">운행경로의 미조사</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">운전자 요인(소질)</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 교통사고 요인 중 가장 결정적 요소는 운전자 요인(소질·판단·주의력 등)이다.</div>
+</div>
+<div class="qbank-item" id="q66">
+  <span class="qbank-num">문제 66</span>
+  <p class="qbank-q">인간 행동에 작용하는 요인과 예시의 연결이 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">내적요인(심신상태): 가정, 직장, 취미</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">내적요인(소질): 판단력, 주의력, 반응속도</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">외적요인(물리환경): 온도, 조명, 소음</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">환경요인(사회적 관계): 직장, 가족, 사회</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 심신상태에는 피로·음주·건강상태 등이 포함된다. 가정·직장·취미는 외적·환경적 요인이다.</div>
+</div>
+<div class="qbank-item" id="q67">
+  <span class="qbank-num">문제 67</span>
+  <p class="qbank-q">사고의 근본 원인인 4M 요인별 방지 대책 중 잘못된 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">기계(Machine): 고장방지설계, 이상검출장치, 방호덮개 설치 등</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">인간(Man): 안전교육, 피로관리, 적성검사 등</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">관리(Management): 감독체계, 교육훈련, 점검활동 등</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">매개체(Media): 환경개선, 정보전달, 복지관리 등</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] Media 대책은 작업 자세·공간·속도 개선이다. 환경개선·정보전달·복지관리는 잘못된 설명이다.</div>
+</div>
+<div class="qbank-item" id="q68">
+  <span class="qbank-num">문제 68</span>
+  <p class="qbank-q">젖은 노면 마찰계수로 옳은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">0.5~0.7</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">0.3~0.5</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">0.2~0.3</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">0.8~0.9</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 마찰계수: 도시지역 건조 아스팔트 약 0.8~0.9, 젖은 아스팔트 약 0.5~0.7이다.</div>
+</div>
+<div class="qbank-item" id="q69">
+  <span class="qbank-num">문제 69</span>
+  <p class="qbank-q">도시지역 일반도로의 마찰계수로 옳은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">0.5~0.7</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">0.3~0.5</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">0.2~0.3</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">0.8~0.9</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 도시지역 일반도로 건조 아스팔트 마찰계수는 약 0.8~0.9이다.</div>
+</div>
+<div class="qbank-item" id="q70">
+  <span class="qbank-num">문제 70</span>
+  <p class="qbank-q">도시구역에서 교통사고 원인 分析을 위한 표준 도로 구간 길이는?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">200m</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">400m</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">600m</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">800m</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 교통사고 원인 조사를 위한 도로 구간 길이: 도시지역에서 600m 단위로 조사한다.</div>
+</div>
+<div class="qbank-item" id="q71">
+  <span class="qbank-num">문제 71</span>
+  <p class="qbank-q">음주운전 교통사고의 일반적 특징으로 볼 수 없는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">밤보다 낮에 사고율이 높다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">음주 후 판단력 저하로 인과관계 오류가 빈번하다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">정차 중인 차량을 들이받는 사고가 발생한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">치사율이 비음주 사고보다 높다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 음주운전사고는 대부분 야간·심야 시간대에 집중된다.</div>
+</div>
+<div class="qbank-item" id="q72">
+  <span class="qbank-num">문제 72</span>
+  <p class="qbank-q">도로에서의 운전방식에 대한 설명으로 옳은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">앞 차량의 급제동이 예상되면 미리 브레이크 준비를 하고 차간 거리를 유지한다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">비가 많이 올 경우 노면이 미끄러우므로 급제동이나 급조작을 피해야 한다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">교차로나 횡단보도 부근에서는 보행자 확인을 주의해야 한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">전방에 차량이 있거나 맞은편에서 차량이 올 때는 상향등을 계속 켜는 것이 좋다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 비가 올 경우 급제동이나 급조작을 피해야 한다. 상향등은 앞차나 맞은편 차량이 없을 때만 사용해야 한다.</div>
+</div>
+<div class="qbank-item" id="q73">
+  <span class="qbank-num">문제 73</span>
+  <p class="qbank-q">교통단속 시 효과로 옳은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">단속을 시작한 이후 시간이 지날수록 단속 효과는 점점 더 커진다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">단속 후 일정 시간이 지나면 단속효과는 더 이상 증가하지 않는다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">단속이 종료되면 단속 전보다 사고율이 즉시 0에 수렴한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">단속이 없는 구간에서는 단속 구간보다 속도가 더 낮아진다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 교통단속: 도입 초기 효과가 있으나 일정 기간이 지나면 효과가 둔화되며 안정화되는 경향이 있다.</div>
+</div>
+<div class="qbank-item" id="q74">
+  <span class="qbank-num">문제 74</span>
+  <p class="qbank-q">교통안전관리의 3대 기능이 아닌 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">계획</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">개선</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">단속</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">조사</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 교통안전관리의 핵심 3대 기능: 계획·개선·단속. 조사는 3대 기능에 포함되지 않는다.</div>
+</div>
+<div class="qbank-item" id="q75">
+  <span class="qbank-num">문제 75</span>
+  <p class="qbank-q">교통안전관리 활동의 목적과 거리가 먼 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">교통사고율의 감소</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">사망자 수 최소화</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">수송량 증가</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">교통의 효율성 향상</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 수송량 증가는 운영 효율의 목표로 안전관리의 직접적 목적과는 다르다.</div>
+</div>
+<div class="qbank-item" id="q76">
+  <span class="qbank-num">문제 76</span>
+  <p class="qbank-q">'교통안전'의 3요소에 해당하지 않는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">인명존중</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">인간성 존중</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">수송효율향상</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">사회복지증진</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 교통안전의 3대 요소: 인명존중·인간성 존중·사회복지 증진. 수송 효율 향상은 안전의 본질적 요소가 아니다.</div>
+</div>
+<div class="qbank-item" id="q77">
+  <span class="qbank-num">문제 77</span>
+  <p class="qbank-q">시속 100km로 주행 시 시야각은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">30도</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">40도</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">50도</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">60도</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 시야각: 속도의 제곱에 반비례. 정지시 200도, 40km/h→100도, 70km/h→65도, 100km/h→40도.</div>
+</div>
+<div class="qbank-item" id="q78">
+  <span class="qbank-num">문제 78</span>
+  <p class="qbank-q">정지시야에서 정상시야각은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">40도</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">65도</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">100도</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">200도</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 정지시야(정상시야각): 약 200도. 속도가 증가할수록 시야각이 좁아진다.</div>
+</div>
+<div class="qbank-item" id="q79">
+  <span class="qbank-num">문제 79</span>
+  <p class="qbank-q">시야각과 속도의 관계로 옳은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">속도가 빨라질수록 시야각은 넓어진다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">시야각은 속도와 무관하다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">속도가 빨라질수록 시야각은 좁아지며 속도의 제곱에 반비례한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">정지 시 시야각은 약 90°이다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 고속 주행 시 터널 시야 현상이 나타나며 시야각이 급격히 좁아진다. 정지 시 정상시야각은 약 200도이다.</div>
+</div>
+<div class="qbank-item" id="q80">
+  <span class="qbank-num">문제 80</span>
+  <p class="qbank-q">동체시력은 정지시력에 비해 어느 정도 감소하는가?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">10%</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">30%</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">50%</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">70%</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 동체시력: 움직이는 물체를 따라가며 인식하는 능력. 일반적으로 정지시력보다 약 30% 낮다.</div>
+</div>
+<div class="qbank-item" id="q81">
+  <span class="qbank-num">문제 81</span>
+  <p class="qbank-q">운전 시 시각적 인지 특성에 대한 설명 중 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">야간에는 조명 밝기 및 대비가 시인지에 큰 영향을 준다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">눈의 피로도가 높으면 시인지 능력이 떨어진다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">주행 속도가 증가하면 시야 확보 거리도 비례하여 증가한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">야간에는 시야 확보 거리가 낮아지고 식별 거리가 짧아진다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 속도가 증가하면 정지거리 확보가 줄어들어 속도와 가시거리는 비례하지 않는다.</div>
+</div>
+<div class="qbank-item" id="q82">
+  <span class="qbank-num">문제 82</span>
+  <p class="qbank-q">운전자의 시야 특성에 대한 설명으로 옳은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">속도가 빨라지면 시야가 좁아지고 시점이 멀어진다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">속도가 빨라지면 시야각이 넓어진다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">속도와 시야각은 무관하다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">속도가 빨라질수록 주변시야의 인지가 더 빨라진다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 고속 주행 시 터널 시야 현상: 시야각이 좁아지고 주시점이 멀어진다.</div>
+</div>
+<div class="qbank-item" id="q83">
+  <span class="qbank-num">문제 83</span>
+  <p class="qbank-q">운전자의 시력 특성에 관한 설명으로 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">명순응은 수십 초에서 수 분 이내에 일어난다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">암순응은 명순응보다 시간이 더 짧다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">고속주행 시 시야각은 속도에 반비례하여 좁아진다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">야간에는 주변시야보다 중심시야의 역할이 더 크다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 암순응은 보통 20~30분 이상 소요된다. 명순응(수십 초~수 분)보다 훨씬 길다.</div>
+</div>
+<div class="qbank-item" id="q84">
+  <span class="qbank-num">문제 84</span>
+  <p class="qbank-q">사고 발생을 막기 위해 2중 3중으로 통제하는 안전 원리는?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">페일세이프</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">스루풋</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">휴먼에러</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">블랙박스</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 페일세이프(Fail-Safe): 시스템에 이상이 발생하더라도 안전한 상태로 유지되도록 설계하는 원리이다.</div>
+</div>
+<div class="qbank-item" id="q85">
+  <span class="qbank-num">문제 85</span>
+  <p class="qbank-q">교통안전 향상을 위해 법적 기준을 마련하고 규제를 통해 효율성을 높이는 접근 방법은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">기술적 접근 방법</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">교육적 접근 방법</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">경제적 접근 방법</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">제도적 접근 방법</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 제도적 접근 방법: 법규 제정·안전 규정 마련·행정적 관리체계를 강화하는 방법이다.</div>
+</div>
+<div class="qbank-item" id="q86">
+  <span class="qbank-num">문제 86</span>
+  <p class="qbank-q">교통안전관리의 원칙(3E)에 해당하지 않는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">기술적 대책(Engineering)</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">노력적 대책(Effort)</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">교육적 대책(Education)</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">관리적 대책(Enforcement)</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 교통안전관리의 3E 원칙: Engineering·Education·Enforcement. Effort는 공식 3E 요소가 아니다.</div>
+</div>
+<div class="qbank-item" id="q87">
+  <span class="qbank-num">문제 87</span>
+  <p class="qbank-q">교통안전관리의 원칙(3E)에 해당하지 않는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">기술적 대책(Engineering)</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">관리적 대책(Enforcement)</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">교육적 대책(Education)</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">협력적 대책(Engagement)</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 교통안전관리의 3E 원칙: Engineering·Education·Enforcement. Engagement는 공식 3E 원칙에 포함되지 않는다.</div>
+</div>
+<div class="qbank-item" id="q88">
+  <span class="qbank-num">문제 88</span>
+  <p class="qbank-q">운전자 모집 시 안전요소로 고려 대상이 아닌 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">운전자의 운전경력</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">운전자의 신체 건강상태</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">운전자의 재산상태</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">운전자의 성격 및 책임감</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 개인의 재산은 안전운전과 관련이 없어 고려 대상이 아니다.</div>
+</div>
+<div class="qbank-item" id="q89">
+  <span class="qbank-num">문제 89</span>
+  <p class="qbank-q">운전자의 피로와 관련된 교통사고 요인이 아닌 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">생체 리듬 교란(교대근무, 밤샘 운전)</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">만성피로</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">수면의 질 저하</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">수면무호흡 등 수면장애</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 만성피로는 의학적 개념으로 단기적인 교통사고 요인으로 분류되지 않는다.</div>
+</div>
+<div class="qbank-item" id="q90">
+  <span class="qbank-num">문제 90</span>
+  <p class="qbank-q">운전자의 운전능력을 측정하는 평가의 명칭은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">운전습관 평가</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">운전대응력 평가</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">운전태도 평가</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">운전적성 평가</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 운전 적성 평가: 시력·청력·반응속도·판단력·주의집중력 등을 종합적으로 확인하는 제도이다.</div>
+</div>
+<div class="qbank-item" id="q91">
+  <span class="qbank-num">문제 91</span>
+  <p class="qbank-q">요인이 연쇄적으로 하나씩 발생하는 사고 형태는?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">연쇄형</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">우발형</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">복합형</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">단일형</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 연쇄형: 작은 요인이 연속적으로 이어져 큰 사고로 발전한다. 하인리히 도미노 이론과 유사하다.</div>
+</div>
+<div class="qbank-item" id="q92">
+  <span class="qbank-num">문제 92</span>
+  <p class="qbank-q">등치성의 원리와 가장 밀접한 관련이 있는 현상은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">단일원인사고</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">연쇄성</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">우연적 사고</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">불가항력 사고</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 등치성 원리: 사고 발생에 기여하는 여러 요인이 동일한 비중을 가진다는 개념. 연쇄성 사고와 관련이 깊다.</div>
+</div>
+<div class="qbank-item" id="q93">
+  <span class="qbank-num">문제 93</span>
+  <p class="qbank-q">교통상황에서 다른 이용자와의 협조와 상호이해를 중시하는 태도는?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">주의분산성</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">방어적 운전 성향</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">자기방어성</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">타자적응성</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 타자적응성: 다른 교통참가자를 동반자로 인식하고 상호 의사소통과 인간관계를 원만히 맺는 능력이다.</div>
+</div>
+<div class="qbank-item" id="q94">
+  <span class="qbank-num">문제 94</span>
+  <p class="qbank-q">사고 다발 운전자의 성격적 특성으로 보기 어려운 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">대인관계가 원만하고 사회적 적응력이 높다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">규칙 준수 태도가 약하다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">급한 성향으로 빠른 판단을 내리는 경우가 많다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">감정 기복이 심하다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 사고 다발 운전자: 충동적이고 규칙 준수 의식이 낮다. 대인관계가 원만하고 사회적 적응력이 높은 사람은 사고 위험이 낮다.</div>
+</div>
+<div class="qbank-item" id="q95">
+  <span class="qbank-num">문제 95</span>
+  <p class="qbank-q">교통사고의 일반적 요인에 대한 서술 중 잘못된 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">교통사고 요인의 추상화</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">도로 선형·노면상태 등 환경 요인은 독립적 또는 상호작용적으로 작용한다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">음주·과속 등 법규위반은 중대사고의 주요 원인이다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">시간대·요일·도로 종류에 따라 사고 분포가 달라진다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] "사고 요인의 추상화"라는 표현은 학문적으로 명확한 개념이 아니며 실제 사고 분析 방법론에도 포함되지 않는다.</div>
+</div>
+<div class="qbank-item" id="q96">
+  <span class="qbank-num">문제 96</span>
+  <p class="qbank-q">조도가 낮은 근무환경이 작업자에게 미치는 영향이 아닌 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">눈의 피로가 심해진다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">집중력이 감소한다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">차분한 기분을 준다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">작업자 스트레스가 증가한다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 조도가 낮은 환경: 눈의 피로·집중력 저하·스트레스 증가가 발생한다. 차분한 기분을 준다는 설명은 부정된다.</div>
+</div>
+<div class="qbank-item" id="q97">
+  <span class="qbank-num">문제 97</span>
+  <p class="qbank-q">근로 환경에서 색채가 직업 효율에 미치는 영향에 대한 설명 중 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">색채의 명시도는 배경과 대상의 명도 차이가 클수록 높다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">색채는 시인성과 주의 집중에 직접적인 영향을 미친다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">배경이 어두울 때 밝은 색은 눈에 잘 띄지 않는다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">안전 표지판은 일반적으로 배경과 대비되는 색을 사용한다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 배경이 어두울수록 밝은 색은 오히려 더 잘 식별된다. 잘 띄지 않는다는 설명은 잘못되었다.</div>
+</div>
+<div class="qbank-item" id="q98">
+  <span class="qbank-num">문제 98</span>
+  <p class="qbank-q">안전벨트의 효과로 기대할 수 없는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">급제동이나 전복 사고 시 탑승자의 2차 충돌을 예방한다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">사고 발생 시 신체의 충격을 분산시켜 상해를 줄여준다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">충돌 시 신체가 받는 충격이 더 커진다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">운전 중 심리적·물리적 안정감을 높여준다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 안전벨트: 충돌 시 탑승자를 고정하여 2차 충돌 방지, 충격을 분산시켜 상해 최소화. 충격이 더 커진다는 설명은 잘못되었다.</div>
+</div>
+<div class="qbank-item" id="q99">
+  <span class="qbank-num">문제 99</span>
+  <p class="qbank-q">교통의 장을 이루는 요소로 볼 수 없는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">보행자</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">교통수단</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">사용자</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">통행자</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 교통의 장: 조종자·보행자·교통수단 등이 상호작용하는 공간. '사용자'는 구성 요소로 명시적으로 포함되지 않는다.</div>
+</div>
+<div class="qbank-item" id="q100">
+  <span class="qbank-num">문제 100</span>
+  <p class="qbank-q">외부의 자극이 인간의 행동으로 이어지는 과정을 올바르게 나열한 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">자각-식별-판단-행동</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">식별-자각-판단-행동</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">식별-순응-판단-행동</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">자각-판단-행동-식별</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 운전자가 외부 자극을 받아 행동하기까지: 자각→식별→판단→행동 단계로 이루어진다(암기: 자식판행).</div>
+</div>
+<div class="qbank-item" id="q101">
+  <span class="qbank-num">문제 101</span>
+  <p class="qbank-q">직무 간의 관계와 관련이 깊은 요인은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">전문화</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">조정</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">공식화</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">권한·책임의 원칙</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 조정: 분화된 직무 간 협력을 원활히 조정하는 기능이다.</div>
+</div>
+<div class="qbank-item" id="q102">
+  <span class="qbank-num">문제 102</span>
+  <p class="qbank-q">교통안전관리론의 주요 특징에 대한 설명 중 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">교통안전관리론은 공식 조직뿐 아니라 비공식 조직의 역할도 고려한다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">사내에서 교통안전관리자의 집단이 형성되어야 한다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">교통안전관리론은 법규·제도적 개선과 기술적 대책을 병행하는 통합적 접근이다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">교통안전관리론은 지속적 개선과 피드백 체계를 포함한다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 교통안전관리론은 조직 전체가 참여하는 전사적 안전관리 체계다. 특정 집단 형성을 강조하는 것이 아니다.</div>
+</div>
+<div class="qbank-item" id="q103">
+  <span class="qbank-num">문제 103</span>
+  <p class="qbank-q">툴박스 미팅의 정의가 아닌 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">장기간에 걸쳐 진행되는 회의이다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">작업 전 안전관리 활동 중 하나로 위험예지훈련(KYT)과 병행하여 시행된다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">보통 5~6명이 참여하는 소규모 회의이다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">작업 시작 전에 실시되는 회의이다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 툴박스 미팅(TBM): 작업 시작 전 단시간(5~10분 내외)의 안전회의이다. 장기간에 걸쳐 진행되는 회의가 아니다.</div>
+</div>
+<div class="qbank-item" id="q104">
+  <span class="qbank-num">문제 104</span>
+  <p class="qbank-q">교통안전 현장 안전회의의 순서로 옳은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">위험예지→도입→운행지시→점검정비→확인</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">도입→점검정비→운행지시→위험예지→확인</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">도입→운행지시→점검정비→위험예지→확인</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">위험예지→확인→도입→점검정비→운행지시</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 현장안전회의(TBM): 도입→점검정비→운행지시→위험예지→확인 단계로 진행(암기: 도점운위확).</div>
+</div>
+<div class="qbank-item" id="q105">
+  <span class="qbank-num">문제 105</span>
+  <p class="qbank-q">철도 및 교통 시스템 안전성 평가의 기본 개념 RAMS에서 M이 의미하는 것으로 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">Safety-안전성</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">Availability-가용성</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">Reliability-신뢰성</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">Maintainability-유지가능성</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] RAMS: R(신뢰성)·A(가용성)·M(정비성/Maintainability)·S(안전성). M은 정비성(유지보수 용이성)이 정확한 표현이다.</div>
+</div></div>
+</div>
+<div class="part">
+  <div class="part-title" onclick="togglePart(this)"><span>신유형 (16문항)</span><span>▼</span></div>
+  <div class="part-body" id="sec-new"><div class="qbank-item new-type" id="q106">
+  <span class="qbank-num">문제 106</span>
+  <p class="qbank-q">교통안전관리 과정에서 작업장·사고현장 등을 방문하여 안전지시 및 확인을 수행하는 단계는?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">조사단계</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">계획단계</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">평가단계</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">개선단계</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 조사단계: 현장 방문을 통해 위험요인 확인 및 안전지시를 수행하는 단계이다.</div>
+</div>
+<div class="qbank-item new-type" id="q107">
+  <span class="qbank-num">문제 107</span>
+  <p class="qbank-q">기존 계획과 실제 수행 결과를 비교 分析하여 그 차이에 따라 필요한 조치를 취하는 관리 기능은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">평가</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">계획</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">통제</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">환류</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 통제: 계획과 실제 수행 결과를 비교하여 편차를 확인하고, 시정·보완 조치를 취하는 관리 기능이다.</div>
+</div>
+<div class="qbank-item new-type" id="q108">
+  <span class="qbank-num">문제 108</span>
+  <p class="qbank-q">통제의 특성에 관한 설명으로 적절하지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">일시적 과정이다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">계획과의 차이를 비교·분析하는 과정이다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">기준 설정, 성과 측정, 시정 조치의 순환 과정이다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">조직 목표 달성을 위해 지속적으로 수행된다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 통제는 지속적·순환적 관리 과정이다. "일시적 과정"이라는 설명은 부적절하다.</div>
+</div>
+<div class="qbank-item new-type" id="q109">
+  <span class="qbank-num">문제 109</span>
+  <p class="qbank-q">운전노동의 특수성에 해당하지 않는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">의존성</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">즉결성</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">책임성</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">독립성</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 운전노동의 특수성: 의존성·즉결성·책임성. 독립성은 운전노동의 특수성에 해당하지 않는다.</div>
+</div>
+<div class="qbank-item new-type" id="q110">
+  <span class="qbank-num">문제 110</span>
+  <p class="qbank-q">모델 단순화 작업에 대한 설명으로 옳은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">모든 변수를 동일한 비중으로 고려한다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">우연요인을 배제하고 핵심 요인 중심으로 구성한다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">실제 현상을 그대로 복제하는 것이 목적이다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">예외 상황을 모두 포함하여 분析 정확도를 높인다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 모델 단순화: 우연적·부차적 요인을 제거하고 핵심 요소만 반영하는 과정이다.</div>
+</div>
+<div class="qbank-item new-type" id="q111">
+  <span class="qbank-num">문제 111</span>
+  <p class="qbank-q">위험회피 운전자 행동에 해당하는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">제한속도를 초과하여 주행한다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">황색신호에서 급가속하여 교차로를 통과한다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">전방 상황을 고려하여 충분한 안전거리를 유지한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">교통 흐름을 이유로 무리하게 차로 변경을 한다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 위험회피 운전자 행동: 사고 가능성을 줄이기 위해 안전거리 유지와 같은 방어적 운전을 한다.</div>
+</div>
+<div class="qbank-item new-type" id="q112">
+  <span class="qbank-num">문제 112</span>
+  <p class="qbank-q">국가가 철도시설 투자를 추진하는 경우 고려해야 하는 요소는?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">경제적 편익</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">사회적·환경적 편익</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">수요와 공급의 균형</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">재정 여건 및 지역균형발전</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 철도산업발전기본법 제7조 관련: 철도시설 투자 시 재정 여건 및 지역균형발전을 고려해야 한다.</div>
+</div>
+<div class="qbank-item new-type" id="q113">
+  <span class="qbank-num">문제 113</span>
+  <p class="qbank-q">사고로 인한 인명·물적 피해를 모두 금전적 가치로 환산하여 평가하는 방식은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">정성평가</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">화폐가치 환산법</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">사고건수법</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">상대평가</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 화폐가치 환산법: 사고로 인한 모든 피해를 금전적 가치로 환산하여 평가하는 방식이다.</div>
+</div>
+<div class="qbank-item new-type" id="q114">
+  <span class="qbank-num">문제 114</span>
+  <p class="qbank-q">운전업무 수행 시 상호 간 체크사항에 대한 설명으로 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">운전 관련 정보는 상호 간 정확히 확인한다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">이상 발생 시 즉시 상호 간에 통보한다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">업무 지시는 상호 확인 후 수행한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">개인 판단에 따라 확인 절차를 생략할 수 있다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 상호 간 체크: 확인·통보·공유를 원칙으로 하며, 개인 판단으로 확인 절차를 생략할 수 없다.</div>
+</div>
+<div class="qbank-item new-type" id="q115">
+  <span class="qbank-num">문제 115</span>
+  <p class="qbank-q">다른 사람과 친밀한 관계를 맺고 싶어 하는 욕구에서 비롯된 동기로 소속감·친화 욕구를 충족하려는 성향은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">유친동기</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">성취동기</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">권력동기</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">회피동기</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="0">[정답 ①] 유친동기(친화동기): 타인과의 친밀감과 관계 유지를 추구하는 사회적 동기이다.</div>
+</div>
+<div class="qbank-item new-type" id="q116">
+  <span class="qbank-num">문제 116</span>
+  <p class="qbank-q">운전자가 정보를 수집하고 판단하여 행동을 결정·실행한 뒤 그 결과를 확인하는 과정에 해당하는 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">교통안전</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">교통사고</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">교통반응</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">교통시설</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 교통반응: 운전자의 인지→판단→행동→피드백으로 이어지는 일련의 과정이다.</div>
+</div>
+<div class="qbank-item new-type" id="q117">
+  <span class="qbank-num">문제 117</span>
+  <p class="qbank-q">교통사고 조사 결과를 언론·교육자료 등을 통해 불특정 다수에게 공개하여 유사 사고 재발을 예방하는 방법은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">근원적 억제법</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">일반적 억제법</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">행정적 억제법</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">기술적 억제법</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 일반적 억제법: 사고 조사 결과를 공개하여 잠재적 행위자들이 유사한 사고를 저지르지 않도록 경각심을 높이는 방법이다.</div>
+</div>
+<div class="qbank-item new-type" id="q118">
+  <span class="qbank-num">문제 118</span>
+  <p class="qbank-q">교통안전관리의 특징으로 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">교통사고 예방을 위한 종합적 관리 활동이다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">계획·조직·지휘·통제 등 관리 기능을 포함하여 체계적으로 수행된다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">노무·인사 관리 부문과 관계성이 없다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">조직 전반의 안전의식 향상을 목적으로 한다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] 교통안전관리는 노무·인사 관리와 밀접한 관련을 가지며 조직 전반과 연계되어 수행된다.</div>
+</div>
+<div class="qbank-item new-type" id="q119">
+  <span class="qbank-num">문제 119</span>
+  <p class="qbank-q">교통사고 발생 후 작성하는 사고 결과 보고서에 대한 설명으로 옳지 않은 것은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">사고의 원인 및 경위에 대한 조사 결과는 객관적인 사실에 근거하여 기술한다</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">이해하기 쉽도록 작성자의 의견이나 주관적인 판단을 포함하여 작성한다</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">사고 재발 방지를 위한 안전 권고사항을 포함하여 작성한다</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">사고조사보고서에는 사고와 관련된 사실 정보, 분析 결과 및 결론을 명확히 제시한다</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="1">[정답 ②] 사고 결과 보고서는 객관적 사실 중심으로 작성해야 한다. 주관적 의견을 포함하는 것은 부적절하다.</div>
+</div>
+<div class="qbank-item new-type" id="q120">
+  <span class="qbank-num">문제 120</span>
+  <p class="qbank-q">안전관리계획의 수립 시 가장 우선적으로 고려해야 할 사항은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">교육 횟수의 확대</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">안전 관련 예산의 규모</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">조직 인원 증원 여부</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">교통사고 발생 원인 分析</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="3">[정답 ④] 안전관리계획: 사고 재발 방지를 위해 교통사고 발생 원인 分析을 기초로 수립한다.</div>
+</div>
+<div class="qbank-item new-type" id="q121">
+  <span class="qbank-num">문제 121</span>
+  <p class="qbank-q">준공과 동시에 소유권이 국가에 귀속되고 일정 기간 시설 관리 운영권을 인정하는 방식은?</p>
+  <ul class="qbank-choices"><li data-num="①" data-idx="0" onclick="pick(this)">BOT</li>
+<li data-num="②" data-idx="1" onclick="pick(this)">BOO</li>
+<li data-num="③" data-idx="2" onclick="pick(this)">BTO</li>
+<li data-num="④" data-idx="3" onclick="pick(this)">BTL</li>
+</ul>
+  <button class="qbank-reveal" onclick="reveal(this)">정답 보기</button>
+  <div class="qbank-explain" data-answer="2">[정답 ③] BTO(Build-Transfer-Operate): 민간이 건설 후 소유권을 국가에 이전하고, 일정 기간 민간이 운영권을 인정받는 방식이다.</div>
+</div></div>
+</div>
+<script>
+const WRONG_KEY='ch21_wrong';
+let wrongMode=false;
+function getWrong(){try{return new Set(JSON.parse(localStorage.getItem(WRONG_KEY)||'[]'))}catch{return new Set()}}
+function saveWrong(s){localStorage.setItem(WRONG_KEY,JSON.stringify([...s]))}
+function updateWrongBar(){const s=getWrong();const b=document.getElementById('wrong-bar');const cnt=document.getElementById('wrong-count-badge');if(s.size>0){b.style.display='flex';cnt.textContent=s.size}else{b.style.display='none';if(wrongMode)toggleWrongMode()}}
+function pick(li){const item=li.closest('.qbank-item');if(item.querySelector('.ans-correct'))return;const ul=li.parentElement;ul.querySelectorAll('li').forEach(l=>l.classList.remove('selected'));li.classList.add('selected')}
+function reveal(btn){const item=btn.closest('.qbank-item');if(item.querySelector('.ans-correct'))return;const ul=item.querySelector('.qbank-choices');const exp=item.querySelector('.qbank-explain');const ans=parseInt(exp.dataset.answer);const sel=ul.querySelector('.selected');exp.style.display='block';btn.style.display='none';ul.querySelectorAll('li').forEach(l=>{const idx=parseInt(l.dataset.idx);if(idx===ans){l.classList.add('ans-correct')}else if(l===sel&&idx!==ans){l.classList.add('ans-wrong')}});const isWrong=sel?parseInt(sel.dataset.idx)!==ans:true;const s=getWrong();const id=item.id;if(isWrong){s.add(id);const note=document.createElement('div');note.className='qbank-wrong-note';note.textContent='❌ 오답 기록됨';item.appendChild(note)}else{s.delete(id)}saveWrong(s);updateWrongBar()}
+function togglePart(btn){const body=btn.nextElementSibling;const arr=btn.querySelector('span:last-child');if(body.style.display==='none'){body.style.display='';arr.textContent='▼'}else{body.style.display='none';arr.textContent='▶'}}
+let wrongModeOn=false;
+function toggleWrongMode(){wrongModeOn=!wrongModeOn;const s=getWrong();document.querySelectorAll('.qbank-item').forEach(item=>{item.style.display=wrongModeOn&&!s.has(item.id)?'none':''})};
+function resetAllItems(){localStorage.removeItem(WRONG_KEY);document.querySelectorAll('.qbank-item').forEach(item=>{item.style.display='';item.querySelectorAll('li').forEach(l=>l.className='');const exp=item.querySelector('.qbank-explain');exp.style.display='none';const btn=item.querySelector('.qbank-reveal');btn.style.display='';item.querySelectorAll('.qbank-wrong-note').forEach(n=>n.remove())});wrongModeOn=false;updateWrongBar()}
+updateWrongBar();
+</script>
+</body>
+</html>

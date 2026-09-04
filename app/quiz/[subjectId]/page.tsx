@@ -3,6 +3,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 const subjectNames: Record<number, string> = {
+  1: '교통안전관리론',
   2: '교통안전법',
   3: '열차운전',
   4: '철도공학',
@@ -10,13 +11,14 @@ const subjectNames: Record<number, string> = {
 };
 
 const IFRAME_SRC: Record<number, string> = {
+  1: '/theory/1-quiz.html',
   2: '/theory/2-quiz.html',
   3: '/theory/3-quiz.html',
   4: '/theory/4-quiz.html',
   5: '/theory/5-quiz.html',
 };
 
-const VALID_IDS = [2, 3, 4, 5];
+const VALID_IDS = [1, 2, 3, 4, 5];
 
 export default function QuizPage() {
   const params = useParams();
