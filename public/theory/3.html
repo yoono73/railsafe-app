@@ -218,6 +218,10 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .cbox-item .cbox-head { font-weight:bold; color:#4c1d95; margin-bottom:4px; font-size:.92em; }
 @media(max-width:600px){ .compare-box.col2{ grid-template-columns:1fr; } }
 
+/* PART 7 concept-hd (= concept-title 동일 스타일) */
+.concept-hd { font-size:1em; font-weight:bold; color:#0369a1; margin-bottom:8px; padding:4px 0; }
+.concept-body { /* wrapper — 스타일 불필요, 구조용 */ }
+
   .cnum { background: #eee !important;
     print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 
@@ -910,7 +914,7 @@ document.addEventListener('DOMContentLoaded', function() {
   Object.keys(EDU3).forEach(function(id) {
     var el = document.getElementById(id);
     if (!el) return;
-    var title = el.querySelector('.concept-title');
+    var title = el.querySelector('.concept-title') || el.querySelector('.concept-hd');
     if (!title) return;
     var btn = document.createElement('button');
     btn.className = 'tts-edu-btn';
@@ -964,7 +968,7 @@ document.addEventListener('DOMContentLoaded', function() {
   Object.keys(EDU3_SUPP).forEach(function(id) {
     var el = document.getElementById(id);
     if (!el) return;
-    var title = el.querySelector('.concept-title');
+    var title = el.querySelector('.concept-title') || el.querySelector('.concept-hd');
     if (!title) return;
     var btn = document.createElement('button');
     btn.className = 'tts-supp-btn';
