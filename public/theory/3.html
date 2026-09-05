@@ -703,19 +703,43 @@ ATS는 특정 지점을 지날 때만 속도를 검사합니다. 지점과 지�
     <li>참고: 운행 중 구간 확장·이설 시에는 전문가 안전진단을 거쳐 단축 가능</li>
   </ul>
 </div>
-</div></div></div><div class="part" id="part6"><div class="part-title" onclick="togglePart(this)"><span>PART 6. 운전이론 ★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-23"><div class="concept-title"><span class="cnum">C-23</span>제동 종류</div>
-<div class="table-wrap"><table>
-<tr><th>제동 방식</th><th>특징</th></tr>
-<tr><td><b>공기제동</b></td><td>기본 제동 방식</td></tr>
-<tr><td><b>발전제동</b></td><td>견인전동기→발전기 변환, 저항기에 열로 소모 / 단점: 전기회로 복잡, 속도 저하 시 제동력 약화</td></tr>
-<tr><td><b>회생제동</b></td><td>발생 전기를 전원계통에 반환 (에너지 절약)</td></tr>
-<tr><td><b>수용제동</b></td><td>전기를 전차선으로 반환</td></tr>
-</table></div>
-<div class="trap">자연제동 ❌ → 정식 제동방식 없음</div>
-<div class="tip">발전제동 단점: ① 전기회로 복잡 ② 속도 저하 시 제동력 약화</div>
+</div></div></div><div class="part" id="part6"><div class="part-title" onclick="togglePart(this)"><span>PART 6. 운전이론 ★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-23"><div class="concept-title"><span class="cnum">C-23</span>제동 종류 ★★★</div>
 
-<div class="theory-note"><strong>이론 배경:</strong> 발전제동은 전동기를 발전기로 전환해 제동력을 얻지만, <strong>속도가 낮아질수록 발전량이 감소</strong>해 제동력이 약해집니다. 회생제동은 발생 전기를 계통에 반환하여 에너지를 절약합니다.</div>
-<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 발전제동의 단점 2가지는?</div><div class="qe-a">정답: 전기회로 복잡 / 속도 저하 시 제동력 약화</div><div class="qe-wrong">오답함정: "발전제동은 단점이 없다"는 오답</div></div>
+<div class="step-box">
+<b>왜 제동 방식이 여러 개인가?</b><br>
+열차는 무게가 수백 톤. 제동 상황에 따라 요구되는 힘·속도·조건이 다릅니다.<br>
+→ 하나의 방식으로는 모든 상황을 커버할 수 없어 <b>복수의 제동 방식을 병용</b>합니다.<br>
+→ 전기가 없는 상황(전차선 단선·비상)에도 반드시 멈춰야 하므로 <b>공기제동이 최후의 보루</b>입니다.
+</div>
+
+<div class="table-wrap"><table>
+<tr><th>제동 방식</th><th>원리</th><th>에너지 처리</th><th>언제 쓰나</th><th>단점</th></tr>
+<tr><td><b>공기제동</b></td><td>압축공기로 브레이크 패드/슈를 바퀴·디스크에 밀착</td><td>열로 소멸 (마찰)</td><td>✅ <b>모든 열차 공통</b> — 상시 기본, 비상, 정차유지</td><td>패드·슈 마모, 고속에서 발열 심함</td></tr>
+<tr class="hl"><td><b>발전제동</b></td><td>견인전동기를 <b>발전기로 전환</b> → 발생 전기를 저항기에서 <b>열로 소모</b></td><td>열로 소멸 (저항기)</td><td>전기가 끊겨도 사용 가능. 구형 전동차, 디젤전기기관차</td><td>① 전기회로 복잡 ② <b>속도 저하 시 제동력 약화</b> ③ 에너지 낭비</td></tr>
+<tr class="hl"><td><b>회생제동</b></td><td>전동기를 발전기로 전환 → 발생 전기를 <b>전차선으로 되돌림</b></td><td>전차선 반환 (에너지 절약)</td><td>✅ <b>도시철도·KTX 주력</b> — 역간 감속 시마다 사용. 에너지 20~30% 절감</td><td>전차선에 다른 열차가 없으면 전기 반환 불가 → 발전제동·공기제동으로 전환</td></tr>
+<tr><td><b>수용제동</b></td><td>회생전력을 전차선 반환 대신 <b>차량 내부 부하(냉난방·저항기)에서 소비</b></td><td>차량 내 소비</td><td>회생제동 불가 시 보조 수단. 전차선 상태 무관하게 제동 가능</td><td>에너지를 열로 낭비 (회생제동보다 비효율)</td></tr>
+</table></div>
+
+<div class="trap">자연제동 ❌ → 정식 제동방식에 없음 | 수용제동 = 전차선 반환 ❌ → 차량 내부 소비</div>
+<div class="tip">발전제동 단점 2가지: ① 전기회로 복잡 ② 속도 저하 시 제동력 약화</div>
+
+<div class="theory-note">
+<strong>① 열차 종류별 제동 방식 조합</strong><br><br>
+<b>도시철도(지하철)</b>: <b>회생제동 + 공기제동</b> 병용이 표준. 역간 거리가 짧아 가속·감속 반복 → 회생제동으로 에너지 대폭 절감. 회생 불가 시 발전제동 또는 수용제동으로 전환 후, 저속 최종 정차는 공기제동.<br><br>
+
+<b>KTX(고속철도)</b>: <b>회생제동 + 디스크식 공기제동 + 발전제동</b>. 고속(300km/h↑)에서는 열 발생이 극심해 디스크 제동이 필수. 저속 구간 진입 시 회생제동 활용. 비상 시 비상제동(공기).<br><br>
+
+<b>일반 전기기관차·전동차(새마을·무궁화 등)</b>: <b>발전제동 + 공기제동</b>. 회생제동 미적용 구형 차량은 발전제동으로 에너지를 저항기 열로 소모.<br><br>
+
+<b>디젤기관차(비전기 구간)</b>: 전기제동 없음 → <b>공기제동만</b>. 일부 디젤전기기관차는 발전제동 사용 가능.<br><br>
+
+<strong>② 제동 단계별 우선순위</strong><br>
+① 회생제동(에너지 회수, 효율 최우선) → ② 발전/수용제동(회생 불가 시) → ③ 공기제동(저속 최종 정차·비상) → ④ 비상제동(공기 최대치, ATC·ATP 자동 발동)<br><br>
+
+<strong>③ 공기제동이 왜 항상 남아있는가?</strong><br>
+전기 없어도 작동. 정차 후 차량 고정(주차제동). 비상 시 ATC/ATP가 자동 발동. 공기만 있으면 어떤 상황에서도 멈출 수 있어 철도 안전의 <b>최후 보루</b>입니다.
+</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 발전제동의 단점 2가지는?</div><div class="qe-a">정답: ① 전기회로 복잡 ② 속도 저하 시 제동력 약화</div><div class="qe-wrong">오답함정: "회생제동과 동일하다" / "도시철도 주력 방식이다"(→ 도시철도는 회생제동이 주력)</div></div>
 </div><div class="concept" id="C-24"><div class="concept-title"><span class="cnum">C-24</span>동력집중식 vs 동력분산식 ★★★</div>
 <div class="vis-wrap"><img src="images/VIS-065_동력집중분산식비교표.jpg" alt="동력집중식 vs 동력분산식 비교 (VIS-065)"><div class="caption">동력집중식 vs 동력분산식 비교 (VIS-065)</div></div>
 <div class="table-wrap"><table>
