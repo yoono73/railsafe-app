@@ -266,6 +266,49 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
   /* 페이지 여백 */
   @page { margin: 15mm 12mm; }
 }
+
+/* ===== 철도왕 교재 박스 ===== */
+.king-book-note {
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-left: 4px solid #f9a825;
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin: 8px 0;
+  font-size: .9em;
+}
+.kb-label {
+  display: inline-block;
+  background: #f9a825;
+  color: #fff;
+  border-radius: 4px;
+  padding: 1px 8px;
+  font-size: .8em;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .9em;
+  margin: 6px 0;
+}
+.info-table th {
+  background: #78350f;
+  color: #fff;
+  padding: 6px 10px;
+  text-align: left;
+  font-size: .88em;
+}
+.info-table td {
+  padding: 5px 10px;
+  border-bottom: 1px solid #ffe082;
+  vertical-align: top;
+}
+.info-table tr.hl td {
+  background: #fff3e0;
+  font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -1058,14 +1101,15 @@ CBTC: <strong>무선통신(Wi-Fi·LTE)</strong>으로 열차↔지상 실시간 
 <strong>절대신호기 vs 허용신호기 [빈출]</strong>
 <table class="info-table" style="margin:6px 0;">
 <tr><th>구분</th><th>종류</th><th>의미</th></tr>
-<tr class="hl"><td><b>절대신호기</b> ✅</td><td>장내신호기 · 출발신호기 · 폐색신호기 · 엄호신호기</td><td>정지현시 = <b>절대 정지</b> (어떠한 경우도 진입 불가)</td></tr>
-<tr><td><b>허용신호기</b> ❌<br>(절대신호기 아님)</td><td>입환신호기 · 중계신호기 · 유도신호기 · 서행신호기</td><td>정지현시라도 <b>주의·확인 후 진입 허용</b></td></tr>
+<tr class="hl"><td><b>절대신호기</b> ✅</td><td>장내신호기 · 출발신호기 · 엄호신호기 · 유도신호기 · 입환신호기</td><td>정지현시 = <b>절대 정지</b> (어떠한 경우도 진입 불가)</td></tr>
+<tr><td><b>허용신호기</b> ❌<br>(절대신호기 아님)</td><td>자동폐색구간 폐색신호기</td><td>정지현시라도 <b>일단정지 후 서행</b> 진입 허용</td></tr>
 </table>
-<div class="trap">❌ "유도신호기 = 절대신호기" → <b>허용신호기</b> (정지라도 조건부 진입 허용)</div>
-<div class="trap">❌ "중계신호기 = 절대신호기" → <b>절대신호기 아님</b> (주신호기 현시 중계 역할)</div>
-<div class="trap">❌ "입환신호기 = 절대신호기" → <b>허용신호기</b> (입환 작업용, 저속 조건부 진입)</div>
+<div class="trap">❌ "폐색신호기(자동폐색) = 절대신호기" → <b>허용신호기</b> (일단정지 후 서행 가능) ★</div>
+<div class="trap">❌ "유도신호기 = 절대신호기 아님" → <b>절대신호기</b> (정지현시 시 절대 정지)</div>
+<div class="trap">❌ "입환신호기 = 절대신호기 아님" → <b>절대신호기</b> (정지현시 시 절대 정지)</div>
+<div class="trap">❌ "중계신호기 = 절대신호기" → <b>절대신호기 아님</b> (종속신호기 — 주신호기 현시 중계 역할)</div>
 </div>
-<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 절대신호기에 해당하지 않는 것은?</div><div class="qe-a">정답: 입환신호기·중계신호기·유도신호기·서행신호기 (이들은 허용신호기)</div><div class="qe-wrong">오답함정: 엄호신호기 — 엄호신호기는 절대신호기에 해당함</div></div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 절대신호기에 해당하지 않는 것은?</div><div class="qe-a">정답: 자동폐색구간 폐색신호기 (허용신호기 — 일단정지 후 서행 가능) ★<br>절대신호기 5종: 장내·출발·엄호·유도·입환신호기</div><div class="qe-wrong">오답함정: 유도신호기·입환신호기를 허용신호기로 혼동 — 이들은 절대신호기임</div></div>
 </div>
 
 <div class="concept" id="p16-s5">

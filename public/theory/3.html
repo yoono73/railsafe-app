@@ -1251,16 +1251,5 @@ window.onbeforeprint = function() {
   });
 };
 </script>
-<!-- TTS Debug Panel -->
-<button id="_dbgToggle" onclick="(function(){var p=document.getElementById('_dbgPanel');var v=p.style.display!=='none';p.style.display=v?'none':'block';if(!v)_debugPanelRefresh();})()" style="position:fixed;bottom:8px;right:8px;z-index:9999;background:#1a1a1a;color:#00ff88;border:1px solid #00ff88;padding:5px 10px;font-size:12px;font-family:monospace;border-radius:4px;opacity:0.9;cursor:pointer;-webkit-tap-highlight-color:transparent;">&#128269;LOG</button>
-<div id="_dbgPanel" style="display:none;position:fixed;bottom:36px;right:0;width:100vw;max-width:440px;height:260px;background:#111;color:#00ff88;font-family:monospace;font-size:11px;z-index:9998;overflow:hidden;border-top:2px solid #00ff88;box-shadow:-2px -2px 8px rgba(0,255,136,0.2);">
-  <div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:#1a1a1a;border-bottom:1px solid #333;">
-    <span style="flex:1;font-weight:bold;font-size:12px;">&#9679; TTS Debug Log</span>
-    <button onclick="if(navigator.clipboard){navigator.clipboard.writeText(_debugLogs.join('\n')).then(function(){alert('Copied '+_debugLogs.length+' lines');});}else{alert(_debugLogs.join('\n'));}" style="background:#222;color:#00ff88;border:1px solid #00ff88;padding:3px 8px;font-size:11px;font-family:monospace;cursor:pointer;border-radius:2px;">COPY</button>
-    <button onclick="_debugLogs=[];_debugPanelRefresh();" style="background:#222;color:#ff5555;border:1px solid #ff5555;padding:3px 8px;font-size:11px;font-family:monospace;cursor:pointer;border-radius:2px;">CLR</button>
-    <button onclick="document.getElementById('_dbgPanel').style.display='none';" style="background:#222;color:#aaa;border:1px solid #555;padding:3px 8px;font-size:11px;font-family:monospace;cursor:pointer;border-radius:2px;">X</button>
-  </div>
-  <div id="_dbgBody" style="height:220px;overflow-y:auto;padding:4px 8px;line-height:1.5;"></div>
-</div>
 </body>
 </html>
