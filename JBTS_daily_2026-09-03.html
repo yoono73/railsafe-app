@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정보통신기사 실기 — 2026-09-03 훈련지</title>
+<style>
+  body{background:#f8f9fa;color:#1a1a1a;font-family:-apple-system,'Malgun Gothic',sans-serif;
+       max-width:880px;margin:0 auto;padding:24px;line-height:1.7}
+  h1{font-size:22px;border-bottom:3px solid #2563eb;padding-bottom:10px}
+  .meta{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;font-size:14px}
+  .chip{display:inline-block;background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe;
+        font-size:13px;font-weight:700;padding:3px 10px;border-radius:99px;margin:3px 4px 3px 0}
+  .q{background:#fff;border:1px solid #e5e7eb;border-left:5px solid #2563eb;border-radius:8px;
+     padding:16px 20px;margin:18px 0}
+  .tag{display:inline-block;background:#dbeafe;color:#1e40af;font-size:12px;font-weight:700;
+       padding:2px 8px;border-radius:4px;margin-right:6px}
+  .type{display:inline-block;background:#fef3c7;color:#92400e;font-size:12px;padding:2px 8px;border-radius:4px}
+  .prompt{font-weight:700;font-size:16px;margin:10px 0}
+  .blank{border-bottom:1.5px solid #9ca3af;display:inline-block;min-width:90px}
+  .answerbox{border:1px dashed #ced4da;border-radius:8px;background:#fcfcfd;min-height:88px;
+             padding:10px 12px;color:#adb5bd;font-size:13px}
+  details{margin-top:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px}
+  summary{cursor:pointer;font-weight:700;color:#166534}
+  .key{background:#fff8e1;border-left:4px solid #f0b429;padding:9px 13px;margin-top:12px;font-size:14px}
+  .calc{background:#f4f7fb;border-radius:6px;padding:12px 14px;font-family:Consolas,Menlo,monospace;
+        font-size:13.5px;margin:8px 0;white-space:pre-line}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+  th,td{border:1px solid #e5e7eb;padding:6px 10px;text-align:left}
+  th{background:#f3f4f6}
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:14px}
+  code{background:#f3f4f6;padding:1px 5px;border-radius:3px;font-size:13px}
+  .bad{color:#b91c1c;font-weight:700}
+  .ok{color:#15803d;font-weight:700}
+  footer{color:#868e96;font-size:13px;text-align:center;margin:26px 0 8px}
+</style>
+</head>
+<body>
+
+<h1>📘 정보통신기사 실기 필답형 — 2026-09-03 (목)</h1>
+
+<div class="meta">
+  <b>오늘의 훈련 대상 4문제</b><br>
+  <span class="chip">C01 감리원 업무범위</span>
+  <span class="chip">C03 공사원가 계산</span>
+  <span class="chip">C04 접지 수치</span>
+  <span class="chip">C06 가용성/RAS 계산</span>
+  <div style="color:#5c6570;font-size:13px;margin-top:8px">
+    선정 근거: 오답(wrong) 기록이 없어 전 토픽이 기한 도래 상태입니다. <b>4순회 1일차</b>로,
+    9/2에 예고한 대로 중요도 5 토픽 <b>C01·C03·C04·C06</b>을 재배정했습니다.
+    1순회(8/22)·2순회(8/26)·3순회(8/30) 유형은 전부 회피했습니다
+    (C01 열거형 / 서술+빈칸형 / 해당·비해당 판정형 → <b>현장 상황 ↔ 업무항목 역매칭형</b> /
+     C03 정산형 / 역산형 / 표 완성형 → <b>원가계산서 오류 정정형</b> /
+     C04 수치암기형 / 현장판정형 / 굵기선정 혼합형 → <b>접지저항 저감대책 설계 계산형</b> /
+     C06 서술비교형 / 운용로그 산출형 → <b>목표 SLA 역산형(허용 MTTR 산출)</b>).
+  </div>
+</div>
+
+<div class="note">
+  ⏱ <b>권장 시간 32분</b> — 문항당 8분. 답을 먼저 손으로 쓴 뒤에만 정답을 펼치세요.<br>
+  채점 후 <b>"오늘 점수: C01 n/m, C03 n/m, C04 n/m, C06 n/m"</b> 형식으로 알려주시면
+  트래커의 streak·다음 복습일을 반영합니다. (미입력 시 streak은 변동 없이 보존됩니다.)
+</div>
+
+<!-- ===================== C01 ===================== -->
+<div class="q">
+  <span class="tag">C01</span><span class="type">현장 상황 ↔ 업무항목 역매칭형</span>
+  <div class="prompt">
+    [문제 1] 구내통신설비 공사 현장에서 감리원이 수행한 아래 조치 ⓐ~ⓘ를,
+    「정보통신공사업법」상 <b>감리원 업무범위 10항목</b> 중 어디에 해당하는지 각각 쓰시오.
+    <b>업무범위에 해당하지 않는 항목이 1개 포함</b>되어 있으며, 그 항목은 "해당 없음"으로 표기하고
+    감리원이 취했어야 할 <b>올바른 조치</b>를 함께 쓰시오. (9점)
+  </div>
+  <table>
+    <tr><th style="width:34px">#</th><th>감리원이 수행한 조치</th><th style="width:150px">해당 업무항목</th></tr>
+    <tr><td>ⓐ</td><td>반입된 UTP Cat6 케이블의 시험성적서·규격을 대조하고 샘플을 발췌 검사함</td><td></td></tr>
+    <tr><td>ⓑ</td><td>지하 통신실 배관 경로가 소방배관과 간섭되어, 현장 여건과 설계도면의 부합 여부를 확인함</td><td></td></tr>
+    <tr><td>ⓒ</td><td>8월 말 예정공정 62%, 실적공정 47%임을 확인하고 시공사에 만회대책 제출을 요구함</td><td></td></tr>
+    <tr><td>ⓓ</td><td>시공사가 제출한 MDF실 기기 배치 상세도(축척 1:50)를 검토·확인함</td><td></td></tr>
+    <tr><td>ⓔ</td><td>발주자의 세대단자함 위치 변경 요청에 대해 공사비·공기 영향을 검토하고 의견을 제시함</td><td></td></tr>
+    <tr><td>ⓕ</td><td>고소작업 구간에 안전난간이 미설치된 것을 확인하고 시정을 지시함</td><td></td></tr>
+    <tr><td>ⓖ</td><td>시공사가 전문공사 일부를 재하도급하려 하여 그 적정성 여부를 검토함</td><td></td></tr>
+    <tr><td>ⓗ</td><td>부실 시공된 단자함 결선부를 감리원이 <u>직접 재시공</u>하여 바로잡음</td><td></td></tr>
+    <tr><td>ⓘ</td><td>준공 후 제출된 준공도면·시험성적서 일체를 검토하고 준공확인서를 작성함</td><td></td></tr>
+  </table>
+  <div style="margin-top:10px" class="answerbox">답안 작성란 — ⓐ~ⓘ 및 "해당 없음" 항목의 올바른 조치</div>
+
+  <details>
+    <summary>정답·해설 펼치기</summary>
+    <table>
+      <tr><th>#</th><th>해당 업무항목</th></tr>
+      <tr><td>ⓐ</td><td><span class="ok">⑥ 사용자재의 규격 검토·검사</span></td></tr>
+      <tr><td>ⓑ</td><td><span class="ok">③ 설계도서의 현장 적합성 확인</span></td></tr>
+      <tr><td>ⓒ</td><td><span class="ok">⑤ 시공 진척(공정) 상황 조사</span> — ①공사계획·공정표 검토로 답해도 부분 인정, 단 <b>실적 대비 조사</b>이므로 ⑤가 정답</td></tr>
+      <tr><td>ⓓ</td><td><span class="ok">② 시공상세도면 검토·확인</span></td></tr>
+      <tr><td>ⓔ</td><td><span class="ok">⑧ 설계변경에 관한 사항 검토</span></td></tr>
+      <tr><td>ⓕ</td><td><span class="ok">⑦ 재해예방 및 안전관리</span></td></tr>
+      <tr><td>ⓖ</td><td><span class="ok">⑨ 하도급의 타당성 검토</span></td></tr>
+      <tr><td>ⓗ</td><td><span class="bad">해당 없음 (업무범위 위반)</span></td></tr>
+      <tr><td>ⓘ</td><td><span class="ok">⑩ 준공도서 검토 및 준공확인</span></td></tr>
+    </table>
+    <p><b>ⓗ 올바른 조치:</b> 시공은 <b>시공자의 책임</b>이며 감리원은 시공에 직접 관여할 수 없다.
+    감리원은 ① 부실 부분을 <b>서면(감리일지·시정지시서)으로 시정 지시</b>하고,
+    ② 시정되지 않거나 중대한 결함이면 <b>재시공·공사중지를 발주자에게 요청</b>하며,
+    ③ 조치 결과를 <b>재확인·기록</b>해야 한다.</p>
+    <div class="key">
+      🔑 <b>감리원 업무범위 10가지 (통째 암기)</b><br>
+      ① 공사계획·공정표 검토 ② 시공상세도면 검토 ③ 설계도서의 현장 적합성 확인
+      ④ 설계도서 준수 여부 확인 ⑤ 시공 진척 상황 조사 ⑥ 사용자재 규격 검토·검사
+      ⑦ 재해예방·안전관리 ⑧ 설계변경 검토 ⑨ 하도급 타당성 검토 ⑩ 준공도서 검토·준공확인<br>
+      ※ <b>직접 시공·직접 설계변경 결정·직접 하도급 승인</b>은 모두 감리원 업무가 아니다(단골 함정).
+    </div>
+  </details>
+</div>
+
+<!-- ===================== C03 ===================== -->
+<div class="q">
+  <span class="tag">C03</span><span class="type">원가계산서 오류 정정형</span>
+  <div class="prompt">
+    [문제 2] 시공사가 제출한 아래 공사원가계산서에는 <b>계산 오류가 3곳</b> 있다.
+    오류 항목을 지적하고 <b>올바른 산출식과 금액</b>을 제시한 뒤, <b>총원가·부가가치세·도급금액</b>을
+    다시 산출하시오. (일반관리비율 6%, 이윤율 15%, 부가세 10%) (10점)
+  </div>
+  <table>
+    <tr><th style="width:36px">기호</th><th>비목</th><th>제출 금액(원)</th><th>시공사 산출 근거</th></tr>
+    <tr><td>가</td><td>재료비</td><td style="text-align:right">20,000,000</td><td>—</td></tr>
+    <tr><td>나</td><td>노무비</td><td style="text-align:right">30,000,000</td><td>—</td></tr>
+    <tr><td>다</td><td>경비</td><td style="text-align:right">10,000,000</td><td>—</td></tr>
+    <tr><td>라</td><td>순공사원가</td><td style="text-align:right">60,000,000</td><td>가+나+다</td></tr>
+    <tr><td>마</td><td>일반관리비</td><td style="text-align:right">1,200,000</td><td>재료비 × 6%</td></tr>
+    <tr><td>바</td><td>이윤</td><td style="text-align:right">9,000,000</td><td>순공사원가 × 15%</td></tr>
+    <tr><td>사</td><td>총원가</td><td style="text-align:right">69,000,000</td><td>라 + 바</td></tr>
+    <tr><td>아</td><td>부가가치세</td><td style="text-align:right">—</td><td>미계상</td></tr>
+    <tr><td>자</td><td>도급금액</td><td style="text-align:right">69,000,000</td><td>사</td></tr>
+  </table>
+  <div style="margin-top:10px" class="answerbox">답안 작성란 — 오류 3곳 지적 + 정정 산출</div>
+
+  <details>
+    <summary>정답·해설 펼치기</summary>
+    <p><b>[오류 ① 마 — 일반관리비 기준 오류]</b><br>
+    일반관리비는 <b>재료비가 아니라 순공사원가</b>에 요율을 곱한다.</p>
+    <div class="calc">일반관리비 = 순공사원가 × 6% = 60,000,000 × 0.06 = 3,600,000원
+(시공사 오류값 1,200,000원 → 2,400,000원 과소계상)</div>
+
+    <p><b>[오류 ② 바 — 이윤 산출 기준 오류]</b><br>
+    이윤은 <b>(노무비 + 경비 + 일반관리비)</b>에 이윤율을 곱한다. <b>재료비는 이윤 산출 기준에서 제외</b>된다.</p>
+    <div class="calc">이윤 = (노무비 + 경비 + 일반관리비) × 15%
+     = (30,000,000 + 10,000,000 + 3,600,000) × 0.15
+     = 43,600,000 × 0.15 = 6,540,000원
+(시공사 오류값 9,000,000원 → 2,460,000원 과다계상)</div>
+
+    <p><b>[오류 ③ 사 — 총원가 구성 누락 + 부가세 미계상]</b><br>
+    총원가 = <b>순공사원가 + 일반관리비 + 이윤</b>인데 일반관리비가 빠져 있고, 도급금액에는 <b>부가가치세 10%</b>가 가산되어야 한다.</p>
+    <div class="calc">총원가   = 60,000,000 + 3,600,000 + 6,540,000 = 70,140,000원
+부가가치세 = 70,140,000 × 10% = 7,014,000원
+도급금액  = 70,140,000 + 7,014,000 = 77,154,000원</div>
+
+    <table>
+      <tr><th>비목</th><th>제출값</th><th>정정값</th></tr>
+      <tr><td>일반관리비</td><td style="text-align:right">1,200,000</td><td style="text-align:right"><b>3,600,000</b></td></tr>
+      <tr><td>이윤</td><td style="text-align:right">9,000,000</td><td style="text-align:right"><b>6,540,000</b></td></tr>
+      <tr><td>총원가</td><td style="text-align:right">69,000,000</td><td style="text-align:right"><b>70,140,000</b></td></tr>
+      <tr><td>부가가치세</td><td style="text-align:right">—</td><td style="text-align:right"><b>7,014,000</b></td></tr>
+      <tr><td>도급금액</td><td style="text-align:right">69,000,000</td><td style="text-align:right"><b>77,154,000</b></td></tr>
+    </table>
+    <div class="key">
+      🔑 <b>원가 4단 공식</b><br>
+      순공사원가 = 재료비 + 노무비 + 경비<br>
+      일반관리비 = <b>순공사원가</b> × 요율(6%)<br>
+      이윤 = (<b>노무비 + 경비 + 일반관리비</b>) × 15% → <b>재료비 제외</b>가 최대 함정<br>
+      총원가 = 순공사원가 + 일반관리비 + 이윤 → 도급금액 = 총원가 × 1.1
+    </div>
+  </details>
+</div>
+
+<!-- ===================== C04 ===================== -->
+<div class="q">
+  <span class="tag">C04</span><span class="type">접지저항 저감대책 설계 계산형</span>
+  <div class="prompt">
+    [문제 3] 100회선을 초과하는 구내통신설비의 접지공사에서, 접지극 1본을 시공하여
+    <b>접지저항 30Ω</b>이 측정되었다. 아래 물음에 답하시오. (11점)
+  </div>
+  <ol>
+    <li>이 설비의 <b>접지저항 기준값</b>과, 100회선 이하인 경우의 <b>예외 기준값</b>을 각각 쓰시오. (2점)</li>
+    <li>동일 규격 접지극을 <b>병렬</b>로 추가할 때, 상호간섭이 없다고 가정하면 기준값을 만족하기 위해 필요한
+        <b>최소 접지극 본수</b>는? (2점)</li>
+    <li>실제로는 상호간섭으로 <b>병렬 저감효율이 80%</b>라고 할 때, 3본·4본 시공 시의 <b>합성 접지저항</b>을
+        각각 구하고 <b>합격 여부를 판정</b>하시오. (4점)</li>
+    <li>위 1)의 두 기준값에 각각 적용하는 <b>접지선의 최소 굵기(연동선 직경)</b>를 쓰시오. (2점)</li>
+    <li>접지공사 완료 후 실시하는 <b>절연저항 시험의 인가전압과 판정 기준</b>을 쓰시오. (1점)</li>
+  </ol>
+  <div style="margin-top:10px" class="answerbox">답안 작성란</div>
+
+  <details>
+    <summary>정답·해설 펼치기</summary>
+    <p><b>1)</b> 일반(100회선 초과): <b>10Ω 이하</b> / 예외(100회선 이하): <b>100Ω 이하</b></p>
+
+    <p><b>2)</b> 상호간섭이 없으면 합성저항 R<sub>n</sub> = R / n</p>
+    <div class="calc">30 / n ≤ 10  →  n ≥ 3
+∴ 최소 3본</div>
+
+    <p><b>3)</b> 저감효율 80% 적용 → R<sub>n</sub> = R / (n × 0.8)</p>
+    <div class="calc">3본: 30 / (3 × 0.8) = 30 / 2.4 = 12.5Ω  → 10Ω 초과, <b>불합격</b>
+4본: 30 / (4 × 0.8) = 30 / 3.2 = 9.375Ω ≈ 9.38Ω → 10Ω 이하, <b>합격</b>
+∴ 실제 시공에서는 4본이 필요하다.</div>
+    <p>※ 병렬 본수를 늘려도 상호간섭(중첩효과) 때문에 이론값만큼 떨어지지 않는다.
+    따라서 접지극 간 이격거리를 충분히(통상 접지극 길이의 2배 이상) 확보하거나,
+    <b>접지저항 저감제·심타공법·메시(망상)접지</b>를 병용한다.</p>
+
+    <p><b>4)</b> 10Ω 기준 → <b>직경 2.6mm 이상</b> 연동선 / 100Ω 기준 → <b>직경 1.6mm 이상</b> 연동선</p>
+
+    <p><b>5)</b> <b>DC 500V 절연저항계(메거)</b>로 측정하여 <b>10MΩ 이상</b>이면 합격.</p>
+
+    <div class="key">
+      🔑 <b>접지 수치 4종 세트</b> — 10Ω / 예외 100Ω(100회선 이하) / 접지선 2.6mm·1.6mm / 절연 <b>500V DC → 10MΩ 이상</b><br>
+      ⚠️ 함정: 절연저항 측정전압을 <b>250V</b>, 판정을 <b>5MΩ</b>으로 쓰는 오답이 가장 많다.
+      병렬 접지 계산은 <b>"이론 R/n → 효율 적용 R/(n·η)"</b> 순서로 반드시 2단 계산.
+    </div>
+  </details>
+</div>
+
+<!-- ===================== C06 ===================== -->
+<div class="q">
+  <span class="tag">C06</span><span class="type">목표 SLA 역산형</span>
+  <div class="prompt">
+    [문제 4] 어떤 통신설비의 <b>MTBF가 500시간</b>이고 현재 <b>MTTR은 2시간</b>이다.
+    발주자는 SLA로 <b>연간 가용도 99.9% 이상</b>을 요구하고 있다. (12점)
+  </div>
+  <ol>
+    <li><b>가용도(A)</b>의 정의식을 쓰고, 현재 설비의 가용도를 <b>소수점 넷째 자리까지(%)</b> 구하시오. (3점)</li>
+    <li>현재 상태의 <b>연간 다운타임(시간)</b>을 구하시오. (1년 = 8,760시간) (2점)</li>
+    <li>SLA 99.9%를 만족하려면 MTBF를 그대로 둔 채 <b>MTTR을 몇 분 이하</b>로 줄여야 하는지 구하시오. (3점)</li>
+    <li>목표 99.9%인 장비 <b>2대가 직렬(2대 모두 정상이어야 서비스 가능)</b>일 때와
+        <b>병렬 이중화</b>일 때의 시스템 가용도를 각각 구하시오. (3점)</li>
+    <li><b>RAS</b>의 3요소를 쓰고, 각 요소에 대응하는 <b>지표</b>를 쓰시오. (1점)</li>
+  </ol>
+  <div style="margin-top:10px" class="answerbox">답안 작성란</div>
+
+  <details>
+    <summary>정답·해설 펼치기</summary>
+    <p><b>1)</b></p>
+    <div class="calc">A = MTBF / (MTBF + MTTR) × 100
+  = 500 / (500 + 2) × 100
+  = 500 / 502 × 100 = 99.6016%</div>
+
+    <p><b>2)</b> 불가용률 = 1 − 0.996016 = 0.003984</p>
+    <div class="calc">연간 다운타임 = 8,760 × 0.003984 ≈ 34.90시간 (약 34시간 54분)</div>
+
+    <p><b>3)</b> A ≥ 0.999 조건을 MTTR에 대해 정리</p>
+    <div class="calc">MTBF / (MTBF + MTTR) ≥ 0.999
+500 ≥ 0.999 × (500 + MTTR)
+MTTR ≤ MTBF × (1 − A) / A = 500 × 0.001 / 0.999
+     = 0.5005시간 ≈ 30.03분
+∴ MTTR을 약 30분 이하로 단축해야 한다.
+   (이때 연간 다운타임 = 8,760 × 0.001 = 8.76시간)</div>
+    <p>MTTR 단축 수단: 예비품(Spare) 상시 확보, 모듈화·핫스왑 구조, 원격감시(NMS) 도입,
+    장애 대응 매뉴얼·비상연락체계 정비.</p>
+
+    <p><b>4)</b></p>
+    <div class="calc">직렬: A = 0.999 × 0.999 = 0.998001 → 99.8001%
+      (연간 다운타임 8,760 × 0.001999 ≈ 17.51시간 — 오히려 나빠짐)
+
+병렬(이중화): A = 1 − (1 − 0.999)² = 1 − 0.000001 = 0.999999
+      → 99.9999%  (연간 다운타임 8,760 × 0.000001 ≈ 0.00876h ≈ 31.5초)</div>
+
+    <p><b>5)</b> R = <b>Reliability(신뢰성) → MTBF</b> /
+       A = <b>Availability(가용성) → A = MTBF/(MTBF+MTTR)</b> /
+       S = <b>Serviceability(보수성) → MTTR</b></p>
+
+    <div class="key">
+      🔑 MTBF = 총 정상동작시간 ÷ 고장횟수, MTTR = 총 수리시간 ÷ 고장횟수<br>
+      역산 공식 <b>MTTR ≤ MTBF × (1−A) / A</b> 는 SLA 문제의 핵심. (A로 나누는 것을 빠뜨리면 오답)<br>
+      ⚠️ 함정: <b>직렬은 가용도가 곱해져 낮아지고, 병렬은 불가용률이 곱해져 높아진다.</b>
+      직렬에 1−(1−A)²을 쓰는 실수 주의.
+    </div>
+  </details>
+</div>
+
+<footer>정보통신기사 실기 필답형 · 에빙하우스 SRS 자동 훈련 · 2026-09-03 (4순회 1일차)</footer>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>#201 보고서 — 철도왕 교재 vs 1.html 비교 (교통안전관리론)</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #f8f9fa; color: #212529; font-size: 14px; line-height: 1.65; }
+header { background: #6f42c1; color: #fff; padding: 18px 24px; }
+header h1 { font-size: 1.25em; margin-bottom: 4px; }
+header .sub { font-size: .88em; opacity: .85; }
+.container { max-width: 960px; margin: 0 auto; padding: 20px 16px 40px; }
+.section { background: #fff; border-radius: 8px; border: 1px solid #dee2e6; margin-bottom: 20px; overflow: hidden; }
+.section-title { background: #343a40; color: #fff; padding: 10px 16px; font-size: 1em; font-weight: bold; letter-spacing: .03em; }
+.section-body { padding: 16px; }
+
+/* 요약 카드 */
+.summary-cards { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.card { flex: 1 1 140px; background: #fff; border-radius: 8px; padding: 14px 16px; text-align: center; border: 1px solid #dee2e6; }
+.card .num { font-size: 2em; font-weight: bold; }
+.card .label { font-size: .82em; color: #6c757d; margin-top: 4px; }
+.card.green .num { color: #28a745; }
+.card.orange .num { color: #fd7e14; }
+.card.red .num { color: #dc3545; }
+.card.blue .num { color: #007bff; }
+.card.purple .num { color: #6f42c1; }
+
+/* 비교 테이블 */
+table { width: 100%; border-collapse: collapse; font-size: .9em; }
+th { background: #495057; color: #fff; padding: 8px 10px; text-align: left; font-weight: 600; white-space: nowrap; }
+td { padding: 7px 10px; border-bottom: 1px solid #e9ecef; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #f8f9fa; }
+.hl td { background: #fff8f0; }
+
+/* 상태 배지 */
+.badge { display: inline-block; border-radius: 12px; padding: 2px 9px; font-size: .78em; font-weight: bold; white-space: nowrap; }
+.badge-done { background: #d4edda; color: #155724; }
+.badge-fix { background: #fff3cd; color: #856404; }
+.badge-new { background: #cfe2ff; color: #084298; }
+.badge-na { background: #e2e3e5; color: #41464b; }
+
+/* 작업 목록 */
+.task-list { list-style: none; }
+.task-list li { padding: 10px 12px; border-left: 4px solid #ccc; margin-bottom: 8px; background: #fff; border-radius: 0 6px 6px 0; }
+.task-list li.new { border-color: #007bff; }
+.task-list li.fix { border-color: #fd7e14; }
+.task-num { display: inline-block; background: #6f42c1; color: #fff; border-radius: 4px; padding: 1px 7px; font-size: .78em; font-weight: bold; margin-right: 6px; }
+.task-concept { font-size: .82em; color: #6c757d; margin-top: 3px; }
+.task-content { font-weight: 600; }
+.task-detail { font-size: .88em; color: #444; margin-top: 4px; }
+
+/* 알림 박스 */
+.alert { padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; font-size: .9em; }
+.alert-info { background: #cff4fc; border-left: 4px solid #0dcaf0; color: #055160; }
+.alert-warn { background: #fff3cd; border-left: 4px solid #ffc107; color: #664d03; }
+.alert-success { background: #d1e7dd; border-left: 4px solid #198754; color: #0f5132; }
+
+/* 교재 목록 */
+.book-list { columns: 2; gap: 20px; }
+.book-item { break-inside: avoid; padding: 6px 0; border-bottom: 1px dotted #dee2e6; display: flex; align-items: flex-start; gap: 6px; }
+.book-item .icon { min-width: 18px; color: #6f42c1; font-weight: bold; }
+.book-item .text { flex: 1; }
+
+@media (max-width: 600px) {
+  .book-list { columns: 1; }
+  .summary-cards { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>📊 #201 보고서 — 철도왕 교재 vs 1.html 비교 (교통안전관리론)</h1>
+  <div class="sub">작성일: 2026-09-05 | 대상: public/theory/1.html (개념01~89) | 교재: 7342 기출예상문제집 이론 섹션</div>
+</header>
+
+<div class="container">
+
+<!-- 요약 카드 -->
+<div class="summary-cards">
+  <div class="card green"><div class="num">20</div><div class="label">이미 반영<br>(king-book-note ✅)</div></div>
+  <div class="card orange"><div class="num">5</div><div class="label">보완 필요<br>(내용 추가)</div></div>
+  <div class="card blue"><div class="num">4</div><div class="label">신규 추가<br>(king-book-note 신설)</div></div>
+  <div class="card purple"><div class="num">29</div><div class="label">교재 이론<br>전체 항목</div></div>
+</div>
+
+<!-- 섹션1: 교재 내용 전체 -->
+<div class="section">
+  <div class="section-title">① 철도왕 교재 — 교통안전관리론 이론 섹션 전체 목록 (29항목)</div>
+  <div class="section-body">
+    <div class="alert alert-info">교재 PDF 27225~29400번 라인 독해 기준 | 제1장 교통안전관리 개론 전체</div>
+    <div class="book-list">
+      <div class="book-item"><span class="icon">①</span><span class="text">교통의 정의·협의/광의 범위·Traffic vs Transportation</span></div>
+      <div class="book-item"><span class="icon">②</span><span class="text">교통기관 3대 요소 (통로·운반구·동력)</span></div>
+      <div class="book-item"><span class="icon">③</span><span class="text">교통이 추구하는 목표 7가지 (신속·정확·안전·경제·쾌적·편의·보급성)</span></div>
+      <div class="book-item"><span class="icon">④</span><span class="text">교통사고 요인 — 인적 84.8%·환경·차량</span></div>
+      <div class="book-item"><span class="icon">⑤</span><span class="text">교통수단별 인적요인 비율 (도로99.5%/항공82.3%/선박72.8%/<strong>철도36.3%</strong>)</span></div>
+      <div class="book-item"><span class="icon">⑥</span><span class="text">하인리히 법칙 (330건 수집: 300+29+1)</span></div>
+      <div class="book-item"><span class="icon">⑦</span><span class="text">욕조곡선 (초기·중기·말기 고장률)</span></div>
+      <div class="book-item"><span class="icon">⑧</span><span class="text">3대 접근방법 (기술적/관리적/제도적)</span></div>
+      <div class="book-item"><span class="icon">⑨</span><span class="text">사고요인 등치성 원리</span></div>
+      <div class="book-item"><span class="icon">⑩</span><span class="text">사고요인 배열형 (연쇄형·집중형·혼합형)</span></div>
+      <div class="book-item"><span class="icon">⑪</span><span class="text">PDCA 사이클 (P계획·D실시·<strong>C통제·A조정</strong>)</span></div>
+      <div class="book-item"><span class="icon">⑫</span><span class="text">위험요소 제거 6단계 (조·탐·원·대·채·환)</span></div>
+      <div class="book-item"><span class="icon">⑬</span><span class="text">교통안전관리 6단계 (준·조·계·설·교·확)</span></div>
+      <div class="book-item"><span class="icon">⑭</span><span class="text">TBM (현장안전회의) 5단계 (도입·점검정비·운행지시·위험예지·확인)</span></div>
+      <div class="book-item"><span class="icon">⑮</span><span class="text">안전진단 5단계 (예비조사·안전진단·종합정비·대책강구·개선목표)</span></div>
+      <div class="book-item"><span class="icon">⑯</span><span class="text">교통안전조직 3유형 (라인·스텝·라인스텝)</span></div>
+      <div class="book-item"><span class="icon">⑰</span><span class="text">B=f(P·E) 공식 — 인간행동 기본 법칙</span></div>
+      <div class="book-item"><span class="icon">⑱</span><span class="text">인간행동 가변요인 4가지 (기능상·작업능률·생리적·심리적)</span></div>
+      <div class="book-item"><span class="icon">⑲</span><span class="text">인지0.3초+판단0.3초+조작0.4초=합계 1초</span></div>
+      <div class="book-item"><span class="icon">⑳</span><span class="text">사고원인 分析표 (인지지연51%·판단착오37%·불가항력7%·조작착오5%)</span></div>
+      <div class="book-item"><span class="icon">㉑</span><span class="text">WHO 의학적 검사기준 (정기건강진단)</span></div>
+      <div class="book-item"><span class="icon">㉒</span><span class="text">과로운전 시 피로 4증세 (운전리듬·시야·국부통증·졸음)</span></div>
+      <div class="book-item"><span class="icon">㉓</span><span class="text">운전자교육원리 8가지 (개별성·자발성·일관성·종합성·집단교육·반복성·생활교육·가정직장)</span></div>
+      <div class="book-item"><span class="icon">㉔</span><span class="text">교육방법 3가지 분류 (개별교육·소집단교육·집합교육)</span></div>
+      <div class="book-item"><span class="icon">㉕</span><span class="text">직무상 훈련기법 9가지 (브레인스토밍·시그니피컨트·노모그램·희망열거·체크리스트·바이오닉스·고든법·인풋아웃풋·초점법)</span></div>
+      <div class="book-item"><span class="icon">㉖</span><span class="text">상담기능 4가지 (정서안정·승무계획변경·효과적지도·일체감형성)</span></div>
+      <div class="book-item"><span class="icon">㉗</span><span class="text">할로효과 — 교통단속 파급효과</span></div>
+      <div class="book-item"><span class="icon">㉘</span><span class="text">교통사고 조사항목 8가지 (전서거상상차추교)</span></div>
+      <div class="book-item"><span class="icon">㉙</span><span class="text">사고다발자 5대 특성 (조기반응·통제곤란·비협조·충동·불안감)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 섹션2: 비교 대조 테이블 -->
+<div class="section">
+  <div class="section-title">② 1.html 반영 현황 대조표</div>
+  <div class="section-body">
+    <div class="alert alert-warn">기준: king-book-note 박스 존재 여부 / 1.html 개념 01~89 전수 확인</div>
+    <table>
+      <thead>
+        <tr>
+          <th>교재 항목</th>
+          <th>1.html 해당 개념</th>
+          <th>king-book-note</th>
+          <th>상태</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="hl"><td>① 교통의 정의·범위·목표7가지</td><td>개념01</td><td>L305 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td>② 교통기관 3대 요소</td><td>개념01 포함</td><td>L305 포함 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr class="hl"><td>④⑤ 인적요인 84.8%·교통수단별 비율</td><td>개념02</td><td>L323 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td>⑧ 3대 접근방법</td><td>개념03</td><td>L349 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr class="hl"><td>⑥ 하인리히 법칙</td><td>개념04</td><td>L388 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td>⑨ 등치성 원리</td><td>개념05</td><td>L403 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr class="hl"><td>⑦ 욕조곡선</td><td>개념06</td><td>L429 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td><strong>⑪ PDCA — C=통제, A=조정 원문</strong></td><td>개념08</td><td>❌ 없음</td><td><span class="badge badge-fix">보완 필요</span></td></tr>
+        <tr class="hl"><td>⑫ 위험요소 제거 6단계</td><td>개념09</td><td>L484 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td>⑬ 교통안전관리 6단계</td><td>개념10</td><td>없음 (내용만)</td><td><span class="badge badge-na">내용 충분</span></td></tr>
+        <tr class="hl"><td><strong>⑭ TBM 5단계 — 원문 상세</strong></td><td>개념11</td><td>❌ 없음</td><td><span class="badge badge-fix">보완 필요</span></td></tr>
+        <tr><td><strong>⑮ 안전진단 5단계 — 원문</strong></td><td>개념13</td><td>❌ 없음</td><td><span class="badge badge-fix">보완 필요</span></td></tr>
+        <tr class="hl"><td>⑲ 인지0.3+판단0.3+조작0.4=1초</td><td>개념16</td><td>L521 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td><strong>⑳ 사고원인 분析표 (인지지연51%…)</strong></td><td>개념16 (미포함)</td><td>❌ 없음</td><td><span class="badge badge-fix">보완 필요</span></td></tr>
+        <tr class="hl"><td><strong>⑯ 교통안전조직 3유형 (라인·스텝·라인스텝)</strong></td><td>개념24·개념70</td><td>❌ 없음</td><td><span class="badge badge-new">신규 추가</span></td></tr>
+        <tr><td><strong>㉕ 직무상 훈련기법 9가지</strong></td><td>개념36 (미포함)</td><td>❌ 없음</td><td><span class="badge badge-new">신규 추가</span></td></tr>
+        <tr class="hl"><td>⑩ 사고요인 배열형</td><td>개념48</td><td>L974 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td>③ 교통안전관리 목표</td><td>개념58</td><td>L1075 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr class="hl"><td>Katz 태도기능 4가지</td><td>개념64</td><td>L796 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td>⑰⑱ B=f(P·E)·가변요인4가지</td><td>개념84</td><td>L951 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr class="hl"><td>인간행동 가변요인 — king-book-note 별도 추가</td><td>개념84 theory-note</td><td>내용은 있음/박스 없음</td><td><span class="badge badge-fix">보완 필요</span></td></tr>
+        <tr><td>EPDO·사고감소율·사고율지표</td><td>개념85</td><td>L1030, L1035 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr class="hl"><td>㉗ 할로효과</td><td>개념86</td><td>L538 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td>㉓ 운전자교육원리 8가지</td><td>개념87 (개념 내용)</td><td>L821 교육방법 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr class="hl"><td>㉖ 상담기능 4가지</td><td>개념88</td><td>L836 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td>㉘ 교통사고 조사항목 8가지</td><td>개념89</td><td>L1020 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr class="hl"><td>㉒ 과로운전 피로 4증세</td><td>개념76</td><td>L913 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr><td>㉙ 사고다발자 5대 특성</td><td>개념77</td><td>L928 ✅</td><td><span class="badge badge-done">완료</span></td></tr>
+        <tr class="hl"><td><strong>㉑ WHO 의학적 검사기준</strong></td><td>없음 (개념 없음)</td><td>❌ 없음</td><td><span class="badge badge-new">신규 추가</span></td></tr>
+        <tr><td><strong>교통사고 방지 원칙 6가지</strong></td><td>없음 (개념 없음)</td><td>❌ 없음</td><td><span class="badge badge-new">신규 추가</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 섹션3: #202 작업 목록 -->
+<div class="section">
+  <div class="section-title">③ #202 작업 목록 — 보완 5건 + 신규 4건 = 총 9건</div>
+  <div class="section-body">
+    <div class="alert alert-success">아래 목록이 #202 실제 작업 범위입니다. 사용자 승인 후 진행 예정.</div>
+
+    <p style="font-weight:bold;margin-bottom:12px;color:#fd7e14;">▶ 보완 (king-book-note 신설 또는 내용 보강)</p>
+    <ul class="task-list">
+      <li class="fix">
+        <span class="task-num">보완-1</span>
+        <span class="task-content">개념08 PDCA — 철도왕 교재 원문 king-book-note 추가</span>
+        <div class="task-concept">해당 개념: 개념08 (PDCA 사이클) | 현재: 내용만 있음</div>
+        <div class="task-detail">추가 내용: "C=통제(Control)·A=조정(Adjust) 원문 명칭" + "교통안전관리에 PDCA 적용 사례" 박스</div>
+      </li>
+      <li class="fix">
+        <span class="task-num">보완-2</span>
+        <span class="task-content">개념11 TBM — 철도왕 교재 5단계 원문 king-book-note 추가</span>
+        <div class="task-concept">해당 개념: 개념11 (TBM 현장안전회의 5단계) | 현재: 내용만 있음</div>
+        <div class="task-detail">추가 내용: 각 단계별 원문 설명 + "5~6명" 인원 출처 명시</div>
+      </li>
+      <li class="fix">
+        <span class="task-num">보완-3</span>
+        <span class="task-content">개념13 안전진단 5단계 — 원문 king-book-note 추가</span>
+        <div class="task-concept">해당 개념: 개념13 (안전진단 5단계) | 현재: step-box만 있음</div>
+        <div class="task-detail">추가 내용: 예비조사→안전진단→종합정비→대책강구→개선목표 각 단계 원문 설명</div>
+      </li>
+      <li class="fix">
+        <span class="task-num">보완-4</span>
+        <span class="task-content">개념16 PIEV — 사고원인 분析표 king-book-note 추가</span>
+        <div class="task-concept">해당 개념: 개념16 (PIEV 운전자 반응과정) | 현재: 인지1초 박스만 있음</div>
+        <div class="task-detail">추가 내용: 인지지연 51% / 판단착오 37% / 불가항력 7% / 조작착오 5% 원문 표</div>
+      </li>
+      <li class="fix">
+        <span class="task-num">보완-5</span>
+        <span class="task-content">개념84 B=f(P·E) — 가변요인 4가지 king-book-note 보강</span>
+        <div class="task-concept">해당 개념: 개념84 (B=f(P·E)) | 현재: theory-note에만 있음</div>
+        <div class="task-detail">추가 내용: 기능상·작업능률·생리적·심리적 4가지 가변요인을 king-book-note 박스로 별도 강조</div>
+      </li>
+    </ul>
+
+    <p style="font-weight:bold;margin:16px 0 12px;color:#007bff;">▶ 신규 추가 (새 개념 또는 기존 개념에 king-book-note 신설)</p>
+    <ul class="task-list">
+      <li class="new">
+        <span class="task-num">신규-1</span>
+        <span class="task-content">개념24 or 개념70 — 교통안전조직 3유형 king-book-note 추가</span>
+        <div class="task-concept">위치: 개념24(조직유형) 또는 개념70(라인스태프조직) 중 적합한 곳</div>
+        <div class="task-detail">추가 내용: ① 라인 조직 (단순·직선형) ② 스텝 조직 (참모형) ③ 라인스텝 조직 (혼합형) — 교통안전관리 관점에서 각 유형 특징·장단점</div>
+      </li>
+      <li class="new">
+        <span class="task-num">신규-2</span>
+        <span class="task-content">개념36 — 직무상 훈련기법 9가지 king-book-note 추가</span>
+        <div class="task-concept">위치: 개념36 (주요 교육기법) 내 추가</div>
+        <div class="task-detail">추가 내용: 브레인스토밍·시그니피컨트·노모그램·희망열거·체크리스트·바이오닉스·고든법·인풋아웃풋·초점법 9가지 원문 명칭 + 간략 설명</div>
+      </li>
+      <li class="new">
+        <span class="task-num">신규-3</span>
+        <span class="task-content">개념 신설 — WHO 의학적 검사기준 (개념90 or 기존 개념에 통합)</span>
+        <div class="task-concept">위치: 개념45(운전자 특성) 내 추가 검토</div>
+        <div class="task-detail">추가 내용: WHO가 제시한 직업 운전자 건강기준 항목들 (시력·청력·혈압·심폐 등) king-book-note</div>
+      </li>
+      <li class="new">
+        <span class="task-num">신규-4</span>
+        <span class="task-content">개념 신설 — 교통사고 방지 원칙 6가지 (개념14 내 통합 or 신규)</span>
+        <div class="task-concept">위치: 개념14(교통사고 방지 5단계) 근처 or 신규 개념90</div>
+        <div class="task-detail">추가 내용: 방어확인·속도적정·주의집중·방향확인·안전거리·등치성적용 6원칙 king-book-note</div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- 섹션4: 현황 요약 -->
+<div class="section">
+  <div class="section-title">④ 현황 요약 및 판단</div>
+  <div class="section-body">
+    <div class="alert alert-success">
+      <strong>✅ 잘 된 점:</strong> 1.html은 이미 20/29항목(69%)에 철도왕 교재 king-book-note가 반영되어 있습니다.
+      특히 핵심 이론(하인리히·욕조·등치성·3대접근·위험요소제거·할로효과·TBM제외) 및 인간공학 파트(B=f(P·E)·인지1초·과로피로·사고다발자)는 이미 충실하게 반영됨.
+    </div>
+    <div class="alert alert-warn">
+      <strong>⚠️ 미반영 이유 추정:</strong>
+      <ul style="margin-top:6px;padding-left:18px;">
+        <li>보완-1~5: 해당 개념들은 내용은 있으나 교재 원문 출처 표시가 없음 → king-book-note 추가로 "이것이 교재 원문"임을 명시해야 함</li>
+        <li>신규-1~4: 1.html에 개념이 아예 없거나(WHO기준·방지원칙) 교통안전 특화 시각에서 다루지 않은 것(조직3유형·훈련기법9가지)</li>
+      </ul>
+    </div>
+    <table>
+      <thead>
+        <tr><th>구분</th><th>건수</th><th>작업 규모 예상</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>이미 완료 (변경 불필요)</td><td>20건</td><td>—</td></tr>
+        <tr class="hl"><td>보완 (king-book-note 추가)</td><td>5건</td><td>개념당 5~15줄 HTML 삽입</td></tr>
+        <tr><td>신규 추가 (새 박스 또는 개념)</td><td>4건</td><td>개념당 10~20줄 HTML 삽입</td></tr>
+        <tr class="hl"><td><strong>합계 (#202 작업 범위)</strong></td><td><strong>9건</strong></td><td>예상 소요: 중간 규모</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:6px;font-size:.9em;color:#444;">
+      <strong>📌 결론:</strong> 이전 세션에서 "#202 신규 12개 + 보완 7개"로 언급했으나,<br>
+      실제 대조 결과 신규 4건 + 보완 5건 = <strong>총 9건</strong>이 정확한 범위입니다.<br>
+      나머지 20건은 이미 반영되어 있어 추가 작업 불필요합니다.
+    </div>
+  </div>
+</div>
+
+<!-- 섹션5: 작업 순서 -->
+<div class="section">
+  <div class="section-title">⑤ #202 작업 순서 (승인 후 진행)</div>
+  <div class="section-body">
+    <div class="alert alert-info">보고서 검토 후 사용자 승인 시 아래 순서로 작업 진행 예정</div>
+    <ol style="padding-left:20px;line-height:2;">
+      <li><strong>보완-4</strong> 개념16 — 사고원인 분析표 king-book-note (핵심 시험 데이터)</li>
+      <li><strong>보완-2</strong> 개념11 TBM — 5단계 원문 박스</li>
+      <li><strong>보완-1</strong> 개념08 PDCA — C·A 원문 박스</li>
+      <li><strong>보완-3</strong> 개념13 안전진단 — 5단계 원문 박스</li>
+      <li><strong>보완-5</strong> 개념84 — 가변요인 4가지 박스 보강</li>
+      <li><strong>신규-1</strong> 교통안전조직 3유형 박스 (개념70 위치)</li>
+      <li><strong>신규-2</strong> 개념36 직무상 훈련기법 9가지 박스</li>
+      <li><strong>신규-3</strong> WHO 의학적 검사기준 (개념45 통합)</li>
+      <li><strong>신규-4</strong> 교통사고 방지 원칙 6가지 (개념14 통합)</li>
+    </ol>
+    <p style="margin-top:14px;font-size:.88em;color:#666;">git commit: git plumbing 방식 (index.lock 우회) | 메시지: feat: 1.html 교통안전관리론 철도왕 교재 보완/신규 9건</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

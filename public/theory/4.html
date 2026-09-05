@@ -382,6 +382,16 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="table-wrap"><table><thead><tr><th>방식</th><th>대표</th><th>특징</th></tr></thead><tbody><tr><td><strong>교류 25,000V</strong></td><td>국철 전기철도</td><td>점착성능 우수, 소형이어도 대량 견인</td></tr><tr><td>직류 1,500V</td><td>구형 도시철도</td><td>터널 단면 작음, 통신유도장애 적음</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>직류 25,000V</strong> → 없음. 교류 25,000V가 국철 표준</div>
 <div class="theory-note"><strong>이론 배경:</strong> 교류 25,000V는 변압기로 전압 변환이 쉬워 변전소 간격을 넓힐 수 있습니다. <strong>직류 25,000V는 존재하지 않습니다</strong>. 교류=25,000V, 직류=1,500V로 구분해서 외웁니다.</div>
 <div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 국철 전기철도의 표준 전기방식은?</div><div class="qe-a">정답: 교류 25,000V</div><div class="qe-wrong">오답함정: "직류 25,000V"라고 답하는 오답</div></div>
+<div class="king-book-note"><span class="kb-label">[철도왕 교재]</span>
+<strong>📌 교류 25,000V vs 직류 1,500V — 혼동 주의</strong>
+<table style="width:100%;border-collapse:collapse;margin-top:8px;font-size:0.9em">
+<thead><tr style="background:#ffe0b2"><th style="padding:5px 8px;border:1px solid #ffcc80;text-align:left">방식</th><th style="padding:5px 8px;border:1px solid #ffcc80;text-align:left">적용</th><th style="padding:5px 8px;border:1px solid #ffcc80;text-align:left">특징</th></tr></thead>
+<tbody>
+<tr><td style="padding:5px 8px;border:1px solid #ffe0b2"><strong>교류 25,000V</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2">국철 (KTX·새마을 등)</td><td style="padding:5px 8px;border:1px solid #ffe0b2">점착성능 우수, 변전소 간격 넓음</td></tr>
+<tr style="background:#fffde7"><td style="padding:5px 8px;border:1px solid #ffe0b2"><strong>직류 1,500V</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2">구형 도시철도</td><td style="padding:5px 8px;border:1px solid #ffe0b2">터널 단면 작음, 통신유도장애 적음</td></tr>
+</tbody></table>
+<div style="margin-top:8px;font-size:0.88em;color:#bf360c">⚠️ 함정: "직류 25,000V" → 존재하지 않음! / "교류가 통신유도장애 적다" → 직류가 적음</div>
+</div>
 </div><div class="concept" id="p2-08">
 <div class="concept-title"><span class="cnum">개념 08</span>집전장치 비해당</div>
 <p><strong>집전장치 O:</strong> 팬터그래프 / 트롤리 폴 / 뷰겔 / 집전슈</p><div class="vis-wrap"><img src="images/VIS-034_집전장치종류비교.jpg" alt="집전장치 종류 비교" loading="eager"><p class="vis-cap">집전장치 종류 비교</p></div><div class="trap">⚠️ 함정 주의: <strong>축전지</strong> → 집전장치 아님 (전력 저장장치)</div>
@@ -459,6 +469,16 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><strong>캔트 부족</strong></td><td>원심력 미상쇄 → 승차감 저하 → <strong>외측 레일 편마모·전도 위험</strong></td><td>고속 열차</td></tr>
 </tbody></table></div>
 <div class="trap">⚠️ 함정 주의: 캔트 과다=<strong>저속 위험(내측)</strong>, 캔트 부족=<strong>고속 위험(외측)</strong> — 방향 혼동 최다 실수</div>
+<div class="king-book-note"><span class="kb-label">[철도왕 교재]</span><br>
+📌 캔트 최대값 수치 암기 필수 (p191)<br>
+<ul>
+<li>일반선 최대캔트: <strong>160mm</strong></li>
+<li>고속선 최대캔트: <strong>130mm</strong></li>
+<li>캔트 공식: C = <strong>GV² / 127R</strong> (G: 궤간(m), V: 속도(km/h), R: 반경(m))</li>
+</ul>
+⚠️ 기출 함정: 고속선 캔트 <strong>130mm &lt; 일반선 160mm</strong> — 고속선이 더 크다는 오답 선지 주의<br>
+⚠️ 슬랙 최대값: 일반선 <strong>30mm</strong>, 완화구간에서 서서히 체감
+</div>
 </div><div class="concept" id="p3-29">
 <div class="concept-title"><span class="cnum">개념 29</span>완화곡선</div>
 <div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>정의</td><td>직선과 원곡선 사이에 삽입하는 <strong>점이(漸移) 구간</strong></td></tr><tr><td>목적</td><td>승차감 향상 / 급격한 원심력 변화 방지 / 탈선 위험 감소</td></tr><tr><td>효과</td><td>캔트·슬랙이 <strong>서서히</strong> 변화 (급변 없음)</td></tr><tr><td>종류</td><td><strong>클로소이드 곡선</strong> (가장 많이 사용) / 3차 포물선</td></tr></tbody></table></div>
@@ -476,6 +496,16 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 </div>
 <div class="trap">⚠️ 함정 주의: 완화곡선 없으면 직선→원곡선 진입 시 원심력 급변 → 승차감 불량·탈선 위험</div>
 <div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 완화곡선이 없을 때 발생하는 문제는?</div><div class="qe-a">정답: 직선→원곡선 진입 시 원심력 급변 → 승차감 불량·탈선 위험</div><div class="qe-wrong">오답함정: "완화곡선 없어도 문제없다"는 오답</div></div>
+<div class="king-book-note"><span class="kb-label">[철도왕 교재]</span><br>
+📌 완화곡선 핵심 정리 (p191)<br>
+<ul>
+<li>가장 많이 사용: <strong>클로소이드(Clothoid)</strong> 곡선 = 코르뉴의 나선 = 오일러의 나선</li>
+<li>선형 순서: <strong>직선 → 완화곡선 → 원곡선</strong></li>
+<li>역할: 캔트·슬랙을 서서히 변화시켜 원심력 급변 방지</li>
+</ul>
+⚠️ 기출 함정: "종곡선"과 혼동 금지 — 완화곡선=<strong>평면 방향(수평)</strong>, 종곡선=수직면(구배 변화점)<br>
+⚠️ 기출 함정: 완화곡선 없으면 → 직선→원곡선 전이 시 원심력 <strong>급변</strong> → 탈선·승차감 불량
+</div>
 <div class="concept" id="p3-30">
 <div class="concept-title"><span class="cnum">개념 30</span>종곡선 — 구배 변화점 처리</div>
 <div class="table-wrap"><table><thead><tr><th>구분</th><th>정의</th><th>설치 위치</th></tr></thead><tbody>
@@ -543,6 +573,17 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="vis-wrap"><img src="images/VIS-036_장대레일부동구간.jpg" alt="장대레일 부동구간" loading="eager"><p class="vis-cap">장대레일 부동구간</p></div><div class="vis-wrap"><img src="images/VIS-037_복진현상도해.jpg" alt="복진 현상 방향 도해" loading="eager"><p class="vis-cap">복진 현상 방향 도해</p></div><div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>장대레일 정의</td><td><strong>200m 이상</strong> 레일</td></tr><tr><td>부동구간</td><td>레일 중심부 — 체결력+도상저항력이 신축 구속</td></tr><tr><td>복진 정의</td><td>열차 주행·온도변화로 레일이 <strong>전후방향</strong>으로 이동</td></tr><tr><td>재설정</td><td>체결장치 풀기 → 레일 가열(28℃) → 재체결</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: 레일 통과톤수: <strong>2~5억 톤</strong> ← 10억 톤 교체 함정</div>
 <div class="theory-note"><strong>이론 배경:</strong> 장대레일(200m 이상)은 이음매를 줄여 <strong>승차감 향상, 소음 감소</strong>의 효과가 있습니다. 복진은 열차 반복하중·온도 변화로 레일이 진행 방향으로 밀리는 현상으로, 체결장치와 도상저항력으로 방지합니다.</div>
 <div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 장대레일의 정의 기준 길이는?</div><div class="qe-a">정답: 200m 이상</div><div class="qe-wrong">오답함정: "100m 이상"으로 혼동하는 오답</div></div>
+<div class="king-book-note"><span class="kb-label">[철도왕 교재]</span>
+<strong>📌 장대레일 핵심 수치 3개 — 숫자 암기 필수</strong>
+<table style="width:100%;border-collapse:collapse;margin-top:8px;font-size:0.9em">
+<thead><tr style="background:#ffe0b2"><th style="padding:5px 8px;border:1px solid #ffcc80;text-align:left">항목</th><th style="padding:5px 8px;border:1px solid #ffcc80;text-align:left">기준값</th><th style="padding:5px 8px;border:1px solid #ffcc80;text-align:left">함정</th></tr></thead>
+<tbody>
+<tr><td style="padding:5px 8px;border:1px solid #ffe0b2"><strong>정의 기준</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2"><strong>200m 이상</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2">100m 이상 → 오답</td></tr>
+<tr style="background:#fffde7"><td style="padding:5px 8px;border:1px solid #ffe0b2"><strong>도상두께</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2"><strong>450mm 이상</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2">400mm → 오답</td></tr>
+<tr><td style="padding:5px 8px;border:1px solid #ffe0b2"><strong>재설정 온도</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2"><strong>28℃</strong> (가열 후 재체결)</td><td style="padding:5px 8px;border:1px solid #ffe0b2">25℃ → 오답</td></tr>
+</tbody></table>
+<div style="margin-top:8px;font-size:0.88em;color:#bf360c">⚠️ 레일 교체 기준: 통과톤수 2~5억 톤 (10억 톤 → 함정)</div>
+</div>
 </div><div class="concept" id="p4-17">
 <div class="concept-title"><span class="cnum">개념 17</span>침목 비교</div><div class="vis-wrap"><img src="images/VIS-041_침목비교카드.png" alt="목침목 vs PC침목 비교 카드" loading="eager"><p class="vis-cap">목침목 vs PC침목 비교 카드</p></div>
 <div class="table-wrap"><table><colgroup><col style="width:1500px"><col style="width:3000px"><col style="width:3000px"><col style="width:2560px"></colgroup><thead><tr><th>구분</th><th>장점</th><th>단점</th><th>함정</th></tr></thead><tbody><tr><td><strong>목침목</strong></td><td>탄성·완충성 큼 / 전기절연도 큼</td><td><strong>부식 우려</strong> (6개월~1년 건조+방부처리)</td><td>부식 없다 ❌</td></tr><tr><td><strong>PC침목</strong></td><td>내구년한 김 / 궤도안정</td><td><strong>전기절연도 낮음</strong></td><td>절연도 높다 ❌</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>PC침목 검사</th><th>주기</th></tr></thead><tbody><tr><td>본선</td><td>연 <strong>1회</strong> 이상</td></tr><tr><td>측선</td><td><strong>2년 1회</strong> 이상</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: PC침목 측선 검사: 2년 1회 ← 1년 1회 교체</div>
@@ -560,6 +601,16 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="trap">⚠️ 함정 주의: 조립 크로싱 마모 → 용접육성으로 원형복귀 <strong>가능</strong> (교체 불필요)</div>
 <div class="theory-note"><strong>이론 배경:</strong> 분기기는 열차를 다른 선로로 전환하는 장치입니다. <strong>탈선분기기</strong>는 신호 오인 사고를 예방하기 위해 의도적으로 차량을 탈선시키는 안전장치입니다. 다이아몬드 크로싱은 두 선로가 평면 교차하는 지점입니다.</div>
 <div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 두 선로가 평면교차하는 분기기의 명칭은?</div><div class="qe-a">정답: 다이아몬드 크로싱</div><div class="qe-wrong">오답함정: "탄성분기기"라고 답하는 오답</div></div>
+<div class="king-book-note"><span class="kb-label">[철도왕 교재]</span><br>
+📌 분기기 구성 3부분 순서 — <strong>포·리·크</strong> (p191)<br>
+<ul>
+<li>① <strong>포인트부</strong>: 텅레일(이동)+기본레일(고정) → 열차 진로 전환 결정</li>
+<li>② <strong>리드부</strong>: 리드레일이 차륜을 포인트부→크로싱부로 유도</li>
+<li>③ <strong>크로싱부</strong>: 두 레일 X자 교차, 틈새(노치) 발생 → 호륜레일로 보완</li>
+</ul>
+💡 두음 암기: <strong>포→리→크</strong> (이 순서 반드시!)<br>
+⚠️ 기출 함정: 조립 크로싱 마모 → 교체 ❌ → <strong>용접육성</strong>으로 원형 복귀
+</div>
 <div class="concept" id="p4-19">
 <div class="concept-title"><span class="cnum">개념 19</span>도상 저항력 — 횡저항·종저항</div>
 <div class="table-wrap"><table><thead><tr><th>종류</th><th>방향</th><th>역할</th><th>관련</th></tr></thead><tbody>
@@ -577,6 +628,16 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="vis-wrap"><img src="images/VIS-026_건널목3종비교표.jpg" alt="건널목 3종 비교표" loading="eager"><p class="vis-cap">건널목 3종 비교표</p></div><div class="table-wrap"><table><thead><tr><th>종류</th><th>설비</th><th>인원</th></tr></thead><tbody><tr><td><strong>1종</strong></td><td>차단기 + 경보기 + 표지</td><td>주야간 작동 또는 안내원 근무</td></tr><tr><td><strong>2종</strong></td><td>경보기 + 표지만</td><td><strong>무인</strong> (간수 불필요)</td></tr><tr><td><strong>3종</strong></td><td>교통안전표지판만</td><td>무인</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>2종 = 차단기 없음, 경보기+표지만, 무인</strong></div><div class="tip">★ 건널목 호륜레일 간격: 직선구간 본선과 <strong>65mm</strong> (안전레일 180mm와 혼동 주의)</div>
 <div class="theory-note"><strong>이론 배경:</strong> 건널목은 도로와 철도가 평면으로 교차하는 지점입니다. <strong>2종=경보기+표지(차단기 없음), 무인</strong>이 핵심 함정 포인트입니다. 1종이 가장 안전하고 3종이 가장 단순합니다.</div>
 <div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 차단기 없이 경보기와 표지만 설치된 건널목은 몇 종인가?</div><div class="qe-a">정답: 2종 건널목</div><div class="qe-wrong">오답함정: "1종이 경보기만 있다"는 오답</div></div>
+<div class="king-book-note"><span class="kb-label">[철도왕 교재]</span><br>
+📌 건널목 1·2·3종 핵심 비교 암기 (p208)<br>
+<table><thead><tr><th>종별</th><th>차단기</th><th>경보기</th><th>인원</th></tr></thead><tbody>
+<tr><td><strong>1종</strong></td><td>✅ 있음</td><td>있음</td><td>주야간 작동 / 안내원 근무</td></tr>
+<tr><td><strong>2종</strong></td><td>❌ <strong>없음</strong></td><td>있음</td><td>무인</td></tr>
+<tr><td><strong>3종</strong></td><td>❌ 없음</td><td>없음</td><td>무인 (표지만)</td></tr>
+</tbody></table>
+⚠️ 기출 함정: <strong>2종 = 차단기 없음</strong> (1종만 차단기 있음!)<br>
+⚠️ 기출 함정: "1종은 무인이다" → 틀림. 무인은 2종·3종
+</div>
 </div><div class="concept" id="p5-20">
 <div class="concept-title"><span class="cnum">개념 20</span>선로 4종 비교 ⚠️ 핵심 함정</div>
 <div class="vis-wrap"><img src="images/VIS-028_선로4종비교.jpg" alt="선로 4종 비교" loading="eager"><p class="vis-cap">선로 4종 비교</p></div><div class="table-wrap"><table><thead><tr><th>선로</th><th>목적</th></tr></thead><tbody><tr><td><strong>대피선</strong></td><td>추월·대피·장시간 정차</td></tr><tr><td><strong>안전측선</strong></td><td>2개 이상 열차 동시진입 시 <strong>충돌 방지</strong></td></tr><tr><td><strong>피난측선</strong></td><td><strong>급구배</strong>에서 역행차량 충돌 방지</td></tr><tr><td><strong>인상선</strong></td><td>차량 입환 시 사용</td></tr></tbody></table></div><div class="trap">⚠️ 함정 주의: <strong>안전측선 ≠ 피난측선</strong> — 안전측선=동시진입 / 피난측선=급구배 역행</div>
@@ -675,6 +736,19 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="trap">⚠️ 함정 주의: 고속선 최대기울기 <strong>35‰</strong> (일반선 25‰와 혼동 주의)</div>
 <div class="theory-note"><strong>이론 배경:</strong> 기울기(구배)는 수평거리 1000m에 대한 높이차(m)를 ‰로 표현합니다. 상구배는 열차 진행 방향이 오르막이므로 저항으로 작용하고, 하구배는 가속 작용합니다. 구배저항 R = W×i (W: 열차중량 ton, i: 기울기 ‰)로 계산합니다.</div>
 <div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 고속철도(KTX)의 최대 허용 기울기는?</div><div class="qe-a">정답: 35‰</div><div class="qe-wrong">오답함정: "25‰(일반선 기준)"으로 답하는 경우</div></div>
+<div class="king-book-note"><span class="kb-label">[철도왕 교재]</span>
+<strong>📌 구배 종류 5가지 — 지배·환산·가상·타력·제한구배</strong>
+<table style="width:100%;border-collapse:collapse;margin-top:8px;font-size:0.9em">
+<thead><tr style="background:#ffe0b2"><th style="padding:5px 8px;border:1px solid #ffcc80;text-align:left">구분</th><th style="padding:5px 8px;border:1px solid #ffcc80;text-align:left">정의</th><th style="padding:5px 8px;border:1px solid #ffcc80;text-align:left">시험 포인트</th></tr></thead>
+<tbody>
+<tr><td style="padding:5px 8px;border:1px solid #ffe0b2"><strong>지배구배</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2">열차 견인력을 결정하는 노선 내 최대구배</td><td style="padding:5px 8px;border:1px solid #ffe0b2">기관차 견인력 산정 기준</td></tr>
+<tr style="background:#fffde7"><td style="padding:5px 8px;border:1px solid #ffe0b2"><strong>환산구배</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2">구배저항 + 곡선저항을 구배 수치로 환산</td><td style="padding:5px 8px;border:1px solid #ffe0b2">곡선+구배 복합 구간 적용</td></tr>
+<tr><td style="padding:5px 8px;border:1px solid #ffe0b2"><strong>가상구배</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2">환산구배와 실구배를 합산한 설계 기준</td><td style="padding:5px 8px;border:1px solid #ffe0b2">터널·곡선 병행 구간 설계</td></tr>
+<tr style="background:#fffde7"><td style="padding:5px 8px;border:1px solid #ffe0b2"><strong>타력구배</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2">열차 타력(관성)으로 극복 가능한 구배</td><td style="padding:5px 8px;border:1px solid #ffe0b2">동력 없이 관성으로 통과 가능</td></tr>
+<tr><td style="padding:5px 8px;border:1px solid #ffe0b2"><strong>제한구배</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2">법령상 열차 운행 최대 허용 구배</td><td style="padding:5px 8px;border:1px solid #ffe0b2">일반선 <strong>25‰</strong> / 고속선 <strong>35‰</strong></td></tr>
+</tbody></table>
+<div style="margin-top:8px;font-size:0.88em;color:#bf360c">⚠️ 지배구배 ≠ 최대구배: 지배구배는 견인력 결정 기준, 제한구배는 법적 허용 한계</div>
+</div>
 </div>
 
 <div class="concept" id="p8-34">
@@ -690,6 +764,16 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="trap">⚠️ 함정 주의: 급구배·급곡선 → <strong>동력분산식</strong> 유리 (집중식은 불리)</div>
 <div class="theory-note"><strong>이론 배경:</strong> 동력분산식은 동력차가 여러 칸에 나뉘어 각 차축에서 견인력을 만들기 때문에, 점착력이 분산되어 급구배 노선에 적합합니다. 동력집중식은 기관차에만 동력이 있어 구조가 단순하지만 점착 한계가 존재합니다.</div>
 <div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 급구배 노선에 유리한 동력방식은?</div><div class="qe-a">정답: 동력분산식 (다축 점착 분산)</div><div class="qe-wrong">오답함정: "동력집중식"으로 답하는 경우</div></div>
+<div class="king-book-note"><span class="kb-label">[철도왕 교재]</span>
+<strong>📌 동력집중식 vs 동력분산식 — 출제 핵심 4가지</strong>
+<ul style="margin:8px 0 0 0;padding-left:18px;font-size:0.9em;color:#4e342e">
+<li><strong>급구배·급곡선</strong> → 동력<strong>분산</strong>식 유리 (다축 점착 분산)</li>
+<li><strong>점착력</strong>: 분산식 우수 / 집중식 취약</li>
+<li><strong>KTX-1</strong> = 집중식 / <strong>KTX-산천·이음</strong> = 분산식</li>
+<li><strong>유지보수</strong>: 집중식 단순·저렴 / 분산식 복잡·고비용</li>
+</ul>
+<div style="margin-top:8px;font-size:0.88em;color:#bf360c">⚠️ 함정: "급구배에 동력집중식이 유리하다" → 오답 (분산식 유리)</div>
+</div>
 </div>
 
 <div class="concept" id="p8-35">
@@ -1228,6 +1312,17 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr class="hl"><td><strong>방지 조건</strong></td><td colspan="3">선회저항을 적절히 크게 유지</td></tr>
 </tbody></table></div>
 <div class="trap">⚠️ 핵심 구분: 1차=낮은속도·감쇠 / 2차=임계속도이상·증폭(자려진동)</div>
+<div class="king-book-note"><span class="kb-label">[철도왕 교재]</span>
+<strong>📌 사행동(蛇行動) 1차·2차 — 비례 관계 완전 정리</strong>
+<table style="width:100%;border-collapse:collapse;margin-top:8px;font-size:0.9em">
+<thead><tr style="background:#ffe0b2"><th style="padding:5px 8px;border:1px solid #ffcc80;text-align:center">구분</th><th style="padding:5px 8px;border:1px solid #ffcc80;text-align:center">1차 사행동 (차체)</th><th style="padding:5px 8px;border:1px solid #ffcc80;text-align:center">2차 사행동 (대차)</th></tr></thead>
+<tbody>
+<tr><td style="padding:5px 8px;border:1px solid #ffe0b2;text-align:center"><strong>발생 조건</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2;text-align:center">비교적 낮은 속도</td><td style="padding:5px 8px;border:1px solid #ffe0b2;text-align:center">임계속도 이상</td></tr>
+<tr style="background:#fffde7"><td style="padding:5px 8px;border:1px solid #ffe0b2;text-align:center"><strong>진동 특성</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2;text-align:center">속도 증가 시 <strong>감쇠</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2;text-align:center">속도 초과 시 <strong>증폭</strong> (자려진동)</td></tr>
+<tr><td style="padding:5px 8px;border:1px solid #ffe0b2;text-align:center"><strong>비례</strong></td><td style="padding:5px 8px;border:1px solid #ffe0b2">궤간↑ · 차륜지름↑ 비례<br>차륜 답면구배↑ <em>반비례</em></td><td style="padding:5px 8px;border:1px solid #ffe0b2">1축 사행동 · 축거↑ 비례<br>궤간↑ <em>반비례</em></td></tr>
+</tbody></table>
+<div style="margin-top:8px;font-size:0.88em;color:#bf360c">⚠️ 방지 조건: 선회저항을 적절히 크게 유지 / 2차=자려진동(임계속도 초과 시 증폭)</div>
+</div>
 </div>
 
 <div class="concept" id="p11-79">

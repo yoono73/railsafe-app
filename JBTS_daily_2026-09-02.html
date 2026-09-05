@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정보통신기사 실기 — 2026-09-02 훈련지</title>
+<style>
+  body{background:#f8f9fa;color:#1a1a1a;font-family:-apple-system,'Malgun Gothic',sans-serif;
+       max-width:880px;margin:0 auto;padding:24px;line-height:1.7}
+  h1{font-size:22px;border-bottom:3px solid #2563eb;padding-bottom:10px}
+  .meta{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;font-size:14px}
+  .chip{display:inline-block;background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe;
+        font-size:13px;font-weight:700;padding:3px 10px;border-radius:99px;margin:3px 4px 3px 0}
+  .q{background:#fff;border:1px solid #e5e7eb;border-left:5px solid #2563eb;border-radius:8px;
+     padding:16px 20px;margin:18px 0}
+  .tag{display:inline-block;background:#dbeafe;color:#1e40af;font-size:12px;font-weight:700;
+       padding:2px 8px;border-radius:4px;margin-right:6px}
+  .type{display:inline-block;background:#fef3c7;color:#92400e;font-size:12px;padding:2px 8px;border-radius:4px}
+  .prompt{font-weight:700;font-size:16px;margin:10px 0}
+  .blank{border-bottom:1.5px solid #9ca3af;display:inline-block;min-width:90px}
+  .answerbox{border:1px dashed #ced4da;border-radius:8px;background:#fcfcfd;min-height:88px;
+             padding:10px 12px;color:#adb5bd;font-size:13px}
+  details{margin-top:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px}
+  summary{cursor:pointer;font-weight:700;color:#166534}
+  .key{background:#fff8e1;border-left:4px solid #f0b429;padding:9px 13px;margin-top:12px;font-size:14px}
+  .calc{background:#f4f7fb;border-radius:6px;padding:12px 14px;font-family:Consolas,Menlo,monospace;
+        font-size:13.5px;margin:8px 0;white-space:pre-line}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+  th,td{border:1px solid #e5e7eb;padding:6px 10px;text-align:left}
+  th{background:#f3f4f6}
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:14px}
+  code{background:#f3f4f6;padding:1px 5px;border-radius:3px;font-size:13px}
+  footer{color:#868e96;font-size:13px;text-align:center;margin:26px 0 8px}
+</style>
+</head>
+<body>
+
+<h1>📘 정보통신기사 실기 필답형 — 2026-09-02 (수)</h1>
+
+<div class="meta">
+  <b>오늘의 훈련 대상 4문제</b><br>
+  <span class="chip">C05 인증(초고속/홈네트워크)</span>
+  <span class="chip">C09 유지보수(PM/CM/예측)</span>
+  <span class="chip">C10 설계단계 감리</span>
+  <span class="chip">T05 ICMP</span>
+  <div style="color:#5c6570;font-size:13px;margin-top:8px">
+    선정 근거: 오답(wrong) 기록이 없어 전 토픽이 기한 도래 상태입니다. <b>3순회 4일차(3순회 1바퀴 완료)</b>로,
+    9/1에 예고한 대로 <b>8/29 배치(C05·C09·C10·T05)</b>를 재배정했습니다.
+    1순회(8/25)·2순회(8/29) 유형은 전부 회피했습니다
+    (C05 수치암기·빈칸형 / 현장 판정형 → <b>인증 체크리스트 오류 정정형</b> /
+     C09 서술 비교형 / 사례 분류형 → <b>보전전략 선정 + MTTR 개선효과 계산형</b> /
+     C10 열거형 / 단계 구분·빈칸형 → <b>설계도서 역매칭 + 검토 지적서 작성형</b> /
+     T05 서술·열거형 / 진단 시나리오 판독형 → <b>메시지 타입번호 매칭 + 방화벽 차단 영향 분석형</b>).
+  </div>
+</div>
+
+<div class="note">
+  ⏱ <b>권장 시간 32분</b> — 문항당 8분. 답을 먼저 손으로 쓴 뒤에만 정답을 펼치세요.<br>
+  채점 후 <b>"오늘 점수: C05 n/m, C09 n/m, C10 n/m, T05 n/m"</b> 형식으로 알려주시면
+  트래커의 streak·다음 복습일을 반영합니다. (미입력 시 streak은 변동 없이 보존됩니다.)
+</div>
+
+<!-- ===================== 문제 1 : C05 ===================== -->
+<div class="q">
+  <span class="tag">C05</span><span class="type">인증 체크리스트 오류 정정형</span>
+  <div class="prompt">문제 1. 아래는 신축 공동주택의 <b>초고속정보통신건물 인증</b> 준비 체크리스트이다.
+  각 항목의 <b>적정(O) / 부적정(X)</b> 을 판정하고, 부적정 항목은 <b>올바른 내용으로 정정</b>하시오. (8점)</div>
+
+  <table>
+    <tr><th style="width:8%">번호</th><th>체크리스트 기재 내용</th><th style="width:12%">O/X</th><th style="width:26%">정정 내용</th></tr>
+    <tr><td>①</td><td>초고속정보통신건물 인증 등급은 <b>1등급·2등급 2가지</b>로 구분된다.</td><td></td><td></td></tr>
+    <tr><td>②</td><td>인증 신청에 대한 <b>처리기간은 30일 이내</b>이다.</td><td></td><td></td></tr>
+    <tr><td>③</td><td>지능형홈네트워크설비 설치확인(인증) 역시 <b>특등급·1등급·2등급</b>으로 구분된다.</td><td></td><td></td></tr>
+    <tr><td>④</td><td>구내통신설비의 <b>접지저항은 100Ω 이하</b>를 확보하면 된다.</td><td></td><td></td></tr>
+    <tr><td>⑤</td><td>절연저항은 <b>250V DC</b>로 측정하여 <b>5MΩ 이상</b>이면 합격이다.</td><td></td><td></td></tr>
+    <tr><td>⑥</td><td>인증 대상 건축물은 <b>공동주택 및 업무시설</b>이다.</td><td></td><td></td></tr>
+  </table>
+  <div class="answerbox" style="margin-top:10px">답안 작성란</div>
+
+  <details><summary>▶ 모범답안 보기</summary>
+    <table>
+      <tr><th>번호</th><th>판정</th><th>정정 내용</th></tr>
+      <tr><td>①</td><td><b>X</b></td><td><b>특등급·1등급·2등급 3가지</b>로 구분 (특등급 누락이 최다 실점)</td></tr>
+      <tr><td>②</td><td><b>X</b></td><td>처리기간 <b>20일 이내</b></td></tr>
+      <tr><td>③</td><td><b>O</b></td><td>지능형홈네트워크설비도 <b>특·1·2등급</b> 동일 체계, 처리기간도 20일 이내</td></tr>
+      <tr><td>④</td><td><b>X</b></td><td>원칙 <b>10Ω 이하</b>. 100Ω 이하는 <b>회선수 100회선 이하</b>인 경우의 예외 규정</td></tr>
+      <tr><td>⑤</td><td><b>X</b></td><td><b>500V DC</b>로 측정하여 <b>10MΩ 이상</b></td></tr>
+      <tr><td>⑥</td><td><b>O</b></td><td>공동주택·업무시설이 인증 대상</td></tr>
+    </table>
+    <div class="key">🔑 <b>“특·1·2 / 20일”</b> 두 덩어리로 암기 — 초고속정보통신건물·지능형홈네트워크 <b>둘 다 동일</b>.<br>
+    ⚠️ 함정 3종: (1) 등급을 2가지로 쓰는 실수, (2) 처리기간 30일 오답,
+    (3) <b>접지 10Ω(예외 100회선 이하 → 100Ω)</b> 과 <b>절연 500V DC·10MΩ</b> 수치 혼동.<br>
+    접지선 굵기도 함께: <b>10Ω → 2.6mm</b>, <b>100Ω → 1.6mm</b>.</div>
+  </details>
+</div>
+
+<!-- ===================== 문제 2 : C09 ===================== -->
+<div class="q">
+  <span class="tag">C09</span><span class="type">보전전략 선정 + MTTR 개선효과 계산형</span>
+  <div class="prompt">문제 2. 어느 구내 광전송장비의 <b>6개월(4,344시간)</b> 운용 실적이 아래와 같다. (8점)</div>
+
+  <div class="calc">◦ 총 운용(달력)시간 : 4,344 h
+◦ 고장 발생 횟수   : 6 회
+◦ 총 수리시간 합계 : 24 h</div>
+
+  <div><b>(1)</b> MTBF, MTTR, 가용도 A[%]를 각각 구하시오. (소수 둘째자리까지)</div>
+  <div><b>(2)</b> NMS 원격감시를 도입하여 <b>MTTR을 4h → 1h</b>로 단축했을 때의 가용도와,
+  <b>연간(8,760h) 다운타임</b> 이 몇 시간 줄어드는지 구하시오.</div>
+  <div><b>(3)</b> 아래 ㉠~㉢ 조치가 <b>예방보전(PM)·사후보전(CM)·예측보전(PdM)</b> 중 무엇인지 쓰고,
+  (2)의 개선은 <b>MTBF와 MTTR 중 어느 지표</b>를 개선한 것인지 답하시오.</div>
+  <table>
+    <tr><td style="width:8%">㉠</td><td>광커넥터 손실을 매월 OTDR로 측정해 <b>열화 추세를 분석</b>, 임계치 도달 전 교체</td><td style="width:22%"></td></tr>
+    <tr><td>㉡</td><td>장비 정지 후 <b>6개월 주기 정기점검</b> 및 필터·팬 교체</td><td></td></tr>
+    <tr><td>㉢</td><td>회선 <b>단선 발생 후</b> 출동하여 융착 접속으로 복구</td><td></td></tr>
+  </table>
+  <div class="answerbox" style="margin-top:10px">답안 작성란</div>
+
+  <details><summary>▶ 모범답안 보기</summary>
+    <div><b>(1)</b></div>
+    <div class="calc">정상동작시간 = 4,344 − 24 = 4,320 h
+MTBF = 4,320 / 6 = <b>720 h</b>
+MTTR = 24 / 6 = <b>4 h</b>
+A = MTBF / (MTBF + MTTR) × 100
+  = 720 / (720 + 4) × 100 = 720 / 724 × 100 = <b>99.45 %</b></div>
+
+    <div><b>(2)</b></div>
+    <div class="calc">개선 후 A' = 720 / (720 + 1) × 100 = 720 / 721 × 100 = <b>99.86 %</b>
+
+연간 다운타임(개선 전) = 8,760 × (4 / 724)   = 8,760 × 0.005525 ≒ <b>48.40 h</b>
+연간 다운타임(개선 후) = 8,760 × (1 / 721)   = 8,760 × 0.001387 ≒ <b>12.15 h</b>
+∴ 감소량 ≒ 48.40 − 12.15 = <b>약 36.25 h/년 단축</b></div>
+
+    <div><b>(3)</b></div>
+    <table>
+      <tr><th>기호</th><th>보전 유형</th><th>근거</th></tr>
+      <tr><td>㉠</td><td><b>예측보전(PdM)</b></td><td>상태 모니터링·추세 분석으로 고장 <b>전</b> 조치</td></tr>
+      <tr><td>㉡</td><td><b>예방보전(PM)</b></td><td>고장 전 <b>정기(주기) 점검</b></td></tr>
+      <tr><td>㉢</td><td><b>사후보전(CM)</b></td><td>고장 <b>후</b> 수리</td></tr>
+    </table>
+    <div style="margin-top:8px">NMS 원격감시 도입은 고장 발견·복구 시간을 줄이므로 <b>MTTR(보수성, Serviceability) 개선</b>.
+    MTBF는 이중화·부품 신뢰도 향상으로 개선되는 지표로 구분해야 한다.</div>
+    <div class="key">🔑 <b>RAS</b> = 신뢰성(Reliability, MTBF) · 가용성(Availability, A) · 보수성(Serviceability, MTTR).<br>
+    ⚠️ 함정: 총 운용시간 4,344를 그대로 6으로 나눠 MTBF=724로 쓰면 오답 —
+    <b>MTBF는 “정상동작시간” ÷ 고장횟수</b>(수리시간 24h를 먼저 뺀다).<br>
+    ⚠️ 함정: “원격감시 도입 → 신뢰성 향상”으로 쓰면 감점. 원격감시는 <b>관리성/보수성(MTTR)</b>.</div>
+  </details>
+</div>
+
+<!-- ===================== 문제 3 : C10 ===================== -->
+<div class="q">
+  <span class="tag">C10</span><span class="type">설계도서 역매칭 + 검토 지적서 작성형</span>
+  <div class="prompt">문제 3. 설계단계 감리원이 설계도서를 검토하여 아래와 같이 지적하였다. (8점)</div>
+
+  <div><b>(1)</b> 각 지적사항이 <b>설계도서 5종</b> 중 어느 문서에 대한 지적인지 쓰시오.
+  <br><span style="font-size:13.5px;color:#5c6570">보기: 설계설명서 · 공사계획서 · 기술계산서 · 설계도면 · 공사비명세서</span></div>
+  <table>
+    <tr><th style="width:8%">기호</th><th>지적사항</th><th style="width:26%">해당 설계도서</th></tr>
+    <tr><td>㉠</td><td>단자함 위치와 배관 경로가 건축 평면과 간섭되어 시공이 불가함 (치수·심볼 표기 오류)</td><td></td></tr>
+    <tr><td>㉡</td><td>수량 산출 근거 없이 자재 단가가 계상되어 있고, 일반관리비 요율이 잘못 적용됨</td><td></td></tr>
+    <tr><td>㉢</td><td>전송로 손실예산(Link Budget)과 접지저항 산정 근거가 누락됨</td><td></td></tr>
+    <tr><td>㉣</td><td>공사 예정공정표와 안전관리계획이 포함되지 않아 착공 준비 검토가 불가함</td><td></td></tr>
+    <tr><td>㉤</td><td>적용 규격·자재 사양·시공 방법에 대한 서술이 없어 품질기준 확인이 불가함</td><td></td></tr>
+  </table>
+
+  <div style="margin-top:14px"><b>(2)</b> 위 ㉠~㉤ 중 <b>㉣이 속한 문서에 반드시 포함되어야 할 항목 5가지</b>를 쓰시오.</div>
+  <div style="margin-top:10px"><b>(3)</b> 아래 업무 중 <b>설계단계 감리업무</b>에 해당하는 것을 모두 고르시오.
+  <br><code>ⓐ 설계기준 적정성 검토</code> <code>ⓑ 기성검사</code> <code>ⓒ 시공성(Constructability) 검토</code>
+  <code>ⓓ 기술계산서 검토</code> <code>ⓔ 사용전검사</code> <code>ⓕ 설계변경 검토</code> <code>ⓖ 시설물 인계인수</code></div>
+  <div class="answerbox" style="margin-top:10px">답안 작성란</div>
+
+  <details><summary>▶ 모범답안 보기</summary>
+    <div><b>(1) 설계도서 역매칭</b></div>
+    <table>
+      <tr><th>기호</th><th>해당 설계도서</th></tr>
+      <tr><td>㉠</td><td><b>설계도면</b></td></tr>
+      <tr><td>㉡</td><td><b>공사비명세서</b></td></tr>
+      <tr><td>㉢</td><td><b>기술계산서</b></td></tr>
+      <tr><td>㉣</td><td><b>공사계획서</b></td></tr>
+      <tr><td>㉤</td><td><b>설계설명서</b></td></tr>
+    </table>
+    <div style="margin-top:10px"><b>(2) 공사계획서 포함 5가지</b><br>
+    ① 공사개요 ② 공정관리계획 ③ 안전관리계획 ④ 공사예정공정표 ⑤ 환경관리계획</div>
+    <div style="margin-top:10px"><b>(3) 설계단계 감리업무 → ⓐ, ⓒ, ⓓ, ⓕ</b><br>
+    ⓑ 기성검사·ⓔ 사용전검사는 <b>준공단계</b>, ⓖ 시설물 인계인수는 <b>인계인수단계</b> 업무이다.</div>
+    <div class="key">🔑 설계도서 5종 두문자 <b>“설·공·기·도·명”</b>
+    = <u>설</u>계설명서 · <u>공</u>사계획서 · <u>기</u>술계산서 · 설계<u>도</u>면 · 공사비<u>명</u>세서.<br>
+    설계단계 감리 5대 업무 = <b>설계기준 적정성 / 설계도서 검토 / 기술계산서 검토 / 설계변경 검토 / 시공성 검토</b>.<br>
+    ⚠️ 함정: <b>기성검사·사용전검사</b>를 설계단계로 분류하는 오답. 이 둘은 <b>준공단계</b>다.</div>
+  </details>
+</div>
+
+<!-- ===================== 문제 4 : T05 ===================== -->
+<div class="q">
+  <span class="tag">T05</span><span class="type">타입번호 매칭 + 방화벽 차단 영향 분석형</span>
+  <div class="prompt">문제 4. ICMP(Internet Control Message Protocol)에 관한 다음 물음에 답하시오. (8점)</div>
+
+  <div><b>(1)</b> 아래 ICMP <b>Type 번호</b>에 해당하는 메시지 명칭과 용도를 쓰시오.</div>
+  <table>
+    <tr><th style="width:12%">Type</th><th style="width:32%">메시지 명칭</th><th>용도</th></tr>
+    <tr><td>0</td><td></td><td></td></tr>
+    <tr><td>3</td><td></td><td></td></tr>
+    <tr><td>5</td><td></td><td></td></tr>
+    <tr><td>8</td><td></td><td></td></tr>
+    <tr><td>11</td><td></td><td></td></tr>
+  </table>
+
+  <div style="margin-top:14px"><b>(2)</b> ICMP가 동작하는 <b>OSI 계층</b>과 <b>캡슐화되는 상위 프로토콜</b>을 쓰시오.</div>
+
+  <div style="margin-top:10px"><b>(3)</b> 보안 강화를 이유로 방화벽에서 <b>ICMP를 전면 차단</b>했을 때 발생하는
+  운용상 문제점 <b>3가지</b>를 쓰고, 권장 조치를 1가지 제시하시오.</div>
+  <div class="answerbox" style="margin-top:10px">답안 작성란</div>
+
+  <details><summary>▶ 모범답안 보기</summary>
+    <div><b>(1)</b></div>
+    <table>
+      <tr><th>Type</th><th>명칭</th><th>용도</th></tr>
+      <tr><td><b>0</b></td><td>Echo Reply</td><td>Echo Request에 대한 응답 (ping 응답)</td></tr>
+      <tr><td><b>3</b></td><td>Destination Unreachable</td><td>목적지 도달 불가 통보 (Code 0 네트워크·1 호스트·3 포트 도달불가, 4 Fragmentation Needed)</td></tr>
+      <tr><td><b>5</b></td><td>Redirect</td><td>더 나은 경로의 게이트웨이로 라우팅 변경 통보</td></tr>
+      <tr><td><b>8</b></td><td>Echo Request</td><td>상대 호스트 도달성 확인 요청 (ping 요청)</td></tr>
+      <tr><td><b>11</b></td><td>Time Exceeded</td><td>TTL 소진(Code 0) 통보 → <b>tracert/traceroute의 동작 원리</b></td></tr>
+    </table>
+    <div style="margin-top:10px"><b>(2)</b> <b>네트워크 계층(IP 계층, OSI 3계층)</b>에서 동작하며,
+    <b>IP 데이터그램의 페이로드로 캡슐화</b>된다(IP 프로토콜 번호 1).
+    TCP·UDP 같은 전송계층 프로토콜을 사용하지 않는다.</div>
+    <div style="margin-top:10px"><b>(3) 전면 차단 시 문제점</b><br>
+    ① <b>ping(Echo Request/Reply) 불가</b> → 장비 생존·도달성 확인 불가, NMS 상태감시 오작동<br>
+    ② <b>traceroute/tracert 불가</b> (Type 11 차단) → 경로 추적·장애 구간 특정 불가<br>
+    ③ <b>Type 3 Code 4(Fragmentation Needed) 차단 → PMTUD 실패</b> →
+       대용량 패킷이 응답 없이 폐기되는 <b>블랙홀 현상</b>, 통신 지연·세션 단절<br>
+    ④ 경로·오류 통보 부재로 장애 진단시간(MTTR) 증가<br>
+    <b>권장 조치</b>: ICMP를 전면 차단하지 말고 <b>필요한 타입만 선별 허용</b>
+    (Type 3 Code 4, Type 11 은 반드시 허용, Echo는 관리망 대역에 한해 허용) +
+    <b>Rate-limit</b> 적용으로 ICMP Flood 공격만 억제.</div>
+    <div class="key">🔑 <b>“0-3-5-8-11”</b> 다섯 숫자로 암기:
+    <b>0 응답 / 3 도달불가 / 5 경로변경 / 8 요청 / 11 시간초과</b>.
+    번호 순서가 <b>Reply(0)가 Request(8)보다 앞</b>이라는 점이 함정.<br>
+    ⚠️ 함정: “ICMP는 전송계층 프로토콜” 또는 “TCP를 사용한다”고 쓰면 오답 —
+    <b>IP에 직접 캡슐화되는 3계층 프로토콜</b>이다.<br>
+    ⚠️ 실무 포인트: <b>ICMP 전면차단 = PMTUD 블랙홀</b> 은 서술형 가점 포인트.</div>
+  </details>
+</div>
+
+<footer>
+  JBTS SRS 자동 훈련 · 2026-09-02 (3순회 4일차, 3순회 1바퀴 완료) ·
+  채점 결과를 알려주시면 트래커에 반영합니다.
+</footer>
+
+</body>
+</html>

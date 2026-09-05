@@ -278,9 +278,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
   </div>
 </div>
 <div class="container">
-  <nav class="toc"><h2>목차</h2><ul><li><a href="#p1" class="toc-part">PART 1. 철도신호 기본 개념</a></li><li><a href="#p2" class="toc-part">PART 2. 신호기 구조상·조작상 분류</a></li><li><a href="#p3" class="toc-part">PART 3. 신호기 기능별 분류 (주·종속·임시)</a></li><li><a href="#p4" class="toc-part">PART 4. 신호기 정위 & 확인거리</a></li><li><a href="#p5" class="toc-part">PART 5. 선로전환기 분류·계통도</a></li><li><a href="#p6" class="toc-part">PART 6. 궤도회로</a></li><li><a href="#p7" class="toc-part">PART 7. 계전기 종류</a></li><li><a href="#p8" class="toc-part">PART 8. 폐색 방식</a></li><li><a href="#p9" class="toc-part">PART 9. 연동장치</a></li><li><a href="#p10" class="toc-part">PART 10. 열차제어시스템</a></li><li><a href="#p11" class="toc-part">PART 11. 건널목 보안장치</a></li><li><a href="#p12" class="toc-part">PART 12. 검지장치 종류</a></li><li><a href="#p13" class="toc-part">PART 13. 고속철도 신호 핵심</a></li><li><a href="#p14" class="toc-part">PART 14. 핵심 수치 통합 암기</a></li><li><a href="#p15" class="toc-part">PART 15. 신유형 대비 (이동폐색·DMI·KTCS)</a></li></ul></nav>
+  <nav class="toc"><h2>목차</h2><ul><li><a href="#p1" class="toc-part">PART 1. 철도신호 기본 개념</a></li><li><a href="#p2" class="toc-part">PART 2. 신호기 구조상·조작상 분류</a></li><li><a href="#p3" class="toc-part">PART 3. 신호기 기능별 분류 (주·종속·임시)</a></li><li><a href="#p4" class="toc-part">PART 4. 신호기 정위 & 확인거리</a></li><li><a href="#p5" class="toc-part">PART 5. 선로전환기 분류·계통도</a></li><li><a href="#p6" class="toc-part">PART 6. 궤도회로</a></li><li><a href="#p7" class="toc-part">PART 7. 계전기 종류</a></li><li><a href="#p8" class="toc-part">PART 8. 폐색 방식</a></li><li><a href="#p9" class="toc-part">PART 9. 연동장치</a></li><li><a href="#p10" class="toc-part">PART 10. 열차제어시스템</a></li><li><a href="#p11" class="toc-part">PART 11. 건널목 보안장치</a></li><li><a href="#p12" class="toc-part">PART 12. 검지장치 종류</a></li><li><a href="#p13" class="toc-part">PART 13. 고속철도 신호 핵심</a></li><li><a href="#p14" class="toc-part">PART 14. 핵심 수치 통합 암기</a></li><li><a href="#p15" class="toc-part">PART 15. 신유형 대비 (이동폐색·DMI·KTCS)</a></li><li><a href="#p16" class="toc-part">PART 16. 철도왕 보충 — 5현시·TTC/CTC·절대신호기·전차선구비조건·접지기준</a></li><li><a href="#p16-s1">보충 1. 신호 현시·운전보안장치</a></li><li><a href="#p16-s2">보충 2. 전차선로·집전장치·AT급전</a></li><li><a href="#p16-s3">보충 3. TTC vs CTC</a></li><li><a href="#p16-s4">보충 4. 절대신호기 해당/비해당</a></li><li><a href="#p16-s5">보충 5. 접지시설 설치 기준</a></li></ul></nav>
   <div class="content">
-    <div class="summary-bar">철도신호 — 15 PARTS | 44개 핵심개념 | VIS-038~048 (11개 이미지) | 함정패턴 6유형 | 신유형 7개념 추가</div>
+    <div class="summary-bar">철도신호 — 16 PARTS | 44+개 핵심개념 | 함정패턴 6유형 | 5현시·TTC/CTC·절대신호기·전차선구비조건·AT급전·접지기준 추가</div>
     <div class="part" id="p1">
   <div class="part-title" onclick="togglePart(this)">
     PART 1. 철도신호 기본 개념 <span class="arrow">▲</span>
@@ -970,8 +970,14 @@ CBTC: <strong>무선통신(Wi-Fi·LTE)</strong>으로 열차↔지상 실시간 
 <div class="concept" id="p16-s1">
 <div class="concept-title"><span class="cnum">보충 1</span>신호 현시·운전보안장치</div>
 <div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span>
-<strong>4현시 (도시철도 지상구간)</strong>: 정지(R) · 주의(Y) · 감속(YG) · 진행(G)<br>
-⚠️ <strong>경계</strong>현시는 4현시에 없음 (5현시에는 있음)
+<strong>현시 구분 비교</strong>
+<table class="info-table" style="margin:6px 0;">
+<tr><th>현시</th><th>구성 (순서: 정지→진행)</th><th>특징</th></tr>
+<tr><td><b>4현시</b></td><td>정지(R) · 주의(Y) · 감속(YG) · 진행(G)</td><td>도시철도 지상구간</td></tr>
+<tr class="hl"><td><b>5현시</b></td><td>정지(R) · <b>경계(YY)</b> · 주의(Y) · 감속(YG) · 진행(G)</td><td><b>경계현시 추가</b></td></tr>
+</table>
+<div class="trap">❌ "4현시에 경계현시 있음" → <b>경계(YY)는 5현시에만 있음</b> (4현시에는 없음)</div>
+<div class="trap">❌ "5현시 순서 = 정지·주의·경계·감속·진행" → <b>정지·경계·주의·감속·진행</b> (경계가 주의 앞)</div>
 </div>
 <table class="info-table" style="margin-top:8px;">
 <tr><th>장치</th><th>설명</th><th>운전보안장치 여부</th></tr>
@@ -1003,7 +1009,80 @@ CBTC: <strong>무선통신(Wi-Fi·LTE)</strong>으로 열차↔지상 실시간 
 <tr><td><b>교류 25kV 이격거리</b></td><td>전차선·급전선 ↔ 접지물 간 절연 이격: <strong>25cm 이상</strong></td></tr>
 </table>
 <div class="trap">지상구간 전차선 구조 = 카테나리식 / 지하구간 = 강체전차선</div>
+<div class="king-book-note" style="margin-top:10px;"><span class="kb-label">📖 철도왕 교재</span>
+<strong>전차선 구비조건 4가지 [빈출]</strong>
+<table class="info-table" style="margin:6px 0;">
+<tr><th>조건</th><th>설명</th></tr>
+<tr class="hl"><td>① 전도율</td><td>전류를 잘 흘릴 수 있는 낮은 전기저항</td></tr>
+<tr><td>② 인장강도</td><td>가선 장력에 견디는 기계적 강도</td></tr>
+<tr class="hl"><td>③ 내구성</td><td>마모·부식에 대한 내구성 (집전판 접촉 마모 포함)</td></tr>
+<tr><td>④ 균일고도</td><td>전체 구간에 걸쳐 전차선 높이가 균일할 것</td></tr>
+</table>
+<div class="trap">❌ "전차선 구비조건 = 절연성" → 전차선 자체는 <b>도체</b>여야 함, 절연성은 조건 아님</div>
+<strong>AT(단권변압기) 급전 원리</strong>
+<table class="info-table" style="margin:6px 0;">
+<tr><th>항목</th><th>내용</th></tr>
+<tr class="hl"><td>급전 전압</td><td>변전소에서 <b>50kV</b>로 급전 → AT에서 <b>25kV</b>로 강압하여 공급</td></tr>
+<tr><td>흡상선 역할</td><td>레일에 흐르는 <b>귀선전류를 흡상</b>하여 대지 누설 억제</td></tr>
+<tr class="hl"><td>흡상선 위치</td><td>단권변압기(AT) 중성점(귀선 측)에 연결</td></tr>
+<tr><td>AT 간격</td><td>약 <b>10~15km</b> 간격으로 설치</td></tr>
+<tr class="hl"><td>장점</td><td>전압 강하 억제 · 귀선 전류 감소 · 전력 손실 감소</td></tr>
+</table>
+<div class="trap">❌ "흡상선 = 전차선에서 전류 공급" → <b>귀선전류 흡상용</b> (급전선 아님)</div>
+</div>
 <br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 온도 변화에 따른 전차선 신축을 조정하기 위해 설치하는 장치는?</div><div class="qe-a">정답: 자동장력조정장치(ATD)</div><div class="qe-wrong">오답함정: "섹션"으로 오답 유도 — 섹션은 전기적 분리용</div></div>
+</div>
+
+</div>
+
+<div class="concept" id="p16-s3">
+<div class="concept-title"><span class="cnum">보충 3</span>TTC vs CTC 차이·기능 범위</div>
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span>
+<strong>TTC / CTC 비교 [빈출]</strong>
+<table class="info-table" style="margin:6px 0;">
+<tr><th>구분</th><th>TTC (Total Traffic Control)</th><th>CTC (Centralized Traffic Control)</th></tr>
+<tr class="hl"><td>의미</td><td>종합교통관제 — 역내 모든 설비를 <b>원격 집중 제어</b></td><td>열차집중제어 — <b>광역 선구</b>의 열차운행 중앙 제어</td></tr>
+<tr><td>제어 범위</td><td><b>1개 역 내부</b> 전체 설비 (신호·선로전환기·조명 등)</td><td><b>복수 역·선구 전체</b> 신호기·선로전환기</td></tr>
+<tr class="hl"><td>역무원 유무</td><td>역무원 없이 원격 운영 <b>가능</b></td><td>각 역 역무원 불필요 → 중앙 집중 운용</td></tr>
+<tr><td>주요 적용</td><td>도시철도·지하철 (무인역)</td><td>일반철도 장거리 선구</td></tr>
+</table>
+<div class="trap">❌ "CTC = 1개 역 장치 제어" → CTC는 <b>선구 전체</b> 열차 집중 제어 (1개 역은 TTC)</div>
+<div class="trap">❌ "TTC와 CTC는 같은 의미" → <b>제어 범위와 목적이 다름</b></div>
+</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 역내 모든 설비를 원격으로 집중 제어하여 역무원 없이 운영 가능하게 하는 시스템은?</div><div class="qe-a">정답: TTC (Total Traffic Control)</div><div class="qe-wrong">오답함정: CTC — CTC는 광역 선구 열차운행 집중 제어</div></div>
+</div>
+
+<div class="concept" id="p16-s4">
+<div class="concept-title"><span class="cnum">보충 4</span>절대신호기 해당 / 비해당 종류</div>
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span>
+<strong>절대신호기 vs 허용신호기 [빈출]</strong>
+<table class="info-table" style="margin:6px 0;">
+<tr><th>구분</th><th>종류</th><th>의미</th></tr>
+<tr class="hl"><td><b>절대신호기</b> ✅</td><td>장내신호기 · 출발신호기 · 폐색신호기 · 엄호신호기</td><td>정지현시 = <b>절대 정지</b> (어떠한 경우도 진입 불가)</td></tr>
+<tr><td><b>허용신호기</b> ❌<br>(절대신호기 아님)</td><td>입환신호기 · 중계신호기 · 유도신호기 · 서행신호기</td><td>정지현시라도 <b>주의·확인 후 진입 허용</b></td></tr>
+</table>
+<div class="trap">❌ "유도신호기 = 절대신호기" → <b>허용신호기</b> (정지라도 조건부 진입 허용)</div>
+<div class="trap">❌ "중계신호기 = 절대신호기" → <b>절대신호기 아님</b> (주신호기 현시 중계 역할)</div>
+<div class="trap">❌ "입환신호기 = 절대신호기" → <b>허용신호기</b> (입환 작업용, 저속 조건부 진입)</div>
+</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 절대신호기에 해당하지 않는 것은?</div><div class="qe-a">정답: 입환신호기·중계신호기·유도신호기·서행신호기 (이들은 허용신호기)</div><div class="qe-wrong">오답함정: 엄호신호기 — 엄호신호기는 절대신호기에 해당함</div></div>
+</div>
+
+<div class="concept" id="p16-s5">
+<div class="concept-title"><span class="cnum">보충 5</span>접지시설 설치 기준·간격</div>
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span>
+<strong>접지시설 설치 기준 [빈출]</strong>
+<table class="info-table" style="margin:6px 0;">
+<tr><th>항목</th><th>기준</th><th>함정</th></tr>
+<tr class="hl"><td>교류전기철도 접지 간격</td><td>전차선로 지지물 기준 <b>50m 이내</b> 마다 설치</td><td>100m ❌</td></tr>
+<tr><td>접지 저항값</td><td><b>10Ω 이하</b></td><td>50Ω ❌</td></tr>
+<tr class="hl"><td>레일 본드 설치 목적</td><td>레일 이음매에서 <b>전기적 연속성</b> 확보 (귀선전류 원활 흐름)</td><td>절연 목적 ❌</td></tr>
+<tr><td>보호선 접지</td><td>급전선과 나란히 설치 → 지락 전류 대지 분산</td><td></td></tr>
+</table>
+<div class="trap">❌ "접지시설 간격 = 100m" → <b>50m 이내</b></div>
+<div class="trap">❌ "레일 본드 = 절연용" → <b>전기적 연속성 확보용</b> (귀선전류 통로)</div>
+</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 교류전기철도에서 접지시설 설치 간격 기준은?</div><div class="qe-a">정답: 전차선로 지지물 기준 50m 이내마다 설치</div><div class="qe-wrong">오답함정: 100m 이내 — 기준이 더 촘촘한 50m</div></div>
 </div>
 
 </div>

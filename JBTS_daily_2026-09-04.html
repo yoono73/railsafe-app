@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정보통신기사 실기 — 2026-09-04 훈련지</title>
+<style>
+  body{background:#f8f9fa;color:#1a1a1a;font-family:-apple-system,'Malgun Gothic',sans-serif;
+       max-width:880px;margin:0 auto;padding:24px;line-height:1.7}
+  h1{font-size:22px;border-bottom:3px solid #2563eb;padding-bottom:10px}
+  .meta{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;font-size:14px}
+  .chip{display:inline-block;background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe;
+        font-size:13px;font-weight:700;padding:3px 10px;border-radius:99px;margin:3px 4px 3px 0}
+  .q{background:#fff;border:1px solid #e5e7eb;border-left:5px solid #2563eb;border-radius:8px;
+     padding:16px 20px;margin:18px 0}
+  .tag{display:inline-block;background:#dbeafe;color:#1e40af;font-size:12px;font-weight:700;
+       padding:2px 8px;border-radius:4px;margin-right:6px}
+  .type{display:inline-block;background:#fef3c7;color:#92400e;font-size:12px;padding:2px 8px;border-radius:4px}
+  .prompt{font-weight:700;font-size:16px;margin:10px 0}
+  .blank{border-bottom:1.5px solid #9ca3af;display:inline-block;min-width:90px}
+  .answerbox{border:1px dashed #ced4da;border-radius:8px;background:#fcfcfd;min-height:88px;
+             padding:10px 12px;color:#adb5bd;font-size:13px}
+  details{margin-top:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px}
+  summary{cursor:pointer;font-weight:700;color:#166534}
+  .key{background:#fff8e1;border-left:4px solid #f0b429;padding:9px 13px;margin-top:12px;font-size:14px}
+  .calc{background:#f4f7fb;border-radius:6px;padding:12px 14px;font-family:Consolas,Menlo,monospace;
+        font-size:13.5px;margin:8px 0;white-space:pre-line}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+  th,td{border:1px solid #e5e7eb;padding:6px 10px;text-align:left}
+  th{background:#f3f4f6}
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:14px}
+  code{background:#f3f4f6;padding:1px 5px;border-radius:3px;font-size:13px}
+  .bad{color:#b91c1c;font-weight:700}
+  .ok{color:#15803d;font-weight:700}
+  footer{color:#868e96;font-size:13px;text-align:center;margin:26px 0 8px}
+</style>
+</head>
+<body>
+
+<h1>📘 정보통신기사 실기 필답형 — 2026-09-04 (금)</h1>
+
+<div class="meta">
+  <b>오늘의 훈련 대상 4문제</b><br>
+  <span class="chip">C11 단계별 감리업무</span>
+  <span class="chip">T03 SNMP</span>
+  <span class="chip">C02 설계도서/공사계획서</span>
+  <span class="chip">C07 감리결과 통보/배치기준</span>
+  <div style="color:#5c6570;font-size:13px;margin-top:8px">
+    선정 근거: 오답(wrong) 기록이 없어 전 토픽이 기한 도래 상태입니다. <b>4순회 2일차</b>로,
+    9/3에 예고한 대로 <b>C11·T03·C02·C07</b> 배치를 재배정했습니다.
+    1순회(8/23)·2순회(8/27)·3순회(8/31) 유형은 전부 회피했습니다
+    (C11 열거형 / 분류형 / 감리일지 단계판정형 → <b>공정 순서배열 + 산출물 역매칭형</b> /
+     T03 수치암기형 / 시나리오 판독형 / 설정오류 진단형 → <b>패킷 캡처 판독 + 폴링 부하 계산형</b> /
+     C02 빈칸형 / 열거·구분형 / 체크리스트 누락판정형 → <b>문서 발췌문 판별형</b> /
+     C07 수치암기형 / 현장 적용형 / 등급 역산형 → <b>배치계획 적정성 심사형</b>).
+  </div>
+</div>
+
+<div class="note">
+  ⏱ <b>권장 시간 32분</b> — 문항당 8분. 답을 먼저 손으로 쓴 뒤에만 정답을 펼치세요.<br>
+  채점 후 <b>"오늘 점수: C11 n/m, T03 n/m, C02 n/m, C07 n/m"</b> 형식으로 알려주시면
+  트래커의 streak·다음 복습일을 반영합니다. (미입력 시 streak은 변동 없이 보존됩니다.)
+</div>
+
+<!-- ===================== C11 ===================== -->
+<div class="q">
+  <span class="tag">C11</span><span class="type">공정 순서배열 + 산출물 역매칭형</span>
+  <div class="prompt">
+    [문제 1] 어느 구내통신설비 공사의 감리업무 항목 ⓐ~ⓗ가 순서 없이 나열되어 있다.
+    (1) 실제 <b>공사 진행 순서대로 배열</b>하고, (2) 각 항목이 속하는 <b>감리 단계</b>
+    (착공단계·시공단계·준공단계·인계인수단계)를 쓰시오. (3) 시공단계에서 감리원이 수행하는
+    <b>4대 관리 업무</b>를 쓰시오. (10점)
+  </div>
+  <table>
+    <tr><th style="width:34px">#</th><th>감리업무 항목</th><th style="width:130px">해당 단계</th></tr>
+    <tr><td>ⓐ</td><td>시설물 인계·인수 확인서에 입회·서명함</td><td></td></tr>
+    <tr><td>ⓑ</td><td>시공사가 제출한 착공신고서·시공계획서를 검토함</td><td></td></tr>
+    <tr><td>ⓒ</td><td>준공계를 검토하고 준공 상태를 현장 확인함</td><td></td></tr>
+    <tr><td>ⓓ</td><td>1차 기성검사를 실시하고 기성고를 확인함</td><td></td></tr>
+    <tr><td>ⓔ</td><td>슬래브 매입배관 시공 중 규격·매설깊이 및 안전조치를 점검함</td><td></td></tr>
+    <tr><td>ⓕ</td><td>사용전검사에 입회하여 지적사항 조치를 확인함</td><td></td></tr>
+    <tr><td>ⓖ</td><td>도로점용 허가 등 인허가 서류의 구비 여부를 확인함</td><td></td></tr>
+    <tr><td>ⓗ</td><td>실적공정이 예정공정에 미달하여 만회대책을 검토·승인함</td><td></td></tr>
+  </table>
+  <p style="margin:12px 0 6px"><b>답안</b></p>
+  <div class="answerbox">(1) 순서: &nbsp; → &nbsp; → &nbsp; → &nbsp; → &nbsp; → &nbsp; → &nbsp; → &nbsp;<br>(2) 단계 / (3) 4대 관리</div>
+
+  <details>
+    <summary>▶ 모범답안 보기</summary>
+    <p><b>(1) 공사 진행 순서</b></p>
+    <div class="calc">ⓑ → ⓖ → ⓔ → ⓗ → ⓓ → ⓕ → ⓒ → ⓐ</div>
+    <p><b>(2) 단계 구분</b></p>
+    <table>
+      <tr><th>단계</th><th>해당 항목</th><th>핵심 내용</th></tr>
+      <tr><td><b>착공단계</b></td><td>ⓑ, ⓖ</td><td>착공신고서·시공계획서·공정표·인허가서류 등 <b>제출서류 검토</b>(12가지)</td></tr>
+      <tr><td><b>시공단계</b></td><td>ⓔ, ⓗ</td><td>시공관리·공정관리·품질관리·안전관리</td></tr>
+      <tr><td><b>준공단계</b></td><td>ⓓ, ⓕ, ⓒ</td><td>① 기성검사 ② 사용전검사 ③ 준공계 검토·준공확인</td></tr>
+      <tr><td><b>인계인수단계</b></td><td>ⓐ</td><td>시설물 인계·인수 확인</td></tr>
+    </table>
+    <p><b>(3) 시공단계 4대 관리</b> — ① <b>시공관리</b> ② <b>공정관리</b> ③ <b>품질관리</b> ④ <b>안전관리</b><br>
+    ※ 2026년 1회 기출은 <u>3가지</u>만 요구 → 공정·품질·안전 3개만 써도 정답.</p>
+    <div class="key">
+      ⚠ <b>함정 3종</b><br>
+      ① <b>기성검사(ⓓ)를 시공단계로 분류</b>하면 오답 — 검사(檢査) 계열은 <b>준공단계</b>로 묶는다.<br>
+      ② <b>사용전검사(ⓕ)와 준공계(ⓒ)의 순서</b> — 사용전검사 합격이 선행, 그 뒤 준공계 검토·준공확인.<br>
+      ③ <b>시공계획서 검토(ⓑ)를 시공단계로</b> 쓰면 오답 — 시공 <u>착수 전</u> 서류검토이므로 <b>착공단계</b>.
+    </div>
+    <div class="key">
+      🔑 암기: <b>「착(서류) — 시(4대관리) — 준(기성·사용전·준공계) — 인(인계인수)」</b>
+    </div>
+  </details>
+</div>
+
+<!-- ===================== T03 ===================== -->
+<div class="q">
+  <span class="tag">T03</span><span class="type">패킷 캡처 판독 + 폴링 부하 계산형</span>
+  <div class="prompt">
+    [문제 2] NMS 서버(10.1.1.5)와 관리대상 스위치(10.1.1.200) 사이의 패킷 캡처 결과이다.
+    (1) ㉠~㉤에 해당하는 <b>SNMP 메시지 종류</b>를 쓰고, (2) 4번 패킷만 포트가 다른 이유를 서술하고,
+    (3) 아래 조건의 <b>폴링 트래픽</b>을 계산하시오. (10점)
+  </div>
+  <table>
+    <tr><th style="width:30px">No</th><th style="width:60px">Time</th><th>출발지</th><th>목적지</th><th>내용</th><th style="width:80px">메시지</th></tr>
+    <tr><td>1</td><td>0.000</td><td>10.1.1.5:4721</td><td>10.1.1.200:161</td><td>OID 1.3.6.1.2.1.1.3.<b>0</b> 값 요청</td><td>( ㉠ )</td></tr>
+    <tr><td>2</td><td>0.004</td><td>10.1.1.200:161</td><td>10.1.1.5:4721</td><td>sysUpTime = 8421300</td><td>( ㉡ )</td></tr>
+    <tr><td>3</td><td>1.000</td><td>10.1.1.5:4722</td><td>10.1.1.200:161</td><td>OID 1.3.6.1.2.1.2.2.1.2 <b>다음 객체</b> 요청(인덱스 미지정)</td><td>( ㉢ )</td></tr>
+    <tr><td>4</td><td>5.210</td><td>10.1.1.200:1027</td><td>10.1.1.5:<b>162</b></td><td>linkDown (ifIndex=10)</td><td>( ㉣ )</td></tr>
+    <tr><td>5</td><td>6.000</td><td>10.1.1.5:4730</td><td>10.1.1.200:161</td><td>ifAdminStatus.10 = down <b>으로 변경</b></td><td>( ㉤ )</td></tr>
+  </table>
+  <p style="margin:10px 0 4px"><b>[계산 조건]</b></p>
+  <div class="calc">· 관리대상 장비 200대, 장비 1대당 수집 OID 12개
+· 폴링 주기 5분(300초), 1개 OID당 요청 1 + 응답 1 = 2개 메시지
+· 요청 + 응답 1쌍의 평균 크기 180 byte
+→ ① 초당 SNMP 메시지 수(msg/s)  ② 평균 소요 대역폭(bps)</div>
+  <div class="answerbox">답안 작성란</div>
+
+  <details>
+    <summary>▶ 모범답안 보기</summary>
+    <p><b>(1) 메시지 종류</b></p>
+    <table>
+      <tr><th>기호</th><th>메시지</th><th>판단 근거</th></tr>
+      <tr><td>㉠</td><td><b>GetRequest</b></td><td>인스턴스 <code>.0</code>까지 지정된 <b>특정 객체 1개</b> 조회 → 관리자→에이전트, 161</td></tr>
+      <tr><td>㉡</td><td><b>GetResponse</b></td><td>에이전트가 요청에 대해 값을 회신(응답), 161</td></tr>
+      <tr><td>㉢</td><td><b>GetNextRequest</b></td><td>인덱스 미지정 + "다음 객체" 요청 → <b>테이블 순차 탐색(MIB walk)</b></td></tr>
+      <tr><td>㉣</td><td><b>Trap</b></td><td>에이전트가 <b>요청 없이 자발적으로</b> 관리자에게 통보, 목적지 <b>162</b></td></tr>
+      <tr><td>㉤</td><td><b>SetRequest</b></td><td>MIB 객체 <b>값을 변경(쓰기)</b>, 161</td></tr>
+    </table>
+    <p><b>(2) 4번 패킷만 포트가 다른 이유</b><br>
+    1·3·5번은 <b>관리자 → 에이전트</b> 방향의 요청이므로 에이전트의 수신 포트 <b>UDP 161</b>을 사용한다.
+    반면 4번은 링크 다운이라는 이벤트를 <b>에이전트 → 관리자</b> 방향으로 자발 통보하는 <b>Trap</b>이므로,
+    관리자(NMS)가 Trap 수신용으로 대기하는 <b>UDP 162</b>로 전송된다.
+    즉 <b>Trap만 방향과 포트가 반대</b>이며, 5가지 메시지 중 <b>유일한 에이전트→관리자 단방향</b> 메시지이다.</p>
+    <p><b>(3) 폴링 부하 계산</b></p>
+    <div class="calc">① 1주기당 OID 수 = 200대 × 12개 = 2,400 OID
+   1주기당 메시지 수 = 2,400 × 2 = 4,800 메시지
+   초당 메시지 수 = 4,800 ÷ 300초 = <b>16 msg/s</b>
+
+② 1주기당 트래픽 = 2,400쌍 × 180 byte = 432,000 byte
+   초당 트래픽 = 432,000 ÷ 300 = 1,440 byte/s
+   대역폭 = 1,440 × 8 = <b>11,520 bps ≒ 11.52 kbps</b></div>
+    <div class="key">
+      ⚠ <b>함정</b> ① <b>메시지 수와 "쌍(pair)" 수를 혼동</b> — 크기 180 byte는 <u>요청+응답 1쌍</u> 기준이므로
+      2,400<b>쌍</b>에 곱해야 한다(4,800을 곱하면 2배 오답).<br>
+      ② byte → bit 환산(<b>×8</b>) 누락.<br>
+      ③ Trap 포트를 161로 쓰는 실수 — <b>폴링 161 / Trap 162</b>.
+    </div>
+    <div class="key">
+      🔑 SNMP 핵심 — 5메시지: <b>GetRequest·GetNextRequest·SetRequest·GetResponse(161) / Trap(162)</b>.
+      전송계층 <b>UDP</b>(오버헤드 최소화, 연결설정 없이 장애 중에도 전송 가능 → 신뢰성은 관리자의 타임아웃·재시도로 보완),
+      <b>애플리케이션 계층</b> 프로토콜. NMS 4요소 = 관리스테이션 + 에이전트 + <b>MIB</b> + SNMP.
+    </div>
+  </details>
+</div>
+
+<!-- ===================== C02 ===================== -->
+<div class="q">
+  <span class="tag">C02</span><span class="type">문서 발췌문 판별형</span>
+  <div class="prompt">
+    [문제 3] 아래 ㉮~㉲는 어느 구내통신설비 공사의 <b>설계도서 및 공사계획서에서 발췌한 내용</b>이다.
+    (1) 각 발췌문이 어느 문서에 해당하는지 쓰고, (2) <b>「정보통신공사업법」상 설계도서 5가지</b>를 모두 쓰고,
+    (3) <b>공사계획서에 포함되는 5가지 항목</b>을 쓰시오. (10점)
+  </div>
+  <table>
+    <tr><th style="width:34px">#</th><th>발췌 내용</th><th style="width:140px">해당 문서</th></tr>
+    <tr><td>㉮</td><td>"구내 간선케이블은 UTP Cat6 4P를 사용하고, 배관은 후강전선관 28C로 한다. 케이블 접속은 성단 후 성능시험을 시행한다."</td><td></td></tr>
+    <tr><td>㉯</td><td>"MDF실 ↔ 각 층 TPS실 간 배관 루트 및 입상 상세, 축척 1:100"</td><td></td></tr>
+    <tr><td>㉰</td><td>"500세대 기준 회선 수요 = 세대당 2회선 × 500 = 1,000회선, 여유율 20% 적용 → 1,200회선 확보"</td><td></td></tr>
+    <tr><td>㉱</td><td>"UTP Cat6 케이블 12,400 m × 단가 850원 = 10,540,000원"</td><td></td></tr>
+    <tr><td>㉲</td><td>"총 공사기간 240일(착공 2026.3.2 ~ 준공 2026.10.27), 주요 마일스톤 및 투입 인력·장비 계획"</td><td></td></tr>
+  </table>
+  <div class="answerbox">답안 작성란</div>
+
+  <details>
+    <summary>▶ 모범답안 보기</summary>
+    <p><b>(1) 발췌문 판별</b></p>
+    <table>
+      <tr><th>#</th><th>해당 문서</th><th>판단 근거</th></tr>
+      <tr><td>㉮</td><td><b>설계설명서</b>(시방서)</td><td>자재 규격·시공방법·시험 등 <b>글로 기술한 시공 기준</b></td></tr>
+      <tr><td>㉯</td><td><b>설계도면</b></td><td><b>축척</b>이 명시된 도면 — 배관 루트·상세도</td></tr>
+      <tr><td>㉰</td><td><b>기술계산서</b></td><td>회선 수요·용량·부하 등 <b>공학적 산출 근거</b></td></tr>
+      <tr><td>㉱</td><td><b>공사비명세서</b></td><td>수량 × 단가 = 금액의 <b>내역(내역서)</b></td></tr>
+      <tr><td>㉲</td><td><b>공사계획서</b></td><td>공기·공정·투입계획 등 <b>공사 수행 계획</b></td></tr>
+    </table>
+    <p><b>(2) 설계도서 5가지</b><br>
+    ① <b>설계설명서</b> ② <b>공사계획서</b> ③ <b>기술계산서</b> ④ <b>설계도면</b> ⑤ <b>공사비명세서</b></p>
+    <p><b>(3) 공사계획서 5가지 항목</b><br>
+    ① <b>공사개요</b> ② <b>공정관리계획</b> ③ <b>안전관리계획</b> ④ <b>공사예정공정표</b> ⑤ <b>환경관리계획</b></p>
+    <div class="key">
+      ⚠ <b>함정</b> ① <b>공사계획서는 그 자체가 설계도서 5가지 중 하나</b>다 — 별개 문서로 빼면 오답.<br>
+      ② ㉮(설계설명서)를 "시방서"로만 쓰면 법령 용어와 불일치 → <b>설계설명서</b>로 표기.<br>
+      ③ ㉱을 "기술계산서"로 쓰는 혼동 주의 — <b>수량×단가=금액</b>이면 <b>공사비명세서</b>,
+         <b>용량·수요 산출</b>이면 기술계산서.
+    </div>
+    <div class="key">
+      🔑 암기: 설계도서 = <b>「설·공·기·도·명」</b>(설계설명서·공사계획서·기술계산서·설계도면·공사비명세서) /
+      공사계획서 = <b>「개·공·안·예·환」</b>(공사개요·공정관리·안전관리·예정공정표·환경관리)
+    </div>
+  </details>
+</div>
+
+<!-- ===================== C07 ===================== -->
+<div class="q">
+  <span class="tag">C07</span><span class="type">배치계획 적정성 심사형</span>
+  <div class="prompt">
+    [문제 4] A 용역업체가 아래와 같이 <b>감리원 배치계획</b>을 제출하였다.
+    (1) 각 현장의 배치가 <b>적합/부적합</b>인지 판정하고, 부적합한 경우 <b>배치하여야 할 등급</b>을 쓰시오.
+    (2) 감리원의 <b>감리결과 통보 기한</b>과 통보 상대방을 쓰고, 그 취지를 서술하시오. (10점)
+  </div>
+  <table>
+    <tr><th style="width:40px">현장</th><th>도급금액</th><th>배치 예정 감리원</th><th style="width:150px">판정 / 정정</th></tr>
+    <tr><td>A</td><td>135억 원</td><td>특급감리원(기술사 아님)</td><td></td></tr>
+    <tr><td>B</td><td>82억 원</td><td>고급감리원</td><td></td></tr>
+    <tr><td>C</td><td>45억 원</td><td>고급감리원</td><td></td></tr>
+    <tr><td>D</td><td>6억 원</td><td>초급감리원</td><td></td></tr>
+    <tr><td>E</td><td>3억 원</td><td>초급감리원</td><td></td></tr>
+  </table>
+  <div class="answerbox">답안 작성란</div>
+
+  <details>
+    <summary>▶ 모범답안 보기</summary>
+    <p><b>(1) 배치 적정성 판정</b></p>
+    <table>
+      <tr><th>현장</th><th>도급금액</th><th>기준 등급</th><th>판정</th><th>정정 내용</th></tr>
+      <tr><td>A</td><td>135억</td><td>특급감리원 중 <b>기술사</b></td><td class="bad">부적합</td><td><b>기술사 자격의 특급감리원</b>으로 교체</td></tr>
+      <tr><td>B</td><td>82억</td><td>특급감리원</td><td class="bad">부적합</td><td>고급 → <b>특급감리원</b></td></tr>
+      <tr><td>C</td><td>45억</td><td>고급감리원</td><td class="ok">적합</td><td>—</td></tr>
+      <tr><td>D</td><td>6억</td><td>중급감리원</td><td class="bad">부적합</td><td>초급 → <b>중급감리원</b></td></tr>
+      <tr><td>E</td><td>3억</td><td>초급감리원</td><td class="ok">적합</td><td>—</td></tr>
+    </table>
+    <div class="calc">[배치기준 정리]
+100억 원 이상 → 특급감리원 中 <b>기술사</b>
+ 70억 원 이상 → 특급감리원
+ 30억 원 이상 → 고급감리원
+  5억 원 이상 → 중급감리원
+  5억 원 미만 → 초급감리원</div>
+    <p><b>(2) 감리결과 통보</b><br>
+    감리원은 공사를 <b>감리한 공사가 완료(완공)된 날부터 7일 이내</b>에
+    <b>발주자</b>에게 <b>감리결과를 서면으로 통보</b>하여야 한다.<br>
+    <b>취지</b> — ① 발주자가 준공 확인·대금 지급·시설물 인수 여부를 신속·정확하게 판단할 수 있도록 하고,
+    ② 감리원의 확인 결과를 문서로 남겨 <b>부실시공 방지와 책임 소재를 명확히</b> 하며,
+    ③ 사용전검사·준공 인가 등 후속 행정절차가 지연 없이 진행되도록 하기 위함이다.</p>
+    <div class="key">
+      ⚠ <b>함정</b> ① <b>A현장(100억 이상)</b>에서 "특급이면 된다"고 넘어가면 오답 —
+      100억 이상은 <b>기술사</b>인 특급감리원이어야 한다.<br>
+      ② <b>"5억"과 "70억"의 경계값</b> — 6억은 중급(초급 아님), 82억은 특급(고급 아님). <b>"이상"</b>은 그 금액을 포함.<br>
+      ③ 통보 기한을 착공 기준·30일 등으로 쓰지 말 것 → <b>완공 후 7일 이내, 발주자에게</b>.
+    </div>
+    <div class="key">
+      🔑 암기: <b>「100(기술사)-70(특급)-30(고급)-5(중급)-5미만(초급) / 완공 후 7일」</b>
+    </div>
+  </details>
+</div>
+
+<footer>
+  에빙하우스 SRS 자동 훈련 · 4순회 2일차 · 다음 세션(9/5) 예정: 채점 입력 시 오답 토픽 최우선,
+  미입력 시 9/1 배치(C08·T01·T02·T04) 4차 유형 교체 재출제
+</footer>
+
+</body>
+</html>
