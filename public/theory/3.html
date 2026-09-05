@@ -505,7 +505,21 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="trap">오너라=상하, 가거라=좌우 ❌ → 오너라=<b>좌우</b>, 가거라=<b>상하</b> (반대 함정!)</div>
 <div class="tip">도시철도: 오너라=접근전호 / 가거라=퇴거전호 (동작 동일)</div>
 
-<div class="theory-note"><strong>이론 배경:</strong> 입환전호는 차량 이동 방향을 알리는 신호입니다. <strong>오너라=좌우, 가거라=상하</strong>를 반드시 기억하세요. 반대로 외우면 100% 틀립니다.</div>
+<div class="theory-note">
+<strong>입환(入換)이란 무엇인가?</strong><br>
+입환은 정거장 내에서 <strong>차량을 이동·연결·분리하는 작업</strong>입니다. 열차는 운행을 마치거나 시작하기 전에 반드시 아래와 같은 작업이 필요합니다.
+<br><br>
+<strong>입환이 필요한 이유 (목적):</strong><br>
+① <strong>열차 편성</strong> — 여객·화물 차량을 기관차에 연결해 출발 준비<br>
+② <strong>차량 분리</strong> — 목적지별로 화물차량을 분리하거나 객차 수 조정<br>
+③ <strong>기관차 방향 전환</strong> — 종착역에서 기관차를 열차 반대편으로 이동 (회차)<br>
+④ <strong>유치선 입고</strong> — 운행 종료 후 차량을 보관선(유치선)으로 이동<br>
+⑤ <strong>점검·정비 이동</strong> — 검수 시설, 세척선 등으로 차량 이동
+<br><br>
+<strong>왜 전호(傳號)가 필요한가?</strong><br>
+입환 작업 중 기관사는 후방이나 측면을 직접 볼 수 없습니다. 전호원(지상 작업자)이 차량 앞뒤를 보면서 안전을 확인하고, 기관사에게 이동 방향을 신호로 전달합니다. 즉, <strong>전호원 → 기관사의 눈과 귀</strong> 역할을 합니다.<br>
+오너라(접근)=좌우, 가거라(퇴거)=상하 — 반대로 외우면 100% 틀립니다.
+</div>
 <br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 오너라전호(접근전호)의 주간 방법은?</div><div class="qe-a">정답: 녹색기를 좌우로 흔듦</div><div class="qe-wrong">오답함정: "위아래로 흔든다"는 오답 (위아래=가거라)</div></div>
 </div><div class="concept" id="C-16"><div class="concept-title"><span class="cnum">C-16</span>제한신호 추정 원칙</div>
 <div class="step-box">
@@ -517,17 +531,40 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 
 <div class="theory-note"><strong>이론 배경:</strong> 불명확한 신호를 <strong>정지로 간주</strong>하는 것은 "가장 안전한 해석" 원칙입니다. 단, 사전 통보가 있으면 통보된 신호를 따릅니다. 이 예외가 시험 함정으로 자주 출제됩니다.</div>
 <br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 상치신호기와 수신호의 현시가 다를 때 따르는 원칙은?</div><div class="qe-a">정답: 더 제한적인 쪽(수신호)에 따름. 단, 사전 통보가 있으면 통보된 신호에 따름</div><div class="qe-wrong">오답함정: "항상 수신호를 따른다"는 오답</div></div>
-</div></div></div><div class="part" id="part4"><div class="part-title" onclick="togglePart(this)"><span>PART 4. 열차제어장치 (ATS·ATC·ATP) ★★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-17"><div class="concept-title"><span class="cnum">C-17</span>열차제어장치 분류</div>
+</div></div></div><div class="part" id="part4"><div class="part-title" onclick="togglePart(this)"><span>PART 4. 열차제어장치 (ATS·ATC·ATP) ★★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-17"><div class="concept-title"><span class="cnum">C-17</span>열차제어장치 분류 — ATS · ATC · ATP ★★★</div>
+<div class="step-box">
+<b>열차제어장치란?</b><br>
+기관사의 실수(신호 위반, 과속)를 자동으로 보완해 열차 충돌·탈선을 막는 안전 시스템.<br>
+<b>ATS → ATC → ATP</b> 순으로 기능이 강화되며, 상위 장치가 하위 장치의 기능을 포함.
+</div>
 <div class="table-wrap"><table>
-<tr><th>장치</th><th>명칭</th><th>기능</th></tr>
-<tr><td><b>ATS</b></td><td>열차자동정지장치</td><td>지상 신호기 허용속도 초과 시 자동 정지</td></tr>
-<tr><td><b>ATC</b></td><td>열차자동제어장치</td><td>운행조건에 맞게 자동 감속·정지, 속도 실시간 표시</td></tr>
-<tr><td><b>ATP</b></td><td>열차자동방호장치</td><td>ATC 기능 + 필요 시 자동제동으로 목표지점 정지</td></tr>
+<tr><th>비교 항목</th><th>ATS<br><span style="font-weight:normal;font-size:0.85em">Automatic Train Stop<br>열차자동정지장치</span></th><th>ATC<br><span style="font-weight:normal;font-size:0.85em">Automatic Train Control<br>열차자동제어장치</span></th><th>ATP<br><span style="font-weight:normal;font-size:0.85em">Automatic Train Protection<br>열차자동방호장치</span></th></tr>
+<tr><td><b>핵심 기능</b></td><td>속도 위반 시 <b>자동 정지</b></td><td><b>속도 자동 제어</b><br>(감속·정지)</td><td>ATC 기능 전체 포함<br>+ 목표지점 자동 정지</td></tr>
+<tr><td><b>신호 위치</b></td><td class="hl"><b>지상신호기</b> 중심<br>(지상 발리스)</td><td class="hl"><b>차내신호기</b> 중심<br>(차량 내부 표시)</td><td><b>차내신호기</b><br>(연속 수신)</td></tr>
+<tr><td><b>속도 제어</b></td><td>❌ 정지 명령만</td><td>✅ 연속 속도 제어</td><td>✅ 연속 속도 제어</td></tr>
+<tr><td><b>연속 감시</b></td><td>❌ 특정 지점만<br>(점·지점 방식)</td><td>✅ 구간 전체<br>(연속 방식)</td><td>✅ 구간 전체<br>(연속 방식)</td></tr>
+<tr><td><b>기관사 역할</b></td><td>경보 후 <b>기관사 확인 필요</b><br>미확인 시 자동 정지</td><td>속도 초과 시<br><b>자동 감속</b> (확인 불필요)</td><td>위험 시<br><b>자동 제동</b>으로 목표 정지</td></tr>
+<tr><td><b>차내 속도 표시</b></td><td>❌ 없음</td><td class="hl">✅ <b>허용속도 실시간 표시</b> ★</td><td>✅ 표시</td></tr>
+<tr><td><b>적용 노선 예</b></td><td>재래선, 일반철도</td><td>KTX, 도시철도</td><td>고속철도(유럽 ETCS 기준)</td></tr>
+<tr><td><b>기능 수준</b></td><td>★ 기본</td><td>★★★ 중급</td><td>★★★★ 최상위</td></tr>
 </table></div>
-<div class="tip">ATS→정지만 / ATC→감속+정지+속도표시 / ATP→ATC+자동제동</div>
-
-<div class="theory-note"><strong>이론 배경:</strong> ATS→ATC→ATP 순으로 기능이 강화됩니다. <strong>ATS=정지만, ATC=속도 연속 제어+차내 표시, ATP=목표지점 자동정지</strong>. ATC와 ATP의 차이가 자주 출제됩니다.</div>
-<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 차량 내부에 허용속도를 실시간으로 표시하는 열차제어장치는?</div><div class="qe-a">정답: ATC (열차자동제어장치)</div><div class="qe-wrong">오답함정: "ATS"로 혼동하는 오답</div></div>
+<div class="tip">
+ATS = 지상신호 + 정지만 | ATC = 차내신호 + 속도 연속 제어 + 차내 표시 | ATP = ATC 전부 + 자동제동 목표정지<br>
+<b>차내 속도 표시 → ATC가 핵심 포인트</b> (ATS는 표시 없음!)
+</div>
+<div class="trap">ATS도 차내에 속도를 표시한다 ❌ → 차내 표시는 ATC부터<br>ATP는 ATC와 완전히 다른 별개 장치다 ❌ → ATP는 ATC 기능을 포함하는 상위 장치</div>
+<div class="theory-note">
+<strong>왜 ATS만으로는 부족한가?</strong><br>
+ATS는 특정 지점을 지날 때만 속도를 검사합니다. 지점과 지점 사이 구간에서는 과속을 감지하지 못합니다. 반면 ATC는 선행 열차 위치에 따라 <strong>허용 속도를 실시간으로 계속 바꿔주고</strong>, 초과하면 즉시 자동 감속합니다. ATP는 여기에 더해 <strong>목표 정지 지점까지 자동으로 제동</strong>하여 열차 간 충돌을 원천 차단합니다.
+</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div>
+<div class="qe-q">Q. 차량 내부에 허용속도를 실시간으로 표시하는 열차제어장치는?</div>
+<div class="qe-a">정답: ATC (열차자동제어장치)</div>
+<div class="qe-wrong">오답함정: "ATS"로 혼동하는 오답 — ATS는 차내 표시 없음</div></div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시 2</div>
+<div class="qe-q">Q. ATS, ATC, ATP를 기능 강화 순서대로 나열하고, 각각의 신호 위치를 쓰시오.</div>
+<div class="qe-a">정답: ATS(지상신호) → ATC(차내신호, 연속 제어) → ATP(차내신호, 자동제동 포함)</div>
+<div class="qe-wrong">오답함정: ATS를 차내신호 방식으로 쓰는 오답</div></div>
 </div></div></div><div class="part" id="part5"><div class="part-title" onclick="togglePart(this)"><span>PART 5. 도시철도운전규칙 ★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-18"><div class="concept-title"><span class="cnum">C-18</span>주요 정의 비교 — 공작물 vs 인공구조물</div>
 <div class="table-wrap"><table>
 <tr><th>규칙</th><th>전차선로 정의</th></tr>
