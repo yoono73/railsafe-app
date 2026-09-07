@@ -128,7 +128,7 @@ export default function SidebarNav() {
                     </Link>
                   </div>
                 )}
-                {/* 교통안전법(id=2) 아래 철도왕 문제 링크 */}
+                {/* 교통안전법(id=2) 아래 링크들 */}
                 {s.id === 2 && (
                   <div className="pl-2 border-l border-green-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
                     <Link
@@ -141,6 +141,17 @@ export default function SidebarNav() {
                     >
                       <span className="text-[10px]">└</span>
                       <span>👑 철도왕 문제(기출·신유형)</span>
+                    </Link>
+                    <Link
+                      href="/kibchul/traffic/concept"
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+                        pathname.startsWith('/kibchul/traffic/concept')
+                          ? 'bg-blue-100 text-blue-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-blue-700'
+                      }`}
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>📘 핵심개념 문제</span>
                     </Link>
                   </div>
                 )}
@@ -316,7 +327,7 @@ export default function SidebarNav() {
                   <Link
                     href="/kibchul/traffic"
                     className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
-                      pathname.startsWith('/kibchul/traffic')
+                      pathname === '/kibchul/traffic'
                         ? 'bg-green-100 text-green-800 font-semibold'
                         : 'text-gray-400 hover:bg-gray-50 hover:text-green-700'
                     }`}
