@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import SidebarNav from '@/components/SidebarNav';
 import MobileNav from '@/components/MobileNav';
+import HeaderBadge from '@/components/HeaderBadge';
 
 export default async function KibchulLayout({
   children,
@@ -18,7 +19,7 @@ export default async function KibchulLayout({
         <div className="flex items-center gap-2">
           <span className="text-xl">📋</span>
           <span className="font-bold text-base">철도안전관리자</span>
-          <span className="text-xs bg-orange-700 px-2 py-0.5 rounded-full ml-1">기출문제</span>
+          <HeaderBadge />
         </div>
         <div className="flex items-center gap-4">
           <span className="text-sm text-orange-300 hidden sm:block">{user.email}</span>

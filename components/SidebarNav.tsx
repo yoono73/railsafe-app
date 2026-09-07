@@ -363,17 +363,30 @@ export default function SidebarNav() {
                   </Link>
                 )}
                 {s.id === 7 && (
-                  <Link
-                    href="/kibchul/safety"
-                    className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
-                      pathname.startsWith('/kibchul/safety')
-                        ? 'bg-red-100 text-red-800 font-semibold'
-                        : 'text-gray-400 hover:bg-gray-50 hover:text-red-700'
-                    }`}
-                  >
-                    <span>└</span>
-                    <span>기출 78문항 CBT</span>
-                  </Link>
+                  <>
+                    <Link
+                      href="/kibchul/safety"
+                      className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
+                        pathname === '/kibchul/safety'
+                          ? 'bg-red-100 text-red-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-red-700'
+                      }`}
+                    >
+                      <span>└</span>
+                      <span>기출 78문항 CBT</span>
+                    </Link>
+                    <Link
+                      href="/kibchul/safety/railway-king"
+                      className={`flex items-center gap-2 pl-7 pr-3 py-1.5 rounded-lg text-xs transition-colors ${
+                        pathname.startsWith('/kibchul/safety/railway-king')
+                          ? 'bg-red-100 text-red-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-red-700'
+                      }`}
+                    >
+                      <span>└</span>
+                      <span>👑 철도왕 문제(기출·신유형)</span>
+                    </Link>
+                  </>
                 )}
               </div>
             ))}
