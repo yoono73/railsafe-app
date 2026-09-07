@@ -8,6 +8,7 @@ const subjectNames: Record<number, string> = {
   3: '열차운전',
   4: '철도공학',
   5: '철도산업기본법',
+  7: '철도안전법',
 };
 
 const IFRAME_SRC: Record<number, string> = {
@@ -16,9 +17,10 @@ const IFRAME_SRC: Record<number, string> = {
   3: '/theory/3-quiz.html',
   4: '/theory/4-quiz.html',
   5: '/theory/5-quiz.html',
+  7: '/theory/7-quiz.html',
 };
 
-const VALID_IDS = [1, 2, 3, 4, 5];
+const VALID_IDS = [1, 2, 3, 4, 5, 7];
 
 export default function QuizPage() {
   const params = useParams();
