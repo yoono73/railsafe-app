@@ -21,6 +21,7 @@ export default function SidebarNav() {
   const getInitialSection = (): 'theory' | 'story' | 'cbt' | 'kibchul' | null => {
     if (pathname.startsWith('/theory')) return 'theory';
     if (pathname.startsWith('/quiz')) return 'theory';
+    if (pathname.includes('/concept')) return 'theory';
     if (pathname.startsWith('/story')) return 'story';
     if (pathname.startsWith('/cbt')) return 'cbt';
     if (pathname.startsWith('/kibchul')) return 'kibchul';
