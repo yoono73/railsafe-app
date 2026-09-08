@@ -188,9 +188,20 @@ export default function SidebarNav() {
                     </Link>
                   </div>
                 )}
-                {/* 철도산업기본법(id=5) 아래 철도왕 문제 링크 */}
+                {/* 철도산업기본법(id=5) 아래 링크들 */}
                 {s.id === 5 && (
                   <div className="pl-2 border-l border-emerald-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
+                    <Link
+                      href="/kibchul/industry/concept"
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+                        pathname.startsWith('/kibchul/industry/concept')
+                          ? 'bg-blue-100 text-blue-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-blue-700'
+                      }`}
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>🚆 핵심개념 문제</span>
+                    </Link>
                     <Link
                       href="/quiz/5"
                       className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
