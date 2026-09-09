@@ -362,6 +362,21 @@ export default function SidebarNav() {
                     <span>기출·복원 127문항 CBT</span>
                   </Link>
                 )}
+                {s.id === 4 && (
+                  <div className="pl-2 border-l border-amber-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
+                    <Link
+                      href="/kibchul/engineering/concept"
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+                        pathname.startsWith('/kibchul/engineering/concept')
+                          ? 'bg-blue-100 text-blue-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-blue-700'
+                      }`}
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>🚂 핵심개념 문제</span>
+                    </Link>
+                  </div>
+                )}
                 {s.id === 2 && (
                   <Link
                     href="/kibchul/traffic"
