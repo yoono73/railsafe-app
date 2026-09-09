@@ -172,9 +172,20 @@ export default function SidebarNav() {
                     </Link>
                   </div>
                 )}
-                {/* 철도공학(id=4) 아래 철도왕 문제 링크 */}
+                {/* 철도공학(id=4) 아래 링크들 */}
                 {s.id === 4 && (
                   <div className="pl-2 border-l border-amber-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
+                    <Link
+                      href="/kibchul/engineering/concept"
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+                        pathname.startsWith('/kibchul/engineering/concept')
+                          ? 'bg-blue-100 text-blue-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-blue-700'
+                      }`}
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>📘 핵심개념 문제</span>
+                    </Link>
                     <Link
                       href="/quiz/4"
                       className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
@@ -361,21 +372,6 @@ export default function SidebarNav() {
                     <span>└</span>
                     <span>기출·복원 127문항 CBT</span>
                   </Link>
-                )}
-                {s.id === 4 && (
-                  <div className="pl-2 border-l border-amber-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
-                    <Link
-                      href="/kibchul/engineering/concept"
-                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
-                        pathname.startsWith('/kibchul/engineering/concept')
-                          ? 'bg-blue-100 text-blue-800 font-semibold'
-                          : 'text-gray-400 hover:bg-gray-50 hover:text-blue-700'
-                      }`}
-                    >
-                      <span className="text-[10px]">└</span>
-                      <span>🚂 핵심개념 문제</span>
-                    </Link>
-                  </div>
                 )}
                 {s.id === 2 && (
                   <Link

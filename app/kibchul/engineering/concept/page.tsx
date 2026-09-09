@@ -101,6 +101,7 @@ function saveWrongEntry(q: ConceptQuestion, selectedIdx: number) {
 async function fetchConceptQuestions(): Promise<ConceptQuestion[]> {
   const supabase = createClient();
 
+  // step1: subject_id=4 question_versions(version_no=1) 조회
   const { data: versionRows, error: vErr } = await supabase
     .from('question_versions')
     .select(`
@@ -119,7 +120,7 @@ async function fetchConceptQuestions(): Promise<ConceptQuestion[]> {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (versionRows as any[])
-    .filter(row => row.questions)
+    .filter(row => row.questions) // subject_id 필터 미매칭 행 제거
     .map(row => {
       const q = Array.isArray(row.questions) ? row.questions[0] : row.questions;
       const qe = Array.isArray(row.question_explanations)
@@ -270,9 +271,10 @@ export default function ConceptEngineeringPage() {
     return (
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '24px 16px', background: '#f8f9fa', minHeight: '100vh' }}>
         {/* 헤더 */}
-        <div style={{ background: 'linear-gradient(135deg,#1e3a5f,#1d4ed8)', color: '#fff', borderRadius: 12, padding: '20px 24px', marginBottom: 24 }}>
-          <div style={{ fontSize: '1.3em', fontWeight: 'bold', marginBottom: 4 }}>🚂 철도공학 핵심개념 문제</div>
-          <div style={{ fontSize: '.85em', opacity: .85 }}>궤도·차량·전기·신호 집중 훈련 — {allQuestions.length}문항</div>
+        <div style={{ background: 'linear-gradient(135deg,#1e3a5f,#2563eb)', color: '#fff', borderRadius: 12, padding: '20px 24px', marginBottom: 24 }}>
+          <div style={{ fontSize: '1.3em', fontWeight: 'bold', marginBottom: 4 }}>📘 철도공학 핵심개념 문제</div>
+          <div style={{ fontSize: '.85em', opacity: .85 }}>총론·궤도·선로·차량·신호·전기 핵심 훈련 — {allQuestions.length}문항</div>
+          <div style={{ fontSize: '.78em', opacity: .7, marginTop: 6 }}>기출 핵심 테마 집중 훈련</div>
         </div>
 
         {/* 이어풀기 배너 */}
@@ -300,13 +302,13 @@ export default function ConceptEngineeringPage() {
         )}
 
         {/* 안내 */}
-        <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: '12px 16px', marginBottom: 20, fontSize: '.85em', color: '#1e3a8a' }}>
-          💡 <strong>핵심개념 문제 안내:</strong> 철도공학 핵심개념의 궤도구조·차량·전기·신호 분야를 다루는 핵심 훈련 문항입니다.
+        <div style={{ background: '#eff6ff', border: '1px solid #93c5fd', borderRadius: 8, padding: '12px 16px', marginBottom: 20, fontSize: '.85em', color: '#1e3a8a' }}>
+          💡 <strong>핵심개념 문제 안내:</strong> 철도공학 총론·궤도·선로설비·차량·신호·전기 분야의 핵심 개념을 다루는 훈련 문항입니다.
           선지별 해설과 함정 포인트가 함께 제공됩니다.
         </div>
 
         {/* 문항 수 카드 */}
-        <div style={{ background: '#fff', border: '2px solid #3b82f6', borderRadius: 10, padding: '16px 20px', marginBottom: 20, textAlign: 'center' }}>
+        <div style={{ background: '#fff', border: '2px solid #2563eb', borderRadius: 10, padding: '16px 20px', marginBottom: 20, textAlign: 'center' }}>
           <div style={{ fontSize: '2em', fontWeight: 'bold', color: '#1d4ed8' }}>{allQuestions.length}</div>
           <div style={{ fontSize: '.85em', color: '#374151' }}>핵심개념 문항</div>
         </div>
@@ -320,7 +322,7 @@ export default function ConceptEngineeringPage() {
         </div>
 
         <button onClick={startQuiz} disabled={allQuestions.length === 0}
-          style={{ width: '100%', padding: '14px', background: allQuestions.length === 0 ? '#d1d5db' : '#1d4ed8', color: '#fff', border: 'none', borderRadius: 10, fontSize: '1.05em', fontWeight: 'bold', cursor: allQuestions.length === 0 ? 'default' : 'pointer' }}>
+          style={{ width: '100%', padding: '14px', background: allQuestions.length === 0 ? '#d1d5db' : '#2563eb', color: '#fff', border: 'none', borderRadius: 10, fontSize: '1.05em', fontWeight: 'bold', cursor: allQuestions.length === 0 ? 'default' : 'pointer' }}>
           {allQuestions.length > 0 ? `🚀 ${allQuestions.length}문항 시작` : '문항 없음'}
         </button>
       </div>
@@ -333,7 +335,7 @@ export default function ConceptEngineeringPage() {
     const pct = answers.length ? Math.round((correctCount / answers.length) * 100) : 0;
     return (
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '24px 16px', background: '#f8f9fa', minHeight: '100vh' }}>
-        <div style={{ background: 'linear-gradient(135deg,#1e3a5f,#1d4ed8)', color: '#fff', borderRadius: 12, padding: '20px 24px', marginBottom: 24, textAlign: 'center' }}>
+        <div style={{ background: 'linear-gradient(135deg,#1e3a5f,#2563eb)', color: '#fff', borderRadius: 12, padding: '20px 24px', marginBottom: 24, textAlign: 'center' }}>
           <div style={{ fontSize: '1.3em', fontWeight: 'bold' }}>결과</div>
           <div style={{ fontSize: '2.5em', fontWeight: 'bold', margin: '10px 0' }}>{pct}점</div>
           <div style={{ fontSize: '.9em', opacity: .85 }}>{correctCount} / {answers.length} 정답</div>
@@ -348,7 +350,7 @@ export default function ConceptEngineeringPage() {
               const q2 = questions.find(q => q.id === a.qid)!;
               return (
                 <div key={a.qid} style={{ background: '#fff', border: '1px solid #fca5a5', borderRadius: 8, padding: '12px 14px', marginBottom: 10 }}>
-                  <div style={{ fontSize: '.78em', color: '#1d4ed8', marginBottom: 4 }}>{q2.exam_area}</div>
+                  <div style={{ fontSize: '.78em', color: '#2563eb', marginBottom: 4 }}>{q2.exam_area}</div>
                   <div style={{ fontSize: '.9em', marginBottom: 8, fontWeight: 500 }}>{q2.question_text}</div>
                   <div style={{ fontSize: '.85em', color: '#ef4444' }}>
                     내 답: {a.selected}번 — {q2.choices[a.selected - 1]?.text}
@@ -379,7 +381,7 @@ export default function ConceptEngineeringPage() {
             ← 홈으로
           </button>
           <button onClick={startQuiz}
-            style={{ flex: 1, padding: '12px', background: '#1d4ed8', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer' }}>
+            style={{ flex: 1, padding: '12px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer' }}>
             다시 풀기
           </button>
         </div>
@@ -401,7 +403,7 @@ export default function ConceptEngineeringPage() {
         <span style={{ fontSize: '.85em', color: '#555' }}>{current + 1} / {questions.length}</span>
       </div>
       <div style={{ background: '#e5e7eb', borderRadius: 99, height: 6, marginBottom: 16 }}>
-        <div style={{ background: '#3b82f6', height: 6, borderRadius: 99, width: `${progress}%`, transition: 'width .3s' }} />
+        <div style={{ background: '#2563eb', height: 6, borderRadius: 99, width: `${progress}%`, transition: 'width .3s' }} />
       </div>
 
       {/* 문제 카드 */}
@@ -427,7 +429,7 @@ export default function ConceptEngineeringPage() {
             bg = '#f3f4f6'; border = '#e5e7eb'; color = '#9ca3af';
           }
         } else if (selected === idx) {
-          bg = '#eff6ff'; border = '#3b82f6'; color = '#1e3a8a'; fontWeight = 'bold';
+          bg = '#eff6ff'; border = '#2563eb'; color = '#1e40af'; fontWeight = 'bold';
         }
         return (
           <div key={idx}>
@@ -456,7 +458,7 @@ export default function ConceptEngineeringPage() {
             </div>
           )}
           {q.memory_line && (
-            <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 6, padding: '6px 10px', marginTop: 6, color: '#1e3a8a' }}>
+            <div style={{ background: '#eff6ff', border: '1px solid #93c5fd', borderRadius: 6, padding: '6px 10px', marginTop: 6, color: '#1e3a8a' }}>
               🔑 암기 포인트: {q.memory_line}
             </div>
           )}
@@ -467,12 +469,12 @@ export default function ConceptEngineeringPage() {
       <div style={{ marginTop: 16, display: 'flex', gap: 10 }}>
         {!revealed ? (
           <button onClick={handleReveal} disabled={selected === null}
-            style={{ flex: 1, padding: '13px', background: selected === null ? '#d1d5db' : '#1d4ed8', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: selected === null ? 'default' : 'pointer', fontSize: '.95em' }}>
+            style={{ flex: 1, padding: '13px', background: selected === null ? '#d1d5db' : '#2563eb', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: selected === null ? 'default' : 'pointer', fontSize: '.95em' }}>
             정답 확인
           </button>
         ) : (
           <button onClick={handleNext}
-            style={{ flex: 1, padding: '13px', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer', fontSize: '.95em' }}>
+            style={{ flex: 1, padding: '13px', background: '#1d4ed8', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer', fontSize: '.95em' }}>
             {current + 1 >= questions.length ? '결과 보기 →' : '다음 문제 →'}
           </button>
         )}
