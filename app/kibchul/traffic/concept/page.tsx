@@ -101,7 +101,7 @@ function saveWrongEntry(q: ConceptQuestion, selectedIdx: number) {
 async function fetchConceptQuestions(): Promise<ConceptQuestion[]> {
   const supabase = createClient();
 
-  // step1: subject_id=2 question_versions(version_no=1) 조회
+  // step1: subject_id=1 (교통안전관리론) question_versions(version_no=1) 조회
   const { data: versionRows, error: vErr } = await supabase
     .from('question_versions')
     .select(`
@@ -113,7 +113,7 @@ async function fetchConceptQuestions(): Promise<ConceptQuestion[]> {
       choices ( choice_key, choice_text, is_correct, explanation, sort_order )
     `)
     .eq('version_no', 1)
-    .eq('questions.subject_id', 2)
+    .eq('questions.subject_id', 1)
     .order('questions(legacy_question_id)');
 
   if (vErr || !versionRows) return [];
