@@ -1407,6 +1407,21 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 </tbody></table></div>
 </div>
 
+<div class="concept" id="p11-94">
+<div class="concept-title"><span class="cnum">개념 94</span>대차(Bogie) 기본구조 ⚠️</div>
+<div class="table-wrap"><table><thead><tr><th>구성요소</th><th>내용</th></tr></thead><tbody>
+<tr class="hl"><td><strong>대차 구성</strong></td><td>차축·차륜·차축상자(베어링) + 대차 프레임 — 차체 하중을 레일에 전달</td></tr>
+<tr><td><strong>1차현가</strong></td><td>차축상자 ↔ 대차 프레임 사이 스프링 — 사행동·궤도 불균일 충격 흡수</td></tr>
+<tr class="hl"><td><strong>2차현가</strong></td><td>대차 프레임 ↔ 차체 사이 공기스프링 등 — 승차감·횡방향 안정성 향상</td></tr>
+<tr><td><strong>구동대차</strong></td><td>전동기 탑재 → 견인력 발생 / 부수대차: 전동기 없이 하중만 전달</td></tr>
+<tr class="hl"><td><strong>고정축거</strong></td><td>대차 내 앞뒤 차축 간 거리 — 곡선 통과 시 슬랙 설정의 기준</td></tr>
+</tbody></table></div>
+<div class="trap">⚠️ 함정 주의: 1차현가(사행동·궤도충격 흡수) ↔ 2차현가(승차감) — 역할 혼동 금지</div>
+<div class="tip">★ 현가 순서: 레일→차축→[1차현가]→대차프레임→[2차현가]→차체</div>
+<div class="theory-note"><strong>이론 배경:</strong> 대차는 차체와 레일 사이에서 하중을 분산하고 곡선 통과와 승차감을 담당합니다. 1차현가는 차축과 대차 프레임 사이에서 선로의 고주파 진동을 흡수하고, 2차현가는 대차 프레임과 차체 사이에서 저주파 진동을 흡수해 승차감을 높입니다. → 참조: <a href="#p12-93">개념 93. 1차현가·2차현가</a></div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 차축과 대차 프레임 사이에서 궤도 불균일을 흡수하는 현가장치는?</div><div class="qe-a">정답: 1차현가</div><div class="qe-wrong">오답함정: "차체와 대차 사이 = 1차현가"라는 오답 (실제로는 2차현가)</div></div>
+</div>
+
 </div></div>
 
 <div class="part" id="p12">
@@ -1505,6 +1520,19 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 신호기 고장 시 자동으로 정지신호가 현시되는 설계 원칙은?</div><div class="qe-a">정답: Fail-Safe 원칙</div><div class="qe-wrong">오답함정: "고장 시 마지막 신호 상태를 유지한다"는 오답</div></div>
 </div>
 
+<div class="concept" id="p12-95">
+<div class="concept-title"><span class="cnum">개념 95</span>기본 궤도회로 원리 — 열차 검지 기초</div>
+<div class="table-wrap"><table><thead><tr><th>상태</th><th>동작</th><th>결과</th></tr></thead><tbody>
+<tr class="hl"><td><strong>열차 없음</strong></td><td>송신기 → 레일 → 수신기 → 계전기 <strong>여자(ON)</strong></td><td>진행신호 현시 가능</td></tr>
+<tr><td><strong>열차 있음</strong></td><td>차축이 양쪽 레일 <strong>단락(Short)</strong> → 수신기 전류 차단 → 계전기 <strong>낙하(OFF)</strong></td><td>열차 점유 검지 → 정지신호</td></tr>
+<tr class="hl"><td><strong>절연이음매</strong></td><td>궤도회로 구간 경계에 설치, 신호전류가 인접 구간으로 흐르는 것 방지</td><td>구간 분리</td></tr>
+</tbody></table></div>
+<div class="trap">⚠️ 함정 주의: 계전기가 <strong>낙하(OFF)</strong>할 때 열차 있음 — 여자(ON) 시에는 열차 없음</div>
+<div class="tip">★ 단락(Short) → 계전기 낙하 → 점유 검지 — 이 3단계가 궤도회로 핵심 / → 참조: <a href="#p12-91">개념 91. 무절연AF궤도회로</a></div>
+<div class="theory-note"><strong>이론 배경:</strong> 궤도회로는 Fail-Safe 원칙이 내재된 구조입니다. 계전기가 정상일 때 여자(ON)되어 진행을 허가하고, 열차 점유·단선·전원 이상 등 어떤 고장이든 계전기가 낙하(OFF)되어 정지신호로 전환됩니다. 이것이 AF궤도회로·무절연 궤도회로의 기초 원리입니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 궤도회로에서 열차 차축이 두 레일을 단락시키면 계전기는 어떻게 동작하는가?</div><div class="qe-a">정답: 계전기 낙하(落下, drop) — 수신기 전류 차단으로 계전기 비여자</div><div class="qe-wrong">오답함정: "단락 시 계전기가 여자된다"는 오답</div></div>
+</div>
+
 <div class="concept" id="p12-91">
 <div class="concept-title"><span class="cnum">개념 91</span>무절연AF궤도회로</div>
 <div class="theory-note"><strong>📌 선행 개념 — 기본 궤도회로 원리:</strong> 궤도회로는 레일을 전기 회로로 이용해 열차를 검지하는 장치입니다. 송신기에서 레일에 미약한 신호 전류를 흘리면, 열차 차축이 두 레일을 단락(Short)시켜 수신기의 전류가 차단되고 계전기가 낙하(동작)하면서 열차 점유를 검지합니다. 기존 방식은 구간 경계에 절연이음매를 설치해야 했지만, AF궤도회로는 이를 주파수로 대체합니다.</div>
@@ -1519,6 +1547,20 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="theory-note"><strong>이론 배경:</strong> 기존 궤도회로는 구간 경계에 절연이음매를 설치해야 했습니다. AF궤도회로는 각 구간마다 다른 주파수의 신호 전류를 흘려 레일을 절연하지 않아도 차량 검지가 가능합니다. 차량 차축이 신호를 단락시켜 열차 점유를 검지합니다.</div>
 <div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 레일 이음매에 절연판 없이 주파수 차이로 구간을 구분하는 궤도회로 방식은?</div><div class="qe-a">정답: 무절연AF궤도회로</div><div class="qe-wrong">오답함정: "무절연은 구간 구분이 불가능하다"는 오답</div></div>
 <!-- VIS 필요: VIS-087_무절연AF궤도회로구성도.png -->
+</div>
+
+<div class="concept" id="p12-96">
+<div class="concept-title"><span class="cnum">개념 96</span>절연구간(Section Gap) — 전원 경계 처리 ⚠️</div>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody>
+<tr class="hl"><td><strong>정의</strong></td><td>서로 다른 급전구간 사이에서 전차선을 전기적으로 분리하는 구간</td></tr>
+<tr><td><strong>설치 목적</strong></td><td>① 이종 전원 혼입 방지 ② 변전소 간 단락사고 방지 ③ 아크 방지</td></tr>
+<tr class="hl"><td><strong>통과 방법</strong></td><td><strong>타력 통과</strong>: 팬터그래프 하강 + 열차 타성(관성)으로 통과 / 통과 중 가속 불가</td></tr>
+<tr><td><strong>과전류 위험</strong></td><td>팬터그래프가 절연구간 내에서 전원 투입 시 단락 → 변전소 차단기 동작</td></tr>
+</tbody></table></div>
+<div class="trap">⚠️ 함정 주의: 절연구간 통과 중에는 <strong>팬터그래프 하강 또는 주회로 개방</strong> — 전원 공급 불가</div>
+<div class="tip">★ 절연구간 = 전원 경계 → 타력(관성)으로만 통과 / AT급전에서도 반드시 존재 / → 참조: <a href="#p12-84">개념 84. BT·AT급전</a></div>
+<div class="theory-note"><strong>이론 배경:</strong> 교류 전기철도에서 인접 변전소의 급전 위상이 다를 수 있어, 두 구간이 직접 연결되면 단락사고가 발생합니다. 절연구간(Section Gap)은 이 경계에 설치하는 전기적 절연 장치입니다. 고속선에서는 열차가 절연구간을 통과하는 동안 자동으로 팬터그래프를 하강하거나 주회로를 차단합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 전기철도에서 서로 다른 급전구간 사이에 설치하는 전기적 분리 구간의 명칭은?</div><div class="qe-a">정답: 절연구간(Section Gap)</div><div class="qe-wrong">오답함정: "절연구간에서도 전원을 공급받을 수 있다"는 오답</div></div>
 </div>
 
 <div class="concept" id="p12-92">
