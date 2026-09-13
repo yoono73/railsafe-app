@@ -1249,7 +1249,8 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr class="hl"><td><strong>지하구간 4현시</strong></td><td>진행 → 주의 → 경계 → 정지</td></tr>
 </tbody></table></div>
 <div class="trap">⚠️ 함정: 지상·지하 현시 순서가 다름 — 지상은 "감속"이 있고, 지하는 "경계"가 있음</div>
-<div class="vis-wrap"><img src="images/VIS-085_신호현시3종비교표.png" alt="신호현시 3종 비교표" loading="lazy"><p class="vis-cap">3현시·5현시·7현시 신호 체계 비교</p></div>
+<div class="theory-note"><strong>이론 배경:</strong> 폐색구간의 최소 간격은 "열차 최대 제동거리 + 안전 여유거리"로, 뒤 열차가 앞 열차에 추돌하지 않도록 충분한 거리를 확보합니다. 신호현시는 지상 구간(진행→감속→주의→정지)과 지하 구간(진행→주의→경계→정지)이 다릅니다. "감속"은 지상, "경계"는 지하 구간의 고유 현시입니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 지하 구간 4현시 신호의 순서를 쓰시오.</div><div class="qe-a">정답: 진행 → 주의 → 경계 → 정지</div><div class="qe-wrong">오답함정: "진행→감속→주의→정지" — 지상 구간 4현시이며, 지하에는 "감속" 대신 "경계"가 있음</div></div>
 </div>
 
 <div class="concept" id="p10-65">
@@ -1261,6 +1262,8 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr class="hl"><td><strong>ATO</strong></td><td>Automatic Train Operation</td><td><strong>자동운전</strong> 기능</td></tr>
 </tbody></table></div>
 <div class="trap">⚠️ ATS vs ATC vs ATP 구분: ATS=정지만, ATC=속도제어, ATP=위치감시+방호</div>
+<div class="theory-note"><strong>이론 배경:</strong> 열차보안장치는 기능 수준으로 구분합니다. ATS(자동열차정지)는 신호 위반 시 자동으로 정지하는 기본 장치입니다. ATC(자동열차제어)는 속도까지 연속 제어합니다. ATP(자동열차방호)는 지상자로부터 수신한 데이터로 열차 위치·속도를 실시간 감시하여 안전 방호합니다. ATO(자동열차운전)는 출발·가속·감속·정차까지 자동으로 수행합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 지상자 데이터로 열차 위치·속도를 감시하고 방호기능을 수행하는 장치는?</div><div class="qe-a">정답: ATP (Automatic Train Protection)</div><div class="qe-wrong">오답함정: "ATC가 위치감시와 방호기능을 수행한다" — ATC는 속도제어, 방호기능은 ATP</div></div>
 </div>
 
 <div class="concept" id="p10-66">
@@ -1270,6 +1273,8 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><strong>허용신호기</strong></td><td>일단 정차 후 <strong>승인 없이도</strong> 규정 속도 이하로 진행 가능</td><td>폐색신호기</td></tr>
 </tbody></table></div>
 <div class="trap">⚠️ 폐색신호기 = 허용신호기 (승인 불요). 출발신호기 = 절대신호기 (승인 필요)</div>
+<div class="theory-note"><strong>이론 배경:</strong> 절대신호기는 정지 현시 시 반드시 정차한 후 관계자(역장·관제사)의 승인을 받아야만 진행할 수 있는 신호기입니다. 엄호·출발·입환신호기가 해당됩니다. 허용신호기(폐색신호기)는 일단 정차 후 승인 없이도 안전이 확인되면 규정 속도 이하로 진행할 수 있습니다. "승인 필요 여부"가 핵심 구분입니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 정지 현시 시 관계자 승인 없이도 규정 속도 이하로 진행할 수 있는 신호기는?</div><div class="qe-a">정답: 허용신호기 (폐색신호기)</div><div class="qe-wrong">오답함정: "출발신호기는 허용신호기다" — 출발신호기는 절대신호기 (승인 필요)</div></div>
 <div class="vis-wrap"><img src="images/VIS-088_절대허용신호기비교표.png" alt="절대신호기 vs 허용신호기 비교표" loading="lazy"><p class="vis-cap">절대신호기(정지 절대)와 허용신호기(정지 허용) 비교</p></div>
 </div>
 
@@ -1280,6 +1285,9 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td>TTC 비해당 기능</td><td>정속도 제어는 TTC 기능 아님 ⚠️</td></tr>
 <tr class="hl"><td><strong>운전보안장치 4종</strong></td><td>ATS · ATC · ATP · CTC</td></tr>
 </tbody></table></div>
+<div class="trap">⚠️ TTC 비해당 기능: "정속도 제어"는 TTC 기능 아님. TTC=차량 출발정지·방송·모니터링</div>
+<div class="theory-note"><strong>이론 배경:</strong> TTC(열차종합제어장치)는 차량 내에서 ① 출발·정지 제어, ② 차내 방송·승객 안내, ③ 차량 정보 모니터링을 담당합니다. CTC(중앙집중식 열차제어)는 관제센터에서 전 구간의 신호기·선로전환기를 원격 제어하는 장치입니다. 운전보안장치 4종은 ATS·ATC·ATP·CTC입니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. TTC(열차종합제어장치)의 기능으로 옳지 않은 것은?<br>① 차량 출발·정지 제어 ② 차내 방송·승객 안내 ③ 차량 정보 모니터링 ④ 정속도 제어</div><div class="qe-a">정답: ④ 정속도 제어 (TTC 기능 아님)</div><div class="qe-wrong">오답함정: "관제센터 원격 제어"도 TTC 아님 — CTC 기능</div></div>
 <div class="vis-wrap"><img src="images/VIS-087_TTC_CTC비교표.png" alt="TTC·CTC 비교표" loading="lazy"><p class="vis-cap">열차집중제어장치(TTC) vs 중앙교통제어(CTC) 비교</p></div>
 </div>
 
@@ -1316,6 +1324,8 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><strong>전차선 구비조건</strong></td><td>① 전기전도도 높을 것 ② 기계적 강도 클 것 ③ 유지보수 용이 ④ 내마모성</td></tr>
 </tbody></table></div>
 <div class="trap">⚠️ 이선현상: 팬터그래프와 전차선이 이탈하는 현상 → 가선금구류 중량화는 구비조건 아님</div>
+<div class="theory-note"><strong>이론 배경:</strong> 이선현상(離線現象)은 팬터그래프가 전차선에서 이탈하는 현상으로, 호(arc) 발생과 전기 공급 중단을 유발합니다. 대책으로는 ① 드로퍼 간격 조정(전차선 수평 유지), ② 장력장치 개선(온도 변화에 따른 이완 방지), ③ 복합가선 적용(심플+보조 전선)이 있습니다. 전차선 구비조건은 전기전도도·기계적 강도·유지보수 용이성·내마모성입니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 이선현상 방지 대책 3가지를 쓰시오.</div><div class="qe-a">정답: ① 드로퍼 간격 조정 ② 장력장치 개선 ③ 복합가선 적용</div><div class="qe-wrong">오답함정: "가선금구류 중량화" — 구비조건이 아닌 오답</div></div>
 
 <div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="0oXVOBum4cM" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/0oXVOBum4cM/hqdefault.jpg" alt="전차선로 고장점 표정장치" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#6b7280;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI 참고영상</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">전차선로 고장점 표정장치</span></div></div>
 </div>
@@ -1327,6 +1337,8 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr><td><strong>전차선 절연구간 편위</strong></td><td><strong>250mm</strong></td></tr>
 </tbody></table></div>
 <div class="trap">⚠️ 절연 이격거리 300mm, 편위 250mm — 수치 혼동 주의</div>
+<div class="theory-note"><strong>이론 배경:</strong> 교류 25kV 시스템에서 인체·구조물과 전차선 사이의 절연 이격거리는 최소 300mm 이상이어야 합니다. 전차선 절연구간에서 팬터그래프의 편위(궤도 중심에서 좌우 이탈 거리)는 250mm 이내로 제한하여 이선현상과 충돌을 방지합니다. 두 수치(300mm·250mm)의 혼동이 대표 함정입니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 교류 25kV 전기철도에서 전선과 접지물 사이의 절연 이격거리 기준은?</div><div class="qe-a">정답: 300mm 이상</div><div class="qe-wrong">오답함정: "250mm" — 250mm는 절연구간 편위 기준, 이격거리는 300mm</div></div>
 </div>
 
 <div class="concept" id="p10-71">
@@ -1337,6 +1349,8 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr class="hl"><td><strong>접근 어려운 지역 기준</strong></td><td>연속 정격전위 150V↓, 인체통과 15mA↓, 순간 정격전위 650V↓</td></tr>
 </tbody></table></div>
 <div class="trap">⚠️ 접근 용이/어려움 차이: 연속전위 60V vs 150V — 인체통과(15mA)와 순간전위(650V)는 동일</div>
+<div class="theory-note"><strong>이론 배경:</strong> 교류식 전기철도는 25kV 고압으로 변전소 간격이 길고 전력 손실이 적어 장거리·경사 구간에 유리합니다. 접지 기준은 접근 용이 지역(사람이 쉽게 닿는 곳)에 연속전위 60V 이하, 접근 어려운 지역(구조물 상부 등)에 150V 이하로 차등 적용합니다. 인체통과전류(15mA)와 순간전위(650V) 기준은 두 지역 모두 동일합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 접근이 용이한 지역의 연속 정격전위 기준은?</div><div class="qe-a">정답: 60V 이하</div><div class="qe-wrong">오답함정: "150V" — 150V는 접근 어려운 지역 기준. 접근 용이 지역은 더 엄격한 60V</div></div>
 </div>
 
 <div class="concept" id="p10-72">
@@ -1351,6 +1365,10 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr class="hl"><td><strong>정류포스트</strong></td><td>급전 구간 말단에서 전압강하·누설전류 저감</td></tr>
 <tr><td><strong>구분장치</strong></td><td>전차선 구간을 전기적으로 분리 → 보수 작업 가능</td></tr>
 </tbody></table></div>
+
+<div class="trap">⚠️ 조가선 방식 구분: 심플커티너리=지상 전철, 강체조가식=지하, 헤비 심플=고속선·터널</div>
+<div class="theory-note"><strong>이론 배경:</strong> 조가선(catenary)은 전차선을 지지하는 방식을 뜻합니다. 심플 커티너리는 가장 기본적인 방식으로 국내 지상 전철 구간에 사용합니다. 강체 조가식은 레일형 구조로 지하 구간의 협소한 공간에 적합합니다. 부속설비에서 에어 조인트는 온도 변화에 따른 전차선 신축 조정, 구분장치는 구간 분리, 정류포스트는 전압강하·누설전류 저감을 담당합니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 지하 구간에 주로 적용되는 조가선 방식은?</div><div class="qe-a">정답: 강체 조가식</div><div class="qe-wrong">오답함정: "심플 커티너리" — 지상 전철에 사용하며, 지하는 강체 조가식</div></div>
 
 <div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="kM1BLVUb7rU" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/kM1BLVUb7rU/hqdefault.jpg" alt="강체 전차선로 세척시스템" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#6b7280;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI 참고영상</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">강체 전차선로 세척시스템</span></div></div>
 </div>
