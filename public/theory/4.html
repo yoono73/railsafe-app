@@ -775,7 +775,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 📌 상치신호기 설치 위치와 신호현시 가시거리 (p208)<br>
 <table><thead><tr><th>신호기 종류</th><th>가시거리 기준</th></tr></thead><tbody>
 <tr><td><strong>장내·출발·폐색·엄호신호기</strong></td><td><strong>600m 이상</strong></td></tr>
-<tr><td><strong>원방·입환·중계신호기</strong></td><td><strong>200m 이상</strong></td></tr>
+<tr><td><strong>원방신호기</strong></td><td><strong>600m 이상</strong></td></tr><tr><td><strong>입환·중계신호기</strong></td><td><strong>200m 이상</strong></td></tr>
 <tr><td><strong>수신호</strong> (차량 정지 필요 시)</td><td>사고 지점으로부터 <strong>400m 이상</strong></td></tr>
 <tr><td><strong>유도신호기</strong></td><td><strong>100m 이상</strong></td></tr>
 </tbody></table>
@@ -1153,8 +1153,8 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <tr class="hl"><td><strong>고정축거</strong></td><td>고정축거가 <strong>클수록</strong> 곡선저항 <strong>커짐</strong></td></tr>
 </tbody></table></div>
 <div class="trap">⚠️ 고정축거가 클수록 저항이 커지는 이유: 긴 차축이 곡선부에서 레일과 더 많이 마찰</div>
-<div class="theory-note"><strong>이론 배경:</strong> 곡선저항은 열차가 곡선부를 통과할 때 받는 추가 저항으로, R = 700/r (‰) 공식으로 계산합니다. 곡선반경(r)이 작을수록, 하중이 클수록, 고정축거가 길수록 저항이 커집니다.</div>
-<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 곡선반경 350m에서 곡선저항은? (공식 R=700/r)</div><div class="qe-a">정답: R = 700/350 = 2‰</div><div class="qe-wrong">오답함정: "700/r"에서 r을 km 단위로 착각하는 경우</div></div>
+<div class="theory-note"><strong>이론 배경:</strong> 곡선저항은 열차가 곡선부를 통과할 때 받는 추가 저항으로, R = 700/r (kg/t) 공식으로 계산합니다. 곡선반경(r)이 작을수록, 하중이 클수록, 고정축거가 길수록 저항이 커집니다.</div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 곡선반경 350m에서 곡선저항은? (공식 R=700/r)</div><div class="qe-a">정답: R = 700/350 = 2 kg/t</div><div class="qe-wrong">오답함정: "700/r"에서 r을 km 단위로 착각하는 경우</div></div>
 </div>
 
 <div class="concept" id="p9-57">
@@ -1269,11 +1269,11 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="concept" id="p10-66">
 <div class="concept-title"><span class="cnum">개념 66</span>절대신호기 vs 허용신호기 ⚠️</div>
 <div class="table-wrap"><table><thead><tr><th>구분</th><th>정의</th><th>해당 신호기</th></tr></thead><tbody>
-<tr class="hl"><td><strong>절대신호기</strong></td><td>정지 현시 시 <strong>반드시 정차 + 관계자 승인</strong>을 받아야만 진행 가능</td><td>엄호·출발·입환신호기</td></tr>
+<tr class="hl"><td><strong>절대신호기</strong></td><td>정지 현시 시 <strong>반드시 정차 + 관계자 승인</strong>을 받아야만 진행 가능</td><td>장내·출발·엄호·입환신호기</td></tr>
 <tr><td><strong>허용신호기</strong></td><td>일단 정차 후 <strong>승인 없이도</strong> 규정 속도 이하로 진행 가능</td><td>폐색신호기</td></tr>
 </tbody></table></div>
 <div class="trap">⚠️ 폐색신호기 = 허용신호기 (승인 불요). 출발신호기 = 절대신호기 (승인 필요)</div>
-<div class="theory-note"><strong>이론 배경:</strong> 절대신호기는 정지 현시 시 반드시 정차한 후 관계자(역장·관제사)의 승인을 받아야만 진행할 수 있는 신호기입니다. 엄호·출발·입환신호기가 해당됩니다. 허용신호기(폐색신호기)는 일단 정차 후 승인 없이도 안전이 확인되면 규정 속도 이하로 진행할 수 있습니다. "승인 필요 여부"가 핵심 구분입니다.</div>
+<div class="theory-note"><strong>이론 배경:</strong> 절대신호기는 정지 현시 시 반드시 정차한 후 관계자(역장·관제사)의 승인을 받아야만 진행할 수 있는 신호기입니다. 장내·출발·엄호·입환신호기가 해당됩니다. 허용신호기(폐색신호기)는 일단 정차 후 승인 없이도 안전이 확인되면 규정 속도 이하로 진행할 수 있습니다. "승인 필요 여부"가 핵심 구분입니다.</div>
 <div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 정지 현시 시 관계자 승인 없이도 규정 속도 이하로 진행할 수 있는 신호기는?</div><div class="qe-a">정답: 허용신호기 (폐색신호기)</div><div class="qe-wrong">오답함정: "출발신호기는 허용신호기다" — 출발신호기는 절대신호기 (승인 필요)</div></div>
 <div class="vis-wrap"><img src="images/VIS-088_절대허용신호기비교표.png" alt="절대신호기 vs 허용신호기 비교표" loading="lazy"><p class="vis-cap">절대신호기(정지 절대)와 허용신호기(정지 허용) 비교</p></div>
 </div>
