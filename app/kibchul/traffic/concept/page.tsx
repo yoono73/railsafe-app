@@ -27,6 +27,9 @@ interface ConceptQuestion {
   memory_line: string;
   choices: ConceptChoice[];
   answer_idx: number; // 1-based
+  origin_type: string | null;
+  provenance_grade: string | null;
+  importance_grade: string | null;
 }
 
 type Mode = 'loading' | 'home' | 'quiz' | 'result';
@@ -97,24 +100,58 @@ function saveWrongEntry(q: ConceptQuestion, selectedIdx: number) {
   } catch {}
 }
 
+// ─── 배지 변환 함수 ─────────────────────────────────────────────
+function getOriginLabel(t: string | null): string {
+  const map: Record<string, string> = {
+    EXAM_RECONSTRUCTED: '출제복원',
+    REVIEW_RECONSTRUCTION: '후기복원',
+    REPEATED_RECONSTRUCTION: '반복출제',
+    SOURCE_BASED_REWRITE: '복원자료기반',
+    CONCEPT_CHECK: '개념확인',
+    PREDICTED_VARIANT: '출제예상',
+    LAW_UPDATE: '최신법령',
+  };
+  return t ? (map[t] ?? '미분류') : '';
+}
+function getImportanceLabel(g: string | null): string {
+  const map: Record<string, string> = { s: 'S급', a_plus: 'A+급', a: 'A급', b: 'B급', c: 'C급' };
+  return g ? (map[g] ?? g) : '';
+}
+function getImportanceColor(g: string | null): { bg: string; color: string } {
+  if (g === 's') return { bg: '#fef9c3', color: '#713f12' };
+  if (g === 'a_plus') return { bg: '#fce7f3', color: '#831843' };
+  if (g === 'a') return { bg: '#dcfce7', color: '#14532d' };
+  return { bg: '#f3f4f6', color: '#374151' };
+}
+
 // ─── Supabase fetch ─────────────────────────────────────────────
 async function fetchConceptQuestions(): Promise<ConceptQuestion[]> {
   const supabase = createClient();
 
-  // step1: subject_id=1 (교통안전관리론) question_versions(version_no=1) 조회
+  // step1: subject_id=1 (교통안전관리론) question_id 목록 조회
+  const { data: qRows, error: qErr } = await supabase
+    .from('questions')
+    .select('id')
+    .eq('subject_id', 1)
+    .order('id');
+
+  if (qErr || !qRows || qRows.length === 0) return [];
+  const questionIds = qRows.map((r: { id: number }) => r.id);
+
+  // step2: question_ids로 question_versions + 관계 조회
   const { data: versionRows, error: vErr } = await supabase
     .from('question_versions')
     .select(`
       id,
       question_id,
       question_text,
-      questions!inner ( id, legacy_question_id, subject_id ),
+      questions!inner ( id, legacy_question_id, subject_id, origin_type, provenance_grade, importance_grade ),
       question_explanations ( exam_area, core_explanation, trap_point, memory_line ),
       choices ( choice_key, choice_text, is_correct, explanation, sort_order )
     `)
+    .in('question_id', questionIds)
     .eq('version_no', 1)
-    .eq('questions.subject_id', 1)
-    .order('questions(legacy_question_id)');
+    .order('question_id');
 
   if (vErr || !versionRows) return [];
 
@@ -148,6 +185,9 @@ async function fetchConceptQuestions(): Promise<ConceptQuestion[]> {
         memory_line: qe?.memory_line ?? '',
         choices,
         answer_idx,
+        origin_type: q?.origin_type ?? null,
+        provenance_grade: q?.provenance_grade ?? null,
+        importance_grade: q?.importance_grade ?? null,
       };
     })
     .sort((a, b) => (a.legacy_id ?? '').localeCompare(b.legacy_id ?? ''));
@@ -408,10 +448,30 @@ export default function ConceptTrafficPage() {
 
       {/* 문제 카드 */}
       <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: '20px', marginBottom: 16, boxShadow: '0 1px 4px rgba(0,0,0,.06)' }}>
-        <div style={{ marginBottom: 10 }}>
-          <span style={{ background: '#eff6ff', color: '#1d4ed8', borderRadius: 4, padding: '2px 8px', fontSize: '.78em', fontWeight: 'bold' }}>
-            {q.exam_area}
-          </span>
+        <div style={{ marginBottom: 10, display: 'flex', gap: 5, flexWrap: 'wrap', alignItems: 'center' }}>
+          {q.exam_area && (
+            <span style={{ background: '#eff6ff', color: '#1d4ed8', borderRadius: 4, padding: '2px 8px', fontSize: '.78em', fontWeight: 'bold' }}>
+              {q.exam_area}
+            </span>
+          )}
+          {q.provenance_grade && (
+            <span style={{ background: '#fef3c7', color: '#92400e', borderRadius: 4, padding: '2px 8px', fontSize: '.73em', fontWeight: 'bold' }}>
+              출처 {q.provenance_grade}
+            </span>
+          )}
+          {q.origin_type && (
+            <span style={{ background: '#f3e8ff', color: '#6b21a8', borderRadius: 4, padding: '2px 8px', fontSize: '.73em' }}>
+              {getOriginLabel(q.origin_type)}
+            </span>
+          )}
+          {q.importance_grade && (() => {
+            const ic = getImportanceColor(q.importance_grade);
+            return (
+              <span style={{ background: ic.bg, color: ic.color, borderRadius: 4, padding: '2px 8px', fontSize: '.73em', fontWeight: 'bold' }}>
+                {getImportanceLabel(q.importance_grade)}
+              </span>
+            );
+          })()}
         </div>
         <div style={{ fontSize: '1em', lineHeight: 1.7, fontWeight: 500 }}>{q.question_text}</div>
       </div>
