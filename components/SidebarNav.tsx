@@ -233,7 +233,7 @@ export default function SidebarNav() {
                       }`}
                     >
                       <span className="text-[10px]">└</span>
-                      <span>🚆 핵심개념 문제</span>
+                      <span>📘 핵심개념 문제</span>
                     </Link>
                     <Link
                       href="/quiz/5"
@@ -260,7 +260,7 @@ export default function SidebarNav() {
                       }`}
                     >
                       <span className="text-[10px]">└</span>
-                      <span>🚂 핵심개념 문제</span>
+                      <span>📘 핵심개념 문제</span>
                     </Link>
                     <Link
                       href="/quiz/7"

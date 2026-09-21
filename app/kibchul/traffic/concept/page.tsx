@@ -5,8 +5,8 @@ import { createClient } from '@/lib/supabase/client';
 import { saveAttempt, removeAttempt } from '@/lib/kibchul-attempts';
 
 // ─── 상수 ──────────────────────────────────────────────────────
-const CONCEPT_SUBJECT_ID = 201;
-const SAVE_KEY = 'concept_traffic_progress';
+const CONCEPT_SUBJECT_ID = 201;   // 내부 식별용 (오답 루프 등)
+const DB_SUBJECT_ID      = 1;     // concept_progress 테이블 subject_id
 const LS_WRONG = 'kibchul_wrong';
 
 // ─── 타입 ──────────────────────────────────────────────────────
@@ -45,7 +45,7 @@ interface SavedProgress {
   current: number;
   answers: Answer[];
   shuffleQ: boolean;
-  savedAt: string;
+  updatedAt: string;
 }
 
 // ─── 유틸 ──────────────────────────────────────────────────────
@@ -58,19 +58,54 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-function saveProgress(data: SavedProgress) {
-  try { localStorage.setItem(SAVE_KEY, JSON.stringify(data)); } catch {}
-}
-function loadProgress(): SavedProgress | null {
-  try {
-    const raw = localStorage.getItem(SAVE_KEY);
-    return raw ? JSON.parse(raw) : null;
-  } catch { return null; }
-}
-function clearProgress() {
-  try { localStorage.removeItem(SAVE_KEY); } catch {}
+// ─── Supabase 진행상태 저장/불러오기/삭제 ────────────────────────
+async function saveProgressToServer(data: SavedProgress): Promise<void> {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+  await supabase.from('concept_progress').upsert({
+    user_id:      user.id,
+    subject_id:   DB_SUBJECT_ID,
+    question_ids: data.questionIds,
+    current:      data.current,
+    answers:      data.answers,
+    shuffle_q:    data.shuffleQ,
+    updated_at:   new Date().toISOString(),
+  }, { onConflict: 'user_id,subject_id' });
 }
 
+async function loadProgressFromServer(): Promise<SavedProgress | null> {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return null;
+  const { data, error } = await supabase
+    .from('concept_progress')
+    .select('question_ids, current, answers, shuffle_q, updated_at')
+    .eq('user_id', user.id)
+    .eq('subject_id', DB_SUBJECT_ID)
+    .maybeSingle();
+  if (error || !data) return null;
+  return {
+    questionIds: data.question_ids ?? [],
+    current:     data.current ?? 0,
+    answers:     (data.answers as Answer[]) ?? [],
+    shuffleQ:    data.shuffle_q ?? false,
+    updatedAt:   data.updated_at ?? '',
+  };
+}
+
+async function clearProgressFromServer(): Promise<void> {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+  await supabase
+    .from('concept_progress')
+    .delete()
+    .eq('user_id', user.id)
+    .eq('subject_id', DB_SUBJECT_ID);
+}
+
+// ─── 오답 저장 ──────────────────────────────────────────────────
 function saveWrongEntry(q: ConceptQuestion, selectedIdx: number) {
   try {
     const existing: { questionId: string }[] = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
@@ -128,7 +163,6 @@ function getImportanceColor(g: string | null): { bg: string; color: string } {
 async function fetchConceptQuestions(): Promise<ConceptQuestion[]> {
   const supabase = createClient();
 
-  // step1: subject_id=1 (교통안전관리론) question_id 목록 조회
   const { data: qRows, error: qErr } = await supabase
     .from('questions')
     .select('id')
@@ -138,7 +172,6 @@ async function fetchConceptQuestions(): Promise<ConceptQuestion[]> {
   if (qErr || !qRows || qRows.length === 0) return [];
   const questionIds = qRows.map((r: { id: number }) => r.id);
 
-  // step2: question_ids로 question_versions + 관계 조회
   const { data: versionRows, error: vErr } = await supabase
     .from('question_versions')
     .select(`
@@ -157,7 +190,7 @@ async function fetchConceptQuestions(): Promise<ConceptQuestion[]> {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (versionRows as any[])
-    .filter(row => row.questions) // subject_id 필터 미매칭 행 제거
+    .filter(row => row.questions)
     .map(row => {
       const q = Array.isArray(row.questions) ? row.questions[0] : row.questions;
       const qe = Array.isArray(row.question_explanations)
@@ -204,16 +237,25 @@ export default function ConceptTrafficPage() {
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [shuffleQ, setShuffleQ] = useState(false);
   const [savedProgress, setSavedProgress] = useState<SavedProgress | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    fetchConceptQuestions().then(qs => {
+    const init = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      setIsLoggedIn(!!user);
+
+      const [qs, progress] = await Promise.all([
+        fetchConceptQuestions(),
+        loadProgressFromServer(),
+      ]);
       setAllQuestions(qs);
-      const p = loadProgress();
-      if (p && p.questionIds.length > 0 && p.current < p.questionIds.length) {
-        setSavedProgress(p);
+      if (progress && progress.questionIds.length > 0 && progress.current < progress.questionIds.length) {
+        setSavedProgress(progress);
       }
       setMode('home');
-    }).catch(() => setMode('home'));
+    };
+    init().catch(() => setMode('home'));
   }, []);
 
   const startQuiz = useCallback(() => {
@@ -224,7 +266,7 @@ export default function ConceptTrafficPage() {
     setRevealed(false);
     setAnswers([]);
     setSavedProgress(null);
-    clearProgress();
+    clearProgressFromServer().catch(() => {});
     setMode('quiz');
   }, [allQuestions, shuffleQ]);
 
@@ -241,19 +283,6 @@ export default function ConceptTrafficPage() {
     setSavedProgress(null);
     setMode('quiz');
   }, [savedProgress, allQuestions]);
-
-  // 퀴즈 중 자동저장
-  useEffect(() => {
-    if (mode === 'quiz' && questions.length > 0) {
-      saveProgress({
-        questionIds: questions.map(q => q.id),
-        current,
-        answers,
-        shuffleQ,
-        savedAt: new Date().toISOString(),
-      });
-    }
-  }, [mode, questions, current, answers, shuffleQ]);
 
   const handleSelect = (idx: number) => {
     if (revealed) {
@@ -275,10 +304,21 @@ export default function ConceptTrafficPage() {
 
   const handleNext = () => {
     const nextIdx = current + 1;
+    const newAnswers = answers; // closure 시점의 answers
+
     if (nextIdx >= questions.length) {
-      clearProgress();
+      // 완료 → 진행 기록 삭제
+      clearProgressFromServer().catch(() => {});
       setMode('result');
     } else {
+      // 저장 후 다음 문제
+      saveProgressToServer({
+        questionIds: questions.map(q => q.id),
+        current:     nextIdx,
+        answers:     newAnswers,
+        shuffleQ,
+        updatedAt:   new Date().toISOString(),
+      }).catch(() => {});
       setCurrent(nextIdx);
       setSelected(null);
       setRevealed(false);
@@ -289,9 +329,15 @@ export default function ConceptTrafficPage() {
     if (questions.length > 0 && (current > 0 || answers.length > 0 || revealed)) {
       const saveIdx = revealed ? current + 1 : current;
       if (saveIdx < questions.length) {
-        saveProgress({ questionIds: questions.map(q => q.id), current: saveIdx, answers, shuffleQ, savedAt: new Date().toISOString() });
+        saveProgressToServer({
+          questionIds: questions.map(q => q.id),
+          current:     saveIdx,
+          answers,
+          shuffleQ,
+          updatedAt:   new Date().toISOString(),
+        }).catch(() => {});
       } else {
-        clearProgress();
+        clearProgressFromServer().catch(() => {});
       }
     }
     setMode('home');
@@ -317,27 +363,28 @@ export default function ConceptTrafficPage() {
           <div style={{ fontSize: '.78em', opacity: .7, marginTop: 6 }}>교통안전관리론 전범위 핵심개념</div>
         </div>
 
-        {/* 이어풀기 배너 */}
-        {savedProgress && (
+        {/* 이어풀기 배너 (로그인 사용자만) */}
+        {savedProgress && isLoggedIn && (
           <div style={{ background: '#eff6ff', border: '2px solid #3b82f6', borderRadius: 10, padding: '14px 18px', marginBottom: 20 }}>
             <div style={{ fontWeight: 'bold', color: '#1d4ed8', marginBottom: 6 }}>📌 이어서 풀기 가능</div>
             <div style={{ fontSize: '.85em', color: '#374151', marginBottom: 10 }}>
               {savedProgress.current}번째 문제까지 완료 · 총 {savedProgress.questionIds.length}문항 ·
               정답 {savedProgress.answers.filter((a: Answer) => a.correct).length}/{savedProgress.answers.length}
               <span style={{ color: '#6b7280', marginLeft: 6 }}>
-                ({new Date(savedProgress.savedAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })} 저장)
+                ({new Date(savedProgress.updatedAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })} 저장)
               </span>
             </div>
-            <div style={{ display: 'flex', gap: 8 }}>
-              <button onClick={resumeQuiz}
-                style={{ flex: 2, padding: '10px', background: '#1d4ed8', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer', fontSize: '.92em' }}>
-                ▶ 이어서 풀기 ({savedProgress.current + 1}번 문제부터)
-              </button>
-              <button onClick={() => { clearProgress(); setSavedProgress(null); }}
-                style={{ flex: 1, padding: '10px', background: '#fff', color: '#6b7280', border: '1px solid #d1d5db', borderRadius: 8, cursor: 'pointer', fontSize: '.88em' }}>
-                삭제
-              </button>
-            </div>
+            <button onClick={resumeQuiz}
+              style={{ width: '100%', padding: '10px', background: '#1d4ed8', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer', fontSize: '.92em' }}>
+              ▶ 이어서 풀기 ({savedProgress.current + 1}번 문제부터)
+            </button>
+          </div>
+        )}
+
+        {/* 비로그인 안내 */}
+        {!isLoggedIn && (
+          <div style={{ background: '#fff7ed', border: '1px solid #fed7aa', borderRadius: 8, padding: '10px 14px', marginBottom: 16, fontSize: '.83em', color: '#9a3412' }}>
+            ℹ️ 로그인하면 어디서든 이어서 풀기가 가능합니다.
           </div>
         )}
 
@@ -381,7 +428,6 @@ export default function ConceptTrafficPage() {
           <div style={{ fontSize: '.9em', opacity: .85 }}>{correctCount} / {answers.length} 정답</div>
         </div>
 
-        {/* 오답 목록 */}
         <div style={{ marginBottom: 20 }}>
           <div style={{ fontWeight: 'bold', marginBottom: 12 }}>❌ 틀린 문항</div>
           {answers.filter(a => !a.correct).length === 0
@@ -416,7 +462,7 @@ export default function ConceptTrafficPage() {
         </div>
 
         <div style={{ display: 'flex', gap: 10, marginTop: 20 }}>
-          <button onClick={() => { clearProgress(); setMode('home'); }}
+          <button onClick={() => setMode('home')}
             style={{ flex: 1, padding: '12px', background: '#6b7280', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer' }}>
             ← 홈으로
           </button>
@@ -497,7 +543,6 @@ export default function ConceptTrafficPage() {
               style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 16px', marginBottom: revealed ? 0 : 8, background: bg, border: `2px solid ${border}`, borderRadius: revealed ? '8px 8px 0 0' : 8, cursor: revealed ? 'default' : 'pointer', color, fontSize: '.92em', lineHeight: 1.5, transition: 'all .15s', fontWeight }}>
               <span style={{ fontWeight: 'bold', marginRight: 4 }}>{icon}{idx}.</span>{c.text}
             </button>
-            {/* 선지별 해설 (정답 공개 후) */}
             {revealed && (
               <div style={{ background: c.is_correct ? '#f0fdf4' : idx === selected ? '#fff1f2' : '#fafafa', border: `1px solid ${c.is_correct ? '#86efac' : idx === selected ? '#fca5a5' : '#e5e7eb'}`, borderTop: 'none', borderRadius: '0 0 8px 8px', padding: '8px 14px', marginBottom: 8, fontSize: '.82em', color: c.is_correct ? '#14532d' : idx === selected ? '#7f1d1d' : '#6b7280' }}>
                 {c.explanation || (c.is_correct ? '정답입니다.' : '오답입니다.')}
@@ -507,7 +552,7 @@ export default function ConceptTrafficPage() {
         );
       })}
 
-      {/* 핵심 해설 (정답 공개 후) */}
+      {/* 핵심 해설 */}
       {revealed && (
         <div style={{ background: '#f0fdf4', border: '1px solid #86efac', borderRadius: 8, padding: '12px 14px', marginTop: 4, fontSize: '.88em', color: '#14532d' }}>
           <strong>✅ 정답: {q.answer_idx}번 — {correctChoice?.text}</strong>
