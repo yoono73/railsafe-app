@@ -144,6 +144,17 @@ export default function SidebarNav() {
                 {s.id === 2 && (
                   <div className="pl-2 border-l border-green-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
                     <Link
+                      href="/kibchul/law/concept"
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+                        pathname.startsWith('/kibchul/law/concept')
+                          ? 'bg-blue-100 text-blue-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-blue-700'
+                      }`}
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>📘 핵심개념 문제</span>
+                    </Link>
+                    <Link
                       href="/quiz/2"
                       className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
                         pathname.startsWith('/quiz/2')
@@ -160,17 +171,6 @@ export default function SidebarNav() {
                 {s.id === 3 && (
                   <div className="pl-2 border-l border-sky-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
                     <Link
-                      href="/quiz/3"
-                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
-                        pathname.startsWith('/quiz/3')
-                          ? 'bg-sky-100 text-sky-800 font-semibold'
-                          : 'text-gray-400 hover:bg-gray-50 hover:text-sky-700'
-                      }`}
-                    >
-                      <span className="text-[10px]">└</span>
-                      <span>👑 철도왕 문제(기출·신유형)</span>
-                    </Link>
-                    <Link
                       href="/kibchul/operation/concept"
                       className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
                         pathname.startsWith('/kibchul/operation/concept')
@@ -180,6 +180,17 @@ export default function SidebarNav() {
                     >
                       <span className="text-[10px]">└</span>
                       <span>📘 핵심개념 문제</span>
+                    </Link>
+                    <Link
+                      href="/quiz/3"
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+                        pathname.startsWith('/quiz/3')
+                          ? 'bg-sky-100 text-sky-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-sky-700'
+                      }`}
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>👑 철도왕 문제(기출·신유형)</span>
                     </Link>
                   </div>
                 )}
