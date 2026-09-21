@@ -312,9 +312,9 @@ export default function ConceptTrafficPage() {
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '24px 16px', background: '#f8f9fa', minHeight: '100vh' }}>
         {/* 헤더 */}
         <div style={{ background: 'linear-gradient(135deg,#1e3a5f,#2563eb)', color: '#fff', borderRadius: 12, padding: '20px 24px', marginBottom: 24 }}>
-          <div style={{ fontSize: '1.3em', fontWeight: 'bold', marginBottom: 4 }}>📘 교통안전법 핵심개념 문제</div>
-          <div style={{ fontSize: '.85em', opacity: .85 }}>핵심 조문·수치·절차 집중 훈련 — {allQuestions.length}문항</div>
-          <div style={{ fontSize: '.78em', opacity: .7, marginTop: 6 }}>법령 기준: [시행 2026.1.2]</div>
+          <div style={{ fontSize: '1.3em', fontWeight: 'bold', marginBottom: 4 }}>📘 교통안전관리론 핵심개념 문제</div>
+          <div style={{ fontSize: '.85em', opacity: .85 }}>핵심 이론·법규·수치 집중 훈련 — {allQuestions.length}문항</div>
+          <div style={{ fontSize: '.78em', opacity: .7, marginTop: 6 }}>교통안전관리론 전범위 핵심개념</div>
         </div>
 
         {/* 이어풀기 배너 */}
@@ -343,7 +343,7 @@ export default function ConceptTrafficPage() {
 
         {/* 안내 */}
         <div style={{ background: '#eff6ff', border: '1px solid #93c5fd', borderRadius: 8, padding: '12px 16px', marginBottom: 20, fontSize: '.85em', color: '#1e3a8a' }}>
-          💡 <strong>핵심개념 문제 안내:</strong> 교통안전법 조문의 정의·수치·절차·제재를 다루는 핵심 훈련 문항입니다.
+          💡 <strong>핵심개념 문제 안내:</strong> 교통안전관리론 전범위 이론·법규·수치·절차를 다루는 핵심 훈련 문항입니다.
           선지별 해설과 함정 포인트가 함께 제공됩니다.
         </div>
 
