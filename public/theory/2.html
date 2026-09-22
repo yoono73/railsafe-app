@@ -1043,16 +1043,32 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 </div>
 </div><div class="concept" id="p10-20">
 <div class="concept-title"><span class="cnum">개념 29</span>교통안전도 산정식</div>
-<p style='background:#f0f8ff;padding:10px;border-radius:6px;font-weight:bold;font-size:1em;margin:8px 0'>(교통사고 발생건수 × 0.6) + (교통사고 사상자 수 × 0.4) × 자동차등록(면허) 대수</p>
-
+<p style='background:#f0f8ff;padding:10px;border-radius:6px;font-weight:bold;font-size:1em;margin:8px 0'>교통안전도 = [(교통사고 발생건수 × <span style="color:#c0392b">0.6</span>) + (교통사고 사상자수 × <span style="color:#2980b9">0.4</span>)] ÷ 자동차등록(면허)대수 × 100,000</p>
+<div class="step-box">
+<strong>📐 계산 예제</strong><br>
+• 상황: 발생건수 <strong>100건</strong>, 사상자 <strong>50명</strong>, 자동차등록대수 <strong>200,000대</strong><br>
+• STEP 1 — 가중 합계: (100 × 0.6) + (50 × 0.4) = <strong>60 + 20 = 80</strong><br>
+• STEP 2 — 정규화: 80 ÷ 200,000 × 100,000 = <strong>40.0</strong> (10만 대당 지수)<br>
+<br>
+<strong>⚠️ 핵심 함정 3가지</strong><br>
+① 가중치 교체: 발생건수 <span style="color:#c0392b">0.6</span> ↔ 사상자수 <span style="color:#2980b9">0.4</span> 뒤바꾸기<br>
+② 나누기 ÷ 를 곱하기 ×로 교체<br>
+③ "자동차등록대수" 대신 "인구수"·"도로연장" 대입
+</div>
 <div class="theory-note">
-  <strong>이론 배경:</strong> 교통안전도 산정식은 (발생건수×0.6 + 사상자수×0.4) × 자동차등록(면허) 대수로 구성된다. 발생건수와 사상자수의 가중치(0.6/0.4)를 바꿔 출제하거나, 면허 대수 대신 다른 기준을 넣는 함정이 있다.
+  <strong>이론 배경:</strong> 교통안전도는 자동차 10만 대당 교통사고 피해를 나타내는 지수다. 분자는 발생건수(가중 0.6)와 사상자수(가중 0.4)의 합, 분모는 자동차등록(면허)대수로 나누고 100,000을 곱해 정규화한다. 가중치 순서(발생건수가 사상자수보다 크다)를 반드시 기억할 것.
 </div>
 <div class="quiz-ex">
   <div class="qe-title">📝 기출 예시</div>
   <div class="qe-q">Q. 교통안전도 산정식에서 교통사고 발생건수의 가중치는?</div>
   <div class="qe-a">정답: 0.6</div>
   <div class="qe-wrong">오답함정: 0.4 — 발생건수 0.6, 사상자수 0.4 (교차 배치 주의)</div>
+</div>
+<div class="quiz-ex">
+  <div class="qe-title">📝 계산형 예시</div>
+  <div class="qe-q">Q. 발생건수 200건, 사상자 100명, 자동차등록대수 500,000대일 때 교통안전도는?</div>
+  <div class="qe-a">정답: [(200×0.6)+(100×0.4)] ÷ 500,000 × 100,000 = (120+40) ÷ 500,000 × 100,000 = <strong>32.0</strong></div>
+  <div class="qe-wrong">오답함정: 가중치 뒤바꿔 [(200×0.4)+(100×0.6)] = 80+60 = 140 → 28.0 — 발생건수가 항상 0.6</div>
 </div>
 </div><div class="concept" id="p10-21">
 <div class="concept-title"><span class="cnum">개념 30</span>중대교통사고</div>
@@ -1468,15 +1484,32 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="part-title" onclick="togglePart(this)">PART 17. 규정확인평가 점수 기준<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p17-33">
 <div class="concept-title"><span class="cnum">개념 47</span>규정확인평가 점수 기준 (제26조)</div>
-<div class="table-wrap"><table><thead><tr><th>점수</th><th>판정</th></tr></thead><tbody><tr><td><strong>80점 이상</strong></td><td>적합</td></tr><tr><td><strong>60점 이상 80점 미만</strong></td><td>조건부 적합</td></tr><tr><td><strong>60점 미만</strong></td><td>부적합</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>점수</th><th>판정</th><th>후속 처분</th></tr></thead><tbody><tr><td><strong>80점 이상</strong></td><td><strong class="hl-green">적합</strong></td><td>이상 없음 — 현행 규정 유지</td></tr><tr><td><strong>60점 이상 80점 미만</strong></td><td><strong style="color:#e67e22">조건부 적합</strong></td><td><strong>개선 권고</strong> — 기한 내 보완 이행 확인</td></tr><tr><td><strong>60점 미만</strong></td><td><strong style="color:#c0392b">부적합</strong></td><td><strong>시정명령</strong> — 미이행 시 과태료 부과</td></tr></tbody></table></div>
+<div class="step-box">
+<strong>📋 평가 절차 흐름</strong><br>
+국토교통부장관 → 규정확인평가 실시 → 판정(적합/조건부/부적합)<br>
+↓ 조건부 적합: 개선 권고 → 이행 기간 내 재확인<br>
+↓ 부적합: 시정명령 → 기간 내 미이행 시 과태료<br>
+<br>
+<strong>⚠️ 시험 포인트</strong><br>
+• 경계 점수 함정: <strong>60점</strong>(부적합 경계), <strong>80점</strong>(적합 기준)<br>
+• "60점 이상"은 <span style="color:#e67e22">조건부 적합</span> (적합 아님!)<br>
+• "80점 미만"도 <span style="color:#e67e22">조건부 적합</span> (부적합 아님!)
+</div>
 <div class="theory-note">
-  <strong>이론 배경:</strong> 국토교통부장관이 교통안전관리규정의 적정성을 확인·평가한다(규정확인평가). 판정 기준 3단계 — <strong>80점 기준(적합)</strong>, <strong>60점 기준(부적합 경계)</strong>. 60~80점 구간이 조건부 적합임에 주의.
+  <strong>이론 배경:</strong> 국토교통부장관이 교통안전관리규정의 적정성을 확인·평가한다(규정확인평가). 판정 기준 3단계 — <strong>80점 기준(적합)</strong>, <strong>60점 기준(부적합 경계)</strong>. 60~80점 구간이 조건부 적합이며, 각 판정마다 후속 처분이 다르다.
 </div>
 <div class="quiz-ex">
   <div class="qe-title">📝 기출 예시</div>
-  <div class="qe-q">Q. 규정확인평가 결과 75점을 받은 경우 판정은?</div>
-  <div class="qe-a">정답: 조건부 적합 (60점 이상 80점 미만)</div>
-  <div class="qe-wrong">오답함정: 적합 — 적합은 80점 이상이어야 함. 75점은 조건부 적합 구간</div>
+  <div class="qe-q">Q. 규정확인평가 결과 75점을 받은 경우 판정과 후속 처분은?</div>
+  <div class="qe-a">정답: 조건부 적합 (60점 이상 80점 미만) → 개선 권고</div>
+  <div class="qe-wrong">오답함정: 적합 — 적합은 80점 이상이어야 함. 75점은 조건부 적합 구간 → 개선 권고 대상</div>
+</div>
+<div class="quiz-ex">
+  <div class="qe-title">📝 기출 예시 2</div>
+  <div class="qe-q">Q. 규정확인평가에서 부적합 판정 시 후속 조치는?</div>
+  <div class="qe-a">정답: 시정명령 (기간 내 미이행 시 과태료)</div>
+  <div class="qe-wrong">오답함정: 개선 권고 — 개선 권고는 조건부 적합 처분. 부적합은 강제력 있는 시정명령</div>
 </div>
 </div></div>
 </div>
@@ -1485,15 +1518,32 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="part-title" onclick="togglePart(this)">PART 18. 교통안전 시범도시<span class="arrow">▲</span></div>
 <div class="part-body"><div class="concept" id="p18-34">
 <div class="concept-title"><span class="cnum">개념 48</span>시범도시 지정·지원</div>
-<div class="table-wrap"><table><thead><tr><th>구분</th><th>내용</th></tr></thead><tbody><tr><td>지정 주체</td><td><strong>지정행정기관의 장</strong></td></tr><tr><td>지원 내용</td><td>예산의 범위에서 <strong>사업비의 일부</strong>를 지원</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>구분</th><th>내용</th><th>시험 포인트</th></tr></thead><tbody><tr><td><strong>지정 주체</strong></td><td><strong>지정행정기관의 장</strong></td><td>국토교통부장관·시도지사 아님 ❌</td></tr><tr><td><strong>지정 요건</strong></td><td>교통사고 감소를 위한 시책 추진 계획 수립 + 지자체 신청</td><td>요건 충족 시 지정, 충족 안 되면 취소</td></tr><tr><td><strong>지원 내용</strong></td><td>예산의 범위에서 <strong>사업비의 일부</strong> 지원</td><td>"전액" 아님 — "일부" 강조 ❌</td></tr><tr><td><strong>지정 취소</strong></td><td>거짓·부정한 방법으로 지정받은 경우, 지정 요건 미충족 시</td><td>취소 사유 2가지 암기</td></tr></tbody></table></div>
+<div class="step-box">
+<strong>📋 시범도시 절차 흐름</strong><br>
+지자체 신청 → 지정행정기관의 장 검토 → 시범도시 지정<br>
+→ 사업비 지원(예산 범위 내 일부)<br>
+→ 지정 취소 사유: ① 거짓·부정 신청 ② 요건 미충족<br>
+<br>
+<strong>⚠️ 시험 함정</strong><br>
+• 지정 주체: 국토교통부장관(×) → <strong>지정행정기관의 장</strong>(○)<br>
+• 지원 범위: "전부 지원"(×) → <strong>"일부" 지원</strong>(○)<br>
+• 취소 사유 2가지 중 1개만 쓰면 감점
+</div>
 <div class="theory-note">
-  <strong>이론 배경:</strong> 교통안전 시범도시는 <strong>지정행정기관의 장</strong>이 지정한다. 지원은 전액이 아니라 <strong>'일부'</strong>만 지원하는 것이 시험 포인트. "예산의 범위에서 사업비의 일부"라는 표현을 정확히 기억할 것.
+  <strong>이론 배경:</strong> 교통안전 시범도시는 교통사고 감소 모델 지역을 지정해 집중 지원하는 제도다. <strong>지정행정기관의 장</strong>이 지정권자이고, 지원은 예산의 범위 안에서 <strong>사업비의 일부</strong>만 지원한다(전액이 아님). 지정 취소는 거짓 신청과 요건 미충족 두 가지가 핵심.
 </div>
 <div class="quiz-ex">
   <div class="qe-title">📝 기출 예시</div>
   <div class="qe-q">Q. 교통안전 시범도시를 지정하는 주체는?</div>
   <div class="qe-a">정답: 지정행정기관의 장</div>
   <div class="qe-wrong">오답함정: 국토교통부장관, 시·도지사 — 시범도시 지정은 지정행정기관의 장이 담당</div>
+</div>
+<div class="quiz-ex">
+  <div class="qe-title">📝 기출 예시 2</div>
+  <div class="qe-q">Q. 교통안전 시범도시 지정을 취소할 수 있는 사유 2가지는?</div>
+  <div class="qe-a">정답: ① 거짓이나 그 밖의 부정한 방법으로 지정받은 경우 ② 지정 요건을 충족하지 못하게 된 경우</div>
+  <div class="qe-wrong">오답함정: "사업비를 목적 외에 사용한 경우"만 쓰면 불완전 답안 — 취소 사유 2가지 모두 서술 필요</div>
 </div>
 </div></div>
 </div>
