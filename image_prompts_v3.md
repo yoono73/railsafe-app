@@ -603,3 +603,93 @@ Font: clean sans-serif. Arrow lines connecting related signals.
 | ✅완료 | VIS-090_시계운전방식3종비교.png | 3.html C-09 | HTML삽입완료 |
 | ✅완료 | VIS-061_폐색방식8종분류표.png | 3.html C-06 | 파일생성완료 |
 | 신규 제작 필요 | VIS-091_상치신호기전체배치도.png | 3.html C-10 | 프롬프트작성완료 |
+
+---
+
+## VIS-092 — 관절대차 vs 일반대차 + 고정축거 개념도
+
+**파일명:** `VIS-092_관절대차고정축거설명도.png`  
+**사용 위치:** `3.html` C-25  
+**크기:** 1792×1024 (가로형)  
+
+```
+White background infographic. Title at top: "관절대차(관절식) vs 일반대차 + 고정축거 개념" in bold dark navy Korean text.
+
+The image is divided into THREE SECTIONS horizontally:
+
+──────────────────────────────────────────────────────────────────────
+SECTION 1 (LEFT 35%): 일반대차 — 일반 연결 구조
+──────────────────────────────────────────────────────────────────────
+Draw two rectangular train cars (car body = light gray rectangle) on a straight track.
+  - Car A (left): has TWO bogies underneath — one at front, one at rear
+  - Car B (right): has TWO bogies underneath — one at front, one at rear
+  - Total: 4 bogies shown (each bogie = small dark rectangle with 2 wheel circles)
+  - Between Car A and Car B: a rigid bar coupling connector (=== symbol)
+
+Label: "일반 연결" below the coupling
+Small callout box: "차량 2개 → 대차 4개"
+Arrow pointing to the coupling: "연결부: 차체끼리 직접 연결"
+
+Below this: a CURVE TRACK view (bird's eye / top-down view)
+  - Show the two cars going around a curve
+  - The coupling between cars shows a sharp kink/angle
+  - Draw "비틀림 발생" with a red wavy line at the coupling
+  - Label: "곡선에서 연결부 비틀림 → 좌우 흔들림"
+
+──────────────────────────────────────────────────────────────────────
+SECTION 2 (MIDDLE 35%): 관절대차 — 공유 대차 구조
+──────────────────────────────────────────────────────────────────────
+Draw two rectangular train cars on a straight track.
+  - Car A (left): has ONE bogie at front only
+  - Between Car A and Car B: ONE SHARED BOGIE (공유대차) — drawn larger, in BLUE color, with label "공유대차 (관절)" and a small joint/hinge symbol on top
+  - Car B (right): has ONE bogie at rear only
+  - Total: 3 bogies shown
+
+Small callout box: "차량 2개 → 대차 3개 (1개 절약)"
+Arrow pointing to the shared bogie: "연결부 = 대차 위에 위치"
+
+Below this: the SAME CURVE TRACK (bird's eye / top-down view)
+  - Show the two cars going around the same curve
+  - The shared bogie rotates smoothly (draw a small rotation arc arrow)
+  - No sharp kink — smooth curve
+  - Label: "공유대차가 관절처럼 회전 → 곡선 부드럽게 통과"
+  - Green checkmark: "✅ 곡선통과 우수 / 승차감 향상"
+
+──────────────────────────────────────────────────────────────────────
+SECTION 3 (RIGHT 30%): 고정축거(Fixed Wheelbase) 개념
+──────────────────────────────────────────────────────────────────────
+Draw a SINGLE BOGIE (top-down / bird's eye view) with:
+  - Two horizontal axle lines (앞차축, 뒷차축)
+  - Each axle has two wheels (circles) at both ends — left and right rail
+  - A double-headed arrow between the two axles labeled: "고정축거" with dimension line
+
+Below: TWO comparison diagrams side by side
+
+LEFT sub-diagram: LONG wheelbase on a curve
+  - Show bogie (top-down) with LONG distance between axles
+  - Curved track below
+  - The outer wheels press hard against the outer rail — show red arrows pushing outward
+  - Label: "축거 길면 → 바퀴가 레일을 강하게 밀어냄"
+  - Label: "❌ 저항 큼 / 마모 심함"
+
+RIGHT sub-diagram: SHORT wheelbase on a curve
+  - Show bogie (top-down) with SHORT distance between axles
+  - Same curved track below
+  - Wheels sit smoothly on the rail — green arrows showing smooth rotation
+  - Label: "축거 짧으면 → 대차가 자유롭게 회전"
+  - Label: "✅ 곡선통과 원활"
+
+──────────────────────────────────────────────────────────────────────
+BOTTOM SUMMARY BOX (full width):
+  Three columns:
+  | 관절대차 장점 | 관절대차 단점 | 고정축거 |
+  | ✅ 곡선통과 우수 / ✅ 승차감 향상 / ✅ 연결부 흔들림 감소 | ❌ 구조 복잡 / ❌ 중량 증가 / ❌ 차량 분리 어려움 | 짧게 → 곡선통과 원활 |
+
+Style: flat infographic, white background, color-coded sections (left=light gray, middle=light blue, right=light green background panels),
+Korean labels, bold key points, top-down track diagrams, no shadows, no 3D.
+Font: clean bold sans-serif Korean. Section dividers: thin vertical gray lines.
+```
+
+| 구분 | 파일명 | 사용 위치 | 상태 |
+|------|--------|-----------|------|
+| 신규 제작 필요 | VIS-092_관절대차고정축거설명도.png | 3.html C-25 | 프롬프트작성완료 |
