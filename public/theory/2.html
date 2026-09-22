@@ -1920,10 +1920,16 @@ function search(){
       Array.from(node.childNodes).forEach(walk);
     }
   }
+  let firstHit=null;
   document.querySelectorAll('.part-body').forEach(b=>{
     walk(b);
-    if(b.querySelector('.highlight')) b.style.display='block';
+    if(b.querySelector('.highlight')){
+      b.style.display='block';
+      if(!firstHit) firstHit=b.querySelector('.highlight');
+    }
   });
+  if(firstHit) firstHit.scrollIntoView({behavior:'smooth',block:'center'});
+  else if(q) alert('검색 결과가 없습니다: ' + q);
 }
 document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')search();});

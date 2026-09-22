@@ -1584,6 +1584,9 @@ function search(){
     }
   }
   walk(document.body);
+  const firstHit=document.querySelector('.highlight');
+  if(firstHit) firstHit.scrollIntoView({behavior:'smooth',block:'center'});
+  else if(q) alert('검색 결과가 없습니다: ' + q);
 }
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.activeElement.id==='q')search();});
 </script>
