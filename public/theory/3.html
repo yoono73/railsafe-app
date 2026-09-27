@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>?댁감?댁쟾 ?듭떖?뺣━</title>
+<title>열차운전 핵심정리</title>
 <style>
 * { box-sizing:border-box; margin:0; padding:0; }
-body { font-family:'Malgun Gothic','留묒? 怨좊뵓',sans-serif; background:#f0f9ff; color:#1a1a2e; font-size:15px; line-height:1.7; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#f0f9ff; color:#1a1a2e; font-size:15px; line-height:1.7; }
 .site-header { background:linear-gradient(135deg,#0c4a6e,#0369a1); color:#fff; padding:5px 16px 4px; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.3); }
 .site-header h1 { font-size:1.05em; }
 .site-header .meta { font-size:.75em; opacity:.8; margin-top:1px; }
@@ -47,7 +47,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .checklist h3{color:#0c4a6e;margin-bottom:8px;font-size:.95em;}
 .checklist label{display:block;margin:4px 0;font-size:.9em;cursor:pointer;}
 
-/* 紐⑤컮???뚯씠釉?媛濡??ㅽ겕濡?諛⑹? */
+/* 모바일 테이블 가로 스크롤 방지 */
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
 
   .print-btn { display:inline-flex; align-items:center; gap:4px; background:#fff; color:#4c1d95; border:none; border-radius:6px; padding:5px 12px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:700; margin-left:6px; transition:background .2s; }
@@ -76,18 +76,18 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 #toc-drawer .toc .toc-part a{color:#4c1d95;font-weight:700}
 }
 
-/* ===== 援먯쑁 TTS 踰꾪듉 ===== */
+/* ===== 교육 TTS 버튼 ===== */
 .tts-edu-btn { display:inline-flex; align-items:center; gap:5px; background:#7c3aed; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px; transition:background .2s; }
 .tts-edu-btn:hover { background:#6d28d9; }
 .tts-edu-btn:disabled { opacity:.6; cursor:wait; }
 .tts-edu-btn.playing { background:#059669; }
-/* ===== 蹂댁땐媛뺤쓽 TTS 踰꾪듉 ===== */
+/* ===== 보충강의 TTS 버튼 ===== */
 .tts-supp-btn { display:inline-flex; align-items:center; gap:5px; background:#0891b2; color:#fff; border:none; border-radius:6px; padding:5px 14px; font-size:.82em; cursor:pointer; font-family:inherit; font-weight:600; margin:6px 0 10px 8px; transition:background .2s; }
 .tts-supp-btn:hover { background:#0e7490; }
 .tts-supp-btn:disabled { opacity:.6; cursor:wait; }
 .tts-supp-btn.playing { background:#047857; }
 
-/* ===== ?꾩껜媛뺤쓽 ?ｊ린 踰꾪듉 ===== */
+/* ===== 전체강의 듣기 버튼 ===== */
 #play-all-btn {
   display: none;
 }
@@ -109,13 +109,13 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 3px 10px rgba(5,150,105,.45);
-    font-family: 'Malgun Gothic','留묒? 怨좊뵓',sans-serif;
+    font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
   }
   #play-all-btn.playing { background: #dc2626; }
   #play-all-btn:active { background: #047857; }
 }
 
-/* ===== ?꾩껜媛뺤쓽 ?곗뒪?ы깙 踰꾪듉 ===== */
+/* ===== 전체강의 데스크탑 버튼 ===== */
 .play-all-desktop-btn {
   display: inline-flex;
   align-items: center;
@@ -128,7 +128,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
   font-size: .82em;
   font-weight: bold;
   cursor: pointer;
-  font-family: 'Malgun Gothic','留묒? 怨좊뵓',sans-serif;
+  font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
   transition: background .2s;
 }
 .play-all-desktop-btn:hover { background: #047857; }
@@ -137,37 +137,37 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
   .play-all-desktop-btn { display: none; }
 }
 
-/* ===== ?꾨┛???꾩슜 ?ㅽ???===== */
+/* ===== 프린트 전용 스타일 ===== */
 @media print {
 
-  /* ?몄뇙 ??overflow 媛뺤젣 ?댁젣 */
+  /* 인쇄 시 overflow 강제 해제 */
   html, body { overflow: visible !important; height: auto !important; }
-  /* ?붾㈃ ?꾩슜 ?붿냼 ?④린湲?*/
+  /* 화면 전용 요소 숨기기 */
   .site-header, .toc, #play-all-btn, #toc-toggle-btn,
   #toc-overlay, #toc-drawer, .tts-edu-btn, .tts-supp-btn,
   .play-all-desktop-btn, .print-btn, button { display: none !important; }
 
-  /* ?덉씠?꾩썐 ?⑥닚??*/
+  /* 레이아웃 단순화 */
   body { font-size: 10.5pt; background: #fff; color: #000; line-height: 1.6; }
   .container { display: block; max-width: 100%; }
   .content { padding: 0; }
 
-  /* 紐⑤뱺 ?뚰듃 ?쇱튂湲?*/
+  /* 모든 파트 펼치기 */
   .part-body { display: block !important; }
 
-  /* ?뚰듃 ?쒕ぉ ?됱긽 ?좎? */
+  /* 파트 제목 색상 유지 */
   .part-title { background: #444 !important; color: #fff !important;
     print-color-adjust: exact; -webkit-print-color-adjust: exact;
     border-radius: 0 !important; font-size: 10.5pt; padding: 6px 12px;
     break-after: avoid; page-break-after: avoid; }
   .part-title .arrow { display: none; }
 
-  /* 媛쒕뀗 釉붾줉 ???섏씠吏 ?섏뼱媛????(?쑣룹씠誘몄?留????섎┝) */
+  /* 개념 블록 — 페이지 넘어가도 됨 (표·이미지만 안 잘림) */
   .concept { border-bottom: 1px solid #ddd; padding-bottom: 8pt; margin-bottom: 6pt; }
   .concept-title { page-break-after: avoid; break-after: avoid;
     font-size: 10.5pt; font-weight: bold; }
 
-  /* ?????섏씠吏 寃쎄퀎 ???섎┝ */
+  /* 표 — 페이지 경계 안 잘림 */
   table { page-break-inside: avoid; break-inside: avoid;
     width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 4pt 0; }
   tr { page-break-inside: avoid; break-inside: avoid; }
@@ -176,36 +176,36 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
     padding: 4px 8px; }
   td { padding: 4px 8px; border-bottom: 1px solid #ccc; }
 
-  /* ?대?吏 ???섏씠吏 寃쎄퀎 ???섎┝ */
+  /* 이미지 — 페이지 경계 안 잘림 */
   .vis-wrap { page-break-inside: avoid; break-inside: avoid; }
   img { max-width: 100%; max-height: 110mm; width: auto; page-break-inside: avoid; break-inside: avoid; }
 
-  /* 寃쎄퀬쨌?겶룸떒怨?諛뺤뒪 */
+  /* 경고·팁·단계 박스 */
   .trap, .tip, .step-box {
     page-break-inside: avoid; break-inside: avoid;
     border-left-width: 3px; padding: 5px 10px; margin: 4pt 0; }
 
-  /* PART ?쒖옉 ???쎄컙???щ갚 */
+  /* PART 시작 전 약간의 여백 */
   .part { margin-bottom: 10pt; }
 
-  /* ?곷떒 ?붿빟諛?*/
+  /* 상단 요약바 */
   .summary-bar { background: #555 !important; color: #fff !important;
     print-color-adjust: exact; -webkit-print-color-adjust: exact;
     font-size: 9pt; padding: 5px 10px; border-radius: 0; margin-bottom: 8pt; }
 
-  /* ?섏씠?쇱씠???됱긽 ?좎? */
+  /* 하이라이트 색상 유지 */
   .highlight { background: #ff0 !important;
     print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 
-/* ?대줎 ?댁꽕 諛뺤뒪 */
+/* 이론 해설 박스 */
 .theory-note { background:#f0f7ff; border-left:4px solid #2563eb; padding:10px 14px; margin:8px 0 20px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#1e3a5f; }
 .theory-note strong { color:#1d4ed8; }
 
-/* 湲곗텧 ?덉떆 諛뺤뒪 */
+/* 기출 예시 박스 */
 .quiz-ex { background:#f0fdf4; border-left:4px solid #16a34a; padding:10px 14px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.88em; color:#14532d; }
 .quiz-ex .qe-title { font-weight:bold; color:#15803d; margin-bottom:4px; }
 
-/* 泥좊룄??援먯옱 蹂댁땐/李⑥씠 諛뺤뒪 */
+/* 철도왕 교재 보충/차이 박스 */
 .king-book-note { background:#fff8e1; border-left:4px solid #f57c00; padding:10px 14px; margin:10px 0; border-radius:0 6px 6px 0; font-size:.88em; color:#4e342e; }
 .king-book-note .kb-label { display:inline-block; background:#f57c00; color:#fff; border-radius:4px; padding:1px 8px; font-size:.82em; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
 .king-book-note strong { color:#bf360c; }
@@ -215,988 +215,992 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 .quiz-ex .qe-a { font-weight:bold; color:#166534; }
 .quiz-ex .qe-wrong { display:block; background:#fee2e2; border-left:3px solid #dc2626; color:#b91c1c; padding:5px 10px; margin:6px 0; border-radius:4px; font-size:0.88em; }
 
-/* 鍮꾧탳 ?섏씠?쇱씠??諛뺤뒪 */
+/* 비교 하이라이트 박스 */
 .compare-box { display:grid; gap:6px; margin:8px 0; }
 .compare-box.col2 { grid-template-columns: 1fr 1fr; }
 .cbox-item { background:#f8f8f8; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px; font-size:.88em; }
 .cbox-item .cbox-head { font-weight:bold; color:#4c1d95; margin-bottom:4px; font-size:.92em; }
 @media(max-width:600px){ .compare-box.col2{ grid-template-columns:1fr; } }
 
-/* PART 7 concept-hd (= concept-title ?숈씪 ?ㅽ??? */
+/* PART 7 concept-hd (= concept-title 동일 스타일) */
 .concept-hd { font-size:1em; font-weight:bold; color:#0369a1; margin-bottom:8px; padding:4px 0; }
-.concept-body { /* wrapper ???ㅽ???遺덊븘?? 援ъ“??*/ }
+.concept-body { /* wrapper — 스타일 불필요, 구조용 */ }
 
   .cnum { background: #eee !important;
     print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 
-  /* ?섏씠吏 ?щ갚 */
+  /* 페이지 여백 */
   @page { margin: 15mm 12mm; }
 }
 </style>
 </head>
 <body>
 <div class="site-header">
-  <h1>?쉪 ?댁감?댁쟾 ?듭떖?뺣━</h1>
-  <div class="meta">泥좊룄李⑤웾?댁쟾洹쒖튃 쨌 ?꾩떆泥좊룄?댁쟾洹쒖튃 쨌 ?댁쟾?대줎 | 41媛?媛쒕뀗 | VIS-061~066</div>
+  <h1>🚄 열차운전 핵심정리</h1>
+  <div class="meta">철도차량운전규칙 · 도시철도운전규칙 · 운전이론 | 41개 개념 | VIS-061~066</div>
   <div class="search-bar">
-    <input id="search" type="text" placeholder="寃?됱뼱 ?낅젰 (?? ?먯깋, ?좏샇湲? ?꾩떆泥좊룄)">
-    <button onclick="document.getElementById('search').value='';document.querySelectorAll('.concept').forEach(c=>c.style.display='')">珥덇린??/button>
-    <button class="print-btn" onclick="window.print()">?뼥截??몄뇙</button>
-    <button class="play-all-desktop-btn" id="play-all-desktop" onclick="playAllTTS()">?렒 ?꾩껜媛뺤쓽</button>
+    <input id="search" type="text" placeholder="검색어 입력 (예: 폐색, 신호기, 도시철도)">
+    <button onclick="document.getElementById('search').value='';document.querySelectorAll('.concept').forEach(c=>c.style.display='')">초기화</button>
+    <button class="print-btn" onclick="window.print()">🖨️ 인쇄</button>
+    <button class="play-all-desktop-btn" id="play-all-desktop" onclick="playAllTTS()">🎧 전체강의</button>
   </div>
 </div>
 <div class="container">
-  <nav class="toc"><h2>?뱥 紐⑹감</h2><ul><li class="toc-part"><a href="#part1">PART 1. 泥좊룄李⑤웾?댁쟾洹쒖튃 ??湲곕낯 洹쒖젙</a></li><li><a href="#C-01">湲곕낯 ?⑹뼱 ?뺤쓽</a></li><li><a href="#C-02">?숇젰李??곌껐 ?꾩튂 + ?댁감 ?덉쟾 ?뺣낫</a></li><li><a href="#C-03">?ш컼?댁감 ?곌껐?쒗븳</a></li><li><a href="#C-04">?숈떆 吏꾩텧??湲곗? ?끸쁾??/a></li><li><a href="#C-05">?댄뻾?댁쟾 쨌 ?뺢굅?????뺤감</a></li><li class="toc-part"><a href="#part2">PART 2. ?먯깋諛⑹떇 ?끸쁾??/a></li><li><a href="#C-06">?먯깋諛⑹떇 ?꾩껜 遺꾨쪟</a></li><li><a href="#C-07">媛??먯깋諛⑹떇 ?듭떖 ?ъ씤??/a></li><li><a href="#C-08">吏?꾪몴 vs 吏?꾧텒 湲곗엯?ы빆 ?끸쁾??/a></li><li><a href="#C-09">?쒓퀎?댁쟾 諛⑹떇</a></li><li class="toc-part"><a href="#part3">PART 3. ?좏샇湲?泥닿퀎 ?끸쁾??/a></li><li><a href="#C-10">?곸튂?좏샇湲?遺꾨쪟</a></li><li><a href="#C-11">?좏샇湲?湲곕낯?먯튃 (?뺤쐞) ?끸쁾??/a></li><li><a href="#C-12">?좏샇?꾩떆 諛⑹떇 (?됰벑??</a></li><li><a href="#C-13">?섏떊???꾩떆諛⑸쾿</a></li><li><a href="#C-14">?꾩떆?좏샇湲?3醫??끸쁾??/a></li><li><a href="#C-15">?낇솚?꾪샇 ?끸쁾??/a></li><li><a href="#C-16">?쒗븳?좏샇 異붿젙 ?먯튃</a></li><li class="toc-part"><a href="#part4">PART 4. ?댁감?쒖뼱?μ튂 (ATS쨌ATC쨌ATP쨌CBTC) ?끸쁾??/a></li><li><a href="#C-17">?댁감?쒖뼱?μ튂 遺꾨쪟 (ATS쨌ATC쨌ATP쨌CBTC)</a></li><li class="toc-part"><a href="#part5">PART 5. ?꾩떆泥좊룄?댁쟾洹쒖튃 ?끸쁾</a></li><li><a href="#C-18">二쇱슂 ?뺤쓽 鍮꾧탳 ??怨듭옉臾?vs ?멸났援ъ“臾?/a></li><li><a href="#C-19">?먭? 二쇨린 ?끸쁾??/a></li><li><a href="#C-20">鍮꾩긽?쒕룞嫄곕━ ?끸쁾??/a></li><li><a href="#C-21">?섏떊???꾩튂 鍮꾧탳 ?끸쁾??/a></li><li><a href="#C-22">?좎꽕쨌媛쒖“ ???쒗뿕?댁쟾 + ??⑺룓??/a></li><li class="toc-part"><a href="#part6">PART 6. ?댁쟾?대줎 ?끸쁾</a></li><li><a href="#C-23">?쒕룞 醫낅쪟</a></li><li><a href="#C-24">?숇젰吏묒쨷??vs ?숇젰遺꾩궛???끸쁾??/a></li><li><a href="#C-25">愿?덈?李?쨌 怨좎젙異뺢굅</a></li><li><a href="#C-26">怨듭＜嫄곕━ 쨌 ?쒕룞嫄곕━ 怨꾩궛 ?끸쁾</a></li><li><a href="#C-27">?쇰ː湲?쨌 ?댄뻾?꾪몴</a></li><li class="toc-part"><a href="#part7">PART 7. 泥좊룄??援먯옱 蹂댁땐 ??李⑤웾?대줎</a></li><li><a href="#C-28">C-28 ?댁감 ?댁쟾??3?붿냼</a></li><li><a href="#C-29">C-29 ?꾧린?쒕룞 vs 湲곌퀎?쒕룞</a></li><li><a href="#C-30">C-30 ?ы뻾??Hunting)</a></li><li><a href="#C-31">C-31 李⑤웾吏꾨룞 3醫?/a></li><li><a href="#C-32">C-32 ?됰룞?ъ씠?는텹IM쨌蹂댄샇?μ튂</a></li><li><a href="#C-33">C-33 ?먯갑怨꾩닔쨌?먯갑??(關횞W)</a></li><li><a href="#C-34">C-34 ?댁감???4醫?/a></li><li><a href="#C-35">C-35 怨듦린?쒕룞 3諛⑹떇 + 寃ъ씤??/a></li><li class="toc-part"><a href="#part8">PART 8. 鍮꾩긽議곗튂 ?끸쁾??/a></li><li><a href="#C-36">鍮꾩긽議곗튂 ?곗꽑?쒖쐞 4?④퀎</a></li><li><a href="#C-37">吏?곷갑??쨌 臾댁꽑諛⑺샇</a></li><li><a href="#C-38">?댁감遺꾨━ ?먮룞?뺤감 ?먮━</a></li><li><a href="#C-39">?꾩감???⑥꽑 ??痍④툒 ?먯튃</a></li><li><a href="#C-40">援ъ썝?댁쟾 쨌 異붿쭊쨌?댄뻾 ?묒뾽?꾪샇</a></li><li><a href="#C-41">?붿옱 諛쒖깮 ??議곗튂</a></li></ul></nav>
+  <nav class="toc"><h2>📋 목차</h2><ul><li class="toc-part"><a href="#part1">PART 1. 철도차량운전규칙 — 기본 규정</a></li><li><a href="#C-01">기본 용어 정의</a></li><li><a href="#C-02">동력차 연결 위치 + 열차 안전 확보</a></li><li><a href="#C-03">여객열차 연결제한</a></li><li><a href="#C-04">동시 진출입 기준 ★★★</a></li><li><a href="#C-05">퇴행운전 · 정거장 외 정차</a></li><li class="toc-part"><a href="#part2">PART 2. 폐색방식 ★★★</a></li><li><a href="#C-06">폐색방식 전체 분류</a></li><li><a href="#C-07">각 폐색방식 핵심 포인트</a></li><li><a href="#C-08">지도표 vs 지도권 기입사항 ★★★</a></li><li><a href="#C-09">시계운전 방식</a></li><li class="toc-part"><a href="#part3">PART 3. 신호기 체계 ★★★</a></li><li><a href="#C-10">상치신호기 분류</a></li><li><a href="#C-11">신호기 기본원칙 (정위) ★★★</a></li><li><a href="#C-12">신호현시 방식 (색등식)</a></li><li><a href="#C-13">수신호 현시방법</a></li><li><a href="#C-14">임시신호기 3종 ★★★</a></li><li><a href="#C-15">입환전호 ★★★</a></li><li><a href="#C-16">제한신호 추정 원칙</a></li><li class="toc-part"><a href="#part4">PART 4. 열차제어장치 (ATS·ATC·ATP·CBTC) ★★★</a></li><li><a href="#C-17">열차제어장치 분류 (ATS·ATC·ATP·CBTC)</a></li><li class="toc-part"><a href="#part5">PART 5. 도시철도운전규칙 ★★</a></li><li><a href="#C-18">주요 정의 비교 — 공작물 vs 인공구조물</a></li><li><a href="#C-19">점검 주기 ★★★</a></li><li><a href="#C-20">비상제동거리 ★★★</a></li><li><a href="#C-21">수신호 위치 비교 ★★★</a></li><li><a href="#C-22">신설·개조 후 시험운전 + 대용폐색</a></li><li class="toc-part"><a href="#part6">PART 6. 운전이론 ★★</a></li><li><a href="#C-23">제동 종류</a></li><li><a href="#C-24">동력집중식 vs 동력분산식 ★★★</a></li><li><a href="#C-25">관절대차 · 고정축거</a></li><li><a href="#C-26">공주거리 · 제동거리 계산 ★★</a></li><li><a href="#C-27">피뢰기 · 운행도표</a></li><li class="toc-part"><a href="#part7">PART 7. 철도왕 교재 보충 — 차량이론</a></li><li><a href="#C-28">C-28 열차 운전의 3요소</a></li><li><a href="#C-29">C-29 전기제동 vs 기계제동</a></li><li><a href="#C-30">C-30 사행동(Hunting)</a></li><li><a href="#C-31">C-31 차량진동 3종</a></li><li><a href="#C-32">C-32 냉동사이클·LIM·보호장치</a></li><li><a href="#C-33">C-33 점착계수·점착력 (μ×W)</a></li><li><a href="#C-34">C-34 열차저항 4종</a></li><li><a href="#C-35">C-35 공기제동 3방식 + 견인력</a></li><li class="toc-part"><a href="#part8">PART 8. 비상조치 ★★★</a></li><li><a href="#C-36">비상조치 우선순위 4단계</a></li><li><a href="#C-37">지상방호 · 무선방호</a></li><li><a href="#C-38">열차분리 자동정차 원리</a></li><li><a href="#C-39">전차선 단선 시 취급 원칙</a></li><li><a href="#C-40">구원운전 · 추진·퇴행 작업전호</a></li><li><a href="#C-41">화재 발생 시 조치</a></li></ul></nav>
   <div class="content">
     <div class="checklist">
-      <h3>??理쒖쥌 泥댄겕由ъ뒪??/h3>
-      <label><input type="checkbox"> ?먯깋諛⑹떇 ?곸슜 4醫??먯뿰李⑦넻) + ???4醫??듭?吏吏) ?몄썱??/label>
-      <label><input type="checkbox"> ?좏샇湲??뺤쐞 ???좊룄=?꾩떆?놁쓬 / ?먮갑=二쇱쓽 / ?먮룞?먯깋=吏꾪뻾 ?뺤떎???덈떎</label>
-      <label><input type="checkbox"> ?낇솚?꾪샇 ?ㅻ꼫??醫뚯슦, 媛嫄곕씪=?곹븯 ?덈떎</label>
-      <label><input type="checkbox"> 吏?꾪몴 湲곗엯?ы빆(?묐걹??챸+諛쒗뻾?쇱옄+?댁감踰덊샇) ?덈떎</label>
-      <label><input type="checkbox"> ?숈떆吏꾩텧??湲곗? 200m/150m/100m ?몄썱??/label>
-      <label><input type="checkbox"> ?꾩떆泥좊룄 鍮꾩긽?쒕룞嫄곕━ = 600m ?몄썱??/label>
-      <label><input type="checkbox"> ?좊줈쨌?꾩감?좊줈 = 留ㅼ씪 1??(?댁쟾蹂댁븞?μ튂 ??留ㅼ씪) ?덈떎</label>
-      <label><input type="checkbox"> ?꾩떆泥좊룄쨌泥좊룄李⑤웾?댁쟾洹쒖튃 ?섏떊??紐⑤몢 = <b>200m ?댁긽</b>?쇰줈 ?숈씪 ?덈떎</label>
-      <label><input type="checkbox"> ITX = ?숇젰遺꾩궛??/ 怨듭＜嫄곕━ = ?띾룄횞?쒓컙 ?덈떎</label>
-      <label><input type="checkbox"> 鍮꾩긽議곗튂 ?곗꽑?쒖쐞 ?좊갑?멤넂?↔??쒕낫怨졻넂??듅媛앸낫?멤넂?ｋ났援??몄썱??/label>
-      <label><input type="checkbox"> 吏?곷갑??嫄곕━ 蹂듭꽑=300m, ?⑥꽑=600m ?덈떎 (?섏떊??200m? ?쇰룞 湲덉?)</label>
-      <label><input type="checkbox"> ?꾩감???⑥꽑 ????臾댁쟾???뺤씤 ?꾧퉴吏 <b>?쒖꽑 媛꾩＜</b>, ?덈? ?묎렐 湲덉? ?덈떎</label>
-      <label><input type="checkbox"> CBTC = 臾댁꽑?듭떊 + ?대룞?먯깋(Moving Block) / ATC? 援щ퀎 ?덈떎</label>
-      <label><input type="checkbox"> ?댁감 ?뺤쓽 ??2021.10.26. 泥좊룄李⑤웾?댁쟾洹쒖튃 ??議곗젣5????젣???덈떎</label>
-      <label><input type="checkbox"> ?덉꽑怨꾩닔 = ?≪븬(Q) / ?ㅼ쨷(P) (遺꾩옄쨌遺꾨え ?쒖꽌 ?덈떎)</label>
+      <h3>✅ 최종 체크리스트</h3>
+      <label><input type="checkbox"> 폐색방식 상용 4종(자연차통) + 대용 4종(통지지지) 외웠다</label>
+      <label><input type="checkbox"> 신호기 정위 — 유도=현시없음 / 원방=주의 / 자동폐색=진행 확실히 안다</label>
+      <label><input type="checkbox"> 입환전호 오너라=좌우, 가거라=상하 안다</label>
+      <label><input type="checkbox"> 지도표 기입사항(양끝역명+발행일자+열차번호) 안다</label>
+      <label><input type="checkbox"> 동시진출입 기준 200m/150m/100m 외웠다</label>
+      <label><input type="checkbox"> 도시철도 비상제동거리 = 600m 외웠다</label>
+      <label><input type="checkbox"> 선로·전차선로 = 매일 1회 (운전보안장치 ≠ 매일) 안다</label>
+      <label><input type="checkbox"> 도시철도·철도차량운전규칙 수신호 모두 = <b>200m 이상</b>으로 동일 안다</label>
+      <label><input type="checkbox"> ITX = 동력분산식 / 공주거리 = 속도×시간 안다</label>
+      <label><input type="checkbox"> 비상조치 우선순위 ①방호→②관제보고→③승객보호→④복구 외웠다</label>
+      <label><input type="checkbox"> 지상방호 거리 복선=300m, 단선=600m 안다 (수신호 200m와 혼동 금지)</label>
+      <label><input type="checkbox"> 전차선 단선 시 → 무전압 확인 전까지 <b>활선 간주</b>, 절대 접근 금지 안다</label>
+      <label><input type="checkbox"> CBTC = 무선통신 + 이동폐색(Moving Block) / ATC와 구별 안다</label>
+      <label><input type="checkbox"> 열차 정의 → 2021.10.26. 철도차량운전규칙 제2조제5호 삭제됨 안다</label>
+      <label><input type="checkbox"> 탈선계수 = 횡압(Q) / 윤중(P) (분자·분모 순서 안다)</label>
     </div>
-    <div class="part" id="part1"><div class="part-title" onclick="togglePart(this)"><span>PART 1. 泥좊룄李⑤웾?댁쟾洹쒖튃 ??湲곕낯 洹쒖젙</span><span class="arr">??/span></div><div class="part-body"><div class="concept" id="C-01"><div class="concept-title"><span class="cnum">C-01</span>湲곕낯 ?⑹뼱 ?뺤쓽</div>
-<div class="table-wrap"><table><tr><th>?⑹뼱</th><th>?뺤쓽</th></tr>
-<tr><td><b>?뺢굅??/b></td><td>?ш컼 ?밴컯, ?붾Ъ ?곹븯, ?댁감 議곗꽦, 援먰뻾쨌????μ냼</td></tr>
-<tr><td><b>蹂몄꽑</b></td><td>?댁감 ?댁쟾???곸슜?섎뒗 ?좊줈</td></tr>
-<tr><td><b>痢≪꽑</b></td><td>蹂몄꽑???꾨땶 ?좊줈</td></tr>
-<tr><td><b>?꾧툒李?/b></td><td>愿?듭젣?숆린???쒕룞?돠룹븬?κ퀎쨌李⑥옣蹂쨌?섏젣?숆린 ?μ튂 李⑤웾</td></tr>
-<tr><td><b>議곗감??/b></td><td>李⑤웾???낇솚쨌?댁감 議곗꽦???꾪빐 ?ъ슜?섎뒗 ?μ냼</td></tr>
-<tr><td><b>援щ궡?댁쟾</b></td><td>?뺢굅?Β룹감?됯린吏 ???낇솚?좏샇???곕Ⅸ ?댁쟾</td></tr>
-<tr><td><b>臾댁씤?댁쟾</b></td><td>?щ엺???댁감 ?덉뿉??吏곸젒 ?댁쟾 ??????愿?쒖떎 ?먭꺽議곗쥌</td></tr>
-<tr class="hl"><td><b>?댁감</b></td><td>?꾩떆泥좊룄?댁쟾洹쒖튃 ??議곗젣3?? 蹂몄꽑 ?댁쟾 紐⑹쟻?쇰줈 ?몄꽦?섍퀬 ?댁감踰덊샇瑜?遺?ы븳 李⑤웾<br><span style="font-size:.85em;color:#666;">??援??? 泥좊룄李⑤웾?댁쟾洹쒖튃 ??議곗젣5?몄쓽 ?댁감 ?뺤쓽??<b>2021.10.26. 媛쒖젙?쇰줈 ??젣</b>??/span></td></tr>
-<tr><td><b>李⑤웾</b></td><td>?댁감瑜?援ъ꽦?섎뒗 1?됱쓽 泥좊룄李⑤웾</td></tr>
+    <div class="part" id="part1"><div class="part-title" onclick="togglePart(this)"><span>PART 1. 철도차량운전규칙 — 기본 규정</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-01"><div class="concept-title"><span class="cnum">C-01</span>기본 용어 정의</div>
+<div class="table-wrap"><table><tr><th>용어</th><th>정의</th></tr>
+<tr><td><b>정거장</b></td><td>여객 승강, 화물 적하, 열차 조성, 교행·대피 장소</td></tr>
+<tr><td><b>본선</b></td><td>열차 운전에 상용하는 선로</td></tr>
+<tr><td><b>측선</b></td><td>본선이 아닌 선로</td></tr>
+<tr><td><b>완급차</b></td><td>관통제동기용 제동통·압력계·차장변·수제동기 장치 차량</td></tr>
+<tr><td><b>조차장</b></td><td>차량의 입환·열차 조성을 위해 사용하는 장소</td></tr>
+<tr><td><b>구내운전</b></td><td>정거장·차량기지 내 입환신호에 따른 운전</td></tr>
+<tr><td><b>무인운전</b></td><td>사람이 열차 안에서 직접 운전 안 함 → 관제실 원격조종</td></tr>
+<tr class="hl"><td><b>열차</b></td><td>도시철도운전규칙 제3조제3호: 본선 운전 목적으로 편성하고 열차번호를 부여한 차량<br><span style="font-size:.85em;color:#666;">※ 구(舊) 철도차량운전규칙 제2조제5호의 열차 정의는 <b>2021.10.26. 개정으로 삭제</b>됨</span></td></tr>
+<tr><td><b>차량</b></td><td>열차를 구성하는 1량의 철도차량</td></tr>
 </table></div>
-<div class="tip">?꾧툒李?援ъ꽦 ?붽린: "?쒖븬李⑥닔" (?쒕룞???뺣젰怨?李⑥옣蹂+?섏젣?숆린)</div>
-<div class="trap">?좑툘 "?댁감" ?뺤쓽 ??泥좊룄李⑤웾?댁쟾洹쒖튃 ??議곗젣5?몃뒗 2021.10.26. ??젣?? ?꾪뻾 ?뺤쓽???꾩떆泥좊룄?댁쟾洹쒖튃?먮쭔 議댁옱 (op_003 異쒖젣 ?ъ씤??</div>
+<div class="tip">완급차 구성 암기: "제압차수" (제동통+압력계+차장변+수제동기)</div>
+<div class="trap">⚠️ "열차" 정의 — 철도차량운전규칙 제2조제5호는 2021.10.26. 삭제됨. 현행 정의는 도시철도운전규칙에만 존재 (op_003 출제 포인트)</div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?댁감?댁쟾洹쒖튃???듭떖 ?⑹뼱?ㅼ? ?쒗뿕??吏곸젒 異쒖젣?⑸땲?? ?뱁엳 <strong>?뺢굅??/strong>(?ш컼쨌?붾Ъ쨌援먰뻾 湲곕뒫)怨?<strong>?꾧툒李?/strong> 援ъ꽦 ?붿냼 ?붽린媛 以묒슂?⑸땲??
+<div class="theory-note"><strong>이론 배경:</strong> 열차운전규칙의 핵심 용어들은 시험에 직접 출제됩니다. 특히 <strong>정거장</strong>(여객·화물·교행 기능)과 <strong>완급차</strong> 구성 요소 암기가 중요합니다.
 
-<br><br><strong>???꾧툒李??⑸룄:</strong> ?댁감 留??ㅼ뿉 ?곌껐?섎뒗 李⑤웾?쇰줈, 李⑥옣(?밸Т?????묒듅???댁감 ?댄뻾??媛먯떆쨌?쒖뼱?섍퀬 鍮꾩긽 ???섎룞?쇰줈 ?댁감瑜??뺤??쒗궗 ???덈룄濡???李⑤웾. "?꾧툒(渶⒵?"? ?띾룄瑜???텛嫄곕굹 鍮좊Ⅴ寃?議곗젅?쒕떎???섎?.
+<br><br><strong>▶ 완급차 용도:</strong> 열차 맨 뒤에 연결하는 차량으로, 차장(승무원)이 탑승해 열차 운행을 감시·제어하고 비상 시 수동으로 열차를 정지시킬 수 있도록 한 차량. "완급(緩急)"은 속도를 늦추거나 빠르게 조절한다는 의미.
 
-<br><br><strong>??4媛吏 ?μ튂 媛곴컖????븷:</strong>
-<br>??<strong>愿?듭젣?숆린???쒕룞??/strong>: 怨듦린?쒕룞???곗씠???뺤텞怨듦린瑜???ν븯怨? 釉뚮젅?댄겕 ?덈? 李⑥텞??諛李⑹떆耳?媛먯냽쨌?뺤??쒗궎???μ튂
-<br>??<strong>?뺣젰怨?/strong>: ?쒕룞愿(愿?듭젣?숆린) ??怨듦린?뺣젰???쒖떆 ??李⑥옣???쒕룞 ?곹깭瑜?吏곸젒 ?뺤씤?섎뒗 怨꾧린
-<br>??<strong>李⑥옣蹂(邕딀럩渦?</strong>: 李⑥옣??鍮꾩긽 ??怨듦린瑜?鍮쇱꽌 ?댁감瑜?湲닿툒?뺤??쒗궎??諛몃툕
-<br>??<strong>?섏젣?숆린(?뗥댍?뺞찣)</strong>: 怨듦린?쒕룞 怨좎옣 ???먮뒗 ?뺤감 ???섎룞(???쇰줈 議곗옉?섎뒗 湲곌퀎???쒕룞湲?
-<br><br><strong>???낇솚(?ζ룢)?대?:</strong> ?뺢굅?Β룹감?됯린吏 ?댁뿉???댁감 議곗꽦쨌?댁껜 ?먮뒗 李⑤웾 ?대룞???꾪빐 李⑤웾???대룞?쒗궎???묒뾽. 蹂몄꽑 ?댁쟾???꾨땶 援щ궡(礪뗥뀱) ?대룞 ?묒뾽.
+<br><br><strong>▶ 4가지 장치 각각의 역할:</strong>
+<br>• <strong>관통제동기용 제동통</strong>: 공기제동에 쓰이는 압축공기를 저장하고, 브레이크 슈를 차축에 밀착시켜 감속·정지시키는 장치
+<br>• <strong>압력계</strong>: 제동관(관통제동기) 내 공기압력을 표시 → 차장이 제동 상태를 직접 확인하는 계기
+<br>• <strong>차장변(車掌辨)</strong>: 차장이 비상 시 공기를 빼서 열차를 긴급정지시키는 밸브
+<br>• <strong>수제동기(手制動機)</strong>: 공기제동 고장 시 또는 정차 후 수동(손)으로 조작하는 기계식 제동기
 
-<br><br><strong>???낇솚?좏샇(?ζ룢岳↑솦):</strong> ?낇솚 ?묒뾽 ??李⑤웾 ?대룞???덇??섍굅???뺤??쒗궎???좏샇. ?뺤쐞(?됱긽??湲곕낯)??<strong>?뺤?</strong>. 援щ궡?댁쟾(?뺢굅?Β룹감?됯린吏 ?댁뿉??李⑤웾???대룞?쒗궗 ???????좏샇???곕씪 ?댁쟾?쒕떎.</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?꾧툒李⑥뿉 諛섎뱶???덉뼱???섎뒗 ?μ튂 4媛吏瑜??곗떆??</div><div class="qe-a">?뺣떟: 愿?듭젣?숆린???쒕룞??/ ?뺣젰怨?/ 李⑥옣蹂 / ?섏젣?숆린 ("?쒖븬李⑥닔" ?붽린)</div><div class="qe-wrong">?ㅻ떟?⑥젙: "?섎룞議곗옉?μ튂"瑜??ы븿?쒕떎怨??곕뒗 ?ㅻ떟</div></div>
-</div><div class="concept" id="C-02"><div class="concept-title"><span class="cnum">C-02</span>?숇젰李??곌껐 ?꾩튂 + ?댁감 ?덉쟾 ?뺣낫</div>
-<div class="step-box"><b>?숇젰李??먯튃:</b> ?댁감 留????곌껐<br>
-<b>?덉쇅:</b> ??湲곌?李?2媛??댁긽쨌留??욎뿉???쒖뼱 ??蹂댁“湲곌?李????좊줈쨌?댁감 怨좎옣<br>
-??援ъ썝쨌?쒖꽕쨌怨듭궗쨌?쒗뿕?댁쟾?댁감 ???뺢굅?β넄痢≪꽑 ?댁쟾 ??湲고? ?밸퀎 ?ъ쑀</div>
-<div class="step-box"><b>?댁감 ?덉쟾 ?뺣낫 3媛吏:</b> ?먯깋 / ?댁감?쒖뼱?μ튂 / ?쒓퀎?댁쟾</div>
+<br><br><strong>▶ 입환(入換)이란:</strong> 정거장·차량기지 내에서 열차 조성·해체 또는 차량 이동을 위해 차량을 이동시키는 작업. 본선 운전이 아닌 구내(構內) 이동 작업.
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?숇젰李⑤? 留??욎뿉 ?곌껐?섎뒗 ?먯튃? 湲곌??ш? <strong>?꾨갑 ?쒖빞</strong>瑜??뺣낫?섍퀬 湲닿툒 ?곹솴??利됯컖 ??묓븯湲??꾪븿?낅땲?? ?덉쇅 6媛吏媛 ?덉뼱 ?쒗뿕???먯＜ 異쒖젣?⑸땲??
+<br><br><strong>▶ 입환신호(入換信號):</strong> 입환 작업 시 차량 이동을 허가하거나 정지시키는 신호. 정위(평상시 기본)는 <strong>정지</strong>. 구내운전(정거장·차량기지 내에서 차량을 이동시킬 때)에 이 신호에 따라 운전한다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 완급차에 반드시 있어야 하는 장치 4가지를 쓰시오.</div><div class="qe-a">정답: 관통제동기용 제동통 / 압력계 / 차장변 / 수제동기 ("제압차수" 암기)</div><div class="qe-wrong">오답함정: "수동조작장치"를 포함한다고 쓰는 오답</div></div>
+</div><div class="concept" id="C-02"><div class="concept-title"><span class="cnum">C-02</span>동력차 연결 위치 + 열차 안전 확보</div>
+<div class="step-box"><b>동력차 원칙:</b> 열차 맨 앞 연결<br>
+<b>예외:</b> ① 기관차 2개 이상·맨 앞에서 제어 ② 보조기관차 ③ 선로·열차 고장<br>
+④ 구원·제설·공사·시험운전열차 ⑤ 정거장↔측선 운전 ⑥ 기타 특별 사유</div>
+<div class="step-box"><b>열차 안전 확보 3가지:</b> 폐색 / 열차제어장치 / 시계운전</div>
 
-<br><br><strong>???숇젰李??덉쇅 6媛吏 ?????덉쇅媛 ?덈뒗媛</strong>
-<br>??<strong>湲곌?李?2媛??댁긽쨌留??욎뿉???쒖뼱</strong>: ?ㅼそ 湲곌?李⑤뒗 ??湲곌?李④? ?쒖뼱?섎?濡?臾몄젣?놁쓬
-<br>??<strong>蹂댁“湲곌?李?/strong>: 寃ъ씤??蹂댁“ 紐⑹쟻 ???꾩튂 怨좎젙 遺덊븘??<br>??<strong>?좊줈쨌?댁감 怨좎옣</strong>: 怨좎옣 ?곹솴?먯꽌 ?щ같移?遺덇?
-<br>??<strong>援ъ썝쨌?쒖꽕쨌怨듭궗쨌?쒗뿕?댁쟾?댁감</strong>: ?뱀닔紐⑹쟻 ?묒뾽?댁감 ???묒뾽 諛⑺뼢???곕씪 ?꾩튂 媛蹂
-<br>??<strong>?뺢굅?β넄痢≪꽑 ?댁쟾</strong>: 吏㏃? 援щ궡 ?대룞 ???띾룄 ??퀬 ?덉쟾 ?꾪뿕 ??쓬
-<br>??<strong>湲고? ?밸퀎 ?ъ쑀</strong>: 泥좊룄?댁쁺湲곌????몄젙??遺덇??쇳븳 ?곹솴
+<div class="theory-note"><strong>이론 배경:</strong> 동력차를 맨 앞에 연결하는 원칙은 기관사가 <strong>전방 시야</strong>를 확보하고 긴급 상황에 즉각 대응하기 위함입니다. 예외 6가지가 있어 시험에 자주 출제됩니다.
 
-<br><br><strong>???먯깋(?됧줊)?대?</strong>
-<br>?좊줈瑜??쇱젙 援ш컙?쇰줈 ?섎늻????援ш컙???댁감 1?留?吏꾩엯???덉슜?섎뒗 諛⑹떇. '?먯깋'? "留됰뒗?????살쑝濡? ???댁감媛 援ш컙???먯쑀?섎㈃ ?ㅼ쓬 ?댁감??洹?援ш컙??鍮꾩썙吏??뚭퉴吏 吏꾩엯 紐?????異붾룎 諛⑹???湲곕낯 ?먮━.
-<br>?먯깋 援ш컙???먯쑀?먮뒗吏??<strong>?먯깋?좏샇湲?/strong>濡??뺤씤: 援ш컙 ?덉뿉 ?댁감 ?덉쑝硫????좏샇湲??뺤?(?곸깋), 鍮꾩뼱 ?덉쑝硫???吏꾪뻾(?뱀깋). ?먯깋諛⑹떇???곕씪 ?좏샇湲?????꾪솕?듬낫쨌吏?꾪몴쨌吏?꾧텒???ъ슜?섍린????
+<br><br><strong>▶ 동력차 예외 6가지 — 왜 예외가 있는가</strong>
+<br>• <strong>기관차 2개 이상·맨 앞에서 제어</strong>: 뒤쪽 기관차는 앞 기관차가 제어하므로 문제없음
+<br>• <strong>보조기관차</strong>: 견인력 보조 목적 → 위치 고정 불필요
+<br>• <strong>선로·열차 고장</strong>: 고장 상황에서 재배치 불가
+<br>• <strong>구원·제설·공사·시험운전열차</strong>: 특수목적 작업열차 → 작업 방향에 따라 위치 가변
+<br>• <strong>정거장↔측선 운전</strong>: 짧은 구내 이동 → 속도 낮고 안전 위험 낮음
+<br>• <strong>기타 특별 사유</strong>: 철도운영기관이 인정한 불가피한 상황
 
-<br><br><strong>???댁감?쒖뼱?μ튂?</strong>
-<br>ATS쨌ATC쨌ATP瑜?紐⑤몢 ?ы븿?섎뒗 ?곸쐞 媛쒕뀗 (?섎굹留?吏移?븯??寃??꾨떂).
-<br>??<strong>ATS</strong>(?먮룞?댁감?뺤??μ튂): ?좏샇 ?꾨컲 ???먮룞 ?뺤?
-<br>??<strong>ATC</strong>(?먮룞?댁감?쒖뼱?μ튂): ?띾룄瑜??먮룞?쇰줈 ?쒖뼱
-<br>??<strong>ATP</strong>(?먮룞?댁감諛⑺샇?μ튂): 異⑸룎쨌?덉꽑 諛⑹?源뚯? ?ы븿??理쒖긽???쒖뒪??<br>????媛吏 紐⑤몢 "湲곌퀎媛 ?댁감瑜??먮룞?쇰줈 ?쒖뼱쨌?뺤?"?섎뒗 ?μ튂??珥앹묶.
+<br><br><strong>▶ 폐색(閉塞)이란</strong>
+<br>선로를 일정 구간으로 나누어 한 구간에 열차 1대만 진입을 허용하는 방식. '폐색'은 "막는다"는 뜻으로, 한 열차가 구간을 점유하면 다음 열차는 그 구간이 비워질 때까지 진입 못 함 → 추돌 방지의 기본 원리.
+<br>폐색 구간이 점유됐는지는 <strong>폐색신호기</strong>로 확인: 구간 안에 열차 있으면 → 신호기 정지(적색), 비어 있으면 → 진행(녹색). 폐색방식에 따라 신호기 대신 전화통보·지도표·지도권을 사용하기도 함.
 
-<br><br><strong>???쒓퀎?댁쟾(誤뽫븣?뗨퐠)?대?</strong>
-<br>湲곌??ш? ?덉쑝濡??꾨갑??吏곸젒 蹂대㈃???댁쟾?섎뒗 諛⑹떇. ?꾨갑???μ븷臾쇱씠???ㅻⅨ ?댁감媛 蹂댁씠硫??ㅼ뒪濡?硫덉땄. ?먯깋쨌?댁감?쒖뼱?μ튂媛 ?녾굅??怨좎옣 ?ъ쓣 ?뚯쓽 理쒗썑 ?섎떒.
+<br><br><strong>▶ 열차제어장치란</strong>
+<br>ATS·ATC·ATP를 모두 포함하는 상위 개념 (하나만 지칭하는 게 아님).
+<br>• <strong>ATS</strong>(자동열차정지장치): 신호 위반 시 자동 정지
+<br>• <strong>ATC</strong>(자동열차제어장치): 속도를 자동으로 제어
+<br>• <strong>ATP</strong>(자동열차방호장치): 충돌·탈선 방지까지 포함한 최상위 시스템
+<br>→ 세 가지 모두 "기계가 열차를 자동으로 제어·정지"하는 장치의 총칭.
 
-<br><br><strong>??????3媛吏媛 ?댁감 ?덉쟾 ?뺣낫 ?섎떒?멸?</strong>
-<br>?댁감???쒕룞嫄곕━媛 ?섎갚 m???ы빐 湲곌????먮떒留뚯쑝濡쒕뒗 異붾룎??留됯린 ?대젮?. 洹몃옒??3媛吏媛 媛곴컖 ?ㅻⅨ ?덉씠?대줈 ?덉쟾??蹂댁셿:
-<br>??<strong>?먯깋</strong> ??怨듦컙 寃⑸━ (媛숈? 援ш컙??2? 吏꾩엯 ?먯쿇 李⑤떒)
-<br>??<strong>?댁감?쒖뼱?μ튂</strong> ???먮룞 ?띾룄쨌?뺤? ?쒖뼱 (?멸컙 ?ㅼ닔 蹂댁셿)
-<br>??<strong>?쒓퀎?댁쟾</strong> ???μ튂 ?녾굅??怨좎옣 ??理쒖냼?쒖쓽 ?덉쟾 ?뺣낫</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?댁감 ?덉쟾 ?뺣낫 3媛吏 諛⑸쾿???곗떆??</div><div class="qe-a">?뺣떟: ?먯깋 / ?댁감?쒖뼱?μ튂 / ?쒓퀎?댁쟾</div><div class="qe-wrong">?ㅻ떟?⑥젙: "?좏샇湲?瑜??낅┰??諛⑸쾿?쇰줈 ?곕뒗 ?ㅻ떟</div></div>
-</div><div class="concept" id="C-03"><div class="concept-title"><span class="cnum">C-03</span>?ш컼?댁감 ?곌껐?쒗븳</div>
+<br><br><strong>▶ 시계운전(視界運轉)이란</strong>
+<br>기관사가 눈으로 전방을 직접 보면서 운전하는 방식. 전방에 장애물이나 다른 열차가 보이면 스스로 멈춤. 폐색·열차제어장치가 없거나 고장 났을 때의 최후 수단.
+
+<br><br><strong>▶ 왜 이 3가지가 열차 안전 확보 수단인가</strong>
+<br>열차는 제동거리가 수백 m에 달해 기관사 판단만으로는 추돌을 막기 어려움. 그래서 3가지가 각각 다른 레이어로 안전을 보완:
+<br>• <strong>폐색</strong> → 공간 격리 (같은 구간에 2대 진입 원천 차단)
+<br>• <strong>열차제어장치</strong> → 자동 속도·정지 제어 (인간 실수 보완)
+<br>• <strong>시계운전</strong> → 장치 없거나 고장 시 최소한의 안전 확보</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 열차 안전 확보 3가지 방법을 쓰시오.</div><div class="qe-a">정답: 폐색 / 열차제어장치 / 시계운전</div><div class="qe-wrong">오답함정: "신호기"를 독립된 방법으로 쓰는 오답</div></div>
+</div><div class="concept" id="C-03"><div class="concept-title"><span class="cnum">C-03</span>여객열차 연결제한</div>
 <div class="step-box">
-?먯튃: ?ш컼?댁감???붿감 ?곌껐 湲덉? (?덉쇅: ?뚯넚 ?먮뒗 ?밸퀎 ?ъ쑀)<br><br>
-?쒗븳?ы빆:<br>
-???붿감 ?곌껐 ??媛앹감 以묎컙???곌껐 湲덉? (?왖룸뮘?먮쭔 媛??<br>
-???뚯넀李⑤웾, 臾대룞?κ린愿李? 2???댁긽??臾닿쾶 遺?댄븳 ?붿감 ???ш컼?댁감 ?곌껐 湲덉?
+원칙: 여객열차에 화차 연결 금지 (예외: 회송 또는 특별 사유)<br><br>
+제한사항:<br>
+• 화차 연결 시 객차 중간에 연결 금지 (앞·뒤에만 가능)<br>
+• 파손차량, 무동력기관차, 2량 이상에 무게 부담한 화차 → 여객열차 연결 금지
 </div>
-<div class="trap">?ш컼?댁감???숇젰湲곌?李??곌껐 湲덉? ?????숇젰湲곌?李⑤뒗 ?곌껐 媛??/div>
+<div class="trap">여객열차에 동력기관차 연결 금지 ❌ → 동력기관차는 연결 가능</div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?ш컼?댁감???붿감瑜??곌껐?섎㈃ 異⑷꺽쨌吏꾨룞 ??<strong>?밴컼 ?덉쟾</strong>???꾪삊???⑸땲?? ?? ?뚯넚 紐⑹쟻?대굹 ?밸퀎 ?ъ쑀???덉쇅?낅땲?? ?붿감 ?곌껐 ?꾩튂(?왖룸뮘留?媛?????④퍡 湲곗뼲?섏꽭??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?ш컼?댁감???붿감瑜??곌껐?섎뒗 寃쎌슦 ?붿감???꾩튂 ?쒗븳??</div><div class="qe-a">?뺣떟: 媛앹감 以묎컙?먮뒗 ?곌껐 湲덉? (???먮뒗 ?ㅼ뿉留??곌껐)</div><div class="qe-wrong">?ㅻ떟?⑥젙: "?대뒓 ?꾩튂??臾대갑?섎떎"???ㅻ떟</div></div>
-</div><div class="concept" id="C-04"><div class="concept-title"><span class="cnum">C-04</span>?숈떆 吏꾩텧??湲곗? ?끸쁾??/div>
-<div class="vis-wrap"><img src="images/VIS-064.png" alt="?댁감 ?숈떆吏꾩텧???ъ쑀嫄곕━ 湲곗? (VIS-064)" style="width:100%;height:auto;"><div class="caption">?댁감 ?숈떆吏꾩텧???ъ쑀嫄곕━ 湲곗? (VIS-064)</div></div>
+<div class="theory-note"><strong>이론 배경:</strong> 여객열차에 화차를 연결하면 충격·진동 등 <strong>승객 안전</strong>에 위협이 됩니다. 단, 회송 목적이나 특별 사유는 예외입니다. 화차 연결 위치(앞·뒤만 가능)도 함께 기억하세요.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 여객열차에 화차를 연결하는 경우 화차의 위치 제한은?</div><div class="qe-a">정답: 객차 중간에는 연결 금지 (앞 또는 뒤에만 연결)</div><div class="qe-wrong">오답함정: "어느 위치든 무방하다"는 오답</div></div>
+</div><div class="concept" id="C-04"><div class="concept-title"><span class="cnum">C-04</span>동시 진출입 기준 ★★★</div>
+<div class="vis-wrap"><img src="images/VIS-064.png" alt="열차 동시진출입 여유거리 기준 (VIS-064)" style="width:100%;height:auto;"><div class="caption">열차 동시진출입 여유거리 기준 (VIS-064)</div></div>
 <div class="table-wrap"><table>
-<tr><th>議곌굔</th><th>湲곗?</th></tr>
-<tr class="hl"><td>?ㅻⅨ 諛⑺뼢 吏꾩엯 ???쇰컲?댁감</td><td><b>200m ?댁긽</b> (異쒕컻?좏샇湲걔룹젙李⑥쐞移섎줈遺??</td></tr>
-<tr class="hl"><td>?ㅻⅨ 諛⑺뼢 吏꾩엯 ???숈감쨌?꾨룞李?/td><td><b>150m ?댁긽</b> (異쒕컻?좏샇湲걔룹젙李⑥쐞移섎줈遺??</td></tr>
-<tr class="hl"><td>?숈씪 諛⑺뼢 吏꾩엯</td><td><b>100m ?댁긽</b> (媛??뺤감?꾩튂?먯꽌)</td></tr>
+<tr><th>조건</th><th>기준</th></tr>
+<tr class="hl"><td>다른 방향 진입 — 일반열차</td><td><b>200m 이상</b> (출발신호기·정차위치로부터)</td></tr>
+<tr class="hl"><td>다른 방향 진입 — 동차·전동차</td><td><b>150m 이상</b> (출발신호기·정차위치로부터)</td></tr>
+<tr class="hl"><td>동일 방향 진입</td><td><b>100m 이상</b> (각 정차위치에서)</td></tr>
 </table></div>
-<div class="trap">?숈감쨌?꾨룞李?150m ???숈씪諛⑺뼢 100m ?レ옄 援먯껜 ?⑥젙 二쇱쓽!</div>
-<div class="tip">?덉쇅: ?덉쟾痢≪꽑 ?ㅼ튂 / ?쒗뻾?좊룄 / ?⑦뻾湲곌?李??댄뻾</div>
+<div class="trap">동차·전동차 150m ↔ 동일방향 100m 숫자 교체 함정 주의!</div>
+<div class="tip">예외: 안전측선 설치 / 서행유도 / 단행기관차 운행</div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?숈떆 吏꾩텧?낆? ???댁감媛 ?숈씪 ?뺢굅?μ뿉 ?숈떆??吏꾩텧쨌?낇븯??寃껋엯?덈떎. <strong>異⑸룎 ?꾪뿕</strong>???덉쑝誘濡?諛⑺뼢쨌李⑥쥌蹂??ъ쑀嫄곕━ 湲곗????꾧꺽??洹쒖젙?⑸땲?? 200m/150m/100m ???섏튂 ?붽린 ?꾩닔?낅땲??
+<div class="theory-note"><strong>이론 배경:</strong> 동시 진출입은 두 열차가 동일 정거장에 동시에 진출·입하는 것입니다. <strong>충돌 위험</strong>이 있으므로 방향·차종별 여유거리 기준을 엄격히 규정합니다. 200m/150m/100m 세 수치 암기 필수입니다.
 
-<br><br><strong>???숈감(?뺠퍓)?</strong>
-<br>?꾨룞湲?紐⑦꽣)瑜??댁옣???먯껜 ?숇젰?쇰줈 ?щ━??李⑤웾. ?쇰컲 ?댁감??湲곌?李④? ?뚯뼱二쇰뒗 諛⑹떇?댁?留??숈감쨌?꾨룞李⑤뒗 ?ㅼ뒪濡??숇젰???? 媛蹂띻퀬 ?쒕룞 ?깅뒫???곗뼱??鍮꾩긽?쒕룞 嫄곕━媛 吏㏃쓬 ??洹몃옒???ъ쑀嫄곕━ 湲곗???200m(?쇰컲?댁감)媛 ?꾨땶 <strong>150m</strong>濡?以꾩뼱?쒕뒗 寃?
+<br><br><strong>▶ 동차(動車)란</strong>
+<br>전동기(모터)를 내장해 자체 동력으로 달리는 차량. 일반 열차는 기관차가 끌어주는 방식이지만 동차·전동차는 스스로 동력을 냄. 가볍고 제동 성능이 뛰어나 비상제동 거리가 짧음 → 그래서 여유거리 기준이 200m(일반열차)가 아닌 <strong>150m</strong>로 줄어드는 것.
 
-<br><br><strong>??"?ㅻⅨ 諛⑺뼢?먯꽌 吏꾩엯"?대?</strong>
-<br>?? A??뿉 ?쒖슱 諛⑺뼢(遺곸そ)?먯꽌 ?댁감 1???ㅼ뼱?ㅻ뒗 ?숈떆?? 遺??諛⑺뼢(?⑥そ)?먯꽌???댁감 2媛 ?ㅼ뼱?ㅻ뒗 ?곹솴. ???댁감媛 <strong>留덉＜蹂대ŉ</strong> 媛숈? ?뺢굅?μ쑝濡??숈떆??吏꾩엯?섎뒗 寃???異⑸룎 ?꾪뿕 媛???믪쓬 ???ъ쑀嫄곕━ 湲곗? 媛???꾧꺽 (?쇰컲 200m, ?숈감 150m).
+<br><br><strong>▶ "다른 방향에서 진입"이란</strong>
+<br>예: A역에 서울 방향(북쪽)에서 열차 1이 들어오는 동시에, 부산 방향(남쪽)에서도 열차 2가 들어오는 상황. 두 열차가 <strong>마주보며</strong> 같은 정거장으로 동시에 진입하는 것 → 충돌 위험 가장 높음 → 여유거리 기준 가장 엄격 (일반 200m, 동차 150m).
 
-<br><br><strong>???대뼸寃??먮떒?섍퀬 ?쒖뼱?섎뒗媛</strong>
-<br>??<strong>?먮떒</strong>: 愿?쒖궗(CTC 醫낇빀愿?? ?먮뒗 ??옣???댁감 ?꾩튂쨌諛⑺뼢???ㅼ떆媛??뺤씤. ?좏뻾 ?댁감媛 異쒕컻?좏샇湲??먮뒗 ?뺤감?꾩튂)濡쒕???洹쒖젙 嫄곕━(200m/150m/100m) ?댁긽 踰쀬뼱??寃껋쓣 ?뺤씤???꾩뿉???ㅼ쓬 ?댁감 吏꾩엯 ?덇?.
-<br>??<strong>?쒖뼱</strong>: 吏꾩엯 ?덇? ?꾧퉴吏 <strong>?λ궡?좏샇湲??뺤?(?곸깋)</strong> ???꾩냽 ?댁감 吏꾩엯 遺덇?. 嫄곕━ ?뺣낫 ?뺤씤 ???λ궡?좏샇湲?吏꾪뻾 ?꾩떆 ??吏꾩엯 ?덇?.</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?숈감쨌?꾨룞李④? ?ㅻⅨ 諛⑺뼢?먯꽌 ?숈떆 吏꾩엯????理쒖냼 ?ъ쑀嫄곕━??</div><div class="qe-a">?뺣떟: 150m ?댁긽 (異쒕컻?좏샇湲걔룹젙李⑥쐞移섎줈遺??</div><div class="qe-wrong">?ㅻ떟?⑥젙: 200m(?쇰컲?댁감 湲곗?)濡??쇰룞?섎뒗 ?ㅻ떟</div></div>
-</div><div class="concept" id="C-05"><div class="concept-title"><span class="cnum">C-05</span>?댄뻾?댁쟾 쨌 ?뺢굅?????뺤감</div>
-<div class="table-wrap"><table><tr><th>??ぉ</th><th>?먯튃</th><th>?덉쇅</th></tr>
-<tr><td><b>?댄뻾?댁쟾</b></td><td>遺덇?</td><td>?좊줈쨌?꾩감?좊줈쨌李⑤웾 怨좎옣 / 援ъ썝쨌?쒖꽕쨌怨듭궗?댁감 / 蹂댁“湲곌?李?/ ?밸퀎 ?ъ쑀</td></tr>
-<tr><td><b>?뺢굅?????뺤감</b></td><td>湲덉?</td><td>1/30 ?댁긽 湲됯꼍??吏꾩엯 ??/ ?뺤??좏샇 / 泥좊룄?ш퀬 諛쒖깮쨌?곕젮 / ?덉쟾??遺?앹씠</td></tr>
+<br><br><strong>▶ 어떻게 판단하고 제어하는가</strong>
+<br>• <strong>판단</strong>: 관제사(CTC 종합관제) 또는 역장이 열차 위치·방향을 실시간 확인. 선행 열차가 출발신호기(또는 정차위치)로부터 규정 거리(200m/150m/100m) 이상 벗어난 것을 확인한 후에야 다음 열차 진입 허가.
+<br>• <strong>제어</strong>: 진입 허가 전까지 <strong>장내신호기 정지(적색)</strong> → 후속 열차 진입 불가. 거리 확보 확인 → 장내신호기 진행 현시 → 진입 허가.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 동차·전동차가 다른 방향에서 동시 진입할 때 최소 여유거리는?</div><div class="qe-a">정답: 150m 이상 (출발신호기·정차위치로부터)</div><div class="qe-wrong">오답함정: 200m(일반열차 기준)로 혼동하는 오답</div></div>
+</div><div class="concept" id="C-05"><div class="concept-title"><span class="cnum">C-05</span>퇴행운전 · 정거장 외 정차</div>
+<div class="table-wrap"><table><tr><th>항목</th><th>원칙</th><th>예외</th></tr>
+<tr><td><b>퇴행운전</b></td><td>불가</td><td>선로·전차선로·차량 고장 / 구원·제설·공사열차 / 보조기관차 / 특별 사유</td></tr>
+<tr><td><b>정거장 외 정차</b></td><td>금지</td><td>1/30 이상 급경사 진입 전 / 정지신호 / 철도사고 발생·우려 / 안전상 부득이</td></tr>
 </table></div>
-<div class="trap">?뺢굅?????뺤감 ?덉쇅 ??遺꾧린湲??쒗븳?띾룄 珥덇낵 ?댄뻾</div>
+<div class="trap">정거장 외 정차 예외 ≠ 분기기 제한속도 초과 운행</div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?댄뻾?댁쟾? 吏꾪뻾 諛⑺뼢怨?諛섎?濡??대룞?섎뒗 寃껋쑝濡? <strong>?꾨갑 ?쒖빞 ?뺣낫媛 ?대젮??/strong> 異⑸룎 ?꾪뿕??利앷??⑸땲?? ?좊줈쨌李⑤웾 怨좎옣, 援ъ썝?댁감 ???뱀닔 ?곹솴?먯꽌留??덉쇅瑜??몄젙?⑸땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?뺢굅?????뺤감 ?덉쇅 ?ъ쑀濡??녹? ?딆? 寃껋??</div><div class="qe-a">?뺣떟: 遺꾧린湲??쒗븳?띾룄 珥덇낵 ?댄뻾 (?뺤감 ?덉슜 ?ъ쑀 ?꾨떂)</div><div class="qe-wrong">?ㅻ떟?⑥젙: "1/30 ?댁긽 湲됯꼍??吏꾩엯 ?????ㅻ떟?쇰줈 李⑷컖?섎뒗 寃쎌슦</div></div>
+<div class="theory-note"><strong>이론 배경:</strong> 퇴행운전은 진행 방향과 반대로 이동하는 것으로, <strong>후방 시야 확보가 어려워</strong> 충돌 위험이 증가합니다. 선로·차량 고장, 구원열차 등 특수 상황에서만 예외를 인정합니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 정거장 외 정차 예외 사유로 옳지 않은 것은?</div><div class="qe-a">정답: 분기기 제한속도 초과 운행 (정차 허용 사유 아님)</div><div class="qe-wrong">오답함정: "1/30 이상 급경사 진입 전"을 오답으로 착각하는 경우</div></div>
 
-<div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="AvXL2WjhUys" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/AvXL2WjhUys/hqdefault.jpg" alt="湲곗감???꾩쭊?????덉쓣源?" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#dc2626;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI ?듭떖?곸긽</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">湲곗감???꾩쭊?????덉쓣源?</span></div></div>
-</div></div></div><div class="part" id="part2"><div class="part-title" onclick="togglePart(this)"><span>PART 2. ?먯깋諛⑹떇 ?끸쁾??/span><span class="arr">??/span></div><div class="part-body"><div class="concept" id="C-06"><div class="concept-title"><span class="cnum">C-06</span>?먯깋諛⑹떇 ?꾩껜 遺꾨쪟</div>
-<div class="vis-wrap"><img src="images/VIS-061_?먯깋諛⑹떇8醫낅텇瑜섑몴.png" alt="?먯깋諛⑹떇 8醫?遺꾨쪟??(VIS-061)"><div class="caption">?먯깋諛⑹떇 8醫?遺꾨쪟??(VIS-061)</div></div>
+<div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="AvXL2WjhUys" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/AvXL2WjhUys/hqdefault.jpg" alt="기차도 후진할 수 있을까?" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#dc2626;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI 핵심영상</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">기차도 후진할 수 있을까?</span></div></div>
+</div></div></div><div class="part" id="part2"><div class="part-title" onclick="togglePart(this)"><span>PART 2. 폐색방식 ★★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-06"><div class="concept-title"><span class="cnum">C-06</span>폐색방식 전체 분류</div>
+<div class="vis-wrap"><img src="images/VIS-061_폐색방식8종분류표.png" alt="폐색방식 8종 분류표 (VIS-061)"><div class="caption">폐색방식 8종 분류표 (VIS-061)</div></div>
 <div class="table-wrap"><table>
-<tr><th>援щ텇</th><th>諛⑹떇 (4醫?</th><th>?붽린</th></tr>
-<tr><td><b>?곸슜?먯깋</b></td><td>?먮룞?먯깋??/ ?곕룞?먯깋??/ 李⑤궡?좏샇?먯깋??/ ?듯몴?먯깋??/td><td><b>?먯뿰李⑦넻</b></td></tr>
-<tr><td><b>??⑺룓??/b></td><td>?듭떊??/ 吏?꾪넻?좎떇 / 吏?꾩떇 / 吏?뱀떇</td><td><b>?듭?吏吏</b></td></tr>
+<tr><th>구분</th><th>방식 (4종)</th><th>암기</th></tr>
+<tr><td><b>상용폐색</b></td><td>자동폐색식 / 연동폐색식 / 차내신호폐색식 / 통표폐색식</td><td><b>자연차통</b></td></tr>
+<tr><td><b>대용폐색</b></td><td>통신식 / 지도통신식 / 지도식 / 지령식</td><td><b>통지지지</b></td></tr>
 </table></div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> <strong>?먯깋(?됧줊)</strong>?대? ?섎굹??援ш컙???섎굹???댁감留?吏꾩엯?????덈룄濡?留됰뒗 諛⑹떇?낅땲?? ?곸슜?먯깋??遺덇??ν븷 ????⑺룓?됱쑝濡??꾪솚?⑸땲?? 8醫낆쓣 紐⑤몢 ?몄썙???⑸땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?곸슜?먯깋 4醫낆쓣 紐⑤몢 ?곗떆??</div><div class="qe-a">?뺣떟: ?먮룞?먯깋??/ ?곕룞?먯깋??/ 李⑤궡?좏샇?먯깋??/ ?듯몴?먯깋??(?먯뿰李⑦넻)</div><div class="qe-wrong">?ㅻ떟?⑥젙: "吏?꾪넻?좎떇"???곸슜?먯깋???ы븿?섎뒗 ?ㅻ떟</div></div>
-<div class="tip">?뱦 ?쒓퀎?댁쟾(寃⑹떆踰빧룹쟾?밸쾿쨌吏?꾧꺽?쒕쾿)? 泥좊룄李⑤웾?댁쟾洹쒖튃 ??0議곗쓽 <b>?먯깋諛⑹떇 遺꾨쪟 ??/b> 蹂꾨룄 鍮꾩긽?댁쟾諛⑸쾿?낅땲??????⑺룓?됯낵 ?쇰룞 湲덉?. ?꾨졊踰뺤? ??⑺룓?됱씠 ?꾨떃?덈떎!</div>
-</div><div class="concept" id="C-07"><div class="concept-title"><span class="cnum">C-07</span>媛??먯깋諛⑹떇 ?듭떖 ?ъ씤??/div>
+<div class="theory-note"><strong>이론 배경:</strong> <strong>폐색(閉塞)</strong>이란 하나의 구간에 하나의 열차만 진입할 수 있도록 막는 방식입니다. 상용폐색이 불가능할 때 대용폐색으로 전환합니다. 8종을 모두 외워야 합니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 상용폐색 4종을 모두 쓰시오.</div><div class="qe-a">정답: 자동폐색식 / 연동폐색식 / 차내신호폐색식 / 통표폐색식 (자연차통)</div><div class="qe-wrong">오답함정: "지도통신식"을 상용폐색에 포함하는 오답</div></div>
+<div class="tip">📌 시계운전(격시법·전령법·지도격시법)은 철도차량운전규칙 제50조의 <b>폐색방식 분류 외</b> 별도 비상운전방법입니다 — 대용폐색과 혼동 금지. 전령법은 대용폐색이 아닙니다!</div>
+</div><div class="concept" id="C-07"><div class="concept-title"><span class="cnum">C-07</span>각 폐색방식 핵심 포인트</div>
 <div class="table-wrap"><table>
-<tr><th>?먯깋諛⑹떇</th><th>?듭떖 ?댁슜</th></tr>
-<tr><td><b>?먮룞?먯깋</b></td><td>?댁감/李⑤웾 ?덉쓣 ?? ?좊줈?꾪솚湲?遺덈웾, ?μ튂 怨좎옣 ???먮룞 ?뺤??좏샇</td></tr>
-<tr><td><b>?곕룞?먯깋</b></td><td>?묐걹 ?뺢굅?Β룹떊?몄냼 ?묐룞 / ?듦낵 ???쒖떆 蹂寃?遺덇? / ?⑥꽑援ш컙: 諛섎?諛⑺뼢 ?먮룞 ?뺤?</td></tr>
-<tr><td><b>李⑤궡?좏샇?먯깋</b></td><td>李⑤웾 ?대????좏샇 ?쒖떆 / 吏?곸옣移?怨좎옣 ???먮룞 ?뺤?</td></tr>
-<tr class="hl"><td><b>?듯몴?먯깋</b></td><td>?대떦 援ш컙 ?듯몴 1媛쒕쭔 ?ъ슜 / ?⑥꽑 ?꾩슜 ??/td></tr>
-<tr><td><b>?듭떊??/b></td><td>?꾩슜 ?듭떊?ㅻ퉬 ?먯튃 / 愿?쒖뾽臾댁쥌?ъ옄 ?먮뒗 ?댁쟾痍④툒?대떦???뱀씤</td></tr>
-<tr><td><b>吏?꾪넻?좎떇</b></td><td>1援ш컙 1留ㅼ쓽 吏?꾪몴 / 吏?꾧텒? 吏?꾪몴 ?덈뒗 ???묒쓽 ??諛쒗뻾</td></tr>
-<tr><td><b>吏?꾩떇</b></td><td>?⑥닚 1?먯깋援ш컙 / 吏?꾪몴 1留?/td></tr>
-<tr><td><b>吏?뱀떇</b></td><td>??愿??媛먯떆 媛??+ ???듭떊?μ튂 ?뺤긽 ??愿???뱀씤?쇰줈 ?쒗뻾</td></tr>
+<tr><th>폐색방식</th><th>핵심 내용</th></tr>
+<tr><td><b>자동폐색</b></td><td>열차/차량 있을 때, 선로전환기 불량, 장치 고장 → 자동 정지신호</td></tr>
+<tr><td><b>연동폐색</b></td><td>양끝 정거장·신호소 협동 / 통과 전 표시 변경 불가 / 단선구간: 반대방향 자동 정지</td></tr>
+<tr><td><b>차내신호폐색</b></td><td>차량 내부에 신호 표시 / 지상장치 고장 시 자동 정지</td></tr>
+<tr class="hl"><td><b>통표폐색</b></td><td>해당 구간 통표 1개만 사용 / 단선 전용 ★</td></tr>
+<tr><td><b>통신식</b></td><td>전용 통신설비 원칙 / 관제업무종사자 또는 운전취급담당자 승인</td></tr>
+<tr><td><b>지도통신식</b></td><td>1구간 1매의 지도표 / 지도권은 지도표 있는 역 협의 후 발행</td></tr>
+<tr><td><b>지도식</b></td><td>단순 1폐색구간 / 지도표 1매</td></tr>
+<tr><td><b>지령식</b></td><td>① 관제 감시 가능 + ② 통신장치 정상 → 관제 승인으로 시행</td></tr>
 </table></div>
-<div class="trap">?듯몴?먯깋??= ?⑥꽑 ?꾩슜 / '蹂듭꽑 ?ъ슜 媛?? ?⑥젙 二쇱쓽!</div>
-<div class="tip">李⑤궡?좏샇?먯깋?????쇰뱶?좏샇 = <b>25km/h ?댄븯</b> (15km/h? ?쇰룞 二쇱쓽)</div>
-<div class="trap">?좑툘 ?좏샇怨좎옣 ???뺤??쒓컙쨌吏꾩엯?띾룄 ?섏튂(1遺? 15km/h ????<b>泥좊룄?댁쁺湲곌? ?닿퇋???곕씪 ?곸씠</b> ???꾧뎅 怨듯넻媛믪쑝濡??붽린?섎㈃ ?ㅻ떟 ?꾪뿕</div>
+<div class="trap">통표폐색식 = 단선 전용 / '복선 사용 가능' 함정 주의!</div>
+<div class="tip">차내신호폐색식 — 야드신호 = <b>25km/h 이하</b> (15km/h와 혼동 주의)</div>
+<div class="trap">⚠️ 신호고장 시 정지시간·진입속도 수치(1분, 15km/h 등)는 <b>철도운영기관 내규에 따라 상이</b> — 전국 공통값으로 암기하면 오답 위험</div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?듯몴?먯깋?앹? <strong>?ㅻЪ ?듯몴瑜?湲곌??ш? 吏곸젒 ?뚯?</strong>?댁빞 援ш컙??吏꾩엯?????덉뒿?덈떎. 臾쇰━??利앺몴 諛⑹떇?쇰줈 ?⑥꽑 ?꾩슜?대ŉ, 蹂듭꽑?먮뒗 ?ъ슜?섏? ?딆뒿?덈떎.</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?먯깋諛⑹떇 以??⑥꽑 ?꾩슜?쇰줈留??ъ슜?섎뒗 諛⑹떇??</div><div class="qe-a">?뺣떟: ?듯몴?먯깋??/div><div class="qe-wrong">?ㅻ떟?⑥젙: "蹂듭꽑?먯꽌???ъ슜 媛?ν븯?????ㅻ떟</div></div>
-</div><div class="concept" id="C-08"><div class="concept-title"><span class="cnum">C-08</span>吏?꾪몴 vs 吏?꾧텒 湲곗엯?ы빆 ?끸쁾??/div>
+<div class="theory-note"><strong>이론 배경:</strong> 통표폐색식은 <strong>실물 통표를 기관사가 직접 소지</strong>해야 구간에 진입할 수 있습니다. 물리적 증표 방식으로 단선 전용이며, 복선에는 사용하지 않습니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 폐색방식 중 단선 전용으로만 사용되는 방식은?</div><div class="qe-a">정답: 통표폐색식</div><div class="qe-wrong">오답함정: "복선에서도 사용 가능하다"는 오답</div></div>
+</div><div class="concept" id="C-08"><div class="concept-title"><span class="cnum">C-08</span>지도표 vs 지도권 기입사항 ★★★</div>
 <div class="table-wrap"><table>
-<tr><th>??ぉ</th><th>湲곗엯?ы빆</th></tr>
-<tr class="hl"><td><b>吏?꾪몴</b></td><td>援ш컙 ?묐걹 ?뺢굅?λ챸 + 諛쒗뻾?쇱옄 + ?ъ슜?댁감踰덊샇</td></tr>
-<tr class="hl"><td><b>吏?꾧텒</b></td><td>?ъ슜援ш컙 + ?ъ슜?댁감 + 諛쒗뻾?쇱옄 + 吏?꾪몴 踰덊샇</td></tr>
+<tr><th>항목</th><th>기입사항</th></tr>
+<tr class="hl"><td><b>지도표</b></td><td>구간 양끝 정거장명 + 발행일자 + 사용열차번호</td></tr>
+<tr class="hl"><td><b>지도권</b></td><td>사용구간 + 사용열차 + 발행일자 + 지도표 번호</td></tr>
 </table></div>
-<div class="trap">吏?꾪몴??湲곌????대쫫 湲곗엯 ?????ы븿?섏? ?딆쓬</div>
+<div class="trap">지도표에 기관사 이름 기입 ❌ → 포함되지 않음</div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> 吏?꾪몴??<strong>援ш컙 ?듦낵 ?먭꺽??利앸챸?섎뒗 怨듭떇 ?쒕쪟</strong>?낅땲?? 援ш컙(?묐걹??챸), ?좏슚??諛쒗뻾?쇱옄), ?댁감(踰덊샇) ??媛吏媛 ?듭떖 湲곗엯?ы빆?낅땲?? 湲곌????대쫫?대굹 ??옣 ?쒕챸? ?ы븿?섏? ?딆뒿?덈떎.</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. 吏?꾪몴??湲곗엯?섎뒗 ?ы빆 3媛吏瑜??곗떆??</div><div class="qe-a">?뺣떟: 援ш컙 ?묐걹 ?뺢굅?λ챸 / 諛쒗뻾?쇱옄 / ?ъ슜?댁감踰덊샇</div><div class="qe-wrong">?ㅻ떟?⑥젙: "湲곌????대쫫"??湲곗엯?ы빆?쇰줈 ?곕뒗 ?ㅻ떟</div></div>
-</div><div class="concept" id="C-09"><div class="concept-title"><span class="cnum">C-09</span>?쒓퀎?댁쟾 諛⑹떇</div>
-<div class="step-box"><b>?쒓퀎?댁쟾(誤뽫븣?뗨퐠)?대??</b><br>?좏샇湲곕굹 ?먯깋?μ튂 ?놁씠 湲곌??ш? ?덉쑝濡?吏곸젒 ?꾨갑??蹂대㈃???댁쟾?섎뒗 諛⑹떇. ?먯깋?μ튂 怨좎옣쨌鍮꾩긽 ??理쒗썑 ?섎떒?쇰줈 ?ъ슜.</div>
-<div class="vis-wrap"><img src="images/VIS-090_?쒓퀎?댁쟾諛⑹떇3醫낅퉬援?png" alt="?쒓퀎?댁쟾 諛⑹떇 3醫?鍮꾧탳 (VIS-090)"><div class="caption">?쒓퀎?댁쟾 諛⑹떇 3醫?鍮꾧탳 (VIS-090)</div></div>
+<div class="theory-note"><strong>이론 배경:</strong> 지도표는 <strong>구간 통과 자격을 증명하는 공식 서류</strong>입니다. 구간(양끝역명), 유효성(발행일자), 열차(번호) 세 가지가 핵심 기입사항입니다. 기관사 이름이나 역장 서명은 포함되지 않습니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 지도표에 기입하는 사항 3가지를 쓰시오.</div><div class="qe-a">정답: 구간 양끝 정거장명 / 발행일자 / 사용열차번호</div><div class="qe-wrong">오답함정: "기관사 이름"을 기입사항으로 쓰는 오답</div></div>
+</div><div class="concept" id="C-09"><div class="concept-title"><span class="cnum">C-09</span>시계운전 방식</div>
+<div class="step-box"><b>시계운전(視界運轉)이란?</b><br>신호기나 폐색장치 없이 기관사가 눈으로 직접 전방을 보면서 운전하는 방식. 폐색장치 고장·비상 시 최후 수단으로 사용.</div>
+<div class="vis-wrap"><img src="images/VIS-090_시계운전방식3종비교.png" alt="시계운전 방식 3종 비교 (VIS-090)"><div class="caption">시계운전 방식 3종 비교 (VIS-090)</div></div>
 <div class="table-wrap"><table>
-<tr><th>諛⑹떇</th><th>?ъ슜 ?좎쥌</th><th>?덉쟾 ?뺣낫 ?먮━</th><th>?듭떖 ?뱀쭠</th></tr>
-<tr><td><b>寃⑹떆踰?/b><br>(?붹셽力?</td><td class="hl"><b>蹂듭꽑 ?꾩슜</b></td><td>?쒓컙 媛꾧꺽(?댁쟾 ?쒓꺽)?쇰줈 遺꾨━</td><td>???댁감 異쒕컻 ??吏???쒓컙??吏?섏빞 ?꾩냽 ?댁감 異쒕컻. 蹂듭꽑? 諛섎? 諛⑺뼢 ?댁감媛 ?놁뼱 ?쒓컙 寃⑸━留뚯쑝濡?異⑸텇</td></tr>
-<tr><td><b>?꾨졊踰?/b><br>(?념빱力?</td><td><b>蹂듭꽑쨌?⑥꽑 紐⑤몢</b></td><td>?꾨졊???щ엺)媛 ?댁감??吏곸젒 ?숈듅</td><td>?꾨졊?먭? ?묒듅???숈븞 洹?援ш컙???먯쑀??寃껋쑝濡?媛꾩＜. ?⑥꽑쨌蹂듭꽑 紐⑤몢 ?곸슜 媛?ν븳 ?좎씪??諛⑹떇</td></tr>
-<tr><td><b>吏?꾧꺽?쒕쾿</b><br>(?뉐컣?붹셽力?</td><td class="hl"><b>?⑥꽑 ?꾩슜</b></td><td>諛⑺뼢 吏???뉐컣) + ?쒓컙 寃⑸━(?붹셽) ?숈떆 ?곸슜</td><td>?⑥꽑? ?묐갑???댁감媛 媛숈? ?좊줈瑜?怨듭쑀?섎?濡?諛⑺뼢 ?듭젣媛 ?꾩닔. 諛⑺뼢 ?덇? + ?쒓컙 媛꾧꺽??紐⑤몢 異⑹”?댁빞 異쒕컻 媛??/td></tr>
+<tr><th>방식</th><th>사용 선종</th><th>안전 확보 원리</th><th>핵심 특징</th></tr>
+<tr><td><b>격시법</b><br>(隔時法)</td><td class="hl"><b>복선 전용</b></td><td>시간 간격(운전 시격)으로 분리</td><td>앞 열차 출발 후 지정 시간이 지나야 후속 열차 출발. 복선은 반대 방향 열차가 없어 시간 격리만으로 충분</td></tr>
+<tr><td><b>전령법</b><br>(傳令法)</td><td><b>복선·단선 모두</b></td><td>전령자(사람)가 열차에 직접 동승</td><td>전령자가 탑승한 동안 그 구간이 점유된 것으로 간주. 단선·복선 모두 적용 가능한 유일한 방식</td></tr>
+<tr><td><b>지도격시법</b><br>(指導隔時法)</td><td class="hl"><b>단선 전용</b></td><td>방향 지도(指導) + 시간 격리(隔時) 동시 적용</td><td>단선은 양방향 열차가 같은 선로를 공유하므로 방향 통제가 필수. 방향 허가 + 시간 간격을 모두 충족해야 출발 가능</td></tr>
 </table></div>
-<div class="tip">寃⑹떆=蹂듭꽑 ?꾩슜 | 吏?꾧꺽???⑥꽑 ?꾩슜 | ?꾨졊=蹂듭꽑쨌?⑥꽑 紐⑤몢<br>?⑥꽑? 留덉＜?ㅻ뒗 ?댁감 ?꾪뿕 ??諛⑺뼢 ?듭젣 ?꾩닔 ??吏?꾧꺽?쒕쾿 ?꾩슜</div>
-<div class="tip">寃⑹떆踰??쒗뻾 ????<b>援ш컙 ???댁감쨌李⑤웾???놁쓬</b>???뺤씤????異쒕컻 ?덇? (援ш컙 ?뺤씤 ?좏뻾)</div>
-<div class="trap">寃⑹떆踰뺤씠 ?⑥꽑?먮룄 ?곗씤??????蹂듭꽑 ?꾩슜<br>吏?꾧꺽?쒕쾿??蹂듭꽑?먮룄 ?곗씤???????⑥꽑 ?꾩슜</div>
-<div class="theory-note"><strong>???⑥꽑? 吏?꾧꺽?쒕쾿?멸??</strong> 蹂듭꽑? ?곹뻾쨌?섑뻾 ?좊줈媛 遺꾨━???덉뼱 諛섎? 諛⑺뼢 ?댁감? 異⑸룎 ?꾪뿕???놁뒿?덈떎. 洹몃옒???쒓컙 媛꾧꺽(寃⑹떆)留뚯쑝濡?異⑸텇?⑸땲?? 諛섎㈃ ?⑥꽑? ?섎굹???좊줈瑜??묐갑?μ씠 怨듭쑀?섎?濡? ?쒕줈 留덉＜蹂대뒗 諛⑺뼢???댁감媛 ?숈떆???ㅼ뼱?ㅻ㈃ ?뺣㈃異⑸룎?⑸땲?? ?곕씪???⑥꽑?먯꽌??諛섎뱶??諛⑺뼢 ?덇?(吏??媛 癒쇱? ?대（?댁?怨? 洹??꾩뿉 ?쒓컙 媛꾧꺽(寃⑹떆)源뚯? ?뷀빐???덉쟾?⑸땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?쒓퀎?댁쟾 諛⑹떇 3媛吏瑜?紐⑤몢 ?곌퀬, 蹂듭꽑쨌?⑥꽑 ?꾩슜??援щ텇?섏떆??</div><div class="qe-a">?뺣떟: ??寃⑹떆踰?蹂듭꽑 ?꾩슜) ???꾨졊踰?蹂듭꽑쨌?⑥꽑 紐⑤몢) ??吏?꾧꺽?쒕쾿(?⑥꽑 ?꾩슜)</div><div class="qe-wrong">?ㅻ떟?⑥젙: "寃⑹떆踰뺤씠 ?⑥꽑?먯꽌???곗씤?? / "吏?꾧꺽?쒕쾿??蹂듭꽑?먮룄 媛?ν븯??</div></div>
-</div></div></div><div class="part" id="part3"><div class="part-title" onclick="togglePart(this)"><span>PART 3. ?좏샇湲?泥닿퀎 ?끸쁾??/span><span class="arr">??/span></div><div class="part-body"><div class="concept" id="C-10"><div class="concept-title"><span class="cnum">C-10</span>?곸튂?좏샇湲?遺꾨쪟 ??二쇱떊?멸린 쨌 醫낆냽?좏샇湲?쨌 ?좏샇遺?띻린</div>
-<div class="vis-wrap"><img src="images/VIS-091_?곸튂?좏샇湲곗쟾泥대같移섎룄.png" alt="?곸튂?좏샇湲??꾩껜 諛곗튂????二쇱떊?멸린쨌醫낆냽?좏샇湲걔룹떊?몃??띻린 (VIS-091)"><div class="caption">?곸튂?좏샇湲??꾩껜 諛곗튂?????ㅼ젣 ?좊줈 ??12醫?諛곗튂 (VIS-091)</div></div>
-<div class="step-box"><b>?곸튂?좏샇湲?躍며쉰岳↑솦艅???</b><br>?쇱젙 ?μ냼??<b>怨좎젙 ?ㅼ튂</b>?섎뒗 ?좏샇湲? ?꾩떆?좏샇湲??쒗뻾쨌?쒗뻾?덇퀬쨌?쒗뻾?댁젣)? 諛섎? 媛쒕뀗.<br>二쇱떊?멸린媛 吏곸젒 ?댁쟾 紐낅졊 ??醫낆냽?좏샇湲곌? 二쇱떊?멸린瑜?蹂댁“ ???좏샇遺?띻린媛 遺媛 ?뺣낫 ?쒓났</div>
+<div class="tip">격시=복선 전용 | 지도격시=단선 전용 | 전령=복선·단선 모두<br>단선은 마주오는 열차 위험 → 방향 통제 필수 → 지도격시법 전용</div>
+<div class="tip">격시법 시행 전 — <b>구간 내 열차·차량이 없음</b>을 확인한 후 출발 허가 (구간 확인 선행)</div>
+<div class="trap">격시법이 단선에도 쓰인다 ❌ → 복선 전용<br>지도격시법이 복선에도 쓰인다 ❌ → 단선 전용</div>
+<div class="theory-note"><strong>왜 단선은 지도격시법인가?</strong> 복선은 상행·하행 선로가 분리돼 있어 반대 방향 열차와 충돌 위험이 없습니다. 그래서 시간 간격(격시)만으로 충분합니다. 반면 단선은 하나의 선로를 양방향이 공유하므로, 서로 마주보는 방향의 열차가 동시에 들어오면 정면충돌합니다. 따라서 단선에서는 반드시 방향 허가(지도)가 먼저 이루어지고, 그 위에 시간 간격(격시)까지 더해야 안전합니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 시계운전 방식 3가지를 모두 쓰고, 복선·단선 전용을 구분하시오.</div><div class="qe-a">정답: ① 격시법(복선 전용) ② 전령법(복선·단선 모두) ③ 지도격시법(단선 전용)</div><div class="qe-wrong">오답함정: "격시법이 단선에서도 쓰인다" / "지도격시법이 복선에도 가능하다"</div></div>
+</div></div></div><div class="part" id="part3"><div class="part-title" onclick="togglePart(this)"><span>PART 3. 신호기 체계 ★★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-10"><div class="concept-title"><span class="cnum">C-10</span>상치신호기 분류 — 주신호기 · 종속신호기 · 신호부속기</div>
+<div class="vis-wrap"><img src="images/VIS-091_상치신호기전체배치도.png" alt="상치신호기 전체 배치도 — 주신호기·종속신호기·신호부속기 (VIS-091)"><div class="caption">상치신호기 전체 배치도 — 실제 선로 위 12종 배치 (VIS-091)</div></div>
+<div class="step-box"><b>상치신호기(常置信號機)란?</b><br>일정 장소에 <b>고정 설치</b>되는 신호기. 임시신호기(서행·서행예고·서행해제)와 반대 개념.<br>주신호기가 직접 운전 명령 → 종속신호기가 주신호기를 보조 → 신호부속기가 부가 정보 제공</div>
 
 <div class="table-wrap"><table>
-<tr><th>遺꾨쪟</th><th>?붽린</th><th>醫낅쪟 諛??듭떖 湲곕뒫</th><th>?뺤쐞</th></tr>
-<tr><td rowspan="6"><b>二쇱떊?멸린</b><br>(6醫?</td><td rowspan="6" class="hl"><b>?μ텧??br>?꾩쑀??/b></td><td><b>?λ궡?좏샇湲?/b> ???뺢굅??諛붽묑???ㅼ튂. ?댁감媛 ?뺢굅??<b>吏꾩엯</b>?????덇? ?좏샇 ?꾩떆</td><td>?뺤?</td></tr>
-<tr><td><b>異쒕컻?좏샇湲?/b> ???뺢굅?????좊줈 留먮떒)???ㅼ튂. ?댁감媛 ?뺢굅?μ쓣 <b>異쒕컻</b>?????덇? ?좏샇 ?꾩떆</td><td>?뺤?</td></tr>
-<tr><td><b>?먯깋?좏샇湲?/b> ???먮룞?먯깋 援ш컙 ???ㅼ튂. 媛?<b>?먯깋援ш컙 吏꾩엯</b> ?덇? (?먮룞?먯깋 ?쒖쇅 ???뺤쐞=?뺤?, ?먮룞?먯깋? 吏꾪뻾)</td><td>?뺤?<br><span style="font-size:0.85em">(?먮룞?먯깋=吏꾪뻾)</span></td></tr>
-<tr><td><b>?꾪샇?좏샇湲?/b> ??嫄대꼸紐㈑룰탳????<b>?밸퀎???꾪뿕???μ냼</b> ?욎뿉 ?ㅼ튂. ?꾪뿕吏??蹂댄샇</td><td>?뺤?</td></tr>
-<tr class="hl"><td><b>?좊룄?좏샇湲?/b> ???λ궡?좏샇湲곌? ?뺤??꾩떆 以묒뿉??<b>??띿쑝濡??뺢굅?????좊룄</b>. 異쒕컻 ?댁감? 媛숈? ?좊줈濡??덈궡</td><td><b>?꾩떆?놁쓬</b></td></tr>
-<tr><td><b>?낇솚?좏샇湲?/b> ??<b>李⑤웾 ?낇솚(?대룞쨌遺꾨━쨌?곌껐)</b> ?묒뾽 ?덇?. ?낇솚 ?꾩슜 ?좏샇</td><td>?뺤?</td></tr>
-<tr><td rowspan="3"><b>醫낆냽?좏샇湲?/b><br>(3醫?</td><td rowspan="3" class="hl"><b>?먰넻以?/b></td><td><b>?먮갑?좏샇湲?/b> ??二쇱떊?멸린(?λ궡쨌?먯깋 ?? <b>?욎そ</b>???ㅼ튂. ?ㅼ쓬 二쇱떊?멸린???꾩떆瑜?<b>誘몃━ ?덇퀬</b>??媛먯냽 以鍮??뚮┝</td><td>二쇱쓽</td></tr>
-<tr><td><b>?듦낵?좏샇湲?/b> ??異쒕컻?좏샇湲곗뿉 <b>醫낆냽</b>. ?댁감媛 ??쓣 <b>臾댁젙李??듦낵</b>?대룄 ?섎뒗吏 ?뚮┝. ?λ궡?좏샇湲??섎????ㅼ튂</td><td>?뺤?</td></tr>
-<tr><td><b>以묎퀎?좏샇湲?/b> ??怨≪꽑쨌?곕꼸 ???쒖씤 遺덈웾 援ш컙?먯꽌 二쇱떊?멸린 ?꾩떆瑜?<b>以묎퀎</b>. 二쇱떊?멸린 ?꾩떆? ?숈씪???댁슜 ?쒖떆</td><td>?뺤?</td></tr>
-<tr><td rowspan="3"><b>?좏샇遺?띻린</b><br>(3醫?</td><td rowspan="3">??/td><td><b>吏꾨줈?쒖떆湲?/b> ???λ궡쨌異쒕컻?좏샇湲곗뿉 遺?? ?댁감媛 媛쒗넻??<b>吏꾨줈 踰덊샇(?좊줈)</b>瑜??レ옄쨌湲고샇濡??쒖떆</td><td>??/td></tr>
-<tr><td><b>吏꾨줈?덇퀬湲?/b> ???먮갑?좏샇湲곗뿉 遺?? ?ㅼ쓬 ?λ궡?좏샇湲곗뿉??媛쒗넻??<b>吏꾨줈瑜?誘몃━</b> ?뚮┝</td><td>??/td></tr>
-<tr><td><b>吏꾨줈媛쒗넻?쒖떆湲?/b> ???낇솚?좏샇湲곗뿉 遺?? ?낇솚 吏꾨줈媛 <b>媛쒗넻?섏뿀??/b>???쒖떆</td><td>??/td></tr>
+<tr><th>분류</th><th>암기</th><th>종류 및 핵심 기능</th><th>정위</th></tr>
+<tr><td rowspan="6"><b>주신호기</b><br>(6종)</td><td rowspan="6" class="hl"><b>장출폐<br>엄유입</b></td><td><b>장내신호기</b> — 정거장 바깥에 설치. 열차가 정거장 <b>진입</b>할 때 허가 신호 현시</td><td>정지</td></tr>
+<tr><td><b>출발신호기</b> — 정거장 끝(선로 말단)에 설치. 열차가 정거장을 <b>출발</b>할 때 허가 신호 현시</td><td>정지</td></tr>
+<tr><td><b>폐색신호기</b> — 자동폐색 구간 내 설치. 각 <b>폐색구간 진입</b> 허가 (자동폐색 제외 시 정위=정지, 자동폐색은 진행)</td><td>정지<br><span style="font-size:0.85em">(자동폐색=진행)</span></td></tr>
+<tr><td><b>엄호신호기</b> — 건널목·교량 등 <b>특별히 위험한 장소</b> 앞에 설치. 위험지점 보호</td><td>정지</td></tr>
+<tr class="hl"><td><b>유도신호기</b> — 장내신호기가 정지현시 중에도 <b>저속으로 정거장 내 유도</b>. 출발 열차와 같은 선로로 안내</td><td><b>현시없음</b></td></tr>
+<tr><td><b>입환신호기</b> — <b>차량 입환(이동·분리·연결)</b> 작업 허가. 입환 전용 신호</td><td>정지</td></tr>
+<tr><td rowspan="3"><b>종속신호기</b><br>(3종)</td><td rowspan="3" class="hl"><b>원통중</b></td><td><b>원방신호기</b> — 주신호기(장내·폐색 등) <b>앞쪽</b>에 설치. 다음 주신호기의 현시를 <b>미리 예고</b>해 감속 준비 알림</td><td>주의</td></tr>
+<tr><td><b>통과신호기</b> — 출발신호기에 <b>종속</b>. 열차가 역을 <b>무정차 통과</b>해도 되는지 알림. 장내신호기 하부에 설치</td><td>정지</td></tr>
+<tr><td><b>중계신호기</b> — 곡선·터널 등 시인 불량 구간에서 주신호기 현시를 <b>중계</b>. 주신호기 현시와 동일한 내용 표시</td><td>정지</td></tr>
+<tr><td rowspan="3"><b>신호부속기</b><br>(3종)</td><td rowspan="3">—</td><td><b>진로표시기</b> — 장내·출발신호기에 부속. 열차가 개통된 <b>진로 번호(선로)</b>를 숫자·기호로 표시</td><td>—</td></tr>
+<tr><td><b>진로예고기</b> — 원방신호기에 부속. 다음 장내신호기에서 개통될 <b>진로를 미리</b> 알림</td><td>—</td></tr>
+<tr><td><b>진로개통표시기</b> — 입환신호기에 부속. 입환 진로가 <b>개통되었음</b>을 표시</td><td>—</td></tr>
 </table></div>
 
 <div class="tip">
-二쇱떊?멸린 = 吏곸젒 ?댁쟾 紐낅졊 (?댁감 吏꾪뻾쨌?뺤?) | 醫낆냽?좏샇湲?= 二쇱떊?멸린 蹂댁“쨌?덇퀬 | ?좏샇遺?띻린 = 吏꾨줈 ?덈궡 ?뺣낫<br>
-?먮갑?좏샇湲??뺤쐞 = <b>二쇱쓽</b> (誘몃━ 二쇱쓽瑜?以섏빞 ?섎?濡? | ?좊룄?좏샇湲??뺤쐞 = <b>?꾩떆?놁쓬</b> (遺瑜대뒗 ?좏샇媛 湲곕낯???꾨떂)
+주신호기 = 직접 운전 명령 (열차 진행·정지) | 종속신호기 = 주신호기 보조·예고 | 신호부속기 = 진로 안내 정보<br>
+원방신호기 정위 = <b>주의</b> (미리 주의를 줘야 하므로) | 유도신호기 정위 = <b>현시없음</b> (부르는 신호가 기본이 아님)
 </div>
-<div class="trap">?먮갑?좏샇湲???二쇱떊?멸린???ы븿 ????醫낆냽?좏샇湲?br>?좊룄?좏샇湲??뺤쐞 = ?뺤? ?????꾩떆?놁쓬<br>?듦낵?좏샇湲????낅┰ ?좏샇湲?????異쒕컻?좏샇湲곗뿉 醫낆냽</div>
+<div class="trap">원방신호기 → 주신호기에 포함 ❌ → 종속신호기<br>유도신호기 정위 = 정지 ❌ → 현시없음<br>통과신호기 → 독립 신호기 ❌ → 출발신호기에 종속</div>
 
-<div class="theory-note"><strong>醫낆냽?좏샇湲곌? ???꾩슂?쒓??</strong> ?댁감???쒕룞 嫄곕━媛 湲몄뼱??二쇱떊?멸린瑜?諛쒓껄??吏곹썑 硫덉텧 ???놁뒿?덈떎. ?먮갑?좏샇湲곕뒗 癒?嫄곕━?먯꽌 誘몃━ "?욎뿉 二쇱쓽(?먮뒗 ?뺤?) ?좏샇媛 ?덈떎"怨??덇퀬??媛먯냽 以鍮??쒓컙??以띾땲?? 以묎퀎?좏샇湲곕뒗 怨≪꽑쨌?곕꼸泥섎읆 ?욎씠 ??蹂댁씠??援ш컙?먯꽌 二쇱떊?멸린 ?꾩떆瑜????蹂댁뿬以띾땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div>
-<div class="qe-q">Q. ?곸튂?좏샇湲곗쓽 3媛吏 遺꾨쪟? 媛곴컖???랁븯???좏샇湲곕? ?곗떆??</div>
-<div class="qe-a">?뺣떟: ??二쇱떊?멸린 ???λ궡쨌異쒕컻쨌?먯깋쨌?꾪샇쨌?좊룄쨌?낇솚(?μ텧?먯뾼?좎엯) ??醫낆냽?좏샇湲????먮갑쨌?듦낵쨌以묎퀎(?먰넻以? ???좏샇遺?띻린 ??吏꾨줈?쒖떆湲걔룹쭊濡쒖삁怨좉린쨌吏꾨줈媛쒗넻?쒖떆湲?/div>
-<div class="qe-wrong">?ㅻ떟?⑥젙: ?먮갑?좏샇湲곕? 二쇱떊?멸린???ы븿 / ?좊룄?좏샇湲??뺤쐞瑜??뺤?濡??곕뒗 ?ㅻ떟</div></div>
-</div><div class="concept" id="C-11"><div class="concept-title"><span class="cnum">C-11</span>?좏샇湲?湲곕낯?먯튃 (?뺤쐞) ?끸쁾??/div>
-<div class="vis-wrap"><img src="images/VIS-062_?좏샇湲곗젙?꾨퉬援먯븫湲곗뭅??jpg" alt="?좏샇湲??뺤쐞 鍮꾧탳 ?붽린移대뱶 (VIS-062)"><div class="caption">?좏샇湲??뺤쐞 鍮꾧탳 ?붽린移대뱶 (VIS-062)</div></div>
+<div class="theory-note"><strong>종속신호기가 왜 필요한가?</strong> 열차는 제동 거리가 길어서 주신호기를 발견한 직후 멈출 수 없습니다. 원방신호기는 먼 거리에서 미리 "앞에 주의(또는 정지) 신호가 있다"고 예고해 감속 준비 시간을 줍니다. 중계신호기는 곡선·터널처럼 앞이 안 보이는 구간에서 주신호기 현시를 대신 보여줍니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div>
+<div class="qe-q">Q. 상치신호기의 3가지 분류와 각각에 속하는 신호기를 쓰시오.</div>
+<div class="qe-a">정답: ① 주신호기 — 장내·출발·폐색·엄호·유도·입환(장출폐엄유입) ② 종속신호기 — 원방·통과·중계(원통중) ③ 신호부속기 — 진로표시기·진로예고기·진로개통표시기</div>
+<div class="qe-wrong">오답함정: 원방신호기를 주신호기에 포함 / 유도신호기 정위를 정지로 쓰는 오답</div></div>
+</div><div class="concept" id="C-11"><div class="concept-title"><span class="cnum">C-11</span>신호기 기본원칙 (정위) ★★★</div>
+<div class="vis-wrap"><img src="images/VIS-062_신호기정위비교암기카드.jpg" alt="신호기 정위 비교 암기카드 (VIS-062)"><div class="caption">신호기 정위 비교 암기카드 (VIS-062)</div></div>
 <div class="table-wrap"><table>
-<tr><th>?좏샇湲?/th><th>湲곕낯 ?꾩떆 (?뺤쐞)</th></tr>
-<tr><td>?λ궡?좏샇湲?/td><td>?뺤??좏샇</td></tr>
-<tr><td>異쒕컻?좏샇湲?/td><td>?뺤??좏샇</td></tr>
-<tr><td>?먯깋?좏샇湲?(?먮룞?먯깋 ?쒖쇅)</td><td>?뺤??좏샇</td></tr>
-<tr><td>?꾪샇?좏샇湲?/td><td>?뺤??좏샇</td></tr>
-<tr><td>?낇솚?좏샇湲?/td><td>?뺤??좏샇</td></tr>
-<tr class="hl"><td><b>?좊룄?좏샇湲?/b></td><td><b>?좏샇瑜??꾩떆?섏? ?꾨땲?쒕떎</b></td></tr>
-<tr class="hl"><td><b>?먮갑?좏샇湲?/b></td><td><b>二쇱쓽?좏샇</b></td></tr>
-<tr class="hl"><td><b>?먮룞?먯깋?좏샇湲?/b></td><td><b>吏꾪뻾?좏샇</b> (?⑥꽑援ш컙? ?뺤??좏샇)</td></tr>
-<tr><td>李⑤궡?좏샇</td><td>吏꾪뻾?좏샇</td></tr>
+<tr><th>신호기</th><th>기본 현시 (정위)</th></tr>
+<tr><td>장내신호기</td><td>정지신호</td></tr>
+<tr><td>출발신호기</td><td>정지신호</td></tr>
+<tr><td>폐색신호기 (자동폐색 제외)</td><td>정지신호</td></tr>
+<tr><td>엄호신호기</td><td>정지신호</td></tr>
+<tr><td>입환신호기</td><td>정지신호</td></tr>
+<tr class="hl"><td><b>유도신호기</b></td><td><b>신호를 현시하지 아니한다</b></td></tr>
+<tr class="hl"><td><b>원방신호기</b></td><td><b>주의신호</b></td></tr>
+<tr class="hl"><td><b>자동폐색신호기</b></td><td><b>진행신호</b> (단선구간은 정지신호)</td></tr>
+<tr><td>차내신호</td><td>진행신호</td></tr>
 </table></div>
-<div class="trap">?좊룄?좏샇湲?湲곕낯 = ?뺤??좏샇 ????<b>?꾩떆?놁쓬</b> (?뺤? ?꾨떂!)</div>
-<div class="trap">?먮갑?좏샇湲?湲곕낯 = 吏꾪뻾?좏샇 ????<b>二쇱쓽?좏샇</b></div>
+<div class="trap">유도신호기 기본 = 정지신호 ❌ → <b>현시없음</b> (정지 아님!)</div>
+<div class="trap">원방신호기 기본 = 진행신호 ❌ → <b>주의신호</b></div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?뺤쐞(若싦퐤)? ?좏샇湲곗쓽 <strong>?됱긽??湲곕낯 ?꾩튂</strong>?낅땲?? ?遺遺??뺤?媛 ?뺤쐞?댁?留? ?먮룞?먯깋?좏샇湲?吏꾪뻾, ?먮갑?좏샇湲?二쇱쓽, ?좊룄?좏샇湲??꾩떆?놁쓬? 諛섎뱶???몄썙???⑸땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?좊룄?좏샇湲곗쓽 ?뺤쐞(湲곕낯 ?꾩떆)??臾댁뾿?멸??</div><div class="qe-a">?뺣떟: ?좏샇瑜??꾩떆?섏? ?꾨땲?쒕떎 (?꾩떆?놁쓬)</div><div class="qe-wrong">?ㅻ떟?⑥젙: "?뺤??좏샇"?쇨퀬 ?듯븯???ㅻ떟</div></div>
-</div><div class="concept" id="C-12"><div class="concept-title"><span class="cnum">C-12</span>?좏샇?꾩떆 諛⑹떇 (?됰벑??</div>
+<div class="theory-note"><strong>이론 배경:</strong> 정위(定位)란 신호기의 <strong>평상시 기본 위치</strong>입니다. 대부분 정지가 정위이지만, 자동폐색신호기=진행, 원방신호기=주의, 유도신호기=현시없음은 반드시 외워야 합니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 유도신호기의 정위(기본 현시)는 무엇인가?</div><div class="qe-a">정답: 신호를 현시하지 아니한다 (현시없음)</div><div class="qe-wrong">오답함정: "정지신호"라고 답하는 오답</div></div>
+</div><div class="concept" id="C-12"><div class="concept-title"><span class="cnum">C-12</span>신호현시 방식 (색등식)</div>
 <div class="table-wrap"><table>
-<tr><th>?꾩떆</th><th>?좏샇 醫낅쪟</th><th>??/th></tr>
-<tr><td><b>5?꾩떆</b></td><td>?뺤?쨌寃쎄퀎쨌二쇱쓽쨌媛먯냽쨌吏꾪뻾</td><td>?겶룻솴?㈑룻솴쨌?⑸끃쨌??/td></tr>
-<tr><td><b>4?꾩떆</b></td><td>?뺤?쨌二쇱쓽쨌媛먯냽쨌吏꾪뻾</td><td>?겶룻솴쨌?⑸끃쨌??/td></tr>
-<tr><td><b>3?꾩떆</b></td><td>?뺤?쨌二쇱쓽쨌吏꾪뻾</td><td>?겶룻솴쨌??/td></tr>
-<tr><td><b>2?꾩떆</b></td><td>?뺤?쨌吏꾪뻾</td><td>?겶룸끃</td></tr>
+<tr><th>현시</th><th>신호 종류</th><th>색</th></tr>
+<tr><td><b>5현시</b></td><td>정지·경계·주의·감속·진행</td><td>적·황황·황·황녹·녹</td></tr>
+<tr><td><b>4현시</b></td><td>정지·주의·감속·진행</td><td>적·황·황녹·녹</td></tr>
+<tr><td><b>3현시</b></td><td>정지·주의·진행</td><td>적·황·녹</td></tr>
+<tr><td><b>2현시</b></td><td>정지·진행</td><td>적·녹</td></tr>
 </table></div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?꾩떆 ?④퀎媛 留롮쓣?섎줉 ???몃????띾룄 ?쒖뼱媛 媛?ν빀?덈떎. <strong>5?꾩떆</strong>???뺤?쨌寃쎄퀎쨌二쇱쓽쨌媛먯냽쨌吏꾪뻾 5?④퀎濡? 寃쎄퀎?좏샇???⑹깋??2媛??⑺솴)濡??쒖떆?⑸땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. 5?꾩떆?먯꽌 寃쎄퀎?좏샇???대떦?섎뒗 ?됱??</div><div class="qe-a">?뺣떟: ?⑺솴(?깊솴??2媛??숈떆 ?먮벑)</div><div class="qe-wrong">?ㅻ떟?⑥젙: "?⑹깋 1媛?濡??듯븯???ㅻ떟</div></div>
-</div><div class="concept" id="C-13"><div class="concept-title"><span class="cnum">C-13</span>?섏떊???꾩떆諛⑸쾿</div>
+<div class="theory-note"><strong>이론 배경:</strong> 현시 단계가 많을수록 더 세밀한 속도 제어가 가능합니다. <strong>5현시</strong>는 정지·경계·주의·감속·진행 5단계로, 경계신호는 황색등 2개(황황)로 표시됩니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 5현시에서 경계신호에 해당하는 색은?</div><div class="qe-a">정답: 황황(등황색 2개 동시 점등)</div><div class="qe-wrong">오답함정: "황색 1개"로 답하는 오답</div></div>
+</div><div class="concept" id="C-13"><div class="concept-title"><span class="cnum">C-13</span>수신호 현시방법</div>
 <div class="table-wrap"><table>
-<tr><th>?좏샇</th><th>二쇨컙</th><th>?쇨컙</th></tr>
-<tr><td><b>?뺤??좏샇</b></td><td>?곸깋湲?(?놁쑝硫??묓뙏 ?믪씠 ?ㅺ굅???뱀깋湲???湲됲엳 ?붾벀)</td><td>?곸깋??(?놁쑝硫??뱀깋????湲됲엳 ?붾벀)</td></tr>
-<tr><td><b>?쒗뻾?좏샇</b></td><td>?곸깋湲??뱀깋湲?紐⑥븘伊먭퀬 癒몃━ ??援먯감</td><td>?뱀깋?깆쓣 ?꾨쭔???붾뱺??/td></tr>
-<tr><td><b>吏꾪뻾?좏샇</b></td><td>?뱀깋湲?(?놁쑝硫??????믪씠 ??</td><td>?뱀깋??/td></tr>
+<tr><th>신호</th><th>주간</th><th>야간</th></tr>
+<tr><td><b>정지신호</b></td><td>적색기 (없으면 양팔 높이 들거나 녹색기 외 급히 흔듦)</td><td>적색등 (없으면 녹색등 외 급히 흔듦)</td></tr>
+<tr><td><b>서행신호</b></td><td>적색기+녹색기 모아쥐고 머리 위 교차</td><td>녹색등을 완만히 흔든다</td></tr>
+<tr><td><b>진행신호</b></td><td>녹색기 (없으면 한 팔 높이 듦)</td><td>녹색등</td></tr>
 </table></div>
-<div class="trap">?섏떊?몄뿉 媛먯냽?좏샇 ?덉쓬 ?????섏떊??= ?뺤?쨌?쒗뻾쨌吏꾪뻾 3醫낅퓧</div>
+<div class="trap">수신호에 감속신호 있음 ❌ → 수신호 = 정지·서행·진행 3종뿐</div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?섏떊?몃뒗 ?좏샇湲?怨좎옣?대굹 鍮꾩긽 ?곹솴?먯꽌 ?ъ슜?섎뒗 蹂댁“ ?좏샇?낅땲?? <strong>?섏떊?몃뒗 3醫낅쭔 ?덉뒿?덈떎</strong> ???뺤?, ?쒗뻾, 吏꾪뻾. 媛먯냽?좏샇???섏떊?몄뿉 ?놁뒿?덈떎.</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?섏떊??醫낅쪟濡??щ컮瑜?寃껋??</div><div class="qe-a">?뺣떟: ?뺤? / ?쒗뻾 / 吏꾪뻾 3醫?/div><div class="qe-wrong">?ㅻ떟?⑥젙: "媛먯냽?좏샇"瑜??섏떊?몄뿉 ?ы븿?섎뒗 ?ㅻ떟</div></div>
-</div><div class="concept" id="C-14"><div class="concept-title"><span class="cnum">C-14</span>?꾩떆?좏샇湲?3醫??끸쁾??/div>
-<div class="vis-wrap"><img src="images/VIS-066_?꾩떆?좏샇湲?醫낅퉬援먰몴.jpg" alt="?꾩떆?좏샇湲?3醫?鍮꾧탳??(VIS-066)"><div class="caption">?꾩떆?좏샇湲?3醫?鍮꾧탳??(VIS-066)</div></div>
+<div class="theory-note"><strong>이론 배경:</strong> 수신호는 신호기 고장이나 비상 상황에서 사용하는 보조 신호입니다. <strong>수신호는 3종만 있습니다</strong> — 정지, 서행, 진행. 감속신호는 수신호에 없습니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 수신호 종류로 올바른 것은?</div><div class="qe-a">정답: 정지 / 서행 / 진행 3종</div><div class="qe-wrong">오답함정: "감속신호"를 수신호에 포함하는 오답</div></div>
+</div><div class="concept" id="C-14"><div class="concept-title"><span class="cnum">C-14</span>임시신호기 3종 ★★★</div>
+<div class="vis-wrap"><img src="images/VIS-066_임시신호기3종비교표.jpg" alt="임시신호기 3종 비교표 (VIS-066)"><div class="caption">임시신호기 3종 비교표 (VIS-066)</div></div>
 <div class="table-wrap"><table>
-<tr><th>醫낅쪟</th><th>??븷</th><th>二쇨컙 ?꾩떆</th><th>?쇨컙 ?꾩떆</th></tr>
-<tr><td><b>?쒗뻾?좏샇湲?/b></td><td>?대떦 援ш컙 ?쒗뻾 吏??/td><td>諛깆깋?뚮몢由??깊솴???먰뙋</td><td>?깊솴?됰벑</td></tr>
-<tr><td><b>?쒗뻾?덇퀬?좏샇湲?/b></td><td>?꾨갑 ?쒗뻾 ?덇퀬</td><td>?묒깋?쇨컖??3媛?諛깆깋?쇨컖??/td><td>?묒깋?쇨컖??3媛?諛깆깋??/td></tr>
-<tr class="hl"><td><b>?쒗뻾?댁젣?좏샇湲?/b></td><td>?쒗뻾 援ъ뿭 吏꾩텧</td><td><b>諛깆깋?뚮몢由??뱀깋 ?먰뙋</b></td><td>?뱀깋??/td></tr>
+<tr><th>종류</th><th>역할</th><th>주간 현시</th><th>야간 현시</th></tr>
+<tr><td><b>서행신호기</b></td><td>해당 구간 서행 지시</td><td>백색테두리+등황색 원판</td><td>등황색등</td></tr>
+<tr><td><b>서행예고신호기</b></td><td>전방 서행 예고</td><td>흑색삼각형 3개+백색삼각형</td><td>흑색삼각형 3개+백색등</td></tr>
+<tr class="hl"><td><b>서행해제신호기</b></td><td>서행 구역 진출</td><td><b>백색테두리+녹색 원판</b></td><td>녹색등</td></tr>
 </table></div>
-<div class="trap">?쒗뻾?댁젣?좏샇湲?二쇨컙 = 諛깆깋?먰뙋 ????<b>?뱀깋 ?먰뙋</b></div>
+<div class="trap">서행해제신호기 주간 = 백색원판 ❌ → <b>녹색 원판</b></div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?꾩떆?좏샇湲곕뒗 ?좊줈 怨듭궗 援ш컙???쒖꽌?濡??ㅼ튂?⑸땲?? <strong>?쒗뻾?덇퀬 ???쒗뻾 ???쒗뻾?댁젣</strong>. ??援щ텇??以묒슂?⑸땲?????쒗뻾?좏샇湲??깊솴?? ?쒗뻾?댁젣=?뱀깋.</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?쒗뻾?댁젣?좏샇湲곗쓽 二쇨컙 ?꾩떆(????</div><div class="qe-a">?뺣떟: 諛깆깋?뚮몢由??뱀깋 ?먰뙋</div><div class="qe-wrong">?ㅻ떟?⑥젙: "諛깆깋 ?먰뙋"?대씪怨??듯븯???ㅻ떟</div></div>
-</div><div class="concept" id="C-15"><div class="concept-title"><span class="cnum">C-15</span>?낇솚?꾪샇 ?끸쁾??/div>
-<div class="vis-wrap"><img src="images/VIS-063_?낇솚?꾪샇鍮꾧탳移대뱶.jpg" alt="?낇솚?꾪샇 鍮꾧탳移대뱶 (VIS-063)"><div class="caption">?낇솚?꾪샇 鍮꾧탳移대뱶 (VIS-063)</div></div>
+<div class="theory-note"><strong>이론 배경:</strong> 임시신호기는 선로 공사 구간에 순서대로 설치됩니다: <strong>서행예고 → 서행 → 서행해제</strong>. 색 구분이 중요합니다 — 서행신호기=등황색, 서행해제=녹색.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 서행해제신호기의 주간 현시(색)는?</div><div class="qe-a">정답: 백색테두리+녹색 원판</div><div class="qe-wrong">오답함정: "백색 원판"이라고 답하는 오답</div></div>
+</div><div class="concept" id="C-15"><div class="concept-title"><span class="cnum">C-15</span>입환전호 ★★★</div>
+<div class="vis-wrap"><img src="images/VIS-063_입환전호비교카드.jpg" alt="입환전호 비교카드 (VIS-063)"><div class="caption">입환전호 비교카드 (VIS-063)</div></div>
 <div class="table-wrap"><table>
-<tr><th>?꾪샇</th><th>二쇨컙</th><th>?쇨컙</th></tr>
-<tr class="hl"><td><b>?ㅻ꼫?쇱쟾??/b> (=?묎렐?꾪샇)</td><td>?뱀깋湲?<b>醫뚯슦</b>濡??붾벀</td><td>?뱀깋??醫뚯슦</td></tr>
-<tr class="hl"><td><b>媛嫄곕씪?꾪샇</b> (=?닿굅?꾪샇)</td><td>?뱀깋湲?<b>?꾩븘??/b>濡??붾벀</td><td>?뱀깋???곹븯</td></tr>
-<tr><td><b>?뺤??꾪샇</b></td><td>?곸깋湲?/td><td>?곸깋??/td></tr>
+<tr><th>전호</th><th>주간</th><th>야간</th></tr>
+<tr class="hl"><td><b>오너라전호</b> (=접근전호)</td><td>녹색기 <b>좌우</b>로 흔듦</td><td>녹색등 좌우</td></tr>
+<tr class="hl"><td><b>가거라전호</b> (=퇴거전호)</td><td>녹색기 <b>위아래</b>로 흔듦</td><td>녹색등 상하</td></tr>
+<tr><td><b>정지전호</b></td><td>적색기</td><td>적색등</td></tr>
 </table></div>
-<div class="trap">?ㅻ꼫???곹븯, 媛嫄곕씪=醫뚯슦 ?????ㅻ꼫??<b>醫뚯슦</b>, 媛嫄곕씪=<b>?곹븯</b> (諛섎? ?⑥젙!)</div>
-<div class="tip">?꾩떆泥좊룄: ?ㅻ꼫???묎렐?꾪샇 / 媛嫄곕씪=?닿굅?꾪샇 (?숈옉 ?숈씪)</div>
+<div class="trap">오너라=상하, 가거라=좌우 ❌ → 오너라=<b>좌우</b>, 가거라=<b>상하</b> (반대 함정!)</div>
+<div class="tip">도시철도: 오너라=접근전호 / 가거라=퇴거전호 (동작 동일)</div>
 
 <div class="theory-note">
-<strong>?낇솚(?ζ룢)?대? 臾댁뾿?멸??</strong><br>
-?낇솚? ?뺢굅???댁뿉??<strong>李⑤웾???대룞쨌?곌껐쨌遺꾨━?섎뒗 ?묒뾽</strong>?낅땲?? ?댁감???댄뻾??留덉튂嫄곕굹 ?쒖옉?섍린 ?꾩뿉 諛섎뱶???꾨옒? 媛숈? ?묒뾽???꾩슂?⑸땲??
+<strong>입환(入換)이란 무엇인가?</strong><br>
+입환은 정거장 내에서 <strong>차량을 이동·연결·분리하는 작업</strong>입니다. 열차는 운행을 마치거나 시작하기 전에 반드시 아래와 같은 작업이 필요합니다.
 <br><br>
-<strong>?낇솚???꾩슂???댁쑀 (紐⑹쟻):</strong><br>
-??<strong>?댁감 ?몄꽦</strong> ???ш컼쨌?붾Ъ 李⑤웾??湲곌?李⑥뿉 ?곌껐??異쒕컻 以鍮?br>
-??<strong>李⑤웾 遺꾨━</strong> ??紐⑹쟻吏蹂꾨줈 ?붾Ъ李⑤웾??遺꾨━?섍굅??媛앹감 ??議곗젙<br>
-??<strong>湲곌?李?諛⑺뼢 ?꾪솚</strong> ??醫낆갑??뿉??湲곌?李⑤? ?댁감 諛섎??몄쑝濡??대룞 (?뚯감)<br>
-??<strong>?좎튂???낃퀬</strong> ???댄뻾 醫낅즺 ??李⑤웾??蹂닿????좎튂???쇰줈 ?대룞<br>
-??<strong>?먭?쨌?뺣퉬 ?대룞</strong> ??寃???쒖꽕, ?몄쿃???깆쑝濡?李⑤웾 ?대룞
+<strong>입환이 필요한 이유 (목적):</strong><br>
+① <strong>열차 편성</strong> — 여객·화물 차량을 기관차에 연결해 출발 준비<br>
+② <strong>차량 분리</strong> — 목적지별로 화물차량을 분리하거나 객차 수 조정<br>
+③ <strong>기관차 방향 전환</strong> — 종착역에서 기관차를 열차 반대편으로 이동 (회차)<br>
+④ <strong>유치선 입고</strong> — 운행 종료 후 차량을 보관선(유치선)으로 이동<br>
+⑤ <strong>점검·정비 이동</strong> — 검수 시설, 세척선 등으로 차량 이동
 <br><br>
-<strong>???꾪샇(?녘솦)媛 ?꾩슂?쒓??</strong><br>
-?낇솚 ?묒뾽 以?湲곌??щ뒗 ?꾨갑?대굹 痢〓㈃??吏곸젒 蹂????놁뒿?덈떎. ?꾪샇??吏???묒뾽????李⑤웾 ?욌뮘瑜?蹂대㈃???덉쟾???뺤씤?섍퀬, 湲곌??ъ뿉寃??대룞 諛⑺뼢???좏샇濡??꾨떖?⑸땲?? 利? <strong>?꾪샇????湲곌??ъ쓽 ?덇낵 洹</strong> ??븷???⑸땲??<br>
-?ㅻ꼫???묎렐)=醫뚯슦, 媛嫄곕씪(?닿굅)=?곹븯 ??諛섎?濡??몄슦硫?100% ?由쎈땲??
+<strong>왜 전호(傳號)가 필요한가?</strong><br>
+입환 작업 중 기관사는 후방이나 측면을 직접 볼 수 없습니다. 전호원(지상 작업자)이 차량 앞뒤를 보면서 안전을 확인하고, 기관사에게 이동 방향을 신호로 전달합니다. 즉, <strong>전호원 → 기관사의 눈과 귀</strong> 역할을 합니다.<br>
+오너라(접근)=좌우, 가거라(퇴거)=상하 — 반대로 외우면 100% 틀립니다.
 </div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?ㅻ꼫?쇱쟾???묎렐?꾪샇)??二쇨컙 諛⑸쾿??</div><div class="qe-a">?뺣떟: ?뱀깋湲곕? 醫뚯슦濡??붾벀</div><div class="qe-wrong">?ㅻ떟?⑥젙: "?꾩븘?섎줈 ?붾뱺?????ㅻ떟 (?꾩븘??媛嫄곕씪)</div></div>
-</div><div class="concept" id="C-16"><div class="concept-title"><span class="cnum">C-16</span>?쒗븳?좏샇 異붿젙 ?먯튃</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 오너라전호(접근전호)의 주간 방법은?</div><div class="qe-a">정답: 녹색기를 좌우로 흔듦</div><div class="qe-wrong">오답함정: "위아래로 흔든다"는 오답 (위아래=가거라)</div></div>
+</div><div class="concept" id="C-16"><div class="concept-title"><span class="cnum">C-16</span>제한신호 추정 원칙</div>
 <div class="step-box">
-1. ?좏샇 ?꾩떆 ?녾굅??遺덈챸????<b>?뺤??좏샇濡?媛꾩＜</b><br>
-2. ?곸튂?좏샇湲?vs ?섏떊???ㅻ? ????<b>???쒗븳?섎뒗 履??섏떊?? ?곸슜</b><br>
-&nbsp;&nbsp;&nbsp;&nbsp;?? ?ъ쟾???듬낫媛 ?덉쑝硫???<b>?듬낫???좏샇???곕쫫</b>
+1. 신호 현시 없거나 불명확 → <b>정지신호로 간주</b><br>
+2. 상치신호기 vs 수신호 다를 때 → <b>더 제한하는 쪽(수신호) 적용</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;단, 사전에 통보가 있으면 → <b>통보된 신호에 따름</b>
 </div>
-<div class="trap">?ъ쟾?듬낫 ?덉뼱???뺤??좏샇濡?媛꾩＜ ?????듬낫???좏샇???곕쫫</div>
+<div class="trap">사전통보 있어도 정지신호로 간주 ❌ → 통보된 신호에 따름</div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> 遺덈챸?뺥븳 ?좏샇瑜?<strong>?뺤?濡?媛꾩＜</strong>?섎뒗 寃껋? "媛???덉쟾???댁꽍" ?먯튃?낅땲?? ?? ?ъ쟾 ?듬낫媛 ?덉쑝硫??듬낫???좏샇瑜??곕쫭?덈떎. ???덉쇅媛 ?쒗뿕 ?⑥젙?쇰줈 ?먯＜ 異쒖젣?⑸땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?곸튂?좏샇湲곗? ?섏떊?몄쓽 ?꾩떆媛 ?ㅻ? ???곕Ⅴ???먯튃??</div><div class="qe-a">?뺣떟: ???쒗븳?곸씤 履??섏떊?????곕쫫. ?? ?ъ쟾 ?듬낫媛 ?덉쑝硫??듬낫???좏샇???곕쫫</div><div class="qe-wrong">?ㅻ떟?⑥젙: "??긽 ?섏떊?몃? ?곕Ⅸ?????ㅻ떟</div></div>
-</div></div></div><div class="part" id="part4"><div class="part-title" onclick="togglePart(this)"><span>PART 4. ?댁감?쒖뼱?μ튂 (ATS쨌ATC쨌ATP쨌CBTC) ?끸쁾??/span><span class="arr">??/span></div><div class="part-body"><div class="concept" id="C-17"><div class="concept-title"><span class="cnum">C-17</span>?댁감?쒖뼱?μ튂 遺꾨쪟 ??ATS 쨌 ATC 쨌 ATP 쨌 CBTC ?끸쁾??/div>
+<div class="theory-note"><strong>이론 배경:</strong> 불명확한 신호를 <strong>정지로 간주</strong>하는 것은 "가장 안전한 해석" 원칙입니다. 단, 사전 통보가 있으면 통보된 신호를 따릅니다. 이 예외가 시험 함정으로 자주 출제됩니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 상치신호기와 수신호의 현시가 다를 때 따르는 원칙은?</div><div class="qe-a">정답: 더 제한적인 쪽(수신호)에 따름. 단, 사전 통보가 있으면 통보된 신호에 따름</div><div class="qe-wrong">오답함정: "항상 수신호를 따른다"는 오답</div></div>
+</div></div></div><div class="part" id="part4"><div class="part-title" onclick="togglePart(this)"><span>PART 4. 열차제어장치 (ATS·ATC·ATP·CBTC) ★★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-17"><div class="concept-title"><span class="cnum">C-17</span>열차제어장치 분류 — ATS · ATC · ATP · CBTC ★★★</div>
 <div class="step-box">
-<b>?댁감?쒖뼱?μ튂??</b><br>
-湲곌??ъ쓽 ?ㅼ닔(?좏샇 ?꾨컲, 怨쇱냽)瑜??먮룞?쇰줈 蹂댁셿???댁감 異⑸룎쨌?덉꽑??留됰뒗 ?덉쟾 ?쒖뒪??<br>
-<b>ATS ??ATC ??ATP</b> ?쒖쑝濡?湲곕뒫??媛뺥솕?섎ŉ, ?곸쐞 ?μ튂媛 ?섏쐞 ?μ튂??湲곕뒫???ы븿.
+<b>열차제어장치란?</b><br>
+기관사의 실수(신호 위반, 과속)를 자동으로 보완해 열차 충돌·탈선을 막는 안전 시스템.<br>
+<b>ATS → ATC → ATP</b> 순으로 기능이 강화되며, 상위 장치가 하위 장치의 기능을 포함.
 </div>
 <div class="table-wrap"><table>
-<tr><th>鍮꾧탳 ??ぉ</th><th>ATS<br><span style="font-weight:normal;font-size:0.85em">Automatic Train Stop<br>?댁감?먮룞?뺤??μ튂</span></th><th>ATC<br><span style="font-weight:normal;font-size:0.85em">Automatic Train Control<br>?댁감?먮룞?쒖뼱?μ튂</span></th><th>ATP<br><span style="font-weight:normal;font-size:0.85em">Automatic Train Protection<br>?댁감?먮룞諛⑺샇?μ튂</span></th></tr>
-<tr><td><b>?듭떖 湲곕뒫</b></td><td>?띾룄 ?꾨컲 ??<b>?먮룞 ?뺤?</b></td><td><b>?띾룄 ?먮룞 ?쒖뼱</b><br>(媛먯냽쨌?뺤?)</td><td>ATC 湲곕뒫 ?꾩껜 ?ы븿<br>+ 紐⑺몴吏???먮룞 ?뺤?</td></tr>
-<tr><td><b>?좏샇 ?꾩튂</b></td><td class="hl"><b>吏?곸떊?멸린</b> 以묒떖<br>(吏??諛쒕━??</td><td class="hl"><b>李⑤궡?좏샇湲?/b> 以묒떖<br>(李⑤웾 ?대? ?쒖떆)</td><td><b>李⑤궡?좏샇湲?/b><br>(?곗냽 ?섏떊)</td></tr>
-<tr><td><b>?띾룄 ?쒖뼱</b></td><td>???뺤? 紐낅졊留?/td><td>???곗냽 ?띾룄 ?쒖뼱</td><td>???곗냽 ?띾룄 ?쒖뼱</td></tr>
-<tr><td><b>?곗냽 媛먯떆</b></td><td>???뱀젙 吏?먮쭔<br>(?먃룹???諛⑹떇)</td><td>??援ш컙 ?꾩껜<br>(?곗냽 諛⑹떇)</td><td>??援ш컙 ?꾩껜<br>(?곗냽 諛⑹떇)</td></tr>
-<tr><td><b>湲곌?????븷</b></td><td>寃쎈낫 ??<b>湲곌????뺤씤 ?꾩슂</b><br>誘명솗?????먮룞 ?뺤?</td><td>?띾룄 珥덇낵 ??br><b>?먮룞 媛먯냽</b> (?뺤씤 遺덊븘??</td><td>?꾪뿕 ??br><b>?먮룞 ?쒕룞</b>?쇰줈 紐⑺몴 ?뺤?</td></tr>
-<tr><td><b>李⑤궡 ?띾룄 ?쒖떆</b></td><td>???놁쓬</td><td class="hl">??<b>?덉슜?띾룄 ?ㅼ떆媛??쒖떆</b> ??/td><td>???쒖떆</td></tr>
-<tr><td><b>?곸슜 ?몄꽑 ??/b></td><td>?щ옒?? ?쇰컲泥좊룄</td><td>KTX, ?꾩떆泥좊룄</td><td>怨좎냽泥좊룄(?좊읇 ETCS 湲곗?)</td></tr>
-<tr><td><b>湲곕뒫 ?섏?</b></td><td>??湲곕낯</td><td>?끸쁾??以묎툒</td><td>?끸쁾?끸쁾 理쒖긽??/td></tr>
+<tr><th>비교 항목</th><th>ATS<br><span style="font-weight:normal;font-size:0.85em">Automatic Train Stop<br>열차자동정지장치</span></th><th>ATC<br><span style="font-weight:normal;font-size:0.85em">Automatic Train Control<br>열차자동제어장치</span></th><th>ATP<br><span style="font-weight:normal;font-size:0.85em">Automatic Train Protection<br>열차자동방호장치</span></th></tr>
+<tr><td><b>핵심 기능</b></td><td>속도 위반 시 <b>자동 정지</b></td><td><b>속도 자동 제어</b><br>(감속·정지)</td><td>ATC 기능 전체 포함<br>+ 목표지점 자동 정지</td></tr>
+<tr><td><b>신호 위치</b></td><td class="hl"><b>지상신호기</b> 중심<br>(지상 발리스)</td><td class="hl"><b>차내신호기</b> 중심<br>(차량 내부 표시)</td><td><b>차내신호기</b><br>(연속 수신)</td></tr>
+<tr><td><b>속도 제어</b></td><td>❌ 정지 명령만</td><td>✅ 연속 속도 제어</td><td>✅ 연속 속도 제어</td></tr>
+<tr><td><b>연속 감시</b></td><td>❌ 특정 지점만<br>(점·지점 방식)</td><td>✅ 구간 전체<br>(연속 방식)</td><td>✅ 구간 전체<br>(연속 방식)</td></tr>
+<tr><td><b>기관사 역할</b></td><td>경보 후 <b>기관사 확인 필요</b><br>미확인 시 자동 정지</td><td>속도 초과 시<br><b>자동 감속</b> (확인 불필요)</td><td>위험 시<br><b>자동 제동</b>으로 목표 정지</td></tr>
+<tr><td><b>차내 속도 표시</b></td><td>❌ 없음</td><td class="hl">✅ <b>허용속도 실시간 표시</b> ★</td><td>✅ 표시</td></tr>
+<tr><td><b>적용 노선 예</b></td><td>재래선, 일반철도</td><td>KTX, 도시철도</td><td>고속철도(유럽 ETCS 기준)</td></tr>
+<tr><td><b>기능 수준</b></td><td>★ 기본</td><td>★★★ 중급</td><td>★★★★ 최상위</td></tr>
 </table></div>
-<div style="margin:10px 0 8px;"><b style="color:#0369a1;">CBTC (Communication-Based Train Control) ???듭떊湲곕컲 ?댁감?쒖뼱 ?끸쁾</b>
+<div style="margin:10px 0 8px;"><b style="color:#0369a1;">CBTC (Communication-Based Train Control) — 통신기반 열차제어 ★★</b>
 <div class="table-wrap"><table>
-<tr><th>??ぉ</th><th>?댁슜</th></tr>
-<tr class="hl"><td><b>?뺤쓽</b></td><td>臾댁꽑?듭떊?쇰줈 ?댁감 ?꾩튂瑜??뺣? ?뚯븙?섍퀬 <b>?대룞沅뚰븳(MA: Movement Authority)</b>???ㅼ떆媛?媛깆떊?섎뒗 ?댁감?쒖뼱 諛⑹떇</td></tr>
-<tr><td><b>?듭떖 ?뱀쭠</b></td><td>??<b>?대룞?먯깋(Moving Block)</b> 援ы쁽 ??怨좎젙 ?먯깋援ш컙 遺덊븘??br>??吏?곸떊?멸린 遺덊븘??(李⑤궡 ?좏샇留??댁슜)<br>???꾩떆泥좊룄 怨좊????댄뻾(60珥?媛꾧꺽 ?댄븯)???곹빀<br>???꾩튂瑜??곗냽 ?섏떊?섏뿬 ?댁감 媛꾧꺽 理쒖냼??/td></tr>
-<tr><td><b>ATC? 李⑥씠</b></td><td>ATC = 吏??湲곕컲 怨좎젙?먯깋 + 李⑤궡?좏샇 / CBTC = 臾댁꽑?듭떊 ?곗냽 ?꾩튂 ?뚯븙 + ?대룞?먯깋</td></tr>
-<tr><td><b>?곸슜 ??/b></td><td>?쒖슱 9?몄꽑, ?좊텇?뱀꽑 ???좎꽕 ?꾩떆泥좊룄</td></tr>
+<tr><th>항목</th><th>내용</th></tr>
+<tr class="hl"><td><b>정의</b></td><td>무선통신으로 열차 위치를 정밀 파악하고 <b>이동권한(MA: Movement Authority)</b>을 실시간 갱신하는 열차제어 방식</td></tr>
+<tr><td><b>핵심 특징</b></td><td>① <b>이동폐색(Moving Block)</b> 구현 — 고정 폐색구간 불필요<br>② 지상신호기 불필요 (차내 신호만 운용)<br>③ 도시철도 고밀도 운행(60초 간격 이하)에 적합<br>④ 위치를 연속 수신하여 열차 간격 최소화</td></tr>
+<tr><td><b>ATC와 차이</b></td><td>ATC = 지점 기반 고정폐색 + 차내신호 / CBTC = 무선통신 연속 위치 파악 + 이동폐색</td></tr>
+<tr><td><b>적용 예</b></td><td>서울 9호선, 신분당선 등 신설 도시철도</td></tr>
 </table></div></div>
 <div class="tip">
-ATS = 吏?곸떊??+ ?뺤?留?| ATC = 李⑤궡?좏샇 + ?띾룄 ?곗냽 ?쒖뼱 + 李⑤궡 ?쒖떆 | ATP = ATC ?꾨? + ?먮룞?쒕룞 紐⑺몴?뺤? | CBTC = 臾댁꽑?듭떊 + ?대룞?먯깋(Moving Block)<br>
-<b>李⑤궡 ?띾룄 ?쒖떆 ??ATC媛 ?듭떖 ?ъ씤??/b> (ATS???쒖떆 ?놁쓬!)
+ATS = 지상신호 + 정지만 | ATC = 차내신호 + 속도 연속 제어 + 차내 표시 | ATP = ATC 전부 + 자동제동 목표정지 | CBTC = 무선통신 + 이동폐색(Moving Block)<br>
+<b>차내 속도 표시 → ATC가 핵심 포인트</b> (ATS는 표시 없음!)
 </div>
-<div class="trap">ATS??李⑤궡???띾룄瑜??쒖떆?쒕떎 ????李⑤궡 ?쒖떆??ATC遺??br>ATP??ATC? ?꾩쟾???ㅻⅨ 蹂꾧컻 ?μ튂??????ATP??ATC 湲곕뒫???ы븿?섎뒗 ?곸쐞 ?μ튂<br>CBTC = ATC???ㅻⅨ ?대쫫 ????CBTC???대룞?먯깋 湲곕컲??蹂꾨룄 諛⑹떇</div>
+<div class="trap">ATS도 차내에 속도를 표시한다 ❌ → 차내 표시는 ATC부터<br>ATP는 ATC와 완전히 다른 별개 장치다 ❌ → ATP는 ATC 기능을 포함하는 상위 장치<br>CBTC = ATC의 다른 이름 ❌ → CBTC는 이동폐색 기반의 별도 방식</div>
 <div class="theory-note">
-<strong>??ATS留뚯쑝濡쒕뒗 遺議깊븳媛?</strong><br>
-ATS???뱀젙 吏?먯쓣 吏???뚮쭔 ?띾룄瑜?寃?ы빀?덈떎. 吏?먭낵 吏???ъ씠 援ш컙?먯꽌??怨쇱냽??媛먯??섏? 紐삵빀?덈떎. 諛섎㈃ ATC???좏뻾 ?댁감 ?꾩튂???곕씪 <strong>?덉슜 ?띾룄瑜??ㅼ떆媛꾩쑝濡?怨꾩냽 諛붽퓭二쇨퀬</strong>, 珥덇낵?섎㈃ 利됱떆 ?먮룞 媛먯냽?⑸땲?? ATP???ш린???뷀빐 <strong>紐⑺몴 ?뺤? 吏?먭퉴吏 ?먮룞?쇰줈 ?쒕룞</strong>?섏뿬 ?댁감 媛?異⑸룎???먯쿇 李⑤떒?⑸땲??
+<strong>왜 ATS만으로는 부족한가?</strong><br>
+ATS는 특정 지점을 지날 때만 속도를 검사합니다. 지점과 지점 사이 구간에서는 과속을 감지하지 못합니다. 반면 ATC는 선행 열차 위치에 따라 <strong>허용 속도를 실시간으로 계속 바꿔주고</strong>, 초과하면 즉시 자동 감속합니다. ATP는 여기에 더해 <strong>목표 정지 지점까지 자동으로 제동</strong>하여 열차 간 충돌을 원천 차단합니다.
 </div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div>
-<div class="qe-q">Q. 李⑤웾 ?대????덉슜?띾룄瑜??ㅼ떆媛꾩쑝濡??쒖떆?섎뒗 ?댁감?쒖뼱?μ튂??</div>
-<div class="qe-a">?뺣떟: ATC (?댁감?먮룞?쒖뼱?μ튂)</div>
-<div class="qe-wrong">?ㅻ떟?⑥젙: "ATS"濡??쇰룞?섎뒗 ?ㅻ떟 ??ATS??李⑤궡 ?쒖떆 ?놁쓬</div></div>
-<div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆 2</div>
-<div class="qe-q">Q. ATS, ATC, ATP瑜?湲곕뒫 媛뺥솕 ?쒖꽌?濡??섏뿴?섍퀬, 媛곴컖???좏샇 ?꾩튂瑜??곗떆??</div>
-<div class="qe-a">?뺣떟: ATS(吏?곸떊?? ??ATC(李⑤궡?좏샇, ?곗냽 ?쒖뼱) ??ATP(李⑤궡?좏샇, ?먮룞?쒕룞 ?ы븿)</div>
-<div class="qe-wrong">?ㅻ떟?⑥젙: ATS瑜?李⑤궡?좏샇 諛⑹떇?쇰줈 ?곕뒗 ?ㅻ떟</div></div>
-</div></div></div><div class="part" id="part5"><div class="part-title" onclick="togglePart(this)"><span>PART 5. ?꾩떆泥좊룄?댁쟾洹쒖튃 ?끸쁾</span><span class="arr">??/span></div><div class="part-body"><div class="concept" id="C-18"><div class="concept-title"><span class="cnum">C-18</span>二쇱슂 ?뺤쓽 鍮꾧탳 ??怨듭옉臾?vs ?멸났援ъ“臾?/div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div>
+<div class="qe-q">Q. 차량 내부에 허용속도를 실시간으로 표시하는 열차제어장치는?</div>
+<div class="qe-a">정답: ATC (열차자동제어장치)</div>
+<div class="qe-wrong">오답함정: "ATS"로 혼동하는 오답 — ATS는 차내 표시 없음</div></div>
+<div class="quiz-ex"><div class="qe-title">📝 기출 예시 2</div>
+<div class="qe-q">Q. ATS, ATC, ATP를 기능 강화 순서대로 나열하고, 각각의 신호 위치를 쓰시오.</div>
+<div class="qe-a">정답: ATS(지상신호) → ATC(차내신호, 연속 제어) → ATP(차내신호, 자동제동 포함)</div>
+<div class="qe-wrong">오답함정: ATS를 차내신호 방식으로 쓰는 오답</div></div>
+</div></div></div><div class="part" id="part5"><div class="part-title" onclick="togglePart(this)"><span>PART 5. 도시철도운전규칙 ★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-18"><div class="concept-title"><span class="cnum">C-18</span>주요 정의 비교 — 공작물 vs 인공구조물</div>
 
 <div class="step-box">
-<b>癒쇱? ?꾩감?좊줈(?삭퍓渶싪러)媛 萸붿?遺??/b><br><br>
-?꾧린濡??щ━???댁감(?꾧린泥좊룄)???꾩뿉???꾧린瑜?怨듦툒諛쏆뒿?덈떎.<br>
-?대븣 ?꾧린瑜?怨듦툒?섎뒗 <b>援щ━ ??耳?대툝)</b> = <b>?꾩감???삭퍓渶?</b><br>
-?꾩감???섎굹濡쒕뒗 ?덇났???????놁쑝??<b>湲곕뫁쨌泥좏깙쨌援ъ“臾쇱씠 ???좎쓣 吏吏</b>?⑸땲??<br><br>
-<b>?꾩감?좊줈 = ?꾩감??援щ━ ?? + ?대? 吏吏?섎뒗 援ъ“臾?/b><br><br>
-臾몄젣??"吏吏?섎뒗 援ъ“臾???洹쒖튃留덈떎 ?ㅻⅨ ?⑹뼱濡?遺瑜몃떎??寃껋엯?덈떎.
+<b>먼저 전차선로(電車線路)가 뭔지부터</b><br><br>
+전기로 달리는 열차(전기철도)는 위에서 전기를 공급받습니다.<br>
+이때 전기를 공급하는 <b>구리 선(케이블)</b> = <b>전차선(電車線)</b><br>
+전차선 하나로는 허공에 뜰 수 없으니 <b>기둥·철탑·구조물이 이 선을 지지</b>합니다.<br><br>
+<b>전차선로 = 전차선(구리 선) + 이를 지지하는 구조물</b><br><br>
+문제는 "지지하는 구조물"을 규칙마다 다른 용어로 부른다는 것입니다.
 </div>
 
 <div class="table-wrap"><table>
-<tr><th>援щ텇</th><th>?곸슜 洹쒖튃</th><th>?꾩감?좊줈 ?뺤쓽</th><th>?????⑹뼱?</th></tr>
-<tr><td><b>?쇰컲 泥좊룄<br>(吏??</b></td><td>泥좊룄李⑤웾?댁쟾洹쒖튃</td><td>?꾩감??+ ?대? 吏吏?섎뒗 <b>怨듭옉臾?/b></td><td>吏?곸뿉 ?몄슫 ?꾨큸?쨌泥좏깙泥섎읆 <b>?낅┰??援ъ“臾?/b>???몄썙???꾩감?좎쓣 吏吏 ??"怨듭옉臾?</td></tr>
-<tr class="hl"><td><b>?꾩떆泥좊룄<br>(吏?섏쿋 ??</b></td><td><b>?꾩떆泥좊룄?댁쟾洹쒖튃</b></td><td>?꾩감??+ ?대? 吏吏?섎뒗 <b>?멸났援ъ“臾?/b></td><td>?곕꼸 泥쒖옣쨌援먭컖 踰쎈㈃泥섎읆 ?대? ?덈뒗 援ъ“臾쇱뿉 ?좎쓣 <b>遺李㈑룰퀬??/b> ?????볦? 媛쒕뀗??"?멸났援ъ“臾?</td></tr>
+<tr><th>구분</th><th>적용 규칙</th><th>전차선로 정의</th><th>왜 이 용어?</th></tr>
+<tr><td><b>일반 철도<br>(지상)</b></td><td>철도차량운전규칙</td><td>전차선 + 이를 지지하는 <b>공작물</b></td><td>지상에 세운 전봇대·철탑처럼 <b>독립된 구조물</b>을 세워서 전차선을 지지 → "공작물"</td></tr>
+<tr class="hl"><td><b>도시철도<br>(지하철 등)</b></td><td><b>도시철도운전규칙</b></td><td>전차선 + 이를 지지하는 <b>인공구조물</b></td><td>터널 천장·교각 벽면처럼 이미 있는 구조물에 선을 <b>부착·고정</b> → 더 넓은 개념인 "인공구조물"</td></tr>
 </table></div>
 
 <div class="theory-note">
-<b>?쎄쾶 湲곗뼲?섎뒗 諛⑸쾿</b><br><br>
-?쉮 <b>?쇰컲 泥좊룄 (吏???좊줈)</b>: ?곗씠???ㅽ뙋???꾨큸?泥섎읆 湲곕뫁???몄슦怨? 洹?湲곕뫁???꾩감?좎쓣 ?≪븘以띾땲?? ??湲곕뫁??"怨듭옉臾??낅땲?? ?낆뿉 ?덈줈 留뚮뱾???몄슫 ?낅┰ 援ъ“臾쇱씠?먯슂.<br><br>
-?쉯 <b>?꾩떆泥좊룄 (吏?섏쿋)</b>: ?곕꼸 ?덉뿉???꾨큸?瑜??몄슱 怨듦컙???놁뒿?덈떎. ????곕꼸 泥쒖옣, 肄섑겕由ы듃 踰쎈㈃, 怨좉? 援먭컖??吏곸젒 ?꾩감?좎쓣 怨좎젙?⑸땲?? ?곕꼸 ?먯껜媛 "?멸났援ъ“臾??닿퀬, 嫄곌린???좎쓣 遺숈씠??嫄곗삁??<br><br>
-<b>?듭떖: ?⑹뼱留??ㅻ? 肉??섎뒗 ?쇱? 媛숈뒿?덈떎 ???꾩감?좎쓣 怨듭쨷??吏吏?섎뒗 寃?</b><br>
-?쒗뿕? ???⑹뼱 李⑥씠(怨듭옉臾?vs ?멸났援ъ“臾?瑜?臾살뒿?덈떎.
+<b>쉽게 기억하는 방법</b><br><br>
+🚆 <b>일반 철도 (지상 선로)</b>: 산이나 들판에 전봇대처럼 기둥을 세우고, 그 기둥이 전차선을 잡아줍니다. 이 기둥이 "공작물"입니다. 땅에 새로 만들어 세운 독립 구조물이에요.<br><br>
+🚇 <b>도시철도 (지하철)</b>: 터널 안에는 전봇대를 세울 공간이 없습니다. 대신 터널 천장, 콘크리트 벽면, 고가 교각에 직접 전차선을 고정합니다. 터널 자체가 "인공구조물"이고, 거기에 선을 붙이는 거예요.<br><br>
+<b>핵심: 용어만 다를 뿐 하는 일은 같습니다 — 전차선을 공중에 지지하는 것.</b><br>
+시험은 이 용어 차이(공작물 vs 인공구조물)를 묻습니다.
 </div>
-<div class="trap">?꾩떆泥좊룄?먯꽌 ?꾩감?좊줈 = ?꾩감??+ 怨듭옉臾?????<b>?멸났援ъ“臾?/b><br>?쇰컲 泥좊룄?먯꽌 ?꾩감?좊줈 = ?꾩감??+ ?멸났援ъ“臾?????<b>怨듭옉臾?/b></div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?꾩떆泥좊룄?댁쟾洹쒖튃?먯꽌 ?꾩감?좊줈???뺤쓽瑜??곗떆??</div><div class="qe-a">?뺣떟: ?꾩감??諛??대? 吏吏?섎뒗 ?멸났援ъ“臾?/div><div class="qe-wrong">?ㅻ떟?⑥젙: "怨듭옉臾??대씪怨??듯븯???ㅻ떟 (怨듭옉臾?泥좊룄李⑤웾?댁쟾洹쒖튃)</div></div>
-</div><div class="concept" id="C-19"><div class="concept-title"><span class="cnum">C-19</span>?먭? 二쇨린 ?끸쁾??/div>
+<div class="trap">도시철도에서 전차선로 = 전차선 + 공작물 ❌ → <b>인공구조물</b><br>일반 철도에서 전차선로 = 전차선 + 인공구조물 ❌ → <b>공작물</b></div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 도시철도운전규칙에서 전차선로의 정의를 쓰시오.</div><div class="qe-a">정답: 전차선 및 이를 지지하는 인공구조물</div><div class="qe-wrong">오답함정: "공작물"이라고 답하는 오답 (공작물=철도차량운전규칙)</div></div>
+</div><div class="concept" id="C-19"><div class="concept-title"><span class="cnum">C-19</span>점검 주기 ★★★</div>
 
 <div class="step-box">
-<b>?좊줈 vs ?꾩감?좊줈 ???룰컝由щ㈃ 癒쇱? 援щ텇?섏꽭??/b><br><br>
-<b>?좊줈(渶싪러)</b> = ?댁감媛 援대윭媛??<b>諛붾떏???덉씪(沅ㅻ룄)</b><br>
-&nbsp;&nbsp;&nbsp;???댁감 諛뷀닿? ?용뒗 泥좎젣 沅ㅻ룄 + 移⑤ぉ + ?먭컝쨌肄섑겕由ы듃 ?몃컲<br><br>
-<b>?꾩감?좊줈(?삭퍓渶싪러)</b> = ?댁감??<b>?꾧린瑜?怨듦툒?섎뒗 怨듭쨷????/b> + 吏吏 援ъ“臾?br>
-&nbsp;&nbsp;&nbsp;???댁감 ?꾩뿉 ?덈뒗 援щ━??+ 洹멸구 諛쏆튂??湲곕뫁/援ъ“臾?(C-18 李멸퀬)<br><br>
-<b>利? ?좊줈=諛붾떏, ?꾩감?좊줈=??怨듭쨷). ?꾩쟾???ㅻⅨ ?ㅻ퉬?낅땲??</b>
+<b>선로 vs 전차선로 — 헷갈리면 먼저 구분하세요</b><br><br>
+<b>선로(線路)</b> = 열차가 굴러가는 <b>바닥의 레일(궤도)</b><br>
+&nbsp;&nbsp;&nbsp;→ 열차 바퀴가 닿는 철제 궤도 + 침목 + 자갈·콘크리트 노반<br><br>
+<b>전차선로(電車線路)</b> = 열차에 <b>전기를 공급하는 공중의 선</b> + 지지 구조물<br>
+&nbsp;&nbsp;&nbsp;→ 열차 위에 있는 구리선 + 그걸 받치는 기둥/구조물 (C-18 참고)<br><br>
+<b>즉, 선로=바닥, 전차선로=위(공중). 완전히 다른 설비입니다.</b>
 </div>
 
 <div class="table-wrap"><table>
-<tr><th>?ㅻ퉬</th><th>??븷</th><th>?먭? 二쇨린</th><th>?댁쑀</th></tr>
-<tr class="hl"><td><b>?좊줈</b></td><td>?댁감媛 ?щ━???덉씪쨌沅ㅻ룄</td><td><b>留ㅼ씪 1???댁긽</b> ?쒗쉶?먭?</td><td>?덉씪 ?댁긽 ???덉꽑 吏곴껐. 留ㅼ씪 ?뺤씤 ?꾩닔</td></tr>
-<tr class="hl"><td><b>?꾩감?좊줈</b></td><td>?꾧린 怨듦툒??吏吏 援ъ“臾?/td><td><b>留ㅼ씪 1???댁긽</b> ?쒗쉶?먭?</td><td>?꾩감???⑥꽑쨌泥섏쭚 ???댄뻾 遺덈뒫. 留ㅼ씪 ?뺤씤 ?꾩닔</td></tr>
-<tr><td>?듭떊?ㅻ퉬</td><td>??컙 ?듭떊 ?μ튂</td><td>?쇱젙??二쇨린</td><td>?꾩옄?λ퉬 ???뺢린 ?먭?</td></tr>
-<tr><td>?댁쟾蹂댁븞?μ튂</td><td>ATS쨌ATC ???덉쟾 ?μ튂</td><td>?쇱젙??二쇨린</td><td>?꾩옄?λ퉬 ???뺢린 ?먭?</td></tr>
+<tr><th>설비</th><th>역할</th><th>점검 주기</th><th>이유</th></tr>
+<tr class="hl"><td><b>선로</b></td><td>열차가 달리는 레일·궤도</td><td><b>매일 1회 이상</b> 순회점검</td><td>레일 이상 → 탈선 직결. 매일 확인 필수</td></tr>
+<tr class="hl"><td><b>전차선로</b></td><td>전기 공급선+지지 구조물</td><td><b>매일 1회 이상</b> 순회점검</td><td>전차선 단선·처짐 → 운행 불능. 매일 확인 필수</td></tr>
+<tr><td>통신설비</td><td>역간 통신 장치</td><td>일정한 주기</td><td>전자장비 — 정기 점검</td></tr>
+<tr><td>운전보안장치</td><td>ATS·ATC 등 안전 장치</td><td>일정한 주기</td><td>전자장비 — 정기 점검</td></tr>
 </table></div>
-<div class="trap">?댁쟾蹂댁븞?μ튂??留ㅼ씪 ?먭? ????留ㅼ씪? <b>?좊줈쨌?꾩감?좊줈</b>留?(?듭떊?ㅻ퉬쨌?댁쟾蹂댁븞?μ튂???쇱젙 二쇨린)</div>
+<div class="trap">운전보안장치도 매일 점검 ❌ → 매일은 <b>선로·전차선로</b>만 (통신설비·운전보안장치는 일정 주기)</div>
 
-<div class="theory-note"><strong>???좊줈? ?꾩감?좊줈留?留ㅼ씪?</strong><br>
-?좊줈??洹좎뿴쨌蹂?뺤씠 ?앷린硫????덉꽑 ?ш퀬. ?꾩감?좎씠 ?딄린嫄곕굹 泥섏?硫????댁감媛 ?꾧린瑜?紐?諛쏆븘 ?댄뻾 遺덈뒫 ?먮뒗 吏묒쟾?μ튂 ?뚯넀. ?????댁감媛 ?吏곸씠湲??꾪븳 <strong>?덈????명봽??/strong>??留ㅼ씪 ?먭??⑸땲?? 諛섎㈃ ?듭떊?ㅻ퉬쨌?댁쟾蹂댁븞?μ튂???꾩옄?λ퉬??留ㅼ씪 ?≪븞 ?쒗쉶蹂대떎 ?뺢린???뺣? ?먭????④낵?곸엯?덈떎.
+<div class="theory-note"><strong>왜 선로와 전차선로만 매일?</strong><br>
+선로에 균열·변형이 생기면 → 탈선 사고. 전차선이 끊기거나 처지면 → 열차가 전기를 못 받아 운행 불능 또는 집전장치 파손. 둘 다 열차가 움직이기 위한 <strong>절대적 인프라</strong>라 매일 점검합니다. 반면 통신설비·운전보안장치는 전자장비라 매일 육안 순회보다 정기적 정밀 점검이 효과적입니다.
 </div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?꾩떆泥좊룄?먯꽌 留ㅼ씪 1???댁긽 ?쒗쉶?먭??댁빞 ?섎뒗 ?ㅻ퉬 2媛吏??</div><div class="qe-a">?뺣떟: ?좊줈 / ?꾩감?좊줈</div><div class="qe-wrong">?ㅻ떟?⑥젙: "?댁쟾蹂댁븞?μ튂??留ㅼ씪 ?먭?"?대씪???ㅻ떟</div></div>
-</div><div class="concept" id="C-20"><div class="concept-title"><span class="cnum">C-20</span>鍮꾩긽?쒕룞嫄곕━ ?끸쁾??/div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 도시철도에서 매일 1회 이상 순회점검해야 하는 설비 2가지는?</div><div class="qe-a">정답: 선로 / 전차선로</div><div class="qe-wrong">오답함정: "운전보안장치도 매일 점검"이라는 오답</div></div>
+</div><div class="concept" id="C-20"><div class="concept-title"><span class="cnum">C-20</span>비상제동거리 ★★★</div>
 <div class="step-box" style="font-size:1.1em; text-align:center; padding:16px;">
-?꾩떆泥좊룄 鍮꾩긽?쒕룞嫄곕━ = <b>600誘명꽣 ?댄븯</b><br>
-<span style="font-size:0.9em; font-weight:normal;">鍮꾩긽?쒕룞??<u>嫄?/u> ?쒓컙遺??<u>?꾩쟾??硫덉텧 ?뚭퉴吏</u> ?대룞??嫄곕━ ??600m</span>
+도시철도 비상제동거리 = <b>600미터 이하</b><br>
+<span style="font-size:0.9em; font-weight:normal;">비상제동을 <u>건</u> 순간부터 <u>완전히 멈출 때까지</u> 이동한 거리 ≤ 600m</span>
 </div>
-<div class="trap">鍮꾩긽?쒕룞嫄곕━ 400m ????<b>600m</b></div>
+<div class="trap">비상제동거리 400m ❌ → <b>600m</b></div>
 
 <div class="theory-note">
-<strong>??鍮꾩긽(?욃만)???대뼸寃??꾨뒗媛? ??鍮꾩긽?쒕룞??諛쒕룞 議곌굔</strong><br>
-鍮꾩긽?쒕룞? ?꾨옒 3媛吏 諛⑸쾿?쇰줈 諛쒕룞?⑸땲??<br>
-??<b>ATC/ATP ?먮룞 諛쒕룞</b> ??李⑤궡?좏샇?μ튂媛 ?덉슜?띾룄 珥덇낵쨌?좏샇 ?꾨컲??媛먯??섎㈃ <b>?먮룞?쇰줈</b> 鍮꾩긽?쒕룞???묐룞?쒗궡. 湲곌??ш? 紐⑤Ⅴ?붾씪???쒖뒪?쒖씠 癒쇱? ?뚯븘??釉뚮젅?댄겕瑜?嫄몄뼱踰꾨┝<br>
-??<b>湲곌???吏곸젒 議곗옉</b> ??湲곌??ш? ?꾨갑 ?μ븷臾셋룹씠?곸쓣 ?몄??섏뿬 鍮꾩긽?쒕룞 ?몃뱾???묐룞<br>
-??<b>?ъ옄?μ튂(Dead-man/EB?μ튂)</b> ??湲곌??ш? ?쇱젙 ?쒓컙 ?몃뱾?먯꽌 ?먯쓣 ?쇨굅???섏떇???껋쑝硫??먮룞?쇰줈 鍮꾩긽?쒕룞 諛쒕룞<br><br>
+<strong>⓪ 비상(非常)을 어떻게 아는가? — 비상제동의 발동 조건</strong><br>
+비상제동은 아래 3가지 방법으로 발동됩니다.<br>
+① <b>ATC/ATP 자동 발동</b> — 차내신호장치가 허용속도 초과·신호 위반을 감지하면 <b>자동으로</b> 비상제동을 작동시킴. 기관사가 모르더라도 시스템이 먼저 알아서 브레이크를 걸어버림<br>
+② <b>기관사 직접 조작</b> — 기관사가 전방 장애물·이상을 인지하여 비상제동 핸들을 작동<br>
+③ <b>사자장치(Dead-man/EB장치)</b> — 기관사가 일정 시간 핸들에서 손을 떼거나 의식을 잃으면 자동으로 비상제동 발동<br><br>
 
-<strong>??"600m ?댄븯"???뺥솗???섎?</strong><br>
-"600m ?꾩뿉 鍮꾩긽?쒕룞??嫄몄뼱???쒕떎"???살씠 <b>?꾨떃?덈떎</b>.<br>
-??鍮꾩긽?쒕룞??<b>?묐룞?쒗궓 洹?吏??/b>?먯꽌 ?댁감媛 <b>?꾩쟾???쒕뒗 吏?먭퉴吏??嫄곕━</b>媛 600m瑜??섏쑝硫????쒕떎???살엯?덈떎.<br>
-??利? 李⑤웾 ?먯껜??<b>?깅뒫 湲곗?</b>?낅땲?? 鍮꾩긽 釉뚮젅?댄겕瑜?諛잛쑝硫?600m ?덉뿉 諛섎뱶??硫덉텧 ???덉뼱???⑸땲??<br><br>
+<strong>① "600m 이하"의 정확한 의미</strong><br>
+"600m 전에 비상제동을 걸어야 한다"는 뜻이 <b>아닙니다</b>.<br>
+→ 비상제동을 <b>작동시킨 그 지점</b>에서 열차가 <b>완전히 서는 지점까지의 거리</b>가 600m를 넘으면 안 된다는 뜻입니다.<br>
+→ 즉, 차량 자체의 <b>성능 기준</b>입니다. 비상 브레이크를 밟으면 600m 안에 반드시 멈출 수 있어야 합니다.<br><br>
 
-<strong>????600m?멸?? ???꾩떆泥좊룄 援ъ“???댁쑀</strong><br>
-?꾩떆泥좊룄(吏?섏쿋)????컙 嫄곕━媛 ??<b>1~2km</b>??遺덇낵?⑸땲?? ?댁감 媛??댄뻾 媛꾧꺽??吏㏐퀬, 吏???곕꼸? ?덉텧濡쒕룄 ?놁뒿?덈떎. 留뚯빟 鍮꾩긽?쒕룞嫄곕━媛 ?덈Т 湲몃㈃ ?꾨갑 ?댁감瑜?異붾룎?섍굅????쓣 吏?섏퀜踰꾨┫ ?꾪뿕???덉뒿?덈떎. 600m ?대궡 ?뺤감 ?λ젰? ?대윴 ?ш퀬瑜?留됯린 ?꾪븳 理쒖냼 ?덉쟾 湲곗??낅땲??<br><br>
+<strong>② 왜 600m인가? — 도시철도 구조상 이유</strong><br>
+도시철도(지하철)는 역간 거리가 약 <b>1~2km</b>에 불과합니다. 열차 간 운행 간격도 짧고, 지하 터널은 탈출로도 없습니다. 만약 비상제동거리가 너무 길면 전방 열차를 추돌하거나 역을 지나쳐버릴 위험이 있습니다. 600m 이내 정차 능력은 이런 사고를 막기 위한 최소 안전 기준입니다.<br><br>
 
-<strong>??600m瑜??섏쑝硫??대뼸寃??섎굹?</strong><br>
-?대떦 李⑤웾? ?꾩떆泥좊룄???ъ엯 遺덇??낅땲?? ?꾩떆泥좊룄?댁쟾洹쒖튃? ??湲곗???<b>李⑤웾 ?댄뻾 ?먭꺽 議곌굔</b>?쇰줈 ?뺥븯怨??덉뼱, 湲곗???珥덇낵?섎뒗 李⑤웾? ?뺣퉬쨌媛쒖꽑 ?꾧퉴吏 ?곸뾽?댄뻾???ъ슜?????놁뒿?덈떎.<br><br>
+<strong>③ 600m를 넘으면 어떻게 되나?</strong><br>
+해당 차량은 도시철도에 투입 불가입니다. 도시철도운전규칙은 이 기준을 <b>차량 운행 자격 조건</b>으로 정하고 있어, 기준을 초과하는 차량은 정비·개선 전까지 영업운행에 사용할 수 없습니다.<br><br>
 
-<strong>???쇰컲泥좊룄???鍮꾧탳</strong><br>
-?쇰컲 泥좊룄??援ш컙蹂??띾룄쨌?섍꼍???ㅼ뼇??鍮꾩긽?쒕룞嫄곕━ 湲곗????꾩떆泥좊룄泥섎읆 ?⑥씪 ?섏튂濡?洹쒖젙?섏? ?딆뒿?덈떎. ?꾩떆泥좊룄留?<b>600m ?⑥씪 湲곗?</b>???ъ슜?⑸땲??
+<strong>④ 일반철도와의 비교</strong><br>
+일반 철도는 구간별 속도·환경이 다양해 비상제동거리 기준이 도시철도처럼 단일 수치로 규정되지 않습니다. 도시철도만 <b>600m 단일 기준</b>을 사용합니다.
 </div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?꾩떆泥좊룄??鍮꾩긽?쒕룞嫄곕━ 湲곗???</div><div class="qe-a">?뺣떟: 600誘명꽣 ?댄븯</div><div class="qe-wrong">?ㅻ떟?⑥젙: "400m"濡??쇰룞?섎뒗 ?ㅻ떟 / "600m ?꾩뿉 ?쒕룞??嫄몄뼱???쒕떎"??媛쒕뀗 ?쇰룞</div></div>
-</div><div class="concept" id="C-21"><div class="concept-title"><span class="cnum">C-21</span>?섏떊???꾩튂 鍮꾧탳 ?끸쁾??/div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 도시철도의 비상제동거리 기준은?</div><div class="qe-a">정답: 600미터 이하</div><div class="qe-wrong">오답함정: "400m"로 혼동하는 오답 / "600m 전에 제동을 걸어야 한다"는 개념 혼동</div></div>
+</div><div class="concept" id="C-21"><div class="concept-title"><span class="cnum">C-21</span>수신호 위치 비교 ★★★</div>
 
 <div class="step-box">
-<b>吏?μ?????슌?곈퍧)?대??</b><br>
-??슌 = 吏??= 諛⑺빐쨌?μ븷. 利? <b>?좊줈瑜?留됯퀬 ?덈뒗 ?ш퀬쨌?μ븷臾쇱쓽 ?꾩튂</b>?낅땲??<br><br>
-?덈? ?ㅼ뼱 ?좊줈 ?꾩뿉 李⑤웾??怨좎옣?ш굅?? ?덉꽑?덇굅?? ?숈꽍???⑥뼱吏?洹?吏?먯씠 "吏?μ????낅땲??<br>
-?뺤??섏떊?몃뒗 ??吏?μ??먯뿉??200m ?⑥뼱吏?<b>?욎そ(?댁감 ?묎렐 諛⑺뼢 履?</b>???몄썙???⑸땲??<br><br>
-???댁쑀: ?댁감??利됯컖 ?뺤감 遺덇?. 理쒖냼 200m???쒕룞 ?ъ쑀嫄곕━媛 ?덉뼱???댁감媛 ?μ븷臾??꾩뿉 硫덉텧 ???덉쓬.
+<b>지장지점(支障地點)이란?</b><br>
+支障 = 지장 = 방해·장애. 즉, <b>선로를 막고 있는 사고·장애물의 위치</b>입니다.<br><br>
+예를 들어 선로 위에 차량이 고장났거나, 탈선했거나, 낙석이 떨어진 그 지점이 "지장지점"입니다.<br>
+정지수신호는 이 지장지점에서 200m 떨어진 <b>앞쪽(열차 접근 방향 쪽)</b>에 세워야 합니다.<br><br>
+→ 이유: 열차는 즉각 정차 불가. 최소 200m의 제동 여유거리가 있어야 열차가 장애물 전에 멈출 수 있음.
 </div>
 
 <div class="table-wrap"><table>
-<tr><th>洹쒖튃</th><th>?좊줈 吏?????뺤??섏떊???꾩튂</th></tr>
-<tr><td>泥좊룄李⑤웾?댁쟾洹쒖튃</td><td>?ш퀬吏?먯쑝濡쒕???<b>200m ?댁긽</b> ??吏??/td></tr>
-<tr class="hl"><td><b>?꾩떆泥좊룄?댁쟾洹쒖튃</b></td><td>吏?μ??먯쑝濡쒕???<b>200m ?댁긽</b> ??吏??/td></tr>
+<tr><th>규칙</th><th>선로 지장 시 정지수신호 위치</th></tr>
+<tr><td>철도차량운전규칙</td><td>사고지점으로부터 <b>200m 이상</b> 앞 지점</td></tr>
+<tr class="hl"><td><b>도시철도운전규칙</b></td><td>지장지점으로부터 <b>200m 이상</b> 앞 지점</td></tr>
 </table></div>
-<div class="trap">?좑툘 ?꾩떆泥좊룄 ?섏떊??= 100m ????<b>??洹쒖튃 紐⑤몢 200m ?댁긽?쇰줈 ?숈씪</b> (李⑥씠 ?놁쓬)</div>
+<div class="trap">⚠️ 도시철도 수신호 = 100m ❌ — <b>두 규칙 모두 200m 이상으로 동일</b> (차이 없음)</div>
 
 <div class="theory-note">
-<strong>??吏?μ???~ ?좏샇???ъ씠 200m???댁쑀</strong><br>
-?댁감???먮룞李⑥쿂??利됯컖 ?뺤감?????놁뒿?덈떎. ?댁감媛 ?쒕룞???쒖옉?????꾩쟾??硫덉텧 ?뚭퉴吏 ?섎갚 誘명꽣瑜??대룞?⑸땲?? ?곕씪???좏샇?먯씠 吏?μ??먯뿉 ??遺숈뼱???먯쓣 ?붾뱾硫??댁감媛 ?뺤감?섍린 ?꾩뿉 異⑸룎??踰꾨┰?덈떎. 理쒖냼 <strong>200m ?꾨갑</strong>?먯꽌 ?좏샇瑜?二쇱뼱???댁감媛 ?쒕룞???쒖옉???μ븷臾??욎뿉 硫덉텧 ???덉뒿?덈떎.<br><br>
+<strong>① 지장지점 ~ 신호원 사이 200m의 이유</strong><br>
+열차는 자동차처럼 즉각 정차할 수 없습니다. 열차가 제동을 시작한 뒤 완전히 멈출 때까지 수백 미터를 이동합니다. 따라서 신호원이 지장지점에 딱 붙어서 손을 흔들면 열차가 정차하기 전에 충돌해 버립니다. 최소 <strong>200m 전방</strong>에서 신호를 주어야 열차가 제동을 시작해 장애물 앞에 멈출 수 있습니다.<br><br>
 
-<strong>??"??吏????諛⑺뼢 ???룰컝由ъ? 留?寃?/strong><br>
-"???대? ?댁감媛 ?ㅺ??ㅻ뒗 諛⑺뼢 湲곗??낅땲??<br>
-??吏?μ??먯뿉???댁감媛 ?ㅻ뒗 諛⑺뼢?쇰줈 200m ?섏븘媛?怨녹뿉 ?좏샇?먯씠 ?꾩튂?⑸땲??<br>
-???좏샇????(200m) ??吏?μ????쒖꽌濡??댁감媛 ?듦낵?섍쾶 ?⑸땲??<br><br>
+<strong>② "앞 지점"의 방향 — 헷갈리지 말 것</strong><br>
+"앞"이란 열차가 다가오는 방향 기준입니다.<br>
+→ 지장지점에서 열차가 오는 방향으로 200m 나아간 곳에 신호원이 위치합니다.<br>
+→ 신호원 → (200m) → 지장지점 순서로 열차가 통과하게 됩니다.<br><br>
 
-<strong>????洹쒖튃???숈씪???댁쑀</strong><br>
-泥좊룄李⑤웾?댁쟾洹쒖튃 ??4議곗? ?꾩떆泥좊룄?댁쟾洹쒖튃 ??1議?紐⑤몢 200m ?댁긽?쇰줈 ?숈씪?섍쾶 洹쒖젙?⑸땲?? 援먯옱??"?꾩떆泥좊룄=100m"濡??섎せ 湲곗옱??寃쎌슦媛 ?덉쑝??踰뺣졊 ?먮Ц? 200m?낅땲??
+<strong>③ 두 규칙이 동일한 이유</strong><br>
+철도차량운전규칙 제94조와 도시철도운전규칙 제71조 모두 200m 이상으로 동일하게 규정합니다. 교재에 "도시철도=100m"로 잘못 기재된 경우가 있으나 법령 원문은 200m입니다.
 </div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?꾩떆泥좊룄?댁쟾洹쒖튃???좊줈 吏?????뺤??섏떊???ㅼ튂 ?꾩튂??</div><div class="qe-a">?뺣떟: 吏?μ??먯쑝濡쒕???200m ?댁긽 (?꾩떆泥좊룄?댁쟾洹쒖튃 ??1議?</div><div class="qe-wrong">?ㅻ떟?⑥젙: "100m ?댁긽"?쇰줈 ?듯븯???ㅻ떟 ???ㅼ젣濡쒕뒗 ??洹쒖튃 紐⑤몢 200m</div></div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 도시철도운전규칙상 선로 지장 시 정지수신호 설치 위치는?</div><div class="qe-a">정답: 지장지점으로부터 200m 이상 (도시철도운전규칙 제71조)</div><div class="qe-wrong">오답함정: "100m 이상"으로 답하는 오답 — 실제로는 두 규칙 모두 200m</div></div>
 <div class="king-book-note">
-  <span class="kb-label">?뱰 泥좊룄??援먯옱 vs 踰뺣졊 ?뺤씤</span>
-  <strong>?좑툘 援먯옱 ?ㅻ쪟 ???꾩떆泥좊룄?댁쟾洹쒖튃 ??1議?/strong>
+  <span class="kb-label">📖 철도왕 교재 vs 법령 확인</span>
+  <strong>⚠️ 교재 오류 — 도시철도운전규칙 제71조</strong>
   <ul>
-    <li>泥좊룄??援먯옱: ?꾩떆泥좊룄 ?섏떊??= <strong>100m ?댁긽</strong>?쇰줈 湲곗옱??/li>
-    <li>踰뺣졊 ?먮Ц: ?꾩떆泥좊룄?댁쟾洹쒖튃 ??1議?= <strong>200m ?댁긽</strong> (踰뺣졊 ?뺤씤 ?꾨즺)</li>
-    <li>寃곕줎: 援먯옱 ?ㅻ쪟. 泥좊룄李⑤웾?댁쟾洹쒖튃(??4議?怨??꾩떆泥좊룄?댁쟾洹쒖튃(??1議? 紐⑤몢 <strong>200m ?댁긽</strong>?쇰줈 ?숈씪??/li>
+    <li>철도왕 교재: 도시철도 수신호 = <strong>100m 이상</strong>으로 기재됨</li>
+    <li>법령 원문: 도시철도운전규칙 제71조 = <strong>200m 이상</strong> (법령 확인 완료)</li>
+    <li>결론: 교재 오류. 철도차량운전규칙(제94조)과 도시철도운전규칙(제71조) 모두 <strong>200m 이상</strong>으로 동일함</li>
   </ul>
 </div>
-</div><div class="concept" id="C-22"><div class="concept-title"><span class="cnum">C-22</span>?좎꽕쨌媛쒖“ ???쒗뿕?댁쟾 + ??⑺룓??/div>
+</div><div class="concept" id="C-22"><div class="concept-title"><span class="cnum">C-22</span>신설·개조 후 시험운전 + 대용폐색</div>
 <div class="table-wrap"><table>
-<tr><th>??ぉ</th><th>?댁슜</th></tr>
-<tr><td>?쒗뿕?댁쟾 湲곌컙</td><td>?좊줈쨌?꾩감?졖룸낫?덉옣移??좎꽕쨌媛쒖“ ??<b>60???댁긽</b> ?쒗뿕?댁쟾 (?꾩떆泥좊룄?댁쟾洹쒖튃 ??議?</td></tr>
-<tr><td>湲곌컙 ?⑥텞</td><td>?댄뻾 以?援ш컙 ?뺤옣쨌?댁꽕? ?꾨Ц媛 ?덉쟾吏꾨떒 ???⑥텞 媛??/td></tr>
-<tr><td>?꾩떆泥좊룄 ??⑺룓??/td><td>?먯깋?μ튂쨌李⑤궡?좏샇?μ튂 怨좎옣 ??愿?쒖궗(愿?쒖뾽臾댁쥌?ъ옄)媛 <b>吏?뱀떇</b>?쇰줈 ?먯깋援ш컙 ?댁감 吏꾩엯 吏??/td></tr>
+<tr><th>항목</th><th>내용</th></tr>
+<tr><td>시험운전 기간</td><td>선로·전차선·보안장치 신설·개조 후 <b>60일 이상</b> 시험운전 (도시철도운전규칙 제9조)</td></tr>
+<tr><td>기간 단축</td><td>운행 중 구간 확장·이설은 전문가 안전진단 후 단축 가능</td></tr>
+<tr><td>도시철도 대용폐색</td><td>폐색장치·차내신호장치 고장 → 관제사(관제업무종사자)가 <b>지령식</b>으로 폐색구간 열차 진입 지시</td></tr>
 </table></div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?좎꽕쨌媛쒖“???ㅻ퉬???ㅼ젣 ?댄뻾 ??<strong>60???댁긽 ?쒗뿕?댁쟾</strong>?쇰줈 ?덉쟾?깆쓣 寃利앺빀?덈떎 (?꾩떆泥좊룄?댁쟾洹쒖튃 ??議?. "1媛쒖썡(??0??"???꾨땶 <strong>60??2媛쒖썡)</strong>?꾩쓣 二쇱쓽. ?? ?댄뻾 以?援ш컙 ?뺤옣쨌?댁꽕? ?꾨Ц媛 ?덉쟾吏꾨떒??嫄곗퀜 湲곌컙 ?⑥텞 媛?? ?꾩떆泥좊룄 ??⑺룓?됱? 吏?뱀떇?쇰줈, 愿?쒖궗媛 吏?쒗빀?덈떎.</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?꾩떆泥좊룄?먯꽌 ?먯깋?μ튂 怨좎옣 ???ъ슜?섎뒗 ??⑺룓??諛⑹떇??</div><div class="qe-a">?뺣떟: 吏?뱀떇 (愿?쒖궗媛 吏??</div><div class="qe-wrong">?ㅻ떟?⑥젙: "吏?꾪넻?좎떇"?쇰줈 ?쇰룞?섎뒗 ?ㅻ떟</div></div>
+<div class="theory-note"><strong>이론 배경:</strong> 신설·개조된 설비는 실제 운행 전 <strong>60일 이상 시험운전</strong>으로 안전성을 검증합니다 (도시철도운전규칙 제9조). "1개월(≈30일)"이 아닌 <strong>60일(2개월)</strong>임을 주의. 단, 운행 중 구간 확장·이설은 전문가 안전진단을 거쳐 기간 단축 가능. 도시철도 대용폐색은 지령식으로, 관제사가 지시합니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 도시철도에서 폐색장치 고장 시 사용하는 대용폐색 방식은?</div><div class="qe-a">정답: 지령식 (관제사가 지시)</div><div class="qe-wrong">오답함정: "지도통신식"으로 혼동하는 오답</div></div>
 <div class="king-book-note">
-  <span class="kb-label">?뱰 泥좊룄??援먯옱 vs 踰뺣졊 ?뺤씤</span>
-  <strong>?좑툘 援먯옱 ?ㅻ쪟 ???꾩떆泥좊룄?댁쟾洹쒖튃 ??議?/strong>
+  <span class="kb-label">📖 철도왕 교재 vs 법령 확인</span>
+  <strong>⚠️ 교재 오류 — 도시철도운전규칙 제9조</strong>
   <ul>
-    <li>泥좊룄??援먯옱: ?쒗뿕?댁쟾 湲곌컙 = <strong>1媛쒖썡 ?댁긽</strong>?쇰줈 湲곗옱??/li>
-    <li>踰뺣졊 ?먮Ц: ?꾩떆泥좊룄?댁쟾洹쒖튃 ??議?= <strong>60???댁긽</strong> (踰뺣졊 ?뺤씤 ?꾨즺)</li>
-    <li>寃곕줎: 援먯옱 ?ㅻ쪟. 1媛쒖썡(??0?????꾨땶 <strong>60??2媛쒖썡)</strong>??踰뺣졊 湲곗???/li>
-    <li>李멸퀬: ?댄뻾 以?援ш컙 ?뺤옣쨌?댁꽕 ?쒖뿉???꾨Ц媛 ?덉쟾吏꾨떒??嫄곗퀜 ?⑥텞 媛??/li>
+    <li>철도왕 교재: 시험운전 기간 = <strong>1개월 이상</strong>으로 기재됨</li>
+    <li>법령 원문: 도시철도운전규칙 제9조 = <strong>60일 이상</strong> (법령 확인 완료)</li>
+    <li>결론: 교재 오류. 1개월(≈30일)이 아닌 <strong>60일(2개월)</strong>이 법령 기준임</li>
+    <li>참고: 운행 중 구간 확장·이설 시에는 전문가 안전진단을 거쳐 단축 가능</li>
   </ul>
 </div>
-</div></div></div><div class="part" id="part6"><div class="part-title" onclick="togglePart(this)"><span>PART 6. ?댁쟾?대줎 ?끸쁾</span><span class="arr">??/span></div><div class="part-body"><div class="concept" id="C-23"><div class="concept-title"><span class="cnum">C-23</span>?쒕룞 醫낅쪟 ?끸쁾??/div>
+</div></div></div><div class="part" id="part6"><div class="part-title" onclick="togglePart(this)"><span>PART 6. 운전이론 ★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-23"><div class="concept-title"><span class="cnum">C-23</span>제동 종류 ★★★</div>
 
 <div class="step-box">
-<b>???쒕룞 諛⑹떇???щ윭 媛쒖씤媛?</b><br>
-?댁감??臾닿쾶媛 ?섎갚 ?? ?쒕룞 ?곹솴???곕씪 ?붽뎄?섎뒗 ?샕룹냽?꽷룹“嫄댁씠 ?ㅻ쫭?덈떎.<br>
-???섎굹??諛⑹떇?쇰줈??紐⑤뱺 ?곹솴??而ㅻ쾭?????놁뼱 <b>蹂듭닔???쒕룞 諛⑹떇??蹂묒슜</b>?⑸땲??<br>
-???꾧린媛 ?녿뒗 ?곹솴(?꾩감???⑥꽑쨌鍮꾩긽)?먮룄 諛섎뱶??硫덉떠???섎?濡?<b>怨듦린?쒕룞??理쒗썑??蹂대（</b>?낅땲??
+<b>왜 제동 방식이 여러 개인가?</b><br>
+열차는 무게가 수백 톤. 제동 상황에 따라 요구되는 힘·속도·조건이 다릅니다.<br>
+→ 하나의 방식으로는 모든 상황을 커버할 수 없어 <b>복수의 제동 방식을 병용</b>합니다.<br>
+→ 전기가 없는 상황(전차선 단선·비상)에도 반드시 멈춰야 하므로 <b>공기제동이 최후의 보루</b>입니다.
 </div>
 
 <div class="table-wrap"><table>
-<tr><th>?쒕룞 諛⑹떇</th><th>?먮━</th><th>?먮꼫吏 泥섎━</th><th>?몄젣 ?곕굹</th><th>?⑥젏</th></tr>
-<tr><td><b>怨듦린?쒕룞</b></td><td>?뺤텞怨듦린濡?釉뚮젅?댄겕 ?⑤뱶/?덈? 諛뷀는룸뵒?ㅽ겕??諛李?/td><td>?대줈 ?뚮㈇ (留덉같)</td><td>??<b>紐⑤뱺 ?댁감 怨듯넻</b> ???곸떆 湲곕낯, 鍮꾩긽, ?뺤감?좎?</td><td>?⑤뱶쨌??留덈え, 怨좎냽?먯꽌 諛쒖뿴 ?ы븿</td></tr>
-<tr class="hl"><td><b>諛쒖쟾?쒕룞</b></td><td>寃ъ씤?꾨룞湲곕? <b>諛쒖쟾湲곕줈 ?꾪솚</b> ??諛쒖깮 ?꾧린瑜????린?먯꽌 <b>?대줈 ?뚮え</b></td><td>?대줈 ?뚮㈇ (???린)</td><td>?꾧린媛 ?딄꺼???ъ슜 媛?? 援ы삎 ?꾨룞李? ?붿젮?꾧린湲곌?李?/td><td>???꾧린?뚮줈 蹂듭옟 ??<b>?띾룄 ??????쒕룞???쏀솕</b> ???먮꼫吏 ??퉬</td></tr>
-<tr class="hl"><td><b>?뚯깮?쒕룞</b></td><td>?꾨룞湲곕? 諛쒖쟾湲곕줈 ?꾪솚 ??諛쒖깮 ?꾧린瑜?<b>?꾩감?좎쑝濡??섎룎由?/b></td><td>?꾩감??諛섑솚 (?먮꼫吏 ?덉빟)</td><td>??<b>?꾩떆泥좊룄쨌KTX 二쇰젰</b> ????컙 媛먯냽 ?쒕쭏???ъ슜. ?먮꼫吏 20~30% ?덇컧</td><td>?꾩감?좎뿉 ?ㅻⅨ ?댁감媛 ?놁쑝硫??꾧린 諛섑솚 遺덇? ??諛쒖쟾?쒕룞쨌怨듦린?쒕룞?쇰줈 ?꾪솚</td></tr>
-<tr><td><b>?섏슜?쒕룞</b></td><td>?뚯깮?꾨젰???꾩감??諛섑솚 ???<b>李⑤웾 ?대? 遺???됰궃諛㈑룹???린)?먯꽌 ?뚮퉬</b></td><td>李⑤웾 ???뚮퉬</td><td>?뚯깮?쒕룞 遺덇? ??蹂댁“ ?섎떒. ?꾩감???곹깭 臾닿??섍쾶 ?쒕룞 媛??/td><td>?먮꼫吏瑜??대줈 ??퉬 (?뚯깮?쒕룞蹂대떎 鍮꾪슚??</td></tr>
+<tr><th>제동 방식</th><th>원리</th><th>에너지 처리</th><th>언제 쓰나</th><th>단점</th></tr>
+<tr><td><b>공기제동</b></td><td>압축공기로 브레이크 패드/슈를 바퀴·디스크에 밀착</td><td>열로 소멸 (마찰)</td><td>✅ <b>모든 열차 공통</b> — 상시 기본, 비상, 정차유지</td><td>패드·슈 마모, 고속에서 발열 심함</td></tr>
+<tr class="hl"><td><b>발전제동</b></td><td>견인전동기를 <b>발전기로 전환</b> → 발생 전기를 저항기에서 <b>열로 소모</b></td><td>열로 소멸 (저항기)</td><td>전기가 끊겨도 사용 가능. 구형 전동차, 디젤전기기관차</td><td>① 전기회로 복잡 ② <b>속도 저하 시 제동력 약화</b> ③ 에너지 낭비</td></tr>
+<tr class="hl"><td><b>회생제동</b></td><td>전동기를 발전기로 전환 → 발생 전기를 <b>전차선으로 되돌림</b></td><td>전차선 반환 (에너지 절약)</td><td>✅ <b>도시철도·KTX 주력</b> — 역간 감속 시마다 사용. 에너지 20~30% 절감</td><td>전차선에 다른 열차가 없으면 전기 반환 불가 → 발전제동·공기제동으로 전환</td></tr>
+<tr><td><b>수용제동</b></td><td>회생전력을 전차선 반환 대신 <b>차량 내부 부하(냉난방·저항기)에서 소비</b></td><td>차량 내 소비</td><td>회생제동 불가 시 보조 수단. 전차선 상태 무관하게 제동 가능</td><td>에너지를 열로 낭비 (회생제동보다 비효율)</td></tr>
 </table></div>
 
-<div class="trap">?먯뿰?쒕룞 ?????뺤떇 ?쒕룞諛⑹떇???놁쓬 | ?섏슜?쒕룞 = ?꾩감??諛섑솚 ????李⑤웾 ?대? ?뚮퉬</div>
-<div class="trap">?좑툘 ?瑜섏젣??留대룎?댁쟾瑜??쒕룞): ?꾧린?쒕룞 3醫?諛쒖쟾쨌?뚯깮쨌?瑜? 以??섎굹. ???쒖쓽 怨듦린?쒕룞쨌諛쒖쟾?쒕룞쨌?뚯깮?쒕룞怨??④퍡 ?쒗뿕??異쒖젣??</div>
-<div class="tip">諛쒖쟾?쒕룞 ?⑥젏 2媛吏: ???꾧린?뚮줈 蹂듭옟 ???띾룄 ??????쒕룞???쏀솕</div>
+<div class="trap">자연제동 ❌ → 정식 제동방식에 없음 | 수용제동 = 전차선 반환 ❌ → 차량 내부 소비</div>
+<div class="trap">⚠️ 와류제동(맴돌이전류 제동): 전기제동 3종(발전·회생·와류) 중 하나. 이 표의 공기제동·발전제동·회생제동과 함께 시험에 출제됨.</div>
+<div class="tip">발전제동 단점 2가지: ① 전기회로 복잡 ② 속도 저하 시 제동력 약화</div>
 
 <div class="theory-note">
-<strong>???댁감 醫낅쪟蹂??쒕룞 諛⑹떇 議고빀</strong><br><br>
-<b>?꾩떆泥좊룄(吏?섏쿋)</b>: <b>?뚯깮?쒕룞 + 怨듦린?쒕룞</b> 蹂묒슜???쒖?. ??컙 嫄곕━媛 吏㏃븘 媛?띉룰컧??諛섎났 ???뚯깮?쒕룞?쇰줈 ?먮꼫吏 ????덇컧. ?뚯깮 遺덇? ??諛쒖쟾?쒕룞 ?먮뒗 ?섏슜?쒕룞?쇰줈 ?꾪솚 ?? ???理쒖쥌 ?뺤감??怨듦린?쒕룞.<br><br>
+<strong>① 열차 종류별 제동 방식 조합</strong><br><br>
+<b>도시철도(지하철)</b>: <b>회생제동 + 공기제동</b> 병용이 표준. 역간 거리가 짧아 가속·감속 반복 → 회생제동으로 에너지 대폭 절감. 회생 불가 시 발전제동 또는 수용제동으로 전환 후, 저속 최종 정차는 공기제동.<br><br>
 
-<b>KTX(怨좎냽泥좊룄)</b>: <b>?뚯깮?쒕룞 + ?붿뒪?ъ떇 怨듦린?쒕룞 + 諛쒖쟾?쒕룞</b>. 怨좎냽(300km/h???먯꽌????諛쒖깮??洹뱀떖???붿뒪???쒕룞???꾩닔. ???援ш컙 吏꾩엯 ???뚯깮?쒕룞 ?쒖슜. 鍮꾩긽 ??鍮꾩긽?쒕룞(怨듦린).<br><br>
+<b>KTX(고속철도)</b>: <b>회생제동 + 디스크식 공기제동 + 발전제동</b>. 고속(300km/h↑)에서는 열 발생이 극심해 디스크 제동이 필수. 저속 구간 진입 시 회생제동 활용. 비상 시 비상제동(공기).<br><br>
 
-<b>?쇰컲 ?꾧린湲곌?李㉱룹쟾?숈감(?덈쭏?꽷룸Т沅곹솕 ??</b>: <b>諛쒖쟾?쒕룞 + 怨듦린?쒕룞</b>. ?뚯깮?쒕룞 誘몄쟻??援ы삎 李⑤웾? 諛쒖쟾?쒕룞?쇰줈 ?먮꼫吏瑜????린 ?대줈 ?뚮え.<br><br>
+<b>일반 전기기관차·전동차(새마을·무궁화 등)</b>: <b>발전제동 + 공기제동</b>. 회생제동 미적용 구형 차량은 발전제동으로 에너지를 저항기 열로 소모.<br><br>
 
-<b>?붿젮湲곌?李?鍮꾩쟾湲?援ш컙)</b>: ?꾧린?쒕룞 ?놁쓬 ??<b>怨듦린?쒕룞留?/b>. ?쇰? ?붿젮?꾧린湲곌?李⑤뒗 諛쒖쟾?쒕룞 ?ъ슜 媛??<br><br>
+<b>디젤기관차(비전기 구간)</b>: 전기제동 없음 → <b>공기제동만</b>. 일부 디젤전기기관차는 발전제동 사용 가능.<br><br>
 
-<strong>???쒕룞 ?④퀎蹂??곗꽑?쒖쐞</strong><br>
-???뚯깮?쒕룞(?먮꼫吏 ?뚯닔, ?⑥쑉 理쒖슦?? ????諛쒖쟾/?섏슜?쒕룞(?뚯깮 遺덇? ?? ????怨듦린?쒕룞(???理쒖쥌 ?뺤감쨌鍮꾩긽) ????鍮꾩긽?쒕룞(怨듦린 理쒕?移? ATC쨌ATP ?먮룞 諛쒕룞)<br><br>
+<strong>② 제동 단계별 우선순위</strong><br>
+① 회생제동(에너지 회수, 효율 최우선) → ② 발전/수용제동(회생 불가 시) → ③ 공기제동(저속 최종 정차·비상) → ④ 비상제동(공기 최대치, ATC·ATP 자동 발동)<br><br>
 
-<strong>??怨듦린?쒕룞??????긽 ?⑥븘?덈뒗媛?</strong><br>
-?꾧린 ?놁뼱???묐룞. ?뺤감 ??李⑤웾 怨좎젙(二쇱감?쒕룞). 鍮꾩긽 ??ATC/ATP媛 ?먮룞 諛쒕룞. 怨듦린留??덉쑝硫??대뼡 ?곹솴?먯꽌??硫덉텧 ???덉뼱 泥좊룄 ?덉쟾??<b>理쒗썑 蹂대（</b>?낅땲??
+<strong>③ 공기제동이 왜 항상 남아있는가?</strong><br>
+전기 없어도 작동. 정차 후 차량 고정(주차제동). 비상 시 ATC/ATP가 자동 발동. 공기만 있으면 어떤 상황에서도 멈출 수 있어 철도 안전의 <b>최후 보루</b>입니다.
 </div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. 諛쒖쟾?쒕룞???⑥젏 2媛吏??</div><div class="qe-a">?뺣떟: ???꾧린?뚮줈 蹂듭옟 ???띾룄 ??????쒕룞???쏀솕</div><div class="qe-wrong">?ㅻ떟?⑥젙: "?뚯깮?쒕룞怨??숈씪?섎떎" / "?꾩떆泥좊룄 二쇰젰 諛⑹떇?대떎"(???꾩떆泥좊룄???뚯깮?쒕룞??二쇰젰)</div></div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 발전제동의 단점 2가지는?</div><div class="qe-a">정답: ① 전기회로 복잡 ② 속도 저하 시 제동력 약화</div><div class="qe-wrong">오답함정: "회생제동과 동일하다" / "도시철도 주력 방식이다"(→ 도시철도는 회생제동이 주력)</div></div>
 
-<div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="jkC_8_iCmJ0" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/jkC_8_iCmJ0/hqdefault.jpg" alt="?댁감 釉뚮젅?댄겕?먯꽑 ??'?쇱씠??' ?뚮━媛 ?ㅻ━?섏슂?" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#dc2626;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI ?듭떖?곸긽</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">?댁감 釉뚮젅?댄겕?먯꽑 ??'?쇱씠??' ?뚮━媛 ?ㅻ━?섏슂?</span></div></div>
-</div><div class="concept" id="C-24"><div class="concept-title"><span class="cnum">C-24</span>?숇젰吏묒쨷??vs ?숇젰遺꾩궛???끸쁾??/div>
-<div class="vis-wrap"><img src="images/VIS-065_?숇젰吏묒쨷遺꾩궛?앸퉬援먰몴.jpg" alt="?숇젰吏묒쨷??vs ?숇젰遺꾩궛??鍮꾧탳 (VIS-065)"><div class="caption">?숇젰吏묒쨷??vs ?숇젰遺꾩궛??鍮꾧탳 (VIS-065)</div></div>
+<div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="jkC_8_iCmJ0" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/jkC_8_iCmJ0/hqdefault.jpg" alt="열차 브레이크에선 왜 '끼이익~' 소리가 들리나요?" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#dc2626;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI 핵심영상</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">열차 브레이크에선 왜 '끼이익~' 소리가 들리나요?</span></div></div>
+</div><div class="concept" id="C-24"><div class="concept-title"><span class="cnum">C-24</span>동력집중식 vs 동력분산식 ★★★</div>
+<div class="vis-wrap"><img src="images/VIS-065_동력집중분산식비교표.jpg" alt="동력집중식 vs 동력분산식 비교 (VIS-065)"><div class="caption">동력집중식 vs 동력분산식 비교 (VIS-065)</div></div>
 <div class="table-wrap"><table>
-<tr><th>援щ텇</th><th>?뱀쭠</th><th>?대떦 李⑤웾</th></tr>
-<tr><td><b>?숇젰吏묒쨷??/b></td><td>?뚯쓬 ?? ?좎?蹂댁닔 媛꾨떒, ?⑥쑉 ??쓬, ?κ굅由???됱닔???곹빀, 媛?띾젰 ?⑥뼱吏?/td><td>?꾧린湲곌?李? ?붿젮湲곌?李④? 寃ъ씤?섎뒗 ?댁감</td></tr>
-<tr class="hl"><td><b>?숇젰遺꾩궛??/b></td><td>?뚯쓬 ?곸쓬, 媛?띿꽦???곗닔, ?먮꼫吏 ?⑥쑉 ?믪쓬</td><td>?꾧린?숈감, ?붿젮?숈감, <b>ITX ?댁감怨꾩뿴</b></td></tr>
+<tr><th>구분</th><th>특징</th><th>해당 차량</th></tr>
+<tr><td><b>동력집중식</b></td><td>소음 큼, 유지보수 간단, 효율 낮음, 장거리 대량수송 적합, 가속력 떨어짐</td><td>전기기관차, 디젤기관차가 견인하는 열차</td></tr>
+<tr class="hl"><td><b>동력분산식</b></td><td>소음 적음, 가속성능 우수, 에너지 효율 높음</td><td>전기동차, 디젤동차, <b>ITX 열차계열</b></td></tr>
 </table></div>
-<div class="trap">ITX-?덈쭏??= ?숇젰吏묒쨷??????<b>?숇젰遺꾩궛??/b></div>
+<div class="trap">ITX-새마을 = 동력집중식 ❌ → <b>동력분산식</b></div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?숇젰遺꾩궛?앹? 媛?李⑤웾???숇젰??遺꾩궛?섏뼱 <strong>媛???깅뒫???곗닔</strong>?⑸땲?? ITX 怨꾩뿴? ?숇젰遺꾩궛?앹쑝濡? ?④굅由?怨좊퉰???댄뻾???곹빀?⑸땲?? KTX-?곗쿇???숇젰遺꾩궛?앹엯?덈떎.</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ITX-?덈쭏?꾩쓽 ?숇젰 諛⑹떇??</div><div class="qe-a">?뺣떟: ?숇젰遺꾩궛??/div><div class="qe-wrong">?ㅻ떟?⑥젙: "?숇젰吏묒쨷???대씪???ㅻ떟</div></div>
-</div><div class="concept" id="C-25"><div class="concept-title"><span class="cnum">C-25</span>愿?덈?李?쨌 怨좎젙異뺢굅 ?끸쁾</div>
+<div class="theory-note"><strong>이론 배경:</strong> 동력분산식은 각 차량에 동력이 분산되어 <strong>가속 성능이 우수</strong>합니다. ITX 계열은 동력분산식으로, 단거리 고빈도 운행에 적합합니다. KTX-산천도 동력분산식입니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. ITX-새마을의 동력 방식은?</div><div class="qe-a">정답: 동력분산식</div><div class="qe-wrong">오답함정: "동력집중식"이라는 오답</div></div>
+</div><div class="concept" id="C-25"><div class="concept-title"><span class="cnum">C-25</span>관절대차 · 고정축거 ★★</div>
 
-<div class="vis-wrap"><img src="images/VIS-092_愿?덈?李④퀬?뺤텞嫄곗꽕紐낅룄.png" alt="愿?덈?李?vs ?쇰컲?李?+ 怨좎젙異뺢굅 媛쒕뀗??(VIS-092)"><div class="caption">愿?덈?李?vs ?쇰컲?李?援ъ“ 鍮꾧탳 + 怨좎젙異뺢굅 媛쒕뀗 (VIS-092)</div></div>
+<div class="vis-wrap"><img src="images/VIS-092_관절대차고정축거설명도.png" alt="관절대차 vs 일반대차 + 고정축거 개념도 (VIS-092)"><div class="caption">관절대차 vs 일반대차 구조 비교 + 고정축거 개념 (VIS-092)</div></div>
 
 <div class="step-box" style="border-left:4px solid #2563eb;">
-<b>?쉩 STEP 0. ?李??븃퍓)媛 萸붽?? ???ш린???쒖옉</b><br><br>
-?댁감瑜??놁뿉??蹂대㈃:<br>
-&nbsp;&nbsp;&nbsp;??<b>?꾩そ</b>: ?щ엺?????<b>李⑥껜</b> (湲곕떎? 諛뺤뒪)<br>
-&nbsp;&nbsp;&nbsp;??<b>?꾨옒履?/b>: 諛뷀는룹뒪?꾨쭅쨌釉뚮젅?댄겕媛 ?щ┛ <b>?李?/b><br><br>
-?李⑤뒗 李⑥껜 ?꾨옒???щ┛ <b>"諛뷀??щ┛ 諛쏆묠?"</b>?낅땲??<br>
-?쇳븨移댄듃濡?鍮꾩쑀?섎㈃ ??移댄듃 紐명넻(=李⑥껜) ?꾨옒??諛뷀?紐⑤뱢(=?李????덇퀬, ??諛뷀?紐⑤뱢??諛⑺뼢???硫?肄붾꼫瑜??뺣땲??<br><br>
-<b>?李?1媛??덉뿉??諛뷀댁텞(李⑥텞)??2媛?/b> ?ㅼ뼱?덉뒿?덈떎.<br>
-(李⑥텞 = 醫뚯슦 諛뷀대? ?곌껐?섎뒗 遊? 李⑥텞 1媛?= 諛뷀?2媛?= ?덉씪 ??1以?<br><br>
-?쇰컲 ?댁감?먯꽌 <b>李⑤웾 1媛쒖뿉 ?李④? 2媛?/b> ?щ┰?덈떎 ???욎そ??1媛? ?ㅼそ??1媛?<br>
-?李④? 李⑥껜 ?꾨옒?먯꽌 醫뚯슦濡??뚯쟾?섎㈃??怨≪꽑 援ш컙???듦낵?⑸땲??
+<b>🚃 STEP 0. 대차(臺車)가 뭔가? — 여기서 시작</b><br><br>
+열차를 옆에서 보면:<br>
+&nbsp;&nbsp;&nbsp;→ <b>위쪽</b>: 사람이 타는 <b>차체</b> (기다란 박스)<br>
+&nbsp;&nbsp;&nbsp;→ <b>아래쪽</b>: 바퀴·스프링·브레이크가 달린 <b>대차</b><br><br>
+대차는 차체 아래에 달린 <b>"바퀴 달린 받침대"</b>입니다.<br>
+쇼핑카트로 비유하면 — 카트 몸통(=차체) 아래에 바퀴 모듈(=대차)이 있고, 이 바퀴 모듈이 방향을 틀며 코너를 돕니다.<br><br>
+<b>대차 1개 안에는 바퀴축(차축)이 2개</b> 들어있습니다.<br>
+(차축 = 좌우 바퀴를 연결하는 봉. 차축 1개 = 바퀴 2개 = 레일 위 1줄)<br><br>
+일반 열차에서 <b>차량 1개에 대차가 2개</b> 달립니다 — 앞쪽에 1개, 뒤쪽에 1개.<br>
+대차가 차체 아래에서 좌우로 회전하면서 곡선 구간을 통과합니다.
 </div>
 
 <div class="theory-note">
-<strong>STEP 1. ?쇰컲 ?곌껐 vs 愿?덈?李???萸먭? ?ㅻⅨ媛?</strong><br><br>
+<strong>STEP 1. 일반 연결 vs 관절대차 — 뭐가 다른가?</strong><br><br>
 
-<b>[?쇰컲 ?곌껐 援ъ“]</b><br>
-李⑤웾A: [?욌?李? ? 李⑥껜A ? [?룸?李? &nbsp;==?곌껐湲?=&nbsp; [?욌?李? ? 李⑥껜B ? [?룸?李?<br>
-??李⑤웾 2媛쒖뿉 ?李?4媛? 李⑤웾怨?李⑤웾 ?ъ씠??<b>?곌껐湲?怨좊━)</b>濡??댁뼱吏?br><br>
+<b>[일반 연결 구조]</b><br>
+차량A: [앞대차] ─ 차체A ─ [뒷대차] &nbsp;==연결기==&nbsp; [앞대차] ─ 차체B ─ [뒷대차]<br>
+→ 차량 2개에 대차 4개. 차량과 차량 사이는 <b>연결기(고리)</b>로 이어짐<br><br>
 
-<b>[愿?덈?李?援ъ“]</b><br>
-李⑤웾A: [?욌?李? ? 李⑥껜A &nbsp;[<b>怨듭쑀?李?/b>]&nbsp; 李⑥껜B ? [?룸?李?<br>
-??李⑤웾 2媛쒖뿉 ?李?3媛? ??李⑤웾??<b>媛?대뜲 ?李?1媛쒕? ?④퍡 ?</b><br>
-????怨듭쑀?李④? 李⑥껜A???ㅻ걹怨?李⑥껜B???욌걹??<b>?숈떆??諛쏆퀜以?/b><br><br>
+<b>[관절대차 구조]</b><br>
+차량A: [앞대차] ─ 차체A &nbsp;[<b>공유대차</b>]&nbsp; 차체B ─ [뒷대차]<br>
+→ 차량 2개에 대차 3개. 두 차량이 <b>가운데 대차 1개를 함께 씀</b><br>
+→ 이 공유대차가 차체A의 뒤끝과 차체B의 앞끝을 <b>동시에 받쳐줌</b><br><br>
 
-<strong>STEP 2. ??怨≪꽑?듦낵媛 ?곗닔?쒓??</strong><br><br>
-<b>?쇰컲 援ъ“</b>: 李⑤웾A? B ?ъ씠???곌껐湲곌? ?덇퀬, 李⑤웾 ?앸?遺꾩씠 ?덇났???좎엳?듬땲?? 怨≪꽑 援ш컙?먯꽌 ??李⑤웾??諛⑺뼢???硫??곌껐湲곌? 鍮꾪?由ш퀬, ??李⑥껜???앸?遺꾩씠 ?쒕줈 諛怨??밴퉩?덈떎 ??醫뚯슦 ?붾뱾由?諛쒖깮.<br><br>
-<b>愿?덈?李?/b>: ??李⑤웾???곌껐遺 ?먯껜媛 ?李?諛뷀? ?꾩뿉 ?щ씪? ?덉뒿?덈떎. 怨≪꽑?먯꽌 怨듭쑀?李④? <b>愿??joint)泥섎읆 ?뚯쟾</b>?섎㈃????李⑥껜瑜??숈떆??遺?쒕읇寃?爰얠뼱以띾땲?? 李⑥껜 ?앸?遺꾩씠 ?덇났?먯꽌 鍮꾪?由??쇱씠 ?놁뒿?덈떎.<br><br>
+<strong>STEP 2. 왜 곡선통과가 우수한가?</strong><br><br>
+<b>일반 구조</b>: 차량A와 B 사이에 연결기가 있고, 차량 끝부분이 허공에 떠있습니다. 곡선 구간에서 앞 차량이 방향을 틀면 연결기가 비틀리고, 두 차체의 끝부분이 서로 밀고 당깁니다 → 좌우 흔들림 발생.<br><br>
+<b>관절대차</b>: 두 차량의 연결부 자체가 대차(바퀴) 위에 올라타 있습니다. 곡선에서 공유대차가 <b>관절(joint)처럼 회전</b>하면서 두 차체를 동시에 부드럽게 꺾어줍니다. 차체 끝부분이 허공에서 비틀릴 일이 없습니다.<br><br>
 
-<strong>STEP 3. ???뱀감媛먯씠 ?μ긽?섎뒗媛?</strong><br><br>
-怨듭쑀?李??덉쓽 ?ㅽ봽留곸씠 ??李⑤웾 ?ъ씠??吏꾨룞???≪닔?⑸땲?? ?쇰컲 ?곌껐湲곕뒗 ?깅뵳???좉퀬由щ씪 吏꾨룞??洹몃?濡??꾨떖?섏?留? 愿?덈?李⑤뒗 ?李⑥쓽 ?ㅽ봽留곸씠 ?꾩땐 ??븷???⑸땲??<br><br>
+<strong>STEP 3. 왜 승차감이 향상되는가?</strong><br><br>
+공유대차 안의 스프링이 두 차량 사이의 진동을 흡수합니다. 일반 연결기는 딱딱한 쇠고리라 진동이 그대로 전달되지만, 관절대차는 대차의 스프링이 완충 역할을 합니다.<br><br>
 
-<strong>STEP 4. ??援ъ“媛 蹂듭옟?섍퀬 以묐웾???섏뼱?섎뒗媛?</strong><br><br>
-怨듭쑀?李?1媛쒓? ??李⑤웾??臾닿쾶瑜??숈떆??諛쏆븘???⑸땲?? ?쇰컲 ?李⑤뒗 李⑤웾 1媛?臾닿쾶留?諛쏆쑝硫??섏?留? 怨듭쑀?李⑤뒗 2諛곗쓽 ?섏쨷??寃щ럩???섎?濡?堉덈?瑜???援듦퀬 ?쇳듉?섍쾶 留뚮뱾?댁빞 ?⑸땲????臾닿굅?뚯쭛?덈떎.<br>
-?먰븳 ??李⑥껜媛 ?李??섎굹瑜?怨듭쑀?섎?濡??곌껐 援ъ“媛 蹂듭옟?댁?怨? 李⑤웾 1媛쒕쭔 ?곕줈 遺꾨━?섍린 ?대졄?듬땲??<br><br>
+<strong>STEP 4. 왜 구조가 복잡하고 중량이 늘어나는가?</strong><br><br>
+공유대차 1개가 두 차량의 무게를 동시에 받아야 합니다. 일반 대차는 차량 1개 무게만 받으면 되지만, 공유대차는 2배의 하중을 견뎌야 하므로 뼈대를 더 굵고 튼튼하게 만들어야 합니다 → 무거워집니다.<br>
+또한 두 차체가 대차 하나를 공유하므로 연결 구조가 복잡해지고, 차량 1개만 따로 분리하기 어렵습니다.<br><br>
 
-<strong>STEP 5. 怨좎젙異뺢굅(?뷴츣邕멱퇌)??</strong><br><br>
-?李??덉뿉??李⑥텞??2媛??덉뒿?덈떎 ??<b>?욎감異?/b>(?욎そ 諛뷀?遊?怨?<b>?룹감異?/b>(?ㅼそ 諛뷀?遊?.<br>
-????李⑥텞 以묒떖 ?ъ씠??嫄곕━ = <b>怨좎젙異뺢굅</b><br><br>
-<b>??吏㏃쓣?섎줉 怨≪꽑?듦낵媛 醫뗭?媛?</b><br>
-?먮? 援щ?由щ뒗 ?λ㈃???곸긽?섏꽭??<br>
-??30cm 湲??? 援쏀엳?ㅻ㈃ ???섏씠 ?꾩슂?섍퀬, ???앹씠 諛뽰쑝濡???대굹??br>
-??5cm 吏㏃? ?? ?쎄쾶 諛⑺뼢 ?꾪솚 媛??br><br>
-?李⑤룄 留덉갔媛吏?낅땲?? 怨좎젙異뺢굅(?욎감異??룹감異?嫄곕━)媛 <b>湲몃㈃</b>, 怨≪꽑?먯꽌 ?욌컮?닿? 爰얠씤 諛⑺뼢?쇰줈 媛???????룸컮?닿? 踰꾪뀲 ?덉씪???놁쑝濡?媛뺥븯寃?諛?대깄?덈떎 ?????룸쭏紐㉱룻깉???꾪뿕.<br>
-怨좎젙異뺢굅媛 <b>吏㏃쑝硫?/b> ?욌뮘 李⑥텞???쒕줈 ??媛꾩꽠 ???李④? ?좎뿰?섍쾶 ?뚯쟾 ??怨≪꽑 ?먰솢.
+<strong>STEP 5. 고정축거(固定軸距)란?</strong><br><br>
+대차 안에는 차축이 2개 있습니다 — <b>앞차축</b>(앞쪽 바퀴 봉)과 <b>뒷차축</b>(뒤쪽 바퀴 봉).<br>
+이 두 차축 중심 사이의 거리 = <b>고정축거</b><br><br>
+<b>왜 짧을수록 곡선통과가 좋은가?</b><br>
+자를 구부리는 장면을 상상하세요:<br>
+→ 30cm 긴 자: 굽히려면 큰 힘이 필요하고, 양 끝이 밖으로 튀어나옴<br>
+→ 5cm 짧은 자: 쉽게 방향 전환 가능<br><br>
+대차도 마찬가지입니다. 고정축거(앞차축~뒷차축 거리)가 <b>길면</b>, 곡선에서 앞바퀴가 꺾인 방향으로 가려 할 때 뒷바퀴가 버텨 레일을 옆으로 강하게 밀어냅니다 → 저항·마모·탈선 위험.<br>
+고정축거가 <b>짧으면</b> 앞뒤 차축이 서로 덜 간섭 → 대차가 유연하게 회전 → 곡선 원활.
 </div>
 
 <div class="table-wrap"><table>
-<tr><th>??ぉ</th><th>媛쒕뀗</th><th>?μ젏</th><th>?⑥젏</th></tr>
-<tr class="hl"><td><b>愿?덈?李?/b><br>(Jacobs Bogie)</td><td>?몄젒????李⑤웾???곌껐遺 ?李?<b>1媛쒕? 怨듭쑀</b></td><td>??怨≪꽑?듦낵 ?곗닔<br>???뱀감媛??μ긽<br>???곌껐遺 ?붾뱾由?媛먯냼</td><td>??援ъ“ 蹂듭옟<br>??以묐웾 利앷?<br>??李⑤웾 ?⑤룆 遺꾨━ ?대젮?</td></tr>
-<tr><td><b>怨좎젙異뺢굅</b><br>(Fixed Wheelbase)</td><td>?李????욎감異??룹감異?以묒떖 ?ъ씠 嫄곕━</td><td>吏㏃쓣?섎줉 ????怨≪꽑?듦낵 ?먰솢</td><td>?덈Т 吏㏃쑝硫?吏곸꽑 二쇳뻾 ?덉젙??媛먯냼</td></tr>
+<tr><th>항목</th><th>개념</th><th>장점</th><th>단점</th></tr>
+<tr class="hl"><td><b>관절대차</b><br>(Jacobs Bogie)</td><td>인접한 두 차량이 연결부 대차 <b>1개를 공유</b></td><td>✅ 곡선통과 우수<br>✅ 승차감 향상<br>✅ 연결부 흔들림 감소</td><td>❌ 구조 복잡<br>❌ 중량 증가<br>❌ 차량 단독 분리 어려움</td></tr>
+<tr><td><b>고정축거</b><br>(Fixed Wheelbase)</td><td>대차 안 앞차축~뒷차축 중심 사이 거리</td><td>짧을수록 → ✅ 곡선통과 원활</td><td>너무 짧으면 직선 주행 안정성 감소</td></tr>
 </table></div>
-<div class="trap">愿?덈?李??⑥젏 = 怨≪꽑?듦낵 遺덈웾 ????怨≪꽑?듦낵???ㅽ엳??<b>?곗닔</b></div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. 愿?덈?李⑥쓽 ?⑥젏 2媛吏??</div><div class="qe-a">?뺣떟: ??援ъ“ 蹂듭옟 ??以묐웾 利앷?</div><div class="qe-wrong">?ㅻ떟?⑥젙: "愿?덈?李⑤뒗 怨≪꽑?듦낵 遺덈웾?섎떎" ???ㅼ젣濡쒕뒗 ?곗닔 / "怨좎젙異뺢굅瑜?湲멸쾶 ?섎㈃ 怨≪꽑?듦낵媛 醫뗫떎" ??諛섎?</div></div>
-</div><div class="concept" id="C-26"><div class="concept-title"><span class="cnum">C-26</span>怨듭＜嫄곕━ 쨌 ?쒕룞嫄곕━ 怨꾩궛 ?끸쁾</div>
+<div class="trap">관절대차 단점 = 곡선통과 불량 ❌ → 곡선통과는 오히려 <b>우수</b></div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 관절대차의 단점 2가지는?</div><div class="qe-a">정답: ① 구조 복잡 ② 중량 증가</div><div class="qe-wrong">오답함정: "관절대차는 곡선통과 불량하다" — 실제로는 우수 / "고정축거를 길게 하면 곡선통과가 좋다" — 반대</div></div>
+</div><div class="concept" id="C-26"><div class="concept-title"><span class="cnum">C-26</span>공주거리 · 제동거리 계산 ★★</div>
 <div class="table-wrap"><table>
-<tr><th>??ぉ</th><th>怨꾩궛??/th></tr>
-<tr class="hl"><td><b>怨듭＜嫄곕━</b></td><td>珥덇린?띾룄 횞 怨듭＜?쒓컙</td></tr>
-<tr><td><b>?ㅼ젣?숆굅由?/b></td><td>?꾩젣?숆굅由?- 怨듭＜嫄곕━</td></tr>
-<tr><td><b>?꾩젣?숆굅由?/b></td><td>?댁감媛 ?뺤????뚭퉴吏 ?대룞???꾩껜 嫄곕━</td></tr>
+<tr><th>항목</th><th>계산식</th></tr>
+<tr class="hl"><td><b>공주거리</b></td><td>초기속도 × 공주시간</td></tr>
+<tr><td><b>실제동거리</b></td><td>전제동거리 - 공주거리</td></tr>
+<tr><td><b>전제동거리</b></td><td>열차가 정지할 때까지 이동한 전체 거리</td></tr>
 </table></div>
-<div class="tip">?? ?쒕룞珥덉냽??20m/s, 怨듭＜?쒓컙 3珥???怨듭＜嫄곕━ = 20 횞 3 = <b>60m</b></div>
+<div class="tip">예) 제동초속도 20m/s, 공주시간 3초 → 공주거리 = 20 × 3 = <b>60m</b></div>
 <div class="step-box" style="border-left:4px solid #7c3aed;background:#f5f3ff;">
-<b>?뵢 ?덉꽑怨꾩닔 怨듭떇</b><br>
-?덉꽑怨꾩닔 = <b>?≪븬(Q) / ?ㅼ쨷(P)</b><br>
-???≪븬(Q): ?덉씪???놁쑝濡?諛?대궡????(遺꾩옄)<br>
-???ㅼ쨷(P): 諛뷀닿? ?덉씪???섏쭅?쇰줈 ?꾨Ⅴ????(遺꾨え)<br>
-<b>?좑툘 ?⑥젙: 遺꾩옄=?≪븬(Q), 遺꾨え=?ㅼ쨷(P) ?쒖꽌 ?덈? 諛붽씀吏 留?寃?</b><br>
-?덉꽑怨꾩닔 媛믪씠 ?댁닔濡??덉꽑 ?꾪뿕???믪쓬 (湲곗?媛??댄븯 ?좎? ?꾩슂)
+<b>🔢 탈선계수 공식</b><br>
+탈선계수 = <b>횡압(Q) / 윤중(P)</b><br>
+• 횡압(Q): 레일을 옆으로 밀어내는 힘 (분자)<br>
+• 윤중(P): 바퀴가 레일을 수직으로 누르는 힘 (분모)<br>
+<b>⚠️ 함정: 분자=횡압(Q), 분모=윤중(P) 순서 절대 바꾸지 말 것!</b><br>
+탈선계수 값이 클수록 탈선 위험이 높음 (기준값 이하 유지 필요)
 </div>
 
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> 怨듭＜嫄곕━???쒕룞 議곗옉 ??<strong>?ㅼ젣 ?쒕룞?μ씠 諛쒖깮?섍린 ?꾧퉴吏</strong> ?대룞??嫄곕━?낅땲?? 湲곌???諛섏쓳?쒓컙怨??쒕룞怨꾪넻 ?묐떟?쒓컙???ы븿?⑸땲?? 怨꾩궛?? 珥덇린?띾룄 횞 怨듭＜?쒓컙.</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?쒕룞珥덉냽??30m/s, 怨듭＜?쒓컙 2珥덉씪 ??怨듭＜嫄곕━??</div><div class="qe-a">?뺣떟: 60m (30m/s 횞 2珥?</div><div class="qe-wrong">?ㅻ떟?⑥젙: "?쒕룞嫄곕━? 媛숇떎"???ㅻ떟</div></div>
+<div class="theory-note"><strong>이론 배경:</strong> 공주거리는 제동 조작 후 <strong>실제 제동력이 발생하기 전까지</strong> 이동한 거리입니다. 기관사 반응시간과 제동계통 응답시간이 포함됩니다. 계산식: 초기속도 × 공주시간.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 제동초속도 30m/s, 공주시간 2초일 때 공주거리는?</div><div class="qe-a">정답: 60m (30m/s × 2초)</div><div class="qe-wrong">오답함정: "제동거리와 같다"는 오답</div></div>
 
-<div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="HxAU3AiTpzk" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/HxAU3AiTpzk/hqdefault.jpg" alt="湲곌??ш? ?댄뻾 以??좎씠 ?????대뼸寃??닿껐?좉퉴??" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#6b7280;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI 李멸퀬?곸긽</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">湲곌??ш? ?댄뻾 以??좎씠 ?????대뼸寃??닿껐?좉퉴??</span></div></div>
-<div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="-c9H1vfEnoo" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/-c9H1vfEnoo/hqdefault.jpg" alt="??꽕?먮룄 硫덉텛吏 ?딅뒗 湲곗감!" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#dc2626;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI ?듭떖?곸긽</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">??꽕?먮룄 硫덉텛吏 ?딅뒗 湲곗감!</span></div></div>
-</div><div class="concept" id="C-27"><div class="concept-title"><span class="cnum">C-27</span>?쇰ː湲?쨌 ?댄뻾?꾪몴 ?끸쁾</div>
+<div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="HxAU3AiTpzk" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/HxAU3AiTpzk/hqdefault.jpg" alt="기관사가 운행 중 잠이 올 땐 어떻게 해결할까요?" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#6b7280;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI 참고영상</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">기관사가 운행 중 잠이 올 땐 어떻게 해결할까요?</span></div></div>
+<div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="-c9H1vfEnoo" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/-c9H1vfEnoo/hqdefault.jpg" alt="폭설에도 멈추지 않는 기차!" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#dc2626;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI 핵심영상</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">폭설에도 멈추지 않는 기차!</span></div></div>
+</div><div class="concept" id="C-27"><div class="concept-title"><span class="cnum">C-27</span>피뢰기 · 운행도표 ★★</div>
 
 <div class="step-box" style="border-left:4px solid #f59e0b;">
-<b>???쇰ː湲??욥쎐????</b><br>
-?쇰ː湲?= ???? ?쇳븯?? + 猶??? 踰덇컻) + 湲??? 湲곌퀎)<br>
-踰덇컻(?댁긽?꾩븬)瑜??쇳븯寃??댁＜???μ튂. 利?<b>?댁긽?꾩븬???붿쓣 ???꾨쪟瑜????묒?)?쇰줈 ?섎젮蹂대궡???덉쟾諛몃툕</b>?낅땲??<br><br>
-?뺤긽 ?꾩븬 ???쇰ː湲??대? ?덉뿰 ?좎? (?꾨쪟 ???먮쫫)<br>
-?댁긽 ?꾩븬(?숇ː쨌?쒖?) ???쇰ː湲??쒓컙 ?꾪넻 ???꾨쪟瑜?<b>?묒?(??濡?諛⑹쟾</b> ???꾧린?ㅻ퉬 蹂댄샇<br>
-?댁긽 ?꾩븬???щ씪吏硫????ㅼ떆 ?덉뿰 蹂듦? (?먮룞 蹂듭썝)
+<b>⚡ 피뢰기(避雷器)란?</b><br>
+피뢰기 = 피(避: 피하다) + 뢰(雷: 번개) + 기(器: 기계)<br>
+번개(이상전압)를 피하게 해주는 장치. 즉 <b>이상전압이 왔을 때 전류를 땅(접지)으로 흘려보내는 안전밸브</b>입니다.<br><br>
+정상 전압 → 피뢰기 내부 절연 유지 (전류 안 흐름)<br>
+이상 전압(낙뢰·서지) → 피뢰기 순간 도통 → 전류를 <b>접지(땅)로 방전</b> → 전기설비 보호<br>
+이상 전압이 사라지면 → 다시 절연 복귀 (자동 복원)
 </div>
 
 <div class="theory-note">
-<strong>???쇰ː湲??ㅼ튂 ?꾩튂 ???대뵒???ㅻ뒗媛?</strong><br>
-?쇰ː湲곕뒗 ?댁긽?꾩븬???꾧린?ㅻ퉬???꾨떖?섍린 <b>?꾩뿉</b> 李⑤떒?댁빞 ?섎?濡? ?ㅻ퉬??<b>?낃뎄(?욌?遺?</b>???ㅼ튂?⑸땲??<br><br>
-??<b>蹂?꾩냼 ?낆텧???⑥옄</b>: ?몃? ?≪쟾?좎뿉???ㅼ뼱?ㅻ뒗 ?숇ː ?쒖?瑜?李⑤떒<br>
-??<b>?꾩감???덉씪(?묒?) ?ъ씠</b>: ?꾩감?좎뿉 ?숇ː媛 吏곴꺽?섍굅???좊룄?섎㈃ ?꾩감???꾩껜???댁긽?꾩븬???쇱쭚 ???쇰ː湲곌? ?덉씪(?吏)濡?諛⑹쟾<br>
-??<b>?곕꼸 ?낃뎄</b>: ?곕꼸 諛??꾩감?좎뿉???ㅼ뼱?ㅻ뒗 ?쒖? 李⑤떒<br>
-??<b>蹂?뺢린쨌?뺣쪟湲????꾧린湲곌린 ??/b>: 湲곌린 蹂댄샇<br><br>
+<strong>① 피뢰기 설치 위치 — 어디에 다는가?</strong><br>
+피뢰기는 이상전압이 전기설비에 도달하기 <b>전에</b> 차단해야 하므로, 설비의 <b>입구(앞부분)</b>에 설치합니다.<br><br>
+▪ <b>변전소 입출력 단자</b>: 외부 송전선에서 들어오는 낙뢰 서지를 차단<br>
+▪ <b>전차선-레일(접지) 사이</b>: 전차선에 낙뢰가 직격하거나 유도되면 전차선 전체에 이상전압이 퍼짐 → 피뢰기가 레일(대지)로 방전<br>
+▪ <b>터널 입구</b>: 터널 밖 전차선에서 들어오는 서지 차단<br>
+▪ <b>변압기·정류기 등 전기기기 앞</b>: 기기 보호<br><br>
 
-<strong>???쇰ː湲곌? ?놁쑝硫?</strong><br>
-?숇ː 1?뚯뿉 ?꾩감???꾩껜, 蹂?꾩냼 蹂?뺢린, ?꾧린湲곌린媛 怨쇱쟾?뺤쑝濡??먯긽?⑸땲?? ?좊줈 ?꾩껜 ?댄뻾??硫덉땅?덈떎.<br><br>
+<strong>② 피뢰기가 없으면?</strong><br>
+낙뢰 1회에 전차선 전체, 변전소 변압기, 전기기기가 과전압으로 손상됩니다. 선로 전체 운행이 멈춥니다.<br><br>
 
-<strong>???댄뻾?꾪몴(?뗨죱?뽬〃)?? ??"洹몃옒??濡??댄빐?섍린</strong><br>
-?댄뻾?꾪몴??<b>?댁감???섎（ ?댄뻾 怨꾪쉷??洹몃옒???좊룄)濡?洹몃┛ 寃?/b>?낅땲??<br><br>
-??<b>媛濡쒖텞(X異?</b>: ?쒓컙 (?ㅼ쟾 5??~ ?ㅼ쓬???덈꼍)<br>
-??<b>?몃줈異?Y異?</b>: ??station) ?꾩튂 (?쒖슱??룹닔?먯뿭쨌泥쒖븞???<br>
-???댁감 1?몄꽦???댄뻾 = <b>???섎굹</b>濡??쒗쁽<br>
-&nbsp;&nbsp;&nbsp;???댁감媛 ?щ━硫????ъ꽑(?대룞?섎?濡??쒓컙+?꾩튂 ?숈떆 蹂??<br>
-&nbsp;&nbsp;&nbsp;????뿉???뺤감?섎㈃ ???섑룊???쒓컙???섎윭???꾩튂 怨좎젙)<br>
-&nbsp;&nbsp;&nbsp;???좎쓽 湲곗슱湲????띾룄 (媛?뚮??섎줉 鍮좊쫫)<br><br>
-?щ윭 ?댁감瑜????꾪몴??洹몃━硫??대뒓 ?쒓컙????대뒓 援ш컙???댁감媛 紐????щ━?붿?, ?욌뮘 ?댁감 媛꾧꺽???쇰쭏?몄? ?쒕늿???뚯븙?⑸땲??<br><br>
+<strong>③ 운행도표(運行圖表)란? — "그래프"로 이해하기</strong><br>
+운행도표는 <b>열차의 하루 운행 계획을 그래프(선도)로 그린 것</b>입니다.<br><br>
+→ <b>가로축(X축)</b>: 시간 (오전 5시 ~ 다음날 새벽)<br>
+→ <b>세로축(Y축)</b>: 역(station) 위치 (서울역·수원역·천안역…)<br>
+→ 열차 1편성의 운행 = <b>선 하나</b>로 표현<br>
+&nbsp;&nbsp;&nbsp;• 열차가 달리면 → 사선(이동하므로 시간+위치 동시 변화)<br>
+&nbsp;&nbsp;&nbsp;• 역에서 정차하면 → 수평선(시간이 흘러도 위치 고정)<br>
+&nbsp;&nbsp;&nbsp;• 선의 기울기 → 속도 (가파를수록 빠름)<br><br>
+여러 열차를 한 도표에 그리면 어느 시간대에 어느 구간에 열차가 몇 편 달리는지, 앞뒤 열차 간격이 얼마인지 한눈에 파악됩니다.<br><br>
 
-<strong>??"紐???"???섎? ???덇툑 ?⑥쐞</strong><br>
-紐??? = ?덇툑. <b>?쒓컙異뺤쓽 ?덇툑 1移??ш린</b>媛 紐?遺꾩씤媛瑜??섑??낅땲??<br><br>
-| 醫낅쪟 | ?섎? | ?⑸룄 |
+<strong>④ "목(目)"의 의미 — 눈금 단위</strong><br>
+목(目) = 눈금. <b>시간축의 눈금 1칸 크기</b>가 몇 분인가를 나타냅니다.<br><br>
+| 종류 | 의미 | 용도 |
 <br>
-&nbsp;&nbsp;<b>1?쒓컙紐?/b>: ?덇툑 1移?= 1?쒓컙 ???섎（ ?꾩껜 ?댄뻾 媛쒖슂 ?뚯븙??(??洹몃┝)<br>
-&nbsp;&nbsp;<b>10遺꾨ぉ</b>: ?덇툑 1移?= 10遺???二쇱슂 ?쒓컙?蹂??댄뻾 怨꾪쉷<br>
-&nbsp;&nbsp;<b>2遺꾨ぉ</b>: ?덇툑 1移?= 2遺????꾩떆泥좊룄泥섎읆 鍮덈룄媛 ?믪? ?몄꽑<br>
-&nbsp;&nbsp;<b>1遺꾨ぉ</b>: ?덇툑 1移?= 1遺???理쒓퀬 ?몃???(?쇱옟?쒓컙? 遺꾩꽍??<br><br>
+&nbsp;&nbsp;<b>1시간목</b>: 눈금 1칸 = 1시간 → 하루 전체 운행 개요 파악용 (큰 그림)<br>
+&nbsp;&nbsp;<b>10분목</b>: 눈금 1칸 = 10분 → 주요 시간대별 운행 계획<br>
+&nbsp;&nbsp;<b>2분목</b>: 눈금 1칸 = 2분 → 도시철도처럼 빈도가 높은 노선<br>
+&nbsp;&nbsp;<b>1분목</b>: 눈금 1칸 = 1분 → 최고 세밀도 (혼잡시간대 분석용)<br><br>
 
-<strong>????30遺꾨ぉ? ?녿뒗媛?</strong><br>
-"30遺꾨ぉ???녿떎"??嫄?踰뺣졊쨌洹쒖젙?먯꽌 怨듭떇 醫낅쪟濡??몄젙?섏? ?딅뒗?ㅻ뒗 ?살엯?덈떎.<br><br>
-?꾩떎???댁쑀: ?댄뻾?꾪몴??<b>?ㅻТ ?ъ슜 紐⑹쟻??留욊쾶 ?뺥빐吏?4醫낅쪟</b>留??곕㈃ 異⑸텇?⑸땲??<br>
-??1?쒓컙紐? ?꾩껜 ?섎（ ?뚯븙<br>
-??10遺꾨ぉ: 以묎컙 ?몃???br>
-??2遺꾨ぉ쨌1遺꾨ぉ: 怨좊????댄뻾 遺꾩꽍<br><br>
-30遺꾩? 1?쒓컙怨?10遺꾩쓽 以묎컙?댁?留?<b>?ㅻТ?먯꽌 ?꾩슂?깆씠 ?놁뒿?덈떎</b>. 1?쒓컙 ?덇툑?쇰줈 異⑸텇??30遺?媛꾧꺽???쎌쓣 ???덇퀬, ???몃??섎㈃ 10遺꾨ぉ???곷땲?? 30遺꾨ぉ???곕뒗 以묎컙 ?④퀎媛 ?ㅼ젣濡??꾩슂 ?놁뼱??踰뺣졊???ы븿?섏? ?딆븯?듬땲??<br><br>
-??<b>?쒗뿕 ?ъ씤??/b>: "30遺꾨ぉ???덈떎" = ?ㅻ떟. <b>4醫낅쪟留??붽린: 1?쒓컙쨌10遺꽷?遺꽷?遺?/b>
+<strong>⑤ 왜 30분목은 없는가?</strong><br>
+"30분목이 없다"는 건 법령·규정에서 공식 종류로 인정하지 않는다는 뜻입니다.<br><br>
+현실적 이유: 운행도표는 <b>실무 사용 목적에 맞게 정해진 4종류</b>만 쓰면 충분합니다.<br>
+→ 1시간목: 전체 하루 파악<br>
+→ 10분목: 중간 세밀도<br>
+→ 2분목·1분목: 고밀도 운행 분석<br><br>
+30분은 1시간과 10분의 중간이지만 <b>실무에서 필요성이 없습니다</b>. 1시간 눈금으로 충분히 30분 간격을 읽을 수 있고, 더 세밀하면 10분목을 씁니다. 30분목을 쓰는 중간 단계가 실제로 필요 없어서 법령에 포함되지 않았습니다.<br><br>
+→ <b>시험 포인트</b>: "30분목도 있다" = 오답. <b>4종류만 암기: 1시간·10분·2분·1분</b>
 </div>
 
 <div class="table-wrap"><table>
-<tr><th>??ぉ</th><th>?댁슜</th></tr>
-<tr class="hl"><td><b>?쇰ː湲?/b></td><td>?댁긽?꾩븬(?숇ː쨌?쒖?) ???묒?濡?諛⑹쟾 ???꾩감?졖룹쟾湲곗꽕鍮?蹂댄샇<br>?ㅼ튂: 蹂?꾩냼 ?낆텧??/ ?꾩감???덉씪 ?ъ씠 / ?곕꼸 ?낃뎄 / ?꾧린湲곌린 ??/td></tr>
-<tr><td><b>?댄뻾?꾪몴 醫낅쪟</b></td><td>1?쒓컙紐?/ 10遺꾨ぉ / 2遺꾨ぉ / 1遺꾨ぉ ??<b>30遺꾨ぉ ?놁쓬</b></td></tr>
+<tr><th>항목</th><th>내용</th></tr>
+<tr class="hl"><td><b>피뢰기</b></td><td>이상전압(낙뢰·서지) → 접지로 방전 → 전차선·전기설비 보호<br>설치: 변전소 입출력 / 전차선-레일 사이 / 터널 입구 / 전기기기 앞</td></tr>
+<tr><td><b>운행도표 종류</b></td><td>1시간목 / 10분목 / 2분목 / 1분목 — <b>30분목 없음</b></td></tr>
 </table></div>
-<div class="trap">?댄뻾?꾪몴 "30遺꾨ぉ" ?????녿뒗 寃?(4醫낅쪟: 1?쒓컙쨌10遺꽷?遺꽷?遺?</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?댄뻾?꾪몴??醫낅쪟 以?議댁옱?섏? ?딅뒗 寃껋??</div><div class="qe-a">?뺣떟: 30遺꾨ぉ (1?쒓컙紐㈑?0遺꾨ぉ쨌2遺꾨ぉ쨌1遺꾨ぉ留??덉쓬)</div><div class="qe-wrong">?ㅻ떟?⑥젙: "30遺꾨ぉ???덈떎"???ㅻ떟 / "?쇰ː湲곕뒗 ?숇ː媛 移??뚮쭔 ?묐룞?쒕떎" ???숇ː肉??꾨땲???ㅼ쐞移??쒖? ???댁긽?꾩븬 紐⑤몢???묐룞</div></div>
-</div></div></div>
+<div class="trap">운행도표 "30분목" ❌ → 없는 것 (4종류: 1시간·10분·2분·1분)</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 운행도표의 종류 중 존재하지 않는 것은?</div><div class="qe-a">정답: 30분목 (1시간목·10분목·2분목·1분목만 있음)</div><div class="qe-wrong">오답함정: "30분목도 있다"는 오답 / "피뢰기는 낙뢰가 칠 때만 작동한다" — 낙뢰뿐 아니라 스위칭 서지 등 이상전압 모두에 작동</div></div>
+</div></div>
 
 <div class="part" id="part7">
 <div class="part-title" onclick="togglePart(this)">
-  <span>PART 7. 泥좊룄??援먯옱 蹂댁땐 ??李⑤웾?대줎</span>
-  <span class="arr">??/span>
+  <span>PART 7. 철도왕 교재 보충 — 차량이론</span>
+  <span class="arr">▼</span>
 </div>
 <div class="part-body">
 
 <div class="concept" id="C-28">
-<div class="concept-hd">C-28 ?댁감 ?댁쟾??3?붿냼</div>
+<div class="concept-hd">C-28 열차 운전의 3요소</div>
 <div class="concept-body">
-<div class="king-book-note"><span class="kb-label">?뱰 泥좊룄??援먯옱</span>
-?댁감 ?댁쟾??<strong>3?붿냼: 湲곌????멸컙) 쨌 沅ㅻ룄(?쒖꽕) 쨌 李⑤웾</strong><br>
-?좑툘 <strong>?듭떊</strong>? ?댁쟾 3?붿냼 <strong>?꾨떂</strong> (?먯＜ ?ㅻ떟?쇰줈 異쒖젣)
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span>
+열차 운전의 <strong>3요소: 기관사(인간) · 궤도(시설) · 차량</strong><br>
+⚠️ <strong>통신</strong>은 운전 3요소 <strong>아님</strong> (자주 오답으로 출제)
 </div>
 <table class="info-table">
-<tr><th>?붿냼</th><th>?댁슜</th></tr>
-<tr><td><b>湲곌???/b></td><td>?댁감 ?댁쟾??議곗옉?섎뒗 ?몄쟻 ?붿냼</td></tr>
-<tr><td><b>沅ㅻ룄</b></td><td>?댁감媛 二쇳뻾?섎뒗 ?좊줈(?쒖꽕 ?붿냼)</td></tr>
-<tr><td><b>李⑤웾</b></td><td>?숇젰쨌?쒕룞 ??李⑤웾 ?먯껜 ?붿냼</td></tr>
+<tr><th>요소</th><th>내용</th></tr>
+<tr><td><b>기관사</b></td><td>열차 운전을 조작하는 인적 요소</td></tr>
+<tr><td><b>궤도</b></td><td>열차가 주행하는 선로(시설 요소)</td></tr>
+<tr><td><b>차량</b></td><td>동력·제동 등 차량 자체 요소</td></tr>
 </table>
-<div class="trap">?듭떊쨌?좏샇???댁쟾 3?붿냼 ?????쒗뿕 ?④낏 ?⑥젙</div>
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?댁감 ?댁쟾? ?멸컙(湲곌?????臾쇱쟻 ?섎떒(李⑤웾)?쇰줈 ?뺥빐吏??쒖꽕(沅ㅻ룄) ?꾨? ?덉쟾?섍쾶 二쇳뻾?쒗궎???됱쐞?낅땲?? ?듭떊쨌?좏샇???댁쟾??吏?먰븯??蹂댁“ ?섎떒?댁?, ?댁쟾 ?됱쐞 ?먯껜??援ъ꽦?붿냼媛 ?꾨떃?덈떎.</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?댁감 ?댁쟾??3?붿냼???대떦?섏? ?딅뒗 寃껋??</div><div class="qe-a">?뺣떟: ?듭떊 (3?붿냼 = 湲곌???룰땄?꽷룹감??</div><div class="qe-wrong">?ㅻ떟?⑥젙: "?듭떊??3?붿냼"???ㅻ떟</div></div>
+<div class="trap">통신·신호는 운전 3요소 ❌ → 시험 단골 함정</div>
+<div class="theory-note"><strong>이론 배경:</strong> 열차 운전은 인간(기관사)이 물적 수단(차량)으로 정해진 시설(궤도) 위를 안전하게 주행시키는 행위입니다. 통신·신호는 운전을 지원하는 보조 수단이지, 운전 행위 자체의 구성요소가 아닙니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 열차 운전의 3요소에 해당하지 않는 것은?</div><div class="qe-a">정답: 통신 (3요소 = 기관사·궤도·차량)</div><div class="qe-wrong">오답함정: "통신도 3요소"는 오답</div></div>
 </div>
 </div>
 
 <div class="concept" id="C-29">
-<div class="concept-hd">C-29 ?꾧린?쒕룞 vs 湲곌퀎?쒕룞</div>
+<div class="concept-hd">C-29 전기제동 vs 기계제동</div>
 <div class="concept-body">
-<div class="king-book-note"><span class="kb-label">?뱰 泥좊룄??援먯옱</span>
-<strong>?꾧린?쒕룞 3醫? 諛쒖쟾?쒕룞 쨌 ?뚯깮?쒕룞 쨌 ?瑜섏젣??留대룎?댁쟾瑜?</strong><br>
-?좑툘 <strong>?덉씪?쒕룞</strong>? 湲곌퀎?겶룹옄湲곗쟻 ?쒕룞 ???꾧린?쒕룞 踰붿＜ <strong>?꾨떂</strong>
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span>
+<strong>전기제동 3종: 발전제동 · 회생제동 · 와류제동(맴돌이전류)</strong><br>
+⚠️ <strong>레일제동</strong>은 기계적·자기적 제동 → 전기제동 범주 <strong>아님</strong>
 </div>
 <table class="info-table">
-<tr><th>援щ텇</th><th>醫낅쪟</th><th>?먮━</th></tr>
-<tr><td rowspan="3"><b>?꾧린?쒕룞</b></td><td>諛쒖쟾?쒕룞</td><td>?꾨룞湲곕? 諛쒖쟾湲곕줈 ?꾪솚 ???꾧린?먮꼫吏瑜????뿉???대줈 ?뚯궛</td></tr>
-<tr><td>?뚯깮?쒕룞</td><td>諛쒖쟾???꾧린瑜??꾩감?좎쑝濡??섎룎由????먮꼫吏 ?뚯닔</td></tr>
-<tr><td>?瑜섏젣??/td><td>留대룎?댁쟾瑜??瑜?瑜??댁슜??鍮꾩젒珥됱떇 ?쒕룞</td></tr>
-<tr><td><b>湲곌퀎?겶룹옄湲곗쟻</b></td><td>?덉씪?쒕룞</td><td>?꾩옄?앹쓣 ?덉씪??諛李????먭린 ?≪씤?μ쑝濡??쒕룞 (?꾧린?쒕룞 ??</td></tr>
+<tr><th>구분</th><th>종류</th><th>원리</th></tr>
+<tr><td rowspan="3"><b>전기제동</b></td><td>발전제동</td><td>전동기를 발전기로 전환 → 전기에너지를 저항에서 열로 소산</td></tr>
+<tr><td>회생제동</td><td>발전한 전기를 전차선으로 되돌림 → 에너지 회수</td></tr>
+<tr><td>와류제동</td><td>맴돌이전류(와류)를 이용한 비접촉식 제동</td></tr>
+<tr><td><b>기계적·자기적</b></td><td>레일제동</td><td>전자석을 레일에 밀착 → 자기 흡인력으로 제동 (전기제동 ❌)</td></tr>
 </table>
-<div class="trap">?덉씪?쒕룞 = 湲곌퀎?겶룹옄湲곗쟻 ?쒕룞 ???꾧린?쒕룞</div>
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?꾧린?쒕룞? ?꾨룞湲곗쓽 ?꾧린?먮꼫吏瑜??쒖슜?⑸땲?? 諛쒖쟾?쒕룞? ???뿴濡??뚯궛, ?뚯깮?쒕룞? ?꾨젰留앹쑝濡??뚯닔, ?瑜섏젣?숈? 留대룎?댁쟾瑜섏쓽 諛섎컻?μ쓣 ?댁슜?⑸땲?? ?덉씪?쒕룞? ?꾩옄?앹쓣 ?덉씪??臾쇰━?곸쑝濡?諛李⑹떆耳??쒕룞?섎?濡?湲곌퀎?겶룹옄湲곗쟻 ?쒕룞???대떦?⑸땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?꾧린?쒕룞??醫낅쪟媛 ?꾨땶 寃껋??</div><div class="qe-a">?뺣떟: ?덉씪?쒕룞 (?꾧린?쒕룞 = 諛쒖쟾쨌?뚯깮쨌?瑜?</div><div class="qe-wrong">?ㅻ떟?⑥젙: ?덉씪?쒕룞???꾧린?쒕룞?쇰줈 遺꾨쪟 ???ㅻ떟</div></div>
+<div class="trap">레일제동 = 기계적·자기적 제동 ≠ 전기제동</div>
+<div class="theory-note"><strong>이론 배경:</strong> 전기제동은 전동기의 전기에너지를 활용합니다. 발전제동은 저항열로 소산, 회생제동은 전력망으로 회수, 와류제동은 맴돌이전류의 반발력을 이용합니다. 레일제동은 전자석을 레일에 물리적으로 밀착시켜 제동하므로 기계적·자기적 제동에 해당합니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 전기제동의 종류가 아닌 것은?</div><div class="qe-a">정답: 레일제동 (전기제동 = 발전·회생·와류)</div><div class="qe-wrong">오답함정: 레일제동을 전기제동으로 분류 → 오답</div></div>
 </div>
 </div>
 
 <div class="concept" id="C-30">
-<div class="concept-hd">C-30 ?ы뻾??Hunting)</div>
+<div class="concept-hd">C-30 사행동(Hunting)</div>
 <div class="concept-body">
-<div class="king-book-note"><span class="kb-label">?뱰 泥좊룄??援먯옱</span>
-<strong>1李??ы뻾??/strong>: ??띿뿉??諛쒖깮, <strong>媛먯뇿</strong>??(?먯뿰 ?뚮㈇)<br>
-<strong>2李??ы뻾??/strong>: <strong>?꾧퀎?띾룄 ?댁긽</strong>?먯꽌 諛쒖깮, <strong>鍮꾧컧??/strong> (?먯젏 ?ы빐吏? ?????꾪뿕<br>
-沅ㅺ컙 <strong>醫곸쓣?섎줉</strong>쨌異뺢굅(怨좎젙異뺢컙 嫄곕━) <strong>吏㏃쓣?섎줉</strong> ?ы뻾??而ㅼ쭚
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span>
+<strong>1차 사행동</strong>: 저속에서 발생, <strong>감쇠</strong>됨 (자연 소멸)<br>
+<strong>2차 사행동</strong>: <strong>임계속도 이상</strong>에서 발생, <strong>비감쇠</strong> (점점 심해짐) — 더 위험<br>
+궤간 <strong>좁을수록</strong>·축거(고정축간 거리) <strong>짧을수록</strong> 사행동 커짐
 </div>
 <table class="info-table">
-<tr><th>援щ텇</th><th>諛쒖깮 議곌굔</th><th>媛먯뇿 ?щ?</th></tr>
-<tr><td><b>1李??ы뻾??/b></td><td>?쇰컲 二쇳뻾 ?띾룄</td><td>媛먯뇿 (?먯뿰 ?뚮㈇)</td></tr>
-<tr><td><b>2李??ы뻾??/b></td><td>?꾧퀎?띾룄 ?댁긽</td><td>鍮꾧컧??(利앺룺, ?꾪뿕)</td></tr>
+<tr><th>구분</th><th>발생 조건</th><th>감쇠 여부</th></tr>
+<tr><td><b>1차 사행동</b></td><td>일반 주행 속도</td><td>감쇠 (자연 소멸)</td></tr>
+<tr><td><b>2차 사행동</b></td><td>임계속도 이상</td><td>비감쇠 (증폭, 위험)</td></tr>
 </table>
-<div class="theory-note"><strong>?ы뻾??媛먯냼 諛⑸쾿:</strong> ???뚯옣 ?ш쾶 ??李⑤쪣 吏由??ш쾶 ??李⑤쪣 ?듬㈃ 湲곗슱湲??묎쾶 ??怨좎젙異뺢컙 嫄곕━(異뺢굅) ?ш쾶</div>
-<div class="trap">沅ㅺ컙 ?볦쓣?섎줉 ?ы뻾??媛먯냼 / 醫곸쓣?섎줉 利앷?</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?ы뻾??以??꾧퀎?띾룄 ?댁긽?먯꽌 諛쒖깮?섍퀬 鍮꾧컧?좎씤 寃껋??</div><div class="qe-a">?뺣떟: 2李??ы뻾??/div><div class="qe-wrong">?ㅻ떟?⑥젙: 1李⑥? 2李?媛먯뇿 ?щ? ?쇰룞</div></div>
+<div class="theory-note"><strong>사행동 감소 방법:</strong> ① 파장 크게 ② 차륜 지름 크게 ③ 차륜 답면 기울기 작게 ④ 고정축간 거리(축거) 크게</div>
+<div class="trap">궤간 넓을수록 사행동 감소 / 좁을수록 증가</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 사행동 중 임계속도 이상에서 발생하고 비감쇠인 것은?</div><div class="qe-a">정답: 2차 사행동</div><div class="qe-wrong">오답함정: 1차와 2차 감쇠 여부 혼동</div></div>
 </div>
 </div>
 
 <div class="concept" id="C-31">
-<div class="concept-hd">C-31 李⑤웾吏꾨룞??醫낅쪟</div>
+<div class="concept-hd">C-31 차량진동의 종류</div>
 <div class="concept-body">
-<div class="king-book-note"><span class="kb-label">?뱰 泥좊룄??援먯옱</span>
-<strong>李⑤웾吏꾨룞 3醫? 濡ㅻ쭅(Rolling) 쨌 ?쇱묶(Pitching) 쨌 ?붿엵(Yawing)</strong><br>
-?좑툘 <strong>怨〓쪧蹂?붋룸컮?댁떛</strong>? ?대떦 遺꾨쪟 ?꾨떂 (?쒗뿕 ?ㅻ떟 ?좎?)
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span>
+<strong>차량진동 3종: 롤링(Rolling) · 피칭(Pitching) · 요잉(Yawing)</strong><br>
+⚠️ <strong>곡률변화·바운싱</strong>은 해당 분류 아님 (시험 오답 선지)
 </div>
 <table class="info-table">
-<tr><th>吏꾨룞 醫낅쪟</th><th>諛⑺뼢</th><th>?ㅻ챸</th></tr>
-<tr><td><b>濡ㅻ쭅(Rolling)</b></td><td>醫뚯슦 ?뚯쟾</td><td>李⑥껜媛 ?좊줈 諛⑺뼢 異뺤쑝濡?醫뚯슦濡?湲곗슱?댁???吏꾨룞</td></tr>
-<tr><td><b>?쇱묶(Pitching)</b></td><td>?욌뮘 ?뚯쟾</td><td>李⑥껜???욌뮘媛 踰덇컝???щ씪媛??吏꾨룞</td></tr>
-<tr><td><b>?붿엵(Yawing)</b></td><td>?섑룊 鍮꾪?由?/td><td>李⑥껜媛 ?섏쭅異뺤쓣 以묒떖?쇰줈 醫뚯슦濡??뚯쟾?섎뒗 吏꾨룞</td></tr>
+<tr><th>진동 종류</th><th>방향</th><th>설명</th></tr>
+<tr><td><b>롤링(Rolling)</b></td><td>좌우 회전</td><td>차체가 선로 방향 축으로 좌우로 기울어지는 진동</td></tr>
+<tr><td><b>피칭(Pitching)</b></td><td>앞뒤 회전</td><td>차체의 앞뒤가 번갈아 올라가는 진동</td></tr>
+<tr><td><b>요잉(Yawing)</b></td><td>수평 비틀림</td><td>차체가 수직축을 중심으로 좌우로 회전하는 진동</td></tr>
 </table>
-<div class="trap">濡ㅻ쭅쨌?쇱묶쨌?붿엵 3媛吏留???"怨〓쪧蹂?? ??/div>
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> 3異??뚯쟾?대룞 媛쒕뀗?낅땲?? 濡ㅻ쭅(Rolling)? X異??꾪썑諛⑺뼢) ?뚯쟾?쇰줈 李⑥껜媛 醫뚯슦濡?湲곗슱?댁?怨? ?쇱묶(Pitching)? Y異?醫뚯슦諛⑺뼢) ?뚯쟾?쇰줈 ?욌뮘媛 援먮?濡??щ씪媛硫? ?붿엵(Yawing)? Z異??섏쭅) ?뚯쟾?쇰줈 李⑥껜媛 ?섑룊 諛⑺뼢?쇰줈 鍮꾪?由쎈땲?? ??났湲걔룹꽑諛빧룹감?됱뿉 ?숈씪?섍쾶 ?곸슜?섎뒗 媛쒕뀗?낅땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. 泥좊룄李⑤웾??吏꾨룞 醫낅쪟???대떦?섏? ?딅뒗 寃껋??</div><div class="qe-a">?뺣떟: 怨〓쪧蹂??(吏꾨룞 = 濡ㅻ쭅쨌?쇱묶쨌?붿엵)</div><div class="qe-wrong">?ㅻ떟?⑥젙: 諛붿슫?굿룰끝瑜좊??붾? 吏꾨룞?쇰줈 ?쇰룞</div></div>
+<div class="trap">롤링·피칭·요잉 3가지만 → "곡률변화" ❌</div>
+<div class="theory-note"><strong>이론 배경:</strong> 3축 회전운동 개념입니다. 롤링(Rolling)은 X축(전후방향) 회전으로 차체가 좌우로 기울어지고, 피칭(Pitching)은 Y축(좌우방향) 회전으로 앞뒤가 교대로 올라가며, 요잉(Yawing)은 Z축(수직) 회전으로 차체가 수평 방향으로 비틀립니다. 항공기·선박·차량에 동일하게 적용되는 개념입니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 철도차량의 진동 종류에 해당하지 않는 것은?</div><div class="qe-a">정답: 곡률변화 (진동 = 롤링·피칭·요잉)</div><div class="qe-wrong">오답함정: 바운싱·곡률변화를 진동으로 혼동</div></div>
 </div>
 </div>
 
 <div class="concept" id="C-32">
-<div class="concept-hd">C-32 李⑤웾?대줎 蹂댁땐 (?됰룞?ъ씠?는텹IM쨌蹂댄샇?μ튂)</div>
+<div class="concept-hd">C-32 차량이론 보충 (냉동사이클·LIM·보호장치)</div>
 <div class="concept-body">
-<div class="king-book-note"><span class="kb-label">?뱰 泥좊룄??援먯옱</span>
-<strong>?됰룞?ъ씠??4?④퀎 (?붽린: ?뺤쓳?쎌쬆)</strong><br>
-?뺤텞 ???묒텞 ???쎌갹 ??利앸컻<br>
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span>
+<strong>냉동사이클 4단계 (암기: 압응팽증)</strong><br>
+압축 → 응축 → 팽창 → 증발<br>
 <br>
-<strong>LIM (?좏삎?좊룄?꾨룞湲? Linear Induction Motor)</strong><br>
-쨌 ?먯갑??遺덊븘????湲됯뎄諛걔룰툒怨≪꽑 援ш컙???좊━<br>
-쨌 ?뚯쟾 ?놁씠 吏곸꽑 異붿쭊??諛쒖깮<br>
+<strong>LIM (선형유도전동기, Linear Induction Motor)</strong><br>
+· 점착력 불필요 → 급구배·급곡선 구간에 유리<br>
+· 회전 없이 직선 추진력 발생<br>
 <br>
-<strong>紐⑥쭊(?댁긽?꾩븬) 蹂댄샇?μ튂</strong><br>
-쨌 <strong>援먮쪟紐⑥쭊</strong> ??<strong>吏곷쪟 ?쇰ː湲?/strong>濡?蹂댄샇<br>
-쨌 <strong>吏곷쪟紐⑥쭊</strong> ??<strong>二쇳벂利?/strong>濡?蹂댄샇
+<strong>모진(이상전압) 보호장치</strong><br>
+· <strong>교류모진</strong> → <strong>직류 피뢰기</strong>로 보호<br>
+· <strong>직류모진</strong> → <strong>주퓨즈</strong>로 보호
 </div>
 <table class="info-table">
-<tr><th>??ぉ</th><th>?듭떖 ?댁슜</th></tr>
-<tr><td><b>?됰룞?ъ씠??/b></td><td>?뺤텞 ???묒텞 ???쎌갹 ??利앸컻 (?뺤쓳?쎌쬆)</td></tr>
-<tr><td><b>LIM</b></td><td>?좏삎?좊룄?꾨룞湲? ?먯갑 遺덊븘?? 湲됯뎄諛걔룰툒怨≪꽑 ?좊━</td></tr>
-<tr><td><b>援먮쪟紐⑥쭊 蹂댄샇</b></td><td>吏곷쪟 ?쇰ː湲?/td></tr>
-<tr><td><b>吏곷쪟紐⑥쭊 蹂댄샇</b></td><td>二쇳벂利?/td></tr>
+<tr><th>항목</th><th>핵심 내용</th></tr>
+<tr><td><b>냉동사이클</b></td><td>압축 → 응축 → 팽창 → 증발 (압응팽증)</td></tr>
+<tr><td><b>LIM</b></td><td>선형유도전동기, 점착 불필요, 급구배·급곡선 유리</td></tr>
+<tr><td><b>교류모진 보호</b></td><td>직류 피뢰기</td></tr>
+<tr><td><b>직류모진 보호</b></td><td>주퓨즈</td></tr>
 </table>
-<div class="trap">援먮쪟紐⑥쭊 ??吏곷쪟 ?쇰ː湲?/ 吏곷쪟紐⑥쭊 ??二쇳벂利?(?쇰룞 二쇱쓽)</div>
-<div class="trap">?좑툘 援먯옱 ?쒗쁽 二쇱쓽: 援먮쪟 ?꾩감???댁긽?꾩븬 ??援먮쪟 ?쇰ː湲?/ 吏곷쪟 ?꾩감???댁긽?꾩븬 ??吏곷쪟 ?쇰ː湲??먮뒗 二쇳벂利?媛 ?꾧린?곸쑝濡??뺥솗???쒗쁽. ??援먯옱 ?쒗쁽: 援먮쪟紐⑥쭊=吏곷쪟?쇰ː湲곕뒗 ?꾧린?곸쑝濡??뺥솗?섏? ?딆쓣 ???덉쓬. ?쒗뿕?먯꽌??援먯옱 ?쒗쁽(援먮쪟紐⑥쭊?믪쭅瑜??쇰ː湲? 洹몃?濡??ъ슜??寃?</div>
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?됰룞?ъ씠???뺤쓳?쎌쬆)? ?됰ℓ媛 ?뺤텞?믪쓳異?諛⑹뿴)?믫뙺李?媛먯븬)?믪쬆諛??≪뿴) ?쒖쑝濡??쒗솚?섎ŉ ?됯컖 ?④낵瑜??낅땲?? LIM? ?뚯쟾???놁씠 吏곸꽑 ?꾩옄湲곕젰?쇰줈 異붿쭊?섎?濡??먯갑?μ씠 ?꾩슂 ?놁뼱 湲됯뎄諛걔룰툒怨≪꽑??媛뺥빀?덈떎. 紐⑥쭊(?댁긽?꾩븬)? ?꾩썝 ?깃꺽(援먮쪟/吏곷쪟)??留욌뒗 蹂댄샇?μ튂濡?李⑤떒?⑸땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?됰룞?ъ씠?댁쓽 ?쒖꽌瑜??곗떆??</div><div class="qe-a">?뺣떟: ?뺤텞 ???묒텞 ???쎌갹 ??利앸컻</div><div class="qe-wrong">?ㅻ떟?⑥젙: ?쒖꽌 ?쇰룞 (?묒텞쨌?쎌갹 ?꾩튂)</div></div>
+<div class="trap">교류모진 → 직류 피뢰기 / 직류모진 → 주퓨즈 (혼동 주의)</div>
+<div class="trap">⚠️ 교재 표현 주의: 교류 전차선 이상전압 → 교류 피뢰기 / 직류 전차선 이상전압 → 직류 피뢰기(또는 주퓨즈)가 전기적으로 정확한 표현. ※ 교재 표현: 교류모진=직류피뢰기는 전기적으로 정확하지 않을 수 있음. 시험에서는 교재 표현(교류모진→직류 피뢰기) 그대로 사용할 것.</div>
+<div class="theory-note"><strong>이론 배경:</strong> 냉동사이클(압응팽증)은 냉매가 압축→응축(방열)→팽창(감압)→증발(흡열) 순으로 순환하며 냉각 효과를 냅니다. LIM은 회전자 없이 직선 전자기력으로 추진하므로 점착력이 필요 없어 급구배·급곡선에 강합니다. 모진(이상전압)은 전원 성격(교류/직류)에 맞는 보호장치로 차단합니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 냉동사이클의 순서를 쓰시오.</div><div class="qe-a">정답: 압축 → 응축 → 팽창 → 증발</div><div class="qe-wrong">오답함정: 순서 혼동 (응축·팽창 위치)</div></div>
 </div>
 </div>
 
 <div class="concept" id="C-33">
-<div class="concept-hd">C-33 ?먯갑怨꾩닔쨌?먯갑??/div>
+<div class="concept-hd">C-33 점착계수·점착력</div>
 <div class="concept-body">
-<div class="king-book-note"><span class="kb-label">?뱰 泥좊룄??援먯옱</span>
-<strong>?먯갑??怨듭떇: F = 關 횞 W</strong><br>
-關(?먯갑怨꾩닔) 횞 W(李⑤쪣 異뺤쨷) = ?먯갑??N ?먮뒗 kgf)<br>
-?좑툘 ?먯갑怨꾩닔??臾댁감???⑥쐞 ?놁쓬) ??"kg" ?⑥쐞 ?꾨떂
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span>
+<strong>점착력 공식: F = μ × W</strong><br>
+μ(점착계수) × W(차륜 축중) = 점착력(N 또는 kgf)<br>
+⚠️ 점착계수는 무차원(단위 없음) — "kg" 단위 아님
 </div>
 <table class="info-table">
-<tr><th>??ぉ</th><th>?댁슜</th></tr>
-<tr><td><b>?먯갑怨꾩닔 關</b></td><td>李⑤쪣怨??덉씪 ?ъ씠 ?묒큺硫댁쓽 留덉같 ?뱀꽦 (0~1 踰붿쐞)</td></tr>
-<tr><td><b>?먯갑??F</b></td><td>李⑤쪣???덉씪??誘몃걚?ъ?吏 ?딄퀬 ?꾨떖?????덈뒗 理쒕? ??/td></tr>
-<tr><td><b>異뺤쨷 W</b></td><td>李⑥텞??嫄몃━???섏쭅 ?섏쨷</td></tr>
+<tr><th>항목</th><th>내용</th></tr>
+<tr><td><b>점착계수 μ</b></td><td>차륜과 레일 사이 접촉면의 마찰 특성 (0~1 범위)</td></tr>
+<tr><td><b>점착력 F</b></td><td>차륜이 레일에 미끄러지지 않고 전달할 수 있는 최대 힘</td></tr>
+<tr><td><b>축중 W</b></td><td>차축에 걸리는 수직 하중</td></tr>
 </table>
 <table class="info-table" style="margin-top:6px;">
-<tr><th>?먯갑怨꾩닔 媛먯냼 ?먯씤</th><th>?댁슜</th></tr>
-<tr><td>?띾룄 利앷?</td><td>怨좎냽?쇱닔濡??먯갑怨꾩닔 媛먯냼</td></tr>
-<tr class="hl"><td>?덉씪 硫??ㅼ뿼</td><td>臾셋룰린由꽷룸굺???깆씠 ?덉씪??臾살쑝硫?媛먯냼</td></tr>
-<tr><td>李⑤쪣 ?듬㈃ ?곹깭</td><td>留덈え쨌?ㅼ뿼?쇰줈 媛먯냼</td></tr>
+<tr><th>점착계수 감소 원인</th><th>내용</th></tr>
+<tr><td>속도 증가</td><td>고속일수록 점착계수 감소</td></tr>
+<tr class="hl"><td>레일 면 오염</td><td>물·기름·낙엽 등이 레일에 묻으면 감소</td></tr>
+<tr><td>차륜 답면 상태</td><td>마모·오염으로 감소</td></tr>
 </table>
-<div class="trap">??"?먯갑??= 留덉같?κ낵 臾닿?" ???먯갑?μ? <b>留덉같?κ낵 ?숈씪 媛쒕뀗</b> (?덉씪쨌李⑤쪣 ?묒큺 留덉같)</div>
-<div class="trap">??"?먯갑怨꾩닔 ?⑥쐞 = kg" ??<b>臾댁감??/b> (?⑥쐞 ?놁쓬)</div>
-<div class="tip">?먯갑?λ낫????寃ъ씤???곸슜 ????<b>怨듭쟾(Slipping)</b> 諛쒖깮</div>
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?먯갑?μ? ??댁뼱 留덉같?κ낵 媛숈? 媛쒕뀗?쇰줈, 李⑤쪣???덉씪 ?꾩뿉??誘몃걚?ъ?吏 ?딄퀬 ?꾨떖?????덈뒗 理쒕? ?섏엯?덈떎. ?먯갑怨꾩닔(關)???щ즺? ?쒕㈃ ?곹깭???곕씪 ?ㅻⅤ硫? 嫄댁“ ?덉씪 > ?듭쑄 ?덉씪 > ?ㅼ뿼 ?덉씪(?숈뿽쨌湲곕쫫 ?? ?쒖쑝濡?媛먯냼?⑸땲?? ?⑥쐞媛 ?녿뒗 臾댁감??怨꾩닔?낅땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. 異뺤쨷??15t, ?먯갑怨꾩닔媛 0.2?????먯갑?μ??</div><div class="qe-a">?뺣떟: F = 0.2 횞 15 = 3t (?먯갑??3t)</div><div class="qe-wrong">?ㅻ떟?⑥젙: ?먯갑怨꾩닔???⑥쐞媛 ?덈떎怨?李⑷컖 ??臾댁감??/div></div>
+<div class="trap">❌ "점착력 = 마찰력과 무관" → 점착력은 <b>마찰력과 동일 개념</b> (레일·차륜 접촉 마찰)</div>
+<div class="trap">❌ "점착계수 단위 = kg" → <b>무차원</b> (단위 없음)</div>
+<div class="tip">점착력보다 큰 견인력 적용 시 → <b>공전(Slipping)</b> 발생</div>
+<div class="theory-note"><strong>이론 배경:</strong> 점착력은 타이어 마찰력과 같은 개념으로, 차륜이 레일 위에서 미끄러지지 않고 전달할 수 있는 최대 힘입니다. 점착계수(μ)는 재료와 표면 상태에 따라 다르며, 건조 레일 > 습윤 레일 > 오염 레일(낙엽·기름 등) 순으로 감소합니다. 단위가 없는 무차원 계수입니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 축중이 15t, 점착계수가 0.2일 때 점착력은?</div><div class="qe-a">정답: F = 0.2 × 15 = 3t (점착력 3t)</div><div class="qe-wrong">오답함정: 점착계수에 단위가 있다고 착각 → 무차원</div></div>
 </div>
 </div>
 
 <div class="concept" id="C-34">
-<div class="concept-hd">C-34 ?댁감???4醫?泥닿퀎</div>
+<div class="concept-hd">C-34 열차저항 4종 체계</div>
 <div class="concept-body">
-<div class="king-book-note"><span class="kb-label">?뱰 泥좊룄??援먯옱</span>
-<strong>?댁감???4醫? 異쒕컻???쨌 二쇳뻾???쨌 援щ같???쨌 怨≪꽑???/strong><br>
-?좑툘 <strong>異쒕컻???/strong>??媛???щ떎 ???쒕룞 ??理쒕? ???꾩슂
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span>
+<strong>열차저항 4종: 출발저항 · 주행저항 · 구배저항 · 곡선저항</strong><br>
+⚠️ <strong>출발저항</strong>이 가장 크다 → 시동 시 최대 힘 필요
 </div>
 <table class="info-table">
-<tr><th>???醫낅쪟</th><th>諛쒖깮 議곌굔</th><th>?뱀쭠</th></tr>
-<tr class="hl"><td><b>異쒕컻???/b></td><td>?뺤? ??異쒕컻 ??/td><td><b>媛????/b> ???(踰좎뼱留??뺤?留덉같)</td></tr>
-<tr><td><b>二쇳뻾???/b></td><td>?깆냽 二쇳뻾 ??/td><td>怨듦린???룰린怨꾩???룸젅?쇱????⑹궛</td></tr>
-<tr class="hl"><td><b>援щ같???/b></td><td>寃쎌궗 援ш컙</td><td>1?곕떦 <b>1 kgf/t</b> (?ㅻⅤ留?+, ?대━留???</td></tr>
-<tr><td><b>怨≪꽑???/b></td><td>怨≪꽑 援ш컙</td><td>諛섏?由꾩씠 ?묒쓣?섎줉 利앷? (?뚮옖吏 留덉같)</td></tr>
+<tr><th>저항 종류</th><th>발생 조건</th><th>특징</th></tr>
+<tr class="hl"><td><b>출발저항</b></td><td>정지 → 출발 시</td><td><b>가장 큰</b> 저항 (베어링 정지마찰)</td></tr>
+<tr><td><b>주행저항</b></td><td>등속 주행 시</td><td>공기저항·기계저항·레일저항 합산</td></tr>
+<tr class="hl"><td><b>구배저항</b></td><td>경사 구간</td><td>1‰당 <b>1 kgf/t</b> (오르막 +, 내리막 −)</td></tr>
+<tr><td><b>곡선저항</b></td><td>곡선 구간</td><td>반지름이 작을수록 증가 (플랜지 마찰)</td></tr>
 </table>
-<div class="trap">??"援щ같???= 1% ??1kgf/t" ??<b>1???쇰?) ??1kgf/t</b> (% ?꾨떂, ???쇰?)</div>
-<div class="trap">??"二쇳뻾???씠 媛???? ??<b>異쒕컻???/b>??媛????/div>
-<div class="tip">珥??댁감???= 異쒕컻???+ 二쇳뻾???+ 援щ같???+ 怨≪꽑???/div>
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> 異쒕컻???씠 媛?????댁쑀???뺤? ?곹깭??踰좎뼱留??뺤?留덉같(?쒏뫆?????대룞留덉같蹂대떎 ?ш린 ?뚮Ц?낅땲?? 援щ같???1??1kgf/t??寃쎌궗媛곸쓽 sin媛믨낵 以묐젰??愿怨꾩뿉???좊룄?⑸땲?? 怨≪꽑???? ?뚮옖吏媛 ?덉씪 痢〓㈃??誘몃뒗 ?섏쑝濡? 諛섏?由꾩씠 ?묒쓣?섎줉 而ㅼ쭛?덈떎.</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. 援щ같???쓽 ?ш린??援щ같 1?곕떦 紐?kgf/t?멸??</div><div class="qe-a">?뺣떟: 1 kgf/t</div><div class="qe-wrong">?ㅻ떟?⑥젙: "1% ??1kgf/t"濡??쇰룞 ???쇱꽱??%)媛 ?꾨땶 ?쇰?(??</div></div>
+<div class="trap">❌ "구배저항 = 1% 당 1kgf/t" → <b>1‰(퍼밀) 당 1kgf/t</b> (% 아님, ‰ 퍼밀)</div>
+<div class="trap">❌ "주행저항이 가장 큼" → <b>출발저항</b>이 가장 큼</div>
+<div class="tip">총 열차저항 = 출발저항 + 주행저항 + 구배저항 + 곡선저항</div>
+<div class="theory-note"><strong>이론 배경:</strong> 출발저항이 가장 큰 이유는 정지 상태의 베어링 정지마찰(靜摩擦)이 운동마찰보다 크기 때문입니다. 구배저항 1‰=1kgf/t는 경사각의 sin값과 중력의 관계에서 유도됩니다. 곡선저항은 플랜지가 레일 측면을 미는 힘으로, 반지름이 작을수록 커집니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 구배저항의 크기는 구배 1‰당 몇 kgf/t인가?</div><div class="qe-a">정답: 1 kgf/t</div><div class="qe-wrong">오답함정: "1% 당 1kgf/t"로 혼동 — 퍼센트(%)가 아닌 퍼밀(‰)</div></div>
 </div>
 </div>
 
 <div class="concept" id="C-35">
-<div class="concept-hd">C-35 怨듦린?쒕룞 3諛⑹떇 + 寃ъ씤??怨듭떇</div>
+<div class="concept-hd">C-35 공기제동 3방식 + 견인력 공식</div>
 <div class="concept-body">
-<div class="king-book-note"><span class="kb-label">?뱰 泥좊룄??援먯옱</span>
-<strong>怨듦린?쒕룞 3諛⑹떇: 吏곹넻??쨌 ?먮룞??쨌 ?꾩옄?먮룞??/strong>
+<div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span>
+<strong>공기제동 3방식: 직통식 · 자동식 · 전자자동식</strong>
 </div>
 <table class="info-table">
-<tr><th>諛⑹떇</th><th>?먮━</th><th>?뱀쭠</th></tr>
-<tr class="hl"><td><b>吏곹넻??/b></td><td>?뺤텞怨듦린瑜?吏곸젒 ?쒕룞 ?ㅻ┛?붾줈 ?꾨떖</td><td>援ъ“ ?⑥닚, ?댁감遺꾨━ ???쒕룞 遺덇? ??<b>?붾Ъ쨌?④굅由?/b></td></tr>
-<tr><td><b>?먮룞??/b></td><td>釉뚮젅?댄겕 愿 ?뺣젰 <b>???/b> ???먮룞 ?쒕룞</td><td>?댁감 遺꾨━ ???먮룞 ?쒕룞 ??<b>?덉쟾???믪쓬</b>, ?ш컼 ?댁감</td></tr>
-<tr class="hl"><td><b>?꾩옄?먮룞??/b></td><td>?먮룞??+ ?꾧린 ?좏샇 蹂묒슜</td><td><b>?묐떟 ?띾룄 鍮좊쫫</b>, 湲??댁감???좊━</td></tr>
+<tr><th>방식</th><th>원리</th><th>특징</th></tr>
+<tr class="hl"><td><b>직통식</b></td><td>압축공기를 직접 제동 실린더로 전달</td><td>구조 단순, 열차분리 시 제동 불가 → <b>화물·단거리</b></td></tr>
+<tr><td><b>자동식</b></td><td>브레이크 관 압력 <b>저하</b> 시 자동 제동</td><td>열차 분리 시 자동 제동 → <b>안전성 높음</b>, 여객 열차</td></tr>
+<tr class="hl"><td><b>전자자동식</b></td><td>자동식 + 전기 신호 병용</td><td><b>응답 속도 빠름</b>, 긴 열차에 유리</td></tr>
 </table>
-<div class="trap">??"吏곹넻??= ?댁감 遺꾨━ ???먮룞 ?쒕룞" ??吏곹넻?앹? <b>?먮룞 ?쒕룞 ????/b> (?먮룞?앹씠 遺꾨━ ???먮룞 ?쒕룞)</div>
-<div class="trap">??"?먮룞??= 愿???믪븘吏????쒕룞" ??<b>?뺣젰 ???/b> ???쒕룞</div>
-<p style="font-weight:bold;color:#92400e;margin:12px 0 6px;">?뵩 寃ъ씤??怨듭떇 ?뺥깭</p>
+<div class="trap">❌ "직통식 = 열차 분리 시 자동 제동" → 직통식은 <b>자동 제동 안 됨</b> (자동식이 분리 시 자동 제동)</div>
+<div class="trap">❌ "자동식 = 관압 높아질 때 제동" → <b>압력 저하</b> 시 제동</div>
+<p style="font-weight:bold;color:#92400e;margin:12px 0 6px;">🔧 견인력 공식 형태</p>
 <table class="info-table">
-<tr><th>怨듭떇</th><th>?댁슜</th></tr>
-<tr class="hl"><td><b>寃ъ씤???쒓퀎</b></td><td>F ??關 횞 W (?먯갑???대궡?ъ빞 怨듭쟾 ?놁쓬)</td></tr>
-<tr><td><b>?띾룄? 寃ъ씤??/b></td><td>F = P / v (P: 異쒕젰[W], v: ?띾룄[m/s]) ???띾룄 利앷? ??寃ъ씤??媛먯냼</td></tr>
-<tr class="hl"><td><b>?좏슚 寃ъ씤??/b></td><td>寃ъ씤?????댁감???= 媛??媛????/td></tr>
+<tr><th>공식</th><th>내용</th></tr>
+<tr class="hl"><td><b>견인력 한계</b></td><td>F ≤ μ × W (점착력 이내여야 공전 없음)</td></tr>
+<tr><td><b>속도와 견인력</b></td><td>F = P / v (P: 출력[W], v: 속도[m/s]) → 속도 증가 시 견인력 감소</td></tr>
+<tr class="hl"><td><b>유효 견인력</b></td><td>견인력 − 열차저항 = 가속 가능 힘</td></tr>
 </table>
-<div class="trap">??"?띾룄 ?믪븘吏덉닔濡?寃ъ씤??利앷?" ??F = P/v ?대?濡??띾룄 利앷? ??<b>寃ъ씤??媛먯냼</b></div>
-<div class="tip">?먯갑?λ낫??寃ъ씤?μ씠 ?щ㈃ ??怨듭쟾(Slipping) 諛쒖깮</div>
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?먮룞??怨듦린?쒕룞? Fail-Safe ?먮━?낅땲?? ?쒕룞愿(釉뚮젅?댄겕愿) ??怨듦린?뺤씠 ?뺤긽?대㈃ ?쒕룞 ?댁젣, ?뺣젰????븘吏硫??댁감 遺꾨━쨌愿 ?뚯넀 ?? ?먮룞 ?쒕룞?⑸땲?? ?꾧린쨌怨듦린 怨듦툒???딄꺼??諛섎뱶???덉쟾(?뺤?) 諛⑺뼢?쇰줈 ?묐룞?섎룄濡??ㅺ퀎???쒖뒪?쒖엯?덈떎.</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?먮룞怨듦린?쒕룞 諛⑹떇?먯꽌 ?쒕룞???묐룞?섎뒗 議곌굔??</div><div class="qe-a">?뺣떟: 釉뚮젅?댄겕 愿(?쒕룞愿) ?뺣젰????섎맆 ???먮룞?쇰줈 ?쒕룞</div><div class="qe-wrong">?ㅻ떟?⑥젙: "?뺣젰???믪븘吏??? ??諛섎?. ?뺣젰 ??????쒕룞</div></div>
+<div class="trap">❌ "속도 높아질수록 견인력 증가" → F = P/v 이므로 속도 증가 시 <b>견인력 감소</b></div>
+<div class="tip">점착력보다 견인력이 크면 → 공전(Slipping) 발생</div>
+<div class="theory-note"><strong>이론 배경:</strong> 자동식 공기제동은 Fail-Safe 원리입니다. 제동관(브레이크관) 내 공기압이 정상이면 제동 해제, 압력이 낮아지면(열차 분리·관 파손 등) 자동 제동됩니다. 전기·공기 공급이 끊겨도 반드시 안전(정지) 방향으로 작동하도록 설계된 시스템입니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 자동공기제동 방식에서 제동이 작동하는 조건은?</div><div class="qe-a">정답: 브레이크 관(제동관) 압력이 저하될 때 자동으로 제동</div><div class="qe-wrong">오답함정: "압력이 높아질 때" — 반대. 압력 저하 시 제동</div></div>
 </div>
 
-<div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="al7QbyZkEcM" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/al7QbyZkEcM/hqdefault.jpg" alt="GTX-A ??щ룄 ?곕꼸 ?붿옱 ??묓썕?? loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#dc2626;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI ?듭떖?곸긽</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">GTX-A ??щ룄 ?곕꼸 ?붿옱 ??묓썕??/span></div></div>
-<div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="WbX73ZsudsA" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/WbX73ZsudsA/hqdefault.jpg" alt="?댁감??釉붾옓諛뺤뒪 ?댁감?댄뻾湲곕줉?μ튂 湲곗닠?댁쟾" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#6b7280;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI 李멸퀬?곸긽</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">?댁감??釉붾옓諛뺤뒪 ?댁감?댄뻾湲곕줉?μ튂 湲곗닠?댁쟾</span></div></div>
+<div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="al7QbyZkEcM" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/al7QbyZkEcM/hqdefault.jpg" alt="GTX-A 대심도 터널 화재 대응훈련" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#dc2626;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI 핵심영상</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">GTX-A 대심도 터널 화재 대응훈련</span></div></div>
+<div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="WbX73ZsudsA" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/WbX73ZsudsA/hqdefault.jpg" alt="열차의 블랙박스 열차운행기록장치 기술이전" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#6b7280;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI 참고영상</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">열차의 블랙박스 열차운행기록장치 기술이전</span></div></div>
 </div>
 
 </div>
 </div>
 
-<div class="part" id="part8"><div class="part-title" onclick="togglePart(this)"><span>PART 8. 鍮꾩긽議곗튂 ?끸쁾??/span><span class="arr">??/span></div><div class="part-body">
+<div class="part" id="part8"><div class="part-title" onclick="togglePart(this)"><span>PART 8. 비상조치 ★★★</span><span class="arr">▼</span></div><div class="part-body">
 
-<div class="concept" id="C-36"><div class="concept-title"><span class="cnum">C-36</span>鍮꾩긽議곗튂 ?곗꽑?쒖쐞 ??4?④퀎 ?먯튃 ?끸쁾??/div>
+<div class="concept" id="C-36"><div class="concept-title"><span class="cnum">C-36</span>비상조치 우선순위 — 4단계 원칙 ★★★</div>
 <div class="step-box" style="border-left:4px solid #dc2626;background:#fef2f2;">
-<b>鍮꾩긽 諛쒖깮 ??議곗튂 ?쒖꽌</b><br>
-??<b>2李??ш퀬 諛⑹?</b> (諛⑺샇 議곗튂 ???꾨갑 ?댁감???뚮┝, ?좏샇?쇨? ?ㅼ튂)<br>
-??<b>愿?쒕낫怨?/b> (愿?쒖궗?먭쾶 ?ш퀬 ?댁슜쨌?꾩튂 利됱떆 蹂닿퀬)<br>
-??<b>?밴컼 蹂댄샇</b> (?덈궡諛⑹넚, ????좊룄, 遺?곸옄 泥섏튂)<br>
-??<b>蹂듦뎄</b> (援ъ썝?댁감 ?붿껌, ?좊줈 ?뺣━)
+<b>비상 발생 시 조치 순서</b><br>
+① <b>2차 사고 방지</b> (방호 조치 — 후방 열차에 알림, 신호염관 설치)<br>
+② <b>관제보고</b> (관제사에게 사고 내용·위치 즉시 보고)<br>
+③ <b>승객 보호</b> (안내방송, 대피 유도, 부상자 처치)<br>
+④ <b>복구</b> (구원열차 요청, 선로 정리)
 </div>
-<div class="trap">?쒖꽌 諛붽씀???⑥젙 二쇱쓽 ???좊갑?멤넂?↔??쒕낫怨졻넂??듅媛앸낫?멤넂?ｋ났援? "?밴컼 蹂댄샇媛 理쒖슦?? ??/div>
-<div class="theory-note"><strong>??諛⑺샇媛 理쒖슦?좎씤媛?</strong> 2李??ш퀬(?꾨갑 ?댁감 異붾룎)媛 諛쒖깮?섎㈃ ?쇳빐媛 湲고븯湲됱닔?곸쑝濡?而ㅼ쭛?덈떎. 諛⑺샇 議곗튂濡??꾩냽 ?댁감瑜??뺤??쒗궎??寃껋씠 理쒖슦?좎엯?덈떎. 洹몃떎??愿?쒖뿉 蹂닿퀬???좊줈 ?꾩껜 ?듭젣瑜?諛쏄퀬, ?밴컼 蹂댄샇? 蹂듦뎄瑜?吏꾪뻾?⑸땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?댁감 ?ш퀬 諛쒖깮 ??湲곌??ъ쓽 議곗튂 ?곗꽑?쒖쐞瑜?4?④퀎濡??곗떆??</div><div class="qe-a">?뺣떟: ??李⑥궗怨?諛⑹?(諛⑺샇) ???↔??쒕낫怨?????듅媛앸낫?????ｋ났援?/div><div class="qe-wrong">?ㅻ떟?⑥젙: "?밴컼 蹂댄샇瑜?媛??癒쇱? ?댁빞 ?쒕떎"???ㅻ떟 ??諛⑺샇媛 理쒖슦??/div></div>
+<div class="trap">순서 바꾸는 함정 주의 — ①방호→②관제보고→③승객보호→④복구. "승객 보호가 최우선" ❌</div>
+<div class="theory-note"><strong>왜 방호가 최우선인가?</strong> 2차 사고(후방 열차 추돌)가 발생하면 피해가 기하급수적으로 커집니다. 방호 조치로 후속 열차를 정지시키는 것이 최우선입니다. 그다음 관제에 보고해 선로 전체 통제를 받고, 승객 보호와 복구를 진행합니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 열차 사고 발생 시 기관사의 조치 우선순위를 4단계로 쓰시오.</div><div class="qe-a">정답: ①2차사고 방지(방호) → ②관제보고 → ③승객보호 → ④복구</div><div class="qe-wrong">오답함정: "승객 보호를 가장 먼저 해야 한다"는 오답 — 방호가 최우선</div></div>
 </div>
 
-<div class="concept" id="C-37"><div class="concept-title"><span class="cnum">C-37</span>吏?곷갑??쨌 臾댁꽑諛⑺샇</div>
+<div class="concept" id="C-37"><div class="concept-title"><span class="cnum">C-37</span>지상방호 · 무선방호</div>
 <div class="table-wrap"><table>
-<tr><th>諛⑺샇 諛⑸쾿</th><th>諛⑸쾿</th><th>嫄곕━</th></tr>
-<tr class="hl"><td><b>吏?곷갑??/b></td><td>吏?μ????꾨갑???좏샇?쇨?(諛쒗솕?쇨?) ?ㅼ튂</td><td>蹂듭꽑: <b>300m ?댁긽</b> ?닿꺽 / ?⑥꽑: <b>600m ?댁긽</b> ?닿꺽</td></tr>
-<tr><td><b>臾댁꽑諛⑺샇</b></td><td>臾댁꽑諛⑺샇 梨꾨꼸(鍮꾩긽梨꾨꼸)濡??몄젒 ?댁감쨌愿?쒖뿉 利됱떆 ?듬낫</td><td>利됱떆 (嫄곕━ 臾닿?)</td></tr>
+<tr><th>방호 방법</th><th>방법</th><th>거리</th></tr>
+<tr class="hl"><td><b>지상방호</b></td><td>지장지점 후방에 신호염관(발화염관) 설치</td><td>복선: <b>300m 이상</b> 이격 / 단선: <b>600m 이상</b> 이격</td></tr>
+<tr><td><b>무선방호</b></td><td>무선방호 채널(비상채널)로 인접 열차·관제에 즉시 통보</td><td>즉시 (거리 무관)</td></tr>
 </table></div>
-<div class="trap">吏?곷갑????蹂듭꽑=300m, ?⑥꽑=600m (?뺤??섏떊??200m? ?쇰룞 二쇱쓽!)</div>
-<div class="tip">吏?곷갑?몃뒗 蹂듭꽑蹂대떎 ?⑥꽑????癒?嫄곕━(600m) ???⑥꽑? 諛섎?諛⑺뼢 ?댁감??諛⑺샇?댁빞 ?섍린 ?뚮Ц</div>
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> 吏?곷갑??嫄곕━???댁감???쒕룞嫄곕━? ?덉쟾?ъ쑀瑜?怨좊젮???곗젙?⑸땲?? 蹂듭꽑? ?대떦 諛⑺뼢 ?댁감留?諛⑺샇?섎㈃ ?섏?留? ?⑥꽑? 媛숈? ?좊줈瑜??묐갑?μ씠 怨듭쑀?섎?濡?諛섎??몃룄 諛⑺샇?댁빞 ??2諛??섏?(600m)???꾩슂?⑸땲?? 臾댁꽑諛⑺샇??吏?곷갑?몃? 蹂댁셿?섎ŉ 利됱떆쨌愿묐쾾???꾪뙆媛 媛?ν빀?덈떎.</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?⑥꽑 援ш컙?먯꽌 吏?곷갑?????좏샇?쇨? ?ㅼ튂 嫄곕━??</div><div class="qe-a">?뺣떟: 吏?μ??먯쑝濡쒕???600m ?댁긽 ?닿꺽</div><div class="qe-wrong">?ㅻ떟?⑥젙: 200m(?섏떊???꾩튂)? ?쇰룞?섎뒗 ?ㅻ떟</div></div>
+<div class="trap">지상방호 — 복선=300m, 단선=600m (정지수신호 200m와 혼동 주의!)</div>
+<div class="tip">지상방호는 복선보다 단선이 더 먼 거리(600m) — 단선은 반대방향 열차도 방호해야 하기 때문</div>
+<div class="theory-note"><strong>이론 배경:</strong> 지상방호 거리는 열차의 제동거리와 안전여유를 고려해 산정합니다. 복선은 해당 방향 열차만 방호하면 되지만, 단선은 같은 선로를 양방향이 공유하므로 반대편도 방호해야 해 2배 수준(600m)이 필요합니다. 무선방호는 지상방호를 보완하며 즉시·광범위 전파가 가능합니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 단선 구간에서 지상방호 시 신호염관 설치 거리는?</div><div class="qe-a">정답: 지장지점으로부터 600m 이상 이격</div><div class="qe-wrong">오답함정: 200m(수신호 위치)와 혼동하는 오답</div></div>
 </div>
 
-<div class="concept" id="C-38"><div class="concept-title"><span class="cnum">C-38</span>?댁감遺꾨━ ?먮룞?뺤감 ?먮━</div>
+<div class="concept" id="C-38"><div class="concept-title"><span class="cnum">C-38</span>열차분리 자동정차 원리</div>
 <div class="step-box">
-<b>?댁감 遺꾨━ ???먮룞 鍮꾩긽?쒕룞 ?먮━ (Fail-Safe)</b><br>
-?댁감 遺꾨━ ??<b>?쒕룞愿(釉뚮젅?댄겕 愿) ?뺣젰 湲됯컧</b> ??<b>?먮룞??怨듦린?쒕룞 ?먮룞 ?묐룞</b> ??鍮꾩긽?뺤감<br>
-???먮룞??怨듦린?쒕룞???듭떖 ?뱀꽦: "?뺣젰 ??????쒕룞"
+<b>열차 분리 시 자동 비상제동 원리 (Fail-Safe)</b><br>
+열차 분리 → <b>제동관(브레이크 관) 압력 급감</b> → <b>자동식 공기제동 자동 작동</b> → 비상정차<br>
+※ 자동식 공기제동의 핵심 특성: "압력 저하 시 제동"
 </div>
-<div class="tip">吏곹넻??怨듦린?쒕룞? 遺꾨━ ???먮룞 ?쒕룞 遺덇? ??諛섎뱶???먮룞??怨듦린?쒕룞?댁뼱????/div>
-<div class="theory-note"><strong>Fail-Safe ?먮━:</strong> ?꾧린쨌?좏샇媛 ?딄꺼?? ?곌껐????ㅻ룄 諛섎뱶???덉쟾 履??뺤?)?쇰줈 ?숈옉?섎뒗 ?ㅺ퀎 泥좏븰. ?댁감遺꾨━ ??愿????????먮룞 ?쒕룞? ??쒖쟻??Fail-Safe ?щ??낅땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?댁감 遺꾨━ ???먮룞?쇰줈 鍮꾩긽?뺤감?섎뒗 ?쒕룞 諛⑹떇??</div><div class="qe-a">?뺣떟: ?먮룞??怨듦린?쒕룞 (?쒕룞愿 ?뺣젰 ??????먮룞 ?쒕룞)</div><div class="qe-wrong">?ㅻ떟?⑥젙: "吏곹넻??怨듦린?쒕룞???먮룞 ?뺤감?쒕떎" ??吏곹넻?앹? 遺꾨━ ???먮룞 ?쒕룞 遺덇?</div></div>
+<div class="tip">직통식 공기제동은 분리 시 자동 제동 불가 — 반드시 자동식 공기제동이어야 함</div>
+<div class="theory-note"><strong>Fail-Safe 원리:</strong> 전기·신호가 끊겨도, 연결이 풀려도 반드시 안전 쪽(정지)으로 동작하는 설계 철학. 열차분리 → 관압 저하 → 자동 제동은 대표적인 Fail-Safe 사례입니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 열차 분리 시 자동으로 비상정차하는 제동 방식은?</div><div class="qe-a">정답: 자동식 공기제동 (제동관 압력 저하 시 자동 제동)</div><div class="qe-wrong">오답함정: "직통식 공기제동도 자동 정차한다" — 직통식은 분리 시 자동 제동 불가</div></div>
 </div>
 
-<div class="concept" id="C-39"><div class="concept-title"><span class="cnum">C-39</span>?꾩감???⑥꽑 ??痍④툒 ?먯튃</div>
+<div class="concept" id="C-39"><div class="concept-title"><span class="cnum">C-39</span>전차선 단선 시 취급 원칙</div>
 <div class="step-box" style="border-left:4px solid #dc2626;background:#fef2f2;">
-<b>?꾩감???⑥꽑 ????臾댁쟾???뺤씤 ?꾧퉴吏 ?쒖꽑(域사퇉)?쇰줈 媛꾩＜</b><br>
-???⑥꽑???꾩감?좎뿉 <b>?덈? ?묎렐쨌?묒큺 湲덉?</b><br>
-???꾩썝 李⑤떒 ?뺤씤? 諛섎뱶??愿?쑣룹쟾湲곕떞?뱀옄 ?뺤씤 ??</div>
-<div class="trap">?꾩감?좎씠 ?딆뼱???낆뿉 ?⑥뼱?몃룄 ???⑥쟾 ?뺤씤 ?꾧퉴吏 <b>?쒖꽑</b> 痍④툒! 留⑥넀 ?묒큺 ?덈? 湲덉?</div>
-<div class="theory-note"><strong>???쒖꽑?쇰줈 媛꾩＜?섎뒗媛?</strong> ?꾩감?좎뿉??援먮쪟 25,000V ?먮뒗 吏곷쪟 1,500V ?댁긽??怨좎븬 ?꾨쪟媛 ?먮쫭?덈떎. ?⑥꽑???좎씠 ?낆뿉 ?우븘 ?덉뼱???꾩썝??李⑤떒?섏? ?딅뒗 ??洹??좉낵 二쇰?? 怨좎븬 ?꾪뿕 援ъ뿭?낅땲?? Fail-Safe ?먯튃 ??遺덊솗?ㅽ븯硫???긽 ?꾪뿕??履쎌쑝濡?媛꾩＜?⑸땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?꾩감?좎씠 ?⑥꽑?섏뼱 ?좊줈???⑥뼱吏?寃쎌슦 湲곌??ъ쓽 議곗튂??</div><div class="qe-a">?뺣떟: 臾댁쟾???뺤씤 ?꾧퉴吏 ?쒖꽑?쇰줈 媛꾩＜?섍퀬 ?묎렐쨌?묒큺 湲덉?, 愿??利됱떆 蹂닿퀬</div><div class="qe-wrong">?ㅻ떟?⑥젙: "?딆뼱吏??좎씠??留뚯졇???쒕떎" ???덈? ????/div></div>
+<b>전차선 단선 시 — 무전압 확인 전까지 활선(活線)으로 간주</b><br>
+→ 단선된 전차선에 <b>절대 접근·접촉 금지</b><br>
+→ 전원 차단 확인은 반드시 관제·전기담당자 확인 후
+</div>
+<div class="trap">전차선이 끊어져 땅에 떨어져도 → 단전 확인 전까지 <b>활선</b> 취급! 맨손 접촉 절대 금지</div>
+<div class="theory-note"><strong>왜 활선으로 간주하는가?</strong> 전차선에는 교류 25,000V 또는 직류 1,500V 이상의 고압 전류가 흐릅니다. 단선된 선이 땅에 닿아 있어도 전원이 차단되지 않는 한 그 선과 주변은 고압 위험 구역입니다. Fail-Safe 원칙 — 불확실하면 항상 위험한 쪽으로 간주합니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 전차선이 단선되어 선로에 떨어진 경우 기관사의 조치는?</div><div class="qe-a">정답: 무전압 확인 전까지 활선으로 간주하고 접근·접촉 금지, 관제 즉시 보고</div><div class="qe-wrong">오답함정: "끊어진 선이니 만져도 된다" — 절대 안 됨</div></div>
 </div>
 
-<div class="concept" id="C-40"><div class="concept-title"><span class="cnum">C-40</span>援ъ썝?댁쟾 쨌 異붿쭊쨌?댄뻾 ?묒뾽?꾪샇</div>
+<div class="concept" id="C-40"><div class="concept-title"><span class="cnum">C-40</span>구원운전 · 추진·퇴행 작업전호</div>
 <div class="table-wrap"><table>
-<tr><th>??ぉ</th><th>?듭떖 ?댁슜</th></tr>
-<tr class="hl"><td><b>援ъ썝?댁쟾</b></td><td>怨좎옣?댁감 援ъ썝 ????愿??吏??諛⑺뼢 ?뺤씤 + 援ъ썝?댁감? ?곌껐 + ?묒뾽?꾪샇 ?뺤씤 ???댁쟾</td></tr>
-<tr><td><b>異붿쭊?댁쟾</b></td><td>?숇젰李④? ?ㅼ뿉??諛硫??댁쟾 ??留???李⑤웾??吏곸썝 ?묒듅 + 湲곌??ъ? <b>?묒뾽?꾪샇</b>濡??곕씫</td></tr>
-<tr><td><b>?댄뻾?댁쟾</b></td><td>?댁감媛 ?꾨갑?쇰줈 ?대룞 ??留???李⑤웾(?꾨갑 履???吏곸썝 ?묒듅 + 湲곌??ъ? <b>?묒뾽?꾪샇</b>濡??곕씫</td></tr>
+<tr><th>항목</th><th>핵심 내용</th></tr>
+<tr class="hl"><td><b>구원운전</b></td><td>고장열차 구원 시 — 관제 지시 방향 확인 + 구원열차와 연결 + 작업전호 확인 후 운전</td></tr>
+<tr><td><b>추진운전</b></td><td>동력차가 뒤에서 밀며 운전 — 맨 앞 차량에 직원 탑승 + 기관사와 <b>작업전호</b>로 연락</td></tr>
+<tr><td><b>퇴행운전</b></td><td>열차가 후방으로 이동 — 맨 앞 차량(후방 쪽)에 직원 탑승 + 기관사와 <b>작업전호</b>로 연락</td></tr>
 </table></div>
-<div class="trap">異붿쭊쨌?댄뻾 ?댁쟾 ?????꾨졊???묒뾽?꾪샇?? ?놁씠 吏꾪뻾 ????諛섎뱶??留???李⑤웾??吏곸썝 ?묒듅 ?꾩슂</div>
-<div class="tip">泥좊룄李⑤웾?댁쟾洹쒖튃 ??02議???異붿쭊쨌?댄뻾 ??留???李⑤웾 吏곸썝怨?湲곌???媛??곕씫 諛⑸쾿(?묒뾽?꾪샇) 紐낆떆</div>
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> 異붿쭊쨌?댄뻾 ?댁쟾?먯꽌 湲곌??щ뒗 吏꾪뻾 諛⑺뼢???꾨갑??吏곸젒 蹂????놁뒿?덈떎. 留???李⑤웾??吏곸썝???꾨갑 媛먯떆 ???묒뾽?꾪샇(?뺥빐吏??좏샇)濡?湲곌??ъ뿉寃?吏?쒕? ?꾨떖?⑸땲?? ?⑤룆 ?먮떒???섑븳 異⑸룎쨌?덉꽑 ?ш퀬瑜?諛⑹??섍린 ?꾪븳 踰뺤젙 ?덉쟾 ?덉감?낅땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. 異붿쭊?댁쟾 ??留???李⑤웾???묒듅??吏곸썝??湲곌??ъ? ?곕씫?섎뒗 諛⑸쾿??</div><div class="qe-a">?뺣떟: ?묒뾽?꾪샇 (泥좊룄李⑤웾?댁쟾洹쒖튃 ??02議?</div><div class="qe-wrong">?ㅻ떟?⑥젙: "臾댁꽑?듭떊?쇰줈留?媛?ν븯?? ???묒뾽?꾪샇媛 踰뺤젙 諛⑸쾿</div></div>
+<div class="trap">추진·퇴행 운전 시 — 전령자(작업전호원) 없이 진행 ❌ → 반드시 맨 앞 차량에 직원 탑승 필요</div>
+<div class="tip">철도차량운전규칙 제102조 — 추진·퇴행 시 맨 앞 차량 직원과 기관사 간 연락 방법(작업전호) 명시</div>
+<div class="theory-note"><strong>이론 배경:</strong> 추진·퇴행 운전에서 기관사는 진행 방향의 전방을 직접 볼 수 없습니다. 맨 앞 차량의 직원이 전방 감시 후 작업전호(정해진 신호)로 기관사에게 지시를 전달합니다. 단독 판단에 의한 충돌·탈선 사고를 방지하기 위한 법정 안전 절차입니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 추진운전 시 맨 앞 차량에 탑승한 직원이 기관사와 연락하는 방법은?</div><div class="qe-a">정답: 작업전호 (철도차량운전규칙 제102조)</div><div class="qe-wrong">오답함정: "무선통신으로만 가능하다" — 작업전호가 법정 방법</div></div>
 </div>
 
-<div class="concept" id="C-41"><div class="concept-title"><span class="cnum">C-41</span>?붿옱 諛쒖깮 ??議곗튂</div>
+<div class="concept" id="C-41"><div class="concept-title"><span class="cnum">C-41</span>화재 발생 시 조치</div>
 <div class="step-box">
-<b>?댁감 ?붿옱 ??議곗튂 ?먯튃</b><br>
-???좎냽??<b>?밴컼 ???/b> ?좊룄 (諛⑹넚쨌?덈궡)<br>
-??<b>愿??蹂닿퀬</b> (?꾩튂, ?붿옱 洹쒕え, ?밴컼 ??<br>
-??<b>?뚰솕 議곗튂</b> (?뚰솕湲??ъ슜, 媛??踰붿쐞 ??<br>
-???곕꼸 ???붿옱: 媛?ν븯硫?<b>?곕꼸 諛뽰쑝濡??대룞</b> ?????(?뺤감 vs ?덉텧 ?먮떒)<br>
-&nbsp;&nbsp;&nbsp;?? 吏꾪뻾 遺덇??ν븯硫??곕꼸 ???뺤감 ??鍮꾩긽援??댁슜
+<b>열차 화재 시 조치 원칙</b><br>
+① 신속한 <b>승객 대피</b> 유도 (방송·안내)<br>
+② <b>관제 보고</b> (위치, 화재 규모, 승객 수)<br>
+③ <b>소화 조치</b> (소화기 사용, 가능 범위 내)<br>
+④ 터널 내 화재: 가능하면 <b>터널 밖으로 이동</b> 후 대피 (정차 vs 탈출 판단)<br>
+&nbsp;&nbsp;&nbsp;단, 진행 불가능하면 터널 내 정차 후 비상구 이용
 </div>
-<div class="trap">?곕꼸 ???붿옱 ??臾댁“嫄??뺤감 ?????덉텧 媛???щ? ?먮떒 ??媛?ν븯硫??곕꼸 諛??대룞???곗꽑</div>
-<div class="theory-note"><strong>?대줎 諛곌꼍:</strong> ?곕꼸? 諛??怨듦컙?대씪 ?곌린? ?좊룆媛?ㅺ? 湲됱냽??異뺤쟻?⑸땲?? ?댁감媛 ?대룞 媛?ν븯硫?媛쒕갑 怨듦컙?쇰줈 ?덉텧?섎뒗 寃껋씠 ?곕꼸 ????쇰낫???⑥뵮 ?덉쟾?⑸땲?? GTX ????щ룄 ?곕꼸?먯꽌??鍮꾩긽援ш퉴吏??嫄곕━媛 湲몄뼱 ?덉텧 媛???щ? ?먮떒???붿슧 以묒슂?⑸땲??</div>
-<br><div class="quiz-ex"><div class="qe-title">?뱷 湲곗텧 ?덉떆</div><div class="qe-q">Q. ?댁감 ???붿옱 諛쒖깮 ???곕꼸 援ш컙?먯꽌??湲곕낯 議곗튂 諛⑺뼢??</div><div class="qe-a">?뺣떟: ?댁감 吏꾪뻾??媛?ν븯硫??곕꼸 諛뽰쑝濡??대룞 ????? 吏꾪뻾 遺덇? ???곕꼸 ???뺤감 ??鍮꾩긽援??댁슜</div><div class="qe-wrong">?ㅻ떟?⑥젙: "?곕꼸?먯꽌 諛섎뱶??利됱떆 ?뺤감?쒕떎" ???대룞 媛???щ? 癒쇱? ?먮떒</div></div>
+<div class="trap">터널 내 화재 시 무조건 정차 ❌ → 탈출 가능 여부 판단 후 가능하면 터널 밖 이동이 우선</div>
+<div class="theory-note"><strong>이론 배경:</strong> 터널은 밀폐 공간이라 연기와 유독가스가 급속히 축적됩니다. 열차가 이동 가능하면 개방 공간으로 탈출하는 것이 터널 내 대피보다 훨씬 안전합니다. GTX 등 대심도 터널에서는 비상구까지의 거리가 길어 탈출 가능 여부 판단이 더욱 중요합니다.</div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 열차 내 화재 발생 시 터널 구간에서의 기본 조치 방향은?</div><div class="qe-a">정답: 열차 진행이 가능하면 터널 밖으로 이동 후 대피, 진행 불가 시 터널 내 정차 후 비상구 이용</div><div class="qe-wrong">오답함정: "터널에서 반드시 즉시 정차한다" — 이동 가능 여부 먼저 판단</div></div>
 </div>
 
-</div></div>
+</div></div></div>
 
   </div>
 </div>
 <script>
 function togglePart(el){const b=el.nextElementSibling;const s=el.querySelector('.arr');
-  b.style.display=b.style.display==='none'?'block':'none';s.textContent=b.style.display==='none'?'??:'??;}
+  b.style.display=b.style.display==='none'?'block':'none';s.textContent=b.style.display==='none'?'▶':'▼';}
 document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('.part-title').forEach(t=>{t.addEventListener('click',()=>togglePart(t));});
   const inp=document.getElementById('search');
@@ -1207,7 +1211,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     });
     if(q) document.querySelectorAll('.part-body').forEach(b=>b.style.display='block');
   });
-  // TOC sticky top???ㅼ젣 ?ㅻ뜑 ?믪씠??留욊쾶 ?숈쟻 議곗젙
+  // TOC sticky top을 실제 헤더 높이에 맞게 동적 조정
   const hdr=document.querySelector('.site-header');
   const toc=document.querySelector('.toc');
   if(hdr&&toc){
@@ -1218,12 +1222,13 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 </script>
 
-<button id="play-all-btn" onclick="playAllTTS()">?렒 ?꾩껜媛뺤쓽</button>
-<button id="toc-toggle-btn" onclick="openTocDrawer()" aria-label="紐⑹감 ?닿린">?뱥 紐⑹감</button>
+<button id="play-all-btn" onclick="playAllTTS()">🎧 전체강의</button>
+<button id="toc-toggle-btn" onclick="openTocDrawer()" aria-label="목차 열기">📋 목차</button>
 <div id="toc-overlay" onclick="closeTocDrawer()"></div>
-<div id="toc-drawer"><div id="toc-drawer-header"><span>紐⑹감</span><button onclick="closeTocDrawer()">??/button></div><nav id="toc-drawer-nav" class="toc"></nav></div>
+<div id="toc-drawer"><div id="toc-drawer-header"><span>목차</span><button onclick="closeTocDrawer()">✕</button></div><nav id="toc-drawer-nav" class="toc"></nav></div>
 <script>
-// 紐⑤컮??紐⑹감 ?쒕줈??function openTocDrawer() {
+// 모바일 목차 드로어
+function openTocDrawer() {
   var mainToc = document.querySelector('.container .toc');
   var drawerNav = document.getElementById('toc-drawer-nav');
   if (mainToc && drawerNav) {
@@ -1245,15 +1250,15 @@ function closeTocDrawer() {
 
 
 <script>
-// ===== 援먯쑁 媛뺤쓽 TTS ?뚮젅?댁뼱 =====
+// ===== 교육 강의 TTS 플레이어 =====
 var _eduAudio3 = null;
 function playEduTTS3(text, btn) {
   if (_eduAudio3 && !_eduAudio3.paused) {
     _eduAudio3.pause(); _eduAudio3 = null;
-    btn.textContent = '狩?以묒슂 媛뺤쓽 ?ｊ린';
+    btn.textContent = '⭐ 중요 강의 듣기';
     btn.classList.remove('playing'); return;
   }
-  btn.textContent = '??遺덈윭?ㅻ뒗 以?..'; btn.disabled = true;
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
   fetch('/api/tts', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -1264,26 +1269,26 @@ function playEduTTS3(text, btn) {
     var url = URL.createObjectURL(blob);
     _eduAudio3 = new Audio(url);
     _eduAudio3.play();
-    btn.textContent = '???쇱떆?뺤?'; btn.disabled = false; btn.classList.add('playing');
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
     _eduAudio3.onended = function() {
-      btn.textContent = '狩?以묒슂 媛뺤쓽 ?ｊ린'; btn.classList.remove('playing'); _eduAudio3 = null;
+      btn.textContent = '⭐ 중요 강의 듣기'; btn.classList.remove('playing'); _eduAudio3 = null;
     };
   })
-  .catch(function() { btn.textContent = '???ㅻ쪟 ???ㅼ떆 ?쒕룄'; btn.disabled = false; });
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
 }
 
 var EDU3 = {
-  'C-06': `?먯깋諛⑹떇, ?댁감?댁쟾?먯꽌 媛??留롮씠 ?섏삤???뚰듃?낅땲?? ?먯깋?대? 臾댁뾿?대깘? ??援ш컙?????댁감留?吏꾩엯?섎룄濡?留됰뒗 諛⑸쾿?낅땲?? ???댁감媛 媛숈? 援ш컙???ㅼ뼱媛硫?異⑸룎 ?꾪뿕???덉쑝?덇퉴?? ?먯깋諛⑹떇? ?ш쾶 ?곸슜?먯깋怨???⑺룓?됱쑝濡??섎돥?덈떎. ?곸슜?먯깋? ?뺤긽 ?댁쟾 ???ъ슜?섎뒗 諛⑹떇, 4媛吏?낅땲?? ?먮룞?먯깋?? ?곕룞?먯깋?? 李⑤궡?좏샇?먯깋?? ?듯몴?먯깋?? ?먯뿰李⑦넻! ?먮룞, ?곕룞, 李⑤궡?좏샇, ?듯몴! ?대젃寃??몄슦?몄슂. ??⑺룓?됱? ?곸슜??怨좎옣?ъ쓣 ???곕뒗 諛⑹떇, 4媛吏?낅땲?? ?듭떊?? 吏?꾪넻?좎떇, 吏?꾩떇, 吏?뱀떇. ?듭?吏吏! ?듭떊, 吏?꾪넻?? 吏?? 吏?? ?몄슦?⑥짛? ?먯뿰李⑦넻, ?듭?吏吏. ???щ뜜 媛吏媛 ?듭떖?낅땲?? 李멸퀬濡??꾨졊踰뺤? ??⑺룓?됱씠 ?꾨땲???쒓퀎?댁쟾 諛⑹떇?낅땲?? ?룰컝由ъ? 留덉꽭??`,
-  'C-08': `吏?꾪몴? 吏?꾧텒, 諛섎뱶??援щ텇?댁빞 ?⑸땲?? 吏?꾪몴??萸먮깘? ?⑥꽑 援ш컙?먯꽌 ?댁감媛 洹?援ш컙???듦낵??沅뚰븳??二쇰뒗 臾몄꽌?덉슂. 湲곗엯 ?ы빆??以묒슂?⑸땲?? 援ш컙 ?묐걹 ??챸, 諛쒗뻾 ?쇱옄, ?댁감 踰덊샇, ????媛吏?낅땲?? 諛섎㈃ 吏?꾧텒? 吏?꾪몴瑜?諛쒗뻾?????놁쓣 ???꾩떆濡?諛쒗뻾?섎뒗 嫄곗삁?? ?쒗뿕?먯꽌 ?먯＜ ?由щ뒗 遺遺? 吏?꾪몴 湲곗엯 ?ы빆????옣 ?대쫫???ㅼ뼱媛꾨떎? ?꾨떃?덈떎! ?묐걹??챸, 諛쒗뻾?쇱옄, ?댁감踰덊샇留?湲곗뼲?섏꽭?? 吏?꾪몴? 吏?꾧텒??李⑥씠?먮룄 ?섏샃?덈떎. 吏?꾪몴??援ш컙 ?낃뎄??뿉??諛쒗뻾, 吏?꾧텒? ??옣??諛쒗뻾 遺덇??????꾩떆 諛쒗뻾. ?대젃寃?援щ텇?섏꽭??`,
-  'C-11': `?좏샇湲??뺤쐞, ?닿쾶 ?쒗뿕???뺣쭚 留롮씠 ?섏샃?덈떎. ?뺤쐞? ?됱긽??湲곕낯 ?꾩튂瑜?留먰빐?? 媛??좏샇湲곗쓽 ?뺤쐞瑜??몄슦??寃??듭떖?낅땲?? 異쒕컻?좏샇湲??뺤쐞???뺤?! ?낇솚?좏샇湲??뺤쐞???뺤?! ?ш린源뚯????ъ썙?? ?⑥젙???덈뒗 寃껊뱾??遊낆떆?? ?좊룄?좏샇湲??뺤쐞???꾩떆?놁쓬?낅땲?? ?뺤?媛 ?꾨땲?먯슂! ?먮갑?좏샇湲??뺤쐞??二쇱쓽?낅땲?? 吏꾪뻾???꾨땲?먯슂! ?먮룞?먯깋?좏샇湲??뺤쐞??吏꾪뻾?낅땲?? ?닿쾶 諛섎?濡??섏삤硫?諛붾줈 ??ㅼ슂. ?먮룞?먯깋? ?뺤?媛 ?뺤쐞 ?꾨땶媛? ?꾨떃?덈떎! ?먮룞?먯깋? 吏꾪뻾???뺤쐞?낅땲?? ?좊룄?좏샇湲?= ?꾩떆?놁쓬, ?먮갑?좏샇湲?= 二쇱쓽, ?먮룞?먯깋 = 吏꾪뻾! ????媛?瑗??몄슦?몄슂!`,
-  'C-14': `?꾩떆?좏샇湲?3醫? ?닿쾬???먯＜ ?섏??? ??媛吏媛 ?덉뒿?덈떎. ?쒗뻾?좏샇湲? ?쒗뻾?덇퀬?좏샇湲? ?쒗뻾?댁젣?좏샇湲곗엯?덈떎. ?쒗뻾?좏샇湲곕뒗 ?대떦 援ш컙?먯꽌 ?쒗뻾?섎씪???좏샇?덉슂. 二쇨컙?먮뒗 諛깆깋?뚮몢由ъ뿉 ?깊솴???먰뙋, ?쇨컙?먮뒗 ?깊솴?됰벑?낅땲?? ?쒗뻾?덇퀬?좏샇湲곕뒗 ?꾨갑???쒗뻾 援ш컙???덈떎怨?誘몃━ ?뚮젮二쇰뒗 ?좏샇?덉슂. 二쇨컙???묒깋?쇨컖????媛쒖뿉 諛깆깋?쇨컖?? ?쒗뻾?댁젣?좏샇湲곕뒗 ?쒗뻾 援ш컙???앸궗?ㅻ뒗 ?좏샇?낅땲?? ?⑥젙! ?쒗뻾?댁젣?좏샇湲?二쇨컙 ?꾩떆媛 諛깆깋 ?먰뙋?대씪怨??섎㈃ ?由?寃곷땲?? 諛깆깋 ?먰뙋???꾨땲???뱀깋 ?먰뙋?낅땲?? ?곗깋 ?뚮몢由??덉뿉 ?뱀깋 ?먰뙋?댁뿉?? ?쒗뻾?댁젣 = ?뱀깋 ?먰뙋, ?닿굅 瑗?湲곗뼲?섏꽭??`,
-  'C-15': `?낇솚?꾪샇, ?ㅻ꼫?쇱? 媛嫄곕씪, 留ㅻ쾲 ?룰컝由ъ짛. ?뺤떎?섍쾶 ?뺣━???쒕━寃좎뒿?덈떎. ?ㅻ꼫?쇱쟾?몃뒗 ?묎렐?꾪샇?쇨퀬???⑸땲?? ?댁감瑜??댁そ?쇰줈 ?ㅺ쾶 ?섎뒗 ?좏샇?덉슂. 二쇨컙?먮뒗 ?뱀깋湲곕? 醫뚯슦濡??붾벊?덈떎. 醫뚯슦! 媛嫄곕씪?꾪샇???닿굅?꾪샇?쇨퀬???⑸땲?? ?댁감瑜??履쎌쑝濡?媛寃??섎뒗 ?좏샇?덉슂. 二쇨컙?먮뒗 ?뱀깋湲곕? ?꾩븘?섎줈 ?붾벊?덈떎. ?꾩븘?? ?ㅻ꼫??醫뚯슦, 媛嫄곕씪=?꾩븘?? 諛섎?濡??몄슦硫?100% ??ㅼ슂. ?ㅻ꼫??????????踰뚮젮??醫뚯슦濡??붾뱶??紐⑥뒿, 媛嫄곕씪 ???????ㅼ뼱?щ졇???대━??紐⑥뒿???곸긽?섎㈃ 湲곗뼲?섍린 ?ъ썙?? ?뺤??꾪샇???곸깋湲? ?쇨컙? ?곸깋?? ?닿굔 ?쎌짛. ?ㅻ꼫??醫뚯슦, 媛嫄곕씪=?꾩븘?? ?닿쾬留?湲곗뼲?섏꽭??`,
-  'C-04': `?숈떆 吏꾩텧??湲곗?, ?닿굅 ?끸쁾????媛쒖쭨由?異쒖젣 ?ъ씤?몄엯?덈떎. ???댁감媛 ?숈떆????뿉??吏꾩텧?낇븷 ???덈뒗 議곌굔??源뚮떎濡쒖썙?? ?먯튃? ?숈떆 吏꾩텧??湲덉??낅땲?? 洹몃윴???덉쇅媛 ?덉뼱?? 議곌굔 ??媛吏媛 紐⑤몢 媛뽰떠?몄빞 ?숈떆 吏꾩텧?낆씠 媛?ν빀?덈떎. 泥レ㎏, ?덉쟾痢≪꽑?대굹 ?덉꽑?좎씠 ?ㅼ튂?섏뼱 ?덉뼱???⑸땲?? ?섏㎏, ?쒕줈 吏?μ씠 ?녿뒗 ?좊줈?ъ빞 ?⑸땲?? ?뗭㎏, 吏꾩텧???좊줈媛 ?쒕줈 ?ㅻⅨ ?좊줈?ъ빞 ?댁슂. ?쒗뿕 ?⑥젙! ?덉쟾痢≪꽑留??덉쑝硫??숈떆 吏꾩텧?낆씠 媛?ν븯?? ?꾨떃?덈떎! ??媛吏 議곌굔 紐⑤몢 異⑹”?댁빞 ?⑸땲?? ?숈떆 吏꾩텧??= ?먯튃 湲덉?, ?덉쇅 議곌굔 3媛吏 異⑹” ??媛?? ?덉쟾痢≪꽑, 吏???녿뒗 ?좊줈, ?ㅻⅨ ?좊줈. ????媛吏 瑗?湲곗뼲?섏꽭??`,
-  'C-07': `媛??먯깋諛⑹떇???듭떖 援щ텇 ?ъ씤?몄엯?덈떎. ?쒗뿕?먯꽌 媛??留롮씠 ?由щ뒗 遺遺꾩쓣 吏싳뼱?쒕┫寃뚯슂. ?먮룞?먯깋?앹? 沅ㅻ룄?뚮줈瑜??댁슜?댁꽌 ?댁감 ?꾩튂瑜??먮룞 媛먯??⑸땲?? ?щ엺??媛쒖엯?섏? ?딆븘???먮룞?쇰줈 ?좏샇媛 諛붾뚯뼱?? ?곕룞?먯깋?앹? ?몄젒 ??쓽 ??Т?먯씠 ?묒쓽?댁꽌 ?먯깋??痍④툒?⑸땲?? ?듯솕媛 ?꾩슂?댁슂. ?듯몴?먯깋?앹? ?댁감媛 ?듯몴瑜??ㅼ젣濡??뚯??댁빞 援ш컙??吏꾩엯?????덉뒿?덈떎. ?⑥꽑?먯꽌 留롮씠 ?ъ슜?댁슂. 李⑤궡?좏샇?먯깋?앹? 李⑤웾 ?대? ?μ튂濡??좏샇瑜??섏떊?댁슂. 怨좎냽泥좊룄?먯꽌 ?ъ슜?⑸땲?? ??⑺룓??以??꾨졊踰뺤? ?뱀닔?댁슂. ?щ엺??吏곸젒 ?댁감? ?④퍡 ?대룞?섎㈃???덉쟾???뺤씤?⑸땲?? ?먮룞?먯깋=沅ㅻ룄?뚮줈 ?먮룞, ?곕룞?먯깋=??媛??묒쓽, ?듯몴=?ㅻЪ ?뚯?, 李⑤궡=李⑤웾 ???섏떊. 媛곴컖???듭떖 ?ㅼ썙?쒕줈 援щ텇?섏꽭??`,
-  'C-17': `?댁감?쒖뼱?μ튂 ATS, ATC, ATP, ??媛吏 諛섎뱶??援щ텇?댁빞 ?⑸땲?? ATS??Automatic Train Stop, ?댁감 ?먮룞 ?뺤? ?μ튂?낅땲?? 吏?곸뿉 ?ㅼ튂???μ튂媛 ?띾룄瑜?媛먯떆?섍퀬, ?꾨컲?섎㈃ ?먮룞?쇰줈 釉뚮젅?댄겕瑜?嫄몄뼱?? 湲곕뒫???⑥닚?⑸땲?? 吏???μ튂 以묒떖. ATC??Automatic Train Control, ?댁감 ?먮룞 ?쒖뼱 ?μ튂?낅땲?? ?좏뻾 ?댁감???嫄곕━???곕씪 ?덉슜 ?띾룄瑜?怨꾩냽 諛붽퓭以띾땲?? 李⑤궡 ?좏샇湲곕줈 湲곌??ъ뿉寃??뚮젮二쇰뒗 援ъ“?덉슂. ATP??Automatic Train Protection, ?댁감 ?먮룞 諛⑺샇 ?μ튂?낅땲?? ?좊읇 湲곗???醫낇빀 蹂댄샇 ?μ튂?덉슂. ?띾룄, ?꾩튂, 吏꾨줈瑜?紐⑤몢 媛먯떆?⑸땲?? ?쒗뿕 ?ъ씤?? ATS ?뱀쭠?? 吏???μ튂 以묒떖, ?뺤? 紐낅졊 以묒떖. ATC ?뱀쭠?? 李⑤궡 ?좏샇湲? ?띾룄 ?곗냽 ?쒖뼱. ATS, ATC, ATP ?뚰뙆踰??섎굹 李⑥씠吏留??꾩쟾???ㅻⅨ ?μ튂?낅땲??`,
-  'C-19': `?꾩떆泥좊룄 ?먭? 二쇨린, ?レ옄媛 ?쒗뿕??洹몃?濡??섏샃?덈떎. ??1?? 3媛쒖썡留덈떎, 6媛쒖썡留덈떎, ??1?뚮? 援щ텇?댁빞 ?댁슂. 援ъ“臾??덉쟾?먭?? ??1???댁긽?낅땲?? 1?꾩뿉 ??踰? 二쇱슂 ?쒖뒪???뺢린?먭?? 6媛쒖썡留덈떎 ?ㅼ떆?⑸땲?? 6媛쒖썡, 利?諛섎뀈留덈떎! 李⑤웾 寃?섎뒗 醫낅쪟蹂꾨줈 ?ㅻⅨ?? ?쇱긽寃?щ뒗 留ㅼ씪 ?ㅼ떆?⑸땲?? 留ㅼ씪! ?쒗뿕 ?⑥젙! 援ъ“臾??먭? 二쇨린??6媛쒖썡? ?꾨떃?덈떎, ??1?? 李⑤웾 ?쇱긽寃??二쇨린?? 留ㅼ씪! ?먭? 二쇨린瑜?臾삳뒗 臾몄젣媛 ?먯＜ ?섏??? 留ㅼ씪-??1??3媛쒖썡-6媛쒖썡-??1?? 媛???ぉ???대뵒???대떦?섎뒗吏瑜?湲곗뼲?섏꽭?? ?レ옄瑜?諛붽퓭 ?ｋ뒗 ?⑥젙 臾몄젣 議곗떖!`,
-  'C-20': `鍮꾩긽?쒕룞嫄곕━, ?꾩떆泥좊룄?먯꽌 以묒슂???섏튂?낅땲?? 鍮꾩긽?쒕룞嫄곕━???댁감媛 鍮꾩긽 釉뚮젅?댄겕瑜??묐룞?쒗궓 ???꾩쟾??硫덉텧 ?뚭퉴吏 ?щ━??嫄곕━?덉슂. ??嫄곕━ ?덉뿉 ?μ븷臾쇱씠 ?놁뼱???⑸땲?? ?꾩떆泥좊룄 鍮꾩긽?쒕룞嫄곕━ 湲곗?? 600誘명꽣 ?대궡?낅땲?? 600誘명꽣! ???섏튂媛 ?쒗뿕???섏??? 鍮꾩긽?쒕룞嫄곕━???띾룄? 愿怨꾧? ?덉뼱?? ?띾룄媛 鍮좊??섎줉 ?쒕룞嫄곕━媛 湲몄뼱吏묐땲?? ?띾룄???쒓낢??鍮꾨??섏짛. 鍮꾩긽?쒕룞嫄곕━? 愿?⑤맂 ?ㅺ퀎 議곌굔???덉뼱?? ?댁감? ?댁감 ?ъ씠 理쒖냼 ?덉쟾 媛꾧꺽??鍮꾩긽?쒕룞嫄곕━蹂대떎 而ㅼ빞 ?⑸땲?? ?쒗뿕 ?ъ씤?? ?꾩떆泥좊룄 鍮꾩긽?쒕룞嫄곕━ 湲곗??? 600誘명꽣 ?대궡! 鍮꾩긽?쒕룞嫄곕━媛 湲몄뼱吏??議곌굔?? ?띾룄媛 鍮좊??섎줉! 600誘명꽣, ???レ옄 瑗?湲곗뼲?섏꽭??`,
-  'C-24': `?숇젰吏묒쨷?앷낵 ?숇젰遺꾩궛?? ????媛吏媛 ?쒗뿕??瑗??섏샃?덈떎. ?숇젰吏묒쨷?앹? 湲곌?李????媛 ?щ윭 媛앹감瑜??뚭퀬 媛??諛⑹떇?댁뿉?? ?섏씠 ??怨녹뿉 吏묒쨷?⑸땲?? ?덈쭏?꾪샇, KTX-1 媛숈? ?댁감媛 ?대떦?댁슂. ?μ젏? 媛앹감瑜??쎄쾶 援먯껜?????덈떎??嫄곗삁?? ?⑥젏? 湲곌?李④? 怨좎옣?섎㈃ ?꾩껜 ?댄뻾??遺덇??⑸땲?? ?숇젰遺꾩궛?앹? 媛?李⑤웾留덈떎 ?숇젰???덉뼱?? ?섏씠 遺꾩궛?⑸땲?? KTX-?곗쿇, 怨좎냽泥좊룄 ?좏삎???ш린 ?대떦?댁슂. ?μ젏? 媛?띿꽦?μ씠 醫뗪퀬 ??李⑤웾??怨좎옣?섎룄 ?댄뻾 吏?띿씠 媛?ν빀?덈떎. ?⑥젏? ?뺣퉬媛 蹂듭옟?댁슂. ?쒗뿕 ?⑥젙! KTX-?곗쿇? ?숇젰吏묒쨷?앹씤媛 遺꾩궛?앹씤媛? ?숇젰遺꾩궛?앹엯?덈떎! KTX-1?? ?숇젰吏묒쨷?? 吏묒쨷=湲곌?李?以묒떖, 遺꾩궛=媛?李⑤웾 ?숇젰. ?대젃寃?湲곗뼲?섏꽭??`,
+  'C-06': `폐색방식, 열차운전에서 가장 많이 나오는 파트입니다. 폐색이란 무엇이냐? 한 구간에 한 열차만 진입하도록 막는 방법입니다. 두 열차가 같은 구간에 들어가면 충돌 위험이 있으니까요. 폐색방식은 크게 상용폐색과 대용폐색으로 나뉩니다. 상용폐색은 정상 운전 시 사용하는 방식, 4가지입니다. 자동폐색식, 연동폐색식, 차내신호폐색식, 통표폐색식. 자연차통! 자동, 연동, 차내신호, 통표! 이렇게 외우세요. 대용폐색은 상용이 고장났을 때 쓰는 방식, 4가지입니다. 통신식, 지도통신식, 지도식, 지령식. 통지지지! 통신, 지도통신, 지도, 지령! 외우셨죠? 자연차통, 통지지지. 이 여덟 가지가 핵심입니다! 참고로 전령법은 대용폐색이 아니라 시계운전 방식입니다. 헷갈리지 마세요!`,
+  'C-08': `지도표와 지도권, 반드시 구분해야 합니다. 지도표는 뭐냐? 단선 구간에서 열차가 그 구간을 통과할 권한을 주는 문서예요. 기입 사항이 중요합니다. 구간 양끝 역명, 발행 일자, 열차 번호, 이 세 가지입니다. 반면 지도권은 지도표를 발행할 수 없을 때 임시로 발행하는 거예요. 시험에서 자주 틀리는 부분! 지도표 기입 사항에 역장 이름이 들어간다? 아닙니다! 양끝역명, 발행일자, 열차번호만 기억하세요. 지도표와 지도권의 차이점도 나옵니다. 지도표는 구간 입구역에서 발행, 지도권은 역장이 발행 불가할 때 임시 발행. 이렇게 구분하세요!`,
+  'C-11': `신호기 정위, 이게 시험에 정말 많이 나옵니다. 정위란 평상시 기본 위치를 말해요. 각 신호기의 정위를 외우는 게 핵심입니다. 출발신호기 정위는 정지! 입환신호기 정위는 정지! 여기까지는 쉬워요. 함정이 있는 것들을 봅시다. 유도신호기 정위는 현시없음입니다. 정지가 아니에요! 원방신호기 정위는 주의입니다. 진행이 아니에요! 자동폐색신호기 정위는 진행입니다. 이게 반대로 나오면 바로 틀려요. 자동폐색은 정지가 정위 아닌가? 아닙니다! 자동폐색은 진행이 정위입니다. 유도신호기 = 현시없음, 원방신호기 = 주의, 자동폐색 = 진행! 이 세 개 꼭 외우세요!`,
+  'C-14': `임시신호기 3종, 이것도 자주 나와요. 세 가지가 있습니다. 서행신호기, 서행예고신호기, 서행해제신호기입니다. 서행신호기는 해당 구간에서 서행하라는 신호예요. 주간에는 백색테두리에 등황색 원판, 야간에는 등황색등입니다. 서행예고신호기는 전방에 서행 구간이 있다고 미리 알려주는 신호예요. 주간에 흑색삼각형 세 개에 백색삼각형. 서행해제신호기는 서행 구간이 끝났다는 신호입니다. 함정! 서행해제신호기 주간 현시가 백색 원판이라고 하면 틀린 겁니다. 백색 원판이 아니라 녹색 원판입니다! 흰색 테두리 안에 녹색 원판이에요. 서행해제 = 녹색 원판, 이거 꼭 기억하세요!`,
+  'C-15': `입환전호, 오너라와 가거라, 매번 헷갈리죠. 확실하게 정리해 드리겠습니다. 오너라전호는 접근전호라고도 합니다. 열차를 이쪽으로 오게 하는 신호예요. 주간에는 녹색기를 좌우로 흔듭니다. 좌우! 가거라전호는 퇴거전호라고도 합니다. 열차를 저쪽으로 가게 하는 신호예요. 주간에는 녹색기를 위아래로 흔듭니다. 위아래! 오너라=좌우, 가거라=위아래! 반대로 외우면 100% 틀려요. 오너라 할 때 두 팔 벌려서 좌우로 흔드는 모습, 가거라 할 때 손 들어올렸다 내리는 모습을 상상하면 기억하기 쉬워요. 정지전호는 적색기, 야간은 적색등. 이건 쉽죠. 오너라=좌우, 가거라=위아래, 이것만 기억하세요!`,
+  'C-04': `동시 진출입 기준, 이거 ★★★ 세 개짜리 출제 포인트입니다. 두 열차가 동시에 역에서 진출입할 수 있는 조건이 까다로워요. 원칙은 동시 진출입 금지입니다. 그런데 예외가 있어요. 조건 세 가지가 모두 갖춰져야 동시 진출입이 가능합니다. 첫째, 안전측선이나 탈선선이 설치되어 있어야 합니다. 둘째, 서로 지장이 없는 선로여야 합니다. 셋째, 진출입 선로가 서로 다른 선로여야 해요. 시험 함정! 안전측선만 있으면 동시 진출입이 가능하다? 아닙니다! 세 가지 조건 모두 충족해야 합니다. 동시 진출입 = 원칙 금지, 예외 조건 3가지 충족 시 가능. 안전측선, 지장 없는 선로, 다른 선로. 이 세 가지 꼭 기억하세요!`,
+  'C-07': `각 폐색방식의 핵심 구분 포인트입니다. 시험에서 가장 많이 틀리는 부분을 짚어드릴게요. 자동폐색식은 궤도회로를 이용해서 열차 위치를 자동 감지합니다. 사람이 개입하지 않아도 자동으로 신호가 바뀌어요. 연동폐색식은 인접 역의 역무원이 협의해서 폐색을 취급합니다. 통화가 필요해요. 통표폐색식은 열차가 통표를 실제로 소지해야 구간에 진입할 수 있습니다. 단선에서 많이 사용해요. 차내신호폐색식은 차량 내부 장치로 신호를 수신해요. 고속철도에서 사용합니다. 대용폐색 중 전령법은 특수해요. 사람이 직접 열차와 함께 이동하면서 안전을 확인합니다. 자동폐색=궤도회로 자동, 연동폐색=역 간 협의, 통표=실물 소지, 차내=차량 내 수신. 각각의 핵심 키워드로 구분하세요!`,
+  'C-17': `열차제어장치 ATS, ATC, ATP, 세 가지 반드시 구분해야 합니다. ATS는 Automatic Train Stop, 열차 자동 정지 장치입니다. 지상에 설치된 장치가 속도를 감시하고, 위반하면 자동으로 브레이크를 걸어요. 기능이 단순합니다. 지상 장치 중심. ATC는 Automatic Train Control, 열차 자동 제어 장치입니다. 선행 열차와의 거리에 따라 허용 속도를 계속 바꿔줍니다. 차내 신호기로 기관사에게 알려주는 구조예요. ATP는 Automatic Train Protection, 열차 자동 방호 장치입니다. 유럽 기준의 종합 보호 장치예요. 속도, 위치, 진로를 모두 감시합니다. 시험 포인트! ATS 특징은? 지상 장치 중심, 정지 명령 중심. ATC 특징은? 차내 신호기, 속도 연속 제어. ATS, ATC, ATP 알파벳 하나 차이지만 완전히 다른 장치입니다!`,
+  'C-19': `도시철도 점검 주기, 숫자가 시험에 그대로 나옵니다. 월 1회, 3개월마다, 6개월마다, 연 1회를 구분해야 해요. 구조물 안전점검은 연 1회 이상입니다. 1년에 한 번! 주요 시스템 정기점검은 6개월마다 실시합니다. 6개월, 즉 반년마다! 차량 검수는 종류별로 다른데, 일상검사는 매일 실시합니다. 매일! 시험 함정! 구조물 점검 주기는 6개월? 아닙니다, 연 1회! 차량 일상검사 주기는? 매일! 점검 주기를 묻는 문제가 자주 나와요. 매일-월 1회-3개월-6개월-연 1회, 각 항목이 어디에 해당하는지를 기억하세요. 숫자를 바꿔 넣는 함정 문제 조심!`,
+  'C-20': `비상제동거리, 도시철도에서 중요한 수치입니다. 비상제동거리는 열차가 비상 브레이크를 작동시킨 후 완전히 멈출 때까지 달리는 거리예요. 이 거리 안에 장애물이 없어야 합니다. 도시철도 비상제동거리 기준은 600미터 이내입니다. 600미터! 이 수치가 시험에 나와요. 비상제동거리는 속도와 관계가 있어요. 속도가 빠를수록 제동거리가 길어집니다. 속도의 제곱에 비례하죠. 비상제동거리와 관련된 설계 조건도 있어요. 열차와 열차 사이 최소 안전 간격이 비상제동거리보다 커야 합니다. 시험 포인트! 도시철도 비상제동거리 기준은? 600미터 이내! 비상제동거리가 길어지는 조건은? 속도가 빠를수록! 600미터, 이 숫자 꼭 기억하세요!`,
+  'C-24': `동력집중식과 동력분산식, 이 두 가지가 시험에 꼭 나옵니다. 동력집중식은 기관차 한 대가 여러 객차를 끌고 가는 방식이에요. 힘이 한 곳에 집중됩니다. 새마을호, KTX-1 같은 열차가 해당해요. 장점은 객차를 쉽게 교체할 수 있다는 거예요. 단점은 기관차가 고장나면 전체 운행이 불가합니다. 동력분산식은 각 차량마다 동력이 있어요. 힘이 분산됩니다. KTX-산천, 고속철도 신형이 여기 해당해요. 장점은 가속성능이 좋고 한 차량이 고장나도 운행 지속이 가능합니다. 단점은 정비가 복잡해요. 시험 함정! KTX-산천은 동력집중식인가 분산식인가? 동력분산식입니다! KTX-1은? 동력집중식! 집중=기관차 중심, 분산=각 차량 동력. 이렇게 기억하세요!`,
 };
 document.addEventListener('DOMContentLoaded', function() {
   Object.keys(EDU3).forEach(function(id) {
@@ -1293,7 +1298,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!title) return;
     var btn = document.createElement('button');
     btn.className = 'tts-edu-btn';
-    btn.textContent = '狩?以묒슂 媛뺤쓽 ?ｊ린';
+    btn.textContent = '⭐ 중요 강의 듣기';
     var script = EDU3[id];
     btn.onclick = function() { playEduTTS3(script, btn); };
     title.insertAdjacentElement('afterend', btn);
@@ -1302,15 +1307,15 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-// ===== 蹂댁땐媛뺤쓽 TTS ?뚮젅?댁뼱 =====
+// ===== 보충강의 TTS 플레이어 =====
 var _suppAudio3 = null;
 function playSuppTTS3(text, btn) {
   if (_suppAudio3 && !_suppAudio3.paused) {
     _suppAudio3.pause(); _suppAudio3 = null;
-    btn.textContent = '?뱴 蹂댁땐媛뺤쓽';
+    btn.textContent = '📚 보충강의';
     btn.classList.remove('playing'); return;
   }
-  btn.textContent = '??遺덈윭?ㅻ뒗 以?..'; btn.disabled = true;
+  btn.textContent = '⏳ 불러오는 중...'; btn.disabled = true;
   fetch('/api/tts', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -1321,23 +1326,23 @@ function playSuppTTS3(text, btn) {
     var url = URL.createObjectURL(blob);
     _suppAudio3 = new Audio(url);
     _suppAudio3.play();
-    btn.textContent = '???쇱떆?뺤?'; btn.disabled = false; btn.classList.add('playing');
+    btn.textContent = '⏸ 일시정지'; btn.disabled = false; btn.classList.add('playing');
     _suppAudio3.onended = function() {
-      btn.textContent = '?뱴 蹂댁땐媛뺤쓽'; btn.classList.remove('playing'); _suppAudio3 = null;
+      btn.textContent = '📚 보충강의'; btn.classList.remove('playing'); _suppAudio3 = null;
     };
   })
-  .catch(function() { btn.textContent = '???ㅻ쪟 ???ㅼ떆 ?쒕룄'; btn.disabled = false; });
+  .catch(function() { btn.textContent = '❌ 오류 — 다시 시도'; btn.disabled = false; });
 }
 
 var EDU3_SUPP = {
-  'C-01': `?댁감?댁쟾 湲곕낯 媛쒕뀗?낅땲?? ?댁감? 李⑤웾??援щ텇?댁빞 ?댁슂. 李⑤웾? 泥좊룄 ?꾨? ?щ━??媛쒕퀎 ?대룞泥댁삁?? ?댁감???섎굹 ?댁긽??李⑤웾???곌껐?섏뼱 ?댁쟾 媛?ν븳 ?곹깭媛 ??寃껋쓣 留먰빀?덈떎. 李⑤웾???щ윭 媛?遺숈뼱???댄뻾 以鍮꾧? ?섎㈃ ?댁감?쇨퀬 ?댁슂. ?댁쟾痍④툒洹쒖젙?먯꽌 ?댁감 ?뺤쓽媛 ?먯＜ ?섏샃?덈떎. ?뺢굅?μ? ?ш컼 痍④툒, ?붾Ъ 痍④툒, 李⑤웾 湲곗? 湲곕뒫???섎뒗 怨녹씠?먯슂. ?? ?좏샇?? 議곗감?? 李⑤웾湲곗?媛 紐⑤몢 ?뺢굅?μ뿉 ?ы븿?⑸땲?? ?쒗뿕 ?⑥젙! ?좏샇?뚭? ?뺢굅?μ뿉 ?대떦?섎굹?? ?대떦?⑸땲?? ??쭔 ?뺢굅?μ씠 ?꾨땲?먯슂. ?좏샇?? 議곗감?? 李⑤웾湲곗????뺢굅?μ엯?덈떎. ?댁감? 李⑤웾??李⑥씠, ?뺢굅?μ쓽 踰붿쐞, ????媛吏瑜??뺥솗??湲곗뼲?섏꽭??`,
-  'C-02': `?댁감 醫낅퀎 遺꾨쪟?낅땲?? ?띾룄? 紐⑹쟻???곕씪 ?섎돇?댁슂. ?밴툒?댁감??二쇱슂 ?뺢굅?μ뿉留??뺤감?섎뒗 媛??鍮좊Ⅸ ?댁감?덉슂. 湲됲뻾?댁감???쇰? ?뺢굅?λ쭔 ?뺤감?댁슂. ?꾪뻾?댁감??紐⑤뱺 ?뺢굅?μ뿉 ?뺤감?⑸땲?? ?붾Ъ?댁감???붾Ъ ?댁넚??紐⑹쟻?댁뿉?? ?쒗뿕?먯꽌 ?댁감 ?곗꽑?쒖쐞???섏??? 媛숈? ?좊줈瑜??щ┫ ???대뼡 ?댁감媛 ?곗꽑?몄??낅땲?? ?쇰컲?곸쑝濡??ш컼?댁감媛 ?붾Ъ?댁감蹂대떎 ?곗꽑?댁뿉?? 媛숈? 醫낅쪟?쇰㈃ ?뺤떆??異쒕컻?섎뒗 ?댁감媛 ?곗꽑?낅땲?? ?ㅼ쓬?쇰줈 ?댁감 踰덊샇 泥닿퀎?낅땲?? ?섑뻾?댁감?????踰덊샇, ?곹뻾?댁감??吏앹닔 踰덊샇瑜??ъ슜?댁슂. ?섑뻾????? ?곹뻾??吏앹닔! 諛섎?濡??몄슦硫???ㅼ슂. ?섑??곸쭩! ?섑뻾 ??? ?곹뻾 吏앹닔濡??몄슦?몄슂.`,
-  'C-04': `?댁감 ?댄뻾 ?덇????듭떖?낅땲?? ?댁감???덇? ?놁씠 異쒕컻?????놁뼱?? 異쒕컻 ?덇???異쒕컻?좏샇湲곕줈 ?쒖떆?⑸땲?? 異쒕컻?좏샇湲곌? 吏꾪뻾???꾩떆?댁빞 異쒕컻?????덉뼱?? 異쒕컻?좏샇湲곌? ?녿뒗 寃쎌슦?먮뒗 ??옣?대굹 愿?쒖궗??吏?쒖뿉 ?곕쫭?덈떎. ?먯깋 諛⑹떇???곌껐?⑸땲?? ?댁감媛 ?ㅼ쓬 援ш컙??吏꾩엯?섎젮硫?洹?援ш컙??鍮꾩뼱 ?덈떎??嫄??뺤씤?댁빞 ?댁슂. ?닿쾶 ?먯깋?낅땲?? 異쒕컻 ???먭? ?ы빆??以묒슂?댁슂. 李⑤웾 ?곹깭, ?붾Ъ 怨좎젙, 臾??ロ옒 ?щ?瑜??뺤씤?댁빞 ?⑸땲?? ?쒗뿕 ?ъ씤?? 異쒕컻?좏샇湲??뺤쐞?? ?뺤?! 異쒕컻 ?덇?瑜?諛쏆쑝硫?吏꾪뻾???꾩떆?댁슂. ?댁감 異쒕컻 ???뺤씤 ?ы빆??臾??ロ옒???ы븿?섎굹?? ?ы븿?⑸땲?? ?뺢굅??異쒕컻 議곌굔怨?異쒕컻?좏샇湲??뺤쐞瑜??④퍡 湲곗뼲?섏꽭??`,
-  'C-05': `?좏샇 ?꾩떆 ?먯튃?낅땲?? ?좏샇???댁감? 李⑤웾???덉쟾?섍쾶 ?댄뻾?쒗궎??吏?쒖삁?? ?좏샇 ?꾩떆??湲곕낯 ?먯튃???덉뒿?덈떎. 泥レ㎏, ?뺤? ?좏샇瑜?理쒖슦?좎쑝濡??댁슂. 吏꾪뻾 ?좏샇蹂대떎 ?뺤? ?좏샇媛 ??긽 ?곗꽑?낅땲?? ?섏㎏, 蹂댁닔???먯튃?낅땲?? 遺덊솗?ㅽ븷 ?뚮뒗 ??긽 ?덉쟾??履쎌쑝濡??묐룞?댁빞 ?댁슂. ?좏샇湲?怨좎옣 ???뺤? ?좏샇媛 ?꾩떆?섎뒗 寃????먯튃 ?뚮Ц?댁뿉?? ?뗭㎏, 理쒓렐???좏샇湲??먯튃?낅땲?? ?댁감??媛??媛源뚯슫 ?좏샇湲곗쓽 ?꾩떆???곕씪???댁슂. ??湲곗??낅땲?? ?뱀깋? 吏꾪뻾, ?⑹깋? 二쇱쓽, ?곸깋? ?뺤??덉슂. ?쇨컙怨?二쇨컙 紐⑤몢 ?곸슜?⑸땲?? ?쒗뿕 ?⑥젙! ?좏샇湲?怨좎옣 ???대뼡 ?좏샇瑜?蹂댁뿬???섎굹?? ?뺤?! 吏꾪뻾???꾨떃?덈떎. ?덉쟾 ?곗꽑 ?먯튃, 怨좎옣 ???뺤? ?좏샇, ????媛吏瑜?瑗?湲곗뼲?섏꽭??`,
-  'C-07': `?띾룄 ?쒗븳 愿??媛쒕뀗?낅땲?? ?댁감??援ш컙蹂꾨줈 ?덉슜 理쒓퀬?띾룄媛 ?뺥빐???덉뼱?? ?대? 珥덇낵?섎㈃ ???⑸땲?? 理쒓퀬?띾룄 醫낅쪟媛 ?덉뼱?? ?ㅺ퀎?띾룄???좊줈瑜??ㅺ퀎????湲곗?????理쒓퀬?띾룄?덉슂. ?댄뻾?띾룄???ㅼ젣 ?댄뻾 ???덉슜?섎뒗 理쒓퀬?띾룄?낅땲?? ??긽 ?ㅺ퀎?띾룄 ?댄븯?ъ빞 ?댁슂. ?쒗뻾?댁쟾 議곌굔??以묒슂?댁슂. ?쒗뻾?대? 洹쒖젙 ?띾룄蹂대떎 ??? ?띾룄濡??댄뻾?섎뒗 寃껋엯?덈떎. ?좊줈 ?묒뾽 以? ?좏샇湲?怨좎옣, ?낆쿇?????쒗뻾?댁빞 ?⑸땲?? ?쒗뻾 ?띾룄???쒖냽 25?щ줈誘명꽣 ?댄븯媛 湲곕낯?댁뿉?? ?쒗뿕 ?⑥젙! ?ㅺ퀎?띾룄? ?댄뻾?띾룄 以??대뒓 寃껋씠 ???믩굹?? ?ㅺ퀎?띾룄! ?댄뻾?띾룄???ㅺ퀎?띾룄瑜?珥덇낵?????놁뒿?덈떎. ?쒗뻾 湲곕낯 ?띾룄?? ?쒖냽 25?щ줈誘명꽣 ?댄븯! ???レ옄???섏샃?덈떎.`,
-  'C-09': `?쒓퀎?댁쟾 諛⑹떇?낅땲?? ?쒓퀎?댁쟾? ?좏샇湲곕굹 ?먯깋?μ튂 ?놁씠 湲곌??ш? ?덉쑝濡?吏곸젒 ?꾨갑??蹂대㈃???댁쟾?섎뒗 諛⑹떇?댁뿉?? ?먯깋?μ튂媛 怨좎옣?ш굅??鍮꾩긽 ?곹솴?????ъ슜?섎뒗 理쒗썑 ?섎떒?낅땲?? ?쒓퀎?댁쟾?먮뒗 ??媛吏 諛⑹떇???덉뼱?? 泥レ㎏, 寃⑹떆踰뺤엯?덈떎. 寃⑹떆???쒓컙???먯뼱 寃⑸━?쒕떎???살씠?먯슂. ???댁감媛 異쒕컻?????쇱젙 ?쒓컙??吏?섍퀬 ?ㅼ쓬 ?댁감瑜?異쒕컻?쒗궎??諛⑸쾿?낅땲?? 蹂듭꽑 ?꾩슜?댁뿉?? 蹂듭꽑? ?곹뻾?졖룻븯?됱꽑??遺꾨━???덉뼱??留덉＜?ㅻ뒗 ?댁감媛 ?놁옏?꾩슂. 洹몃윭???쒓컙 媛꾧꺽留?踰뚮젮二쇰㈃ 異⑸텇?⑸땲?? ?섏㎏, ?꾨졊踰뺤엯?덈떎. ?꾨졊?? 利??щ엺??吏곸젒 ?댁감???묒듅?댁슂. 洹??щ엺???怨??덈뒗 ?숈븞? 洹?援ш컙???먯쑀??寃껋씠???ㅻⅨ ?댁감??吏꾩엯?????놁뒿?덈떎. 蹂듭꽑怨??⑥꽑 紐⑤몢 ?ъ슜?댁슂. ?뗭㎏, 吏?꾧꺽?쒕쾿?낅땲?? 吏?? 利?諛⑺뼢 ?덇?? 寃⑹떆, 利??쒓컙 媛꾧꺽???숈떆???ъ슜?섎뒗 諛⑸쾿?댁뿉?? ?⑥꽑 ?꾩슜?낅땲?? ?⑥꽑? ???좊줈濡??묐갑?μ씠 ?ㅻ땲?덇퉴 諛⑺뼢 ?듭젣媛 諛섎뱶???꾩슂?섍굅?좎슂. ?듭떖 ?붽린! 寃⑹떆踰뺤? 蹂듭꽑 ?꾩슜, 吏?꾧꺽?쒕쾿? ?⑥꽑 ?꾩슜, ?꾨졊踰뺤? ?????ъ슜. ?쒗뿕 ?⑥젙! 吏?꾧꺽?쒕쾿??蹂듭꽑?먮룄 ?곗씤?? ?꾨떃?덈떎, ?⑥꽑 ?꾩슜?낅땲??`,
-  'C-12': `?좏샇湲??뺤쐞 ?꾩껜 ?뺣━?낅땲?? ?뺤쐞???됱긽??湲곕낯 ?꾩튂?덉슂. 媛??좏샇湲곕퀎 ?뺤쐞瑜???踰덉뿉 ?뺣━?⑸땲?? 癒쇱? 吏꾪뻾 怨꾩뿴???뺤쐞?낅땲?? ?먮룞?먯깋?좏샇湲??뺤쐞??吏꾪뻾?댁뿉?? ?닿쾶 ?⑥젙?낅땲?? ?먮룞?먯깋? 吏꾪뻾???뺤쐞! ?ㅼ쓬?쇰줈 ?뺤? 怨꾩뿴???뺤쐞?낅땲?? ?λ궡?좏샇湲? 異쒕컻?좏샇湲? ?낇솚?좏샇湲곗쓽 ?뺤쐞???뺤??낅땲?? ?뱀닔??寃쎌슦?낅땲?? ?먮갑?좏샇湲??뺤쐞??二쇱쓽?덉슂. 吏꾪뻾???뺤????꾨땶 二쇱쓽媛 ?뺤쐞! ?좊룄?좏샇湲??뺤쐞???꾩떆?놁쓬?댁뿉?? ?뺤?媛 ?꾨떃?덈떎! ?뺣━?⑸땲?? ?먮룞?먯깋 = 吏꾪뻾 ?뺤쐞, ?먮갑?좏샇湲?= 二쇱쓽 ?뺤쐞, ?좊룄?좏샇湲?= ?꾩떆?놁쓬 ?뺤쐞, ?섎㉧吏 = ?뺤? ?뺤쐞. ????媛吏 ?덉쇅留??뺤떎???몄슦硫??⑸땲??`,
-  'C-16': `?좊줈?꾪솚湲곗? 洹??뺤쐞?낅땲?? ?좊줈?꾪솚湲곕뒗 ?댁감??吏꾨줈瑜?諛붽씀???μ튂?덉슂. 吏곸꽑?쇰줈 媛덉? 怨≪꽑?쇰줈 媛덉?瑜?寃곗젙?⑸땲?? ?좊줈?꾪솚湲??뺤쐞??湲곕낯 ?꾩튂瑜?留먰빀?덈떎. ?듭긽 ?ъ슜?섎뒗 諛⑺뼢?쇰줈 ?볦뿬 ?덉뼱?? ?쇰컲?곸쑝濡?蹂몄꽑 諛⑺뼢???뺤쐞?낅땲?? 遺蹂몄꽑?대굹 痢≪꽑?쇰줈 媛??諛⑺뼢? 諛섏쐞?덉슂. ?좊줈?꾪솚湲?痍④툒 ?먯튃???덉뼱?? ?댁감 吏꾨줈瑜??뺥솗?섍쾶 ?ㅼ젙?????좉????⑸땲?? ?댁감媛 吏?섍컝 ???꾪솚?섎㈃ ?덈? ???쇱슂. ?좊줈?꾪솚湲??좉툑?????섎㈃ 異쒕컻 遺덇??낅땲?? ?쒗뿕 ?⑥젙! ?좊줈?꾪솚湲??뺤쐞?? 蹂몄꽑 諛⑺뼢! 諛섏쐞?? 痢≪꽑 ?먮뒗 遺蹂몄꽑 諛⑺뼢! ?댁감 ?듦낵 以??좊줈?꾪솚湲곕? ?꾪솚?????덈굹?? ?덈? ???⑸땲?? ?좊줈?꾪솚湲곕뒗 ?뺤쐞媛 蹂몄꽑, 諛섏쐞媛 痢≪꽑. ?대젃寃?湲곗뼲?섏꽭??`,
+  'C-01': `열차운전 기본 개념입니다. 열차와 차량을 구분해야 해요. 차량은 철도 위를 달리는 개별 이동체예요. 열차는 하나 이상의 차량이 연결되어 운전 가능한 상태가 된 것을 말합니다. 차량이 여러 개 붙어서 운행 준비가 되면 열차라고 해요. 운전취급규정에서 열차 정의가 자주 나옵니다. 정거장은 여객 취급, 화물 취급, 차량 기지 기능을 하는 곳이에요. 역, 신호소, 조차장, 차량기지가 모두 정거장에 포함됩니다. 시험 함정! 신호소가 정거장에 해당하나요? 해당합니다! 역만 정거장이 아니에요. 신호소, 조차장, 차량기지도 정거장입니다. 열차와 차량의 차이, 정거장의 범위, 이 두 가지를 정확히 기억하세요!`,
+  'C-02': `열차 종별 분류입니다. 속도와 목적에 따라 나뉘어요. 특급열차는 주요 정거장에만 정차하는 가장 빠른 열차예요. 급행열차는 일부 정거장만 정차해요. 완행열차는 모든 정거장에 정차합니다. 화물열차는 화물 운송이 목적이에요. 시험에서 열차 우선순위도 나와요. 같은 선로를 달릴 때 어떤 열차가 우선인지입니다. 일반적으로 여객열차가 화물열차보다 우선이에요. 같은 종류라면 정시에 출발하는 열차가 우선입니다. 다음으로 열차 번호 체계입니다. 하행열차는 홀수 번호, 상행열차는 짝수 번호를 사용해요. 하행이 홀수, 상행이 짝수! 반대로 외우면 틀려요. 하홀상짝! 하행 홀수, 상행 짝수로 외우세요.`,
+  'C-04': `열차 운행 허가의 핵심입니다. 열차는 허가 없이 출발할 수 없어요. 출발 허가는 출발신호기로 표시됩니다. 출발신호기가 진행을 현시해야 출발할 수 있어요. 출발신호기가 없는 경우에는 역장이나 관제사의 지시에 따릅니다. 폐색 방식도 연결됩니다. 열차가 다음 구간에 진입하려면 그 구간이 비어 있다는 걸 확인해야 해요. 이게 폐색입니다. 출발 전 점검 사항도 중요해요. 차량 상태, 화물 고정, 문 닫힘 여부를 확인해야 합니다. 시험 포인트! 출발신호기 정위는? 정지! 출발 허가를 받으면 진행을 현시해요. 열차 출발 전 확인 사항에 문 닫힘이 포함되나요? 포함됩니다! 정거장 출발 조건과 출발신호기 정위를 함께 기억하세요.`,
+  'C-05': `신호 현시 원칙입니다. 신호는 열차와 차량을 안전하게 운행시키는 지시예요. 신호 현시의 기본 원칙이 있습니다. 첫째, 정지 신호를 최우선으로 해요. 진행 신호보다 정지 신호가 항상 우선입니다. 둘째, 보수적 원칙입니다. 불확실할 때는 항상 안전한 쪽으로 작동해야 해요. 신호기 고장 시 정지 신호가 현시되는 게 이 원칙 때문이에요. 셋째, 최근접 신호기 원칙입니다. 열차는 가장 가까운 신호기의 현시에 따라야 해요. 색 기준입니다. 녹색은 진행, 황색은 주의, 적색은 정지예요. 야간과 주간 모두 적용됩니다. 시험 함정! 신호기 고장 시 어떤 신호를 보여야 하나요? 정지! 진행이 아닙니다. 안전 우선 원칙, 고장 시 정지 신호, 이 두 가지를 꼭 기억하세요!`,
+  'C-07': `속도 제한 관련 개념입니다. 열차는 구간별로 허용 최고속도가 정해져 있어요. 이를 초과하면 안 됩니다. 최고속도 종류가 있어요. 설계속도는 선로를 설계할 때 기준이 된 최고속도예요. 운행속도는 실제 운행 시 허용되는 최고속도입니다. 항상 설계속도 이하여야 해요. 서행운전 조건도 중요해요. 서행이란 규정 속도보다 낮은 속도로 운행하는 것입니다. 선로 작업 중, 신호기 고장, 악천후 시 서행해야 합니다. 서행 속도는 시속 25킬로미터 이하가 기본이에요. 시험 함정! 설계속도와 운행속도 중 어느 것이 더 높나요? 설계속도! 운행속도는 설계속도를 초과할 수 없습니다. 서행 기본 속도는? 시속 25킬로미터 이하! 이 숫자도 나옵니다.`,
+  'C-09': `시계운전 방식입니다. 시계운전은 신호기나 폐색장치 없이 기관사가 눈으로 직접 전방을 보면서 운전하는 방식이에요. 폐색장치가 고장났거나 비상 상황일 때 사용하는 최후 수단입니다. 시계운전에는 세 가지 방식이 있어요. 첫째, 격시법입니다. 격시는 시간을 두어 격리한다는 뜻이에요. 앞 열차가 출발한 뒤 일정 시간이 지나고 다음 열차를 출발시키는 방법입니다. 복선 전용이에요! 복선은 상행선·하행선이 분리돼 있어서 마주오는 열차가 없잖아요. 그러니 시간 간격만 벌려주면 충분합니다. 둘째, 전령법입니다. 전령자, 즉 사람이 직접 열차에 탑승해요. 그 사람이 타고 있는 동안은 그 구간이 점유된 것이니 다른 열차는 진입할 수 없습니다. 복선과 단선 모두 사용해요. 셋째, 지도격시법입니다. 지도, 즉 방향 허가와 격시, 즉 시간 간격을 동시에 사용하는 방법이에요. 단선 전용입니다! 단선은 한 선로로 양방향이 다니니까 방향 통제가 반드시 필요하거든요. 핵심 암기! 격시법은 복선 전용, 지도격시법은 단선 전용, 전령법은 둘 다 사용. 시험 함정! 지도격시법이 복선에도 쓰인다? 아닙니다, 단선 전용입니다!`,
+  'C-12': `신호기 정위 전체 정리입니다. 정위는 평상시 기본 위치예요. 각 신호기별 정위를 한 번에 정리합니다. 먼저 진행 계열의 정위입니다. 자동폐색신호기 정위는 진행이에요. 이게 함정입니다. 자동폐색은 진행이 정위! 다음으로 정지 계열의 정위입니다. 장내신호기, 출발신호기, 입환신호기의 정위는 정지입니다. 특수한 경우입니다. 원방신호기 정위는 주의예요. 진행도 정지도 아닌 주의가 정위! 유도신호기 정위는 현시없음이에요. 정지가 아닙니다! 정리합니다. 자동폐색 = 진행 정위, 원방신호기 = 주의 정위, 유도신호기 = 현시없음 정위, 나머지 = 정지 정위. 이 세 가지 예외만 확실히 외우면 됩니다!`,
+  'C-16': `선로전환기와 그 정위입니다. 선로전환기는 열차의 진로를 바꾸는 장치예요. 직선으로 갈지 곡선으로 갈지를 결정합니다. 선로전환기 정위는 기본 위치를 말합니다. 통상 사용하는 방향으로 놓여 있어요. 일반적으로 본선 방향이 정위입니다. 부본선이나 측선으로 가는 방향은 반위예요. 선로전환기 취급 원칙이 있어요. 열차 진로를 정확하게 설정한 후 잠가야 합니다. 열차가 지나갈 때 전환하면 절대 안 돼요. 선로전환기 잠금이 안 되면 출발 불가입니다. 시험 함정! 선로전환기 정위는? 본선 방향! 반위는? 측선 또는 부본선 방향! 열차 통과 중 선로전환기를 전환할 수 있나요? 절대 안 됩니다! 선로전환기는 정위가 본선, 반위가 측선. 이렇게 기억하세요.`,
 };
 document.addEventListener('DOMContentLoaded', function() {
   Object.keys(EDU3_SUPP).forEach(function(id) {
@@ -1347,7 +1352,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!title) return;
     var btn = document.createElement('button');
     btn.className = 'tts-supp-btn';
-    btn.textContent = '?뱴 蹂댁땐媛뺤쓽';
+    btn.textContent = '📚 보충강의';
     var script = EDU3_SUPP[id];
     btn.onclick = function() { playSuppTTS3(script, btn); };
     title.insertAdjacentElement('afterend', btn);
@@ -1356,13 +1361,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-// ===== ?꾩껜媛뺤쓽 ?ｊ린 (prefetch濡?媛뺤쓽 ?ъ씠 媛꾧꺽 理쒖냼?? =====
+// ===== 전체강의 듣기 (prefetch로 강의 사이 간격 최소화) =====
 var _allAudio = null;
 var _allQueue = [];
 var _allIndex = 0;
 var _allPlaying = false;
-var _allCache = {}; // index -> blobUrl (prefetch 罹먯떆)
-var _warmupTimer = null; // BT A2DP ?뚮컢????대㉧
+var _allCache = {}; // index -> blobUrl (prefetch 캐시)
+var _warmupTimer = null; // BT A2DP 워밍업 타이머
 
 function _allBtns() {
   return [document.getElementById('play-all-btn'), document.getElementById('play-all-desktop')];
@@ -1380,7 +1385,7 @@ function playAllTTS() {
     _allPlaying = false; _allQueue = []; _allIndex = 0;
     Object.values(_allCache).forEach(function(u){ try{URL.revokeObjectURL(u);}catch(e){} });
     _allCache = {};
-    _allSetLabel('?렒 ?꾩껜媛뺤쓽'); _allSetPlaying(false);
+    _allSetLabel('🎧 전체강의'); _allSetPlaying(false);
     _stopKeepAlive(); _stopHeartbeat();
     if (_warmupTimer) { clearTimeout(_warmupTimer); _warmupTimer = null; }
     return;
@@ -1396,14 +1401,15 @@ function playAllTTS() {
   if (!_allQueue.length) return;
   _allIndex = 0; _allPlaying = true; _allCache = {};
   _allSetPlaying(true);
-  // 泥??몃옓 + ?ㅼ쓬 ?몃옓 誘몃━ 濡쒕뱶
+  // 첫 트랙 + 다음 트랙 미리 로드
   _allPrefetch(0); _allPrefetch(1);
   _ensureCtx().then(function() { _startKeepAlive(); _startHeartbeat(); _warmupTimer = setTimeout(function() { _warmupTimer = null; _allPlayNext(); }, 700); });
 }
 
-// index 踰??몃옓??諛깃렇?쇱슫??fetch?댁꽌 罹먯떆?????function _allPrefetch(idx) {
+// index 번 트랙을 백그라운드 fetch해서 캐시에 저장
+function _allPrefetch(idx) {
   if (idx < 0 || idx >= _allQueue.length || _allCache[idx] !== undefined) return;
-  _allCache[idx] = null; // 濡쒕뵫 以??쒖떆 (null = 吏꾪뻾以?
+  _allCache[idx] = null; // 로딩 중 표시 (null = 진행중)
   fetch('/api/tts', {
     method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({text:_allQueue[idx], voiceId:'sQ3a15DhENXU8pKTHlcc'})
@@ -1412,8 +1418,8 @@ function playAllTTS() {
     .catch(function(){ _allCache[idx] = 'error'; });
 }
 
-// ?? 蹂쇰ⅷ 洹좎씪??(GainNode + DynamicsCompressor) ??
-// ?묒? ?뚮━ ?ㅼ슦怨????뚮━ ?뚮윭??李??ㅻ뵒?ㅼ뿉?쒕룄 洹좎씪?섍쾶
+// ── 볼륨 균일화 (GainNode + DynamicsCompressor) ──
+// 작은 소리 키우고 큰 소리 눌러서 차 오디오에서도 균일하게
 var _audioCtx = null;
 var _debugLogs = [];
 function _debugAppend(name, ct) {
@@ -1439,7 +1445,7 @@ function _debugPanelRefresh() {
     return '<div style="border-bottom:1px solid #333;padding:3px 2px;">'+l+'</div>';
   }).join('');
 }
-// 李?釉붾（?ъ뒪 ?섍꼍?먯꽌 AudioContext suspend ?먮룞 蹂듦뎄
+// 차 블루투스 환경에서 AudioContext suspend 자동 복구
 function _ensureCtx() {
   if (!_audioCtx) {
     _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1458,7 +1464,7 @@ function _startKeepAlive() {
   try {
     var osc = _audioCtx.createOscillator();
     var g   = _audioCtx.createGain();
-    osc.frequency.value = 150; g.gain.value = 0.00001; // 150Hz 洹뱀냼????A2DP ?ㅽ듃由??좎???(BT cold-start ???
+    osc.frequency.value = 150; g.gain.value = 0.00001; // 150Hz 극소음 — A2DP 스트림 유지용 (BT cold-start 대응)
     osc.connect(g); g.connect(_audioCtx.destination);
     osc.start();
     _keepAliveNode = { osc: osc, gain: g };
@@ -1469,7 +1475,7 @@ function _stopKeepAlive() {
   try { _keepAliveNode.osc.stop(); _keepAliveNode.gain.disconnect(); } catch(e) {}
   _keepAliveNode = null;
 }
-// 500ms 諛뺣룞 ???ъ깮 以?AudioContext ?쇱떆?뺤? 利됱떆 蹂듦뎄 (釉붾（?ъ뒪 mid-track ?딄? 諛⑹?)
+// 500ms 박동 — 재생 중 AudioContext 일시정지 즉시 복구 (블루투스 mid-track 끊김 방지)
 var _heartbeatTimer = null;
 function _startHeartbeat() {
   if (_heartbeatTimer) return;
@@ -1486,7 +1492,7 @@ function _playBoosted(url, onended) {
   var graph = null;
   var _progressTimer = null;
   var _lastCT = -1, _stuckTicks = 0;
-  var _doneCalled = false; // 以묐났 ?몄텧 諛⑹?
+  var _doneCalled = false; // 중복 호출 방지
 
   function _cleanup() {
     if (_progressTimer) { clearInterval(_progressTimer); _progressTimer = null; }
@@ -1499,11 +1505,11 @@ function _playBoosted(url, onended) {
     if (_doneCalled) return; _doneCalled = true;
     _cleanup(); onended && onended();
   }
-  // 李⑤웾 吏꾨떒????踰꾪듉??理쒓렐 ?대깽???쒓컖 ?몄텧 (李⑥뿉???딄린硫????붾㈃?쇰줈 ?뺤씤)
+  // 차량 진단용 — 버튼에 최근 이벤트+시각 노출 (차에서 끊기면 폰 화면으로 확인)
   function _logEvt(name) {
     try {
       var t = Math.round(audio.currentTime || 0);
-      _allSetLabel('??' + (_allIndex+1) + '/' + _allQueue.length + ' [' + name + '@' + t + 's]');
+      _allSetLabel('⏸ ' + (_allIndex+1) + '/' + _allQueue.length + ' [' + name + '@' + t + 's]');
       _debugAppend(name, t);
     } catch(e) {}
   }
@@ -1512,7 +1518,7 @@ function _playBoosted(url, onended) {
     try {
       var src  = _audioCtx.createMediaElementSource(audio);
       var gain = _audioCtx.createGain();
-      gain.gain.value = 3.0;                // 蹂쇰ⅷ ?좎?
+      gain.gain.value = 3.0;                // 볼륨 유지
       var comp = _audioCtx.createDynamicsCompressor();
       comp.threshold.value = -10;
       comp.knee.value      = 6;
@@ -1527,23 +1533,23 @@ function _playBoosted(url, onended) {
     } catch(e) {}
     audio.play().catch(function() { _logEvt('play-fail'); _done(); });
 
-    // 吏꾪뻾 媛먯떆 ??2珥덈쭏??泥댄겕
-    // paused ?곹깭???꾩쟻 (?댁쟾 踰꾧렇: paused硫?由ъ뀑?댁꽌 watchdog ?곸썝?????곗죱??
+    // 진행 감시 — 2초마다 체크
+    // paused 상태도 누적 (이전 버그: paused면 리셋해서 watchdog 영원히 안 터졌음)
     _progressTimer = setInterval(function() {
       if (!_allPlaying || audio.ended) { _cleanup(); return; }
       if (!audio.paused) {
         if (audio.currentTime === _lastCT) {
           _stuckTicks++;
-          if (_stuckTicks >= 7) { // 14s ?ъ깮 以??뺤껜 ??媛뺤젣 ?대룞
+          if (_stuckTicks >= 7) { // 14s 재생 중 정체 → 강제 이동
             _logEvt('stuck');
             try { audio.pause(); } catch(e) {}
             _done();
           }
         } else { _lastCT = audio.currentTime; _stuckTicks = 0; }
       } else {
-        // paused: onpause retry 以묒씠吏留??κ린 硫덉땄??媛먯떆 (?댁쟾???ш린??由ъ뀑?댁꽌 援먯갑)
+        // paused: onpause retry 중이지만 장기 멈춤도 감시 (이전엔 여기서 리셋해서 교착)
         _stuckTicks++;
-        if (_stuckTicks >= 10) { // 20s paused 援먯갑 ??媛뺤젣 ?대룞
+        if (_stuckTicks >= 10) { // 20s paused 교착 → 강제 이동
           _logEvt('pause-stuck');
           _done();
         }
@@ -1551,7 +1557,7 @@ function _playBoosted(url, onended) {
     }, 2000);
   });
 
-  // AVRCP pause ??理쒕? 5???ъ떆?? 5???뚯쭊 ??媛뺤젣 ?ㅼ쓬 ?몃옓 (?댁쟾 踰꾧렇: ?뚯쭊 ??援먯갑)
+  // AVRCP pause → 최대 5회 재시도. 5회 소진 시 강제 다음 트랙 (이전 버그: 소진 후 교착)
   audio.onpause = function() {
     if (!_allPlaying || audio.ended) return;
     _logEvt('pause');
@@ -1564,7 +1570,7 @@ function _playBoosted(url, onended) {
           if (_tries < 5) {
             setTimeout(_resume, 300 + _tries * 100);
           } else {
-            _logEvt('retry-fail'); // 5???뚯쭊 ???ㅼ쓬 ?몃옓 媛뺤젣
+            _logEvt('retry-fail'); // 5회 소진 → 다음 트랙 강제
             _done();
           }
         });
@@ -1573,8 +1579,8 @@ function _playBoosted(url, onended) {
     setTimeout(_resume, 200);
   };
 
-  // stalled: 踰꾪띁 怨듦툒 以묐떒 (blob ?섎┝쨌?ㅽ듃?뚰겕쨌AudioContext 臾몄젣)
-  // ?댁쟾???몃뱾???놁뼱??stalled 諛쒖깮 ???곴뎄 援먯갑 ??3s ??媛뺤젣 ?대룞
+  // stalled: 버퍼 공급 중단 (blob 잘림·네트워크·AudioContext 문제)
+  // 이전에 핸들러 없어서 stalled 발생 시 영구 교착 — 3s 후 강제 이동
   audio.onstalled = function() {
     _logEvt('stalled');
     setTimeout(function() {
@@ -1583,7 +1589,7 @@ function _playBoosted(url, onended) {
     }, 3000);
   };
 
-  // abort / emptied: 鍮꾩젙??醫낅즺 ??利됱떆 ?ㅼ쓬 ?몃옓
+  // abort / emptied: 비정상 종료 — 즉시 다음 트랙
   audio.onabort   = function() { _logEvt('abort');   _done(); };
   audio.onemptied = function() { _logEvt('emptied'); if (!audio.ended) _done(); };
 
@@ -1595,19 +1601,20 @@ function _playBoosted(url, onended) {
 function _allPlayNext() {
   if (!_allPlaying || _allIndex >= _allQueue.length) {
     _allPlaying = false; _allQueue = []; _allIndex = 0;
-    _allSetLabel('?렒 ?꾩껜媛뺤쓽'); _allSetPlaying(false);
+    _allSetLabel('🎧 전체강의'); _allSetPlaying(false);
     _stopHeartbeat(); _stopKeepAlive();
     return;
   }
-  _allSetLabel('??' + (_allIndex+1) + '/' + _allQueue.length);
-  // 誘몃━ ?ㅼ쓬+1, ?ㅼ쓬+2 ?몃옓 prefetch
+  _allSetLabel('⏸ ' + (_allIndex+1) + '/' + _allQueue.length);
+  // 미리 다음+1, 다음+2 트랙 prefetch
   _allPrefetch(_allIndex + 1); _allPrefetch(_allIndex + 2); _allPrefetch(_allIndex + 3);
 
   function tryPlay() {
     if (!_allPlaying) return;
     var cached = _allCache[_allIndex];
     if (cached === undefined || cached === null) {
-      // ?꾩쭅 濡쒕뵫 以???50ms ???ъ떆??      setTimeout(tryPlay, 50); return;
+      // 아직 로딩 중 — 50ms 후 재시도
+      setTimeout(tryPlay, 50); return;
     }
     if (cached === 'error') { _allIndex++; _allPlayNext(); return; }
     _allAudio = _playBoosted(cached, function(){ _allIndex++; _allPlayNext(); });
@@ -1617,7 +1624,7 @@ function _allPlayNext() {
 </script>
 
 <script>
-// ?몄뇙 ?? lazy ?대?吏 媛뺤젣 濡쒕뱶 + overflow ?댁젣
+// 인쇄 전: lazy 이미지 강제 로드 + overflow 해제
 window.onbeforeprint = function() {
   document.body.style.overflow = '';
   document.querySelectorAll('img').forEach(function(img) {
