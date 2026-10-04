@@ -102,23 +102,23 @@ body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #f0
 #progress-bar { height: 100%; background: #64b5f6; border-radius: 4px; transition: width 0.3s; }
 #progress-text { font-size: 11px; opacity: 0.9; }
 
-/* 통합 인쇄 버튼 */
+/* 통합 인쇄 버튼 (header 우측) */
 #btn-print-all {
-  display: block;
-  width: 100%;
-  margin-top: 10px;
-  padding: 7px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
   background: rgba(255,255,255,0.15);
   border: 1px solid rgba(255,255,255,0.4);
   color: #fff;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   border-radius: 4px;
   cursor: pointer;
-  text-align: center;
-  letter-spacing: 0.3px;
-  transition: background 0.2s;
   text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s;
+  flex-shrink: 0;
 }
 #btn-print-all:hover { background: rgba(255,255,255,0.28); }
 
@@ -197,25 +197,7 @@ body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #f0
   overflow: hidden;
   background: #f0f2f5;
 }
-#viewer-bar {
-  background: #fff;
-  padding: 8px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #e0e4ef;
-  flex-shrink: 0;
-  min-height: 40px;
-}
-#viewer-bar .current-unit-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #283593;
-}
-#viewer-bar .viewer-hint {
-  font-size: 11px;
-  color: #90a4ae;
-}
+
 #unit-iframe {
   flex: 1;
   width: 100%;
@@ -289,7 +271,7 @@ body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #f0
     </div>
     <div class="title">GATE5 철도공학</div>
     <div class="header-right">
-      <span style="font-size:12px;opacity:0.7;">New System</span>
+      <a id="btn-print-all" href="GATE5_PRINT_ALL_v1.1.html" target="_blank">🖨 인쇄/PDF</a>
     </div>
   </div>
 
@@ -307,9 +289,6 @@ body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #f0
           <div id="progress-bar" style="width:0%"></div>
         </div>
         <div id="progress-text">완료 0 / 75 UNIT</div>
-        <a id="btn-print-all" href="GATE5_PRINT_ALL_v1.1.html" target="_blank">
-          🖨 통합 인쇄 / PDF
-        </a>
       </div>
       <div id="toc-scroll">
         <!-- JS로 생성 -->
@@ -318,10 +297,6 @@ body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #f0
 
     <!-- 뷰어 -->
     <div id="viewer-wrap">
-      <div id="viewer-bar">
-        <span class="current-unit-label" id="current-label">UNIT을 선택하세요</span>
-        <span class="viewer-hint" id="viewer-hint">왼쪽 목차에서 학습할 UNIT을 선택하세요</span>
-      </div>
       <!-- 시작 화면 -->
       <div id="welcome-screen">
         <div class="welcome-icon">📚</div>
@@ -562,8 +537,6 @@ function activateUnit(unitId, unit) {
   }, 100);
 
   // viewer bar 업데이트
-  document.getElementById('current-label').textContent = unit.id + ' ' + unit.title + (unit.version ? '  (' + unit.version + ')' : '');
-  document.getElementById('viewer-hint').textContent = '📖 학습 중';
 
   // 시작화면 숨기고 iframe 표시
   document.getElementById('welcome-screen').style.display = 'none';
@@ -637,8 +610,6 @@ window.addEventListener('popstate', (e) => {
     document.getElementById('welcome-screen').style.display = '';
     document.getElementById('unit-iframe').style.display = 'none';
     document.getElementById('unit-iframe').src = 'about:blank';
-    document.getElementById('current-label').textContent = 'UNIT을 선택하세요';
-    document.getElementById('viewer-hint').textContent = '왼쪽 목차에서 학습할 UNIT을 선택하세요';
     if (activeUnitId) {
       const prev = document.getElementById('unit-item-' + activeUnitId);
       if (prev) prev.classList.remove('active');
