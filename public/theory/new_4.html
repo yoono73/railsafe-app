@@ -622,8 +622,11 @@ function toggleMobileMenu() {
   document.getElementById('overlay').classList.toggle('active');
 }
 function closeMobileMenu() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('active');
+  // 모바일에서만 닫기 (데스크톱은 목차 고정 유지)
+  if (window.innerWidth < 768) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('active');
+  }
 }
 
 /* ============================================================
@@ -652,6 +655,11 @@ window.addEventListener('popstate', (e) => {
 buildTOC();
 renderProgress();
 loadFromURL();
+
+// 데스크톱에서 목차 자동 열기 (고정)
+if (window.innerWidth >= 768) {
+  document.getElementById('sidebar').classList.add('open');
+}
 </script>
 </body>
 </html>
