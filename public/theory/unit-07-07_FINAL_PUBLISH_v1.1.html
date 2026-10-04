@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>07-07 무절연AF궤도회로 | 철도공학</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#fff; color:#111; font-size:15px; line-height:1.75; }
+
+/* 헤더 */
+.site-header { background:#fff; color:#111; padding:8px 16px 6px; border-bottom:3px solid #78350f; }
+.site-header h1 { font-size:1.05em; font-weight:bold; color:#78350f; }
+.site-header .meta { font-size:.78em; color:#555; margin-top:2px; }
+
+.container { max-width:960px; margin:0 auto; padding:20px 24px 60px; }
+
+/* 단원 헤더 */
+.unit-header { border:2px solid #78350f; border-radius:6px; padding:12px 16px; margin-bottom:22px; background:#fff; }
+.unit-header h2 { font-size:1.2em; font-weight:bold; color:#78350f; }
+.unit-header .nav-link { font-size:.82em; color:#555; margin-top:4px; }
+
+/* 섹션 */
+.section { margin:0 0 26px 0; }
+.section-title { font-size:1.05em; font-weight:bold; color:#111; border-left:4px solid #78350f; padding:5px 0 5px 12px; margin-bottom:14px; background:#fff; }
+
+/* 개념 */
+.concept { margin:14px 0 6px; padding-bottom:14px; border-bottom:1px solid #ccc; }
+.concept:last-child { border-bottom:none; }
+.concept-title { font-size:1em; font-weight:bold; color:#78350f; margin-bottom:8px; padding:4px 0; }
+.concept-title .cnum { border:1px solid #78350f; color:#78350f; border-radius:4px; padding:1px 7px; font-size:.85em; margin-right:6px; }
+
+/* 테이블 */
+table { width:100%; border-collapse:collapse; margin:8px 0; font-size:.9em; }
+th { background:#e8e8e8; color:#111; padding:7px 10px; text-align:left; font-size:.88em; border:1.5px solid #999; font-weight:bold; }
+td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#fff; }
+tr:nth-child(even) td { background:#fff; }
+tr.hl td { background:#fff; font-weight:bold; }
+
+/* 강조 박스 */
+.trap {
+  background:#fff;
+  border-left:4px solid #c0392b;
+  padding:8px 12px; margin:8px 0;
+  border-radius:0 4px 4px 0;
+  font-size:.9em; color:#c0392b; font-weight:bold;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+.tip {
+  background:#fff;
+  border-left:4px solid #2e7d32;
+  padding:8px 12px; margin:8px 0;
+  border-radius:0 4px 4px 0;
+  font-size:.9em; color:#2e7d32; font-weight:bold;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+.theory-note {
+  background:#fff;
+  border-left:4px solid #1565c0;
+  padding:10px 14px; margin:8px 0;
+  border-radius:0 4px 4px 0;
+  font-size:.9em; color:#111;
+  border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0;
+}
+.theory-note strong { color:#1565c0; }
+
+.quiz-ex {
+  background:#fff;
+  border-left:4px solid #2e7d32;
+  padding:10px 14px; margin:8px 0;
+  border-radius:0 4px 4px 0;
+  font-size:.88em; color:#111;
+  border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0;
+}
+.quiz-ex .qe-title { font-weight:bold; color:#2e7d32; margin-bottom:4px; }
+.quiz-ex .qe-q { margin:4px 0 2px; }
+.quiz-ex .qe-a { font-weight:bold; color:#1b5e20; }
+.quiz-ex .qe-wrong {
+  display:block;
+  background:#fff;
+  border-left:3px solid #c0392b;
+  color:#c0392b;
+  padding:5px 10px; margin:6px 0;
+  border-radius:0 4px 4px 0;
+  font-size:.88em;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+.quiz-mc { background:#fff; border:1px solid #ccc; border-left:4px solid #555; padding:12px 14px; margin:12px 0; border-radius:0 4px 4px 0; font-size:.9em; }
+.quiz-mc .qm-src { font-size:.78em; color:#555; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
+.quiz-mc .qm-q { font-weight:bold; color:#111; margin-bottom:8px; line-height:1.6; }
+.quiz-mc .qm-choices { margin:0 0 8px 4px; }
+.quiz-mc .qm-choice { padding:3px 0; color:#222; line-height:1.7; }
+.quiz-mc .qm-ans { font-size:.82em; color:#444; border-top:1px solid #ddd; padding-top:6px; margin-top:4px; }
+
+/* VIS 래퍼 */
+.vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
+.vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; background:#fff; }
+.vis-cap { font-size:.8em; color:#555; margin-top:6px; }
+
+/* 흐름 박스 */
+.step-flow { background:#fff; border:1px solid #bbb; border-radius:6px; padding:12px 16px; margin:10px 0; font-size:.9em; }
+.step-flow .flow-title { font-weight:bold; color:#78350f; margin-bottom:8px; }
+.flow-chain { display:flex; flex-wrap:wrap; align-items:center; gap:4px; }
+.flow-step { background:#fff; border:1px solid #78350f; border-radius:4px; padding:4px 10px; font-size:.88em; white-space:nowrap; color:#111; }
+.flow-arrow { color:#78350f; font-weight:bold; font-size:1.1em; }
+
+/* 용어 박스 */
+.term-box { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:10px 0; }
+.term-item { background:#fff; border:1px solid #bbb; border-radius:4px; padding:10px 12px; font-size:.88em; }
+.term-item .term-word { font-weight:bold; color:#78350f; font-size:.95em; margin-bottom:3px; }
+.term-item .term-en { color:#555; font-size:.82em; margin-bottom:4px; }
+.term-item .term-def { color:#111; line-height:1.6; }
+
+/* 2축 비교 박스 */
+.two-axis-box { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:12px 0; }
+.axis-card { border:1.5px solid #78350f; border-radius:6px; padding:12px; background:#fff; }
+.axis-card .axis-head { font-weight:bold; color:#78350f; font-size:.95em; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid #ccc; }
+.axis-item { margin:6px 0; padding:5px 8px; border:1px solid #e0e0e0; border-radius:3px; font-size:.88em; background:#fff; }
+.axis-item strong { color:#78350f; }
+
+/* 미검증 표시 */
+.unverified { border-left:3px solid #e67e22; padding:4px 10px; border-radius:0 4px 4px 0; font-size:.83em; color:#b7600a; margin:4px 0; background:#fff; border-top:1px solid #f5f5f5; border-bottom:1px solid #f5f5f5; border-right:1px solid #f5f5f5; }
+
+/* 상호참조 */
+.cross-ref { border-left:3px solid #7c3aed; padding:6px 12px; border-radius:0 4px 4px 0; font-size:.86em; color:#4c1d95; margin:6px 0; background:#fff; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+
+/* 작업 메타 박스 */
+.meta-box { background:#fff; border:1px solid #bbb; border-radius:6px; padding:10px 16px; font-size:.8em; color:#555; margin-top:24px; }
+
+/* 반응형 */
+@media(max-width:600px){
+  .term-box, .two-axis-box { grid-template-columns:1fr; }
+  .flow-chain { flex-direction:column; align-items:flex-start; }
+}
+
+/* 프린트 전용 설정 */
+@media print {
+  body { font-size:12pt; line-height:1.6; background:#fff !important; color:#000 !important; }
+  .site-header { border-bottom:2pt solid #000; padding:6pt 0; }
+  .unit-header { border:1.5pt solid #000; page-break-after:avoid; }
+  .concept { page-break-inside:avoid; }
+  .vis-wrap { page-break-inside:avoid; }
+  .term-box { grid-template-columns:1fr 1fr; }
+  .two-axis-box { grid-template-columns:1fr 1fr; }
+  table { page-break-inside:avoid; }
+  th { background:#e8e8e8 !important; color:#000 !important; border:1.5px solid #999 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  td { border:1.5px solid #bbb !important; background:#fff !important; }
+  tr.hl td { background:#fff !important; }
+  .trap, .tip, .theory-note, .quiz-ex, .quiz-mc { page-break-inside:avoid; }
+  a { color:#000 !important; text-decoration:none; }
+    @page {
+    size: A4 portrait;
+    margin: 12mm 12mm 12mm 18mm;
+  }
+  /* — GATE5 PRINT LOCK v1 추가규칙 — */
+  img, .vis-wrap img { max-width:100%; height:auto; }
+  table { width:100%; max-width:100%; }
+  .quiz-mc { break-inside:avoid; page-break-inside:avoid; }
+  .qst-box, .sys-card, .content-box { break-inside:avoid; page-break-inside:avoid; }
+  .answer-section { break-before:page; page-break-before:always; }
+  .print-btn { display:none !important; }
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <h1>철도교통안전관리자 — 철도공학</h1>
+  <div class="meta">07-07 무절연AF궤도회로 상세 | FINAL PUBLISH v1.1</div>
+</header>
+
+<div class="container">
+
+<div class="unit-header">
+  <h2>07-07 무절연AF궤도회로(Jointless AF Track Circuit) — 원리와 특성</h2>
+  <div class="nav-link">연결: 07-06 궤도회로 원리와 종류 → <strong>[현재]</strong> → 07-08 연동장치</div>
+</div>
+
+
+<!-- ══ § 0. 선행 용어 정의 ══ -->
+<div class="section">
+<div class="section-title">§ 0. 이 단원에서 반드시 먼저 알아야 할 용어 (8개)</div>
+<p style="font-size:.88em;color:#333;margin-bottom:10px;"><strong>07-06에서 이어지는 핵심 용어들입니다. 07-06을 먼저 학습한 뒤 읽으세요.</strong></p>
+
+<div class="cross-ref">🔗 선행 단원: <strong>07-06 궤도회로 원리와 종류</strong> — 단락(Short)·계전기 여자/무여자·유절연·Fail-Safe 원칙을 먼저 확인하세요.</div>
+
+<div class="term-box">
+
+<div class="term-item">
+  <div class="term-word">AF (Audio Frequency)</div>
+  <div class="term-en">Audio Frequency — 가청주파수</div>
+  <div class="term-def">사람의 귀로 들을 수 있는 주파수 대역(약 20Hz~20kHz). 궤도회로에서는 수백Hz~수kHz 대역을 신호전류로 사용한다. AF는 <strong>신호전류·주파수 방식</strong> 분류이며 절연방법(유절연/무절연)과는 독립된 기준이다.</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">무절연 (Jointless)</div>
+  <div class="term-en">Jointless / Insulation-free</div>
+  <div class="term-def">절연이음매(물리적 절연체)를 레일에 설치하지 않고, 주파수 차이 등 전기적 방법으로 인접 구간을 구분하는 방식. <strong>절연방법</strong> 분류이며 신호전류의 주파수(AF 여부)와는 독립된 기준이다.</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">동조 (Tuning / Resonance)</div>
+  <div class="term-en">Tuning / Resonance</div>
+  <div class="term-def">LC 회로의 고유 주파수를 특정 신호 주파수에 맞추는 것. 직렬 LC 회로는 공진 주파수에서 임피던스 최소, 병렬 LC 회로는 최대가 된다. 이 특성으로 주파수별 임피던스 특성을 만들 수 있다. 실제 통과·억제 특성은 직렬/병렬 구성과 시스템 설계에 따라 달라지므로 단순히 “특정 주파수=통과/차단”으로 일반화하지 않는다.</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">동조유니트 (Tuning Unit)</div>
+  <div class="term-en">Tuning Unit</div>
+  <div class="term-def">특정 주파수에서 원하는 임피던스 특성이 나타나도록 설계한 주파수 선택 장치. 무절연 AF 궤도회로의 경계부에서 공심인덕터 등과 함께 전기적 절연개소를 구성하여 물리적 절연이음매 없이 구간을 분리한다.</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">공심인덕터 (Air-Core Inductor)</div>
+  <div class="term-en">Air-Core Inductor</div>
+  <div class="term-def">철심 없이 코일만으로 구성한 인덕터. 철심 인덕터에 비해 비선형성·포화 문제가 없어 특정 주파수 대역의 신호전류 제어에 적합하다. 동조유니트와 조합하여 경계부 전기적 분리에 사용한다.</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">분로저항 (Shunt Resistance)</div>
+  <div class="term-en">Shunt Resistance</div>
+  <div class="term-def">열차 차축이 두 레일을 단락할 때의 등가 저항. <strong>충분히 낮아야</strong> 수신부에 도달하는 신호전류가 충분히 차단되어 계전기가 낙하(무여자)하고 열차가 안정적으로 검지된다. 분로저항이 높으면 검지 불량(분로불량) 발생 위험.</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">도상저항 (Ballast Resistance)</div>
+  <div class="term-en">Ballast Resistance</div>
+  <div class="term-def">자갈·콘크리트 등 도상(道床)을 통한 두 레일 사이의 누설 저항. <strong>지나치게 낮아지면</strong>(습기·오염 등으로) 신호전류가 레일 밖으로 누설되어 오검지(가점유) 가능성이 커진다. 충분히 높게 유지되어야 한다.</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">분로불량 (Poor Shunt)</div>
+  <div class="term-en">Poor Shunt / Shunting Failure</div>
+  <div class="term-def">열차가 있는데도 차축 단락 저항이 충분히 낮지 않아 점유 검지가 불완전해지는 위험 현상. 차량 차륜·레일 표면의 오염·녹이 원인이 되며 열차를 "있음"으로 검지하지 못하는 안전측 위반 상황이다.</div>
+</div>
+
+</div><!-- /.term-box -->
+</div>
+
+
+<!-- ══ § 1. AF란 무엇인가 ══ -->
+<div class="section">
+<div class="section-title">§ 1. AF(가청주파수)란 무엇인가</div>
+
+<div class="theory-note">
+<strong>핵심 정의:</strong> AF = Audio Frequency = 가청주파수. 궤도회로에서는 사람의 귀로 들을 수 있는 주파수 대역(수백Hz~수kHz)의 교류 신호전류를 레일에 흘려 열차를 검지한다.
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>항목</th><th>내용</th></tr></thead>
+<tbody>
+<tr class="hl"><td><strong>AF 풀네임</strong></td><td>Audio Frequency (가청주파수)</td></tr>
+<tr><td><strong>주파수 대역</strong></td><td>수백 Hz ~ 수 kHz (일반적으로 수백Hz~3kHz 범위 사용)</td></tr>
+<tr><td><strong>사용 이유</strong></td><td>주파수 선택 특성을 이용해 인접 구간의 신호를 구별하고, 송·수신 및 동조회로를 통해 열차검지 신호를 안정적으로 처리할 수 있음</td></tr>
+<tr class="hl"><td><strong>분류 기준</strong></td><td>신호전류의 <strong>주파수 방식</strong> 분류. 절연방법(유절연/무절연)과는 <strong>독립된 기준</strong></td></tr>
+</tbody>
+</table></div>
+
+<div class="trap">⚠️ AF = 무절연이라는 등식은 틀렸다. AF 주파수 방식을 쓰면서도 절연이음매(유절연)를 적용할 수 있다. AF와 무절연은 서로 다른 분류 기준이다.</div>
+<div class="tip">★ 2축 독립 원칙: [절연방법] 유절연 / 무절연 ← 이것과 → [신호방식] DC / AF(가청주파수) 는 별개 축이다.</div>
+</div>
+
+
+<!-- ══ § 2. 무절연 궤도회로 — 주파수로 구간을 구분하는 원리 ══ -->
+<div class="section">
+<div class="section-title">§ 2. 무절연 궤도회로 — 주파수로 구간을 구분하는 원리</div>
+
+<div class="theory-note">
+<strong>핵심 질문:</strong> 절연이음매 없이 어떻게 인접 두 구간의 신호전류가 섞이지 않는가?<br>
+<strong>답:</strong> 구간마다 <strong>서로 다른 주파수(f₁, f₂, …)</strong>의 신호전류를 사용하고, 경계부에 동조유니트·공심인덕터 등을 설치하여 주파수 선택적 임피던스 특성으로 인접 구간 신호의 누설·간섭을 억제하고 전기적 경계를 형성한다.
+</div>
+
+<div class="step-flow">
+  <div class="flow-title">무절연 경계 형성 원리 (3단계)</div>
+  <div class="flow-chain">
+    <div class="flow-step">구간 A: 주파수 f₁ 신호전류 송신</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">경계부: 동조유니트·공심인덕터</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">주파수 선택적 임피던스 특성 형성</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">인접 구간으로 신호 누설·간섭 억제</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">구간 B: 주파수 f₂로 독립 운영</div>
+  </div>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>항목</th><th>유절연 궤도회로</th><th>무절연 AF 궤도회로</th></tr></thead>
+<tbody>
+<tr class="hl"><td><strong>구간 경계 방법</strong></td><td>절연이음매(절연체를 레일에 삽입)</td><td>주파수 차이 + 동조유니트·공심인덕터로 전기적 경계 형성</td></tr>
+<tr><td><strong>절연이음매</strong></td><td>필요 (구간마다 설치)</td><td>불필요 (무절연)</td></tr>
+<tr><td><strong>신호전류</strong></td><td>DC 또는 상용주파수 AC</td><td>AF 교류 (수백Hz~수kHz), 구간별 주파수 상이</td></tr>
+<tr><td><strong>임피던스본드·S-bond 등</strong></td><td>전기철도 복궤조 등에서 귀선전류·신호전류 처리를 위해 적용 가능</td><td>시스템 구성에 따라 적용 방식이 다름. <strong>무절연이라고 해서 임피던스본드가 항상 불필요한 것은 아님</strong></td></tr>
+<tr><td><strong>레일 이음매</strong></td><td>일반이음매 + 절연이음매 혼용</td><td>용접레일(장대레일) 전면 적용 용이</td></tr>
+<tr class="hl"><td><strong>유지보수</strong></td><td>절연이음매 상태 점검·교환 필요</td><td>절연이음매 자체의 유지보수 부담은 줄지만, 동조부·송수신부·경계회로의 점검은 필요</td></tr>
+</tbody>
+</table></div>
+
+<div class="tip">★ 무절연 = 절연이음매 없이 주파수·전기적 경계로 인접 구간을 구분하는 방식 (sig_065·066 기출 정의)</div>
+<div class="tip">★ AF 궤도회로 = 가청주파수 대역의 신호를 이용하며 무절연 방식 구성에 활용되는 궤도회로 (sig_063·064 기출 정의)</div>
+</div>
+
+
+<!-- ══ § 3. 원리도 (VIS-07B) ══ -->
+<div class="section">
+<div class="section-title">§ 3. 무절연AF궤도회로 원리도</div>
+
+<div class="vis-wrap">
+  <img class="vis-img" src="images/VIS-07B_AF_track_circuit_FINAL.png" alt="AF 무절연 궤도회로 원리도" loading="lazy">
+  <p class="vis-cap">VIS-07B — 무절연 AF 궤도회로: 인접 구간은 서로 다른 AF 주파수를 사용하고, 경계부의 주파수 선택형 동조회로로 신호 누설·간섭을 억제한다. 열차 점유 시 차축 분로로 수신전류가 감소하여 점유를 검지한다.</p>
+</div>
+
+<div class="theory-note">
+<strong>그림 읽는 법:</strong><br>
+① 구간 A에는 f₁, 구간 B에는 f₂의 신호전류가 흐른다.<br>
+② 경계부(동조유니트+공심인덕터)가 서로의 주파수에 대해 높은 임피던스를 나타내어 신호전류가 인접 구간으로 누설되는 것을 억제한다.<br>
+③ 열차 차축이 레일을 낮은 임피던스로 단락(shunt)하면 신호전류가 분류되어 수신부 전류가 감소하고, 판정 임계값 이하가 되면 계전기가 낙하(무여자)하여 점유로 검지한다. (Fail-Safe 원리는 07-06과 동일)
+</div>
+
+</div>
+
+
+<!-- ══ § 4. 구성 요소 상세 ══ -->
+<div class="section">
+<div class="section-title">§ 4. 주요 구성 요소</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>구성 요소</th><th>역할</th><th>비고</th></tr></thead>
+<tbody>
+<tr class="hl"><td><strong>AF 송신기</strong></td><td>구간별로 지정된 주파수(f₁, f₂…)의 신호전류를 레일에 공급</td><td>구간마다 주파수 상이</td></tr>
+<tr><td><strong>AF 수신기</strong></td><td>해당 구간 주파수의 신호전류를 선택적으로 수신·판정</td><td>주파수 필터 내장</td></tr>
+<tr><td><strong>궤도계전기</strong></td><td>수신전류 정상 → 여자(비점유) / 수신전류가 판정 임계값 이하로 감소 → 낙하(점유)</td><td>07-06과 동일 Fail-Safe 원칙</td></tr>
+<tr class="hl"><td><strong>동조유니트</strong></td><td>경계부에서 주파수 선택적 임피던스 특성을 형성하여 인접 구간 신호의 누설·간섭을 억제</td><td>공심인덕터 등과 조합</td></tr>
+<tr><td><strong>공심인덕터</strong></td><td>경계부에서 동조유니트와 함께 전기적 절연개소 구성</td><td>철심 없어 비선형성 없음</td></tr>
+<tr><td><strong>레일(장대레일)</strong></td><td>신호전류 및 귀선전류의 통로. 절연이음매 없이 용접 연속 가능</td><td>무절연의 핵심 장점</td></tr>
+</tbody>
+</table></div>
+
+<div class="theory-note">
+<strong>동조유니트의 LC 회로 원리:</strong><br>
+직렬 LC 회로: 공진 주파수에서 임피던스 <strong>최소</strong> → 해당 주파수 전류를 잘 통과시킴<br>
+병렬 LC 회로: 공진 주파수에서 임피던스 <strong>최대</strong> → 해당 주파수 전류를 차단<br>
+경계부 동조회로는 직렬·병렬 공진을 조합한 주파수 선택 특성을 이용해 인접 구간 신호의 누설·간섭을 억제하고 전기적 경계를 형성한다. 실제 회로의 임피던스 특성은 시스템 구성에 따라 달라지므로 “특정 주파수에서 항상 높다/낮다”로 일반화하지 않는다.
+</div>
+</div>
+
+
+<!-- ══ § 5. 도상저항과 분로저항 ══ -->
+<div class="section">
+<div class="section-title">§ 5. 도상저항과 분로저항 — 오검지와 검지불량</div>
+
+<div class="theory-note">
+<strong>궤도회로의 두 가지 위험 상황:</strong><br>
+① <strong>도상저항 저하</strong>: 열차 없는데 점유로 오검지 (가점유) → 열차 운행 지연<br>
+② <strong>분로저항 증가 (분로불량)</strong>: 열차 있는데 비점유로 오검지 → 안전측 위반, 충돌 위험
+</div>
+
+<div class="two-axis-box">
+
+<div class="axis-card">
+  <div class="axis-head">도상저항 (Ballast Resistance) — 높아야 한다</div>
+  <div class="axis-item"><strong>정의:</strong> 두 레일 사이 도상(자갈·콘크리트)을 통한 누설 저항</div>
+  <div class="axis-item"><strong>정상 시:</strong> 충분히 높음 → 신호전류가 레일 밖으로 누설되지 않음</div>
+  <div class="axis-item"><strong>저하 시:</strong> 강우·침수·오염으로 저하 → 신호전류 누설 → 수신부 전류 감소 → <span style="color:#c0392b">계전기 낙하 → 가점유(False Occupation)</span></div>
+  <div class="axis-item"><strong>시험 포인트:</strong> 도상저항 <strong>낮아짐 → 오검지 가능성 증가</strong></div>
+</div>
+
+<div class="axis-card">
+  <div class="axis-head">분로저항 (Shunt Resistance) — 낮아야 한다</div>
+  <div class="axis-item"><strong>정의:</strong> 열차 차축이 두 레일을 단락할 때의 등가 저항</div>
+  <div class="axis-item"><strong>정상 시:</strong> 충분히 낮음 → 신호전류가 차축으로 분류 → 수신부 전류 차단 → 계전기 낙하 → 정상 점유 검지</div>
+  <div class="axis-item"><strong>증가 시:</strong> 차륜·레일 표면 오염·녹 → 단락 불완전 → 수신부 전류 차단 불완전 → <span style="color:#c0392b">계전기 미낙하 → 분로불량(Poor Shunt)</span></div>
+  <div class="axis-item"><strong>시험 포인트:</strong> 분로저항 <strong>높아짐 → 검지 불량 위험</strong></div>
+</div>
+
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>구분</th><th>도상저항</th><th>분로저항</th></tr></thead>
+<tbody>
+<tr class="hl"><td><strong>기준값</strong></td><td>높을수록 좋다</td><td>낮을수록 좋다</td></tr>
+<tr><td><strong>문제 발생 조건</strong></td><td>낮아질 때 (습기·오염)</td><td>높아질 때 (표면 오염·녹)</td></tr>
+<tr><td><strong>오검지 유형</strong></td><td>가점유 (열차 없는데 있다고 표시)</td><td>분로불량 (열차 있는데 없다고 표시)</td></tr>
+<tr class="hl"><td><strong>안전 위험도</strong></td><td>운행 지연 (상대적으로 낮음)</td><td>충돌 위험 (매우 높음, 안전측 위반)</td></tr>
+</tbody>
+</table></div>
+
+<div class="trap">⚠️ 분로불량은 안전측 위반이다 — 열차가 있는데 없다고 판정하면 충돌 사고로 이어진다</div>
+<div class="tip">★ 도상저항 = 두 레일 사이 누설경로 저항, 낮아지면 오검지 가능성 증가 (sig_067 기출 정의)</div>
+<div class="tip">★ 분로저항 = 차축 단락 등가 저항, 충분히 낮아야 안정적 열차 검지 가능 (sig_069 기출 정의)</div>
+</div>
+
+
+<!-- ══ § 6. 장점과 단점 ══ -->
+<div class="section">
+<div class="section-title">§ 6. 무절연AF궤도회로의 장점과 단점</div>
+
+<div class="two-axis-box">
+
+<div class="axis-card">
+  <div class="axis-head">✅ 장점</div>
+  <div class="axis-item"><strong>① 절연이음매 제거</strong>: 유지보수 비용·공수 대폭 감소</div>
+  <div class="axis-item"><strong>② 경계부 기계적 절연 축소</strong>: 시스템에 따라 동조부·S-bond·임피던스본드 등으로 전기적 경계를 구성하여 절연이음매 의존도를 줄일 수 있음</div>
+  <div class="axis-item"><strong>③ 장대레일 적용 용이</strong>: 용접 연속 레일에 절연 절단 불필요 → 승차감·유지보수 개선</div>
+  <div class="axis-item"><strong>④ 레일 절손 검지 가능</strong>: 폐회로식 구조에서 레일 단선 시 안전측(점유) 검지로 나타날 수 있음</div>
+</div>
+
+<div class="axis-card">
+  <div class="axis-head">⚠️ 단점</div>
+  <div class="axis-item"><strong>① 주파수 혼신 방지</strong>: 인접 구간 주파수 간 간섭 방지 설계 필요</div>
+  <div class="axis-item"><strong>② 고가 장비</strong>: AF 송수신기·동조유니트 등 고가</div>
+  <div class="axis-item"><strong>③ 도상저항 관리</strong>: 도상저항 저하 시 오검지 위험, 정기적 측정 필요</div>
+  <div class="axis-item"><strong>④ 분로불량 관리</strong>: 차량·레일 표면 상태에 따라 분로불량 발생 가능</div>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ══ § 7. 레일 절손 검지 가능성 ══ -->
+<div class="section">
+<div class="section-title">§ 7. 레일 절손 검지 가능성</div>
+
+<div class="theory-note">
+<strong>폐회로식 궤도회로의 부가 효과:</strong> 레일이 단선(折損)되면 신호전류 경로가 끊겨 수신부에 전류가 도달하지 못한다. 계전기가 낙하(무여자)하여 <strong>안전측(점유)으로 표시</strong>되므로 열차 운전에 경보를 줄 수 있다. 이것이 "레일 절손 검지 가능성"이다.
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>상황</th><th>계전기 상태</th><th>표시</th><th>안전 여부</th></tr></thead>
+<tbody>
+<tr><td>정상 (열차 없음)</td><td>여자(ON)</td><td>비점유</td><td>정상</td></tr>
+<tr><td>열차 점유 (단락)</td><td>무여자(OFF)</td><td>점유</td><td>정상 검지</td></tr>
+<tr class="hl"><td>레일 단선(절손)</td><td>무여자(OFF)</td><td><strong>점유(안전측)</strong></td><td>안전측 — 운행 정지 유도</td></tr>
+<tr><td>전원 이상</td><td>무여자(OFF)</td><td>점유(안전측)</td><td>Fail-Safe 원칙 적용</td></tr>
+</tbody>
+</table></div>
+
+<div class="tip">★ 레일 절손 검지 가능성 = 폐회로식 궤도회로는 일부 레일 단선·회로 단절 시 안전측 점유로 나타날 수 있는 장점 (sig_071 기출 정의)</div>
+<div class="trap">⚠️ 레일 절손 시 100% 검지를 보장하지는 않는다 — "검지 가능성"이 있다는 표현에 유의</div>
+</div>
+
+
+<!-- ══ § 8. 시험 포인트 요약 ══ -->
+<div class="section">
+<div class="section-title">§ 8. 시험 포인트 요약</div>
+
+<div class="tip">★ AF = Audio Frequency(가청주파수). 신호전류 방식 분류 — 절연방법(무절연/유절연)과 독립된 별개 기준</div>
+<div class="tip">★ 무절연 = 절연이음매 없이 주파수·전기적 경계로 인접 구간 구분. 절연방법 분류</div>
+<div class="tip">★ 무절연AF궤도회로 핵심: 절연이음매 없이 주파수 선택형 전기적 경계를 구성하므로 장대레일 적용과 절연이음매 유지보수 측면에서 유리하다</div>
+<div class="tip">★ 도상저항 낮아짐 → 오검지(가점유) 가능성 증가. 도상저항은 높아야 한다</div>
+<div class="tip">★ 분로저항 높아짐(분로불량) → 열차 검지 불량 위험. 분로저항은 낮아야 한다</div>
+<div class="tip">★ 레일 절손 → 폐회로식 궤도회로는 안전측(점유)으로 나타날 수 있다 (Fail-Safe 연장)</div>
+<div class="trap">⚠️ AF = 무절연 등식 절대 금지. AF 방식을 쓰면서 유절연도 가능하다</div>
+<div class="trap">⚠️ 동조유니트로 모든 무절연 궤도회로를 일반화하지 않는다 — 대표적 예시일 뿐</div>
+<div class="trap">⚠️ 분로불량 = 안전측 위반. 열차가 있는데 없다고 검지 → 충돌 위험</div>
+</div>
+
+
+<!-- ══ § 9. 관련 문제 — 철도신호 기출복원 CBT ══ -->
+<div class="section">
+<div class="section-title">§ 9. 관련 문제 — 철도신호 기출복원 CBT</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_063 · A+등급</div>
+  <div class="qm-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은? "가청주파수 대역의 신호를 이용하며 무절연 방식 구성에 활용되는 궤도회로이다."</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 임피던스 본드</div>
+    <div class="qm-choice">② 분로불량</div>
+    <div class="qm-choice">③ AF 궤도회로</div>
+    <div class="qm-choice">④ 무절연 궤도회로</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_064 · A+등급</div>
+  <div class="qm-q">다음 중 「AF 궤도회로」에 대한 설명으로 옳은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 두 레일 사이 누설경로를 나타내는 저항으로, 지나치게 낮아지면 오검지 가능성이 커질 수 있다.</div>
+    <div class="qm-choice">② 전형적인 폐회로식 궤도회로에서 선로가 비어 있으면 궤도계전기가 여자되는 상태이다.</div>
+    <div class="qm-choice">③ 절연이음매 없이 주파수·전기적 경계로 인접 궤도회로를 구분하는 방식이다.</div>
+    <div class="qm-choice">④ 가청주파수 대역의 신호를 이용하며 무절연 방식 구성에 활용되는 궤도회로이다.</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_065 · A+등급</div>
+  <div class="qm-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은? "절연이음매 없이 주파수·전기적 경계로 인접 궤도회로를 구분하는 방식이다."</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 비점유 시 궤도계전기 여자</div>
+    <div class="qm-choice">② 임피던스 본드</div>
+    <div class="qm-choice">③ 가점유</div>
+    <div class="qm-choice">④ 무절연 궤도회로</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_066 · A+등급</div>
+  <div class="qm-q">다음 중 「무절연 궤도회로」에 대한 설명으로 옳은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 전형적인 폐회로식 궤도회로에서 선로가 비어 있으면 궤도계전기가 여자되는 상태이다.</div>
+    <div class="qm-choice">② 열차 차축이 레일을 단락할 때의 등가 저항으로, 충분히 낮아야 안정적으로 열차를 검지할 수 있다.</div>
+    <div class="qm-choice">③ 폐회로식 궤도회로는 일부 레일 단선·회로 단절 시 안전측 점유로 나타날 수 있는 장점이 있다.</div>
+    <div class="qm-choice">④ 절연이음매 없이 주파수·전기적 경계로 인접 궤도회로를 구분하는 방식이다.</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_067 · A+등급</div>
+  <div class="qm-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은? "두 레일 사이 누설경로를 나타내는 저항으로, 지나치게 낮아지면 오검지 가능성이 커질 수 있다."</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 도상저항</div>
+    <div class="qm-choice">② 임피던스 본드</div>
+    <div class="qm-choice">③ 궤도회로</div>
+    <div class="qm-choice">④ AF 궤도회로</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_068 · A+등급</div>
+  <div class="qm-q">다음 중 「도상저항」에 대한 설명으로 옳은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 레일을 전기회로의 일부로 사용하여 특정 구간의 열차 점유 여부를 검지하는 장치이다.</div>
+    <div class="qm-choice">② 실제 열차가 없는데도 궤도회로가 점유로 표시되는 현상이다.</div>
+    <div class="qm-choice">③ 폐회로식 궤도회로는 일부 레일 단선·회로 단절 시 안전측 점유로 나타날 수 있는 장점이 있다.</div>
+    <div class="qm-choice">④ 두 레일 사이 누설경로를 나타내는 저항으로, 지나치게 낮아지면 오검지 가능성이 커질 수 있다.</div>
+  </div>
+</div>
+
+</div><!-- /.section §9 -->
+
+
+<!-- ══ § 10. 정답 및 해설 ══ -->
+<div class="section answer-section">
+<div class="section-title">§ 10. §9 관련 문제 정답 및 해설</div>
+<div class="trap">⚠️ 먼저 §9의 6문항을 풀고 난 뒤 확인한다. §9 문제 본문에는 정답 표시·정답 하이라이트·✓ 표시를 넣지 않는다.</div>
+<div class="table-wrap"><table>
+<thead><tr><th style="width:12%;">문항</th><th style="width:12%;">정답</th><th>핵심 해설</th></tr></thead>
+<tbody>
+<tr><td>Q1 · sig_063</td><td><strong>③</strong></td><td>AF 궤도회로는 가청주파수 대역의 신호를 이용하며, 무절연 방식 구성에 활용될 수 있다.</td></tr>
+<tr><td>Q2 · sig_064</td><td><strong>④</strong></td><td>① 도상저항, ② 비점유 시 계전기 여자, ③ 무절연 궤도회로의 설명이다.</td></tr>
+<tr><td>Q3 · sig_065</td><td><strong>④</strong></td><td>무절연 궤도회로는 절연이음매 없이 주파수·전기적 경계로 인접 궤도회로를 구분하는 방식이다.</td></tr>
+<tr><td>Q4 · sig_066</td><td><strong>④</strong></td><td>① 비점유 시 계전기 여자, ② 분로저항, ③ 레일 절손 검지 가능성의 설명이다.</td></tr>
+<tr><td>Q5 · sig_067</td><td><strong>①</strong></td><td>도상저항은 두 레일 사이 누설경로의 저항이다. 지나치게 낮아지면 신호전류 누설로 가점유 가능성이 커진다.</td></tr>
+<tr><td>Q6 · sig_068</td><td><strong>④</strong></td><td>① 궤도회로, ② 가점유, ③ 레일 절손 검지 가능성의 설명이다.</td></tr>
+</tbody>
+</table></div>
+</div>
+
+
+<!-- 메타 박스 -->
+<div class="meta-box">
+  <strong>작업 메타</strong> | 파일명: unit-07-07_FINAL_PUBLISH_v1.1.html | 버전: v1.1 FINAL LOCK<br>
+  출처: 4.html(개념 102) · signal-exam-data.ts(sig_063~068) | 작성일: 2026-10-03<br>
+  기술표현 검수 보강: 무절연 AF 경계의 동조회로는 시스템별 구성 차이를 반영하여 “주파수 선택적 임피던스 특성” 수준으로 서술. 임피던스본드 불필요 일반화 삭제.<br>
+  보안 원칙: SOURCE 우선. 확인된 기출 문항(sig_063~068)만 수록. 임의 예상문제 없음.<br>
+  2축 독립 원칙 준수: AF(신호방식) ≠ 무절연(절연방법). 등식 표기 금지.<br>
+  v1.1 FINAL LOCK: ①§9 정답 노출 제거 및 §10 정답·해설 분리 ②동조유니트 “항상 높은 임피던스” 일반화 제거 ③무절연=임피던스본드 불필요 일반화 제거 ④차축 단락 시 “수신전류 차단”을 “감소·임계값 이하”로 교정 ⑤VIS-07B 신규 이미지 연결
+</div>
+
+</div><!-- /.container -->
+</body>
+</html>

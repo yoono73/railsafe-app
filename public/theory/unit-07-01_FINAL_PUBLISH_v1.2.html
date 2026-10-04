@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>07-01 신호기 분류·현시 | 철도공학</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#fff; color:#111; font-size:15px; line-height:1.75; }
+
+/* 인쇄 버튼 */
+.print-btn {
+  position:fixed; top:12px; right:16px; z-index:999;
+  background:#78350f; color:#fff; border:none; border-radius:5px;
+  padding:6px 14px; font-size:.85em; font-weight:bold; cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+}
+.print-btn:hover { background:#5c2707; }
+
+.site-header { background:#fff; color:#111; padding:8px 16px 6px; border-bottom:3px solid #78350f; }
+.site-header h1 { font-size:1.05em; font-weight:bold; color:#78350f; }
+.site-header .meta { font-size:.78em; color:#555; margin-top:2px; }
+
+.container { max-width:960px; margin:0 auto; padding:20px 24px 60px; }
+
+.unit-header { border:2px solid #78350f; border-radius:6px; padding:12px 16px; margin-bottom:22px; background:#fff; }
+.unit-header h2 { font-size:1.2em; font-weight:bold; color:#78350f; }
+.unit-header .nav-link { font-size:.82em; color:#555; margin-top:4px; }
+
+.section { margin:0 0 26px 0; }
+.section-title { font-size:1.05em; font-weight:bold; color:#111; border-left:4px solid #78350f; padding:5px 0 5px 12px; margin-bottom:14px; background:#fff; }
+
+.concept { margin:14px 0 6px; padding-bottom:14px; border-bottom:1px solid #ccc; }
+.concept:last-child { border-bottom:none; }
+.concept-title { font-size:1em; font-weight:bold; color:#78350f; margin-bottom:8px; padding:4px 0; }
+.concept-title .cnum { border:1px solid #78350f; color:#78350f; border-radius:4px; padding:1px 7px; font-size:.85em; margin-right:6px; }
+
+table { width:100%; border-collapse:collapse; margin:8px 0; font-size:.9em; }
+th { background:#e8e8e8; color:#111; padding:7px 10px; text-align:left; font-size:.88em; border:1.5px solid #999; font-weight:bold; }
+td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#fff; }
+tr.hl td { background:#fff; font-weight:bold; }
+
+.trap {
+  background:#fff; border-left:4px solid #c0392b;
+  padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0;
+  font-size:.9em; color:#c0392b; font-weight:bold;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+.tip {
+  background:#fff; border-left:4px solid #2e7d32;
+  padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0;
+  font-size:.9em; color:#2e7d32; font-weight:bold;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+.theory-note {
+  background:#fff; border-left:4px solid #1565c0;
+  padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0;
+  font-size:.9em; color:#111;
+  border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0;
+}
+.theory-note strong { color:#1565c0; }
+
+.quiz-ex {
+  background:#fff; border-left:4px solid #2e7d32;
+  padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0;
+  font-size:.88em; color:#111;
+  border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0;
+}
+.quiz-ex .qe-title { font-weight:bold; color:#2e7d32; margin-bottom:4px; }
+.quiz-ex .qe-q { margin:4px 0 2px; }
+.quiz-ex .qe-a { font-weight:bold; color:#1b5e20; }
+.quiz-ex .qe-wrong {
+  display:block; background:#fff; border-left:3px solid #c0392b;
+  color:#c0392b; padding:5px 10px; margin:6px 0;
+  border-radius:0 4px 4px 0; font-size:.88em;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+
+/* 기출 문제 박스 (정답 없음) */
+.quiz-mc { background:#fff; border:1px solid #ccc; border-left:4px solid #555; padding:12px 14px; margin:12px 0; border-radius:0 4px 4px 0; font-size:.9em; }
+.quiz-mc .qm-src { font-size:.78em; color:#555; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
+.quiz-mc .qm-q { font-weight:bold; color:#111; margin-bottom:8px; line-height:1.6; }
+.quiz-mc .qm-choices { margin:0 0 0 4px; }
+.quiz-mc .qm-choice { padding:3px 0; color:#222; line-height:1.7; }
+
+/* 정답 해설 섹션 */
+.answer-section { margin-top:32px; border-top:2px solid #78350f; padding-top:16px; }
+.answer-section h3 { font-size:1em; font-weight:bold; color:#78350f; margin-bottom:12px; }
+.ans-list { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 16px; }
+.ans-chip { border:1px solid #999; border-radius:4px; padding:4px 10px; font-size:.85em; color:#111; }
+.ans-chip strong { color:#78350f; }
+.ans-item { border:1px solid #ccc; border-left:4px solid #78350f; border-radius:0 4px 4px 0; padding:10px 14px; margin:8px 0; font-size:.88em; }
+.ans-item .ai-no { font-weight:bold; color:#78350f; font-size:.9em; margin-bottom:4px; }
+.ans-item .ai-ans { font-weight:bold; margin:3px 0; }
+.ans-item .ai-exp { color:#333; margin:3px 0; line-height:1.7; }
+.ans-item .ai-trap { color:#c0392b; font-size:.87em; margin-top:4px; }
+
+.vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
+.vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; background:#fff; }
+.vis-cap { font-size:.8em; color:#555; margin-top:6px; }
+
+.term-box { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:10px 0; }
+.term-item { background:#fff; border:1px solid #bbb; border-radius:4px; padding:10px 12px; font-size:.88em; }
+.term-item .term-word { font-weight:bold; color:#78350f; font-size:.95em; margin-bottom:3px; }
+.term-item .term-def { color:#111; line-height:1.6; }
+
+/* YouTube 카드 */
+.krri-yt-card { margin:10px 0 4px; border:1px solid #e5e7eb; border-radius:8px; overflow:hidden; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.07); }
+.yt-thumb { position:relative; cursor:pointer; background:#000; }
+.yt-thumb img { width:100%; display:block; aspect-ratio:16/9; object-fit:cover; opacity:.88; }
+.yt-play-btn { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+.yt-play-btn div { width:52px; height:52px; background:rgba(220,38,38,.9); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.4); }
+.yt-player-frame { width:100%; aspect-ratio:16/9; border:0; display:block; background:#000; }
+.yt-meta { padding:7px 12px; display:flex; align-items:center; gap:8px; background:#f9fafb; }
+.yt-badge { font-size:11px; padding:2px 7px; border-radius:3px; font-weight:600; white-space:nowrap; color:#fff; }
+.yt-badge.primary { background:#dc2626; }
+.yt-title { font-size:13px; color:#111; font-weight:500; line-height:1.3; }
+
+.meta-box { background:#fff; border:1px solid #bbb; border-radius:6px; padding:10px 16px; font-size:.8em; color:#555; margin-top:24px; }
+
+@media(max-width:600px){
+  .term-box { grid-template-columns:1fr; }
+}
+
+/* ── GATE5 PRINT LOCK v1 — 12/12/12/18mm ── */
+@media print {
+  body { font-size:12pt; line-height:1.6; background:#fff !important; color:#000 !important; }
+  .print-btn { display:none !important; }
+  .site-header { border-bottom:2pt solid #000; padding:6pt 0; }
+  .unit-header { border:1.5pt solid #000; page-break-after:avoid; }
+  .concept { page-break-inside:avoid; }
+  .vis-wrap { page-break-inside:avoid; }
+  .term-box { grid-template-columns:1fr 1fr; }
+  table { page-break-inside:avoid; width:100%; max-width:100%; }
+  th { background:#e8e8e8 !important; color:#000 !important; border:1.5px solid #999 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  td { border:1.5px solid #bbb !important; background:#fff !important; }
+  .trap, .tip, .theory-note, .quiz-ex { page-break-inside:avoid; }
+  .quiz-mc { break-inside:avoid; page-break-inside:avoid; }
+  .ans-item { break-inside:avoid; page-break-inside:avoid; }
+  a { color:#000 !important; text-decoration:none; }
+  .krri-yt-card .yt-thumb, .krri-yt-card .yt-player-frame, iframe, video { display:none !important; }
+  .krri-yt-card { border:1px solid #ccc; }
+  .krri-yt-card .yt-meta { background:#fff; }
+  img, .vis-wrap img { max-width:100%; height:auto; }
+  .answer-section { break-before:page; page-break-before:always; }
+  @page {
+    size: A4 portrait;
+    margin: 12mm 12mm 12mm 18mm;
+  }
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+
+<header class="site-header">
+  <h1>철도교통안전관리자 — 철도공학</h1>
+  <div class="meta">07-01 신호기 분류·현시 | FINAL PUBLISH v1.2</div>
+</header>
+
+<div class="container">
+
+<div class="unit-header">
+  <h2>07-01 신호기 분류·현시 — 구조상·조작상·기능별·정위·확인거리·특수신호</h2>
+  <div class="nav-link"><strong>[현재]</strong> → 07-02 선로전환기 분류·계통도</div>
+</div>
+
+
+<!-- ══ § 0. 핵심 용어 먼저 ══ -->
+<div class="section">
+<div class="section-title">§ 0. 이 단원에서 반드시 먼저 알아야 할 용어</div>
+
+<div class="term-box">
+
+<div class="term-item">
+  <div class="term-word">현시(現示)</div>
+  <div class="term-def">신호기가 기관사에게 <strong>지금 상태를 눈으로 보여주는 것</strong>. 색등·완목 위치·등의 배열로 "정지·주의·진행" 등의 운전 지시를 전달하는 행위.</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">정위(定位)</div>
+  <div class="term-def">신호기가 <strong>평상시 기본으로 유지하는 상태</strong>. 열차 운행 지시가 없을 때 자동으로 취하는 위치. 시험에서 3가지 예외(복선폐색=진행, 원방=주의, 유도=소등)가 핵심.</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">확인거리</div>
+  <div class="term-def">기관사가 <strong>신호기의 현시를 확인할 수 있어야 하는 최소 거리</strong>. 제동 여유 확보를 위해 규정. 주요 신호기 600m, 입환·중계 200m, 유도 100m, 장내 대향 100m·배향 60m.</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">절대신호기 vs 허용신호기</div>
+  <div class="term-def"><strong>절대신호기</strong>: 정지 현시 시 어떠한 경우에도 열차 진입 불가. <strong>허용신호기</strong>: 정지 현시라도 일단정지 후 서행 진입 허용. 자동폐색 폐색신호기만 허용신호기.</div>
+</div>
+
+</div><!-- /.term-box -->
+</div>
+
+
+<!-- ══ § 1. 구조상 분류 ══ -->
+<div class="section">
+<div class="section-title">§ 1. 신호기 구조상 분류 3종</div>
+
+<div class="vis-wrap">
+  <img class="vis-img" src="images/VIS-029_신호기분류체계.png" alt="신호기 분류 체계 트리 — 구조상·조작상·주신호기·종속신호기">
+  <p class="vis-cap">신호기 분류 체계 트리 (VIS-029)</p>
+</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">01</span>구조상 분류 3종</div>
+<table>
+  <thead><tr><th>종류</th><th>현시 방법</th><th>특징</th></tr></thead>
+  <tbody>
+    <tr><td><strong>완목식 신호기</strong></td><td>주간=완목 위치·형태 / 야간=등색</td><td><strong>주야간 현시방법 다름</strong> ★</td></tr>
+    <tr><td><strong>색등식 신호기</strong></td><td>색등(적·황·녹)으로 현시</td><td>주야간 동일. 현재 가장 많이 사용</td></tr>
+    <tr><td><strong>등열식 신호기</strong></td><td>2개 이상 백색등 배열 패턴으로 현시</td><td><strong>유도·중계신호기에 사용</strong></td></tr>
+  </tbody>
+</table>
+<div class="trap">⚠️ 함정: <strong>완목식만</strong> 주야간 현시방법이 다름 — 색등식·등열식은 주야간 <strong>동일</strong></div>
+<div class="theory-note"><strong>이론 배경:</strong> 완목식은 낮에 완목(막대기) 각도·형태로, 밤에는 색등으로 표시하므로 주야간이 다르다. 색등식은 낮밤 구분 없이 항상 색등으로 표시하며 현재 가장 널리 사용된다. 등열식은 여러 흰색 등의 배열 패턴으로 신호를 표시하며 유도신호기·중계신호기 전용이다.</div>
+<div class="quiz-ex">
+  <div class="qe-title">기출 예시</div>
+  <div class="qe-q">Q. 주야간 현시 방법이 서로 다른 신호기는?</div>
+  <div class="qe-a">정답: 완목식 신호기</div>
+  <div class="qe-wrong">오답함정: 색등식 — 색등식은 주야간 동일하게 색등으로 현시</div>
+</div>
+</div>
+</div>
+
+
+<!-- ══ § 2. 조작상 분류 ══ -->
+<div class="section">
+<div class="section-title">§ 2. 신호기 조작상 분류 3종</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">02</span>조작상 분류 3종</div>
+<table>
+  <thead><tr><th>종류</th><th>작동 방식</th><th>주요 적용 신호기</th></tr></thead>
+  <tbody>
+    <tr><td><strong>수동신호기</strong></td><td>신호취급자가 레버 직접 조작</td><td>비자동구간</td></tr>
+    <tr><td><strong>자동신호기</strong></td><td>궤도회로로 자동 현시 / <strong>취급자 조작 불가</strong></td><td>자동폐색구간 <strong>폐색신호기</strong></td></tr>
+    <tr><td><strong>반자동신호기</strong></td><td>자동현시 기본 + 취급자 조작 가능</td><td>자동폐색구간 <strong>장내·출발신호기</strong></td></tr>
+  </tbody>
+</table>
+<div class="trap">⚠️ 함정: <strong>폐색신호기 = 자동</strong> / 장내·출발 = <strong>반자동</strong> (혼동 주의)</div>
+<div class="theory-note"><strong>이론 배경:</strong> 자동신호기는 궤도회로가 열차의 유무를 감지하여 자동으로 현시를 바꾸므로 취급자가 조작할 수 없다. 반자동신호기는 자동현시가 기본이지만 역장 등이 필요 시 직접 조작할 수도 있다.</div>
+<div class="quiz-ex">
+  <div class="qe-title">기출 예시</div>
+  <div class="qe-q">Q. 자동폐색구간 폐색신호기의 조작상 분류는?</div>
+  <div class="qe-a">정답: 자동신호기</div>
+  <div class="qe-wrong">오답함정: 반자동신호기 — 반자동신호기는 장내·출발신호기에 해당</div>
+</div>
+</div>
+</div>
+
+
+<!-- ══ § 3. 기능별 — 주신호기 6종 ══ -->
+<div class="section">
+<div class="section-title">§ 3. 신호기 기능별 분류 — 주신호기 6종</div>
+
+<div class="vis-wrap">
+  <img class="vis-img" src="images/VIS-091_상치신호기전체배치도.png" alt="상치신호기 전체 배치도 — 주신호기·종속신호기·신호부속기">
+  <p class="vis-cap">상치신호기 전체 배치도 (VIS-091) — 주신호기·종속신호기·신호부속기 위치 관계</p>
+</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">03</span>주신호기 6종 — 「장출폐엄유입」</div>
+<table>
+  <thead><tr><th>종류</th><th>기능</th><th>설치 위치</th></tr></thead>
+  <tbody>
+    <tr><td><strong>장내신호기</strong></td><td>정거장 구내 진입 가부 지시</td><td>정거장 진입 전방 (확인거리: 대향 100m / 배향 60m)</td></tr>
+    <tr><td><strong>출발신호기</strong></td><td>정거장 출발 가부 지시</td><td>출발선 시점(역 끝)</td></tr>
+    <tr><td><strong>폐색신호기</strong></td><td>폐색구간 진입 가부 지시</td><td>폐색구간 시작점</td></tr>
+    <tr><td><strong>엄호신호기</strong></td><td>평면교차분기·특수시설 통과 열차 진입 가부</td><td>특수지점 앞</td></tr>
+    <tr class="hl"><td><strong>유도신호기</strong></td><td>장내신호기 정지 시에도 예외 진입 허용</td><td>장내신호기에 부속</td></tr>
+    <tr><td><strong>입환신호기</strong></td><td>입환차량 진입 가부</td><td>입환 구역</td></tr>
+  </tbody>
+</table>
+<div class="tip">★ 암기법: <strong>「장출폐엄유입」</strong> — 장내·출발·폐색·엄호·유도·입환</div>
+<div class="tip">★ <strong>유도신호기 정위 = 소등(무현시)</strong> — 평상시 꺼져 있음 (정지 아님!) ★</div>
+<div class="theory-note"><strong>이론 배경:</strong> 주신호기 6종 역할: <strong>장내</strong>=역 진입, <strong>출발</strong>=역 출발, <strong>폐색</strong>=구간 경계, <strong>엄호</strong>=특수지점 보호, <strong>유도</strong>=예외 진입 허용(정위=소등), <strong>입환</strong>=입환 작업. 폐색신호기는 복선에서 정위=진행, 단선에서 정위=정지.</div>
+<div class="quiz-ex">
+  <div class="qe-title">기출 예시</div>
+  <div class="qe-q">Q. 장내신호기가 정지를 현시하고 있을 때에도 예외적으로 진입을 허용할 수 있는 신호기는?</div>
+  <div class="qe-a">정답: 유도신호기</div>
+  <div class="qe-wrong">오답함정: 폐색신호기 — 폐색신호기는 구간 경계 신호기, 예외 진입 허용 기능 없음</div>
+</div>
+</div>
+
+<!-- YouTube V-Y-14 -->
+<div class="krri-yt-card">
+  <div class="yt-thumb" data-vid="2to9QiopqO0" onclick="playYT(this)">
+    <img src="https://img.youtube.com/vi/2to9QiopqO0/hqdefault.jpg" alt="철도 신호기의 모든 것" loading="lazy">
+    <div class="yt-play-btn"><div><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div>
+  </div>
+  <div class="yt-meta">
+    <span class="yt-badge primary">KRRI 핵심영상</span>
+    <span class="yt-title">철도 신호기의 모든 것 (V-Y-14)</span>
+  </div>
+</div>
+</div>
+
+
+<!-- ══ § 4. 기능별 — 종속·임시신호기 ══ -->
+<div class="section">
+<div class="section-title">§ 4. 기능별 분류 — 종속신호기 3종 · 임시신호기 3종</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">04</span>종속신호기 3종 — 「원통중」</div>
+<table>
+  <thead><tr><th>종류</th><th>기능</th><th>특징</th></tr></thead>
+  <tbody>
+    <tr><td><strong>원방신호기</strong></td><td>장내신호기 현시 <strong>예고</strong></td><td>비자동구간 / <strong>정위=주의</strong></td></tr>
+    <tr><td><strong>통과신호기</strong></td><td>기계식 장내신호기 하단에서 통과 여부 지시</td><td>기계식에만 사용</td></tr>
+    <tr><td><strong>중계신호기</strong></td><td>주신호기 현시상태 예고·중계</td><td><strong>등열식</strong> 사용 / 곡선·터널부</td></tr>
+  </tbody>
+</table>
+<div class="trap">⚠️ 함정: <strong>중계신호기 = 종속신호기</strong> (주신호기 아님, 임시신호기도 아님) ★★</div>
+<div class="theory-note"><strong>이론 배경:</strong> 종속신호기는 주신호기에 종속되어 예고·중계 역할만 하며 열차를 독립적으로 제어하지 않는다. 중계신호기는 곡선·터널 등 시야가 제한된 구간에서 주신호기 현시를 중계한다.</div>
+<div class="quiz-ex">
+  <div class="qe-title">기출 예시</div>
+  <div class="qe-q">Q. 중계신호기는 어느 분류에 속하는가?</div>
+  <div class="qe-a">정답: 종속신호기</div>
+  <div class="qe-wrong">오답함정: 임시신호기 — 임시신호기는 서행예고·서행·서행해제 3종</div>
+</div>
+</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">05</span>임시신호기 3종 ★ 비해당 자주 출제</div>
+<p style="margin:6px 0;"><strong>서행예고신호기 / 서행신호기 / 서행해제신호기</strong></p>
+<div class="trap">⚠️ 함정: <strong>중계신호기는 임시신호기가 아님</strong> — 종속신호기임 ★★</div>
+<div class="tip">★ 임시신호기 비해당 = <strong>중계신호기</strong> — 매 회 출제</div>
+<div class="theory-note"><strong>이론 배경:</strong> 임시신호기는 공사·장애 등 임시 상황에서 서행 구간을 표시하는 3종(서행예고·서행·서행해제)으로만 구성. 중계신호기는 종속신호기이므로 임시신호기 비해당으로 매회 출제된다.</div>
+<div class="quiz-ex">
+  <div class="qe-title">기출 예시</div>
+  <div class="qe-q">Q. 임시신호기에 해당하지 않는 것은?</div>
+  <div class="qe-a">정답: 중계신호기 (임시신호기 3종: 서행예고·서행·서행해제)</div>
+  <div class="qe-wrong">오답함정: 서행신호기 — 서행신호기는 임시신호기 3종 중 하나</div>
+</div>
+</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">06</span>신호부속기 3종</div>
+<table>
+  <thead><tr><th>부속기</th><th>부속 대상</th><th>기능</th></tr></thead>
+  <tbody>
+    <tr><td><strong>진로표시기</strong></td><td>장내·출발·입환신호기</td><td>개통된 진로 번호 표시</td></tr>
+    <tr><td><strong>진로예고기</strong></td><td>원방신호기</td><td>다음 장내신호기 진로 번호 미리 표시</td></tr>
+    <tr><td><strong>진로개통표시기</strong></td><td>입환신호기</td><td>입환 진로 개통 표시</td></tr>
+  </tbody>
+</table>
+<p style="font-size:.88em;color:#555;margin:6px 0;">진로표시기 종류: 진로 수 3개 이하=<strong>등렬식</strong> / 4개 이상=<strong>문자식</strong></p>
+</div>
+</div>
+
+
+<!-- ══ § 5. 절대신호기 vs 허용신호기 ══ -->
+<div class="section">
+<div class="section-title">§ 5. 절대신호기 vs 허용신호기</div>
+
+<div class="vis-wrap">
+  <img class="vis-img" src="images/VIS-088_절대허용신호기비교표.png" alt="절대신호기 vs 허용신호기 비교표">
+  <p class="vis-cap">절대신호기 vs 허용신호기 비교 (VIS-088)</p>
+</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">07</span>절대/허용신호기 구분</div>
+<table>
+  <thead><tr><th>구분</th><th>해당 신호기</th><th>정지 현시 시</th></tr></thead>
+  <tbody>
+    <tr class="hl"><td><strong>절대신호기</strong></td><td>장내·출발·엄호·유도·입환 (5종)</td><td><strong>절대 정지</strong> (어떠한 경우도 진입 불가)</td></tr>
+    <tr><td><strong>허용신호기</strong></td><td>자동폐색구간 <strong>폐색신호기</strong> (1종)</td><td>일단정지 후 <strong>서행 진입 허용</strong></td></tr>
+  </tbody>
+</table>
+<div class="tip">★ 암기법: <strong>「장출엄유입 = 절대」</strong> — 폐색신호기만 허용신호기</div>
+<div class="trap">⚠️ 함정: 자동폐색 폐색신호기 = 절대신호기 → ❌ <strong>허용신호기</strong></div>
+<div class="trap">⚠️ 함정: 유도신호기·입환신호기 = 허용신호기 → ❌ <strong>절대신호기</strong></div>
+<div class="trap">⚠️ 함정: 중계신호기 = 절대신호기 → ❌ 중계신호기는 <strong>종속신호기</strong></div>
+<div class="theory-note"><strong>이론 배경:</strong> 절대신호기는 정지현시 시 어떠한 경우에도 열차 진입이 불가합니다. 장내·출발·엄호·유도·입환신호기 5종이 해당합니다. 반면 자동폐색구간 폐색신호기는 허용신호기로, 정지현시라도 일단정지 후 서행으로 진입할 수 있습니다. 유도신호기와 입환신호기가 절대신호기에 해당한다는 점이 자주 출제됩니다.</div>
+<div class="quiz-ex">
+  <div class="qe-title">기출 예시</div>
+  <div class="qe-q">Q. 자동폐색구간 폐색신호기는 절대신호기인가, 허용신호기인가?</div>
+  <div class="qe-a">정답: 허용신호기 (일단정지 후 서행 가능)</div>
+  <div class="qe-wrong">오답함정: 절대신호기 — 장내·출발·엄호·유도·입환신호기가 절대신호기</div>
+</div>
+</div>
+</div>
+
+
+<!-- ══ § 6. 정위 암기표 ══ -->
+<div class="section">
+<div class="section-title">§ 6. 신호기 정위 암기표 ★ 핵심</div>
+
+<div class="vis-wrap">
+  <img class="vis-img" src="images/VIS-039_신호기정위암기카드_FINAL.png" alt="신호기 정위 상태 암기카드">
+  <p class="vis-cap">신호기 정위 암기카드 (VIS-039 FINAL)</p>
+</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">08</span>신호기별 정위 상태</div>
+<table>
+  <thead><tr><th>신호기</th><th>정위 상태</th><th>주의</th></tr></thead>
+  <tbody>
+    <tr><td>장내·출발·입환·엄호</td><td><strong>정지</strong></td><td>기본 4종</td></tr>
+    <tr class="hl"><td><strong>유도신호기</strong></td><td><strong>소등(무현시)</strong></td><td>정지 아님! ★</td></tr>
+    <tr class="hl"><td><strong>복선 폐색신호기</strong></td><td><strong>진행</strong></td><td>단선은 정지 ★</td></tr>
+    <tr><td>단선 폐색신호기</td><td><strong>정지</strong></td><td></td></tr>
+    <tr class="hl"><td><strong>원방신호기</strong></td><td><strong>주의</strong></td><td>진행·정지 아님! ★</td></tr>
+  </tbody>
+</table>
+<div class="trap">⚠️ 유도신호기 정위 = '정지' → ❌ <strong>소등(무현시)</strong></div>
+<div class="trap">⚠️ 원방신호기 정위 = '정지' → ❌ <strong>주의</strong></div>
+<div class="trap">⚠️ 복선 폐색신호기 정위 = '정지' → ❌ <strong>진행</strong></div>
+<div class="theory-note"><strong>이론 배경:</strong> 정위는 평상시 신호기의 기본 상태다. 3가지 예외를 반드시 암기: <strong>복선 폐색신호기=진행</strong>(열차 없으면 진행 가능), <strong>원방신호기=주의</strong>(장내신호기 예고), <strong>유도신호기=소등</strong>(평상시 꺼져 있다가 예외 진입 시에만 점등). 이 3가지 예외가 시험 핵심.</div>
+<div class="quiz-ex">
+  <div class="qe-title">기출 예시</div>
+  <div class="qe-q">Q. 원방신호기의 정위 상태는?</div>
+  <div class="qe-a">정답: 주의</div>
+  <div class="qe-wrong">오답함정: 정지 또는 진행 — 원방신호기는 장내신호기를 예고하므로 주의가 정위</div>
+</div>
+</div>
+</div>
+
+
+<!-- ══ § 7. 확인거리 ══ -->
+<div class="section">
+<div class="section-title">§ 7. 신호기 확인거리</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">09</span>신호기별 확인거리 (6.html PART 4 개념10 원문 기준)</div>
+<table>
+  <thead><tr><th>신호기 종류</th><th>확인거리</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr class="hl"><td><strong>장내·출발·폐색·엄호신호기</strong></td><td><strong>600m 이상</strong></td><td>★</td></tr>
+    <tr><td>입환·중계신호기 / 주신호용 진로표시기</td><td><strong>200m 이상</strong></td><td></td></tr>
+    <tr><td>유도신호기 / 입환신호용 진로표시기</td><td><strong>100m 이상</strong></td><td></td></tr>
+    <tr><td>장내신호기 <strong>대향</strong> 방향</td><td><strong>100m 이상</strong></td><td></td></tr>
+    <tr class="hl"><td>장내신호기 <strong>배향</strong> 방향</td><td><strong>60m 이상</strong></td><td>★</td></tr>
+  </tbody>
+</table>
+<div class="theory-note">
+  <strong>이론 배경:</strong> 확인거리는 기관사가 제동에 필요한 시간을 벌 수 있도록 신호기를 충분히 먼 거리에서 확인하도록 규정한 최소 거리.<br>
+  ① 장내·출발·폐색·엄호 → <strong>600m</strong> &nbsp; ② 입환·중계·주신호용 진로표시기 → <strong>200m</strong> &nbsp; ③ 유도·입환신호용 진로표시기 → <strong>100m</strong><br>
+  ④ 장내신호기 <strong>대향</strong>(열차가 신호기를 정면으로 바라보는 방향) → <strong>100m</strong><br>
+  ⑤ 장내신호기 <strong>배향</strong>(신호기 등을 뒤에서 바라보는 방향) → <strong>60m</strong><br>
+  ※ 장내신호기의 600m는 일반 기준이고, 대향·배향은 방향에 따른 별도 규정(특수 수치)이다.
+</div>
+<div class="trap">⚠️ 함정: 장내신호기 '배향 = 600m' → ❌ 배향은 <strong>60m</strong>, 대향은 <strong>100m</strong></div>
+<div class="trap">⚠️ 함정: 입환신호기 = 600m → ❌ 입환은 <strong>200m</strong></div>
+<div class="trap">⚠️ 함정: 유도신호기 = 600m → ❌ 유도는 <strong>100m</strong></div>
+<div class="quiz-ex">
+  <div class="qe-title">기출 예시</div>
+  <div class="qe-q">Q. 장내신호기 배향 방향 확인거리는?</div>
+  <div class="qe-a">정답: 60m 이상</div>
+  <div class="qe-wrong">오답함정: 600m — 600m는 장내신호기 일반 확인거리 기준. 배향=60m, 대향=100m</div>
+</div>
+</div>
+</div>
+
+
+<!-- ══ § 8. 특수신호 3종 ══ -->
+<div class="section">
+<div class="section-title">§ 8. 특수신호 3종</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">10</span>특수신호 3종 ★</div>
+<table>
+  <thead><tr><th>종류</th><th>방법</th></tr></thead>
+  <tbody>
+    <tr><td><strong>발뢰신호</strong></td><td>레일에 설치 → 차륜이 밟으면 뇌관 폭발</td></tr>
+    <tr><td><strong>발염신호</strong></td><td>신호염관의 적색화염</td></tr>
+    <tr><td><strong>발광신호</strong></td><td>특수신호 발광기에 의한 적색등 움직임</td></tr>
+  </tbody>
+</table>
+<div class="trap">⚠️ 함정: <strong>발폭신호</strong> → 존재하지 않음 (비해당 답으로 자주 출제) ★</div>
+<div class="theory-note"><strong>이론 배경:</strong> 특수신호는 비상 상황에서 전방 열차에 위험을 알리는 비상 신호. 발뢰(뇌관 폭발)·발염(적색화염)·발광(적색등 움직임) 3종만 존재. '발폭신호'는 규정에 없는 허구 항목으로 매 회 비해당 답으로 출제된다.</div>
+<div class="quiz-ex">
+  <div class="qe-title">기출 예시</div>
+  <div class="qe-q">Q. 특수신호의 종류에 해당하지 않는 것은?</div>
+  <div class="qe-a">정답: 발폭신호 (존재하지 않음)</div>
+  <div class="qe-wrong">오답함정: 발뢰신호 — 발뢰신호는 특수신호 3종 중 하나</div>
+</div>
+</div>
+</div>
+
+
+<!-- ══ § 9. 보충 — 5현시 구분 ══ -->
+<div class="section">
+<div class="section-title">§ 9. 보충 — 신호 현시 구분 (3현시·4현시·5현시)</div>
+
+<div class="vis-wrap">
+  <img class="vis-img" src="images/VIS-085_신호현시3종비교표.png" alt="신호 현시 방식 비교 — 3현시·4현시·5현시">
+  <p class="vis-cap">신호 현시 방식 비교 (VIS-085)</p>
+</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">11</span>현시 구분 비교</div>
+<table>
+  <thead><tr><th>현시</th><th>구성 (정지→진행 순서)</th><th>적용 구간</th></tr></thead>
+  <tbody>
+    <tr><td><strong>3현시</strong></td><td>정지(R) · 주의(Y) · 진행(G)</td><td>일반 구간 (기본형)</td></tr>
+    <tr><td><strong>4현시</strong></td><td>정지(R) · 주의(Y) · 감속(YG) · 진행(G)</td><td>도시철도 지상구간</td></tr>
+    <tr class="hl"><td><strong>5현시</strong></td><td>정지(R) · <strong>경계(YY)</strong> · 주의(Y) · 감속(YG) · 진행(G)</td><td>고속·혼용 구간</td></tr>
+  </tbody>
+</table>
+<div class="trap">⚠️ 함정: "4현시에 경계현시 있음" → <strong>경계(YY)는 5현시에만 있음</strong></div>
+<div class="trap">⚠️ 함정: "5현시 순서 = 정지·주의·경계·감속·진행" → <strong>정지·경계·주의·감속·진행</strong> (경계가 주의 앞)</div>
+</div>
+</div>
+
+
+<!-- ══ § 10. 기출 문제 (정답 없음) ══ -->
+<div class="section">
+<div class="section-title">§ 10. 기출 문제 (16문항) — 정답은 § 11 참조</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q01 | sig_241 | 주신호기 분류 | 등급 S</div>
+  <div class="qm-q">다음 중 「주신호기」에 해당하지 않는 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 장내신호기</div>
+    <div class="qm-choice">② 원방신호기</div>
+    <div class="qm-choice">③ 유도신호기</div>
+    <div class="qm-choice">④ 입환신호기</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q02 | sig_242 | 장내신호기 정의 | 등급 S</div>
+  <div class="qm-q">정거장 구내로 진입하는 열차에 진입 가부를 지시하는 신호기는?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 출발신호기</div>
+    <div class="qm-choice">② 폐색신호기</div>
+    <div class="qm-choice">③ 장내신호기</div>
+    <div class="qm-choice">④ 엄호신호기</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q03 | sig_243 | 유도신호기 | 등급 S</div>
+  <div class="qm-q">장내신호기가 정지를 현시하고 있을 때에도 예외적으로 진입을 허용할 수 있는 신호기는?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 폐색신호기</div>
+    <div class="qm-choice">② 원방신호기</div>
+    <div class="qm-choice">③ 유도신호기</div>
+    <div class="qm-choice">④ 중계신호기</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q04 | sig_244 | 입환신호기 | 등급 A+</div>
+  <div class="qm-q">입환차량의 진입 가부를 지시하는 주신호기는?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 엄호신호기</div>
+    <div class="qm-choice">② 입환신호기</div>
+    <div class="qm-choice">③ 장내신호기</div>
+    <div class="qm-choice">④ 유도신호기</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q05 | sig_245 | 엄호신호기 | 등급 A+</div>
+  <div class="qm-q">평면교차분기 등 특수시설을 통과하는 열차의 진입 가부를 지시하는 신호기는?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 유도신호기</div>
+    <div class="qm-choice">② 장내신호기</div>
+    <div class="qm-choice">③ 엄호신호기</div>
+    <div class="qm-choice">④ 폐색신호기</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q06 | sig_246 | 정위 복합 | 등급 S</div>
+  <div class="qm-q">다음 중 신호기 정위(평상시 기본 상태)에 대한 설명으로 옳은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 복선 자동폐색구간 폐색신호기 정위는 정지이다</div>
+    <div class="qm-choice">② 원방신호기 정위는 진행이다</div>
+    <div class="qm-choice">③ 유도신호기 정위는 소등(무현시)이다</div>
+    <div class="qm-choice">④ 장내신호기 정위는 진행이다</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q07 | sig_247 | 원방신호기 정위 | 등급 S</div>
+  <div class="qm-q">원방신호기의 정위 상태는?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 진행</div>
+    <div class="qm-choice">② 주의</div>
+    <div class="qm-choice">③ 정지</div>
+    <div class="qm-choice">④ 소등(무현시)</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q08 | sig_248 | 복선폐색 정위 | 등급 S</div>
+  <div class="qm-q">복선 자동폐색구간 폐색신호기의 정위 상태는?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 주의</div>
+    <div class="qm-choice">② 정지</div>
+    <div class="qm-choice">③ 진행</div>
+    <div class="qm-choice">④ 소등</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q09 | sig_249 | 임시신호기 비해당 | 등급 A+</div>
+  <div class="qm-q">다음 중 「임시신호기」에 해당하지 않는 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 서행예고신호기</div>
+    <div class="qm-choice">② 서행신호기</div>
+    <div class="qm-choice">③ 중계신호기</div>
+    <div class="qm-choice">④ 서행해제신호기</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q10 | sig_250 | 종속신호기 비해당 | 등급 A+</div>
+  <div class="qm-q">주신호기의 현시 상태를 예고·중계하는 종속신호기에 해당하지 않는 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 원방신호기</div>
+    <div class="qm-choice">② 서행신호기</div>
+    <div class="qm-choice">③ 중계신호기</div>
+    <div class="qm-choice">④ 통과신호기</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q11 | sig_251 | 확인거리 600m | 등급 S</div>
+  <div class="qm-q">장내·출발·폐색·엄호신호기의 확인거리 기준은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 100m 이상</div>
+    <div class="qm-choice">② 200m 이상</div>
+    <div class="qm-choice">③ 400m 이상</div>
+    <div class="qm-choice">④ 600m 이상</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q12 | sig_252 | 유도신호기 확인거리 | 등급 A+</div>
+  <div class="qm-q">유도신호기의 확인거리 기준은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 600m 이상</div>
+    <div class="qm-choice">② 400m 이상</div>
+    <div class="qm-choice">③ 200m 이상</div>
+    <div class="qm-choice">④ 100m 이상</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q13 | sig_253 | 배향 확인거리 | 등급 A+</div>
+  <div class="qm-q">장내신호기의 배향 방향 확인거리 기준은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 600m 이상</div>
+    <div class="qm-choice">② 200m 이상</div>
+    <div class="qm-choice">③ 100m 이상</div>
+    <div class="qm-choice">④ 60m 이상</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q14 | sig_254 | 특수신호 비해당 | 등급 A+</div>
+  <div class="qm-q">다음 중 특수신호의 종류에 해당하지 않는 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 발뢰신호</div>
+    <div class="qm-choice">② 발염신호</div>
+    <div class="qm-choice">③ 발폭신호</div>
+    <div class="qm-choice">④ 발광신호</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q15 | sig_255 | 허용신호기 처리 | 등급 A+</div>
+  <div class="qm-q">자동폐색구간 폐색신호기의 정지 현시 시 처리 방법으로 옳은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 절대 정지 — 어떠한 경우에도 진행 불가</div>
+    <div class="qm-choice">② 관제사 허가 후 진행 가능</div>
+    <div class="qm-choice">③ 일단정지 후 서행 진행 가능</div>
+    <div class="qm-choice">④ 다음 신호기까지 25km/h로 진행</div>
+  </div>
+</div>
+
+<div class="quiz-mc">
+  <div class="qm-src">■ Q16 | rk_ch82_05 | 절대신호기 비해당 | 철도왕 교재</div>
+  <div class="qm-q">절대신호기에 해당되지 않는 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 입환신호기</div>
+    <div class="qm-choice">② 폐색신호기</div>
+    <div class="qm-choice">③ 엄호신호기</div>
+    <div class="qm-choice">④ 출발신호기</div>
+  </div>
+</div>
+
+</div><!-- /.section §10 -->
+
+
+<!-- ══ § 11. 정답 및 해설 (PRINT 새 페이지) ══ -->
+<div class="section answer-section">
+<div class="section-title">§ 11. 정답 및 해설</div>
+
+<h3>▶ 정답 일람</h3>
+<div class="ans-list">
+  <span class="ans-chip">Q01 <strong>②</strong></span>
+  <span class="ans-chip">Q02 <strong>③</strong></span>
+  <span class="ans-chip">Q03 <strong>③</strong></span>
+  <span class="ans-chip">Q04 <strong>②</strong></span>
+  <span class="ans-chip">Q05 <strong>③</strong></span>
+  <span class="ans-chip">Q06 <strong>③</strong></span>
+  <span class="ans-chip">Q07 <strong>②</strong></span>
+  <span class="ans-chip">Q08 <strong>③</strong></span>
+  <span class="ans-chip">Q09 <strong>③</strong></span>
+  <span class="ans-chip">Q10 <strong>②</strong></span>
+  <span class="ans-chip">Q11 <strong>④</strong></span>
+  <span class="ans-chip">Q12 <strong>④</strong></span>
+  <span class="ans-chip">Q13 <strong>④</strong></span>
+  <span class="ans-chip">Q14 <strong>③</strong></span>
+  <span class="ans-chip">Q15 <strong>③</strong></span>
+  <span class="ans-chip">Q16 <strong>②</strong></span>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q01 | sig_241 | 주신호기 비해당</div>
+  <div class="ai-ans">정답: ② 원방신호기</div>
+  <div class="ai-exp">주신호기 6종: 장내·출발·폐색·엄호·유도·입환신호기. 원방신호기는 종속신호기(장내신호기 현시 예고 역할).</div>
+  <div class="ai-trap">함정: ③유도신호기는 '유도'라는 이름 때문에 주신호기 아닌 것처럼 느껴지지만 주신호기 6종에 포함됨.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q02 | sig_242 | 장내신호기 정의</div>
+  <div class="ai-ans">정답: ③ 장내신호기</div>
+  <div class="ai-exp">장내신호기: 정거장 구내로 진입하는 열차에 진입 가부 지시. 정거장 진입 전방에 설치.</div>
+  <div class="ai-trap">함정: ①출발신호기는 정거장 출발 가부 지시(방향 반대).</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q03 | sig_243 | 유도신호기</div>
+  <div class="ai-ans">정답: ③ 유도신호기</div>
+  <div class="ai-exp">유도신호기: 장내신호기 정지 현시 중에도 예외적으로 진입을 허용. 정위=소등(무현시)이며, 필요 시에만 점등.</div>
+  <div class="ai-trap">함정: ④중계신호기는 종속신호기로 예외 진입 허용 기능 없음.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q04 | sig_244 | 입환신호기</div>
+  <div class="ai-ans">정답: ② 입환신호기</div>
+  <div class="ai-exp">입환신호기: 입환차량(차량 이동 작업)의 진입 가부 지시. 주신호기 6종에 포함.</div>
+  <div class="ai-trap">함정: ①엄호신호기는 평면교차분기·특수시설 통과 열차 진입 가부 지시(다른 역할).</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q05 | sig_245 | 엄호신호기</div>
+  <div class="ai-ans">정답: ③ 엄호신호기</div>
+  <div class="ai-exp">엄호신호기: 평면교차분기·특수시설 등 특수지점을 통과하는 열차의 진입 가부 지시. 특수지점 앞에 설치.</div>
+  <div class="ai-trap">함정: ②장내신호기는 정거장 구내 진입 가부(일반 역 진입).</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q06 | sig_246 | 정위 복합</div>
+  <div class="ai-ans">정답: ③ 유도신호기 정위는 소등(무현시)이다</div>
+  <div class="ai-exp">정위 3대 예외: 복선 폐색신호기=진행, 원방신호기=주의, 유도신호기=소등(무현시).</div>
+  <div class="ai-trap">①복선 폐색=진행(정지 아님), ②원방=주의(진행 아님), ④장내=정지(진행 아님).</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q07 | sig_247 | 원방신호기 정위</div>
+  <div class="ai-ans">정답: ② 주의</div>
+  <div class="ai-exp">원방신호기는 장내신호기 현시를 예고하므로, 정위는 '주의'(경계 태세). 정지나 진행이 아님.</div>
+  <div class="ai-trap">함정: '정지'로 교체하거나 '진행'으로 교체하는 함정이 빈출.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q08 | sig_248 | 복선폐색 정위</div>
+  <div class="ai-ans">정답: ③ 진행</div>
+  <div class="ai-exp">복선 자동폐색구간 폐색신호기는 열차가 없으면 진행 가능하므로 정위=진행. 단선 폐색신호기=정지.</div>
+  <div class="ai-trap">함정: 복선/단선 교체 함정. 단선=정지, 복선=진행.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q09 | sig_249 | 임시신호기 비해당</div>
+  <div class="ai-ans">정답: ③ 중계신호기</div>
+  <div class="ai-exp">임시신호기 3종: 서행예고·서행·서행해제신호기. 중계신호기는 종속신호기(주신호기 현시 중계 역할).</div>
+  <div class="ai-trap">함정: 중계신호기가 '중계'한다는 이름 때문에 임시신호기처럼 보이지만 종속신호기임.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q10 | sig_250 | 종속신호기 비해당</div>
+  <div class="ai-ans">정답: ② 서행신호기</div>
+  <div class="ai-exp">종속신호기 3종: 원방·통과·중계신호기. 서행신호기는 임시신호기(서행 구간 표시).</div>
+  <div class="ai-trap">함정: 종속신호기=「원통중」, 임시신호기=「서행예고·서행·서행해제」 분리 암기 필수.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q11 | sig_251 | 확인거리 600m</div>
+  <div class="ai-ans">정답: ④ 600m 이상</div>
+  <div class="ai-exp">장내·출발·폐색·엄호신호기 확인거리=600m 이상. 이 4종이 대표 주신호기 일반 확인거리.</div>
+  <div class="ai-trap">함정: 입환=200m, 유도=100m 혼동 금지.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q12 | sig_252 | 유도신호기 확인거리</div>
+  <div class="ai-ans">정답: ④ 100m 이상</div>
+  <div class="ai-exp">유도신호기 확인거리=100m 이상. 입환신호기·중계신호기는 200m 이상.</div>
+  <div class="ai-trap">함정: 유도신호기를 주신호기이므로 600m로 혼동 — 별도 100m 규정 적용.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q13 | sig_253 | 배향 확인거리</div>
+  <div class="ai-ans">정답: ④ 60m 이상</div>
+  <div class="ai-exp">장내신호기 배향(신호기 등을 뒤에서 보는 방향)=60m 이상. 대향=100m 이상. 일반 확인거리(600m)와 구분 필수.</div>
+  <div class="ai-trap">함정: 장내신호기이므로 600m→대향 100m→배향 60m 3단계 구분.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q14 | sig_254 | 특수신호 비해당</div>
+  <div class="ai-ans">정답: ③ 발폭신호</div>
+  <div class="ai-exp">특수신호 3종: 발뢰(뇌관)·발염(적색화염)·발광(적색등). '발폭신호'는 규정에 없는 항목.</div>
+  <div class="ai-trap">함정: 발뢰·발염·발광 3종 중 어느 하나가 비해당처럼 보이도록 출제되지 않음 — 발폭이 답.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q15 | sig_255 | 허용신호기 처리</div>
+  <div class="ai-ans">정답: ③ 일단정지 후 서행 진행 가능</div>
+  <div class="ai-exp">자동폐색 폐색신호기=허용신호기. 정지 현시 시 일단정지 후 선로 확인하며 서행 진입 허용.</div>
+  <div class="ai-trap">함정: ①은 절대신호기(장내·출발·엄호·유도·입환)의 규칙. 폐색신호기는 허용신호기.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q16 | rk_ch82_05 | 절대신호기 비해당</div>
+  <div class="ai-ans">정답: ② 폐색신호기</div>
+  <div class="ai-exp">절대신호기 5종: 장내·출발·엄호·유도·입환신호기. 자동폐색신호기는 허용신호기(일단정지 후 서행 가능).</div>
+  <div class="ai-trap">함정: ①입환신호기·③엄호신호기·④출발신호기는 모두 절대신호기임.</div>
+</div>
+
+</div><!-- /.answer-section -->
+
+
+<div class="meta-box">
+  <strong>07-01 LOCAL LOCK 보고 v1.2</strong><br>
+  ■ 원자료: 6.html PART 2~4·16 / signal-exam-data.ts sig_241~255 / railway-king-data.ts rk_ch82_05<br>
+  ■ VIS: VIS-029·039·085·088·091 (실제 열어서 판정 완료)<br>
+  ■ 영상: V-Y-14 (2to9QiopqO0) PRIMARY / youtube-nocookie.com 표준<br>
+  ■ §7 확인거리: 6.html PART 4 개념10 원문 5행 구조 그대로 적용<br>
+  ■ §5 절대신호기: "어떠한 경우도 진입 불가" — 6.html PART 16 원문 표현<br>
+  ■ PRINT LOCK v1: 12/12/12/18mm A4 / §11 새 페이지 / qm-correct 없음 / 정답 강조 없음<br>
+  ■ v1.1 변경: §10 qm-ans 제거 → §11 answer-section 분리 / 인쇄버튼 추가 / playYT nocookie 표준화 / 확인거리 표 원문 분리 / 절대신호기 표현 원문 수정<br>  ■ v1.2 변경: VIS-039 기존 JPG → VIS-039_신호기정위암기카드_FINAL.png 교체 / 지정 문구 수정 상태 유지<br>
+  작성: 2026-10-04 | ChatGPT 최종검수 대기 — 퍼블리싱 안 함
+</div>
+
+</div><!-- /.container -->
+
+<script>
+/* ── YouTube 플레이어 (08-01 v1.5 LOCK 구조) ── */
+if(typeof playYT==='undefined'){
+  function playYT(el){
+    var card=el.closest('.krri-yt-card');
+    var vid=el.getAttribute('data-vid');
+    card.innerHTML='<iframe class="yt-player-frame" src="https://www.youtube-nocookie.com/embed/'+vid+'?autoplay=1&rel=0" allow="autoplay;encrypted-media;fullscreen" allowfullscreen></iframe>';
+  }
+}
+</script>
+</body>
+</html>

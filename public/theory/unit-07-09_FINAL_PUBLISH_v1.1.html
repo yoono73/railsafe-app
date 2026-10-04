@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>07-09 폐색시스템 | 철도신호</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#fff; color:#111; font-size:15px; line-height:1.75; }
+
+.site-header { background:#fff; color:#111; padding:8px 16px 6px; border-bottom:3px solid #78350f; }
+.site-header h1 { font-size:1.05em; font-weight:bold; color:#78350f; }
+.site-header .meta { font-size:.78em; color:#555; margin-top:2px; }
+
+.container { max-width:960px; margin:0 auto; padding:20px 24px 60px; }
+
+.unit-header { border:2px solid #78350f; border-radius:6px; padding:12px 16px; margin-bottom:22px; background:#fff; }
+.unit-header h2 { font-size:1.2em; font-weight:bold; color:#78350f; }
+.unit-header .nav-link { font-size:.82em; color:#555; margin-top:4px; }
+
+.section { margin:0 0 26px 0; }
+.section-title { font-size:1.05em; font-weight:bold; color:#111; border-left:4px solid #78350f; padding:5px 0 5px 12px; margin-bottom:14px; background:#fff; }
+
+.concept { margin:14px 0 6px; padding-bottom:14px; border-bottom:1px solid #ccc; }
+.concept:last-child { border-bottom:none; }
+.concept-title { font-size:1em; font-weight:bold; color:#78350f; margin-bottom:8px; padding:4px 0; }
+.concept-title .cnum { border:1px solid #78350f; color:#78350f; border-radius:4px; padding:1px 7px; font-size:.85em; margin-right:6px; }
+
+table { width:100%; border-collapse:collapse; margin:8px 0; font-size:.9em; }
+th { background:#e8e8e8; color:#111; padding:7px 10px; text-align:left; font-size:.88em; border:1.5px solid #999; font-weight:bold; }
+td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#fff; }
+
+.trap {
+  background:#fff; border-left:4px solid #c0392b;
+  padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0;
+  font-size:.9em; color:#c0392b; font-weight:bold;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+.tip {
+  background:#fff; border-left:4px solid #2e7d32;
+  padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0;
+  font-size:.9em; color:#2e7d32; font-weight:bold;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+.theory-note {
+  background:#fff; border-left:4px solid #1565c0;
+  padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0;
+  font-size:.9em; color:#111;
+  border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0;
+}
+.theory-note strong { color:#1565c0; }
+
+.cross-ref {
+  background:#fff; border-left:4px solid #6a1b9a;
+  padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0;
+  font-size:.88em; color:#6a1b9a;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+
+.img-placeholder {
+  background:#f5f5f5; border:2px dashed #bbb; border-radius:4px;
+  padding:32px 16px; margin:10px 0; text-align:center;
+  color:#777; font-size:.88em;
+}
+.img-placeholder .fname { font-weight:bold; color:#555; margin-bottom:4px; }
+.img-placeholder .fdesc { color:#888; }
+
+.vis-wrap { margin:12px 0 16px; text-align:center; page-break-inside:avoid; }
+.vis-wrap img { max-width:100%; height:auto; border:1.5px solid #bbb; border-radius:4px; background:#fff; }
+.vis-caption { font-size:.82em; color:#555; margin-top:5px; }
+
+.quiz-mc { background:#fff; border:1px solid #ccc; border-left:4px solid #555; padding:12px 14px; margin:12px 0; border-radius:0 4px 4px 0; font-size:.9em; }
+.quiz-mc .qm-src { font-size:.78em; color:#555; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
+.quiz-mc .qm-q { font-weight:bold; color:#111; margin-bottom:8px; line-height:1.6; }
+.quiz-mc .qm-choices { margin:0 0 8px 4px; }
+.quiz-mc .qm-choice { padding:3px 0; color:#222; line-height:1.7; }
+
+.ans-box { background:#fff; border:1px solid #bbb; border-left:4px solid #78350f; border-radius:0 4px 4px 0; padding:10px 14px; margin:8px 0; font-size:.9em; }
+.ans-box .ans-num { font-weight:bold; color:#78350f; margin-bottom:4px; }
+.ans-box .ans-answer { font-weight:bold; color:#1b5e20; }
+.ans-box .ans-exp { color:#333; margin-top:4px; }
+
+.meta-box { background:#f9f9f9; border:1px solid #ccc; border-radius:5px; padding:12px 16px; margin:18px 0 10px; font-size:.83em; color:#444; }
+.meta-box strong { color:#78350f; }
+
+.sep { border:none; border-top:1px solid #ddd; margin:20px 0; }
+
+p { margin:6px 0; }
+ul, ol { margin:6px 0 6px 22px; }
+li { margin:3px 0; }
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm 12mm 12mm 18mm;
+  }
+  body { font-size:12pt; line-height:1.6; background:#fff !important; color:#000 !important; }
+  .site-header { border-bottom:2pt solid #000; padding:6pt 0; }
+  .unit-header { border:1.5pt solid #000; page-break-after:avoid; }
+  .concept { page-break-inside:avoid; }
+  .vis-wrap { break-inside:avoid; page-break-inside:avoid; }
+  img, .vis-wrap img { max-width:100%; height:auto; }
+  table { width:100%; max-width:100%; break-inside:avoid; page-break-inside:avoid; }
+  th { background:#e8e8e8 !important; color:#000 !important; border:1.5px solid #999 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  td { border:1px solid #bbb !important; }
+  .trap, .tip, .theory-note, .quiz-ex, .quiz-mc, .ans-box { break-inside:avoid; page-break-inside:avoid; }
+  .answer-section { break-before:page; page-break-before:always; }
+  .print-btn { display:none !important; }
+  a { color:#000 !important; text-decoration:none; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>철도교통 안전관리 · 신호 이론 단원</h1>
+  <div class="meta">GATE5 학습단원 / railsafe-app · FINAL REVIEW v1.1</div>
+</header>
+
+<div class="container">
+
+<div class="unit-header">
+  <h2>07-09 폐색시스템 (Block System) ⚠️ 빈출</h2>
+  <div class="nav-link">← 07-08 연동장치 &nbsp;|&nbsp; 07-10 → &nbsp;|&nbsp; CROSS-REF: 07-06 궤도회로</div>
+</div>
+
+<!-- ───────────────────────────────── §0 선행 용어 -->
+<div class="section">
+  <div class="section-title">§ 0. 선행 용어 정의 — 이것부터 확인</div>
+
+  <table>
+    <tr>
+      <th style="width:20%">용어</th>
+      <th style="width:35%">핵심 정의</th>
+      <th>왜 필요한가</th>
+    </tr>
+    <tr>
+      <td><strong>폐색 (Block)</strong></td>
+      <td>일정 구간에 동시에 2 이상의 열차를 운전시키지 않도록 그 구간을 하나의 열차 운전에 점용시키는 운전보안 개념</td>
+      <td>원칙적으로 같은 폐색구간에 둘 이상의 열차가 동시에 운전되는 것을 방지</td>
+    </tr>
+    <tr>
+      <td><strong>폐색구간</strong></td>
+      <td>안전한 열차 간격 확보를 위해 하나의 점유 단위로 관리되는 선로 구간</td>
+      <td>한 폐색구간 = 동시 1열차 원칙의 최소 단위</td>
+    </tr>
+    <tr>
+      <td><strong>폐색장치</strong></td>
+      <td>폐색방식을 시행하기 위해 열차 유무 확인과 신호 제어 등에 사용하는 장치·설비</td>
+      <td>폐색방식의 안전한 시행을 지원</td>
+    </tr>
+    <tr>
+      <td><strong>폐색신호기</strong></td>
+      <td>폐색구간 진입 전 설치되는 신호기 — 전방 구간 점유 여부를 현시</td>
+      <td>자동폐색의 핵심 구성요소. 허용신호기로 동작(정지 현시 시 규정속도 이하 진행 가능)</td>
+    </tr>
+    <tr>
+      <td><strong>시간간격법</strong></td>
+      <td>앞 열차 출발 후 일정 시간이 지나면 뒤 열차 출발을 허가하는 방식</td>
+      <td>열차간격 제어의 역사적 원형 — 초기 철도에서 사용</td>
+    </tr>
+    <tr>
+      <td><strong>공간간격법</strong></td>
+      <td>선로를 구간으로 나누고, 앞 열차가 구간을 벗어난 것을 확인한 후 뒤 열차 진입을 허가하는 방식</td>
+      <td>현대 철도의 기본 원리 — 폐색 개념의 기초</td>
+    </tr>
+    <tr>
+      <td><strong>안전간격</strong></td>
+      <td>후속열차가 선행열차와 충돌하지 않도록 제동거리 등을 반영해 확보하는 거리 또는 시간 여유</td>
+      <td>폐색구간 설계의 기준</td>
+    </tr>
+    <tr>
+      <td><strong>제동거리</strong></td>
+      <td>열차가 제동을 시작한 뒤 정지할 때까지 필요한 거리</td>
+      <td>폐색구간 최소 길이 결정 요소</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ───────────────────────────────── §1 열차간격 제어 목적 -->
+<div class="section">
+  <div class="section-title">§ 1. 열차간격 제어의 목적</div>
+
+  <div class="concept">
+    <div class="concept-title"><span class="cnum">개념 A</span> 왜 열차간격을 제어해야 하는가</div>
+    <p>철도에서 열차는 레일 위를 달리므로 <strong>자동차처럼 임의로 방향을 바꿀 수 없다</strong>. 앞 열차가 급정지하면 뒤 열차가 충돌할 위험이 있고, 분기점에서는 복수 열차의 진로가 겹칠 수 있다.</p>
+    <p>따라서 철도 신호시스템의 핵심 목적은 <strong>열차 상호 간 충돌을 방지하기 위한 공간적·시간적 간격 확보</strong>이다.</p>
+
+    <div class="theory-note">
+      <strong>안전간격 결정 요소</strong><br>
+      안전간격은 ① 열차의 제동거리, ② 선로 경사(구배), ③ 열차 종류(속도·중량), ④ 신호 응동시간 등을 복합적으로 반영한다. 폐색구간의 최소 길이는 이 안전간격보다 길어야 한다.
+    </div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── §2 시간간격법 vs 공간간격법 -->
+<div class="section">
+  <div class="section-title">§ 2. 시간간격법 → 공간간격법 (열차간격 제어의 발전)</div>
+
+  <div class="concept">
+    <div class="concept-title"><span class="cnum">개념 B</span> 시간간격법 (Time Interval Method)</div>
+    <p><strong>정의</strong>: 앞 열차가 출발한 후 일정 시간(예: 5분, 10분)이 지나면 뒤 열차 출발을 허가하는 방식.</p>
+    <p><strong>왜 필요했는가</strong>: 전기 신호 기술이 없던 초창기 철도에서 유일하게 가능한 열차간격 제어 방법이었다.</p>
+    <p><strong>어떻게 동작하는가</strong>: 역장이나 신호원이 시계를 보고 일정 시간 경과 후 통과 신호를 줌.</p>
+
+    <div class="trap">⚠️ 결정적 한계: 앞 열차가 고장·사고로 정지해도 시간만 지나면 뒤 열차 출발을 허가 → 추돌 위험. 열차 실제 위치를 확인하지 않음.</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title"><span class="cnum">개념 C</span> 공간간격법 (Space Interval Method) — 폐색의 근거</div>
+    <p><strong>정의</strong>: 선로를 미리 정한 구간으로 나누고, 앞 열차가 해당 구간을 완전히 벗어난 것을 <em>확인한 후</em> 뒤 열차 진입을 허가하는 방식.</p>
+    <p><strong>왜 필요한가</strong>: 앞 열차의 <em>실제 위치</em>를 기준으로 간격을 제어하므로 시간간격법의 한계를 극복.</p>
+    <p><strong>어떻게 동작하는가</strong>: ① 선로를 폐색구간으로 분할 → ② 구간 내 열차 유무를 신호장치로 확인 → ③ 비어있으면 뒤 열차 진입 허가.</p>
+
+    <div class="tip">💡 공간간격법이 현대 폐색시스템의 기초다. "폐색" = 공간간격법의 구현.</div>
+
+    <table>
+      <tr>
+        <th></th>
+        <th>시간간격법</th>
+        <th>공간간격법</th>
+      </tr>
+      <tr>
+        <td><strong>제어 기준</strong></td>
+        <td>시간(경과)</td>
+        <td>공간(구간 점유 여부)</td>
+      </tr>
+      <tr>
+        <td><strong>앞 열차 정지 시</strong></td>
+        <td>시간만 지나면 뒤 열차 출발 허가 → 위험</td>
+        <td>구간 점유 중이면 뒤 열차 진입 불가 → 안전</td>
+      </tr>
+      <tr>
+        <td><strong>현대 사용 여부</strong></td>
+        <td>일반 영업선에서 원칙적 미사용</td>
+        <td>현대 철도의 기본 원리</td>
+      </tr>
+    </table>
+
+    <div class="vis-wrap">
+      <img src="images/VIS-09A_time_space_interval_block_FINAL.png" alt="시간간격법과 공간간격법 비교 및 폐색의 기본 원리" onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;><div class=&quot;fname&quot;>images/VIS-09A_time_space_interval_block_FINAL.png</div><div class=&quot;fdesc&quot;>이미지 파일을 images 폴더에 복사하세요.</div></div>';">
+      <div class="vis-caption">VIS-09A · 시간간격법 vs 공간간격법 → 폐색(Block)의 기본 원리</div>
+    </div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── §3 폐색 정의 -->
+<div class="section">
+  <div class="section-title">§ 3. 폐색 정의 · 폐색구간 · 폐색장치 ⚠️ 빈출</div>
+
+  <div class="concept">
+    <div class="concept-title"><span class="cnum">개념 D</span> 폐색(Block)의 정의와 구성</div>
+
+    <div class="theory-note">
+      <strong>폐색(Block)</strong>: 일정 구간에 동시에 2 이상의 열차를 운전시키지 않도록 그 구간을 하나의 열차 운전에 점용시키는 운전보안 개념.<br>
+      → 핵심: "선로 구분 + 진입 제어" 두 가지가 함께 있어야 폐색.
+    </div>
+
+    <p><strong>폐색구간(Block Section)</strong>: 안전한 열차 간격 확보를 위해 하나의 점유 단위로 관리되는 선로 구간. 한 폐색구간에는 원칙적으로 1열차만 진입할 수 있다.</p>
+    <p><strong>폐색장치(Block Equipment)</strong>: 폐색구간의 점유 여부를 확인하고 진입을 제어하는 장치. 궤도회로·신호기·연동장치 등이 유기적으로 구성.</p>
+
+    <div class="theory-note">
+      <strong>폐색구간 설치 기준 (개념 75 기준)</strong><br>
+      폐색구간의 최소 길이 = 최대 제동거리 + 안전여유거리. 열차가 폐색신호기의 정지 현시를 인식한 후 안전하게 정지할 수 있는 충분한 거리가 확보되어야 한다.
+    </div>
+
+    <p><strong>폐색신호기(Block Signal)</strong>: 폐색구간에 진입하려는 열차에 신호를 현시하는 주신호기. 교재에서는 자동폐색신호기를 대표적인 허용신호기로 설명하지만, 정지신호를 지나 운전하는 세부 절차·제한속도는 적용 규정과 운영기준을 따라야 한다.</p>
+
+    <div class="cross-ref">
+      🔗 CROSS-REF: 허용신호기 vs 절대신호기 구분 → 신호기 종류 단원 참조 (개념 45 계열)<br>
+      🔗 CROSS-REF: 폐색장치의 핵심 — 궤도회로 → 07-06 궤도회로 참조
+    </div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── §4 상용폐색 -->
+<div class="section">
+  <div class="section-title">§ 4. 상용폐색방식 (Normal Block) — 출처별 분리 ⚠️ 빈출</div>
+
+  <div class="concept">
+    <div class="concept-title"><span class="cnum">개념 E</span> 상용폐색 — 정상 운행 시 사용하는 폐색방식</div>
+
+    <div class="trap">⚠️ 시험 핵심 함정: 일반철도(KRIC) 기준과 도시철도운전규칙 기준의 분류가 다르다. 두 체계를 혼합하면 오답. 반드시 출처별로 분리해서 암기.</div>
+
+    <p style="margin-top:10px;"><strong>① 철도차량운전규칙 기준</strong></p>
+    <table>
+      <tr>
+        <th style="width:20%">상용폐색 방식</th>
+        <th style="width:35%">원리</th>
+        <th>주요 적용 구간</th>
+      </tr>
+      <tr>
+        <td><strong>자동폐색식</strong></td>
+        <td>궤도회로 열차점유 자동검지 → 폐색신호기 자동현시</td>
+        <td>복선·전철 구간</td>
+      </tr>
+      <tr>
+        <td><strong>연동폐색식</strong></td>
+        <td>인접 역 간 전화(전령)·연동으로 폐색 허가 취득. 폐색취급원 필요.</td>
+        <td>단선 구간</td>
+      </tr>
+      <tr>
+        <td><strong>차내신호폐색식</strong></td>
+        <td>지상 신호기 없이 차내(Cab) 신호로 운전제어. ATC 연동.</td>
+        <td>고속선·ATC 구간</td>
+      </tr>
+      <tr>
+        <td><strong>통표폐색식</strong></td>
+        <td>통표(Token) 물리적 소지 열차만 해당 구간 진입 허가</td>
+        <td>단선·비전철 구간</td>
+      </tr>
+    </table>
+
+    <p style="margin-top:12px;"><strong>② 도시철도운전규칙 기준</strong></p>
+    <table>
+      <tr>
+        <th style="width:20%">상용폐색 방식</th>
+        <th>설명</th>
+      </tr>
+      <tr>
+        <td><strong>자동폐색식</strong></td>
+        <td>궤도회로 점유검지 기반 자동 신호현시</td>
+      </tr>
+      <tr>
+        <td><strong>차내신호폐색식</strong></td>
+        <td>차내신호(ATC 계열)로 운전제어. 지상신호기 불필요.</td>
+      </tr>
+    </table>
+
+    <div class="theory-note">
+      <strong>왜 두 기준이 다른가?</strong><br>
+      일반철도는 단선·복선·전철·비전철·고속 등 다양한 노선 조건을 포함하므로 분류가 더 넓다. 도시철도는 대부분 복선·전철·ATC/ATO 환경이므로 자동폐색식과 차내신호폐색식만을 상용폐색으로 규정한다.
+    </div>
+
+    <div class="tip">💡 암기 포인트: 일반철도 상용폐색 = 자·연·차·통 (자동/연동/차내신호/통표). 도시철도 상용폐색 = 자·차 (자동/차내신호).</div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── §5 대용폐색 -->
+<div class="section">
+  <div class="section-title">§ 5. 대용폐색방식 (Substitute Block) — 출처별 분리</div>
+
+  <div class="concept">
+    <div class="concept-title"><span class="cnum">개념 F</span> 대용폐색 — 상용폐색 장치 고장·사용 불능 시 대체 사용</div>
+
+    <div class="theory-note">
+      <strong>대용폐색이란</strong>: 상용폐색 장치(자동폐색, 차내신호폐색 등)가 고장나거나 사용할 수 없을 때 임시로 사용하는 폐색방식. 일반적으로 인위적 확인 절차가 더 필요하고 운전 효율이 낮다.
+    </div>
+
+    <p style="margin-top:10px;"><strong>① 철도차량운전규칙 기준</strong></p>
+    <table>
+      <tr>
+        <th style="width:22%">대용폐색 방식</th>
+        <th>원리</th>
+      </tr>
+      <tr>
+        <td><strong>통신식</strong></td>
+        <td>전화 등 통신수단으로 인접역 간 폐색 허가 취득</td>
+      </tr>
+      <tr>
+        <td><strong>지도통신식</strong></td>
+        <td>지도표(증표)와 통신을 함께 사용하여 폐색 허가</td>
+      </tr>
+      <tr>
+        <td><strong>지도식</strong></td>
+        <td>지도표(증표)를 사용하여 열차의 폐색구간 진입을 통제</td>
+      </tr>
+      <tr>
+        <td><strong>지령식</strong></td>
+        <td>관제사의 지령에 따라 폐색구간 진입을 통제</td>
+      </tr>
+    </table>
+
+    <p style="margin-top:12px;"><strong>② 도시철도운전규칙 기준</strong></p>
+    <table>
+      <tr>
+        <th style="width:22%">대용폐색 방식</th>
+        <th>설명</th>
+      </tr>
+      <tr>
+        <td><strong>지령식</strong></td>
+        <td>복선운전 시 사용 가능 — 관제사가 폐색구간 진입을 지시</td>
+      </tr>
+      <tr>
+        <td><strong>통신식</strong></td>
+        <td>복선운전 시 사용 가능 — 관계 역·소와 관제사가 협의하여 진입을 통제</td>
+      </tr>
+      <tr>
+        <td><strong>지도통신식</strong></td>
+        <td>단선운전 시 사용 — 지도표·지도권과 통신 절차를 이용</td>
+      </tr>
+    </table>
+
+    <div class="trap">⚠️ 최신 기준 주의: 지령식은 도시철도에만 있는 방식이 아니다. 「철도차량운전규칙」의 대용폐색방식에도 지령식이 포함된다. 도시철도는 복선=지령식 또는 통신식, 단선=지도통신식으로 구분한다.</div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── §6 자동폐색 -->
+<div class="section">
+  <div class="section-title">§ 6. 자동폐색장치 (Automatic Block System) ⚠️ 빈출</div>
+
+  <div class="concept">
+    <div class="concept-title"><span class="cnum">개념 G</span> 자동폐색의 동작 원리</div>
+
+    <div class="theory-note">
+      <strong>자동폐색 정의</strong>: 열차 점유검지에 따라 폐색신호가 자동으로 제어되는 폐색방식.<br>
+      → 폐색취급원 없이 열차·신호기가 자동으로 폐색을 처리.
+    </div>
+
+    <p style="margin-top:10px;"><strong>동작 흐름 (초학자 설명)</strong></p>
+    <ol>
+      <li><strong>열차 진입</strong>: 열차가 폐색구간에 진입한다.</li>
+      <li><strong>궤도회로 점유검지</strong>: 열차의 차륜·차축이 두 레일을 단락(shunt)시켜 궤도회로에 전류 변화 발생 → 궤도계전기 상태 변화 → 해당 폐색구간 점유로 판정.</li>
+      <li><strong>폐색구간 점유정보 생성</strong>: 점유 판정 결과가 신호 제어계통에 전달된다.</li>
+      <li><strong>폐색신호기 제어</strong>: 점유 중인 폐색구간 앞에 설치된 폐색신호기가 정지 현시 → 뒤따르는 열차 진입 차단.</li>
+      <li><strong>열차 진출 후 해정</strong>: 열차가 폐색구간을 완전히 벗어나면 점유가 해소된다. 이후 신호 현시는 전방 폐색구간 점유, 선로전환기 상태, 장치 고장 여부 등 다른 안전조건을 함께 만족할 때 결정된다.</li>
+    </ol>
+
+    <div class="trap">
+      ⚠️ 직접 등치 금지 표현:<br>
+      · "계전기 여자 = 진행신호" — 여자 상태는 비점유 정보를 출력하는 것이며, 신호기 현시는 연동장치 등 다른 조건과 함께 결정된다.<br>
+      · "궤도계전기 낙하(무여자) = 반드시 열차 있음" — 전원상실·레일단선·접촉불량 등 고장에서도 무여자 발생. Fail-Safe 원칙에 의해 무여자→안전측 제어.
+    </div>
+
+    <div class="vis-wrap">
+  <img src="images/VIS-07A_track_circuit_FINAL.png"
+       alt="VIS-07A 궤도회로 동작 비교도 — 비점유 vs 점유">
+  <div class="vis-caption">
+    VIS-07A · 궤도회로 동작 비교도 — 비점유 상태 vs 점유 상태
+  </div>
+</div>
+
+    <div class="cross-ref">
+      🔗 CROSS-REF: 궤도회로 원리 → 07-06 궤도회로 참조 (개념 95 계열)<br>
+      🔗 CROSS-REF: Fail-Safe 원칙 → 무여자 = 안전측 제어 (개념 101 계열)
+    </div>
+
+    <div class="theory-note">
+      <strong>폐색신호기의 성격 — 허용신호기</strong><br>
+      자동폐색구간의 폐색신호기는 <em>허용신호기</em>이다. 정지 현시 시 운전자가 규정 속도(보통 15km/h 이하) 이하로 전방을 확인하며 진행할 수 있다. 장내·출발신호기(절대신호기)와 구별된다.
+    </div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── §7 연동폐색 -->
+<div class="section">
+  <div class="section-title">§ 7. 연동폐색식 (Interlocking Block System) — 연동장치와 반드시 구분</div>
+
+  <div class="concept">
+    <div class="concept-title"><span class="cnum">개념 H</span> 연동폐색식의 정의와 동작</div>
+
+    <div class="trap">
+      ⚠️ 핵심 혼동 방지:<br>
+      · <strong>연동장치(Interlocking)</strong> = 역 구내에서 신호기·선로전환기·폐색장치를 상호 연결하여 잘못된 동시조작을 방지하는 <em>장치·시스템</em> → 07-08 참조<br>
+      · <strong>연동폐색식(Interlocking Block)</strong> = 연동폐색기와 신호기를 연동하고 상대 정거장·신호소의 승인을 받아 진입시키는 <em>폐색방식</em><br>
+      → 이름이 비슷하지만 완전히 다른 개념. 절대로 혼용 금지.
+    </div>
+
+    <p style="margin-top:10px;"><strong>연동폐색식 정의</strong>: 폐색구간 양끝의 정거장 또는 신호소에 설치된 <strong>연동폐색기와 신호기를 연동</strong>하여 열차 유무를 표시하고, 상대 정거장 또는 신호소의 승인을 받아 열차를 폐색구간에 진입시키는 상용폐색방식.</p>
+
+    <table>
+      <tr><th>항목</th><th>내용</th></tr>
+      <tr><td><strong>진입 전 확인</strong></td><td>“폐색구간에 열차 없음” 표시를 확인하고 전방 정거장 또는 신호소의 승인을 받는다.</td></tr>
+      <tr><td><strong>승인 표시</strong></td><td>승인은 연동폐색기의 “폐색구간에 열차 있음” 표시로 한다.</td></tr>
+      <tr><td><strong>안전조건</strong></td><td>열차가 폐색구간에 있으면 해당 구간 신호기에 진행을 지시하는 신호를 현시할 수 없다.</td></tr>
+      <tr><td><strong>단선구간 추가조건</strong></td><td>한 방향에 폐색이 이루어지면 반대방향 신호기는 자동으로 정지신호를 현시한다.</td></tr>
+      <tr><td><strong>법령상 분류</strong></td><td>「철도차량운전규칙」 제50조의 상용폐색방식 중 하나.</td></tr>
+      <tr><td><strong>도시철도운전규칙</strong></td><td>상용폐색방식으로 자동폐색식·차내신호폐색식만 규정하므로 연동폐색식은 해당 분류에 포함되지 않는다.</td></tr>
+    </table>
+
+    <div class="cross-ref">
+      🔗 CROSS-REF: 연동장치(Interlocking) 전체 내용 → 07-08 단원 참조
+    </div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── §8 고정폐색 vs 이동폐색 -->
+<div class="section">
+  <div class="section-title">§ 8. 고정폐색 vs 이동폐색 — 폐색 구조의 진화</div>
+
+  <div class="concept">
+    <div class="concept-title"><span class="cnum">개념 I</span> 고정폐색 (Fixed Block)</div>
+    <p><strong>정의</strong>: 선로를 미리 정한 고정된 구간으로 나누고, 각 구간 점유 여부에 따라 열차 간격을 제어하는 방식.</p>
+    <p><strong>경계</strong>: 신호기·궤도회로 경계 등 미리 정해진 물리적 또는 논리적 위치로 구분된다.</p>
+    <p><strong>특징</strong>: 자동폐색식이 고정폐색의 대표적 구현. 폐색구간의 위치와 크기가 고정되어 있으며 열차 실제 위치와 무관하게 구간 단위로 점유 여부를 판단.</p>
+
+    <div class="theory-note">
+      <strong>고정폐색의 간격 한계</strong><br>
+      폐색구간이 크면 열차 간격이 넓어져 선로 용량 감소. 구간이 작으면 신호기·궤도회로 설비 수가 늘어나 비용 증가. 설계 시 균형이 필요.
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title"><span class="cnum">개념 J</span> 이동폐색 (Moving Block)</div>
+    <p><strong>정의</strong>: 선행열차의 실제 위치와 속도, 제동성능 등을 반영해 안전한계가 열차와 함께 이동하는 방식.</p>
+    <p><strong>필수 정보</strong>: 열차의 실시간 위치·속도와 안전제동 관련 정보가 지속적으로 필요하다.</p>
+    <p><strong>장점</strong>: 고정된 구간 없이 실제 열차 위치 기준으로 간격 제어 → 열차 간격을 더 촘촘하게 유지 가능 → 선로 용량 증가.</p>
+
+    <div class="theory-note">
+      <strong>이동폐색 구현 기술</strong><br>
+      CBTC(Communication Based Train Control): 양방향 무선통신과 정밀 위치정보를 이용해 이동폐색 구현에 유리한 열차제어 방식.<br>
+      KTCS-3: 궤도회로를 사용하지 않는 이동폐색 기술을 핵심 방향으로 한다.<br><br>
+      ※ GPS를 이동폐색의 일반적 위치검지 수단으로 일반화하지 않는다. 구체적 방식은 시스템별로 차이가 있다.
+    </div>
+
+    <div style="margin:10px 0; text-align:center;">
+      <img src="images/VIS-07C_신호제어_기능관계도_FINAL.png"
+           alt="VIS-07C 신호제어 기능관계도 — 분기형"
+           style="max-width:100%; border:1px solid #ccc; border-radius:4px;"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <div class="img-placeholder" style="display:none;">
+        <div class="fname">images/VIS-07C_신호제어_기능관계도_FINAL.png</div>
+        <div class="fdesc">이미지 로드 실패 — 파일 경로 확인 필요</div>
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <th></th>
+        <th>고정폐색</th>
+        <th>이동폐색</th>
+      </tr>
+      <tr>
+        <td><strong>폐색구간</strong></td>
+        <td>미리 정해진 고정 구간</td>
+        <td>열차 위치에 따라 동적으로 변화</td>
+      </tr>
+      <tr>
+        <td><strong>위치 확인</strong></td>
+        <td>구간 단위(궤도회로 점유)</td>
+        <td>열차 실시간 위치</td>
+      </tr>
+      <tr>
+        <td><strong>선로 용량</strong></td>
+        <td>구간 크기에 제한됨</td>
+        <td>상대적으로 높음</td>
+      </tr>
+      <tr>
+        <td><strong>대표 기술</strong></td>
+        <td>자동폐색식, 연동폐색식</td>
+        <td>CBTC, KTCS-3(무선기반)</td>
+      </tr>
+    </table>
+
+    <div class="cross-ref">
+      🔗 CROSS-REF: 점유정보 획득 원리 → 07-06 궤도회로 (개념 95, VIS-07A)<br>
+      🔗 CROSS-REF: CBTC 상세 → 07-05 열차제어 단원 참조
+    </div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── §9 시험포인트 -->
+<div class="section">
+  <div class="section-title">§ 9. 시험포인트 요약</div>
+
+  <table>
+    <tr>
+      <th style="width:30%">항목</th>
+      <th>핵심 포인트</th>
+    </tr>
+    <tr>
+      <td>폐색 정의</td>
+      <td>"선로 구분 + 진입 제어" — 안전간격 확보 목적</td>
+    </tr>
+    <tr>
+      <td>폐색구간</td>
+      <td>하나의 점유 단위로 관리되는 선로 구간. 제동거리 등 안전조건을 반영하되 “최대 제동거리+안전여유거리”를 모든 방식의 법정 산식으로 일반화하지 않는다.</td>
+    </tr>
+    <tr>
+      <td>시간간격법 vs 공간간격법</td>
+      <td>시간간격법 = 경과시간 기준(앞 열차 위치 불확인 → 위험). 공간간격법 = 실제 구간 점유 기준(현대 철도 기본).</td>
+    </tr>
+    <tr>
+      <td>상용폐색 분류</td>
+      <td>철도차량운전규칙: 자동/연동/차내신호/통표. 도시철도운전규칙: 자동/차내신호. 출처별 구분.</td>
+    </tr>
+    <tr>
+      <td>대용폐색 분류</td>
+      <td>철도차량운전규칙: 통신/지도통신/지도/지령. 도시철도운전규칙: 복선=지령·통신, 단선=지도통신.</td>
+    </tr>
+    <tr>
+      <td>자동폐색 흐름</td>
+      <td>열차 진입 → 궤도회로 점유검지 → 폐색구간 점유정보 → 폐색신호기 정지 현시. 계전기 여자=진행신호 직접 등치 금지.</td>
+    </tr>
+    <tr>
+      <td>연동폐색식 vs 연동장치</td>
+      <td>연동장치 = 역 구내 충돌방지 장치. 연동폐색식 = 역 간 폐색방식. 완전히 별개 개념.</td>
+    </tr>
+    <tr>
+      <td>고정폐색 vs 이동폐색</td>
+      <td>고정폐색 = 미리 정해진 구간. 이동폐색 = 선행열차 실제 위치·속도·제동성능 반영, 안전한계 이동.</td>
+    </tr>
+    <tr>
+      <td>폐색신호기 성격</td>
+      <td>교재상 자동폐색신호기는 대표적 허용신호기. 정지신호 통과 시 세부 제한속도·절차는 운영규정 확인. 차내신호 “15신호”와 혼동 금지.</td>
+    </tr>
+  </table>
+
+  <div class="tip">💡 암기 요약: 폐색 = 공간간격법 구현. 상용(철도차량운전규칙): 자·연·차·통. 상용(도시): 자·차. 대용(철도차량운전규칙): 통·지통·지·령. 자동폐색: 열차→궤도회로→점유정보→폐색신호기. 연동폐색식 ≠ 연동장치.</div>
+</div>
+
+<!-- ───────────────────────────────── §10 기출문제 -->
+<div class="section">
+  <div class="section-title">§ 10. 기출 DB 수록 문제 — 신호 DB Part 4</div>
+
+  <div class="quiz-mc">
+    <div class="qm-src">Q1 · sig_076 · Part 4 · 등급 S · 출처: 철도신호 기출 DB</div>
+    <div class="qm-q">다음 설명에 해당하는 용어로 가장 적절한 것은?<br>"일정 구간에 동시에 2 이상의 열차를 운전시키지 않도록 그 구간을 하나의 열차 운전에 점용시키는 운전보안 개념이다."</div>
+    <div class="qm-choices">
+      <div class="qm-choice">① 폐색</div>
+      <div class="qm-choice">② 제동거리</div>
+      <div class="qm-choice">③ 이동폐색의 필수 정보</div>
+      <div class="qm-choice">④ 안전간격</div>
+    </div>
+  </div>
+
+  <div class="quiz-mc">
+    <div class="qm-src">Q2 · sig_077 · Part 4 · 등급 S · 출처: 철도신호 기출 DB</div>
+    <div class="qm-q">다음 중 「폐색」에 대한 설명으로 옳은 것은?</div>
+    <div class="qm-choices">
+      <div class="qm-choice">① 일정 구간에 동시에 2 이상의 열차를 운전시키지 않도록 그 구간을 하나의 열차 운전에 점용시키는 운전보안 개념이다.</div>
+      <div class="qm-choice">② 일정 시간 동안 안전하게 처리할 수 있는 열차 수로, 운전시격이 짧아질수록 증가할 수 있다.</div>
+      <div class="qm-choice">③ 선행열차의 실제 위치와 속도, 제동성능 등을 반영해 안전한계가 열차와 함께 이동하는 방식이다.</div>
+      <div class="qm-choice">④ 신호기·궤도회로 경계 등 미리 정해진 물리적 또는 논리적 위치로 구분된다.</div>
+    </div>
+  </div>
+
+  <div class="quiz-mc">
+    <div class="qm-src">Q3 · sig_078 · Part 4 · 등급 A+ · 출처: 철도신호 기출 DB</div>
+    <div class="qm-q">다음 설명에 해당하는 용어로 가장 적절한 것은?<br>"안전한 열차 간격 확보를 위해 하나의 점유 단위로 관리되는 선로 구간이다."</div>
+    <div class="qm-choices">
+      <div class="qm-choice">① 폐색구간</div>
+      <div class="qm-choice">② CBTC와 이동폐색</div>
+      <div class="qm-choice">③ 폐색</div>
+      <div class="qm-choice">④ 고정폐색</div>
+    </div>
+  </div>
+
+  <div class="quiz-mc">
+    <div class="qm-src">Q4 · sig_080 · Part 4 · 등급 S · 출처: 철도신호 기출 DB</div>
+    <div class="qm-q">다음 설명에 해당하는 용어로 가장 적절한 것은?<br>"선로를 미리 정한 고정된 구간으로 나누고 각 구간 점유 여부에 따라 열차 간격을 제어하는 방식이다."</div>
+    <div class="qm-choices">
+      <div class="qm-choice">① 폐색구간</div>
+      <div class="qm-choice">② 선로용량</div>
+      <div class="qm-choice">③ 고정폐색</div>
+      <div class="qm-choice">④ 제동거리</div>
+    </div>
+  </div>
+
+  <div class="quiz-mc">
+    <div class="qm-src">Q5 · sig_081 · Part 4 · 등급 S · 출처: 철도신호 기출 DB</div>
+    <div class="qm-q">다음 중 「고정폐색」에 대한 설명으로 옳은 것은?</div>
+    <div class="qm-choices">
+      <div class="qm-choice">① 선로를 미리 정한 고정된 구간으로 나누고 각 구간 점유 여부에 따라 열차 간격을 제어하는 방식이다.</div>
+      <div class="qm-choice">② 같은 지점을 연속 열차가 통과하는 시간 간격을 뜻하며 선로용량과 밀접하다.</div>
+      <div class="qm-choice">③ CBTC는 양방향 무선통신과 정밀 위치정보를 이용해 이동폐색 구현에 유리한 열차제어 방식이다.</div>
+      <div class="qm-choice">④ 열차 점유검지에 따라 폐색신호가 자동으로 제어되는 폐색방식이다.</div>
+    </div>
+  </div>
+
+  <div class="quiz-mc">
+    <div class="qm-src">Q6 · sig_082 · Part 4 · 등급 S · 출처: 철도신호 기출 DB</div>
+    <div class="qm-q">다음 설명에 해당하는 용어로 가장 적절한 것은?<br>"선행열차의 실제 위치와 속도, 제동성능 등을 반영해 안전한계가 열차와 함께 이동하는 방식이다."</div>
+    <div class="qm-choices">
+      <div class="qm-choice">① 고정폐색</div>
+      <div class="qm-choice">② CBTC와 이동폐색</div>
+      <div class="qm-choice">③ 이동폐색</div>
+      <div class="qm-choice">④ 고정폐색의 경계</div>
+    </div>
+  </div>
+
+  <div class="quiz-mc">
+    <div class="qm-src">Q7 · sig_084 · Part 4 · 등급 A+ · 출처: 철도신호 기출 DB</div>
+    <div class="qm-q">다음 설명에 해당하는 용어로 가장 적절한 것은?<br>"열차 점유검지에 따라 폐색신호가 자동으로 제어되는 폐색방식이다."</div>
+    <div class="qm-choices">
+      <div class="qm-choice">① 선로용량</div>
+      <div class="qm-choice">② 고정폐색의 경계</div>
+      <div class="qm-choice">③ KTCS-3와 이동폐색</div>
+      <div class="qm-choice">④ 자동폐색</div>
+    </div>
+  </div>
+
+  <div class="quiz-mc">
+    <div class="qm-src">Q8 · sig_085 · Part 4 · 등급 A+ · 출처: 철도신호 기출 DB</div>
+    <div class="qm-q">다음 중 「자동폐색」에 대한 설명으로 옳은 것은?</div>
+    <div class="qm-choices">
+      <div class="qm-choice">① 열차의 실시간 위치·속도와 안전제동 관련 정보가 지속적으로 필요하다.</div>
+      <div class="qm-choice">② 열차 점유검지에 따라 폐색신호가 자동으로 제어되는 폐색방식이다.</div>
+      <div class="qm-choice">③ KTCS-3는 궤도회로를 사용하지 않는 이동폐색 기술을 핵심 방향으로 한다.</div>
+      <div class="qm-choice">④ 신호기·궤도회로 경계 등 미리 정해진 물리적 또는 논리적 위치로 구분된다.</div>
+    </div>
+  </div>
+
+  <div class="quiz-mc">
+    <div class="qm-src">Q9 · sig_083 · Part 4 · 등급 S · 출처: 철도신호 기출 DB</div>
+    <div class="qm-q">다음 중 「이동폐색」의 정의를 가장 직접적으로 설명한 것은?</div>
+    <div class="qm-choices">
+      <div class="qm-choice">① 열차의 실시간 위치·속도와 안전제동 관련 정보가 지속적으로 필요하다.</div>
+      <div class="qm-choice">② 선행열차의 실제 위치와 속도, 제동성능 등을 반영해 안전한계가 열차와 함께 이동하는 방식이다.</div>
+      <div class="qm-choice">③ 신호기·궤도회로 경계 등 미리 정해진 물리적 또는 논리적 위치로 구분된다.</div>
+      <div class="qm-choice">④ 선로를 미리 정한 고정된 구간으로 나누고 각 구간 점유 여부에 따라 열차 간격을 제어하는 방식이다.</div>
+    </div>
+  </div>
+
+  <div class="quiz-mc">
+    <div class="qm-src">Q10 · sig_086 · Part 4 · 등급 A+ · 출처: 철도신호 기출 DB</div>
+    <div class="qm-q">다음 설명에 해당하는 용어로 가장 적절한 것은?<br>"후속열차가 선행열차와 충돌하지 않도록 제동거리 등을 반영해 확보하는 거리 또는 시간 여유이다."</div>
+    <div class="qm-choices">
+      <div class="qm-choice">① 안전간격</div>
+      <div class="qm-choice">② 고정폐색의 경계</div>
+      <div class="qm-choice">③ 제동거리</div>
+      <div class="qm-choice">④ 폐색구간</div>
+    </div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── §11 정답·해설 -->
+<div class="section answer-section">
+  <div class="section-title">§ 11. 정답 및 해설</div>
+
+  <div class="ans-box">
+    <div class="ans-num">Q1 · sig_076</div>
+    <div class="ans-answer">정답: ①번 — 폐색</div>
+    <div class="ans-exp">일정 구간에 동시에 2 이상의 열차를 운전시키지 않도록 그 구간을 하나의 열차 운전에 점용시키는 운전보안 개념이 폐색(Block)의 정의다.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-num">Q2 · sig_077</div>
+    <div class="ans-answer">정답: ①번</div>
+    <div class="ans-exp">①이 폐색의 정의. ②는 선로용량, ③은 이동폐색, ④는 고정폐색의 경계에 대한 설명.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-num">Q3 · sig_078</div>
+    <div class="ans-answer">정답: ①번 — 폐색구간</div>
+    <div class="ans-exp">하나의 점유 단위로 관리되는 선로 구간 = 폐색구간(Block Section).</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-num">Q4 · sig_080</div>
+    <div class="ans-answer">정답: ③번 — 고정폐색</div>
+    <div class="ans-exp">미리 정한 고정된 구간으로 나누어 점유 여부에 따라 제어하는 방식 = 고정폐색(Fixed Block).</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-num">Q5 · sig_081</div>
+    <div class="ans-answer">정답: ①번</div>
+    <div class="ans-exp">①이 고정폐색의 정의. ②는 운전시격(Headway), ③은 CBTC, ④는 자동폐색식 설명.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-num">Q6 · sig_082</div>
+    <div class="ans-answer">정답: ③번 — 이동폐색</div>
+    <div class="ans-exp">선행열차의 실제 위치·속도·제동성능을 반영해 안전한계가 열차와 함께 이동 = 이동폐색(Moving Block).</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-num">Q7 · sig_084</div>
+    <div class="ans-answer">정답: ④번 — 자동폐색</div>
+    <div class="ans-exp">열차 점유검지에 따라 폐색신호가 자동으로 제어 = 자동폐색식(Automatic Block System).</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-num">Q8 · sig_085</div>
+    <div class="ans-answer">정답: ②번</div>
+    <div class="ans-exp">②가 자동폐색의 정의. ①은 이동폐색의 필수 정보(실시간 위치·속도), ③은 KTCS-3, ④는 고정폐색의 경계 설명.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-num">Q9 · sig_083</div>
+    <div class="ans-answer">정답: ②번</div>
+    <div class="ans-exp">②가 이동폐색의 정의. ①은 이동폐색의 필수 정보(실시간 위치·속도)로 이동폐색을 <em>구현하기 위해 필요한 것</em>이고, 이동폐색 자체의 정의는 ②가 더 직접적.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-num">Q10 · sig_086</div>
+    <div class="ans-answer">정답: ①번 — 안전간격</div>
+    <div class="ans-exp">후속열차가 선행열차와 충돌하지 않도록 제동거리 등을 반영해 확보하는 거리 또는 시간 여유 = 안전간격.</div>
+  </div>
+</div>
+
+<!-- 메타 박스 -->
+<div class="meta-box">
+  <strong>§4 상용폐색 출처</strong>: 「철도차량운전규칙」 제50조 — 자동·연동·차내신호·통표. 「도시철도운전규칙」 제52조 — 자동·차내신호. 두 체계는 분리 병기.<br>
+  <strong>§5 대용폐색 출처</strong>: 「철도차량운전규칙」 제50조 — 통신·지도통신·지도·지령. 「도시철도운전규칙」 제55조 — 복선: 지령·통신 / 단선: 지도통신.<br>
+  <strong>§6 자동폐색 근거</strong>: 4.html 개념 79 (폐색방식 5종) + 개념 95 (궤도회로 열차검지) + GATE5_폐색_VERIFY결과_및_VIS사양_v3.md (VIS-NEW-07A 사양 확정).<br>
+  <strong>§7 연동폐색식</strong>: 「철도차량운전규칙」 제50조·제52조·제53조 기준으로 보정. 상용폐색방식 중 하나이며, 단선구간에는 반대방향 신호 정지 조건이 추가됨. 도시철도운전규칙의 상용폐색 분류에는 미포함.<br>
+  <strong>기출문제</strong>: sig_076·077·078·080·081·082·083·084·085·086 (신호 기출 DB Part 4, S/A+ 등급). 상용/대용폐색 분류 체계 기출 미확인 (4.html 미수록).<br>
+  <strong>이미지 위치</strong>: VIS-09A(시간간격법 vs 공간간격법 → 폐색 기본원리) → §2 삽입 완료. VIS-07A·VIS-07C는 CROSS-REF용이며 현 파일에서는 기존 placeholder 유지.
+</div>
+
+</div><!-- /container -->
+</body>
+</html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GATE5 철도공학 — 철도교통안전관리자</title>
+<style>
+/* ===== 기본 리셋 ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #f0f2f5; color: #1a1a2e; }
+
+/* ===== 레이아웃 ===== */
+#app { display: flex; flex-direction: column; height: 100vh; }
+
+/* ── 상단 헤더 ── */
+#header {
+  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  color: #fff;
+  padding: 0 20px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+#header .breadcrumb {
+  font-size: 13px;
+  opacity: 0.8;
+  letter-spacing: 0.5px;
+}
+#header .title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+#header .header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── 메인 콘텐츠 영역 ── */
+#main { display: flex; flex: 1; overflow: hidden; }
+
+/* ── 왼쪽 사이드바 ── */
+#sidebar {
+  width: 280px;
+  min-width: 220px;
+  max-width: 340px;
+  background: #fff;
+  border-right: 1px solid #e0e4ef;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.06);
+}
+
+/* ── 사이드바 상단 ── */
+#sidebar-header {
+  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  color: #fff;
+  padding: 14px 16px 12px;
+  flex-shrink: 0;
+}
+#sidebar-header .sys-name {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+#progress-bar-wrap {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+  height: 6px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+#progress-bar { height: 100%; background: #64b5f6; border-radius: 4px; transition: width 0.3s; }
+#progress-text { font-size: 11px; opacity: 0.9; }
+
+/* 통합 인쇄 버튼 */
+#btn-print-all {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 7px 0;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  letter-spacing: 0.3px;
+  transition: background 0.2s;
+  text-decoration: none;
+}
+#btn-print-all:hover { background: rgba(255,255,255,0.28); }
+
+/* ── 목차 스크롤 영역 ── */
+#toc-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+#toc-scroll::-webkit-scrollbar { width: 4px; }
+#toc-scroll::-webkit-scrollbar-thumb { background: #c5cae9; border-radius: 2px; }
+
+/* ── PART 그룹 ── */
+.part-group { border-bottom: 1px solid #f0f2f5; }
+.part-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 14px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 12px;
+  font-weight: 700;
+  color: #37474f;
+  background: #f8f9fe;
+  border-left: 3px solid transparent;
+  transition: background 0.15s;
+}
+.part-header:hover { background: #eef0fb; }
+.part-header.open { border-left-color: #3949ab; color: #283593; }
+.part-header .part-arrow { font-size: 10px; color: #90a4ae; transition: transform 0.2s; }
+.part-header.open .part-arrow { transform: rotate(180deg); }
+.part-header .part-count { font-size: 10px; color: #90a4ae; margin-left: 4px; font-weight: 400; }
+
+/* ── UNIT 목록 ── */
+.unit-list { display: none; }
+.unit-list.open { display: block; }
+
+.unit-item {
+  display: flex;
+  align-items: center;
+  padding: 7px 14px 7px 20px;
+  cursor: default;
+  font-size: 12px;
+  color: #90a4ae;
+  transition: background 0.12s;
+  border-left: 3px solid transparent;
+}
+.unit-item.published {
+  color: #37474f;
+  cursor: pointer;
+}
+.unit-item.published:hover { background: #eef0fb; color: #283593; }
+.unit-item.active {
+  background: #e8eaf6 !important;
+  border-left-color: #3f51b5 !important;
+  color: #283593 !important;
+  font-weight: 600;
+}
+.unit-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  margin-right: 8px;
+  flex-shrink: 0;
+  background: #cfd8dc;
+}
+.unit-item.published .unit-dot { background: #42a5f5; }
+.unit-item.active .unit-dot { background: #3f51b5; }
+.unit-label { line-height: 1.3; }
+
+/* ── 오른쪽 뷰어 ── */
+#viewer-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #f0f2f5;
+}
+#viewer-bar {
+  background: #fff;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e0e4ef;
+  flex-shrink: 0;
+  min-height: 40px;
+}
+#viewer-bar .current-unit-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #283593;
+}
+#viewer-bar .viewer-hint {
+  font-size: 11px;
+  color: #90a4ae;
+}
+#unit-iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: #fff;
+}
+
+/* ── 시작 화면 ── */
+#welcome-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #546e7a;
+  text-align: center;
+  gap: 16px;
+  padding: 40px;
+}
+#welcome-screen .welcome-icon { font-size: 56px; }
+#welcome-screen h2 { font-size: 22px; font-weight: 700; color: #283593; }
+#welcome-screen p { font-size: 14px; line-height: 1.6; max-width: 400px; }
+#welcome-screen .published-list {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+#welcome-screen .pub-chip {
+  background: #e8eaf6;
+  color: #3f51b5;
+  border: 1px solid #c5cae9;
+  border-radius: 14px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+#welcome-screen .pub-chip:hover { background: #c5cae9; }
+
+/* ── 모바일 토글 ── */
+#mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 768px) {
+  #mobile-menu-btn { display: block; }
+  #sidebar {
+    position: fixed;
+    top: 52px;
+    left: 0;
+    bottom: 0;
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    box-shadow: 4px 0 16px rgba(0,0,0,0.2);
+  }
+  #sidebar.open { transform: translateX(0); }
+  #overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    top: 52px;
+    background: rgba(0,0,0,0.35);
+    z-index: 150;
+  }
+  #overlay.active { display: block; }
+}
+
+/* ── 준비중 뱃지 ── */
+.pending-badge {
+  font-size: 10px;
+  color: #bdbdbd;
+  margin-left: 4px;
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- 헤더 -->
+  <div id="header">
+    <div>
+      <button id="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+      <span class="breadcrumb">철도교통안전관리자 &rsaquo; 철도공학</span>
+    </div>
+    <div class="title">GATE5 철도공학</div>
+    <div class="header-right">
+      <span style="font-size:12px;opacity:0.7;">New System</span>
+    </div>
+  </div>
+
+  <!-- 오버레이 (모바일) -->
+  <div id="overlay" onclick="closeMobileMenu()"></div>
+
+  <!-- 메인 -->
+  <div id="main">
+
+    <!-- 사이드바 -->
+    <div id="sidebar">
+      <div id="sidebar-header">
+        <div class="sys-name">🚆 GATE5 철도공학</div>
+        <div id="progress-bar-wrap">
+          <div id="progress-bar" style="width:0%"></div>
+        </div>
+        <div id="progress-text">완료 0 / 75 UNIT</div>
+        <a id="btn-print-all" href="GATE5_PRINT_ALL_v1.1.html" target="_blank">
+          🖨 통합 인쇄 / PDF
+        </a>
+      </div>
+      <div id="toc-scroll">
+        <!-- JS로 생성 -->
+      </div>
+    </div>
+
+    <!-- 뷰어 -->
+    <div id="viewer-wrap">
+      <div id="viewer-bar">
+        <span class="current-unit-label" id="current-label">UNIT을 선택하세요</span>
+        <span class="viewer-hint" id="viewer-hint">왼쪽 목차에서 학습할 UNIT을 선택하세요</span>
+      </div>
+      <!-- 시작 화면 -->
+      <div id="welcome-screen">
+        <div class="welcome-icon">📚</div>
+        <h2>GATE5 철도공학</h2>
+        <p>왼쪽 목차에서 학습할 UNIT을 선택하세요.<br>현재 <strong id="pub-count-inline">7</strong>개 UNIT이 학습 가능합니다.</p>
+        <div class="published-list" id="quick-links"></div>
+      </div>
+      <!-- iframe -->
+      <iframe id="unit-iframe" style="display:none;" title="UNIT 학습 콘텐츠"></iframe>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   UNIT REGISTRY — 향후 FINAL 판정 즉시 status: 'published' 변경
+   ============================================================ */
+const UNITS = [
+  // PART 01 철도일반
+  { id:'01-01', part:'01', title:'철도 특성·역할',        status:'pending' },
+  { id:'01-02', part:'01', title:'철도 법제·분류',        status:'pending' },
+  { id:'01-03', part:'01', title:'철도 역사',             status:'pending' },
+  { id:'01-04', part:'01', title:'철도 계획·수요예측',    status:'pending' },
+  { id:'01-05', part:'01', title:'교통투자·경제성',       status:'pending' },
+  { id:'01-06', part:'01', title:'RAMS·안전관리',         status:'pending' },
+  // PART 02 선로계획·설계
+  { id:'02-01', part:'02', title:'선로 계획·기준',        status:'pending' },
+  { id:'02-02', part:'02', title:'건축한계·차량한계',     status:'pending' },
+  { id:'02-03', part:'02', title:'선로용량·포화도',       status:'pending' },
+  { id:'02-04', part:'02', title:'복선화',                status:'pending' },
+  { id:'02-05', part:'02', title:'정거장·선로설비 개요',  status:'pending' },
+  // PART 03 선로기하구조
+  { id:'03-01', part:'03', title:'곡선·완화곡선',         status:'pending' },
+  { id:'03-02', part:'03', title:'캔트·슬랙',             status:'pending' },
+  { id:'03-03', part:'03', title:'구배·하중·선로저항',    status:'pending' },
+  // PART 04 선로구조물·노반
+  { id:'04-01', part:'04', title:'교량',                  status:'pending' },
+  { id:'04-02', part:'04', title:'터널',                  status:'pending' },
+  { id:'04-03', part:'04', title:'노반',                  status:'pending' },
+  { id:'04-04', part:'04', title:'선로안전설비',          status:'pending' },
+  // PART 05 궤도구조
+  { id:'05-01', part:'05', title:'레일',                  status:'pending' },
+  { id:'05-02', part:'05', title:'레일이음매·장대레일',   status:'pending' },
+  { id:'05-03', part:'05', title:'침목',                  status:'pending' },
+  { id:'05-04', part:'05', title:'도상',                  status:'pending' },
+  { id:'05-05', part:'05', title:'분기기',                status:'pending' },
+  { id:'05-06', part:'05', title:'선로검사·보수',         status:'pending' },
+  // PART 06 선로설비·정거장
+  { id:'06-01', part:'06', title:'정거장 형식·설비',      status:'pending' },
+  { id:'06-02', part:'06', title:'건널목·보안설비',       status:'pending' },
+  // PART 07 신호
+  { id:'07-01', part:'07', title:'신호기 분류·현시·색상', status:'published', file:'unit-07-01_FINAL_PUBLISH_v1.2.html', version:'v1.2' },
+  { id:'07-02', part:'07', title:'신호기 부속·임시신호기',status:'pending' },
+  { id:'07-03', part:'07', title:'선로전환기',            status:'pending' },
+  { id:'07-04', part:'07', title:'건널목 신호·보안',      status:'pending' },
+  { id:'07-05', part:'07', title:'폐색방식 종류',         status:'pending' },
+  { id:'07-06', part:'07', title:'기본 궤도회로',         status:'published', file:'unit-07-06_FINAL_PUBLISH_v1.6.html', version:'v1.6' },
+  { id:'07-07', part:'07', title:'무절연 AF궤도회로',     status:'published', file:'unit-07-07_FINAL_PUBLISH_v1.1.html', version:'v1.1' },
+  { id:'07-08', part:'07', title:'연동장치·쇄정',         status:'published', file:'unit-07-08_FINAL_PUBLISH_v1.2.html', version:'v1.2' },
+  { id:'07-09', part:'07', title:'폐색 시스템',           status:'published', file:'unit-07-09_FINAL_PUBLISH_v1.1.html', version:'v1.1' },
+  { id:'07-10', part:'07', title:'Fail-Safe 원리',        status:'published', file:'unit-07-10_FINAL_PUBLISH_v1.1.html', version:'v1.1' },
+  // PART 08 열차제어·통신
+  { id:'08-01', part:'08', title:'ATS·ATP·ATC·ATO',       status:'published', file:'unit-08-01_FINAL_PUBLISH_v1.5.html', version:'v1.5' },
+  { id:'08-02', part:'08', title:'TTC·운전보안장치',       status:'pending' },
+  { id:'08-03', part:'08', title:'CBTC·이동폐색',         status:'pending' },
+  { id:'08-04', part:'08', title:'열차운전이론',           status:'pending' },
+  { id:'08-05', part:'08', title:'열차운행 안전',          status:'pending' },
+  { id:'08-06', part:'08', title:'열차통신·LTE-R',         status:'pending' },
+  { id:'08-07', part:'08', title:'CTC·TMS',               status:'pending' },
+  // PART 09 전기철도·전력공급
+  { id:'09-01', part:'09', title:'전력방식·급전계통',      status:'pending' },
+  { id:'09-02', part:'09', title:'변전소·급전방식',        status:'pending' },
+  { id:'09-03', part:'09', title:'전기철도 특성',          status:'pending' },
+  { id:'09-04', part:'09', title:'귀선·임피던스본드',      status:'pending' },
+  { id:'09-05', part:'09', title:'절연구간·통과방법',      status:'pending' },
+  { id:'09-06', part:'09', title:'급전선·전차선 전반',     status:'pending' },
+  // PART 10 전차선로·가선·집전
+  { id:'10-01', part:'10', title:'전차선로 구조·설치기준', status:'pending' },
+  { id:'10-02', part:'10', title:'전차선 높이·지지물',     status:'pending' },
+  { id:'10-03', part:'10', title:'구분장치',               status:'pending' },
+  { id:'10-04', part:'10', title:'가선방식·부속설비',      status:'pending' },
+  { id:'10-05', part:'10', title:'가선방식 비교·장단점',   status:'pending' },
+  { id:'10-06', part:'10', title:'집전장치·팬터그래프',    status:'pending' },
+  { id:'10-07', part:'10', title:'ATD·이선현상',           status:'pending' },
+  { id:'10-08', part:'10', title:'전차선 마모·점검',       status:'pending' },
+  { id:'10-09', part:'10', title:'전차선 고장·사고',       status:'pending' },
+  // PART 11 차량 총론
+  { id:'11-01', part:'11', title:'차량 분류·동력방식',     status:'pending' },
+  { id:'11-02', part:'11', title:'추진·전동기',            status:'pending' },
+  { id:'11-03', part:'11', title:'집전·전기회로',          status:'pending' },
+  { id:'11-04', part:'11', title:'차량 총론 보완',         status:'pending' },
+  { id:'11-05', part:'11', title:'점착·공전·활주',         status:'pending' },
+  // PART 12 열차성능
+  { id:'12-01', part:'12', title:'열차저항 4종',           status:'pending' },
+  { id:'12-02', part:'12', title:'견인정수·견인력',        status:'pending' },
+  { id:'12-03', part:'12', title:'주행저항·가속도',        status:'pending' },
+  { id:'12-04', part:'12', title:'제동방식·공기제동',      status:'pending' },
+  { id:'12-05', part:'12', title:'비상제동·제동거리',      status:'pending' },
+  // PART 13 차량구조
+  { id:'13-01', part:'13', title:'차체·차체구조',          status:'pending' },
+  { id:'13-02', part:'13', title:'대차·윤축',              status:'pending' },
+  { id:'13-03', part:'13', title:'현가장치',               status:'pending' },
+  { id:'13-04', part:'13', title:'연결기·완충기',          status:'pending' },
+  { id:'13-05', part:'13', title:'진동·사행동·탈선',       status:'pending' },
+  // PART 14 특수차량
+  { id:'14-01', part:'14', title:'경량전철·고무차륜',      status:'pending' },
+  { id:'14-02', part:'14', title:'특수차량·부속설비',      status:'pending' },
+];
+
+/* PART 메타 */
+const PART_META = {
+  '01': 'PART 01 · 철도일반',
+  '02': 'PART 02 · 선로계획·설계',
+  '03': 'PART 03 · 선로기하구조',
+  '04': 'PART 04 · 선로구조물·노반',
+  '05': 'PART 05 · 궤도구조',
+  '06': 'PART 06 · 선로설비·정거장',
+  '07': 'PART 07 · 신호',
+  '08': 'PART 08 · 열차제어·통신',
+  '09': 'PART 09 · 전기철도·전력공급',
+  '10': 'PART 10 · 전차선로·가선·집전',
+  '11': 'PART 11 · 차량 총론',
+  '12': 'PART 12 · 열차성능',
+  '13': 'PART 13 · 차량구조',
+  '14': 'PART 14 · 특수차량',
+};
+
+/* ============================================================
+   진행률 계산
+   ============================================================ */
+const TOTAL = UNITS.length;
+const PUBLISHED = UNITS.filter(u => u.status === 'published');
+const PUB_COUNT = PUBLISHED.length;
+const PCT = Math.round(PUB_COUNT / TOTAL * 10) / 10;
+
+/* ============================================================
+   목차 렌더링
+   ============================================================ */
+function buildTOC() {
+  const toc = document.getElementById('toc-scroll');
+  // PART별 그루핑
+  const parts = {};
+  UNITS.forEach(u => {
+    if (!parts[u.part]) parts[u.part] = [];
+    parts[u.part].push(u);
+  });
+
+  Object.keys(parts).sort().forEach(partKey => {
+    const list = parts[partKey];
+    const partName = PART_META[partKey] || ('PART ' + partKey);
+    const pubInPart = list.filter(u => u.status === 'published').length;
+
+    const grp = document.createElement('div');
+    grp.className = 'part-group';
+    grp.id = 'part-' + partKey;
+
+    const hdr = document.createElement('div');
+    hdr.className = 'part-header';
+    hdr.innerHTML = `<span>${partName}</span><span><span class="part-count">${pubInPart > 0 ? '●'.repeat(Math.min(pubInPart,3)) + ' ' : ''}${list.length}개</span><span class="part-arrow">▼</span></span>`;
+    hdr.onclick = () => togglePart(partKey);
+
+    const ul = document.createElement('div');
+    ul.className = 'unit-list';
+    ul.id = 'ul-' + partKey;
+
+    list.forEach(u => {
+      const li = document.createElement('div');
+      li.className = 'unit-item' + (u.status === 'published' ? ' published' : '');
+      li.id = 'unit-item-' + u.id;
+      li.dataset.id = u.id;
+      if (u.status === 'published') {
+        li.onclick = () => loadUnit(u.id);
+      }
+      li.innerHTML = `<span class="unit-dot"></span><span class="unit-label">${u.id} ${u.title}${u.status !== 'published' ? '<span class="pending-badge">준비중</span>' : ''}</span>`;
+      ul.appendChild(li);
+    });
+
+    grp.appendChild(hdr);
+    grp.appendChild(ul);
+    toc.appendChild(grp);
+  });
+}
+
+function togglePart(partKey) {
+  const hdr = document.querySelector('#part-' + partKey + ' .part-header');
+  const ul = document.getElementById('ul-' + partKey);
+  const isOpen = ul.classList.contains('open');
+  hdr.classList.toggle('open', !isOpen);
+  ul.classList.toggle('open', !isOpen);
+}
+
+function openPart(partKey) {
+  const hdr = document.querySelector('#part-' + partKey + ' .part-header');
+  const ul = document.getElementById('ul-' + partKey);
+  if (hdr) hdr.classList.add('open');
+  if (ul) ul.classList.add('open');
+}
+
+/* ============================================================
+   UNIT 로드
+   ============================================================ */
+let activeUnitId = null;
+
+function loadUnit(unitId) {
+  const unit = UNITS.find(u => u.id === unitId);
+  if (!unit || unit.status !== 'published') return;
+
+  // URL 상태 반영
+  const url = new URL(window.location.href);
+  url.searchParams.set('unit', unitId);
+  window.history.pushState({ unitId }, '', url.toString());
+
+  activateUnit(unitId, unit);
+}
+
+function activateUnit(unitId, unit) {
+  if (!unit) unit = UNITS.find(u => u.id === unitId);
+  if (!unit || unit.status !== 'published') return;
+
+  // 이전 active 해제
+  if (activeUnitId) {
+    const prev = document.getElementById('unit-item-' + activeUnitId);
+    if (prev) prev.classList.remove('active');
+  }
+  activeUnitId = unitId;
+
+  // 현재 active
+  const el = document.getElementById('unit-item-' + unitId);
+  if (el) el.classList.add('active');
+
+  // PART 펼치기
+  openPart(unit.part);
+
+  // active 항목 스크롤 노출
+  setTimeout(() => {
+    if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }, 100);
+
+  // viewer bar 업데이트
+  document.getElementById('current-label').textContent = unit.id + ' ' + unit.title + (unit.version ? '  (' + unit.version + ')' : '');
+  document.getElementById('viewer-hint').textContent = '📖 학습 중';
+
+  // 시작화면 숨기고 iframe 표시
+  document.getElementById('welcome-screen').style.display = 'none';
+  const iframe = document.getElementById('unit-iframe');
+  iframe.style.display = 'block';
+  iframe.src = unit.file;
+
+  // 모바일: 목차 닫기
+  closeMobileMenu();
+}
+
+/* ============================================================
+   URL 파라미터 처리
+   ============================================================ */
+function loadFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const unitId = params.get('unit');
+  if (unitId) {
+    const unit = UNITS.find(u => u.id === unitId);
+    if (unit && unit.status === 'published') {
+      activateUnit(unitId, unit);
+      return;
+    }
+    // pending or not found: 기본 화면 + 해당 PART 펼치기
+    if (unit) openPart(unit.part);
+  }
+  // 기본: PART 07 펼치기 (published UNIT 있는 첫 PART)
+  openPart('07');
+}
+
+/* ============================================================
+   진행률 렌더링
+   ============================================================ */
+function renderProgress() {
+  document.getElementById('progress-bar').style.width = PCT + '%';
+  document.getElementById('progress-text').textContent = `완료 ${PUB_COUNT} / ${TOTAL} UNIT  (${PCT}%)`;
+  document.getElementById('pub-count-inline').textContent = PUB_COUNT;
+
+  // 빠른 접근 링크
+  const ql = document.getElementById('quick-links');
+  PUBLISHED.forEach(u => {
+    const chip = document.createElement('span');
+    chip.className = 'pub-chip';
+    chip.textContent = u.id + ' ' + u.title;
+    chip.onclick = () => loadUnit(u.id);
+    ql.appendChild(chip);
+  });
+}
+
+/* ============================================================
+   모바일 메뉴
+   ============================================================ */
+function toggleMobileMenu() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('active');
+}
+function closeMobileMenu() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('active');
+}
+
+/* ============================================================
+   popstate (뒤로/앞으로 버튼)
+   ============================================================ */
+window.addEventListener('popstate', (e) => {
+  if (e.state && e.state.unitId) {
+    const unit = UNITS.find(u => u.id === e.state.unitId);
+    activateUnit(e.state.unitId, unit);
+  } else {
+    // 시작화면으로
+    document.getElementById('welcome-screen').style.display = '';
+    document.getElementById('unit-iframe').style.display = 'none';
+    document.getElementById('unit-iframe').src = 'about:blank';
+    document.getElementById('current-label').textContent = 'UNIT을 선택하세요';
+    document.getElementById('viewer-hint').textContent = '왼쪽 목차에서 학습할 UNIT을 선택하세요';
+    if (activeUnitId) {
+      const prev = document.getElementById('unit-item-' + activeUnitId);
+      if (prev) prev.classList.remove('active');
+      activeUnitId = null;
+    }
+  }
+});
+
+/* ============================================================
+   초기화
+   ============================================================ */
+buildTOC();
+renderProgress();
+loadFromURL();
+</script>
+</body>
+</html>

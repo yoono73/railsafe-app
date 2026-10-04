@@ -1,0 +1,141 @@
+/*
+ * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ *  GATE5 PRINT LOCK v1
+ *  A4 Portrait / Ring Binding
+ *  Top 12mm / Right 12mm / Bottom 12mm / Left 18mm
+ *  LOCK DATE: 2026-10-04
+ * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ *
+ *  용도: 08-02 이후 신규 UNIT HTML의 PRINT CSS 기준 템플릿
+ *  사용법: 신규 UNIT 제작 시 아래 블록을 @media print { } 안에
+ *          그대로 붙여넣고 UNIT별 특수 규칙만 추가한다.
+ *
+ *  ※ 현재 검증된 6개 UNIT(07-06 ~ 07-10, 08-01)은
+ *     이 외부 CSS를 참조하지 않고 HTML 내부 PRINT CSS를 유지한다.
+ *     신규 UNIT 제작 후에도 HTML 내부 값과 이 파일의 값이
+ *     일치하는지 반드시 검수한다.
+ * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ */
+
+@media print {
+
+  /* ── 1. 페이지 규격 ── */
+  @page {
+    size: A4 portrait;
+    margin: 12mm 12mm 12mm 18mm;
+    /* 좌측 18mm = 링제본 여백 */
+  }
+
+  /* ── 2. 기본 배경·색상 ── */
+  body {
+    font-size: 12pt;
+    line-height: 1.6;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  /* ── 3. 인쇄 불필요 요소 숨김 ── */
+  .print-btn,
+  .no-print,
+  .site-nav,
+  .nav-bar,
+  .sidebar,
+  button[onclick],
+  /* 영상 플레이어 */
+  iframe,
+  .yt-player-frame,
+  .krri-yt-card .yt-thumb,
+  .krri-yt-card .yt-player-frame,
+  video {
+    display: none !important;
+  }
+
+  /* ── 4. 이미지 · VIS ── */
+  img,
+  .vis-wrap img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .vis-wrap {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ── 5. 표(Table) ── */
+  table {
+    width: 100%;
+    max-width: 100%;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  th {
+    background: #e8e8e8 !important;
+    color: #000 !important;
+    border: 1.5px solid #999 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  td {
+    border: 1.5px solid #bbb !important;
+    background: #fff !important;
+  }
+
+  /* ── 6. 문제 섹션 (페이지 중간 잘림 방지) ── */
+  .quiz-mc {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .qst-box {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ── 7. 카드·박스 계열 ── */
+  .sys-card,
+  .content-box {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ── 8. tip · trap · 이론노트 ── */
+  .trap,
+  .tip,
+  .theory-note,
+  .quiz-ex {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ── 9. 정답·해설 섹션 — 항상 새 페이지 시작 ── */
+  .answer-section {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  /* ── 10. 링크 ── */
+  a {
+    color: #000 !important;
+    text-decoration: none;
+  }
+
+}
+
+/*
+ * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ *  신규 UNIT HTML 내부 PRINT 블록 최소 붙여넣기 템플릿
+ *  (이 파일을 <link>로 참조할 경우 아래 @page만 내부에 선언)
+ *  ──────────────────────────────────────────────
+ *  @media print {
+ *    @page {
+ *      size: A4 portrait;
+ *      margin: 12mm 12mm 12mm 18mm;
+ *    }
+ *    /* GATE5 PRINT LOCK v1 — 규칙은 GATE5_PRINT_LOCK_v1.css 참조 */
+ *    /* UNIT별 특수 규칙만 이 아래에 추가 */
+ *  }
+ * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ */

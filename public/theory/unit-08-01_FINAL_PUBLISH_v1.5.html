@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08-01 ATS · ATP · ATC · ATO 열차제어 시스템</title>
+<style>
+  /* ===== 기본 리셋 ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ===== 페이지 래퍼 ===== */
+  .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+
+  /* ===== 상단 헤더 ===== */
+  .unit-header {
+    border-bottom: 2px solid #1e3a5f;
+    padding-bottom: 14px;
+    margin-bottom: 28px;
+  }
+  .unit-num {
+    font-size: 12px;
+    color: #1e3a5f;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .unit-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 4px 0 6px;
+  }
+  .unit-sub {
+    font-size: 13px;
+    color: #555;
+  }
+  .badge-row {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 3px;
+    border: 1px solid;
+  }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-lock { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+
+  /* ===== 섹션 제목 ===== */
+  .sec-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1e3a5f;
+    border-left: 4px solid #1e3a5f;
+    padding-left: 10px;
+    margin: 32px 0 14px;
+  }
+  .sec-sub {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 20px 0 8px;
+    padding: 4px 10px;
+    background: #f5f7fa;
+    border-left: 3px solid #64748b;
+  }
+
+  /* ===== 선행용어 카드 ===== */
+  .term-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .term-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 12px 14px;
+    background: #fff;
+  }
+  .term-name {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1e3a5f;
+    margin-bottom: 4px;
+  }
+  .term-desc {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.6;
+  }
+  .term-why {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  /* ===== 본문 박스 ===== */
+  .content-box {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 16px 18px;
+    background: #fff;
+    margin-bottom: 14px;
+  }
+  .content-box p {
+    margin-bottom: 8px;
+  }
+  .content-box p:last-child { margin-bottom: 0; }
+
+  /* ===== 기능관계도 (§1 개정 버전) ===== */
+  .func-map {
+    border: 1.5px solid #1e3a5f;
+    border-radius: 6px;
+    padding: 18px 20px;
+    background: #f8fafc;
+    margin-bottom: 14px;
+  }
+  .func-map-lead {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1e3a5f;
+    text-align: center;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #cbd5e1;
+  }
+  .func-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 600px) {
+    .func-cols { grid-template-columns: 1fr; }
+  }
+  .func-block {
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+  .func-block-safe {
+    border: 1.5px solid #2563eb;
+    background: #eff6ff;
+  }
+  .func-block-op {
+    border: 1.5px solid #92400e;
+    background: #fffbeb;
+  }
+  .func-block-title {
+    font-weight: 800;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .func-block-safe .func-block-title { color: #1d4ed8; }
+  .func-block-op .func-block-title { color: #92400e; }
+  .func-block ul {
+    padding-left: 16px;
+    margin: 0;
+  }
+  .func-block li {
+    margin-bottom: 5px;
+    line-height: 1.55;
+  }
+  .func-note {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed #cbd5e1;
+    text-align: center;
+  }
+
+  /* ===== 시스템별 상세 박스 ===== */
+  .sys-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .sys-header {
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sys-header .abbr {
+    font-size: 18px;
+    font-weight: 900;
+  }
+  .sys-header .fullname {
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.85;
+  }
+  .sys-body {
+    padding: 14px 16px;
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+  .sys-body ul { padding-left: 18px; margin: 4px 0; }
+  .sys-body li { margin-bottom: 4px; }
+  .sys-body strong { color: #1a1a1a; }
+
+  /* 색상 테마 */
+  .sys-ats .sys-header { background: #eff6ff; color: #1d4ed8; border-bottom: 1px solid #bfdbfe; }
+  .sys-atp .sys-header { background: #f5f3ff; color: #6d28d9; border-bottom: 1px solid #ddd6fe; }
+  .sys-atc .sys-header { background: #f0fdfa; color: #0f766e; border-bottom: 1px solid #99f6e4; }
+  .sys-ato .sys-header { background: #fffbeb; color: #92400e; border-bottom: 1px solid #fde68a; }
+
+  /* ===== 표 ===== */
+  .tbl-wrap {
+    overflow-x: auto;
+    margin: 12px 0;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: #fff;
+  }
+  th {
+    background: #1e3a5f;
+    color: #fff;
+    font-weight: 700;
+    padding: 9px 12px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .td-center { text-align: center; }
+  .td-key { font-weight: 700; color: #1e3a5f; white-space: nowrap; }
+  .yes { color: #059669; font-weight: 700; }
+  .cond { color: #d97706; font-weight: 700; }
+  .no { color: #dc2626; font-weight: 700; }
+
+  /* ===== CROSS-REF 박스 ===== */
+  .cross-ref {
+    border: 1.5px solid #0ea5e9;
+    border-radius: 6px;
+    padding: 12px 16px;
+    background: #f0f9ff;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .cross-ref-title {
+    font-weight: 800;
+    color: #0369a1;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .cross-ref ul { padding-left: 18px; margin: 0; }
+  .cross-ref li { margin-bottom: 3px; }
+
+  /* ===== VERIFY 박스 ===== */
+  .verify-box {
+    border: 1.5px solid #f59e0b;
+    border-radius: 6px;
+    padding: 10px 14px;
+    background: #fffbeb;
+    margin: 10px 0;
+    font-size: 13px;
+  }
+  .verify-title {
+    font-weight: 800;
+    color: #92400e;
+    margin-bottom: 4px;
+  }
+
+  /* ===== 시험포인트 ===== */
+  .exam-section {
+    margin-top: 12px;
+  }
+  .exam-item {
+    padding: 10px 14px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    border: 1.5px solid;
+  }
+  .exam-key {
+    border-color: #1e3a5f;
+    background: #f0f4f8;
+    color: #1a1a1a;
+  }
+  .exam-trap {
+    border-color: #dc2626;
+    background: #fef2f2;
+    color: #1a1a1a;
+  }
+  .exam-item strong { display: block; margin-bottom: 3px; }
+
+  /* ===== 문제 영역 ===== */
+  .qst-box {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    background: #fff;
+  }
+  .qst-meta {
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 6px;
+  }
+  .qst-num {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1e3a5f;
+    margin-bottom: 8px;
+  }
+  .qst-q {
+    font-size: 14px;
+    color: #1a1a1a;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .choice-list {
+    list-style: none;
+    padding: 0;
+  }
+  .choice-list li {
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    margin-bottom: 5px;
+    border: 1px solid #e2e8f0;
+    line-height: 1.6;
+    background: #fff;
+  }
+  .choice-list li:hover { background: #f8fafc; }
+
+  /* ===== 정답 해설 ===== */
+  .ans-box {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    background: #f8fafc;
+  }
+  .ans-header {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1e3a5f;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .ans-num { font-size: 13px; font-weight: 700; color: #1e3a5f; }
+  .ans-answer {
+    display: inline-block;
+    background: #1e3a5f;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 2px 9px;
+    border-radius: 3px;
+  }
+  .ans-exp {
+    font-size: 13.5px;
+    color: #1a1a1a;
+    line-height: 1.7;
+  }
+  .ans-exp ul { padding-left: 18px; margin: 6px 0; }
+  .ans-exp li { margin-bottom: 4px; }
+
+  /* ===== VIS 이미지 ===== */
+  .vis-wrap {
+    margin: 14px 0;
+    text-align: center;
+  }
+  .vis-wrap img {
+    max-width: 100%;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 6px;
+  }
+  .vis-caption {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  /* ===== 영상 카드 ===== */
+  .krri-yt-card { margin: 10px 0 4px; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.07); }
+  .yt-thumb { position: relative; cursor: pointer; background: #000; }
+  .yt-thumb img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; opacity: .88; }
+  .yt-thumb .play-btn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .yt-thumb .play-btn div { width: 52px; height: 52px; background: rgba(220,38,38,.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,.4); }
+  .yt-meta { padding: 7px 12px; display: flex; align-items: center; gap: 8px; background: #f9fafb; }
+  .yt-badge-primary { background: #dc2626; color: #fff; font-size: 11px; padding: 2px 7px; border-radius: 3px; font-weight: 600; white-space: nowrap; }
+  .yt-title { font-size: 13px; color: #111; font-weight: 500; line-height: 1.3; }
+  .yt-player-frame { width:100%; aspect-ratio:16/9; border:0; display:block; background:#000; }
+
+  /* ===== 인쇄 ===== */
+  @media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm 12mm 12mm 18mm;
+  }
+    .page-wrap { padding: 10px; }
+    .sys-card, .qst-box, .content-box { break-inside: avoid; }
+    .krri-yt-card .yt-thumb, .krri-yt-card .yt-player-frame { display: none; }
+    .krri-yt-card { border: 1px solid #e2e8f0; padding: 4px 8px; background: #f8fafc; margin: 6px 0; box-shadow: none; }
+    .krri-yt-card .yt-meta { background: transparent; padding: 0; }
+    /* — GATE5 PRINT LOCK v1 추가규칙 — */
+  img, .vis-wrap img { max-width:100%; height:auto; }
+  table { width:100%; max-width:100%; }
+  .quiz-mc { break-inside:avoid; page-break-inside:avoid; }
+  .qst-box, .sys-card, .content-box { break-inside:avoid; page-break-inside:avoid; }
+  .answer-section { break-before:page; page-break-before:always; }
+  .print-btn { display:none !important; }
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- ===== 헤더 ===== -->
+  <header class="unit-header">
+    <div class="unit-num">UNIT 08-01 · PART 08 열차제어 시스템</div>
+    <h1 class="unit-title">ATS · ATP · ATC · ATO 열차제어 시스템</h1>
+    <div class="unit-sub">열차의 감시·보호·제어·자동운전 — 4가지 계통의 역할과 차이</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 08-01</span>
+      <span class="badge badge-grade">S~A+ 최빈출</span>
+      <span class="badge badge-lock">LOCAL LOCK</span>
+    </div>
+  </header>
+
+  <!-- ===== §0 선행 용어 ===== -->
+  <h2 class="sec-title">§0 · 선행 용어</h2>
+  <div class="term-grid">
+
+    <div class="term-card">
+      <div class="term-name">지상자 (Transponder)</div>
+      <div class="term-desc">선로 바닥에 매립된 정보 송신 장치. 열차가 지상자 위를 통과하면 지상 정보를 차상장치로 전달한다.</div>
+      <div class="term-why">→ ATS·ATP에서 지상→차상 정보 전달 경로 이해에 필요</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-name">차상장치 (On-board Device)</div>
+      <div class="term-desc">열차에 탑재된 신호·제어 장치 전반. 지상자 등에서 받은 정보를 해석하여 속도감시·제동을 수행한다.</div>
+      <div class="term-why">→ ATS·ATC·ATP 모두 차상장치가 핵심 역할</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-name">허용속도 (Permitted Speed)</div>
+      <div class="term-desc">현재 구간에서 열차가 넘어선 안 되는 속도 한계. 신호조건·선로조건·제동성능 등을 반영한다.</div>
+      <div class="term-why">→ ATC·ATP가 실제속도와 허용속도를 비교하는 기준</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-name">차내신호 (Cab Signal)</div>
+      <div class="term-desc">운전실 내부 표시기에 현시되는 신호. 지상 신호기 대신 운전실 속도·현시 정보를 직접 표시한다.</div>
+      <div class="term-why">→ ATC 시스템에서 속도코드를 차내신호로 표시</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-name">속도코드 (Speed Code)</div>
+      <div class="term-desc">궤도회로를 통해 열차 차상에 전달되는 허용속도 정보. 전통적인 궤도회로 기반 ATC 시스템에서 차내신호와 연동된다.</div>
+      <div class="term-why">→ 전통적 ATC의 핵심 정보 전달 수단</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-name">제동곡선 (Braking Curve)</div>
+      <div class="term-desc">열차가 특정 지점에서 정지하기 위해 감속을 시작해야 하는 속도-거리 관계 곡선.</div>
+      <div class="term-why">→ ATP·ATC의 과속 판단 및 자동제동 기준</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-name">안전방호·강제제동 (Safety Protection)</div>
+      <div class="term-desc">기관사 조작 없이 차상장치가 자동으로 제동을 강제 적용하는 동작. 속도 초과 또는 신호위반 시 발동. ATS·ATC·ATP의 핵심 보호 기능.</div>
+      <div class="term-why">→ ATO의 운전제동과 구분 필요 — ATO는 운전자동화, ATP 계열은 안전방호</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-name">운행권한 (Movement Authority, MA)</div>
+      <div class="term-desc">열차가 안전하게 진행할 수 있도록 지상 제어설비가 부여하는 진로 한계와 허용 범위.</div>
+      <div class="term-why">→ ATP·CBTC 등 현대 열차제어의 핵심 개념</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-name">정위치 정차 (Precise Stopping)</div>
+      <div class="term-desc">정거장에서 승강문 위치에 정확히 맞춰 정차하는 동작.</div>
+      <div class="term-why">→ ATO의 자동운전 기능 중 하나</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-name">열차방호 (Train Protection)</div>
+      <div class="term-desc">과속·신호모진 등 위험 상황에서 열차를 자동으로 정지 또는 감속시켜 사고를 방지하는 기능.</div>
+      <div class="term-why">→ ATP의 핵심 목적. ATO와 명확히 구분 필요</div>
+    </div>
+
+  </div>
+
+  <!-- ===== §1 열차제어시스템이 왜 필요한가 ===== -->
+  <h2 class="sec-title">§1 · 열차제어시스템이 왜 필요한가</h2>
+
+  <div class="content-box">
+    <p>열차는 <strong>레일 위를 고속으로 운행</strong>하며 정차에 긴 제동거리가 필요하다. 기관사가 모든 신호를 실시간으로 확인하고 정확한 속도를 유지하는 것에는 한계가 있다. 특히 속도가 높아질수록 다음과 같은 위험이 증가한다.</p>
+    <ul style="padding-left:18px; margin:8px 0;">
+      <li>정지신호를 인식했더라도 제동거리 부족으로 추월</li>
+      <li>허용속도를 초과한 상태에서 곡선 구간 진입</li>
+      <li>앞 열차와의 간격 미확보로 추돌</li>
+    </ul>
+    <p>이러한 위험을 <strong>자동으로 감시·보호·제어</strong>하기 위해 열차제어시스템이 필요하다. ATS·ATP·ATC·ATO는 각각의 역할이 있으며, 크게 <strong>안전·방호 계통</strong>과 <strong>운전자동화 계통</strong>으로 구분하여 이해하는 것이 핵심이다.</p>
+  </div>
+
+  <!-- §1 기능관계도 — 개정 버전 (직렬 흐름도 제거) -->
+  <div class="func-map">
+    <div class="func-map-lead">기관사에 의한 열차운전을 지원하는 두 계통</div>
+    <div class="func-cols">
+      <div class="func-block func-block-safe">
+        <div class="func-block-title">안전·방호 계통</div>
+        <ul>
+          <li><strong>ATS</strong> (열차자동정지장치)<br>위험·신호위반 시 자동정지 개입</li>
+          <li><strong>ATC</strong> (열차자동제어장치)<br>허용속도 연속 감시·제어</li>
+          <li><strong>ATP</strong> (자동열차방호장치)<br>운행권한·속도 감시 및 강제제동</li>
+        </ul>
+      </div>
+      <div class="func-block func-block-op">
+        <div class="func-block-title">운전자동화 계통</div>
+        <ul>
+          <li><strong>ATO</strong> (열차자동운전장치)<br>출발·가속·정속·감속·정위치 정차 자동화</li>
+          <li style="color:#92400e; font-size:12px; margin-top:8px;">※ ATO의 운전한계·속도 감시는 ATP·ATC 등 안전·방호 계통이 별도 담당</li>
+        </ul>
+      </div>
+    </div>
+    <div class="func-note">
+      위 구조는 기능 관계를 설명하기 위한 것이다.<br>
+      ATS·ATP·ATC·ATO가 반드시 순차적으로 신호를 처리한다는 의미가 아니다.
+    </div>
+  </div>
+
+  <div class="content-box" style="border-color:#f59e0b; background:#fffbeb;">
+    <strong style="color:#92400e;">⚠ 주의: 기능관계도 해석</strong>
+    <p style="margin-top:6px;">각 시스템은 세대·구성·철도 종류에 따라 다르게 구축된다. 특정 구성에서 ATS·ATC·ATP·ATO가 함께 적용될 수도 있고, 일부만 사용될 수도 있다. 각 시스템의 역할과 핵심 차이점을 구분하는 것이 시험의 핵심이다.</p>
+  </div>
+
+  <!-- ===== §2 ATS ===== -->
+  <h2 class="sec-title">§2 · ATS — 열차자동정지장치</h2>
+
+  <div class="sys-card sys-ats">
+    <div class="sys-header">
+      <span class="abbr">ATS</span>
+      <span class="fullname">Automatic Train Stop · 열차자동정지장치</span>
+    </div>
+    <div class="sys-body">
+      <div class="sec-sub" style="margin-top:0; margin-bottom:8px;">기본 원리</div>
+      <p><strong>운전자가 정지신호 등 안전조건을 위반할 때 자동으로 제동을 개입시키는 장치.</strong> 기관사가 신호를 확인하지 못하거나 조작이 늦어질 경우 차상장치가 자동으로 경보 및 제동을 적용한다.</p>
+
+      <div class="sec-sub">동작 과정</div>
+      <ul>
+        <li><strong>지상자 통과</strong> → 차상장치가 신호 정보 수신</li>
+        <li><strong>경보 발생</strong> → 기관사에게 정지신호 접근 경보</li>
+        <li>기관사가 <strong>일정 시간 내 응답하지 않으면</strong> 자동제동 적용</li>
+        <li>안전조건 위반 상태 지속 시 자동으로 열차 정지</li>
+      </ul>
+
+      <div class="sec-sub">시험 핵심</div>
+      <ul>
+        <li>ATS의 목적 = <strong>위험상황·신호위반 시 경보 및 자동정지</strong></li>
+        <li>전형적으로 <strong>지점제어(불연속 제어) 중심</strong> 방식 — 지상자 위치에서 정보 수신이 기본</li>
+        <li><strong>허용속도를 전 구간에서 연속적으로 감시·제어하지 않는다</strong> (ATC와 구분 핵심)</li>
+        <li>특정 ATS 구현 방식의 세부 특성을 ATS 전체로 일반화하지 않는다</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify-box">
+    <div class="verify-title">VERIFY</div>
+    ATS-S(점제어식), ATS-P(패턴식) 등 세부 분류는 보유 자료(signal-exam-data, 4.html, 6.html)에서 직접 시험문제로 출제된 것이 확인되지 않음. 임의로 시험범위로 확정하지 않음.
+  </div>
+
+  <!-- ===== §3 ATP ===== -->
+  <h2 class="sec-title">§3 · ATP — 자동열차방호장치</h2>
+
+  <div class="sys-card sys-atp">
+    <div class="sys-header">
+      <span class="abbr">ATP</span>
+      <span class="fullname">Automatic Train Protection · 자동열차방호장치</span>
+    </div>
+    <div class="sys-body">
+      <div class="sec-sub" style="margin-top:0; margin-bottom:8px;">기본 원리</div>
+      <p><strong>운행권한과 허용속도를 감시하여 과속·신호위반 등 위험 시 제동을 강제하는 자동열차방호 기능.</strong> 기관사의 의도와 관계없이 안전 한계를 넘는 순간 자동으로 개입한다.</p>
+
+      <div class="sec-sub">핵심 기능</div>
+      <ul>
+        <li><strong>속도 감시</strong>: 실제 운행속도와 허용속도를 지속 비교</li>
+        <li><strong>운행권한 감시</strong>: 열차에 부여된 이동 한계(MA)를 초과하지 않도록 감시</li>
+        <li><strong>안전방호·강제제동</strong>: 위반 감지 시 기관사 개입 없이 즉시 강제제동 적용</li>
+        <li><strong>제동곡선 기반</strong>: 목표 정지 지점까지 안전하게 정지하기 위한 감속 기준 적용</li>
+      </ul>
+
+      <div class="sec-sub">시험 핵심</div>
+      <ul>
+        <li>ATP = <strong>"방호(Protection)"</strong> 기능 — 자동운전과 다름</li>
+        <li>지상자·발리스(Balise) 등을 통해 지상 → 차상으로 정보 전달</li>
+        <li><strong>ATP ≠ 자동운전</strong>. ATO와 혼동 금지</li>
+        <li>ATO가 자동운전을 수행하더라도 <strong>안전 방호 감시는 ATP 계열이 담당</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cross-ref">
+    <div class="cross-ref-title">🔗 CROSS-REF</div>
+    <ul>
+      <li><strong>07-10 Fail-Safe</strong> — ATP의 과속 시 강제제동은 Fail-Safe 원리 적용 사례</li>
+      <li><strong>07-06 기본 궤도회로</strong> — ATP 지상장치 구성요소 중 일부는 궤도회로와 연계</li>
+    </ul>
+  </div>
+
+  <!-- ===== §4 ATC ===== -->
+  <h2 class="sec-title">§4 · ATC — 열차자동제어장치</h2>
+
+  <div class="sys-card sys-atc">
+    <div class="sys-header">
+      <span class="abbr">ATC</span>
+      <span class="fullname">Automatic Train Control · 열차자동제어장치</span>
+    </div>
+    <div class="sys-body">
+      <div class="sec-sub" style="margin-top:0; margin-bottom:8px;">기본 원리</div>
+      <p><strong>열차의 허용속도 등을 지속적으로 감시·제어하여 안전한 속도 운전을 지원하는 자동열차제어 방식.</strong> 차상장치가 허용속도를 지속적으로 파악하고, 초과 시 자동제동을 적용한다.</p>
+
+      <div class="sec-sub">차내신호 (Cab Signal)</div>
+      <p>ATC 시스템에서는 지상의 신호기 대신 <strong>차내신호(운전실 표시기)</strong>에 속도 현시. 고속 운행 시 지상 신호기를 육안으로 확인하기 어려운 문제를 해결한다.</p>
+
+      <div class="sec-sub">궤도회로 기반 ATC의 속도코드</div>
+      <p><strong>전통적인 궤도회로 기반 ATC에서는</strong> 궤도회로에 속도정보 또는 속도코드를 실어 차상으로 전달하는 방식이 사용된다. AF(가청주파수)궤도회로를 활용하면 다중 주파수로 속도코드를 전달할 수 있다.</p>
+      <p style="font-size:13px; color:#64748b; margin-top:4px;">※ ATC 전체가 반드시 궤도회로 속도코드 방식인 것은 아니다. 구현 방식은 세대·시스템에 따라 다를 수 있다. → <a href="#" style="color:#0369a1;">07-07 AF궤도회로 CROSS-REF</a></p>
+
+      <div class="sec-sub">ATS와 ATC의 핵심 차이</div>
+      <ul>
+        <li><strong>ATS</strong>: 전형적으로 지점제어 중심 — 위험·신호위반 시 정지 개입</li>
+        <li><strong>ATC</strong>: <strong>연속제어</strong> — 운행 중 지속적으로 허용속도를 감시·제어하는 것이 핵심</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cross-ref">
+    <div class="cross-ref-title">🔗 CROSS-REF</div>
+    <ul>
+      <li><strong>07-07 무절연 AF궤도회로</strong> — 전통적 ATC 속도코드 전달에 AF궤도회로가 활용됨</li>
+      <li><strong>07-06 기본 궤도회로</strong> — ATC 정보 흐름의 기반. 궤도회로 이해 선행 필요</li>
+    </ul>
+  </div>
+
+  <!-- ===== §5 ATO ===== -->
+  <h2 class="sec-title">§5 · ATO — 열차자동운전장치</h2>
+
+  <div class="sys-card sys-ato">
+    <div class="sys-header">
+      <span class="abbr">ATO</span>
+      <span class="fullname">Automatic Train Operation · 열차자동운전장치</span>
+    </div>
+    <div class="sys-body">
+      <div class="sec-sub" style="margin-top:0; margin-bottom:8px;">기본 원리</div>
+      <p><strong>정차·가속·감속 등 열차 운전 동작을 자동화하는 열차자동운전 기능.</strong> 기관사 없이 또는 최소 감시 하에 열차가 스스로 역간 운전을 수행한다.</p>
+
+      <div class="sec-sub">자동화 기능 범위</div>
+      <ul>
+        <li><strong>자동 출발</strong>: 출입문 닫힘 확인 후 정거장 출발</li>
+        <li><strong>가속</strong>: 목표 속도까지 자동 가속</li>
+        <li><strong>정속 운전</strong>: 지정 속도 유지</li>
+        <li><strong>감속</strong>: 다음 역 도착에 맞춰 자동 감속 (운전 목적의 제동 명령 포함)</li>
+        <li><strong>정위치 정차</strong>: 승강문 위치에 정확히 정차</li>
+      </ul>
+
+      <div class="sec-sub">ATO의 운전제동과 ATP의 안전방호·강제제동 구분</div>
+      <p><strong>ATO는 운전 자동화를 담당하고, 안전 방호는 ATP·ATC 계열이 담당한다.</strong></p>
+      <ul>
+        <li><strong>ATO 운전제동</strong>: 감속·정위치 정차를 위해 ATO가 수행하는 정상적인 제동 명령. 운전 자동화의 일부.</li>
+        <li><strong>ATP 강제제동</strong>: 허용속도 초과·운행권한 위반 등 안전 한계를 넘을 때 ATO 명령을 무시하고 ATP가 강제로 적용하는 제동. 안전 방호의 핵심.</li>
+      </ul>
+      <p style="margin-top:8px; font-size:13px; color:#92400e;"><strong>⚠ ATO ≠ ATP</strong>: ATO만으로 열차 안전 방호가 완성되지 않는다. 안전 방호는 ATP 계열이 별도로 담당한다.</p>
+    </div>
+  </div>
+
+  <!-- ===== §6 종합 비교표 ===== -->
+  <h2 class="sec-title">§6 · ATS vs ATP vs ATC vs ATO 종합비교</h2>
+
+  <!-- 신규 종합비교 이미지 (VIS-08A) -->
+  <div class="vis-wrap">
+    <img src="images/VIS-08A_ATS_ATP_ATC_ATO_종합비교_FINAL.png"
+         alt="ATS vs ATP vs ATC vs ATO 종합비교">
+    <div class="vis-caption">VIS-08A · ATS·ATP·ATC·ATO 4시스템 역할 종합비교 — 안전방호 계통 vs 운전자동화 계통</div>
+  </div>
+
+  <!-- PRIMARY 영상: EbliD1aZ160 — 초고속열차 신호체계·LTE-R·하이퍼튜브 -->
+  <div class="krri-yt-card">
+    <div class="yt-thumb" data-vid="EbliD1aZ160" onclick="playYT(this)">
+      <img src="https://img.youtube.com/vi/EbliD1aZ160/hqdefault.jpg"
+           alt="초고속열차의 미래는? 신호체계·LTE-R·하이퍼튜브까지 총정리 (3편)" loading="lazy">
+      <div class="play-btn">
+        <div><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+      </div>
+    </div>
+    <div class="yt-meta">
+      <span class="yt-badge-primary">KRRI 핵심영상</span>
+      <span class="yt-title">초고속열차의 미래는? 신호체계·LTE-R·하이퍼튜브까지 총정리 (3편)</span>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>항목</th>
+          <th style="background:#1d4ed8;">ATS</th>
+          <th style="background:#6d28d9;">ATP</th>
+          <th style="background:#0f766e;">ATC</th>
+          <th style="background:#92400e;">ATO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key">정식 명칭</td>
+          <td>Automatic<br>Train <strong>Stop</strong><br><small>열차자동정지장치</small></td>
+          <td>Automatic<br>Train <strong>Protection</strong><br><small>자동열차방호장치</small></td>
+          <td>Automatic<br>Train <strong>Control</strong><br><small>열차자동제어장치</small></td>
+          <td>Automatic<br>Train <strong>Operation</strong><br><small>열차자동운전장치</small></td>
+        </tr>
+        <tr>
+          <td class="td-key">핵심 목적</td>
+          <td>신호위반 시<br>정지 개입</td>
+          <td>과속·위반 위험 시<br>제동 강제 (방호)</td>
+          <td>허용속도<br>연속 감시·제어</td>
+          <td>운전 동작<br>자동화</td>
+        </tr>
+        <tr>
+          <td class="td-key">제어 방식</td>
+          <td>지점(불연속)<br>중심</td>
+          <td>연속 감시</td>
+          <td>연속 제어</td>
+          <td>자동 운전</td>
+        </tr>
+        <tr>
+          <td class="td-key">속도 감시</td>
+          <td class="td-center cond">제한적</td>
+          <td class="td-center yes">○ (허용속도)</td>
+          <td class="td-center yes">○ (연속)</td>
+          <td class="td-center cond">간접적<br><small>(ATP에 의존)</small></td>
+        </tr>
+        <tr>
+          <td class="td-key">안전방호·<br>강제제동</td>
+          <td class="td-center yes">○</td>
+          <td class="td-center yes">○ (강제)</td>
+          <td class="td-center yes">○</td>
+          <td class="td-center cond">△ 운전 목적의<br>제동 수행<br><small>/ 안전방호·강제제동은<br>ATP 등 보호계통</small></td>
+        </tr>
+        <tr>
+          <td class="td-key">차내신호</td>
+          <td class="td-center no">—</td>
+          <td class="td-center cond">시스템별</td>
+          <td class="td-center yes">○</td>
+          <td class="td-center cond">시스템별</td>
+        </tr>
+        <tr>
+          <td class="td-key">자동운전</td>
+          <td class="td-center no">—</td>
+          <td class="td-center no">—</td>
+          <td class="td-center no">—</td>
+          <td class="td-center yes">○</td>
+        </tr>
+        <tr>
+          <td class="td-key">구분 핵심어</td>
+          <td><strong>정지</strong>신호<br>위반·경보</td>
+          <td><strong>방호</strong><br>운행권한·MA</td>
+          <td><strong>제어</strong><br>속도코드·차내신호</td>
+          <td><strong>운전</strong><br>가속·감속·정차</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:12px; color:#64748b; margin-top:6px;">※ ○/—/△는 주된 기능 여부 표시. 실제 시스템은 구성·세대에 따라 다를 수 있음.</p>
+
+  <!-- ===== §7 작동 관계 및 CROSS-REF ===== -->
+  <h2 class="sec-title">§7 · 전체 작동관계 및 CROSS-REF</h2>
+
+  <div class="content-box">
+    <p><strong>ATO와 ATP의 계층 관계:</strong> ATO(자동운전)는 ATP(방호) 위에서 동작한다. ATO가 자동으로 가속·감속을 수행하는 동안에도 ATP는 허용속도·운행권한을 감시하며, 위반 감지 시 ATO 명령을 무시하고 강제제동을 적용한다. ATO의 운전 목적 제동과 ATP의 안전방호 강제제동은 별개다.</p>
+    <p style="margin-top:8px;"><strong>ATC와 궤도회로:</strong> 전통적인 궤도회로 기반 ATC에서는 열차 주행 중 궤도회로에 중첩된 속도코드를 차상장치가 지속 수신하는 방식으로 동작한다. 이는 07-07 AF궤도회로가 다중 주파수 신호를 전달하는 구조와 직접 연결된다. ATC 전체가 반드시 이 방식인 것은 아님에 주의.</p>
+  </div>
+
+  <div class="cross-ref">
+    <div class="cross-ref-title">🔗 CROSS-REF 목록</div>
+    <ul>
+      <li><strong>07-06</strong> 기본 궤도회로 — ATC·ATP 지상장치의 열차위치 검지 기반</li>
+      <li><strong>07-07</strong> 무절연 AF궤도회로 — 전통적 ATC 속도코드 전달 매체</li>
+      <li><strong>07-08</strong> 연동장치·쇄정 — ATC/ATP 시스템과 연동장치 간 진로 안전 확인 관계</li>
+      <li><strong>07-09</strong> 폐색시스템 — 고정폐색(ATC 연계)과 이동폐색(CBTC·ATP 기반) 비교</li>
+      <li><strong>07-10</strong> Fail-Safe — ATP 과속 시 강제제동이 Fail-Safe 원리 적용 사례</li>
+    </ul>
+  </div>
+
+  <!-- ===== §8 시험 포인트 ===== -->
+  <h2 class="sec-title">§8 · 시험 포인트</h2>
+  <div class="exam-section">
+
+    <div class="exam-item exam-key">
+      <strong>★ ATS 정의 — S급 직접기출</strong>
+      운전자가 정지신호 등 안전조건을 위반할 때 자동으로 제동을 개입시키는 <strong>열차자동정지장치</strong>.
+    </div>
+
+    <div class="exam-item exam-key">
+      <strong>★ ATC 정의 — S급 직접기출</strong>
+      열차의 허용속도 등을 <strong>지속적으로</strong> 감시·제어하여 안전한 속도 운전을 지원하는 <strong>열차자동제어장치</strong>.
+    </div>
+
+    <div class="exam-item exam-key">
+      <strong>★ ATP 정의 — S급 직접기출</strong>
+      운행권한과 허용속도를 감시하여 과속·신호위반 등 위험 시 <strong>제동을 강제</strong>하는 <strong>자동열차방호장치</strong>.
+    </div>
+
+    <div class="exam-item exam-key">
+      <strong>★ ATO 정의 — S급 직접기출</strong>
+      정차·가속·감속 등 열차 운전 동작을 자동화하는 <strong>열차자동운전장치</strong>.
+    </div>
+
+    <div class="exam-item exam-key">
+      <strong>★ ATP와 ATO의 관계 — A+급</strong>
+      ATO가 자동운전을 수행하더라도 <strong>안전한 운행한계·속도 감시는 ATP 계열 보호기능이 담당</strong>한다.
+    </div>
+
+    <div class="exam-item exam-trap">
+      <strong>⚠ 함정: ATS vs ATC 혼동</strong>
+      ATS = 위험상황·신호위반 시 정지 개입 중심 (전형적으로 지점제어)<br>
+      ATC = 허용속도 감시·제어를 <strong>연속적으로</strong> 수행 — 이것이 핵심 차이
+    </div>
+
+    <div class="exam-item exam-trap">
+      <strong>⚠ 함정: ATP = 자동운전</strong>
+      ATP(방호)와 ATO(자동운전)를 혼동하지 않는다.<br>
+      ATP = 보호·감시·강제제동 / ATO = 운전 자동화
+    </div>
+
+    <div class="exam-item exam-trap">
+      <strong>⚠ 함정: ATC = CTC</strong>
+      ATC(Automatic Train Control, 열차자동제어장치) ≠ CTC(Centralized Traffic Control, 열차집중제어)<br>
+      ATC = 속도 자동제어 / CTC = 관제실에서 원격 집중 제어
+    </div>
+
+    <div class="exam-item exam-trap">
+      <strong>⚠ 함정: ATO만으로 안전 완성</strong>
+      ATO는 <strong>운전 자동화</strong>만 담당. 안전 방호(속도감시·강제제동)는 ATP 계열이 별도 담당. ATO 단독으로 열차 방호 불가.
+    </div>
+
+    <div class="exam-item exam-trap">
+      <strong>⚠ 함정: ATS·ATP·ATC·ATO = 직렬 처리순서</strong>
+      4개 시스템을 하나의 순차적 신호처리 순서로 암기하지 않는다.<br>
+      각각 독립적인 역할을 가진 시스템이며, 실제 구성은 세대·노선에 따라 다르다.
+    </div>
+
+    <div class="exam-item exam-trap">
+      <strong>⚠ 함정: ATO의 운전제동 = ATP의 강제제동</strong>
+      ATO의 운전 목적 제동(감속·정차)과 ATP의 안전방호 강제제동은 별개다.<br>
+      ATO = 운전자동화 계통 / ATP = 안전방호 계통
+    </div>
+
+  </div>
+
+  <!-- ===== §9 관련 문제 ===== -->
+  <h2 class="sec-title">§9 · 관련 문제</h2>
+
+  <!-- Q1 -->
+  <div class="qst-box">
+    <div class="qst-meta">출처: signal-exam-data.ts · sig_105 | 등급: S</div>
+    <div class="qst-num">Q1</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"운전자가 정지신호 등 안전조건을 위반할 때 자동으로 제동을 개입시키는 열차자동정지 계열 장치이다."</em></div>
+    <ol class="choice-list">
+      <li>① ATS</li>
+      <li>② CTC</li>
+      <li>③ ATO</li>
+      <li>④ 연동장치와 CTC의 관계</li>
+    </ol>
+  </div>
+
+  <!-- Q2 -->
+  <div class="qst-box">
+    <div class="qst-meta">출처: signal-exam-data.ts · sig_107 | 등급: S</div>
+    <div class="qst-num">Q2</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"열차의 허용속도 등을 지속적으로 감시·제어하여 안전한 속도 운전을 지원하는 자동열차제어 방식이다."</em></div>
+    <ol class="choice-list">
+      <li>① ATC</li>
+      <li>② 속도프로파일</li>
+      <li>③ DMI</li>
+      <li>④ CTC</li>
+    </ol>
+  </div>
+
+  <!-- Q3 -->
+  <div class="qst-box">
+    <div class="qst-meta">출처: signal-exam-data.ts · sig_109 | 등급: S</div>
+    <div class="qst-num">Q3</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"운행권한과 허용속도를 감시하여 과속·신호위반 등 위험 시 제동을 강제하는 자동열차방호 기능이다."</em></div>
+    <ol class="choice-list">
+      <li>① ATC</li>
+      <li>② ATP</li>
+      <li>③ 운행권한(Movement Authority)</li>
+      <li>④ ATP와 ATO의 관계</li>
+    </ol>
+  </div>
+
+  <!-- Q4 -->
+  <div class="qst-box">
+    <div class="qst-meta">출처: signal-exam-data.ts · sig_111 | 등급: S</div>
+    <div class="qst-num">Q4</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"정차·가속·감속 등 열차 운전 동작을 자동화하는 자동열차운전 기능이다."</em></div>
+    <ol class="choice-list">
+      <li>① DMI</li>
+      <li>② 운행권한(Movement Authority)</li>
+      <li>③ ATO</li>
+      <li>④ ATS와 ATC의 차이</li>
+    </ol>
+  </div>
+
+  <!-- Q5 -->
+  <div class="qst-box">
+    <div class="qst-meta">출처: signal-exam-data.ts · sig_124 | 등급: A+</div>
+    <div class="qst-num">Q5</div>
+    <div class="qst-q">다음 중 「ATP와 ATO의 관계」에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 정차·가속·감속 등 열차 운전 동작을 자동화하는 자동열차운전 기능이다.</li>
+      <li>② CTC가 진로 명령을 내려도 실제 안전조건 확인과 충돌방지는 연동장치가 담당한다.</li>
+      <li>③ 구간별 허용속도와 제동곡선 등을 반영해 열차가 따라야 할 속도 기준을 나타낸다.</li>
+      <li>④ ATO가 자동운전을 수행하더라도 안전한 운행한계·속도 감시는 ATP 계열 보호기능이 담당한다.</li>
+    </ol>
+  </div>
+
+  <!-- Q6 — 기술보정 (sig_106 복수정답 가능성 → 단일정답화) -->
+  <div class="qst-box">
+    <div class="qst-meta">출처: signal-exam-data.ts · sig_106 [원자료 복수정답 가능성 → 학습용 기술보정] | 등급: S</div>
+    <div class="qst-num">Q6</div>
+    <div class="qst-q">다음 중 「ATS」에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① ATS는 열차의 허용속도를 운행 전 구간에서 연속적으로 감시·제어하는 장치이다.</li>
+      <li>② 열차가 안전하게 진행할 수 있도록 허용된 진로와 한계를 나타내는 정보이다.</li>
+      <li>③ 운전자가 정지신호 등 안전조건을 위반할 때 자동으로 제동을 개입시키는 열차자동정지 계열 장치이다.</li>
+      <li>④ 열차운행 현황·운행계획·지연 등을 종합적으로 관리하는 열차운행관리 시스템이다.</li>
+    </ol>
+  </div>
+
+  <!-- ===== §10 정답 및 해설 ===== -->
+  <div class="answer-section" style="margin:0;padding:0;">
+  <h2 class="sec-title">§10 · 정답 및 해설</h2>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q1</span>
+      <span class="ans-answer">정답 ①</span>
+    </div>
+    <div class="ans-exp">
+      <strong>ATS (Automatic Train Stop)</strong> — 열차자동정지장치.<br>
+      운전자가 정지신호 등 안전조건을 위반할 때 자동으로 제동을 개입시키는 장치이다.<br>
+      <ul>
+        <li>② CTC: 열차집중제어 — 관제실에서 여러 역 신호·진로를 원격 제어 (08-01 범위 밖)</li>
+        <li>③ ATO: 열차자동운전장치 — 정차·가속·감속 등 운전 동작 자동화 (전혀 다른 기능)</li>
+      </ul>
+      <strong>출처:</strong> signal-exam-data.ts · sig_105 (S급)
+    </div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q2</span>
+      <span class="ans-answer">정답 ①</span>
+    </div>
+    <div class="ans-exp">
+      <strong>ATC (Automatic Train Control)</strong> — 열차자동제어장치.<br>
+      허용속도를 <strong>지속적으로</strong> 감시·제어. "지속적으로"가 ATS(지점제어 중심)와 구분되는 핵심어.<br>
+      <ul>
+        <li>② 속도프로파일: 구간별 허용속도·제동곡선 기준 — ATC가 참조하는 기준이지 ATC 자체가 아님</li>
+        <li>④ CTC: 관제 시스템 — ATC와 이름 유사하나 전혀 다른 기능 (최빈출 함정)</li>
+      </ul>
+      <strong>출처:</strong> signal-exam-data.ts · sig_107 (S급)
+    </div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q3</span>
+      <span class="ans-answer">정답 ②</span>
+    </div>
+    <div class="ans-exp">
+      <strong>ATP (Automatic Train Protection)</strong> — 자동열차방호장치.<br>
+      운행권한(MA)과 허용속도를 감시하여 과속·신호위반 위험 시 <strong>제동을 강제</strong>하는 방호 기능.<br>
+      <ul>
+        <li>① ATC: 허용속도 연속 감시·제어. "방호·강제제동"은 ATP의 핵심어</li>
+        <li>③ 운행권한(MA): ATP가 감시하는 <em>대상</em>. ATP 자체가 아님</li>
+      </ul>
+      <strong>출처:</strong> signal-exam-data.ts · sig_109 (S급)
+    </div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q4</span>
+      <span class="ans-answer">정답 ③</span>
+    </div>
+    <div class="ans-exp">
+      <strong>ATO (Automatic Train Operation)</strong> — 열차자동운전장치.<br>
+      정차·가속·감속 등 <strong>운전 동작 전반을 자동화</strong>. 자동운전이 핵심어.<br>
+      <ul>
+        <li>① DMI: 운전자에게 허용속도·목표속도·운행권한 등 차상 운전정보를 표시하는 인터페이스</li>
+        <li>② 운행권한(MA): 진로 허용 범위 정보 — ATO가 활용하는 정보이지 ATO 자체가 아님</li>
+      </ul>
+      <strong>출처:</strong> signal-exam-data.ts · sig_111 (S급)
+    </div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q5</span>
+      <span class="ans-answer">정답 ④</span>
+    </div>
+    <div class="ans-exp">
+      <strong>ATP와 ATO의 관계:</strong> ATO가 자동운전을 수행하더라도 <strong>안전한 운행한계·속도 감시는 ATP 계열 보호기능이 담당</strong>한다.<br>
+      <ul>
+        <li>① ATO 정의는 맞으나, 이 문제는 "ATP와 ATO의 관계"를 묻는다</li>
+        <li>② CTC와 연동장치 관계 — 이 단원 범위 밖</li>
+        <li>③ 속도프로파일 설명 — ATP/ATO 관계와 무관</li>
+      </ul>
+      핵심: <strong>ATO(자동운전) + ATP(방호) 분리 원칙</strong><br>
+      <strong>출처:</strong> signal-exam-data.ts · sig_124 (A+급)
+    </div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q6</span>
+      <span class="ans-answer">정답 ③</span>
+    </div>
+    <div class="ans-exp">
+      <strong>ATS 정의:</strong> 운전자가 정지신호 등 안전조건을 위반할 때 자동으로 제동을 개입시키는 열차자동정지 계열 장치.<br>
+      <ul>
+        <li>① "열차의 허용속도를 운행 전 구간에서 연속적으로 감시·제어" → 이는 ATS가 아닌 <strong>ATC</strong>의 성격. ATS는 전형적으로 지점제어 중심이며 전 구간 연속 감시·제어를 핵심 기능으로 하지 않는다. → 오답</li>
+        <li>② 운행권한(MA) 설명 — ATS와 무관</li>
+        <li>④ TMS(열차운행관리시스템) 설명</li>
+      </ul>
+      ※ 학습용 기술보정: 원자료 sig_106의 선지 ①은 ATS와 ATC의 차이를 기술하는 내용으로 ATS 단독 설명으로도 읽힐 수 있어 복수정답 가능성이 있었다. v1.1에서 ①을 ATC 성격의 명확한 오답으로 보정하여 단일정답화하였다.<br>
+      <strong>출처:</strong> signal-exam-data.ts · sig_106 (S급) [원자료 복수정답 가능성 → 학습용 기술보정]
+    </div>
+  </div>
+
+  <hr style="border:none; border-top:1.5px solid #e2e8f0; margin:30px 0 20px;">
+  <div style="font-size:12px; color:#94a3b8; text-align:center; line-height:2;">
+    unit-08-01 · <strong>v1.5</strong> · FINAL CHECK · localhost 내부재생 확인 후 LOCK<br>
+    수정이력: sig_106 복수정답 가능성 기술보정 / ATS·ATP·ATC·ATO 직렬 흐름 제거 / 안전·방호 vs 운전자동화 기능축 분리 / ATO 운전제동 vs 안전방호제동 구분 명확화 / ATC 궤도회로 기반 표현 범위 한정 / ATS 지점제어 일반화 완화 / VIS-08A img 태그 연결 / YouTube 재생구조 4.html 표준(썸네일→클릭→nocookie iframe)으로 교체(v1.5)
+  </div>
+
+</div><!-- /page-wrap -->
+
+
+<script>
+if(typeof playYT==='undefined'){
+  function playYT(el){
+    var vid=el.getAttribute('data-vid');
+    var wrap=el.parentNode;
+    wrap.innerHTML='<iframe width="100%" style="aspect-ratio:16/9;border:none;display:block;" src="https://www.youtube-nocookie.com/embed/'+vid+'?autoplay=1&rel=0" allow="autoplay;encrypted-media;fullscreen" allowfullscreen></iframe>';
+  }
+}
+</script>
+
+</body>
+</html>

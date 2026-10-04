@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>07-08 연동장치 | 철도공학</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#fff; color:#111; font-size:15px; line-height:1.75; }
+
+/* 헤더 */
+.site-header { background:#fff; color:#111; padding:8px 16px 6px; border-bottom:3px solid #78350f; }
+.site-header h1 { font-size:1.05em; font-weight:bold; color:#78350f; }
+.site-header .meta { font-size:.78em; color:#555; margin-top:2px; }
+
+.container { max-width:960px; margin:0 auto; padding:20px 24px 60px; }
+
+/* 단원 헤더 */
+.unit-header { border:2px solid #78350f; border-radius:6px; padding:12px 16px; margin-bottom:22px; background:#fff; }
+.unit-header h2 { font-size:1.2em; font-weight:bold; color:#78350f; }
+.unit-header .nav-link { font-size:.82em; color:#555; margin-top:4px; }
+
+/* 섹션 */
+.section { margin:0 0 26px 0; }
+.section-title { font-size:1.05em; font-weight:bold; color:#111; border-left:4px solid #78350f; padding:5px 0 5px 12px; margin-bottom:14px; background:#fff; }
+
+/* 개념 */
+.concept { margin:14px 0 6px; padding-bottom:14px; border-bottom:1px solid #ccc; }
+.concept:last-child { border-bottom:none; }
+.concept-title { font-size:1em; font-weight:bold; color:#78350f; margin-bottom:8px; padding:4px 0; }
+.concept-title .cnum { border:1px solid #78350f; color:#78350f; border-radius:4px; padding:1px 7px; font-size:.85em; margin-right:6px; }
+
+/* 테이블 */
+table { width:100%; border-collapse:collapse; margin:8px 0; font-size:.9em; }
+th { background:#e8e8e8; color:#111; padding:7px 10px; text-align:left; font-size:.88em; border:1.5px solid #999; font-weight:bold; }
+td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#fff; }
+tr:nth-child(even) td { background:#fff; }
+tr.hl td { background:#fff; font-weight:bold; }
+
+/* 강조 박스 */
+.trap {
+  background:#fff;
+  border-left:4px solid #c0392b;
+  padding:8px 12px; margin:8px 0;
+  border-radius:0 4px 4px 0;
+  font-size:.9em; color:#c0392b; font-weight:bold;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+.tip {
+  background:#fff;
+  border-left:4px solid #2e7d32;
+  padding:8px 12px; margin:8px 0;
+  border-radius:0 4px 4px 0;
+  font-size:.9em; color:#2e7d32; font-weight:bold;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+.theory-note {
+  background:#fff;
+  border-left:4px solid #1565c0;
+  padding:10px 14px; margin:8px 0;
+  border-radius:0 4px 4px 0;
+  font-size:.9em; color:#111;
+  border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0;
+}
+.theory-note strong { color:#1565c0; }
+
+.quiz-ex {
+  background:#fff;
+  border-left:4px solid #2e7d32;
+  padding:10px 14px; margin:8px 0;
+  border-radius:0 4px 4px 0;
+  font-size:.88em; color:#111;
+  border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0;
+}
+.quiz-ex .qe-title { font-weight:bold; color:#2e7d32; margin-bottom:4px; }
+.quiz-ex .qe-q { margin:4px 0 2px; }
+.quiz-ex .qe-a { font-weight:bold; color:#1b5e20; }
+.quiz-ex .qe-wrong {
+  display:block;
+  background:#fff;
+  border-left:3px solid #c0392b;
+  color:#c0392b;
+  padding:5px 10px; margin:6px 0;
+  border-radius:0 4px 4px 0;
+  font-size:.88em;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+
+/* 기출문제 */
+.quiz-mc { background:#fff; border:1px solid #ccc; border-left:4px solid #555; padding:12px 14px; margin:12px 0; border-radius:0 4px 4px 0; font-size:.9em; }
+.quiz-mc .qm-src { font-size:.78em; color:#555; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
+.quiz-mc .qm-q { font-weight:bold; color:#111; margin-bottom:8px; line-height:1.6; }
+.quiz-mc .qm-choices { margin:0 0 8px 4px; }
+.quiz-mc .qm-choice { padding:3px 0; color:#222; line-height:1.7; }
+
+/* 정답 해설 */
+.ans-box { background:#fff; border:1px solid #bbb; border-left:4px solid #78350f; border-radius:0 4px 4px 0; padding:10px 14px; margin:8px 0; font-size:.9em; }
+.ans-box .ans-num { font-weight:bold; color:#78350f; margin-bottom:4px; }
+.ans-box .ans-answer { font-weight:bold; color:#1b5e20; }
+.ans-box .ans-exp { color:#333; margin-top:4px; }
+.ans-box .ans-caution { color:#c0392b; font-size:.88em; margin-top:4px; }
+
+/* VIS 래퍼 */
+.vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
+.vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; background:#fff; }
+.vis-cap { font-size:.8em; color:#555; margin-top:6px; }
+
+/* 흐름 박스 */
+.step-flow { background:#fff; border:1px solid #bbb; border-radius:6px; padding:12px 16px; margin:10px 0; font-size:.9em; }
+.step-flow .flow-title { font-weight:bold; color:#78350f; margin-bottom:8px; }
+.flow-chain { display:flex; flex-wrap:wrap; align-items:center; gap:4px; }
+.flow-step { background:#fff; border:1px solid #78350f; border-radius:4px; padding:4px 10px; font-size:.88em; white-space:nowrap; color:#111; }
+.flow-arrow { color:#78350f; font-weight:bold; font-size:1.1em; }
+
+/* 용어 박스 */
+.term-box { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:10px 0; }
+.term-item { background:#fff; border:1px solid #bbb; border-radius:4px; padding:10px 12px; font-size:.88em; }
+.term-item .term-word { font-weight:bold; color:#78350f; font-size:.95em; margin-bottom:3px; }
+.term-item .term-en { color:#555; font-size:.82em; margin-bottom:4px; }
+.term-item .term-def { color:#111; line-height:1.6; }
+
+/* 2축 비교 박스 */
+.two-axis-box { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:12px 0; }
+.axis-card { border:1.5px solid #78350f; border-radius:6px; padding:12px; background:#fff; }
+.axis-card .axis-head { font-weight:bold; color:#78350f; font-size:.95em; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid #ccc; }
+.axis-item { margin:6px 0; padding:5px 8px; border:1px solid #e0e0e0; border-radius:3px; font-size:.88em; background:#fff; }
+.axis-item strong { color:#78350f; }
+
+/* 상호참조 */
+.cross-ref { border-left:3px solid #7c3aed; padding:6px 12px; border-radius:0 4px 4px 0; font-size:.86em; color:#4c1d95; margin:6px 0; background:#fff; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+
+/* 작업 메타 박스 */
+.meta-box { background:#fff; border:1px solid #bbb; border-radius:6px; padding:10px 16px; font-size:.8em; color:#555; margin-top:24px; }
+
+/* 반응형 */
+@media(max-width:600px){
+  .term-box, .two-axis-box { grid-template-columns:1fr; }
+  .flow-chain { flex-direction:column; align-items:flex-start; }
+}
+
+/* 프린트 전용 설정 */
+@media print {
+  body { font-size:12pt; line-height:1.6; background:#fff !important; color:#000 !important; }
+  .site-header { border-bottom:2pt solid #000; padding:6pt 0; }
+  .unit-header { border:1.5pt solid #000; page-break-after:avoid; }
+  .concept { page-break-inside:avoid; }
+  .vis-wrap { page-break-inside:avoid; }
+  .term-box { grid-template-columns:1fr 1fr; }
+  .two-axis-box { grid-template-columns:1fr 1fr; }
+  table { page-break-inside:avoid; }
+  th { background:#e8e8e8 !important; color:#000 !important; border:1.5px solid #999 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  td { border:1.5px solid #bbb !important; background:#fff !important; }
+  tr.hl td { background:#fff !important; }
+  .trap, .tip, .theory-note, .quiz-ex, .quiz-mc, .ans-box { page-break-inside:avoid; }
+  a { color:#000 !important; text-decoration:none; }
+    @page {
+    size: A4 portrait;
+    margin: 12mm 12mm 12mm 18mm;
+  }
+  /* — GATE5 PRINT LOCK v1 추가규칙 — */
+  img, .vis-wrap img { max-width:100%; height:auto; }
+  table { width:100%; max-width:100%; }
+  .quiz-mc { break-inside:avoid; page-break-inside:avoid; }
+  .qst-box, .sys-card, .content-box { break-inside:avoid; page-break-inside:avoid; }
+  .answer-section { break-before:page; page-break-before:always; }
+  .print-btn { display:none !important; }
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <h1>철도교통안전관리자 — 철도공학</h1>
+  <div class="meta">07-08 연동장치 상세 | FINAL PUBLISH v1.2</div>
+</header>
+
+<div class="container">
+
+<div class="unit-header">
+  <h2>07-08 연동장치(Interlocking) — 정의·연쇄·쇄정</h2>
+  <div class="nav-link">연결: 07-07 무절연AF궤도회로 → <strong>[현재]</strong> → 07-09</div>
+</div>
+
+
+<!-- ══ § 0. 선행 용어 정의 ══ -->
+<div class="section">
+<div class="section-title">§ 0. 이 단원에서 반드시 먼저 알아야 할 용어 (8개)</div>
+<p style="font-size:.88em;color:#333;margin-bottom:10px;"><strong>07-06·07-07에서 이어지는 핵심 용어들입니다. 궤도회로·신호기를 먼저 학습한 뒤 읽으세요.</strong></p>
+
+<div class="cross-ref">🔗 선행 단원: <strong>07-06 궤도회로 원리</strong> — 계전기 여자/낙하·열차 점유 검지 / <strong>07-07 AF궤도회로</strong> — 무절연 구간 구분 원리를 먼저 확인하세요.</div>
+
+<div class="term-box">
+
+<div class="term-item">
+  <div class="term-word">연동장치 (Interlocking)</div>
+  <div class="term-en">Interlocking System</div>
+  <div class="term-def">신호기·선로전환기·궤도회로를 상호 연결해 <strong>잘못된 동시 조작을 방지</strong>하는 안전 장치</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">쇄정 (Locking)</div>
+  <div class="term-en">Locking</div>
+  <div class="term-def">설정된 진로에서 선로전환기 또는 신호기가 <strong>임의로 움직이지 못하도록 잠그는</strong> 기능</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">해정 (Unlocking)</div>
+  <div class="term-en">Unlocking / Release</div>
+  <div class="term-def">쇄정 상태를 해제하여 선로전환기·신호기가 <strong>다시 조작 가능하게 푸는</strong> 것</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">정위 (Normal Position)</div>
+  <div class="term-en">Normal Position</div>
+  <div class="term-def">선로전환기가 기준으로 정해진 <strong>평상시 위치</strong>에 있는 상태</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">반위 (Reverse Position)</div>
+  <div class="term-en">Reverse Position</div>
+  <div class="term-def">선로전환기가 정위의 <strong>반대쪽 진로로 전환된</strong> 상태</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">진로 (Route)</div>
+  <div class="term-en">Route / Train Path</div>
+  <div class="term-def">열차 또는 차량이 신호기에 의해 허용받아 <strong>통과하도록 설정된 선로 경로</strong></div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">연쇄 (Interlocking Dependency)</div>
+  <div class="term-en">Interlocking Dependency</div>
+  <div class="term-def">신호기·선로전환기 간 <strong>상호 조건 관계</strong> — A 조건 미충족 시 B 동작 불가</div>
+</div>
+
+<div class="term-item">
+  <div class="term-word">전자연동장치 (EI)</div>
+  <div class="term-en">Electronic Interlocking (EI)</div>
+  <div class="term-def">연동 논리를 <strong>전자·컴퓨터 기반</strong>으로 처리하며 안전 논리와 이중화를 적용하는 현대 표준</div>
+</div>
+
+</div><!-- /term-box -->
+</div><!-- /section §0 -->
+
+
+<!-- ══ § 1. 연동장치 정의와 목적 ══ -->
+<div class="section">
+<div class="section-title">§ 1. 연동장치(Interlocking) 정의와 목적</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념 A</span>연동장치 정의 ⚠️ 최빈출</div>
+<table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody>
+<tr class="hl"><td><strong>정의</strong></td><td>신호기·선로전환기·궤도회로 등을 <strong>상호 연동</strong>하여, 충돌 진로가 동시에 설정되지 않도록 하는 <strong>안전장치</strong></td></tr>
+<tr><td><strong>목적</strong></td><td>① 열차 충돌 방지 ② 탈선 방지 ③ 잘못된 진로 설정 방지</td></tr>
+<tr><td><strong>적용 설비</strong></td><td>신호기 ↔ 선로전환기 ↔ 궤도회로 (3종 연동)</td></tr>
+<tr><td><strong>종류</strong></td><td>기계식 (레버 연동기) → 전기식 (전기연동기) → <strong>전자식: 전자연동장치 EI</strong> (현대 표준)</td></tr>
+</tbody></table>
+<div class="trap">⚠️ 함정 주의: 연동장치 목적 = <strong>충돌·탈선 방지</strong> — 속도 제어·제동 거리 단축 아님</div>
+<div class="trap">⚠️ 함정 주의: "ATS가 연동 기능을 한다" → 오답. ATS = 속도 제어. 연동 기능은 연동장치 전담</div>
+<div class="theory-note"><strong>이론 배경:</strong> 연동장치는 안전 인터록(Interlock)입니다. 예를 들어, 선로전환기가 정위에 없으면 해당 진로의 신호기는 진행 현시를 할 수 없도록 상호 조건을 걸어 놓습니다. 이 조건 관계를 <strong>연쇄</strong>라 하고, 조건이 충족될 때까지 설비를 잠그는 것을 <strong>쇄정</strong>이라 합니다.</div>
+</div><!-- /concept A -->
+</div><!-- /section §1 -->
+
+
+<!-- ══ § 2. 연쇄와 쇄정의 차이 ══ -->
+<div class="section">
+<div class="section-title">§ 2. 연쇄(Chain)와 쇄정(Lock)의 차이</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념 B</span>연쇄 vs 쇄정 ⚠️</div>
+<table><thead><tr><th>구분</th><th>연쇄 (Dependency)</th><th>쇄정 (Locking)</th></tr></thead><tbody>
+<tr class="hl"><td><strong>의미</strong></td><td>신호기·선로전환기 간 <strong>상호 조건 관계</strong></td><td>조건에 따라 설비를 <strong>물리적·전기적으로 잠금</strong></td></tr>
+<tr><td><strong>성격</strong></td><td>논리적 관계 (IF A 충족 → B 허용)</td><td>물리/전기적 잠금 행위</td></tr>
+<tr><td><strong>예시</strong></td><td>선로전환기 정위 → 신호기 진행 허용 (연쇄 조건)</td><td>열차 접근 시 선로전환기 전환 불가로 잠금</td></tr>
+<tr><td><strong>기억법</strong></td><td>연쇄 = 조건 (Chain of conditions)</td><td>쇄정 = 잠금 (Lock)</td></tr>
+</tbody></table>
+<div class="tip">★ 연쇄 = 조건 관계 / 쇄정 = 잠금 행위 — 연쇄가 쇄정의 근거를 제공함</div>
+
+<div class="vis-wrap">
+  <img class="vis-img" src="images/연동장치의_연쇄와_쇄정.png" alt="연동장치의 연쇄와 쇄정 개념도" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+  <p style="display:none;color:#c0392b;font-size:.85em;">※ 이미지 로드 실패: images/연동장치의_연쇄와_쇄정.png</p>
+  <p class="vis-cap">연동장치 — 연쇄(조건 관계)와 쇄정(잠금 행위) 개념도</p>
+</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 연쇄는 "A 조건이 충족되어야 B가 동작할 수 있다"는 논리 관계입니다. 쇄정은 이 연쇄 조건이 미충족 상태일 때 설비가 움직이지 못하도록 실제로 잠그는 행위입니다. 두 개념은 함께 작동하며, 연동장치의 핵심 메커니즘을 구성합니다.</div>
+</div><!-- /concept B -->
+</div><!-- /section §2 -->
+
+
+<!-- ══ § 3. 정위 / 반위 ══ -->
+<div class="section">
+<div class="section-title">§ 3. 정위 / 반위 / 전환 검지</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념 C</span>정위·반위·전환 검지 ⚠️</div>
+<table><thead><tr><th>용어</th><th>정의</th><th>핵심</th></tr></thead><tbody>
+<tr class="hl"><td><strong>정위</strong></td><td>취급버튼·리버 등으로 해당 신호설비를 <strong>취급하기 전의 기준 상태</strong></td><td>직선·본선 방향과 항상 같은 뜻은 아님</td></tr>
+<tr><td><strong>반위</strong></td><td>정위의 <strong>반대 상태</strong> — 취급하여 기준 상태와 반대 위치가 된 상태</td><td>분기선·측선 방향과 항상 같은 뜻은 아님</td></tr>
+<tr class="hl"><td><strong>전환 검지</strong></td><td>선로전환기가 명령된 끝 위치까지 <strong>실제로 전환</strong>되었는지 확인하는 기능</td><td>전환 완료 확인 → 신호 허가 연동</td></tr>
+</tbody></table>
+<div class="trap">⚠️ 함정 주의: <strong>정위=직선·본선, 반위=분기·측선</strong>으로 일반화하면 안 됨. 정위는 해당 설비의 취급 전 기준 상태, 반위는 그 반대 상태</div>
+<div class="tip">★ 기억법: 정위 = 취급 전 기준 상태 / 반위 = 그 반대 상태</div>
+
+<div class="step-flow">
+<div class="flow-title">🔄 진로 설정 순서</div>
+<div class="flow-chain">
+  <span class="flow-step">① 진로 요청</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">② 선로전환기 전환 (정위/반위)</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">③ 전환 검지 확인</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">④ 쇄정 (잠금)</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">⑤ 신호기 진행 현시</span>
+</div>
+</div>
+
+<div class="theory-note"><strong>이론 배경:</strong> 선로전환기는 열차 진로를 결정하므로 전환이 완료되지 않으면 신호기가 진행 현시를 할 수 없습니다. 전환 검지(End Position Detection)가 정위 또는 반위 완료를 확인한 뒤에야 쇄정이 이뤄지고, 그 후 신호기 연동이 허가됩니다.</div>
+</div><!-- /concept C -->
+</div><!-- /section §3 -->
+
+
+<!-- ══ § 4. 쇄정의 기본 형태 5종 ══ -->
+<div class="section">
+<div class="section-title">§ 4. 쇄정의 기본 형태 — 정위·반위·정반위·편·조건부 쇄정 ⚠️ 빈출</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념 D</span>쇄정의 세부 용어 5종 (철도신호지침 용어 정의)</div>
+<table><thead><tr><th>종류</th><th>정의</th><th>초학자 해석</th></tr></thead><tbody>
+<tr class="hl"><td><strong>정위쇄정</strong></td><td>갑·을 취급버튼의 상호관계에서 한쪽을 반위로 취급했을 때 <strong>상대 취급버튼을 정위로 쇄정</strong>하는 관계</td><td>상대 장치를 기준 위치에 묶어 두는 쇄정</td></tr>
+<tr><td><strong>반위쇄정</strong></td><td>정해진 연쇄조건에서 상대 취급버튼을 <strong>반위 위치로 쇄정</strong>하고, 조건이 맞지 않으면 다른 취급을 허용하지 않는 관계</td><td>상대 장치를 반대 위치에 묶어 두는 쇄정</td></tr>
+<tr class="hl"><td><strong>정반위쇄정</strong></td><td>갑을 반위로 취급했을 때 을이 <strong>정위든 반위든 현재 있는 위치 그대로 쇄정</strong>되는 관계</td><td>어느 방향인가가 아니라 ‘현재 위치를 유지’시키는 쇄정</td></tr>
+<tr><td><strong>편쇄정</strong></td><td>갑을 반위로 취급했을 때 을을 <strong>정위 또는 반위 중 한쪽 위치에서만 쇄정</strong>하는 관계. 정위편쇄정·반위편쇄정으로 구분</td><td>한쪽 위치에서만 성립하는 편측(偏) 쇄정</td></tr>
+<tr class="hl"><td><strong>조건부쇄정</strong></td><td>갑을 반위로 취급했을 때 을이 <strong>다른 취급버튼의 특정 조건이 충족된 경우에만</strong> 쇄정되는 관계</td><td>추가 조건이 맞아야 성립하는 쇄정</td></tr>
+</tbody></table>
+<div class="cross-ref">📋 <strong>용어 근거:</strong> 철도신호지침의 쇄정 용어 정의에 정위쇄정·반위쇄정·정반위쇄정·편쇄정·조건부쇄정이 명시됨. 현행 국가철도공단 설계기준에는 <strong>KR S-06040 연동장치 쇄정 방법 Rev.6(2025.1.31 시행)</strong>이 존재함.</div>
+<div class="trap">⚠️ 함정 주의: sig_261의 보기에서는 <strong>③ 연속쇄정</strong>이 비해당 정답. 이를 ‘쇄정의 종류가 총 4종뿐’이라고 확대 해석하면 안 됨. 편쇄정 등 다른 쇄정 용어도 존재</div>
+<div class="tip">★ 용어 묶음: 정·반·정반·편·조 = 정위쇄정 / 반위쇄정 / 정반위쇄정 / 편쇄정 / 조건부쇄정</div>
+
+<div class="quiz-ex">
+<div class="qe-title">📝 기출 예시 (sig_261)</div>
+<div class="qe-q">Q. 다음 중 쇄정의 종류에 해당하지 않는 것은?<br>① 정위쇄정 ② 반위쇄정 ③ 연속쇄정 ④ 조건부쇄정</div>
+<div class="qe-a">정답: ③ 연속쇄정 — 해당 기출 보기 중 쇄정 종류에 해당하지 않는 항목</div>
+<span class="qe-wrong">오답함정: 이 문항만 보고 ‘쇄정 종류는 4종’이라고 암기하지 말 것. 정반위쇄정·편쇄정 등은 별도 용어 정의로 구분</span>
+</div>
+</div><!-- /concept D -->
+</div><!-- /section §4 -->
+
+
+<!-- ══ § 5. 시험 학습 핵심 쇄정 6종 ══ -->
+<div class="section">
+<div class="section-title">§ 5. 시험 학습 핵심 쇄정 6종 ⚠️ 빈출</div>
+
+<p style="font-size:.88em;color:#333;margin:0 0 10px 0;">※ 위 6종(철사·진로·진로구분·접근·보류·시간쇄정)은 본 교재의 핵심 학습범위이며 쇄정의 전체 종류를 의미하지 않는다. 폐로쇄정·표시쇄정·조사쇄정 등은 현재 본문 수록 대상 아님.</p>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념 E</span>쇄정 6종 — 언제 걸리는가 / 무엇을 막는가 / 언제 풀리는가</div>
+<table><thead><tr><th>종류</th><th>언제 걸리는가</th><th>무엇을 막는가</th><th>언제 풀리는가</th></tr></thead><tbody>
+<tr class="hl"><td><strong>진로쇄정</strong></td><td>진행 현시에 의해 열차가 <strong>해당 진로에 진입</strong>했을 때</td><td>관계 선로전환기가 있는 진로를 <strong>통과 중 임의 전환</strong>하지 못하게 함</td><td>열차가 관계 선로전환기가 있는 <strong>모든 궤도회로를 통과</strong>한 후</td></tr>
+<tr><td><strong>진로구분쇄정</strong></td><td>진행 현시에 의해 열차가 진로에 진입하여 <strong>구분된 궤도구간을 점유</strong>할 때</td><td>해당 구간의 관계 선로전환기 등을 <strong>전환하지 못하게</strong> 함</td><td>열차가 일정 구간을 통과할 때마다 <strong>그 구간을 순차 해정</strong></td></tr>
+<tr class="hl"><td><strong>철사쇄정</strong><br><span style="font-size:.82em;color:#555;">Detector Locking</span></td><td>열차가 <strong>선로전환기가 있는 궤도회로를 점유</strong>했을 때</td><td>그 선로전환기의 <strong>전환을 금지</strong>하여 열차 통과 중 전환 방지</td><td>해당 궤도회로의 <strong>점유가 해소</strong>된 후</td></tr>
+<tr><td><strong>접근쇄정</strong></td><td>진행신호 현시 후 열차가 <strong>신호기 외방 접근구간에 진입</strong>하거나, 열차가 접근구간에 있는 상태에서 진행신호를 현시했을 때</td><td>해당 진로의 <strong>선로전환기 등을 전환하지 못하게</strong> 함</td><td>접근구간에 열차가 없으면 즉시. 열차가 있으면 <strong>신호기 내방 진입</strong> 또는 정지신호 현시 후 <strong>정해진 시분 경과</strong> 후</td></tr>
+<tr class="hl"><td><strong>보류쇄정</strong></td><td>신호기·입환표지에 <strong>일단 진행을 지시하는 신호를 현시</strong>한 후</td><td>열차 위치와 관계없이 일정 조건이 충족될 때까지 <strong>진로 내 선로전환기 등을 전환하지 못하게</strong> 함</td><td>열차가 해당 진로에 진입하거나, 정지신호 현시 후 <strong>정해진 시분 경과</strong> 후 (해정시분은 접근쇄정에 준함)</td></tr>
+<tr><td><strong>시간쇄정</strong></td><td>갑·을 취급버튼이 상호 쇄정된 상태에서 <strong>갑을 정위로 복귀</strong>했을 때</td><td>을을 즉시 해정하지 않고 <strong>일정시간 계속 쇄정</strong></td><td>설정된 <strong>일정시간이 경과</strong>한 후</td></tr>
+</tbody></table>
+
+<div class="theory-note">
+<strong>초학자 포인트 — 진로쇄정 vs 진로구분쇄정:</strong><br>
+• <strong>진로쇄정</strong>: 열차가 진로에 들어서면 진로 전체를 하나로 묶어 잠금 → 열차가 진로 끝까지 나올 때까지 일괄 해정. 마치 "터널 전체를 점유"하는 개념.<br>
+• <strong>진로구분쇄정</strong>: 진로를 구간 단위로 나누어, 열차가 지나온 구간부터 순차적으로 잠금 해제 → 뒤따라오는 열차 또는 다른 진로에 대한 진로 용량을 효율화. 마치 "터널을 칸별로 통과하면서 뒤 칸부터 열어주는" 개념.
+</div>
+
+<div class="theory-note">
+<strong>접근쇄정 vs 보류쇄정 vs 시간쇄정 — 세 개를 구별하는 핵심:</strong><br>
+• <strong>접근쇄정</strong>: 진행신호와 접근구간 열차 점유가 결합되면 발동 → 관계 선로전환기 등을 전환하지 못하게 함. 열차가 접근 중이면 신호를 정지로 바꾸어도 즉시 진로를 풀지 않음<br>
+• <strong>보류쇄정</strong>: 접근쇄정을 시행하지 않는 경우 등에 사용 → 일단 진행신호를 현시하면 열차 위치와 관계없이 진로 내 선로전환기 등을 일정 조건까지 계속 쇄정<br>
+• <strong>시간쇄정</strong>: 상호 쇄정된 취급에서 쇄정 측을 정위로 복귀해도 상대 취급을 즉시 풀지 않고 일정시간 후 해정하는 방식
+</div>
+
+<div class="tip">★ 진로쇄정 = 진로 전체 일괄 해정 / 진로구분쇄정 = 통과 구간만 순차 해정</div>
+<div class="tip">★ 접근쇄정 = 진행신호 + 접근구간 열차 점유 / 보류쇄정 = 접근쇄정을 시행하지 않는 경우 등에 적용, 진행신호 현시 후 진로 내 선로전환기 등을 일정 조건까지 쇄정</div>
+<div class="trap">⚠️ 접근쇄정 해정시분 시험 빈출: 장내신호기 = <strong>90초±10%</strong> / 출발·입환신호기 = <strong>30초±10%</strong> — 수치 교체 함정 주의</div>
+<div class="cross-ref">📌 <strong>철사쇄정 용어 표기:</strong> 일부 자료에서 "궤도쇄정(軌道鎖錠)" 또는 "TC쇄정"으로도 표기됨. 철도신호지침 계열에서는 "철사쇄정(Detector Locking)"이 공식 표기. 핵심 정의: <strong>선로전환기가 설치된 궤도회로를 열차가 점유하고 있을 때 그 선로전환기를 전환할 수 없도록 하는 쇄정.</strong></div>
+
+<div class="quiz-ex">
+<div class="qe-title">📝 기출 예시 (sig_042)</div>
+<div class="qe-q">Q. "일단 설정된 진로를 열차가 안전하게 통과할 때까지 필요한 설비가 바뀌지 않도록 유지하는 기능"은?</div>
+<div class="qe-a">정답: 진로쇄정</div>
+<span class="qe-wrong">오답함정: "접근쇄정"과 혼동 — 접근쇄정은 신호기 접근 후 급해제 방지, 진로쇄정은 통과 완료까지 유지</span>
+</div>
+
+<div class="quiz-ex">
+<div class="qe-title">📝 기출 예시 (sig_280)</div>
+<div class="qe-q">Q. 장내신호기 접근쇄정 해정시분은?<br>① 30초±10% ② 60초±10% ③ 90초±10% ④ 120초±10%</div>
+<div class="qe-a">정답: ③ 90초±10% (장내=90초, 출발·입환=30초 — 수치 교체 함정 빈출)</div>
+<span class="qe-wrong">수치 함정: 장내신호기 90초±10% / 출발·입환신호기(입환표지 포함) 30초±10%. 철도신호지침의 접근쇄정 해정시분 기준</span>
+</div>
+</div><!-- /concept E -->
+</div><!-- /section §5 -->
+
+
+<!-- ══ § 6. 신호기·선로전환기·궤도회로 관계 ══ -->
+<div class="section">
+<div class="section-title">§ 6. 신호기·선로전환기·궤도회로와 연동장치 관계</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념 F</span>3종 설비 연동 관계</div>
+<table><thead><tr><th>설비</th><th>연동장치에서의 역할</th><th>쇄정 예시</th></tr></thead><tbody>
+<tr class="hl"><td><strong>신호기</strong></td><td>진로 허가 표시 — 연동 조건 미충족 시 <strong>정지신호 자동 현시</strong></td><td>선로전환기 미완전 전환 → 진행 현시 불가</td></tr>
+<tr><td><strong>선로전환기</strong></td><td>진로 방향 결정 — 진로 설정 후 <strong>자동 쇄정</strong>, 임의 전환 불가</td><td>열차 진입 후 → 선로전환기 쇄정 유지</td></tr>
+<tr class="hl"><td><strong>궤도회로</strong></td><td>열차 점유·비점유 정보를 연동장치에 제공 → <strong>철사쇄정·진로쇄정 등 쇄정 조건</strong>으로 활용</td><td>선로전환기가 있는 궤도회로 점유 시 → 해당 선로전환기 전환 금지</td></tr>
+</tbody></table>
+<div class="tip">★ 핵심 관계: 연동장치는 신호기·선로전환기·궤도회로 등의 상태와 조건을 상호 연계하여 안전한 진로 설정 여부를 판단</div>
+<div class="theory-note"><strong>이론 배경:</strong> 연동장치는 "신호기가 진행을 허가하려면 → 선로전환기가 완전히 전환(검지 완료)되어야 하고 → 궤도회로에 열차가 없어야 한다"는 3중 조건을 동시에 검사합니다. 어느 하나라도 미충족이면 신호기는 정지신호를 유지합니다.</div>
+</div><!-- /concept F -->
+</div><!-- /section §6 -->
+
+
+<!-- ══ § 7. Fail-Safe와 전자연동장치 ══ -->
+<div class="section">
+<div class="section-title">§ 7. Fail-Safe 원칙과 전자연동장치(EI)</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념 G</span>Fail-Safe와 연동장치의 관계</div>
+<table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody>
+<tr class="hl"><td><strong>Fail-Safe 원칙</strong></td><td>장치 고장·오작동 시 <strong>자동으로 가장 안전한 상태(정지·차단)</strong>로 전환되는 설계 원칙</td></tr>
+<tr><td><strong>연동장치 적용</strong></td><td>고장·불확실 상태에서 <strong>안전하지 않은 진행 허가나 선로전환기 전환이 이루어지지 않도록</strong> 안전측으로 제어</td></tr>
+<tr class="hl"><td><strong>목적</strong></td><td>장치 고장이 사고로 이어지지 않도록 <strong>안전 측(Safety Side)이 Default</strong></td></tr>
+</tbody></table>
+<div class="trap">⚠️ 함정 주의: Fail-Safe = 고장 시 <strong>정지(안전) 측</strong>으로 작동 — 진행 측 현시 ❌</div>
+<div class="tip">★ Fail-Safe = 고장해도(Fail) 안전(Safe) — 이름 자체가 원칙 설명</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념 H</span>전자연동장치(EI) 특징</div>
+<table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody>
+<tr class="hl"><td><strong>정의</strong></td><td>연동 논리를 <strong>전자·컴퓨터 기반</strong>으로 처리하며 안전 논리와 이중화 등을 적용하는 연동장치</td></tr>
+<tr><td><strong>특징</strong></td><td>① 소프트웨어 연동 논리 ② 이중화(Redundancy) 구성 ③ 현대 철도 표준 ④ 원격 감시·유지보수 가능</td></tr>
+<tr><td><strong>장점</strong></td><td>기계식·전기식 대비: 유지보수↓, 기능 확장 용이, 진단 자동화</td></tr>
+</tbody></table>
+<div class="theory-note"><strong>이론 배경:</strong> 전자연동장치(EI: Electronic Interlocking)는 기존 릴레이·기계식 연동기를 컴퓨터 소프트웨어로 대체합니다. 안전 소프트웨어(SIL 인증)와 이중화 하드웨어로 Fail-Safe를 구현하며, 현대 도시철도·고속철도에 표준으로 적용됩니다.</div>
+</div><!-- /concept H -->
+</div><!-- /section §7 -->
+
+
+<!-- ══ § 8. 연동장치 vs 연동폐색식 ══ -->
+<div class="section">
+<div class="section-title">§ 8. 연동장치(Interlocking)와 연동폐색식 — 개념 혼동 주의</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념 I</span>연동장치 vs 연동폐색식 비교 ⚠️</div>
+<div class="two-axis-box">
+<div class="axis-card">
+<div class="axis-head">🔒 연동장치 (Interlocking)</div>
+<div class="axis-item"><strong>분류:</strong> 신호·보안 장치</div>
+<div class="axis-item"><strong>기능:</strong> 신호기·선로전환기·궤도회로를 상호 연동하여 충돌 진로 동시 설정 방지</div>
+<div class="axis-item"><strong>범위:</strong> 역 구내 — 분기·진로 설정 통제</div>
+<div class="axis-item"><strong>핵심:</strong> 진로 내 안전 (충돌·탈선 방지)</div>
+</div>
+<div class="axis-card">
+<div class="axis-head">🚦 연동폐색식 (Interlocking Block)</div>
+<div class="axis-item"><strong>분류:</strong> 폐색 방식 (구간 운전 통제)</div>
+<div class="axis-item"><strong>기능:</strong> 인접 역 간 전화·연동으로 폐색 허가 → 폐색취급원 필요</div>
+<div class="axis-item"><strong>범위:</strong> 역 간 구간 — 선행 열차와의 안전 거리 확보</div>
+<div class="axis-item"><strong>핵심:</strong> 구간 안전 (추돌 방지)</div>
+</div>
+</div>
+<div class="trap">⚠️ 함정 주의: 연동장치 ≠ 연동폐색식 — 연동장치는 역 구내 설비 통제, 연동폐색식은 역 간 폐색 방식</div>
+<div class="tip">★ 기억법: 연동장치 = 역 구내 충돌 방지 / 연동폐색식 = 역 간 추돌 방지</div>
+</div><!-- /concept I -->
+</div><!-- /section §8 -->
+
+
+<!-- ══ § 9. 시험 포인트 요약 ══ -->
+<div class="section">
+<div class="section-title">§ 9. 시험 포인트 요약 ⚠️</div>
+
+<div class="tip">★ 연동장치 정의: 신호기·선로전환기·궤도회로를 상호 연동하여 충돌 진로 동시 설정을 방지하는 안전장치 (속도 제어 아님)</div>
+<div class="tip">★ 쇄정 세부 용어: 정위·반위·정반위·편·조건부쇄정 / 기출 sig_261에서는 <strong>연속쇄정이 비해당</strong></div>
+<div class="tip">★ 진로쇄정 = 통과할 때까지 유지 / 접근쇄정 = 접근 후 급해제 방지</div>
+<div class="tip">★ 접근쇄정 해정시분: 장내 = <strong>90초±10%</strong> / 출발·입환 = <strong>30초±10%</strong></div>
+<div class="tip">★ 정위 = 평상시(기준) 위치 / 반위 = 반대쪽 전환 상태</div>
+<div class="tip">★ 전자연동장치(EI) = 컴퓨터 기반 연동 로직 + 이중화 = 현대 표준</div>
+
+<div class="trap">⚠️ 연동장치 목적 = 충돌·탈선 방지 (속도 제어·거리 단축 아님)</div>
+<div class="trap">⚠️ Fail-Safe = 고장 시 정지(안전) 측 — 진행 허가 방향 아님</div>
+<div class="trap">⚠️ 연동장치(역 구내 설비 통제) ≠ 연동폐색식(역 간 폐색 방식) — 혼동 금지</div>
+</div><!-- /section §9 -->
+
+
+<!-- ══ § 10. 기출문제 ══ -->
+<div class="section">
+<div class="section-title">§ 10. 기출문제 (정답은 § 11에서 확인)</div>
+<p style="font-size:.85em;color:#555;margin-bottom:12px;">
+  ⚠️ 정답·해설은 아래 § 11에만 수록됩니다. 먼저 직접 풀어본 후 확인하세요.
+</p>
+
+<!-- sig_040 -->
+<div class="quiz-mc">
+  <div class="qm-src">출처: signal-exam-data sig_040 | Part 2. 선로전환기·진로·연동 | 등급: S</div>
+  <div class="qm-q">Q1. 다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>"신호기·선로전환기·궤도회로 등을 상호 연동해 충돌 진로가 동시에 설정되지 않도록 하는 안전장치이다."</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 접근쇄정</div>
+    <div class="qm-choice">② 측면방호</div>
+    <div class="qm-choice">③ 연동장치</div>
+    <div class="qm-choice">④ 쇄정</div>
+  </div>
+</div>
+
+<!-- sig_041 -->
+<div class="quiz-mc">
+  <div class="qm-src">출처: signal-exam-data sig_041 | Part 2. 선로전환기·진로·연동 | 등급: S</div>
+  <div class="qm-q">Q2. 다음 중 「연동장치」에 대한 설명으로 옳은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 신호기·선로전환기·궤도회로 등을 상호 연동해 충돌 진로가 동시에 설정되지 않도록 하는 안전장치이다.</div>
+    <div class="qm-choice">② 설정된 진로에서 선로전환기가 임의로 움직이지 못하도록 잠그는 기능이다.</div>
+    <div class="qm-choice">③ 열차 또는 차량이 신호기에 의해 허용받아 통과하도록 설정된 선로 경로이다.</div>
+    <div class="qm-choice">④ 열차가 신호기에 접근한 뒤 진로를 급히 해제하여 위험이 생기는 것을 방지하는 기능이다.</div>
+  </div>
+</div>
+
+<!-- sig_042 -->
+<div class="quiz-mc">
+  <div class="qm-src">출처: signal-exam-data sig_042 | Part 2. 선로전환기·진로·연동 | 등급: A+</div>
+  <div class="qm-q">Q3. 다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>"일단 설정된 진로를 열차가 안전하게 통과할 때까지 필요한 설비가 바뀌지 않도록 유지하는 기능이다."</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 연동장치</div>
+    <div class="qm-choice">② 텅레일</div>
+    <div class="qm-choice">③ Fail-safe</div>
+    <div class="qm-choice">④ 진로쇄정</div>
+  </div>
+</div>
+
+<!-- sig_045 -->
+<div class="quiz-mc">
+  <div class="qm-src">출처: signal-exam-data sig_045 | Part 2. 선로전환기·진로·연동 | 등급: A+</div>
+  <div class="qm-q">Q4. 다음 중 「접근쇄정」에 대한 설명으로 옳은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 연동 논리를 전자·컴퓨터 기반으로 처리하며 안전논리와 이중화 등을 적용하는 연동장치이다.</div>
+    <div class="qm-choice">② 신호기·선로전환기·궤도회로 등을 상호 연동해 충돌 진로가 동시에 설정되지 않도록 하는 안전장치이다.</div>
+    <div class="qm-choice">③ 열차가 신호기에 접근한 뒤 진로를 급히 해제하여 위험이 생기는 것을 방지하는 기능이다.</div>
+    <div class="qm-choice">④ 분기기에서 열차의 진행 진로를 바꾸기 위해 포인트를 전환하는 장치이다.</div>
+  </div>
+</div>
+
+<!-- sig_049 -->
+<div class="quiz-mc">
+  <div class="qm-src">출처: signal-exam-data sig_049 | Part 2. 선로전환기·진로·연동 | 등급: A+</div>
+  <div class="qm-q">Q5. 다음 중 「전자연동장치」에 대한 설명으로 옳은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 분기기에서 열차의 진행 진로를 바꾸기 위해 포인트를 전환하는 장치이다.</div>
+    <div class="qm-choice">② 선로전환기가 명령된 끝 위치까지 실제로 전환되었는지 확인하는 기능이다.</div>
+    <div class="qm-choice">③ 설정된 진로에서 선로전환기가 임의로 움직이지 못하도록 잠그는 기능이다.</div>
+    <div class="qm-choice">④ 연동 논리를 전자·컴퓨터 기반으로 처리하며 안전논리와 이중화 등을 적용하는 연동장치이다.</div>
+  </div>
+</div>
+
+<!-- sig_261 -->
+<div class="quiz-mc">
+  <div class="qm-src">출처: signal-exam-data sig_261 | Part 2. 선로전환기·진로·연동 | 등급: A+</div>
+  <div class="qm-q">Q6. 다음 중 쇄정의 종류에 해당하지 않는 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 정위쇄정</div>
+    <div class="qm-choice">② 반위쇄정</div>
+    <div class="qm-choice">③ 연속쇄정</div>
+    <div class="qm-choice">④ 조건부쇄정</div>
+  </div>
+</div>
+
+<!-- sig_280 -->
+<div class="quiz-mc">
+  <div class="qm-src">출처: signal-exam-data sig_280 | Part 8. 법령·수치 | 등급: A+ | 근거: 철도신호지침 / KR S-06040 연동장치 쇄정 방법 계열</div>
+  <div class="qm-q">Q7. 장내신호기 접근쇄정 해정시분은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 30초 ± 10%</div>
+    <div class="qm-choice">② 60초 ± 10%</div>
+    <div class="qm-choice">③ 90초 ± 10%</div>
+    <div class="qm-choice">④ 120초 ± 10%</div>
+  </div>
+</div>
+
+</div><!-- /section §10 -->
+
+
+<!-- ══ § 11. 정답 및 해설 ══ -->
+<div class="section answer-section">
+<div class="section-title">§ 11. 정답 및 해설</div>
+
+<div class="ans-box">
+  <div class="ans-num">Q1 (sig_040)</div>
+  <div class="ans-answer">정답: ③ 연동장치</div>
+  <div class="ans-exp">신호기·선로전환기·궤도회로 등을 상호 연동해 충돌 진로가 동시에 설정되지 않도록 하는 안전장치이다.</div>
+  <div class="ans-caution">오답함정: "ATS가 연동 기능을 한다" — ATS는 속도 제어, 연동 기능은 연동장치 전담</div>
+</div>
+
+<div class="ans-box">
+  <div class="ans-num">Q2 (sig_041)</div>
+  <div class="ans-answer">정답: ① 신호기·선로전환기·궤도회로 등을 상호 연동해 충돌 진로가 동시에 설정되지 않도록 하는 안전장치이다.</div>
+  <div class="ans-exp">②는 쇄정, ③은 진로, ④는 접근쇄정 설명.</div>
+  <div class="ans-caution">오답함정: ②④를 연동장치로 혼동</div>
+</div>
+
+<div class="ans-box">
+  <div class="ans-num">Q3 (sig_042)</div>
+  <div class="ans-answer">정답: ④ 진로쇄정</div>
+  <div class="ans-exp">일단 설정된 진로를 열차가 안전하게 통과할 때까지 필요한 설비가 바뀌지 않도록 유지하는 기능이다.</div>
+  <div class="ans-caution">오답함정: "접근쇄정"과 혼동 — 접근쇄정은 접근 후 급해제 방지, 진로쇄정은 통과 완료까지 유지</div>
+</div>
+
+<div class="ans-box">
+  <div class="ans-num">Q4 (sig_045)</div>
+  <div class="ans-answer">정답: ③ 열차가 신호기에 접근한 뒤 진로를 급히 해제하여 위험이 생기는 것을 방지하는 기능이다.</div>
+  <div class="ans-exp">①은 전자연동장치, ②는 연동장치, ④는 선로전환기 설명.</div>
+  <div class="ans-caution">오답함정: ①②로 혼동. 접근쇄정 = 접근 후 급해제 방지 = 해정시분 규정과 연결</div>
+</div>
+
+<div class="ans-box">
+  <div class="ans-num">Q5 (sig_049)</div>
+  <div class="ans-answer">정답: ④ 연동 논리를 전자·컴퓨터 기반으로 처리하며 안전논리와 이중화 등을 적용하는 연동장치이다.</div>
+  <div class="ans-exp">①은 선로전환기, ②는 전환 검지, ③은 쇄정 설명.</div>
+  <div class="ans-caution">오답함정: ③ 쇄정과 전자연동장치를 혼동</div>
+</div>
+
+<div class="ans-box">
+  <div class="ans-num">Q6 (sig_261)</div>
+  <div class="ans-answer">정답: ③ 연속쇄정</div>
+  <div class="ans-exp">이 문항의 보기 중 비해당 항목은 ③ 연속쇄정. 철도신호지침의 쇄정 세부 용어에는 정위·반위·정반위·편·조건부쇄정 등이 있으므로, 이 문제를 ‘쇄정은 총 4종’으로 일반화하지 않는다.</div>
+  <div class="ans-caution">오답함정: 정반위쇄정은 ‘정위+반위를 동시에 요구’한다는 뜻이 아니라, 상대 취급버튼이 정위 또는 반위 어느 위치에 있든 그 현재 위치에 쇄정되는 관계</div>
+</div>
+
+<div class="ans-box">
+  <div class="ans-num">Q7 (sig_280)</div>
+  <div class="ans-answer">정답: ③ 90초 ± 10%</div>
+  <div class="ans-exp">장내신호기 접근쇄정 해정 = 90초±10%. 출발·입환신호기(입환표지 포함) = 30초±10%.</div>
+  <div class="ans-caution">오답함정: '30초=장내, 90초=출발'로 바꾸는 함정이 매 회 출제. 장내=90초 반드시 암기.</div>
+  <div class="ans-caution">출처: 철도신호지침 / KR S-06040 연동장치 쇄정 방법 Rev.6(2025.1.31 시행) 계열 기준.</div>
+</div>
+
+</div><!-- /section §11 -->
+
+
+<!-- 메타 박스 -->
+<div class="meta-box">
+  <strong>출처 및 보안 원칙</strong><br>
+  이론 본문: 4.html 개념 99~101 (연동장치·쇄정·Fail-Safe) · 철도공학 교육과정 표준 범위<br>
+  §4 쇄정 용어 5종: 철도신호지침 용어 정의(정위·반위·정반위·편·조건부쇄정) 기준 · 현행 KR S-06040 연동장치 쇄정 방법 Rev.6(2025.1.31 시행) 존재 확인<br>
+  §5 철사·진로·진로구분·접근·보류·시간쇄정: 철도신호지침 제152조~제160조 정의·해정 기준을 우선 반영<br>
+  Q7 접근쇄정 해정시분: 철도신호지침 / KR 연동장치 쇄정 기준 계열 (장내=90초±10% / 출발·입환=30초±10%)<br>
+  기출문제: signal-exam-data.ts sig_040·041·042·045·049·261·280 (7문항, 원문 그대로)<br>
+  이미지: images/연동장치의_연쇄와_쇄정.png<br>
+  ⚠️ 실제 자료에 없는 문제는 수록하지 않음. 임의 예상문제 생성 금지 원칙 준수.
+</div>
+
+</div><!-- /container -->
+</body>
+</html>

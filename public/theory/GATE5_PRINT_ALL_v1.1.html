@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GATE5 통합 인쇄 v1.1 — 선택 UNIT · 출력모드 선택</title>
+  <style>
+    /* ── 기본 레이아웃 ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #f0f2f5; color: #1a1a2e; min-height: 100vh; }
+
+    /* ── 헤더 ── */
+    .app-header {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2d5986 100%);
+      color: #fff;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    .app-header h1 { font-size: 1.1rem; font-weight: 700; }
+    .app-header .badge {
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: .73rem;
+    }
+    .header-right { margin-left: auto; font-size: .78rem; opacity: .75; }
+
+    /* ── 메인 ── */
+    .main { display: flex; min-height: calc(100vh - 50px); }
+
+    /* ── 좌측 사이드바 ── */
+    .sidebar {
+      width: 340px;
+      min-width: 280px;
+      background: #fff;
+      border-right: 1px solid #e2e6ea;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sidebar-inner { overflow-y: auto; flex: 1; padding: 12px 14px; }
+
+    /* ── 출력 모드 패널 ── */
+    .mode-panel {
+      padding: 10px 14px;
+      border-bottom: 1px solid #e9ecef;
+      background: #fafbfc;
+    }
+    .mode-panel-title {
+      font-size: .75rem;
+      font-weight: 700;
+      color: #555;
+      margin-bottom: 7px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .mode-options {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .mode-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: .82rem;
+      transition: background .12s, border-color .12s;
+      user-select: none;
+    }
+    .mode-option:hover { background: #f0f4ff; border-color: #c7d7ff; }
+    .mode-option input[type="radio"] { margin-top: 2px; cursor: pointer; }
+    .mode-option.selected { background: #eef3ff; border-color: #4c8bf5; }
+    .mode-option .mode-icon { font-size: 1em; }
+    .mode-detail { display: flex; flex-direction: column; gap: 2px; }
+    .mode-name { font-weight: 600; color: #1e3a5f; font-size: .82rem; }
+    .mode-desc { font-size: .72rem; color: #666; line-height: 1.4; }
+
+    /* ── 빠른 선택 버튼 ── */
+    .quick-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      padding: 10px 14px;
+      border-bottom: 1px solid #e9ecef;
+      background: #f8f9fa;
+    }
+    .quick-btns button {
+      padding: 4px 10px;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      background: #fff;
+      font-size: .76rem;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+      white-space: nowrap;
+    }
+    .quick-btns button:hover { background: #e9f0ff; border-color: #4c8bf5; color: #1d4ed8; }
+    .quick-btns button.danger:hover { background: #fff0f0; border-color: #e44; color: #c00; }
+
+    /* ── PART 그룹 ── */
+    .part-group { margin-bottom: 10px; }
+    .part-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 8px;
+      background: #f1f5f9;
+      border-radius: 6px;
+      font-size: .8rem;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      user-select: none;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 5px;
+    }
+    .part-label:hover { background: #e0eaff; }
+    .part-label input[type="checkbox"] { width: 14px; height: 14px; cursor: pointer; }
+    .part-count { margin-left: auto; font-size: .7rem; color: #64748b; font-weight: 400; }
+
+    /* ── UNIT 항목 ── */
+    .unit-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 7px 6px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: .8rem;
+      color: #374151;
+      border: 1px solid transparent;
+      margin-bottom: 2px;
+      transition: background .12s;
+    }
+    .unit-item:hover { background: #f0f4ff; border-color: #c7d7ff; }
+    .unit-item input[type="checkbox"] { width: 13px; height: 13px; cursor: pointer; }
+    .unit-code {
+      font-family: monospace;
+      font-size: .73rem;
+      background: #eef2ff;
+      color: #4f46e5;
+      border-radius: 4px;
+      padding: 1px 5px;
+      white-space: nowrap;
+    }
+    .unit-name { flex: 1; line-height: 1.3; }
+    .badge-done {
+      font-size: .63rem;
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+      padding: 1px 5px;
+      white-space: nowrap;
+    }
+    .badge-wip {
+      font-size: .63rem;
+      background: #fef9c3;
+      color: #854d0e;
+      border: 1px solid #fde68a;
+      border-radius: 10px;
+      padding: 1px 5px;
+      white-space: nowrap;
+    }
+
+    /* ── 인쇄 버튼 패널 ── */
+    .print-panel {
+      padding: 12px 14px;
+      border-top: 2px solid #e2e6ea;
+      background: #f8f9fa;
+    }
+    .selected-count { font-size: .8rem; color: #555; margin-bottom: 7px; }
+    .selected-count strong { color: #1e3a5f; }
+    .btn-print {
+      width: 100%;
+      padding: 10px 0;
+      background: #1e3a5f;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: .92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-print:hover { background: #2d5986; }
+    .btn-print:disabled { background: #b0b8c8; cursor: not-allowed; }
+
+    /* ── 우측 안내 ── */
+    .content-area {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+    }
+    .guide-box {
+      max-width: 520px;
+      background: #fff;
+      border: 1px solid #e2e6ea;
+      border-radius: 12px;
+      padding: 28px 32px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+    .guide-box h2 { font-size: 1rem; color: #1e3a5f; margin-bottom: 14px; font-weight: 700; }
+    .guide-box ol { padding-left: 18px; }
+    .guide-box li { font-size: .85rem; color: #444; margin-bottom: 7px; line-height: 1.6; }
+    .guide-box li strong { color: #1e3a5f; }
+    .mode-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: .78rem; }
+    .mode-table th { background: #1e3a5f; color: #fff; padding: 6px 10px; border: 1px solid #d0d7de; font-weight: 600; }
+    .mode-table td { padding: 5px 10px; border: 1px solid #e2e8f0; color: #444; }
+    .mode-table tr:nth-child(even) td { background: #f8fafc; }
+    .spec-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: .78rem; }
+    .spec-table th { background: #f1f5f9; color: #334155; font-weight: 600; padding: 5px 9px; border: 1px solid #e2e8f0; text-align: left; }
+    .spec-table td { padding: 5px 9px; border: 1px solid #e2e8f0; color: #555; }
+    .spec-table td:last-child { font-family: monospace; color: #1e3a5f; }
+    .warn-box { margin-top: 14px; background: #fef9c3; border: 1px solid #fde68a; border-radius: 8px; padding: 8px 12px; font-size: .8rem; color: #7c4b00; }
+
+    /* ── 로딩 오버레이 ── */
+    #loading-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      color: #fff;
+      font-size: .95rem;
+    }
+    #loading-overlay.show { display: flex; }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 4px solid rgba(255,255,255,.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── 인쇄 전용 영역 ── */
+    #print-content { display: none; }
+
+    /* ═══════════════════════════════════════════════════════
+       GATE5 PRINT LOCK v1  —  A4 링제본 여백
+       Chrome 인쇄 설정: 여백 기본값(Default) 선택
+       ═══════════════════════════════════════════════════════ */
+    @media print {
+      /* ── 화면 UI 전체 숨기기 ── */
+      .app-header, .main, .sidebar, .content-area,
+      #loading-overlay { display: none !important; }
+
+      /* ── 인쇄 컨텐츠 표시 ── */
+      #print-content { display: block !important; }
+
+      /* ── 페이지 규격 LOCK ── */
+      @page {
+        size: A4 portrait;
+        margin: 12mm 12mm 12mm 18mm;
+      }
+
+      /* ── 본문 기본 ── */
+      body { font-size: 12pt; line-height: 1.6; background: #fff !important; color: #000 !important; }
+
+      /* ── UNIT 사이 페이지 나눔 ── */
+      .unit-print-block { break-before: page; page-break-before: always; }
+      .unit-print-block:first-child { break-before: auto; page-break-before: auto; }
+
+      /* ── UNIT 공통 요소 ── */
+      .unit-header, .site-header { border-bottom: 2pt solid #000; padding: 6pt 0; }
+      .concept { page-break-inside: avoid; }
+      .vis-wrap { break-inside: avoid; page-break-inside: avoid; }
+      img, .vis-wrap img { max-width: 100%; height: auto; }
+      table { width: 100%; max-width: 100%; break-inside: avoid; page-break-inside: avoid; }
+      th { background: #e8e8e8 !important; color: #000 !important;
+           border: 1.5px solid #999 !important;
+           -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      td { border: 1px solid #bbb !important; }
+      .trap, .tip, .theory-note, .quiz-ex { break-inside: avoid; page-break-inside: avoid; }
+      .quiz-mc { break-inside: avoid; page-break-inside: avoid; }
+      .qst-box, .sys-card, .content-box { break-inside: avoid; page-break-inside: avoid; }
+      .answer-section { break-before: page; page-break-before: always; }
+      .print-btn { display: none !important; }
+      [data-ptype="ui"] { display: none !important; }
+      a { color: #000 !important; text-decoration: none; }
+
+      /* ════════════════════════════════════════════
+         출력 모드별 섹션 표시/숨김
+         tagSections()가 [data-ptype] 속성을 부여한 후
+         #print-content[data-print-mode]로 제어한다.
+         ════════════════════════════════════════════ */
+
+      /* 핵심정리 — 문제·정답 숨기기 */
+      #print-content[data-print-mode="summary"] [data-ptype="quiz"],
+      #print-content[data-print-mode="summary"] [data-ptype="answer"] {
+        display: none !important;
+      }
+
+      /* 문제집 — 본문·정답 숨기기 */
+      #print-content[data-print-mode="quiz"] [data-ptype="content"],
+      #print-content[data-print-mode="quiz"] [data-ptype="answer"] {
+        display: none !important;
+      }
+
+      /* 정답·해설 — 본문·문제 숨기기 */
+      #print-content[data-print-mode="answer"] [data-ptype="content"],
+      #print-content[data-print-mode="answer"] [data-ptype="quiz"] {
+        display: none !important;
+      }
+
+      /* 모든 모드에서: 헤더는 항상 표시 */
+      #print-content [data-ptype="header"] { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── 헤더 ── -->
+<header class="app-header">
+  <h1>🖨 GATE5 통합 인쇄</h1>
+  <span class="badge">PRINT ALL v1.1</span>
+  <div class="header-right">GATE5 PRINT LOCK v1 · A4 세로 · 링제본 22mm · 여백 기본값(Default)</div>
+</header>
+
+<!-- ── 로딩 오버레이 ── -->
+<div id="loading-overlay">
+  <div class="spinner"></div>
+  <div id="loading-msg">UNIT 로딩 중...</div>
+</div>
+
+<!-- ── 메인 ── -->
+<div class="main">
+
+  <!-- ── 좌측 사이드바 ── -->
+  <aside class="sidebar">
+
+    <!-- 출력 모드 선택 -->
+    <div class="mode-panel">
+      <div class="mode-panel-title">📤 출력 모드</div>
+      <div class="mode-options" id="mode-options">
+
+        <label class="mode-option selected" id="mode-opt-all">
+          <input type="radio" name="print-mode" value="all" checked onchange="onModeChange()">
+          <span class="mode-icon">📚</span>
+          <div class="mode-detail">
+            <span class="mode-name">전체 학습본</span>
+            <span class="mode-desc">본문 + VIS + 시험포인트 + 문제 + 정답해설</span>
+          </div>
+        </label>
+
+        <label class="mode-option" id="mode-opt-summary">
+          <input type="radio" name="print-mode" value="summary" onchange="onModeChange()">
+          <span class="mode-icon">📖</span>
+          <div class="mode-detail">
+            <span class="mode-name">핵심정리</span>
+            <span class="mode-desc">본문 + VIS + 시험포인트 (문제·정답 제외)</span>
+          </div>
+        </label>
+
+        <label class="mode-option" id="mode-opt-quiz">
+          <input type="radio" name="print-mode" value="quiz" onchange="onModeChange()">
+          <span class="mode-icon">📝</span>
+          <div class="mode-detail">
+            <span class="mode-name">문제집</span>
+            <span class="mode-desc">문제 섹션만 (본문·정답 제외)</span>
+          </div>
+        </label>
+
+        <label class="mode-option" id="mode-opt-answer">
+          <input type="radio" name="print-mode" value="answer" onchange="onModeChange()">
+          <span class="mode-icon">🔑</span>
+          <div class="mode-detail">
+            <span class="mode-name">정답·해설</span>
+            <span class="mode-desc">정답/해설 섹션만 (본문·문제 제외)</span>
+          </div>
+        </label>
+
+      </div>
+    </div>
+
+    <!-- 빠른 선택 -->
+    <div class="quick-btns">
+      <button onclick="selectAll()">✅ 전체 선택</button>
+      <button onclick="deselectAll()" class="danger">⬜ 전체 해제</button>
+      <button onclick="selectDone()">🟢 완성 UNIT</button>
+    </div>
+
+    <!-- UNIT 목록 -->
+    <div class="sidebar-inner" id="unit-list"></div>
+
+    <!-- 인쇄 버튼 패널 -->
+    <div class="print-panel">
+      <div class="selected-count" id="count-label">선택된 UNIT: <strong>0개</strong></div>
+      <button class="btn-print" id="btn-print" onclick="printSelected()" disabled>
+        🖨 선택 UNIT 인쇄 / PDF
+      </button>
+    </div>
+  </aside>
+
+  <!-- ── 우측 안내 ── -->
+  <div class="content-area">
+    <div class="guide-box">
+      <h2>📋 출력모드 · 인쇄 안내</h2>
+
+      <table class="mode-table">
+        <tr>
+          <th>모드</th><th>출력 내용</th>
+        </tr>
+        <tr><td>📚 전체 학습본</td><td>본문 + VIS + 시험포인트 + 문제 + 정답해설</td></tr>
+        <tr><td>📖 핵심정리</td><td>본문 + VIS + 시험포인트 <em>(문제·정답 제외)</em></td></tr>
+        <tr><td>📝 문제집</td><td>문제 섹션만 <em>(본문·정답 제외)</em></td></tr>
+        <tr><td>🔑 정답·해설</td><td>정답/해설 섹션만 <em>(본문·문제 제외)</em></td></tr>
+      </table>
+
+      <ol style="margin-top:14px;">
+        <li>좌측에서 <strong>출력 모드</strong>와 <strong>UNIT</strong>을 선택합니다.</li>
+        <li>「선택 UNIT 인쇄/PDF」 클릭 → 인쇄 대화상자 열림.</li>
+        <li>Chrome 인쇄 설정:
+          <ul style="margin-top:5px;padding-left:16px;">
+            <li>용지: <strong>A4</strong> · 방향: <strong>세로</strong> · 배율: <strong>100%</strong></li>
+            <li>여백: <strong>기본값(Default)</strong> — "없음" 절대 금지</li>
+            <li>배경 그래픽: 체크 권장</li>
+          </ul>
+        </li>
+        <li>각 UNIT은 <strong>새 페이지</strong>에서 시작합니다.</li>
+        <li>정답 섹션은 <strong>별도 페이지</strong>에서 시작합니다.</li>
+      </ol>
+
+      <table class="spec-table">
+        <tr><th>항목</th><th>GATE5 PRINT LOCK v1 설정값</th></tr>
+        <tr><td>상단 / 하단 여백</td><td>14mm / 14mm</td></tr>
+        <tr><td>우측 여백</td><td>12mm</td></tr>
+        <tr><td>좌측(링제본) 여백</td><td>22mm</td></tr>
+        <tr><td>용지</td><td>A4 세로 (210×297mm)</td></tr>
+      </table>
+
+      <div class="warn-box">
+        ⚠️ 실제 인쇄 검수 전에는 <strong>PRINT LOCK FINAL 처리를 하지 않습니다.</strong><br>
+        원본 UNIT 파일을 fetch하여 합성합니다 — 원본 수정 없음.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 인쇄 전용 컨테이너 ── -->
+<div id="print-content"></div>
+
+<script>
+/* ─────────────────────────────────────────────
+   GATE5 UNIT 레지스트리
+   향후 75 UNIT까지 이 배열에 추가하면 됩니다.
+   done: true = FINAL PUBLISH 완성 UNIT
+───────────────────────────────────────────── */
+const UNIT_REGISTRY = [
+  // ── PART 07 : 철도신호 (6개) ──
+  { id:'07-01', part:'07', partName:'PART 07 · 철도신호', label:'07-01 신호기 분류·현시·색상', file:'unit-07-01_FINAL_PUBLISH_v1.2.html', version:'v1.2', done:true  },
+  { id:'07-06', part:'07', partName:'PART 07 · 철도신호', label:'07-06 궤도회로 원리와 종류',  file:'unit-07-06_FINAL_PUBLISH_v1.6.html', version:'v1.6', done:true  },
+  { id:'07-07', part:'07', partName:'PART 07 · 철도신호', label:'07-07 무절연 AF 궤도회로',    file:'unit-07-07_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true  },
+  { id:'07-08', part:'07', partName:'PART 07 · 철도신호', label:'07-08 연동장치',               file:'unit-07-08_FINAL_PUBLISH_v1.2.html', version:'v1.2', done:true  },
+  { id:'07-09', part:'07', partName:'PART 07 · 철도신호', label:'07-09 폐색 시스템',            file:'unit-07-09_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true  },
+  { id:'07-10', part:'07', partName:'PART 07 · 철도신호', label:'07-10 Fail-Safe 원리',         file:'unit-07-10_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true  },
+  // ── PART 08 : 열차제어 시스템 (1개) ──
+  { id:'08-01', part:'08', partName:'PART 08 · 열차제어 시스템', label:'08-01 ATS · ATP · ATC · ATO', file:'unit-08-01_FINAL_PUBLISH_v1.5.html', version:'v1.5', done:true  },
+  // 향후 추가: { id:'01-01', part:'01', partName:'PART 01', label:'01-01 제목', file:'', version:'', done:false },
+];
+
+/* ── 현재 출력 모드 ── */
+let currentMode = 'all';
+
+/* ── 모드 라벨 ── */
+const MODE_NAMES = {
+  all:     '📚 전체 학습본',
+  summary: '📖 핵심정리',
+  quiz:    '📝 문제집',
+  answer:  '🔑 정답·해설',
+};
+
+/* ─── PART 그룹핑 ─── */
+function groupByPart(units) {
+  const map = new Map();
+  units.forEach(u => {
+    if (!map.has(u.part)) map.set(u.part, { partName: u.partName, units: [] });
+    map.get(u.part).units.push(u);
+  });
+  return map;
+}
+
+/* ─── 체크박스 헬퍼 ─── */
+function getChecked(id)      { const el = document.getElementById('chk-' + id); return el ? el.checked : false; }
+function setChecked(id, val) { const el = document.getElementById('chk-' + id); if (el) el.checked = val; }
+
+function updateCount() {
+  const n = UNIT_REGISTRY.filter(u => u.done && getChecked(u.id)).length;
+  document.getElementById('count-label').innerHTML = `선택된 UNIT: <strong>${n}개</strong>`;
+  document.getElementById('btn-print').disabled = (n === 0);
+
+  // PART 체크박스 동기화
+  const partMap = groupByPart(UNIT_REGISTRY);
+  partMap.forEach((group, partId) => {
+    const doneUnits = group.units.filter(u => u.done);
+    const allChecked = doneUnits.length > 0 && doneUnits.every(u => getChecked(u.id));
+    const partChk = document.getElementById('chk-part-' + partId);
+    if (partChk) partChk.checked = allChecked;
+  });
+}
+
+function selectAll()  { UNIT_REGISTRY.filter(u => u.done).forEach(u => setChecked(u.id, true));  updateCount(); }
+function deselectAll(){ UNIT_REGISTRY.forEach(u => setChecked(u.id, false));                      updateCount(); }
+function selectDone() { UNIT_REGISTRY.forEach(u => setChecked(u.id, u.done));                     updateCount(); }
+function togglePart(partId) {
+  const val = document.getElementById('chk-part-' + partId)?.checked ?? false;
+  UNIT_REGISTRY.filter(u => u.part === partId && u.done).forEach(u => setChecked(u.id, val));
+  updateCount();
+}
+
+/* ─── 모드 변경 ─── */
+function onModeChange() {
+  currentMode = document.querySelector('input[name="print-mode"]:checked')?.value ?? 'all';
+  document.querySelectorAll('.mode-option').forEach(el => el.classList.remove('selected'));
+  document.getElementById('mode-opt-' + currentMode)?.classList.add('selected');
+}
+
+/* ─── UNIT 목록 렌더링 ─── */
+function renderUnitList() {
+  const container = document.getElementById('unit-list');
+  const partMap = groupByPart(UNIT_REGISTRY);
+  let html = '';
+  partMap.forEach((group, partId) => {
+    const doneCount  = group.units.filter(u => u.done).length;
+    const totalCount = group.units.length;
+    html += `<div class="part-group">
+      <label class="part-label" for="chk-part-${partId}">
+        <input type="checkbox" id="chk-part-${partId}" onchange="togglePart('${partId}')">
+        ${group.partName}
+        <span class="part-count">${doneCount}/${totalCount}</span>
+      </label>`;
+    group.units.forEach(u => {
+      const badge = u.done
+        ? `<span class="badge-done">✅ ${u.version}</span>`
+        : `<span class="badge-wip">🚧 미완성</span>`;
+      html += `<label class="unit-item" for="chk-${u.id}">
+        <input type="checkbox" id="chk-${u.id}" ${!u.done ? 'disabled' : ''} onchange="updateCount()">
+        <span class="unit-code">${u.id}</span>
+        <span class="unit-name">${u.label}</span>
+        ${badge}
+      </label>`;
+    });
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+  updateCount();
+}
+
+/* ─────────────────────────────────────────────
+   섹션 분류 (tagSections)
+   fetch된 HTML DOM에 data-ptype 속성을 부여한다.
+
+   판정 기준:
+   · answer   — .answer-section
+   · quiz     — div.section(.quiz-mc 포함) | 독립 .quiz-mc | 독립 .qst-box
+   · content  — 그 외 div.section, content-box, 본문 요소
+   · header   — .unit-header, .site-header
+   · ui       — .print-btn
+─────────────────────────────────────────────── */
+function tagSections(bodyEl) {
+  // 1. answer-section
+  bodyEl.querySelectorAll('.answer-section').forEach(el => {
+    el.dataset.ptype = 'answer';
+  });
+
+  // 2. div.section 처리 (07-xx 계열)
+  bodyEl.querySelectorAll('.section:not(.answer-section)').forEach(el => {
+    if (!el.dataset.ptype) {
+      if (el.querySelector('.quiz-mc, .qst-box')) {
+        el.dataset.ptype = 'quiz';
+      } else {
+        el.dataset.ptype = 'content';
+      }
+    }
+  });
+
+  // 3. 독립 qst-box (08-01 계열 — section 래퍼 없음)
+  bodyEl.querySelectorAll('.qst-box').forEach(el => {
+    if (!el.closest('[data-ptype]')) {
+      el.dataset.ptype = 'quiz';
+    }
+  });
+
+  // 4. 독립 quiz-mc (section 밖에 있는 경우)
+  bodyEl.querySelectorAll('.quiz-mc').forEach(el => {
+    if (!el.closest('[data-ptype]')) {
+      el.dataset.ptype = 'quiz';
+    }
+  });
+
+  // 5. 헤더 — 항상 표시
+  bodyEl.querySelectorAll('.unit-header, .site-header, .page-header').forEach(el => {
+    el.dataset.ptype = 'header';
+  });
+
+  // 6. UI 요소 숨기기
+  bodyEl.querySelectorAll('.print-btn').forEach(el => {
+    el.dataset.ptype = 'ui';
+  });
+
+  // 7. 08-01 style: content-box, sec-title 등 미분류 본문 → content
+  bodyEl.querySelectorAll('.content-box, .sys-card').forEach(el => {
+    if (!el.closest('[data-ptype]') && !el.dataset.ptype) {
+      el.dataset.ptype = 'content';
+    }
+  });
+}
+
+/* ─────────────────────────────────────────────
+   인쇄 실행
+   선택 UNIT을 fetch → DOM 합성 → window.print()
+───────────────────────────────────────────── */
+async function printSelected() {
+  const selected = UNIT_REGISTRY.filter(u => u.done && getChecked(u.id));
+  if (selected.length === 0) { alert('인쇄할 UNIT을 선택하세요.'); return; }
+
+  const overlay = document.getElementById('loading-overlay');
+  const loadMsg = document.getElementById('loading-msg');
+  overlay.classList.add('show');
+
+  const printArea = document.getElementById('print-content');
+  printArea.innerHTML = '';
+
+  // data-print-mode 설정 (CSS 모드 제어용)
+  if (currentMode === 'all') {
+    printArea.removeAttribute('data-print-mode');
+  } else {
+    printArea.dataset.printMode = currentMode;
+  }
+
+  try {
+    for (let i = 0; i < selected.length; i++) {
+      const unit = selected[i];
+      loadMsg.textContent = `(${i + 1}/${selected.length}) [${MODE_NAMES[currentMode]}] ${unit.id} 로딩 중…`;
+
+      // ── fetch ──
+      const res = await fetch('./' + unit.file + '?v=' + Date.now());
+      if (!res.ok) throw new Error(`${unit.file} 로드 실패 (${res.status})`);
+      const html = await res.text();
+
+      // ── DOM 파싱 ──
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+
+      // 스크립트 제거 (JS 충돌 방지)
+      doc.querySelectorAll('script').forEach(s => s.remove());
+      // 외부 link 제거 (CDN 로드 방지)
+      doc.querySelectorAll('link[rel="stylesheet"]').forEach(l => l.remove());
+
+      // 섹션 분류
+      tagSections(doc.body);
+
+      // style 태그 수집
+      const styles = [...doc.querySelectorAll('style')].map(s => s.outerHTML).join('\n');
+
+      // body 내용
+      const bodyHtml = doc.body ? doc.body.innerHTML : '';
+
+      // ── 래퍼 div ──
+      const wrapper = document.createElement('div');
+      wrapper.className = 'unit-print-block';
+      wrapper.dataset.unitId = unit.id;
+      wrapper.innerHTML =
+        `<!-- ══ UNIT ${unit.id} ${unit.label} · ${MODE_NAMES[currentMode]} ══ -->\n` +
+        styles + '\n' + bodyHtml;
+
+      printArea.appendChild(wrapper);
+    }
+
+    loadMsg.textContent = `[${MODE_NAMES[currentMode]}] 준비 완료 — 대화상자 열기 중…`;
+    await new Promise(r => setTimeout(r, 400));
+    window.print();
+
+  } catch (err) {
+    alert('오류: ' + err.message);
+    console.error(err);
+  } finally {
+    overlay.classList.remove('show');
+    setTimeout(() => { printArea.innerHTML = ''; printArea.removeAttribute('data-print-mode'); }, 1500);
+  }
+}
+
+/* ── 초기화 ── */
+document.addEventListener('DOMContentLoaded', () => {
+  renderUnitList();
+});
+</script>
+</body>
+</html>
