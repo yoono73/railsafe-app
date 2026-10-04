@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import SidebarNav from '@/components/SidebarNav';
 import MobileNav from '@/components/MobileNav';
@@ -19,11 +20,11 @@ export default function TheoryLayoutClient({ user, children }: TheoryLayoutClien
   return (
     <div className="h-[100dvh] bg-zinc-50 flex flex-col overflow-hidden">
       <header className="bg-purple-900 text-white px-6 py-3 flex items-center justify-between shrink-0 z-20">
-        <div className="flex items-center gap-2">
+        <Link href="/dashboard" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <span className="text-xl">🚇</span>
           <span className="font-bold text-base">철도안전관리자</span>
           <span className="text-xs bg-purple-700 px-2 py-0.5 rounded-full ml-1">베타</span>
-        </div>
+        </Link>
         <div className="flex items-center gap-4">
           <span className="text-sm text-purple-300 hidden sm:block">{user.email}</span>
           <form action="/auth/signout" method="post">
