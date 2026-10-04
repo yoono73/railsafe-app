@@ -4,19 +4,28 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
+// CBT/스토리/기출문제/스토리 섹션에서 사용하는 과목 목록 (new4 없음)
 const subjects = [
   { id: 1, name: '교통안전관리론', icon: '📊' },
   { id: 2, name: '교통안전법', icon: '⚖️' },
   { id: 3, name: '열차운전', icon: '🚇' },
-  { id: 'new4', name: 'new_철도공학', icon: '🆕', href: '/theory/new_4.html' },
   { id: 4, name: '철도공학', icon: '🔧' },
   { id: 5, name: '철도산업기본법', icon: '📋' },
   { id: 6, name: '철도신호', icon: '🚦' },
   { id: 7, name: '철도안전법', icon: '🛡️' },
 ];
 
-// new4는 핵심정리 전용 — 스토리/CBT/기출문제 섹션에서는 제외
-const regularSubjects = subjects.filter(s => s.id !== 'new4');
+// 핵심정리 섹션에서 사용 (new4 포함) — subjects와 별도 관리
+const theorySubjects = [
+  { id: 1, name: '교통안전관리론', icon: '📊' },
+  { id: 2, name: '교통안전법', icon: '⚖️' },
+  { id: 3, name: '열차운전', icon: '🚇' },
+  { id: 'new4' as const, name: 'new_철도공학', icon: '🆕' },
+  { id: 4, name: '철도공학', icon: '🔧' },
+  { id: 5, name: '철도산업기본법', icon: '📋' },
+  { id: 6, name: '철도신호', icon: '🚦' },
+  { id: 7, name: '철도안전법', icon: '🛡️' },
+];
 
 export default function SidebarNav() {
   const pathname = usePathname();
@@ -104,7 +113,7 @@ export default function SidebarNav() {
 
         {openSection === 'theory' && (
           <div className="ml-4 flex flex-col gap-0.5">
-            {subjects.map(s => (
+            {theorySubjects.map(s => (
               <div key={s.id}>
                 {s.id === 'new4' ? (
                   <Link
@@ -308,7 +317,7 @@ export default function SidebarNav() {
 
         {openSection === 'story' && (
           <div className="ml-4 flex flex-col gap-0.5">
-            {regularSubjects.map(s => (
+            {subjects.map(s => (
               <Link
                 key={s.id}
                 href={`/story/${s.id}`}
@@ -339,7 +348,7 @@ export default function SidebarNav() {
 
         {openSection === 'cbt' && (
           <div className="ml-4 flex flex-col gap-0.5">
-            {regularSubjects.map(s => (
+            {subjects.map(s => (
               <Link
                 key={s.id}
                 href={`/cbt/${s.id}`}
@@ -370,7 +379,7 @@ export default function SidebarNav() {
 
         {openSection === 'kibchul' && (
           <div className="ml-4 flex flex-col gap-0.5">
-            {regularSubjects.map(s => (
+            {subjects.map(s => (
               <div key={s.id}>
                 <Link
                   href={`/kibchul/${s.id}`}
