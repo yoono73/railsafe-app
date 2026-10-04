@@ -197,6 +197,15 @@ export default function SidebarNav() {
                 {/* 철도공학(id=4) 아래 링크들 */}
                 {s.id === 4 && (
                   <div className="pl-2 border-l border-amber-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
+                    <a
+                      href="/theory/new_4.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors bg-orange-50 text-orange-700 hover:bg-orange-100 hover:text-orange-900 font-semibold border border-orange-200"
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>🆕 GATE5 new_철도공학</span>
+                    </a>
                     <Link
                       href="/kibchul/engineering/concept"
                       className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
