@@ -45,7 +45,7 @@ body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #f0
 /* ── 메인 콘텐츠 영역 ── */
 #main { display: flex; flex: 1; overflow: hidden; }
 
-/* ── 왼쪽 사이드바 ── */
+/* ── 왼쪽 사이드바 (오버레이 드로어 방식) ── */
 #sidebar {
   width: 280px;
   min-width: 220px;
@@ -56,8 +56,28 @@ body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #f0
   flex-direction: column;
   overflow: hidden;
   flex-shrink: 0;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.06);
+  /* 기본: 오버레이로 숨김 */
+  position: fixed;
+  top: 52px;
+  left: 0;
+  bottom: 0;
+  z-index: 200;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+  box-shadow: 4px 0 16px rgba(0,0,0,0.2);
 }
+#sidebar.open { transform: translateX(0); }
+
+/* ── 오버레이 배경 ── */
+#overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  top: 52px;
+  background: rgba(0,0,0,0.35);
+  z-index: 150;
+}
+#overlay.active { display: block; }
 
 /* ── 사이드바 상단 ── */
 #sidebar-header {
@@ -238,40 +258,15 @@ body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #f0
 }
 #welcome-screen .pub-chip:hover { background: #c5cae9; }
 
-/* ── 모바일 토글 ── */
+/* ── 목차 토글 버튼 (항상 표시) ── */
 #mobile-menu-btn {
-  display: none;
+  display: block;
   background: none;
   border: none;
   color: #fff;
   font-size: 22px;
   cursor: pointer;
   padding: 0 4px;
-}
-
-/* ── 반응형 ── */
-@media (max-width: 768px) {
-  #mobile-menu-btn { display: block; }
-  #sidebar {
-    position: fixed;
-    top: 52px;
-    left: 0;
-    bottom: 0;
-    z-index: 200;
-    transform: translateX(-100%);
-    transition: transform 0.25s ease;
-    box-shadow: 4px 0 16px rgba(0,0,0,0.2);
-  }
-  #sidebar.open { transform: translateX(0); }
-  #overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    top: 52px;
-    background: rgba(0,0,0,0.35);
-    z-index: 150;
-  }
-  #overlay.active { display: block; }
 }
 
 /* ── 준비중 뱃지 ── */
