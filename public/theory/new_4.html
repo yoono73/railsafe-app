@@ -542,6 +542,17 @@ function activateUnit(unitId, unit) {
   document.getElementById('welcome-screen').style.display = 'none';
   const iframe = document.getElementById('unit-iframe');
   iframe.style.display = 'block';
+  iframe.onload = function() {
+    try {
+      const doc = this.contentDocument;
+      if (!doc || !doc.head) return;
+      if (doc.getElementById('__gate5-width-override')) return;
+      const style = doc.createElement('style');
+      style.id = '__gate5-width-override';
+      style.textContent = '.container { max-width: 100% !important; }';
+      doc.head.appendChild(style);
+    } catch(e) {}
+  };
   iframe.src = unit.file;
 
   // 모바일: 목차 닫기
