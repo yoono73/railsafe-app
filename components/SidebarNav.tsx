@@ -15,6 +15,9 @@ const subjects = [
   { id: 7, name: '철도안전법', icon: '🛡️' },
 ];
 
+// new4는 핵심정리 전용 — 스토리/CBT/기출문제 섹션에서는 제외
+const regularSubjects = subjects.filter(s => s.id !== 'new4');
+
 export default function SidebarNav() {
   const pathname = usePathname();
 
@@ -305,7 +308,7 @@ export default function SidebarNav() {
 
         {openSection === 'story' && (
           <div className="ml-4 flex flex-col gap-0.5">
-            {subjects.map(s => (
+            {regularSubjects.map(s => (
               <Link
                 key={s.id}
                 href={`/story/${s.id}`}
@@ -336,7 +339,7 @@ export default function SidebarNav() {
 
         {openSection === 'cbt' && (
           <div className="ml-4 flex flex-col gap-0.5">
-            {subjects.map(s => (
+            {regularSubjects.map(s => (
               <Link
                 key={s.id}
                 href={`/cbt/${s.id}`}
@@ -367,7 +370,7 @@ export default function SidebarNav() {
 
         {openSection === 'kibchul' && (
           <div className="ml-4 flex flex-col gap-0.5">
-            {subjects.map(s => (
+            {regularSubjects.map(s => (
               <div key={s.id}>
                 <Link
                   href={`/kibchul/${s.id}`}
