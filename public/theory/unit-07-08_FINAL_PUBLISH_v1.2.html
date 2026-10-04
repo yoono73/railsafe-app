@@ -139,6 +139,15 @@ tr.hl td { background:#fff; font-weight:bold; }
 }
 
 /* 프린트 전용 설정 */
+/* 인쇄 버튼 */
+.print-btn {
+  position:fixed; top:12px; right:16px; z-index:999;
+  background:#78350f; color:#fff; border:none; border-radius:5px;
+  padding:6px 14px; font-size:.85em; font-weight:bold; cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+}
+.print-btn:hover { background:#5c2707; }
+
 @media print {
   body { font-size:12pt; line-height:1.6; background:#fff !important; color:#000 !important; }
   .site-header { border-bottom:2pt solid #000; padding:6pt 0; }
@@ -168,6 +177,8 @@ tr.hl td { background:#fff; font-weight:bold; }
 </style>
 </head>
 <body>
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+
 <header class="site-header">
   <h1>철도교통안전관리자 — 철도공학</h1>
   <div class="meta">07-08 연동장치 상세 | FINAL PUBLISH v1.2</div>
