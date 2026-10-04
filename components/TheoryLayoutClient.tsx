@@ -38,7 +38,7 @@ export default function TheoryLayoutClient({ user, children }: TheoryLayoutClien
       <div className="flex flex-1 overflow-hidden min-h-0">
         {!isFullPage && <SidebarNav />}
         {!isFullPage && <MobileNav />}
-        <main className="flex-1 flex flex-col overflow-hidden pb-20 md:pb-0">
+        <main className={`flex-1 flex flex-col overflow-hidden ${isFullPage ? '' : 'pb-20 md:pb-0'}`}>
           {children}
         </main>
       </div>
