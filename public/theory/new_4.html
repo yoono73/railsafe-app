@@ -68,6 +68,23 @@ body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #f0
 }
 #sidebar.open { transform: translateX(0); }
 
+/* ── 데스크톱: sidebar를 push-content 방식으로 ── */
+@media (min-width: 768px) {
+  #sidebar {
+    position: relative !important;
+    transform: none !important;
+    box-shadow: none !important;
+    transition: width 0.25s ease !important;
+    top: auto; left: auto; bottom: auto; z-index: 1;
+  }
+  #sidebar:not(.open) {
+    width: 0 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+  #overlay, #overlay.active { display: none !important; }
+}
+
 /* ── 오버레이 배경 ── */
 #overlay {
   display: none;
@@ -549,7 +566,7 @@ function activateUnit(unitId, unit) {
       if (doc.getElementById('__gate5-width-override')) return;
       const style = doc.createElement('style');
       style.id = '__gate5-width-override';
-      style.textContent = '.container { max-width: 100% !important; }';
+      style.textContent = '.container { max-width: none !important; margin-right: 0 !important; }';
       doc.head.appendChild(style);
     } catch(e) {}
   };
