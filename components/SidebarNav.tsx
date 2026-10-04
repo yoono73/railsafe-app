@@ -104,15 +104,13 @@ export default function SidebarNav() {
             {subjects.map(s => (
               <div key={s.id}>
                 {s.id === 'new4' ? (
-                  <a
-                    href={(s as {id: string; name: string; icon: string; href: string}).href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href="/theory/new_4.html"
                     className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-colors bg-orange-50 text-orange-700 hover:bg-orange-100 hover:text-orange-900 border border-orange-200"
                   >
                     <span>{s.icon}</span>
                     <span className="truncate">{s.name}</span>
-                  </a>
+                  </Link>
                 ) : (
                 <Link
                   href={`/theory/${s.id}`}
