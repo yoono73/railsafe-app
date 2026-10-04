@@ -566,7 +566,34 @@ function activateUnit(unitId, unit) {
       if (doc.getElementById('__gate5-width-override')) return;
       const style = doc.createElement('style');
       style.id = '__gate5-width-override';
-      style.textContent = '.container, .page-wrap { max-width: none !important; margin: 0 !important; padding-left: 24px !important; padding-right: 130px !important; } .print-btn { right: 16px !important; }';
+      style.textContent = [
+        /* WEB 전용: 화면에서만 130px 우측 안전여백 + 폭 확장 */
+        '@media screen {',
+        '  .container, .page-wrap {',
+        '    max-width: none !important;',
+        '    margin: 0 !important;',
+        '    padding-left: 24px !important;',
+        '    padding-right: 130px !important;',
+        '  }',
+        '  .print-btn { right: 16px !important; }',
+        '}',
+        /* PRINT 전용: WEB override 제거, site-header 숨기기 */
+        '@media print {',
+        '  .site-header {',
+        '    display: none !important;',
+        '    margin: 0 !important;',
+        '    padding: 0 !important;',
+        '    height: 0 !important;',
+        '    overflow: hidden !important;',
+        '    border: none !important;',
+        '  }',
+        '  .container, .page-wrap {',
+        '    max-width: none !important;',
+        '    margin: 0 !important;',
+        '    padding: 0 !important;',
+        '  }',
+        '}'
+      ].join('\n');
       doc.head.appendChild(style);
     } catch(e) {}
   };
