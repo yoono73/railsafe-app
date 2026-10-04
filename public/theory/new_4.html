@@ -566,7 +566,7 @@ function activateUnit(unitId, unit) {
       if (doc.getElementById('__gate5-width-override')) return;
       const style = doc.createElement('style');
       style.id = '__gate5-width-override';
-      style.textContent = '.container { max-width: none !important; margin-right: 0 !important; }';
+      style.textContent = '.container, .page-wrap { max-width: none !important; margin: 0 !important; padding-left: 24px !important; padding-right: 24px !important; }';
       doc.head.appendChild(style);
     } catch(e) {}
   };
