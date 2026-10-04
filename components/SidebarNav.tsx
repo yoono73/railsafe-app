@@ -105,7 +105,7 @@ export default function SidebarNav() {
               <div key={s.id}>
                 {s.id === 'new4' ? (
                   <Link
-                    href="/theory/new_4.html"
+                    href="/theory/new4"
                     className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-colors bg-orange-50 text-orange-700 hover:bg-orange-100 hover:text-orange-900 border border-orange-200"
                   >
                     <span>{s.icon}</span>
