@@ -8,6 +8,7 @@ const subjects = [
   { id: 1, name: '교통안전관리론', icon: '📊' },
   { id: 2, name: '교통안전법', icon: '⚖️' },
   { id: 3, name: '열차운전', icon: '🚇' },
+  { id: 'new4', name: 'new_철도공학', icon: '🆕', href: '/theory/new_4.html' },
   { id: 4, name: '철도공학', icon: '🔧' },
   { id: 5, name: '철도산업기본법', icon: '📋' },
   { id: 6, name: '철도신호', icon: '🚦' },
@@ -102,6 +103,17 @@ export default function SidebarNav() {
           <div className="ml-4 flex flex-col gap-0.5">
             {subjects.map(s => (
               <div key={s.id}>
+                {s.id === 'new4' ? (
+                  <a
+                    href={(s as {id: string; name: string; icon: string; href: string}).href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-colors bg-orange-50 text-orange-700 hover:bg-orange-100 hover:text-orange-900 border border-orange-200"
+                  >
+                    <span>{s.icon}</span>
+                    <span className="truncate">{s.name}</span>
+                  </a>
+                ) : (
                 <Link
                   href={`/theory/${s.id}`}
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
@@ -113,6 +125,7 @@ export default function SidebarNav() {
                   <span>{s.icon}</span>
                   <span className="truncate">{s.name}</span>
                 </Link>
+                )}
                 {/* 교통안전관리론(id=1) 아래 링크들 */}
                 {s.id === 1 && (
                   <div className="pl-2 border-l border-pink-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
@@ -197,15 +210,6 @@ export default function SidebarNav() {
                 {/* 철도공학(id=4) 아래 링크들 */}
                 {s.id === 4 && (
                   <div className="pl-2 border-l border-amber-200 ml-4 mt-0.5 mb-0.5 flex flex-col gap-0.5">
-                    <a
-                      href="/theory/new_4.html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors bg-orange-50 text-orange-700 hover:bg-orange-100 hover:text-orange-900 font-semibold border border-orange-200"
-                    >
-                      <span className="text-[10px]">└</span>
-                      <span>🆕 GATE5 new_철도공학</span>
-                    </a>
                     <Link
                       href="/kibchul/engineering/concept"
                       className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
