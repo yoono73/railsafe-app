@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08-02 TTC · CTC · 운전보안장치</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-lock { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+  .sec-sub { font-size: 14px; font-weight: 700; color: #1a1a1a; margin: 20px 0 8px; padding: 4px 10px; background: #f5f7fa; border-left: 3px solid #64748b; }
+
+  .term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
+  .term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+  .term-name { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 4px; }
+  .term-desc { font-size: 13px; color: #333; line-height: 1.6; }
+  .term-why { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+  .content-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-top: 10px; font-size: 14px; }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+
+  .table-wrap { overflow-x: auto; margin-top: 12px; }
+  .table-wrap table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .table-wrap th { background: #1e3a5f; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+  .table-wrap td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  .table-wrap tr:last-child td { border-bottom: none; }
+  .table-wrap tr:nth-child(even) td { background: #f8fafc; }
+
+  .tip { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 6px; padding: 12px 14px; margin-top: 12px; font-size: 13px; color: #0369a1; }
+  .trap { background: #fff7ed; border: 1px solid #fdba74; border-radius: 6px; padding: 12px 14px; margin-top: 10px; font-size: 13px; color: #9a3412; }
+
+  .vis-wrap { margin: 16px 0; text-align: center; }
+  .vis-img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+
+  .quiz-mc { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-top: 14px; }
+  .qm-src { font-size: 11px; color: #64748b; margin-bottom: 8px; }
+  .qm-q { font-size: 14px; font-weight: 700; margin-bottom: 10px; line-height: 1.6; }
+  .qm-choices { list-style: none; }
+  .qm-choices li { font-size: 13px; padding: 3px 0; }
+
+  .ans-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 14px; }
+  .ans-table th { background: #1e3a5f; color: #fff; padding: 7px 10px; font-weight: 700; text-align: center; }
+  .ans-table td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  .ans-table tr:last-child td { border-bottom: none; }
+  .ans-table tr:nth-child(even) td { background: #f8fafc; }
+
+  .meta { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 14px 16px; margin-top: 40px; font-size: 12px; color: #64748b; line-height: 1.8; }
+  .meta strong { color: #1a1a1a; }
+
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    .page-wrap { padding: 10px; }
+    .sec-title { margin-top: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<!-- ===== 헤더 ===== -->
+<div class="unit-header">
+  <div class="unit-num">GATE5 · PART 08 · UNIT 02</div>
+  <div class="unit-title">TTC · CTC · 운전보안장치</div>
+  <div class="unit-sub">열차집중제어(TTC/CTC) 구성·역할·효과 / TMS / 운전보안장치(ATS·ATP·ATC·ATO) 개요</div>
+  <div class="badge-row">
+    <span class="badge badge-part">PART 08 신호제어</span>
+    <span class="badge badge-grade">기출 A등급</span>
+    <span class="badge badge-lock">FINAL PUBLISH v1.0</span>
+  </div>
+</div>
+
+<!-- ===== §0 선행 용어 ===== -->
+<h2 class="sec-title">§0 · 선행 용어</h2>
+<div class="term-grid">
+  <div class="term-card">
+    <div class="term-name">TTC (Train Traffic Control)</div>
+    <div class="term-desc">열차집중제어. 한국 철도에서 CTC와 혼용되는 용어. 중앙 사령실에서 다수 역의 신호·진로를 원격 감시·제어.</div>
+    <div class="term-why">※ 시험에서 TTC=CTC로 보면 된다</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">CTC (Centralized Traffic Control)</div>
+    <div class="term-desc">열차집중제어장치. 중앙에서 신호·진로를 원격 제어하는 시스템. 여러 역을 한 곳에서 감시·조작.</div>
+    <div class="term-why">※ 연동장치와 역할 분담 구분 필수</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">TMS (Train Management System)</div>
+    <div class="term-desc">열차운행관리시스템. 열차운행 현황·운행계획·지연 등을 종합 관리. CTC보다 상위 관리 개념.</div>
+    <div class="term-why">※ CTC≠TMS: CTC=신호·진로 제어, TMS=운행관리·계획</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">운전보안장치</div>
+    <div class="term-desc">열차 운전의 안전을 확보하는 장치 총칭. ATS·ATP·ATC·ATO 등 차상·지상 장치 포함.</div>
+    <div class="term-why">→ 상세 내용: 08-01 참조</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">LCP (Local Control Panel)</div>
+    <div class="term-desc">현장역에 설치된 제어반. CTC 명령 수신 → 연동장치·ATC 전송, 현장 설비 표시정보 → CTC 전송.</div>
+    <div class="term-why">★ 설치 위치: <strong>현장역</strong> (CTC 사령실 아님)</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">연동장치</div>
+    <div class="term-desc">신호기·선로전환기 간 상호 논리조건을 확인해 충돌 방지. CTC 명령에도 최종 안전확인 담당.</div>
+    <div class="term-why">※ CTC는 명령, 연동장치는 안전논리 확인</div>
+  </div>
+</div>
+
+<!-- ===== §1 TTC / CTC ===== -->
+<h2 class="sec-title">§1 · TTC / CTC — 열차집중제어</h2>
+
+<div class="vis-wrap">
+  <img class="vis-img" src="images/VIS-087_TTC_CTC비교표.png" alt="VIS-087 TTC/CTC 비교표">
+  <p class="vis-cap">VIS-087 | TTC / CTC 비교표 — 명칭·역할·구성 비교</p>
+</div>
+
+<div class="sec-sub">CTC가 왜 필요한가?</div>
+<div class="content-box">
+  <p><strong>CTC 이전:</strong> 각 역마다 역무원이 신호기·선로전환기를 직접 조작 → 수십 개 역에 수십 명 필요, 운전 밀도 한계</p>
+  <p><strong>CTC 이후:</strong> <strong>1개 중앙 사령실</strong>에서 수십 개 역을 동시에 감시·원격 제어 → 인력 절감, 고밀도 운전 가능</p>
+</div>
+
+<div class="sec-sub">CTC 주요 효과</div>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>효과</th><th>설명</th></tr></thead>
+    <tbody>
+      <tr><td><strong>열차 운행상황 집중 감시·표시</strong></td><td>전 구간 열차 위치·운행상황을 대형 표시반에 실시간 표시</td></tr>
+      <tr><td><strong>진로 자동 제어</strong></td><td>열차 운행계획에 따라 진로 자동 설정·해제</td></tr>
+      <tr><td><strong>신호설비 원격 감시</strong></td><td>원격지 신호기·선로전환기 상태 감시</td></tr>
+      <tr><td><strong>인력 절감</strong></td><td>각 역 신호취급 인원 감축 가능</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="trap">⚠️ 함정: <strong>CTC의 효과에 "열차운행계획의 문서화"는 포함되지 않는다.</strong> 문서화·계획 수립은 TMS(열차운행관리시스템)의 역할이다. ★ 빈출</div>
+
+<div class="sec-sub">CTC 구성 요소</div>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>구성</th><th>역할</th></tr></thead>
+    <tbody>
+      <tr><td><strong>CTC 사령실</strong></td><td>중앙 감시·제어 거점. 표시반, 제어반, 서버 등 설치</td></tr>
+      <tr><td><strong>LCP (현장역)</strong></td><td>CTC 명령 → 연동장치·ATC 전달 / 현장 설비 상태 → CTC 전송 ★ 위치: <strong>현장역</strong></td></tr>
+      <tr><td><strong>연동장치</strong></td><td>CTC가 진로 명령을 내려도 실제 안전확인·충돌방지는 연동장치가 최종 담당</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="tip">💡 핵심 관계: <strong>CTC = 명령 (What)</strong> / <strong>연동장치 = 안전논리 확인 (How / Safety)</strong><br>CTC의 진로 명령이 들어와도 연동장치가 안전조건(선로전환기 정위, 적색신호 구간 없음 등)을 확인하지 않으면 신호를 내보내지 않는다.</div>
+
+<!-- ===== §2 TMS ===== -->
+<h2 class="sec-title">§2 · TMS — 열차운행관리시스템</h2>
+
+<div class="content-box">
+  <p><strong>TMS (Train Management System)</strong>: 열차운행 현황·운행계획·지연 등을 종합적으로 관리하는 상위 시스템.</p>
+  <p>CTC가 신호·진로의 현장 실시간 제어에 집중한다면, TMS는 운행계획 수립·지연 관리·예측·조정 등 관리 업무를 담당한다.</p>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>구분</th><th>CTC</th><th>TMS</th></tr></thead>
+    <tbody>
+      <tr><td><strong>역할</strong></td><td>신호·진로 원격 감시·제어</td><td>열차운행 관리·계획·지연 조정</td></tr>
+      <tr><td><strong>성격</strong></td><td>현장 실시간 제어</td><td>운행 관리·상위 계획</td></tr>
+      <tr><td><strong>관계</strong></td><td>CTC ⊂ TMS 체계 안에 포함</td><td>CTC보다 상위 개념</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="trap">⚠️ 함정: <strong>CTC = 운행관리</strong>라고 외우면 오답. CTC는 <strong>신호·진로 제어</strong>, 운행관리·계획 수립은 <strong>TMS</strong> ★</div>
+
+<!-- ===== §3 운전보안장치 개요 ===== -->
+<h2 class="sec-title">§3 · 운전보안장치 개요 (ATS · ATP · ATC · ATO)</h2>
+
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>장치</th><th>풀네임</th><th>핵심 기능</th><th>특징 키워드</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ATS</strong></td><td>Automatic Train Stop</td><td>신호위반·과속 시 자동 정지 개입</td><td>불연속 지점 경보·제동 ★</td></tr>
+      <tr><td><strong>ATP</strong></td><td>Automatic Train Protection</td><td>운행권한·허용속도 감시 → 위반 시 제동 강제</td><td>ATO의 안전 기반 (하위) ★★</td></tr>
+      <tr><td><strong>ATC</strong></td><td>Automatic Train Control</td><td>허용속도 연속 감시·제어 → 초과 시 자동 제동</td><td>연속 속도감시 ★</td></tr>
+      <tr><td><strong>ATO</strong></td><td>Automatic Train Operation</td><td>출발·가속·감속·정위치정차·출입문 자동 제어</td><td>ATP 위에서 동작 (상위) ★★</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="tip">💡 계층 관계: <strong>ATP (안전 기반, 하위) → ATO (자동운전, 상위)</strong><br>ATO는 ATP가 없으면 단독 운행 불가. ATP는 ATO 없이도 동작 가능.</div>
+
+<div class="trap">⚠️ ATS vs ATC 혼동 주의: ATS=<strong>불연속</strong>(지점) 경보·제동 / ATC=<strong>연속</strong> 속도감시·제동 ★ 빈출</div>
+
+<div class="content-box" style="margin-top:12px; font-size:13px;">
+  <p>📌 상세 내용(지상자 구조, 속도조사식 원리, 지상자 이격거리 수치 등)은 → <strong>08-01 ATS·ATP·ATC·ATO 열차제어 시스템</strong> 참조</p>
+</div>
+
+<!-- ===== §4 CTC vs 연동장치 ===== -->
+<h2 class="sec-title">§4 · CTC와 연동장치의 역할 분담</h2>
+
+<div class="vis-wrap">
+  <img class="vis-img" src="images/VIS-040_CTC_ATC비교도해.png" alt="VIS-040 CTC·ATC 비교도해">
+  <p class="vis-cap">VIS-040 | CTC · ATC 비교도해 — 시스템 계층 및 역할</p>
+</div>
+
+<div class="content-box">
+  <p><strong>[흐름]</strong> CTC 사령실에서 진로 명령 발령 → LCP(현장역)가 수신 → 연동장치로 전달 → 연동장치가 안전조건 확인 → 조건 충족 시 신호기 현시·선로전환기 동작</p>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>단계</th><th>주체</th><th>역할</th></tr></thead>
+    <tbody>
+      <tr><td>①</td><td><strong>CTC 사령실</strong></td><td>진로 설정 명령 발령 (운전 관제)</td></tr>
+      <tr><td>②</td><td><strong>LCP (현장역)</strong></td><td>CTC 명령 수신 → 연동장치·ATC에 전달</td></tr>
+      <tr><td>③</td><td><strong>연동장치</strong></td><td>안전조건 확인 (충돌·탈선 방지) → 최종 신호 현시</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="tip">💡 핵심 암기: CTC가 아무리 "가라"고 해도, <strong>연동장치가 안전조건을 확인하기 전까지는 신호가 진행을 현시하지 않는다.</strong></div>
+
+<!-- ===== §5 ATS 지상자 이격거리 ===== -->
+<h2 class="sec-title">§5 · ATS 수치 기준</h2>
+
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>항목</th><th>기준값</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ATS 지상자 레일면 이격거리</strong></td><td><strong>400mm 이상</strong></td><td>★ 빈출 수치</td></tr>
+      <tr><td>속도조사식 ATS 지상자 설치위치</td><td>우측 레일면에서 300mm±10mm</td><td>이격거리와 혼동 금지</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="trap">⚠️ 함정: "ATS 지상자 이격거리"= <strong>400mm 이상</strong> / "속도조사식 설치위치" = 300mm ±10mm — 두 수치 혼동 빈출 ★</div>
+
+<!-- ===== §6 시험 포인트 ===== -->
+<h2 class="sec-title">§6 · 시험 포인트 요약</h2>
+
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>포인트</th><th>정답 암기</th></tr></thead>
+    <tbody>
+      <tr><td>TTC = ?</td><td>CTC와 동의어 (열차집중제어)</td></tr>
+      <tr><td>CTC 효과에 <strong>포함되지 않는</strong> 것</td><td>열차운행계획의 문서화 ★</td></tr>
+      <tr><td>CTC vs 연동장치</td><td>CTC=명령·감시 / 연동장치=안전확인·충돌방지</td></tr>
+      <tr><td>CTC vs TMS</td><td>CTC=신호·진로 제어 / TMS=운행관리·계획</td></tr>
+      <tr><td>LCP 설치위치</td><td>현장역 (CTC 사령실 아님) ★</td></tr>
+      <tr><td>ATP와 ATO 계층</td><td>ATP(하위·안전기반) / ATO(상위·자동운전) — ATO는 ATP 위에서 동작</td></tr>
+      <tr><td>ATS vs ATC 차이</td><td>ATS=불연속 경보·제동 / ATC=연속 속도감시·제동 ★</td></tr>
+      <tr><td>ATS 지상자 이격거리</td><td>400mm 이상 (300mm와 혼동 금지)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== §7 관련 문제 ===== -->
+<h2 class="sec-title">§7 · 관련 문제</h2>
+
+<!-- Q1 -->
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_101 · A등급</div>
+  <div class="qm-q">Q1. 다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>"여러 역의 신호와 진로를 중앙에서 감시·제어하는 열차집중제어 방식이다."</div>
+  <ul class="qm-choices">
+    <li>① ATC</li>
+    <li>② ATP와 ATO의 관계</li>
+    <li>③ CTC</li>
+    <li>④ 운행권한(Movement Authority)</li>
+  </ul>
+</div>
+
+<!-- Q2 -->
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_102 · A등급</div>
+  <div class="qm-q">Q2. 다음 중 「CTC」에 대한 설명으로 옳은 것은?</div>
+  <ul class="qm-choices">
+    <li>① 여러 역의 신호와 진로를 중앙에서 감시·제어하는 열차집중제어 방식이다.</li>
+    <li>② 정차·가속·감속 등 열차 운전 동작을 자동화하는 자동열차운전 기능이다.</li>
+    <li>③ 운행권한과 허용속도를 감시하여 과속·신호위반 등 위험 시 제동을 강제하는 자동열차방호 기능이다.</li>
+    <li>④ 구간별 허용속도와 제동곡선 등을 반영해 열차가 따라야 할 속도 기준을 나타낸다.</li>
+  </ul>
+</div>
+
+<!-- Q3 -->
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_103 · A등급</div>
+  <div class="qm-q">Q3. 다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>"열차운행 현황·운행계획·지연 등을 종합적으로 관리하는 열차운행관리 시스템이다."</div>
+  <ul class="qm-choices">
+    <li>① TMS</li>
+    <li>② ATC</li>
+    <li>③ 속도프로파일</li>
+    <li>④ DMI</li>
+  </ul>
+</div>
+
+<!-- Q4 -->
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_104 · A등급</div>
+  <div class="qm-q">Q4. 다음 중 「TMS」에 대한 설명으로 옳은 것은?</div>
+  <ul class="qm-choices">
+    <li>① CTC가 진로 명령을 내려도 실제 안전조건 확인과 충돌방지는 연동장치가 담당한다.</li>
+    <li>② 여러 역의 신호와 진로를 중앙에서 감시·제어하는 열차집중제어 방식이다.</li>
+    <li>③ 구간별 허용속도와 제동곡선 등을 반영해 열차가 따라야 할 속도 기준을 나타낸다.</li>
+    <li>④ 열차운행 현황·운행계획·지연 등을 종합적으로 관리하는 열차운행관리 시스템이다.</li>
+  </ul>
+</div>
+
+<!-- Q5 -->
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_108 · A등급</div>
+  <div class="qm-q">Q5. 다음 중 「ATC」에 대한 설명으로 옳은 것은?</div>
+  <ul class="qm-choices">
+    <li>① 여러 역의 신호와 진로를 중앙에서 감시·제어하는 열차집중제어 방식이다.</li>
+    <li>② 열차의 허용속도 등을 지속적으로 감시·제어하여 안전한 속도 운전을 지원하는 자동열차제어 방식이다.</li>
+    <li>③ CTC가 진로 명령을 내려도 실제 안전조건 확인과 충돌방지는 연동장치가 담당한다.</li>
+    <li>④ 관제센터에서 현장 신호설비를 감시하고 제어 명령을 보내는 기능이다.</li>
+  </ul>
+</div>
+
+<!-- Q6 -->
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_110 · A등급</div>
+  <div class="qm-q">Q6. 다음 중 「ATP」에 대한 설명으로 옳은 것은?</div>
+  <ul class="qm-choices">
+    <li>① 운전자에게 허용속도·목표속도·운행권한 등 차상 운전정보를 표시하는 인터페이스이다.</li>
+    <li>② 구간별 허용속도와 제동곡선 등을 반영해 열차가 따라야 할 속도 기준을 나타낸다.</li>
+    <li>③ 운행권한과 허용속도를 감시하여 과속·신호위반 등 위험 시 제동을 강제하는 자동열차방호 기능이다.</li>
+    <li>④ 열차가 안전하게 진행할 수 있도록 허용된 진로와 한계를 나타내는 정보이다.</li>
+  </ul>
+</div>
+
+<!-- Q7 -->
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_112 · A등급</div>
+  <div class="qm-q">Q7. 다음 중 「ATO」에 대한 설명으로 옳은 것은?</div>
+  <ul class="qm-choices">
+    <li>① 관제센터에서 현장 신호설비를 감시하고 제어 명령을 보내는 기능이다.</li>
+    <li>② 열차의 허용속도 등을 지속적으로 감시·제어하여 안전한 속도 운전을 지원하는 자동열차제어 방식이다.</li>
+    <li>③ 정차·가속·감속 등 열차 운전 동작을 자동화하는 자동열차운전 기능이다.</li>
+    <li>④ 구간별 허용속도와 제동곡선 등을 반영해 열차가 따라야 할 속도 기준을 나타낸다.</li>
+  </ul>
+</div>
+
+<!-- Q8 -->
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_122 · A등급</div>
+  <div class="qm-q">Q8. 다음 중 「연동장치와 CTC의 관계」에 대한 설명으로 옳은 것은?</div>
+  <ul class="qm-choices">
+    <li>① CTC가 진로 명령을 내려도 실제 안전조건 확인과 충돌방지는 연동장치가 담당한다.</li>
+    <li>② ATS는 신호위반 시 정지 개입 중심이고, ATC는 허용속도 감시·제어까지 연속적으로 수행하는 방향이 핵심 차이이다.</li>
+    <li>③ 구간별 허용속도와 제동곡선 등을 반영해 열차가 따라야 할 속도 기준을 나타낸다.</li>
+    <li>④ 여러 역의 신호와 진로를 중앙에서 감시·제어하는 열차집중제어 방식이다.</li>
+  </ul>
+</div>
+
+<!-- Q9 -->
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_183 · A등급</div>
+  <div class="qm-q">Q9. CTC와 연동장치의 역할 관계로 가장 적절한 것은?</div>
+  <ul class="qm-choices">
+    <li>① CTC는 중앙 감시·제어, 연동장치는 현장 안전조건 확인과 충돌방지</li>
+    <li>② CTC와 연동장치는 완전히 같은 장치</li>
+    <li>③ 연동장치는 운행계획만 작성</li>
+    <li>④ CTC는 객실 방송만 담당</li>
+  </ul>
+</div>
+
+<!-- Q10 -->
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_211 · A등급</div>
+  <div class="qm-q">Q10. CTC와 TMS의 구분으로 가장 적절한 것은?</div>
+  <ul class="qm-choices">
+    <li>① CTC=운행관리, TMS=현장신호 직접제어</li>
+    <li>② CTC=신호·진로 원격감시/제어, TMS=열차운행 관리·계획·조정</li>
+    <li>③ 둘은 완전히 동일</li>
+    <li>④ 둘 다 차상장치</li>
+  </ul>
+</div>
+
+<!-- Q11 -->
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_278 · A+등급</div>
+  <div class="qm-q">Q11. 다음 중 CTC(열차집중제어장치)의 효과로 옳지 않은 것은?</div>
+  <ul class="qm-choices">
+    <li>① 열차 운행상황 집중 감시·표시</li>
+    <li>② 진로 자동 제어</li>
+    <li>③ 신호설비 원격 감시</li>
+    <li>④ 열차운행계획의 문서화</li>
+  </ul>
+</div>
+
+<!-- Q12 -->
+<div class="quiz-mc">
+  <div class="qm-src">📋 철도신호 기출복원 CBT · sig_279 · A+등급</div>
+  <div class="qm-q">Q12. ATS 지상자의 레일면으로부터 이격 거리 기준은?</div>
+  <ul class="qm-choices">
+    <li>① 200mm 이상</li>
+    <li>② 300mm 이상</li>
+    <li>③ 400mm 이상</li>
+    <li>④ 600mm 이상</li>
+  </ul>
+</div>
+
+<!-- ===== §8 정답 및 해설 ===== -->
+<h2 class="sec-title">§8 · 정답 및 해설</h2>
+<div class="table-wrap">
+  <table class="ans-table">
+    <thead>
+      <tr><th>문항</th><th>정답</th><th>핵심 해설</th><th>SOURCE</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Q1</strong></td><td>③</td><td>여러 역의 신호와 진로를 중앙에서 감시·제어 = CTC (열차집중제어)</td><td>sig_101</td></tr>
+      <tr><td><strong>Q2</strong></td><td>①</td><td>CTC: 여러 역의 신호와 진로를 중앙에서 감시·제어하는 열차집중제어 방식 ★</td><td>sig_102</td></tr>
+      <tr><td><strong>Q3</strong></td><td>①</td><td>열차운행 현황·운행계획·지연 등 종합 관리 = TMS</td><td>sig_103</td></tr>
+      <tr><td><strong>Q4</strong></td><td>④</td><td>TMS: 열차운행 현황·운행계획·지연 등을 종합 관리하는 시스템 ★</td><td>sig_104</td></tr>
+      <tr><td><strong>Q5</strong></td><td>②</td><td>ATC: 허용속도를 지속적으로 감시·제어하여 안전한 속도 운전 지원 (연속 감시) ★</td><td>sig_108</td></tr>
+      <tr><td><strong>Q6</strong></td><td>③</td><td>ATP: 운행권한·허용속도 감시 → 위반 시 제동 강제 (ATO의 안전 기반) ★★</td><td>sig_110</td></tr>
+      <tr><td><strong>Q7</strong></td><td>③</td><td>ATO: 정차·가속·감속 등 열차 운전 동작 자동화 (ATP 위에서 동작) ★★</td><td>sig_112</td></tr>
+      <tr><td><strong>Q8</strong></td><td>①</td><td>CTC가 명령을 내려도 실제 안전확인·충돌방지는 연동장치 담당 ★★</td><td>sig_122</td></tr>
+      <tr><td><strong>Q9</strong></td><td>①</td><td>CTC=중앙 감시·제어 / 연동장치=현장 안전조건 확인·충돌방지 역할 분담 ★</td><td>sig_183</td></tr>
+      <tr><td><strong>Q10</strong></td><td>②</td><td>CTC=신호·진로 원격감시/제어 / TMS=열차운행 관리·계획·조정 (역할 분명히 구분) ★</td><td>sig_211</td></tr>
+      <tr><td><strong>Q11</strong></td><td>④</td><td>CTC 효과 아닌 것: 열차운행계획의 문서화 → 이는 TMS 역할. CTC는 감시·제어·진로 자동제어 ★★</td><td>sig_278</td></tr>
+      <tr><td><strong>Q12</strong></td><td>③</td><td>ATS 지상자 이격거리 = 400mm 이상 ★ (300mm는 속도조사식 설치위치 — 혼동 빈출)</td><td>sig_279</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== meta-box ===== -->
+<div class="meta">
+  <strong>📋 작업 상태:</strong> FINAL PUBLISH v1.0 (FINAL LOCK) | 2026-10-05<br>
+  <strong>📚 SOURCE:</strong> signal-exam-data.ts (sig_101·102·103·104·108·110·112·122·183·211·278·279) | 6.html PART 10·16<br>
+  <strong>🖼️ 이미지:</strong> VIS-087_TTC_CTC비교표.png / VIS-040_CTC_ATC비교도해.png / VIS-08A_ATS_ATP_ATC_ATO_종합비교_FINAL.png<br>
+  <strong>🔗 CROSS-REF:</strong> 08-01 (ATS·ATP·ATC·ATO 상세) / 07-08 (연동장치) / 07-09 (폐색방식)<br>
+  <strong>📊 문제수:</strong> 12문항 (sig_101·102·103·104·108·110·112·122·183·211·278·279)<br>
+  <strong>📝 버전 이력:</strong><br>
+  &nbsp;&nbsp;v1.0 (2026-10-05): 신규 제작 — TTC/CTC/TMS 이론 + 운전보안장치 개요 + 12문항 (sig_101~279 범위)
+</div>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
