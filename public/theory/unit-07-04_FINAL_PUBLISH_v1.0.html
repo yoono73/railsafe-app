@@ -195,6 +195,30 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
   <div class="tc-link"><strong>→ 연결:</strong> §2 경보장치 수치(하강·상승 시간), §3 전동차단기 구성</div>
 </div>
 
+<div class="term-card">
+  <div class="tc-word">③ 직류직권전동기 (DC Series Motor)</div>
+  <div class="tc-def">직류 전원을 사용하며 계자 권선과 전기자 권선이 직렬 연결된 전동기. <strong>전동차단기</strong>의 구동에 사용. 기동 토크가 크고 속도 제어가 용이한 특성이 있다.<br><strong>주의:</strong> 전기선로전환기(07-03)는 콘덴서기동형 유도전동기(단상 4극)를 사용하므로 혼동 금지.</div>
+  <div class="tc-link"><strong>→ 연결:</strong> §3 전동차단기 구성, 07-03 선로전환기</div>
+</div>
+
+<div class="term-card">
+  <div class="tc-word">④ 마찰연축기·감속치차 (Friction Clutch · Reduction Gear)</div>
+  <div class="tc-def">마찰연축기(마찰클러치): 전동기 동력을 차단봉 구동축에 연결·분리하는 안전장치. 과부하 시 슬립하여 기계적 손상을 방지.<br>감속치차(감속기어): 전동기의 고속 회전을 낮은 속도·높은 토크로 변환하여 차단봉을 안정적으로 작동시킴.</div>
+  <div class="tc-link"><strong>→ 연결:</strong> §3 전동차단기 구성</div>
+</div>
+
+<div class="term-card">
+  <div class="tc-word">⑤ 궤도회로 / 궤도단락 (Track Circuit / Track Shunting)</div>
+  <div class="tc-def">궤도회로: 레일을 전기회로의 일부로 사용하여 열차 유무를 검지하는 장치. 건널목에서 열차 접근 감지의 기본 원리.<br>궤도단락: 열차의 금속 차축이 양쪽 레일을 단락(단전)시켜 열차 검지 신호가 발생하는 현상.</div>
+  <div class="tc-link"><strong>→ 연결:</strong> §5 검지장치 종류, 07-06 기본 궤도회로</div>
+</div>
+
+<div class="term-card">
+  <div class="tc-word">⑥ 호륜레일 (Guard Rail)</div>
+  <div class="tc-def">건널목 내 포장 면과 레일 사이에 설치하는 보조 레일. 차량 바퀴가 레일 안쪽으로 빠지는 것을 방지하고 열차 주행 안전을 확보. 건널목 안전설비의 구조적 요소.</div>
+  <div class="tc-link"><strong>→ 연결:</strong> §1 건널목 3종 분류</div>
+</div>
+
 </div><!-- /concept -->
 </div><!-- /§0 -->
 
@@ -209,7 +233,7 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 <table>
   <thead><tr><th>종류</th><th>차단기</th><th>경보기</th><th>감시원</th></tr></thead>
   <tbody>
-    <tr><td><strong>제1종</strong></td><td>○ (자동차단기)</td><td>○ (경보기)</td><td>○ (상주 근무)</td></tr>
+    <tr><td><strong>제1종</strong></td><td>○ (자동차단기)</td><td>○ (경보기)</td><td>△ (별표 기준에 따라)</td></tr>
     <tr><td><strong>제2종</strong></td><td>✕</td><td>○ (경보기)</td><td>✕ (무인·자동)</td></tr>
     <tr><td><strong>제3종</strong></td><td>✕</td><td>✕</td><td>✕ (안전표지만)</td></tr>
   </tbody>
@@ -218,7 +242,7 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 <div class="trap">★ 핵심 함정 — 제2종에는 차단기와 감시원이 없다! "경보기+안전표지"만. 문제에서 "2종에는 차단기 필요"라고 오답 제시.</div>
 
 <div class="theory-note">
-  <strong>이론 배경: </strong>제1종이 가장 안전(차단기+경보기+감시원 3중). 제3종은 안전표지(표지판)만 설치.
+  <strong>이론 배경: </strong>제1종이 가장 안전(차단기+경보기 필수, 관리원은 「철도시설의 기술기준」 별표 기준에 따라 배치). 제3종은 안전표지(표지판)만 설치.
 </div>
 </div><!-- /concept -->
 
@@ -256,7 +280,7 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 <div class="concept-title"><span class="cnum">개념04</span>경보장치 7가지 수치</div>
 
 <div class="vis-wrap">
-  <img src="../images/VIS-046_건널목경보장치수치암기카드.jpg" alt="VIS-046 건널목 경보장치 수치 암기카드">
+  <img src="images/VIS-046_건널목경보장치수치암기카드.jpg" alt="VIS-046 건널목 경보장치 수치 암기카드">
   <p class="vis-cap">VIS-046 건널목 경보장치 수치 암기카드</p>
 </div>
 
@@ -370,7 +394,7 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 <div class="concept">
 <div class="crossref-box">
   <div class="cr-title">이 단원과 연결되는 핵심 개념</div>
-  - <strong>07-03 선로전환기:</strong> 전기선로전환기에도 마찰클러치·직류직권전동기 사용 → 전동차단기 구성과 비교<br>
+  - <strong>07-03 선로전환기:</strong> 전동차단기=직류직권전동기 / 전기선로전환기=콘덴서기동형 유도전동기(단상 4극) — 구동·감속·보호기구 구성은 유사하나 전동기 형식이 다르므로 혼동 금지<br>
   - <strong>§검지장치 9종:</strong> 끌림검지장치 등 — 건널목 지장물 검지도 포함<br>
   - <strong>철도안전법:</strong> 건널목 사고 예방 조치 (1종=자동차단기 의무, 사고다발=입체화 추진)
 </div>
@@ -494,6 +518,7 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 <div class="quiz-mc">
   <div class="qm-src">철도왕 신유형 | ch7 #154</div>
   <div class="qm-q">Q10. [신유형] 철도안전법에 따른 건널목 사고 예방 조치로 옳지 않은 것은?</div>
+  <div class="qm-src" style="font-size:.75em;color:#888;margin-bottom:4px;">📌 LAW NOTE: 문제 출처의 "철도안전법" 표현은 교재 표현. 건널목 설비 기준의 실제 법적 근거는 「철도시설의 기술기준」(국토교통부 고시) 제69조·제71조 및 별표.</div>
   <div class="qm-choices">
     <div class="qm-choice">① 1종 건널목에는 자동차단기를 설치한다</div>
     <div class="qm-choice">② 건널목에는 경보장치를 설치한다</div>
@@ -553,8 +578,8 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 <div class="ans-item">
   <div class="ai-no">Q05 [eng_72·A] 가장 안전한 건널목</div>
   <div class="ai-ans">정답 ① 제1종 건널목</div>
-  <div class="ai-exp">제1종 = 차단기+경보기+감시원(가장 안전). 제2종 = 경보기만. 제3종 = 안전표지만.</div>
-  <div class="ai-trap">신호기가 포함된다고 혼동하지 말 것. 1종>2종>3종 안전 순.</div>
+  <div class="ai-exp">제1종 = 차단기+경보기 필수(가장 안전). 관리원은 「철도시설의 기술기준」 별표 기준에 따라 배치. 제2종 = 경보기만. 제3종 = 안전표지만.</div>
+  <div class="ai-trap">원문 문제의 "신호기" 표현은 교재 원문 표현. 현행 기준상 제1종 핵심 설비는 차단기+경보기이며 감시원을 필수 구성 요건으로 혼동하지 말 것. 1종>2종>3종 안전 순.</div>
 </div>
 
 <div class="ans-item">
@@ -587,8 +612,8 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 <div class="ans-item">
   <div class="ai-no">Q10 [rk_ch7_NEW_26] 건널목 사고예방조치 옳지 않은 것</div>
   <div class="ai-ans">정답 ④ 2종 건널목에도 자동차단기를 의무 설치한다</div>
-  <div class="ai-exp">자동차단기는 1종에만 의무 설치. 2종 = 경보기만.</div>
-  <div class="ai-trap">①②③은 모두 옳은 조치. ④만 틀린 내용.</div>
+  <div class="ai-exp">자동차단기는 1종에만 의무 설치. 2종 = 경보기만. (실제 법적 근거: 「철도시설의 기술기준」 제69조·제71조 및 별표)</div>
+  <div class="ai-trap">①②③은 모두 옳은 조치. ④만 틀린 내용. 문제의 "철도안전법" 표현은 교재 원문이며, 세부 설비 기준은 「철도시설의 기술기준」에서 규정.</div>
 </div>
 
 </div><!-- /answer-section -->
