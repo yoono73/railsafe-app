@@ -2553,7 +2553,7 @@ export const ch7Questions: RailwayKingQuestion[] = [
     id: 'rk_ch7_NEW_26', chapter: 'ch7', num: 154,
     question: '[신유형] 철도안전법에 따른 건널목 사고 예방 조치로 옳지 않은 것은?',
     choices: ['1종 건널목에는 자동차단기를 설치한다', '건널목에는 경보장치를 설치한다', '사고 다발 건널목은 입체화를 추진한다', '2종 건널목에도 자동차단기를 의무 설치한다'],
-    answer: 1,
+    answer: 3,
     explanation: '2종 건널목에는 경보기만 설치하며, 자동차단기는 1종 건널목에만 의무 설치한다.',
   },
   {
