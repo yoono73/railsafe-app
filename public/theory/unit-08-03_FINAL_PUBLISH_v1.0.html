@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08-03 CBTC · 이동폐색</title>
+<style>
+  /* ===== 기본 리셋 ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ===== 페이지 래퍼 ===== */
+  .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+
+  /* ===== 상단 헤더 ===== */
+  .unit-header {
+    border-bottom: 2px solid #1e3a5f;
+    padding-bottom: 14px;
+    margin-bottom: 28px;
+  }
+  .unit-num {
+    font-size: 12px;
+    color: #1e3a5f;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .unit-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 4px 0 6px;
+  }
+  .unit-sub {
+    font-size: 13px;
+    color: #555;
+  }
+  .badge-row {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 3px;
+    border: 1px solid;
+  }
+  .badge-part  { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-lock  { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+
+  /* ===== 섹션 제목 ===== */
+  .sec-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1e3a5f;
+    border-left: 4px solid #1e3a5f;
+    padding-left: 10px;
+    margin: 32px 0 14px;
+  }
+  .sec-sub {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 20px 0 8px;
+    padding: 4px 10px;
+    background: #f5f7fa;
+    border-left: 3px solid #64748b;
+  }
+
+  /* ===== 선행용어 카드 ===== */
+  .term-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .term-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 12px 14px;
+    background: #fff;
+  }
+  .term-name {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1e3a5f;
+    margin-bottom: 4px;
+  }
+  .term-desc {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.6;
+  }
+  .term-why {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  /* ===== 본문 박스 ===== */
+  .content-box {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 16px 18px;
+    background: #fff;
+    margin-bottom: 14px;
+    font-size: 14px;
+  }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+  .content-box ul { padding-left: 18px; margin: 6px 0; }
+  .content-box li { margin-bottom: 4px; }
+
+  /* ===== 시스템별 카드 (sys-card) ===== */
+  .sys-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .sys-header {
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sys-header .abbr {
+    font-size: 18px;
+    font-weight: 900;
+  }
+  .sys-header .fullname {
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.85;
+  }
+  .sys-body {
+    padding: 14px 16px;
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+  .sys-body ul { padding-left: 18px; margin: 4px 0; }
+  .sys-body li { margin-bottom: 4px; }
+  .sys-body strong { color: #1a1a1a; }
+
+  /* 카드 색상 테마 */
+  .sys-cbtc .sys-header { background: #eff6ff; color: #1d4ed8; border-bottom: 1px solid #bfdbfe; }
+  .sys-mb .sys-header   { background: #f0fdfa; color: #0f766e; border-bottom: 1px solid #99f6e4; }
+  .sys-atp .sys-header  { background: #fef3c7; color: #92400e; border-bottom: 1px solid #fde68a; }
+  .sys-ato .sys-header  { background: #fdf4ff; color: #7e22ce; border-bottom: 1px solid #e9d5ff; }
+  .sys-safe .sys-header { background: #fef2f2; color: #991b1b; border-bottom: 1px solid #fecaca; }
+
+  /* ===== 표 ===== */
+  .tbl-wrap {
+    overflow-x: auto;
+    margin: 12px 0;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: #fff;
+  }
+  th {
+    background: #1e3a5f;
+    color: #fff;
+    font-weight: 700;
+    padding: 9px 12px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .td-center { text-align: center; }
+  .td-key { font-weight: 700; color: #1e3a5f; white-space: nowrap; }
+
+  /* ===== CROSS-REF 박스 ===== */
+  .cross-ref {
+    border: 1.5px solid #0ea5e9;
+    border-radius: 6px;
+    padding: 12px 16px;
+    background: #f0f9ff;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .cross-ref-title {
+    font-weight: 800;
+    color: #0369a1;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .cross-ref ul { padding-left: 18px; margin: 0; }
+  .cross-ref li { margin-bottom: 3px; }
+
+  /* ===== 시험포인트 ===== */
+  .exam-item {
+    padding: 10px 14px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    border: 1.5px solid;
+  }
+  .exam-key {
+    border-color: #1e3a5f;
+    background: #f0f4f8;
+    color: #1a1a1a;
+  }
+  .exam-trap {
+    border-color: #dc2626;
+    background: #fef2f2;
+    color: #1a1a1a;
+  }
+  .exam-item strong { display: block; margin-bottom: 3px; }
+
+  /* ===== 문제 영역 ===== */
+  .qst-box {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    background: #fff;
+  }
+  .qst-meta {
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 6px;
+  }
+  .qst-num {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1e3a5f;
+    margin-bottom: 8px;
+  }
+  .qst-q {
+    font-size: 14px;
+    color: #1a1a1a;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .choice-list {
+    list-style: none;
+    padding: 0;
+  }
+  .choice-list li {
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    margin-bottom: 5px;
+    border: 1px solid #e2e8f0;
+    line-height: 1.6;
+    background: #fff;
+  }
+
+  /* ===== 정답 해설 ===== */
+  .ans-box {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    background: #f8fafc;
+  }
+  .ans-header {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1e3a5f;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .ans-num { font-size: 13px; font-weight: 700; color: #1e3a5f; }
+  .ans-answer {
+    display: inline-block;
+    background: #1e3a5f;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 2px 9px;
+    border-radius: 3px;
+  }
+  .ans-exp {
+    font-size: 13.5px;
+    color: #1a1a1a;
+    line-height: 1.7;
+  }
+  .ans-exp ul { padding-left: 18px; margin: 6px 0; }
+  .ans-exp li { margin-bottom: 4px; }
+
+  /* ===== meta 박스 ===== */
+  .meta {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 40px;
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.8;
+  }
+  .meta strong { color: #1a1a1a; }
+
+  /* ===== 인쇄 버튼 ===== */
+  .print-btn {
+    position: fixed; top: 12px; right: 16px; z-index: 999;
+    background: #78350f; color: #fff; border: none; border-radius: 5px;
+    padding: 6px 14px; font-size: .85em; font-weight: bold; cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,.18);
+  }
+  .print-btn:hover { background: #5c2707; }
+
+  /* ===== 인쇄 ===== */
+  @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+  @media print {
+    .page-wrap { padding: 10px; }
+    .sec-title { margin-top: 18px; }
+    img { max-width: 100%; height: auto; }
+    table { width: 100%; max-width: 100%; }
+    .sys-card, .qst-box, .content-box, .exam-item, .ans-box { break-inside: avoid; page-break-inside: avoid; }
+    .sec-title, .sec-sub { break-after: avoid; page-break-after: avoid; }
+    tr { break-inside: avoid; page-break-inside: avoid; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .answer-section { break-before: page; page-break-before: always; }
+    .print-btn { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<button class="print-btn" type="button" aria-label="현재 학습자료 인쇄 또는 PDF 저장" onclick="window.print()">🖨 인쇄 / PDF</button>
+
+<div class="page-wrap">
+
+  <!-- ===== 헤더 ===== -->
+  <header class="unit-header">
+    <div class="unit-num">UNIT 08-03 · PART 08 열차제어 시스템</div>
+    <h1 class="unit-title">CBTC · 이동폐색</h1>
+    <div class="unit-sub">무선통신 기반 열차제어(CBTC) 개념·구성 / 이동폐색과의 관계 / 고밀도 운전 / ATP·ATO 연계 / 안전 설계 원칙</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 08-03</span>
+      <span class="badge badge-grade">기출 A~S등급</span>
+      <span class="badge badge-lock">FINAL PUBLISH v1.0</span>
+    </div>
+  </header>
+
+  <!-- ===== §0 선행 용어 ===== -->
+  <h2 class="sec-title">§0 · 선행 용어</h2>
+  <div class="term-grid">
+
+    <div class="term-card">
+      <div class="term-name">CBTC (Communication Based Train Control)</div>
+      <div class="term-desc">무선통신을 이용해 열차의 위치·속도·상태를 실시간으로 주고받으며 열차간격과 속도를 제어하는 시스템.</div>
+      <div class="term-why">→ 단순 무선설비가 아닌 '제어 시스템'임을 구별 ★</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-name">이동폐색 (Moving Block)</div>
+      <div class="term-desc">열차 위치·속도를 실시간으로 파악해 동적으로 안전간격을 설정하는 폐색 방식. 고정된 폐색구간이 없음.</div>
+      <div class="term-why">→ CBTC ≠ 이동폐색: CBTC가 이동폐색을 구현하는 수단 ★</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-name">운행권한 / MA (Movement Authority)</div>
+      <div class="term-desc">지상이 차상에 전달하는 안전 이동 허가 범위·거리 정보. 열차가 안전하게 이동할 수 있는 허용 구역.</div>
+      <div class="term-why">→ 지상→열차 방향으로 전달</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-name">ATP (Automatic Train Protection)</div>
+      <div class="term-desc">열차 과속·신호 위반 등을 자동 감지·제동하는 열차보호장치.</div>
+      <div class="term-why">→ CBTC 운행권한을 실제 안전제동으로 보장하는 연계 장치</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-name">ATO (Automatic Train Operation)</div>
+      <div class="term-desc">가감속·정위치정차 등 열차 운전 전 과정을 자동화하는 자동운전장치.</div>
+      <div class="term-why">→ CBTC 속도·위치정보를 이용해 자동운전 수행</div>
+    </div>
+
+    <div class="term-card">
+      <div class="term-name">운전시격</div>
+      <div class="term-desc">연속하는 두 열차가 같은 지점을 통과하는 시간 간격. 시격이 짧을수록 더 많은 열차를 운행 가능.</div>
+      <div class="term-why">→ 고밀도 운전 = 운전시격 단축</div>
+    </div>
+
+  </div><!-- /term-grid -->
+
+  <!-- ===== §1 CBTC 개요 ===== -->
+  <h2 class="sec-title">§1 · CBTC 개요와 이동폐색의 관계</h2>
+
+  <div class="sec-sub">1-1 CBTC 정의</div>
+  <div class="sys-card sys-cbtc">
+    <div class="sys-header">
+      <span class="abbr">CBTC</span>
+      <span class="fullname">Communication Based Train Control</span>
+    </div>
+    <div class="sys-body">
+      <p><strong>무선통신을 이용해 열차의 위치·속도·상태를 실시간으로 주고받으며 열차간격과 속도를 제어하는 시스템이다.</strong></p>
+      <ul>
+        <li>통신은 <strong>수단</strong>, 위치·권한·속도 제어가 <strong>목적</strong></li>
+        <li>단순 무선설비와 구별: 통신정보를 이용한 종합 제어 시스템</li>
+        <li>정밀 위치검지 + 양방향 무선통신 + 지상·차상 제어장치로 구성</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec-sub">1-2 CBTC vs 이동폐색 — 개념 구분 ★★★</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>구분</th><th>CBTC</th><th>이동폐색</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key">성격</td>
+          <td>열차제어 <strong>시스템</strong> 개념</td>
+          <td>안전간격 <strong>관리 방식</strong> (폐색 방법)</td>
+        </tr>
+        <tr>
+          <td class="td-key">관계</td>
+          <td colspan="2" class="td-center">CBTC가 이동폐색을 구현하는 수단 중 하나</td>
+        </tr>
+        <tr>
+          <td class="td-key">혼동 주의</td>
+          <td colspan="2" class="td-center">CBTC = 이동폐색이 아님. 별개 개념 ★</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-sub">1-3 CBTC 정보 흐름 (양방향)</div>
+  <div class="content-box">
+    <p><strong>열차 → 지상</strong>: 위치 · 속도 · 상태 정보 전송</p>
+    <p><strong>지상 → 열차</strong>: 운행권한(MA) · 속도조건 · 제어정보 전송</p>
+    <ul>
+      <li>반드시 <strong>양방향</strong> 통신이 핵심 — 단방향이라는 선지는 항상 오답 ★</li>
+      <li>통신지연이 발생하면 제어정보의 실시간성이 저해됨 → 안전성 설계에서 중요 관리 요소</li>
+    </ul>
+  </div>
+
+  <!-- ===== §2 CBTC 구성 요소 ===== -->
+  <h2 class="sec-title">§2 · CBTC 구성 요소</h2>
+
+  <div class="sys-card sys-cbtc">
+    <div class="sys-header">
+      <span class="abbr">양방향 무선통신</span>
+    </div>
+    <div class="sys-body">
+      <p>열차와 지상 제어설비가 위치·상태와 운행권한·속도조건을 상호 교환하는 통신 구조.</p>
+      <ul>
+        <li>CBTC 핵심 인프라 — 통신 없이는 제어 불가</li>
+        <li>통신지연: 제어정보의 실시간성을 저해 → 성능·안전성 설계에서 중요하게 관리</li>
+        <li>통신두절 시: 안전측 제어(제한·정지)로 전환 원칙 적용</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sys-card sys-mb">
+    <div class="sys-header">
+      <span class="abbr">지상 / 관제 제어장치</span>
+    </div>
+    <div class="sys-body">
+      <p>열차로부터 상태정보를 받고, 안전한 운행권한·속도조건을 계산해 전달하는 지상측 제어 기능.</p>
+      <ul>
+        <li>각 열차의 위치·속도 정보를 수집하여 MA 계산</li>
+        <li>이동폐색 운용 시 동적 안전간격 결정의 핵심</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sys-card sys-mb">
+    <div class="sys-header">
+      <span class="abbr">차상제어장치</span>
+    </div>
+    <div class="sys-body">
+      <p>지상에서 받은 운행권한·속도조건을 감시하고, ATP/ATO 기능과 연계해 열차를 제어하는 장치.</p>
+      <ul>
+        <li>지상 제어장치의 명령을 수신하여 실제 열차 제어 수행</li>
+        <li>ATP 연계: 안전제동 보장 / ATO 연계: 자동운전 수행</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec-sub">2-4 실시간 위치정보 · 위치정확도</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>구분</th><th>개념</th><th>시험 포인트</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key">실시간 위치정보</td>
+          <td>CBTC가 짧은 운전시격과 이동폐색을 구현할 때 핵심적으로 사용하는 열차 상태정보</td>
+          <td class="td-center">이동폐색의 근거가 되는 정보</td>
+        </tr>
+        <tr>
+          <td class="td-key">위치정확도</td>
+          <td>열차간격 계산의 기초. 오차가 작을수록 정밀한 이동폐색 운용에 유리한 요소</td>
+          <td class="td-center">정확도 ↑ → 시격 단축 가능</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== §3 이동폐색과 고밀도 운전 ===== -->
+  <h2 class="sec-title">§3 · 이동폐색 지원과 고밀도 운전</h2>
+
+  <div class="sys-card sys-mb">
+    <div class="sys-header">
+      <span class="abbr">이동폐색 지원</span>
+    </div>
+    <div class="sys-body">
+      <p>CBTC의 정밀 위치검지와 양방향 통신을 활용해 열차별 동적 안전간격을 설정할 수 있는 기능.</p>
+      <ul>
+        <li>고정폐색과 달리 구간 경계 없이 실시간 간격 계산</li>
+        <li>위치정확도가 높을수록 더 좁은 간격으로 안전 운행 가능</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>구분</th><th>고밀도 운전</th><th>짧은 운전시격</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key">정의</td>
+          <td>운전시격을 줄여 동일 선로에서 더 많은 열차를 안전하게 운행하는 운용 형태</td>
+          <td>정밀 위치정보와 연속 제어를 통해 선행열차를 더 가깝게 추종할 수 있어 얻는 효과</td>
+        </tr>
+        <tr>
+          <td class="td-key">관계</td>
+          <td>CBTC+이동폐색이 가능하게 하는 운용 목표</td>
+          <td>고밀도 운전의 구체적 실현 방법</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cross-ref">
+    <div class="cross-ref-title">📌 CROSS-REF — 고정폐색 vs 이동폐색 비교 (VIS-07E)</div>
+    <ul>
+      <li><strong>고정폐색</strong>: 선로를 일정 구간으로 분할, 구간당 1열차만 허용 — 간격이 고정됨</li>
+      <li><strong>이동폐색</strong>: 실시간 위치 기반 동적 간격 — 열차가 움직이는 만큼 뒤 열차도 추종 가능</li>
+      <li>이동폐색은 CBTC와 같은 무선기반 위치검지 시스템이 있어야 구현 가능</li>
+    </ul>
+  </div>
+
+  <!-- ===== §4 ATP · ATO 연계와 운행권한 ===== -->
+  <h2 class="sec-title">§4 · ATP · ATO 연계와 운행권한(MA)</h2>
+
+  <div class="sys-card sys-atp">
+    <div class="sys-header">
+      <span class="abbr">ATP 연계</span>
+      <span class="fullname">Automatic Train Protection</span>
+    </div>
+    <div class="sys-body">
+      <p><strong>CBTC 운행권한을 실제 안전제동으로 보장하는 방호 기능과의 연계.</strong></p>
+      <ul>
+        <li>지상이 계산한 MA(운행권한)를 차상 ATP가 감시</li>
+        <li>MA를 초과하면 자동 제동 발생 → 안전 확보</li>
+        <li>CBTC 체계에서 안전의 최후 방호선 역할</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sys-card sys-ato">
+    <div class="sys-header">
+      <span class="abbr">ATO 연계</span>
+      <span class="fullname">Automatic Train Operation</span>
+    </div>
+    <div class="sys-body">
+      <p><strong>CBTC의 속도·위치정보를 이용해 가감속·정위치정차 등 자동운전을 수행하는 연계.</strong></p>
+      <ul>
+        <li>차상제어장치가 MA 범위 내에서 ATO를 통해 자동운전 실행</li>
+        <li>CBTC 정밀 위치정보 → 정위치정차 정확도 향상</li>
+        <li>ATP = 안전(방호), ATO = 운전(효율) — 역할 구분 ★</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec-sub">4-3 운행권한 MA (Movement Authority)</div>
+  <div class="content-box">
+    <p><strong>MA = 열차가 안전하게 이동하도록 허용된 범위·거리 정보</strong></p>
+    <ul>
+      <li>지상 제어장치가 계산 → 차상제어장치로 무선 전달 (지상→열차)</li>
+      <li>이동폐색에서 MA는 실시간으로 갱신됨 — 고정 구간이 아님</li>
+      <li>기관사 면허·승객 승차권·전기요금과 혼동 금지 (시험 함정 선지)</li>
+    </ul>
+  </div>
+
+  <!-- ===== §5 안전 설계 원칙 ===== -->
+  <h2 class="sec-title">§5 · 안전 설계 원칙</h2>
+
+  <div class="sys-card sys-safe">
+    <div class="sys-header">
+      <span class="abbr">통신두절 시 안전측 제어</span>
+    </div>
+    <div class="sys-body">
+      <p><strong>무선통신이 상실되면 정상 운행을 그대로 계속하기보다 제한·정지 등 안전측으로 전환하는 설계원칙.</strong></p>
+      <ul>
+        <li>Fail-Safe 원칙 적용: 통신 장애 = 위험 상황 → 안전측 행동</li>
+        <li>통신 정상화 후 운행 재개</li>
+        <li>"정상 운행 계속"이라는 선지는 항상 오답 ★</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec-sub">5-2 통신지연 관리</div>
+  <div class="content-box">
+    <p><strong>통신지연</strong>: 제어정보의 실시간성을 저해할 수 있어 CBTC 성능과 안전성 설계에서 중요하게 관리되는 요소.</p>
+    <ul>
+      <li>지연이 클수록 MA 갱신 주기가 길어져 이동폐색 정확도 저하</li>
+      <li>통신지연 허용 기준을 설계 단계에서 명확히 규정</li>
+    </ul>
+  </div>
+
+  <!-- ===== §6 시험 포인트 ===== -->
+  <h2 class="sec-title">§6 · 시험 포인트</h2>
+
+  <div class="exam-item exam-trap">
+    <strong>⛔ 함정 — CBTC = 이동폐색 (X)</strong>
+    CBTC는 '시스템', 이동폐색은 '폐색 방식'. CBTC가 이동폐색을 구현하는 수단이지, 동일 개념이 아님.
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>⛔ 함정 — 통신두절 시 정상 운행 계속 (X)</strong>
+    통신두절 = 안전측 제어(제한·정지)로 전환. "그대로 계속"은 항상 오답.
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>⛔ 함정 — CBTC는 단방향 통신 (X)</strong>
+    반드시 양방향. 열차→지상(위치·상태), 지상→열차(MA·제어정보).
+  </div>
+  <div class="exam-item exam-key">
+    <strong>✅ 핵심 — 지상/관제 제어장치 vs 차상제어장치</strong>
+    지상: 상태정보 수신 → MA·속도조건 계산·전달. 차상: MA 감시 + ATP/ATO 연계 제어.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>✅ 핵심 — 위치정확도</strong>
+    열차간격 계산의 기초. 정확도 높을수록 이동폐색 정밀 운용 가능 → 운전시격 단축.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>✅ 핵심 — MA (운행권한)</strong>
+    지상→열차 방향. "안전하게 이동하도록 허용된 범위·거리". 기관사 면허와 혼동 금지.
+  </div>
+
+  <!-- ===== 기출문제 ===== -->
+  <h2 class="sec-title">기출문제</h2>
+
+  <!-- Q01 sig_126 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_126 · Part 6 · S등급</div>
+    <div class="qst-num">Q01</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"무선통신을 이용해 열차의 위치·속도·상태를 실시간으로 주고받으며 열차간격과 속도를 제어하는 시스템이다."</em></div>
+    <ol class="choice-list">
+      <li>① 지상/관제 제어장치</li>
+      <li>② CBTC</li>
+      <li>③ 통신두절 시 안전측 제어</li>
+      <li>④ 위치정확도</li>
+    </ol>
+  </div>
+
+  <!-- Q02 sig_127 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_127 · Part 6 · S등급</div>
+    <div class="qst-num">Q02</div>
+    <div class="qst-q">다음 중 「CBTC」에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 열차간격 계산의 기초가 되므로 오차가 작을수록 정밀한 이동폐색 운용에 유리한 요소이다.</li>
+      <li>② 무선통신을 이용해 열차의 위치·속도·상태를 실시간으로 주고받으며 열차간격과 속도를 제어하는 시스템이다.</li>
+      <li>③ 열차로부터 상태정보를 받고 안전한 운행권한·속도조건을 계산해 전달하는 지상측 제어 기능이다.</li>
+      <li>④ CBTC 운행권한을 실제 안전제동으로 보장하는 방호 기능과의 연계를 뜻한다.</li>
+    </ol>
+  </div>
+
+  <!-- Q03 sig_128 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_128 · Part 6 · A+등급</div>
+    <div class="qst-num">Q03</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"열차와 지상 제어설비가 위치·상태와 운행권한·속도조건을 상호 교환하는 통신 구조이다."</em></div>
+    <ol class="choice-list">
+      <li>① 고밀도 운전</li>
+      <li>② 양방향 무선통신</li>
+      <li>③ ATP 연계</li>
+      <li>④ 지상/관제 제어장치</li>
+    </ol>
+  </div>
+
+  <!-- Q04 sig_129 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_129 · Part 6 · A+등급</div>
+    <div class="qst-num">Q04</div>
+    <div class="qst-q">다음 중 「양방향 무선통신」에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 제어정보의 실시간성을 저해할 수 있어 CBTC 성능과 안전성 설계에서 중요하게 관리되는 요소이다.</li>
+      <li>② 열차와 지상 제어설비가 위치·상태와 운행권한·속도조건을 상호 교환하는 통신 구조이다.</li>
+      <li>③ 운전시격을 줄여 동일 선로에서 더 많은 열차를 안전하게 운행하는 운용 형태이다.</li>
+      <li>④ 무선통신이 상실되면 정상 운행을 그대로 계속하기보다 제한·정지 등 안전측으로 전환하는 설계원칙이다.</li>
+    </ol>
+  </div>
+
+  <!-- Q05 sig_130 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_130 · Part 6 · A+등급</div>
+    <div class="qst-num">Q05</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"CBTC가 짧은 운전시격과 이동폐색을 구현할 때 핵심적으로 사용하는 열차 상태정보이다."</em></div>
+    <ol class="choice-list">
+      <li>① 짧은 운전시격</li>
+      <li>② 통신지연</li>
+      <li>③ 지상/관제 제어장치</li>
+      <li>④ 실시간 위치정보</li>
+    </ol>
+  </div>
+
+  <!-- Q06 sig_131 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_131 · Part 6 · A+등급</div>
+    <div class="qst-num">Q06</div>
+    <div class="qst-q">다음 중 「실시간 위치정보」에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① CBTC가 짧은 운전시격과 이동폐색을 구현할 때 핵심적으로 사용하는 열차 상태정보이다.</li>
+      <li>② 열차로부터 상태정보를 받고 안전한 운행권한·속도조건을 계산해 전달하는 지상측 제어 기능이다.</li>
+      <li>③ 무선통신을 이용해 열차의 위치·속도·상태를 실시간으로 주고받으며 열차간격과 속도를 제어하는 시스템이다.</li>
+      <li>④ 열차와 지상 제어설비가 위치·상태와 운행권한·속도조건을 상호 교환하는 통신 구조이다.</li>
+    </ol>
+  </div>
+
+  <!-- Q07 sig_132 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_132 · Part 6 · A+등급</div>
+    <div class="qst-num">Q07</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"열차로부터 상태정보를 받고 안전한 운행권한·속도조건을 계산해 전달하는 지상측 제어 기능이다."</em></div>
+    <ol class="choice-list">
+      <li>① 실시간 위치정보</li>
+      <li>② 이동폐색 지원</li>
+      <li>③ 지상/관제 제어장치</li>
+      <li>④ 양방향 무선통신</li>
+    </ol>
+  </div>
+
+  <!-- Q08 sig_133 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_133 · Part 6 · A+등급</div>
+    <div class="qst-num">Q08</div>
+    <div class="qst-q">다음 중 「지상/관제 제어장치」에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 지상에서 받은 운행권한·속도조건을 감시하고 ATP/ATO 기능과 연계해 열차를 제어하는 장치이다.</li>
+      <li>② CBTC가 짧은 운전시격과 이동폐색을 구현할 때 핵심적으로 사용하는 열차 상태정보이다.</li>
+      <li>③ 열차로부터 상태정보를 받고 안전한 운행권한·속도조건을 계산해 전달하는 지상측 제어 기능이다.</li>
+      <li>④ 운전시격을 줄여 동일 선로에서 더 많은 열차를 안전하게 운행하는 운용 형태이다.</li>
+    </ol>
+  </div>
+
+  <!-- Q09 sig_134 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_134 · Part 6 · A+등급</div>
+    <div class="qst-num">Q09</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"지상에서 받은 운행권한·속도조건을 감시하고 ATP/ATO 기능과 연계해 열차를 제어하는 장치이다."</em></div>
+    <ol class="choice-list">
+      <li>① 고밀도 운전</li>
+      <li>② 차상제어장치</li>
+      <li>③ 실시간 위치정보</li>
+      <li>④ ATP 연계</li>
+    </ol>
+  </div>
+
+  <!-- Q10 sig_135 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_135 · Part 6 · A+등급</div>
+    <div class="qst-num">Q10</div>
+    <div class="qst-q">다음 중 「차상제어장치」에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① CBTC의 속도·위치정보를 이용해 가감속·정위치정차 등 자동운전을 수행하는 연계를 뜻한다.</li>
+      <li>② 열차로부터 상태정보를 받고 안전한 운행권한·속도조건을 계산해 전달하는 지상측 제어 기능이다.</li>
+      <li>③ 지상에서 받은 운행권한·속도조건을 감시하고 ATP/ATO 기능과 연계해 열차를 제어하는 장치이다.</li>
+      <li>④ CBTC의 정밀 위치검지와 양방향 통신을 활용해 열차별 동적 안전간격을 설정할 수 있는 기능이다.</li>
+    </ol>
+  </div>
+
+  <!-- Q11 sig_136 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_136 · Part 6 · A+등급</div>
+    <div class="qst-num">Q11</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"CBTC의 정밀 위치검지와 양방향 통신을 활용해 열차별 동적 안전간격을 설정할 수 있는 기능이다."</em></div>
+    <ol class="choice-list">
+      <li>① 차상제어장치</li>
+      <li>② ATO 연계</li>
+      <li>③ 위치정확도</li>
+      <li>④ 이동폐색 지원</li>
+    </ol>
+  </div>
+
+  <!-- Q12 sig_137 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_137 · Part 6 · A+등급</div>
+    <div class="qst-num">Q12</div>
+    <div class="qst-q">다음 중 「이동폐색 지원」에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 무선통신을 이용해 열차의 위치·속도·상태를 실시간으로 주고받으며 열차간격과 속도를 제어하는 시스템이다.</li>
+      <li>② 열차간격 계산의 기초가 되므로 오차가 작을수록 정밀한 이동폐색 운용에 유리한 요소이다.</li>
+      <li>③ 열차와 지상 제어설비가 위치·상태와 운행권한·속도조건을 상호 교환하는 통신 구조이다.</li>
+      <li>④ CBTC의 정밀 위치검지와 양방향 통신을 활용해 열차별 동적 안전간격을 설정할 수 있는 기능이다.</li>
+    </ol>
+  </div>
+
+  <!-- Q13 sig_138 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_138 · Part 6 · A+등급</div>
+    <div class="qst-num">Q13</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"운전시격을 줄여 동일 선로에서 더 많은 열차를 안전하게 운행하는 운용 형태이다."</em></div>
+    <ol class="choice-list">
+      <li>① CBTC</li>
+      <li>② 이동폐색 지원</li>
+      <li>③ ATP 연계</li>
+      <li>④ 고밀도 운전</li>
+    </ol>
+  </div>
+
+  <!-- Q14 sig_139 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_139 · Part 6 · A+등급</div>
+    <div class="qst-num">Q14</div>
+    <div class="qst-q">다음 중 「고밀도 운전」에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 운전시격을 줄여 동일 선로에서 더 많은 열차를 안전하게 운행하는 운용 형태이다.</li>
+      <li>② 제어정보의 실시간성을 저해할 수 있어 CBTC 성능과 안전성 설계에서 중요하게 관리되는 요소이다.</li>
+      <li>③ 무선통신이 상실되면 정상 운행을 그대로 계속하기보다 제한·정지 등 안전측으로 전환하는 설계원칙이다.</li>
+      <li>④ CBTC 운행권한을 실제 안전제동으로 보장하는 방호 기능과의 연계를 뜻한다.</li>
+    </ol>
+  </div>
+
+  <!-- Q15 sig_140 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_140 · Part 6 · A+등급</div>
+    <div class="qst-num">Q15</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"정밀 위치정보와 연속 제어를 통해 선행열차를 더 가깝게 추종할 수 있어 얻는 효과이다."</em></div>
+    <ol class="choice-list">
+      <li>① 통신지연</li>
+      <li>② 짧은 운전시격</li>
+      <li>③ 이동폐색 지원</li>
+      <li>④ ATP 연계</li>
+    </ol>
+  </div>
+
+  <!-- Q16 sig_141 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_141 · Part 6 · A+등급</div>
+    <div class="qst-num">Q16</div>
+    <div class="qst-q">다음 중 「짧은 운전시격」에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 제어정보의 실시간성을 저해할 수 있어 CBTC 성능과 안전성 설계에서 중요하게 관리되는 요소이다.</li>
+      <li>② 무선통신이 상실되면 정상 운행을 그대로 계속하기보다 제한·정지 등 안전측으로 전환하는 설계원칙이다.</li>
+      <li>③ 정밀 위치정보와 연속 제어를 통해 선행열차를 더 가깝게 추종할 수 있어 얻는 효과이다.</li>
+      <li>④ 열차와 지상 제어설비가 위치·상태와 운행권한·속도조건을 상호 교환하는 통신 구조이다.</li>
+    </ol>
+  </div>
+
+  <!-- Q17 sig_142 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_142 · Part 6 · A+등급</div>
+    <div class="qst-num">Q17</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"CBTC 운행권한을 실제 안전제동으로 보장하는 방호 기능과의 연계를 뜻한다."</em></div>
+    <ol class="choice-list">
+      <li>① ATP 연계</li>
+      <li>② 양방향 무선통신</li>
+      <li>③ 실시간 위치정보</li>
+      <li>④ 위치정확도</li>
+    </ol>
+  </div>
+
+  <!-- Q18 sig_143 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_143 · Part 6 · A+등급</div>
+    <div class="qst-num">Q18</div>
+    <div class="qst-q">다음 중 「ATP 연계」에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 무선통신을 이용해 열차의 위치·속도·상태를 실시간으로 주고받으며 열차간격과 속도를 제어하는 시스템이다.</li>
+      <li>② 무선통신이 상실되면 정상 운행을 그대로 계속하기보다 제한·정지 등 안전측으로 전환하는 설계원칙이다.</li>
+      <li>③ CBTC 운행권한을 실제 안전제동으로 보장하는 방호 기능과의 연계를 뜻한다.</li>
+      <li>④ 제어정보의 실시간성을 저해할 수 있어 CBTC 성능과 안전성 설계에서 중요하게 관리되는 요소이다.</li>
+    </ol>
+  </div>
+
+  <!-- Q19 sig_144 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_144 · Part 6 · A+등급</div>
+    <div class="qst-num">Q19</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"CBTC의 속도·위치정보를 이용해 가감속·정위치정차 등 자동운전을 수행하는 연계를 뜻한다."</em></div>
+    <ol class="choice-list">
+      <li>① ATO 연계</li>
+      <li>② 짧은 운전시격</li>
+      <li>③ 양방향 무선통신</li>
+      <li>④ 통신지연</li>
+    </ol>
+  </div>
+
+  <!-- Q20 sig_145 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_145 · Part 6 · A+등급</div>
+    <div class="qst-num">Q20</div>
+    <div class="qst-q">다음 중 「ATO 연계」에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 무선통신이 상실되면 정상 운행을 그대로 계속하기보다 제한·정지 등 안전측으로 전환하는 설계원칙이다.</li>
+      <li>② CBTC의 정밀 위치검지와 양방향 통신을 활용해 열차별 동적 안전간격을 설정할 수 있는 기능이다.</li>
+      <li>③ CBTC의 속도·위치정보를 이용해 가감속·정위치정차 등 자동운전을 수행하는 연계를 뜻한다.</li>
+      <li>④ 지상에서 받은 운행권한·속도조건을 감시하고 ATP/ATO 기능과 연계해 열차를 제어하는 장치이다.</li>
+    </ol>
+  </div>
+
+  <!-- Q21 sig_146 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_146 · Part 6 · A+등급</div>
+    <div class="qst-num">Q21</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"무선통신이 상실되면 정상 운행을 그대로 계속하기보다 제한·정지 등 안전측으로 전환하는 설계원칙이다."</em></div>
+    <ol class="choice-list">
+      <li>① 실시간 위치정보</li>
+      <li>② 짧은 운전시격</li>
+      <li>③ 통신두절 시 안전측 제어</li>
+      <li>④ 고밀도 운전</li>
+    </ol>
+  </div>
+
+  <!-- Q22 sig_147 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_147 · Part 6 · A+등급</div>
+    <div class="qst-num">Q22</div>
+    <div class="qst-q">다음 중 「통신두절 시 안전측 제어」에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 정밀 위치정보와 연속 제어를 통해 선행열차를 더 가깝게 추종할 수 있어 얻는 효과이다.</li>
+      <li>② 제어정보의 실시간성을 저해할 수 있어 CBTC 성능과 안전성 설계에서 중요하게 관리되는 요소이다.</li>
+      <li>③ 무선통신이 상실되면 정상 운행을 그대로 계속하기보다 제한·정지 등 안전측으로 전환하는 설계원칙이다.</li>
+      <li>④ CBTC가 짧은 운전시격과 이동폐색을 구현할 때 핵심적으로 사용하는 열차 상태정보이다.</li>
+    </ol>
+  </div>
+
+  <!-- Q23 sig_148 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_148 · Part 6 · A+등급</div>
+    <div class="qst-num">Q23</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"제어정보의 실시간성을 저해할 수 있어 CBTC 성능과 안전성 설계에서 중요하게 관리되는 요소이다."</em></div>
+    <ol class="choice-list">
+      <li>① 이동폐색 지원</li>
+      <li>② 지상/관제 제어장치</li>
+      <li>③ 통신지연</li>
+      <li>④ 통신두절 시 안전측 제어</li>
+    </ol>
+  </div>
+
+  <!-- Q24 sig_149 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_149 · Part 6 · A+등급</div>
+    <div class="qst-num">Q24</div>
+    <div class="qst-q">다음 중 「통신지연」에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 제어정보의 실시간성을 저해할 수 있어 CBTC 성능과 안전성 설계에서 중요하게 관리되는 요소이다.</li>
+      <li>② 무선통신을 이용해 열차의 위치·속도·상태를 실시간으로 주고받으며 열차간격과 속도를 제어하는 시스템이다.</li>
+      <li>③ 열차간격 계산의 기초가 되므로 오차가 작을수록 정밀한 이동폐색 운용에 유리한 요소이다.</li>
+      <li>④ 정밀 위치정보와 연속 제어를 통해 선행열차를 더 가깝게 추종할 수 있어 얻는 효과이다.</li>
+    </ol>
+  </div>
+
+  <!-- Q25 sig_150 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_150 · Part 6 · A+등급</div>
+    <div class="qst-num">Q25</div>
+    <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br>
+    <em>"열차간격 계산의 기초가 되므로 오차가 작을수록 정밀한 이동폐색 운용에 유리한 요소이다."</em></div>
+    <ol class="choice-list">
+      <li>① CBTC</li>
+      <li>② 위치정확도</li>
+      <li>③ ATO 연계</li>
+      <li>④ 고밀도 운전</li>
+    </ol>
+  </div>
+
+  <!-- Q26 sig_207 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_207 · Part 6 · A+등급</div>
+    <div class="qst-num">Q26</div>
+    <div class="qst-q">CBTC와 이동폐색의 관계로 가장 적절한 것은?</div>
+    <ol class="choice-list">
+      <li>① 완전히 같은 뜻이다</li>
+      <li>② CBTC는 통신기반 열차제어 개념이고 이동폐색은 안전간격 관리 방식이다</li>
+      <li>③ CBTC는 통신과 무관하다</li>
+      <li>④ 이동폐색은 항상 지상신호만 쓴다</li>
+    </ol>
+  </div>
+
+  <!-- Q27 sig_213 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_213 · Part 6 · A+등급</div>
+    <div class="qst-num">Q27</div>
+    <div class="qst-q">CBTC의 정보 흐름으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 열차→지상: 위치·속도·상태, 지상→열차: 운행권한·제어정보</li>
+      <li>② 열차→지상은 음성만 가능</li>
+      <li>③ 지상→열차는 불가능</li>
+      <li>④ 단방향 통신이 기본</li>
+    </ol>
+  </div>
+
+  <!-- Q28 sig_222 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_222 · Part 6 · A+등급</div>
+    <div class="qst-num">Q28</div>
+    <div class="qst-q">CBTC를 단순 무선설비로 보면 안 되는 이유는?</div>
+    <ol class="choice-list">
+      <li>① 통신정보를 이용해 위치·권한·속도제어를 수행하는 시스템이기 때문</li>
+      <li>② 무선이 전혀 없기 때문</li>
+      <li>③ 승객만 사용하기 때문</li>
+      <li>④ 법규만 처리하기 때문</li>
+    </ol>
+  </div>
+
+  <!-- Q29 sig_234 -->
+  <div class="qst-box">
+    <div class="qst-meta">sig_234 · Part 6 · A+등급</div>
+    <div class="qst-num">Q29</div>
+    <div class="qst-q">운행권한(MA)의 의미에 가장 가까운 것은?</div>
+    <ol class="choice-list">
+      <li>① 열차가 안전하게 이동하도록 허용된 범위/거리 정보</li>
+      <li>② 기관사 면허</li>
+      <li>③ 승객 승차권</li>
+      <li>④ 전기요금</li>
+    </ol>
+  </div>
+
+  <!-- ===== 정답 해설 ===== -->
+  <section class="answer-section">
+    <h2 class="sec-title">정답 및 해설</h2>
+
+    <!-- A01 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q01</span>
+        <span class="ans-answer">정답 ②</span>
+        <span style="font-size:11px;color:#64748b;">sig_126</span>
+      </div>
+      <div class="ans-exp">
+        CBTC: 무선통신을 이용해 열차의 위치·속도·상태를 실시간으로 주고받으며 열차간격과 속도를 제어하는 시스템이다.
+      </div>
+    </div>
+
+    <!-- A02 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q02</span>
+        <span class="ans-answer">정답 ②</span>
+        <span style="font-size:11px;color:#64748b;">sig_127</span>
+      </div>
+      <div class="ans-exp">
+        CBTC 정의: 무선통신을 이용해 열차의 위치·속도·상태를 실시간으로 주고받으며 열차간격과 속도를 제어하는 시스템.
+        ①은 위치정확도, ③은 지상/관제 제어장치, ④는 ATP 연계에 대한 설명이다.
+      </div>
+    </div>
+
+    <!-- A03 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q03</span>
+        <span class="ans-answer">정답 ②</span>
+        <span style="font-size:11px;color:#64748b;">sig_128</span>
+      </div>
+      <div class="ans-exp">
+        양방향 무선통신: 열차와 지상 제어설비가 위치·상태와 운행권한·속도조건을 상호 교환하는 통신 구조이다.
+      </div>
+    </div>
+
+    <!-- A04 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q04</span>
+        <span class="ans-answer">정답 ②</span>
+        <span style="font-size:11px;color:#64748b;">sig_129</span>
+      </div>
+      <div class="ans-exp">
+        양방향 무선통신: 열차와 지상 제어설비가 위치·상태와 운행권한·속도조건을 상호 교환하는 통신 구조.
+        ①은 통신지연, ③은 고밀도 운전, ④는 통신두절 시 안전측 제어에 대한 설명이다.
+      </div>
+    </div>
+
+    <!-- A05 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q05</span>
+        <span class="ans-answer">정답 ④</span>
+        <span style="font-size:11px;color:#64748b;">sig_130</span>
+      </div>
+      <div class="ans-exp">
+        실시간 위치정보: CBTC가 짧은 운전시격과 이동폐색을 구현할 때 핵심적으로 사용하는 열차 상태정보이다.
+      </div>
+    </div>
+
+    <!-- A06 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q06</span>
+        <span class="ans-answer">정답 ①</span>
+        <span style="font-size:11px;color:#64748b;">sig_131</span>
+      </div>
+      <div class="ans-exp">
+        실시간 위치정보: CBTC가 짧은 운전시격과 이동폐색을 구현할 때 핵심적으로 사용하는 열차 상태정보.
+        ②는 지상/관제 제어장치, ③은 CBTC, ④는 양방향 무선통신에 대한 설명이다.
+      </div>
+    </div>
+
+    <!-- A07 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q07</span>
+        <span class="ans-answer">정답 ③</span>
+        <span style="font-size:11px;color:#64748b;">sig_132</span>
+      </div>
+      <div class="ans-exp">
+        지상/관제 제어장치: 열차로부터 상태정보를 받고 안전한 운행권한·속도조건을 계산해 전달하는 지상측 제어 기능이다.
+      </div>
+    </div>
+
+    <!-- A08 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q08</span>
+        <span class="ans-answer">정답 ③</span>
+        <span style="font-size:11px;color:#64748b;">sig_133</span>
+      </div>
+      <div class="ans-exp">
+        지상/관제 제어장치: 열차로부터 상태정보를 받고 안전한 운행권한·속도조건을 계산해 전달하는 지상측 제어 기능.
+        ①은 차상제어장치에 대한 설명이다.
+      </div>
+    </div>
+
+    <!-- A09 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q09</span>
+        <span class="ans-answer">정답 ②</span>
+        <span style="font-size:11px;color:#64748b;">sig_134</span>
+      </div>
+      <div class="ans-exp">
+        차상제어장치: 지상에서 받은 운행권한·속도조건을 감시하고 ATP/ATO 기능과 연계해 열차를 제어하는 장치이다.
+      </div>
+    </div>
+
+    <!-- A10 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q10</span>
+        <span class="ans-answer">정답 ③</span>
+        <span style="font-size:11px;color:#64748b;">sig_135</span>
+      </div>
+      <div class="ans-exp">
+        차상제어장치: 지상에서 받은 운행권한·속도조건을 감시하고 ATP/ATO 기능과 연계해 열차를 제어하는 장치.
+        ①은 ATO 연계, ②는 지상/관제 제어장치, ④는 이동폐색 지원에 대한 설명이다.
+      </div>
+    </div>
+
+    <!-- A11 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q11</span>
+        <span class="ans-answer">정답 ④</span>
+        <span style="font-size:11px;color:#64748b;">sig_136</span>
+      </div>
+      <div class="ans-exp">
+        이동폐색 지원: CBTC의 정밀 위치검지와 양방향 통신을 활용해 열차별 동적 안전간격을 설정할 수 있는 기능이다.
+      </div>
+    </div>
+
+    <!-- A12 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q12</span>
+        <span class="ans-answer">정답 ④</span>
+        <span style="font-size:11px;color:#64748b;">sig_137</span>
+      </div>
+      <div class="ans-exp">
+        이동폐색 지원: CBTC의 정밀 위치검지와 양방향 통신을 활용해 열차별 동적 안전간격을 설정할 수 있는 기능.
+        ①은 CBTC, ②는 위치정확도, ③은 양방향 무선통신에 대한 설명이다.
+      </div>
+    </div>
+
+    <!-- A13 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q13</span>
+        <span class="ans-answer">정답 ④</span>
+        <span style="font-size:11px;color:#64748b;">sig_138</span>
+      </div>
+      <div class="ans-exp">
+        고밀도 운전: 운전시격을 줄여 동일 선로에서 더 많은 열차를 안전하게 운행하는 운용 형태이다.
+      </div>
+    </div>
+
+    <!-- A14 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q14</span>
+        <span class="ans-answer">정답 ①</span>
+        <span style="font-size:11px;color:#64748b;">sig_139</span>
+      </div>
+      <div class="ans-exp">
+        고밀도 운전: 운전시격을 줄여 동일 선로에서 더 많은 열차를 안전하게 운행하는 운용 형태.
+        ②는 통신지연, ③은 통신두절 시 안전측 제어, ④는 ATP 연계에 대한 설명이다.
+      </div>
+    </div>
+
+    <!-- A15 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q15</span>
+        <span class="ans-answer">정답 ②</span>
+        <span style="font-size:11px;color:#64748b;">sig_140</span>
+      </div>
+      <div class="ans-exp">
+        짧은 운전시격: 정밀 위치정보와 연속 제어를 통해 선행열차를 더 가깝게 추종할 수 있어 얻는 효과이다.
+      </div>
+    </div>
+
+    <!-- A16 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q16</span>
+        <span class="ans-answer">정답 ③</span>
+        <span style="font-size:11px;color:#64748b;">sig_141</span>
+      </div>
+      <div class="ans-exp">
+        짧은 운전시격: 정밀 위치정보와 연속 제어를 통해 선행열차를 더 가깝게 추종할 수 있어 얻는 효과.
+        ①은 통신지연, ②는 통신두절 시 안전측 제어, ④는 양방향 무선통신에 대한 설명이다.
+      </div>
+    </div>
+
+    <!-- A17 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q17</span>
+        <span class="ans-answer">정답 ①</span>
+        <span style="font-size:11px;color:#64748b;">sig_142</span>
+      </div>
+      <div class="ans-exp">
+        ATP 연계: CBTC 운행권한을 실제 안전제동으로 보장하는 방호 기능과의 연계를 뜻한다.
+      </div>
+    </div>
+
+    <!-- A18 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q18</span>
+        <span class="ans-answer">정답 ③</span>
+        <span style="font-size:11px;color:#64748b;">sig_143</span>
+      </div>
+      <div class="ans-exp">
+        ATP 연계: CBTC 운행권한을 실제 안전제동으로 보장하는 방호 기능과의 연계.
+        ①은 CBTC, ②는 통신두절 시 안전측 제어, ④는 통신지연에 대한 설명이다.
+      </div>
+    </div>
+
+    <!-- A19 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q19</span>
+        <span class="ans-answer">정답 ①</span>
+        <span style="font-size:11px;color:#64748b;">sig_144</span>
+      </div>
+      <div class="ans-exp">
+        ATO 연계: CBTC의 속도·위치정보를 이용해 가감속·정위치정차 등 자동운전을 수행하는 연계를 뜻한다.
+      </div>
+    </div>
+
+    <!-- A20 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q20</span>
+        <span class="ans-answer">정답 ③</span>
+        <span style="font-size:11px;color:#64748b;">sig_145</span>
+      </div>
+      <div class="ans-exp">
+        ATO 연계: CBTC의 속도·위치정보를 이용해 가감속·정위치정차 등 자동운전을 수행하는 연계.
+        ①은 통신두절 시 안전측 제어, ②는 이동폐색 지원, ④는 차상제어장치에 대한 설명이다.
+      </div>
+    </div>
+
+    <!-- A21 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q21</span>
+        <span class="ans-answer">정답 ③</span>
+        <span style="font-size:11px;color:#64748b;">sig_146</span>
+      </div>
+      <div class="ans-exp">
+        통신두절 시 안전측 제어: 무선통신이 상실되면 정상 운행을 그대로 계속하기보다 제한·정지 등 안전측으로 전환하는 설계원칙이다.
+      </div>
+    </div>
+
+    <!-- A22 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q22</span>
+        <span class="ans-answer">정답 ③</span>
+        <span style="font-size:11px;color:#64748b;">sig_147</span>
+      </div>
+      <div class="ans-exp">
+        통신두절 시 안전측 제어: 무선통신이 상실되면 정상 운행을 그대로 계속하기보다 제한·정지 등 안전측으로 전환하는 설계원칙.
+        ①은 짧은 운전시격, ②는 통신지연, ④는 실시간 위치정보에 대한 설명이다.
+      </div>
+    </div>
+
+    <!-- A23 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q23</span>
+        <span class="ans-answer">정답 ③</span>
+        <span style="font-size:11px;color:#64748b;">sig_148</span>
+      </div>
+      <div class="ans-exp">
+        통신지연: 제어정보의 실시간성을 저해할 수 있어 CBTC 성능과 안전성 설계에서 중요하게 관리되는 요소이다.
+      </div>
+    </div>
+
+    <!-- A24 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q24</span>
+        <span class="ans-answer">정답 ①</span>
+        <span style="font-size:11px;color:#64748b;">sig_149</span>
+      </div>
+      <div class="ans-exp">
+        통신지연: 제어정보의 실시간성을 저해할 수 있어 CBTC 성능과 안전성 설계에서 중요하게 관리되는 요소.
+        ②는 CBTC, ③은 위치정확도, ④는 짧은 운전시격에 대한 설명이다.
+      </div>
+    </div>
+
+    <!-- A25 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q25</span>
+        <span class="ans-answer">정답 ②</span>
+        <span style="font-size:11px;color:#64748b;">sig_150</span>
+      </div>
+      <div class="ans-exp">
+        위치정확도: 열차간격 계산의 기초가 되므로 오차가 작을수록 정밀한 이동폐색 운용에 유리한 요소이다.
+      </div>
+    </div>
+
+    <!-- A26 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q26</span>
+        <span class="ans-answer">정답 ②</span>
+        <span style="font-size:11px;color:#64748b;">sig_207</span>
+      </div>
+      <div class="ans-exp">
+        CBTC는 '통신기반 열차제어 시스템' 개념이고, 이동폐색은 '안전간격 관리 방식(폐색 방법)'이다.
+        CBTC가 이동폐색을 구현하는 수단 중 하나이며, 둘은 동일 개념이 아니다.
+      </div>
+    </div>
+
+    <!-- A27 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q27</span>
+        <span class="ans-answer">정답 ①</span>
+        <span style="font-size:11px;color:#64748b;">sig_213</span>
+      </div>
+      <div class="ans-exp">
+        CBTC는 반드시 양방향 통신: 열차→지상(위치·속도·상태), 지상→열차(운행권한·제어정보).
+        단방향이라는 선지는 항상 오답이다.
+      </div>
+    </div>
+
+    <!-- A28 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q28</span>
+        <span class="ans-answer">정답 ①</span>
+        <span style="font-size:11px;color:#64748b;">sig_222</span>
+      </div>
+      <div class="ans-exp">
+        CBTC는 단순 무선설비가 아니라, 통신정보를 이용해 위치·권한·속도제어를 수행하는 시스템이다.
+        통신은 수단이고 제어가 목적임을 파악해야 한다.
+      </div>
+    </div>
+
+    <!-- A29 -->
+    <div class="ans-box">
+      <div class="ans-header">
+        <span class="ans-num">Q29</span>
+        <span class="ans-answer">정답 ①</span>
+        <span style="font-size:11px;color:#64748b;">sig_234</span>
+      </div>
+      <div class="ans-exp">
+        운행권한(MA, Movement Authority): 열차가 안전하게 이동하도록 허용된 범위/거리 정보.
+        지상 제어장치가 계산하여 차상으로 전달한다. 기관사 면허·승객 승차권과 혼동 금지.
+      </div>
+    </div>
+
+  </section><!-- /answer-section -->
+
+  <!-- ===== meta ===== -->
+  <div class="meta">
+    <strong>UNIT 08-03 · CBTC · 이동폐색 — FINAL PUBLISH v1.0</strong><br>
+    SOURCE: signal-exam-data.ts Part 6 (sig_126~sig_150, sig_207, sig_213, sig_222, sig_234) — 29문항<br>
+    VIS: VIS-07E 고정폐색 vs 이동폐색 CROSS-REF (본문 §3)<br>
+    LINKAGE: new_4.html / GATE5_PRINT_ALL_v1.1.html / GATE5_MASTER_ASSET_MAP_v1.4.md<br>
+    PRINT: @page A4 portrait; margin 12mm 12mm 12mm 18mm<br>
+    <!-- CHANGELOG
+      v1.0 (2026-10-06): 최초 제작. Part 6 29문항 전수 수록. §0~§6 이론 + Q01~Q29 + 정답 29개.
+    -->
+  </div>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
