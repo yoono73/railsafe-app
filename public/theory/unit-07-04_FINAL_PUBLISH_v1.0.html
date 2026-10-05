@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>07-04 건널목 신호·보안 | 철도공학</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#fff; color:#111; font-size:15px; line-height:1.75; }
+
+.print-btn {
+  position:fixed; top:12px; right:16px; z-index:999;
+  background:#78350f; color:#fff; border:none; border-radius:5px;
+  padding:6px 14px; font-size:.85em; font-weight:bold; cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+}
+.print-btn:hover { background:#5c2707; }
+
+.site-header { background:#fff; color:#111; padding:8px 16px 6px; border-bottom:3px solid #78350f; }
+.site-header h1 { font-size:1.05em; font-weight:bold; color:#78350f; }
+.site-header .meta { font-size:.78em; color:#555; margin-top:2px; }
+
+.container { max-width:960px; margin:0 auto; padding:20px 24px 60px; }
+
+.unit-header { border:2px solid #78350f; border-radius:6px; padding:12px 16px; margin-bottom:22px; background:#fff; }
+.unit-header h2 { font-size:1.2em; font-weight:bold; color:#78350f; }
+.unit-header .nav-link { font-size:.82em; color:#555; margin-top:4px; }
+
+.section { margin:0 0 26px 0; }
+.section-title { font-size:1.05em; font-weight:bold; color:#111; border-left:4px solid #78350f; padding:5px 0 5px 12px; margin-bottom:14px; background:#fff; }
+
+.concept { margin:14px 0 6px; padding-bottom:14px; border-bottom:1px solid #ccc; }
+.concept:last-child { border-bottom:none; }
+.concept-title { font-size:1em; font-weight:bold; color:#78350f; margin-bottom:8px; padding:4px 0; }
+.concept-title .cnum { border:1px solid #78350f; color:#78350f; border-radius:4px; padding:1px 7px; font-size:.85em; margin-right:6px; }
+
+table { width:100%; border-collapse:collapse; margin:8px 0; font-size:.9em; }
+th { background:#e8e8e8; color:#111; padding:7px 10px; text-align:left; font-size:.88em; border:1.5px solid #999; font-weight:bold; }
+td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#fff; }
+
+.trap {
+  background:#fff; border-left:4px solid #c0392b;
+  padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0;
+  font-size:.9em; color:#c0392b; font-weight:bold;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+.tip {
+  background:#fff; border-left:4px solid #2e7d32;
+  padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0;
+  font-size:.9em; color:#2e7d32; font-weight:bold;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+.theory-note {
+  background:#fff; border-left:4px solid #1565c0;
+  padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0;
+  font-size:.9em; color:#111;
+  border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0;
+}
+.theory-note strong { color:#1565c0; }
+
+.quiz-ex {
+  background:#fff; border-left:4px solid #2e7d32;
+  padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0;
+  font-size:.88em; color:#111;
+  border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0;
+}
+.quiz-ex .qe-title { font-weight:bold; color:#2e7d32; margin-bottom:4px; }
+.quiz-ex .qe-q { margin:4px 0 2px; }
+.quiz-ex .qe-a { font-weight:bold; color:#1b5e20; }
+.quiz-ex .qe-wrong {
+  display:block; background:#fff; border-left:3px solid #c0392b;
+  color:#c0392b; padding:5px 10px; margin:6px 0;
+  border-radius:0 4px 4px 0; font-size:.88em;
+  border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee;
+}
+
+.quiz-mc { background:#fff; border:1px solid #ccc; border-left:4px solid #555; padding:12px 14px; margin:12px 0; border-radius:0 4px 4px 0; font-size:.9em; }
+.quiz-mc .qm-src { font-size:.78em; color:#555; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
+.quiz-mc .qm-q { font-weight:bold; color:#111; margin-bottom:8px; line-height:1.6; }
+.quiz-mc .qm-choices { margin:0 0 0 4px; }
+.quiz-mc .qm-choice { padding:3px 0; color:#222; line-height:1.7; }
+
+.answer-section { margin-top:32px; border-top:2px solid #78350f; padding-top:16px; }
+.answer-section h3 { font-size:1em; font-weight:bold; color:#78350f; margin-bottom:12px; }
+.ans-list { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 16px; }
+.ans-chip { border:1px solid #999; border-radius:4px; padding:4px 10px; font-size:.85em; color:#111; }
+.ans-chip strong { color:#78350f; }
+.ans-item { border:1px solid #ccc; border-left:4px solid #78350f; border-radius:0 4px 4px 0; padding:10px 14px; margin:8px 0; font-size:.88em; }
+.ans-item .ai-no { font-weight:bold; color:#78350f; font-size:.9em; margin-bottom:4px; }
+.ans-item .ai-ans { font-weight:bold; margin:3px 0; }
+.ans-item .ai-exp { color:#333; margin:3px 0; line-height:1.7; }
+.ans-item .ai-trap { color:#c0392b; font-size:.87em; margin-top:4px; }
+
+.vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
+.vis-wrap img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; background:#fff; }
+.vis-cap { font-size:.8em; color:#555; margin-top:6px; }
+
+.term-box { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:10px 0; }
+.term-item { background:#fff; border:1px solid #bbb; border-radius:4px; padding:10px 12px; font-size:.88em; }
+.term-item .term-word { font-weight:bold; color:#78350f; font-size:.95em; margin-bottom:3px; }
+.term-item .term-def { color:#111; line-height:1.6; }
+
+.term-card { background:#fff; border:1px solid #bbb; border-radius:6px; padding:12px 16px; margin:10px 0; font-size:.9em; }
+.term-card .tc-word { font-weight:bold; color:#78350f; font-size:1em; margin-bottom:4px; }
+.term-card .tc-def { color:#111; line-height:1.7; margin-bottom:4px; }
+.term-card .tc-link { font-size:.87em; color:#555; border-top:1px solid #e0e0e0; padding-top:6px; margin-top:6px; }
+.term-card .tc-link strong { color:#1565c0; }
+
+.flow-box {
+  background:#fff; border-left:4px solid #78350f;
+  padding:10px 14px; margin:10px 0; border-radius:0 4px 4px 0;
+  font-size:.88em; color:#111;
+  border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0;
+  line-height:2;
+}
+.flow-box .fb-title { font-weight:bold; color:#78350f; margin-bottom:4px; }
+
+.crossref-box {
+  background:#fff; border:1px solid #78350f; border-radius:6px; padding:12px 16px; margin:10px 0;
+  font-size:.9em;
+}
+.crossref-box .cr-title { font-weight:bold; color:#78350f; margin-bottom:8px; }
+
+.meta-box { background:#fff; border:1px solid #bbb; border-radius:6px; padding:10px 16px; font-size:.8em; color:#555; margin-top:24px; }
+
+.vis-guide {
+  background:#fff; border-left:4px solid #455a64;
+  padding:10px 14px; margin:8px 0 4px; border-radius:0 4px 4px 0;
+  font-size:.88em; color:#111;
+  border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0;
+}
+.vis-guide .vg-title { font-weight:bold; color:#455a64; margin-bottom:6px; }
+
+@media(max-width:600px){
+  .term-box { grid-template-columns:1fr; }
+}
+
+/* ── GATE5 PRINT LOCK v1 — 12/12/12/18mm ── */
+@media print {
+  body { font-size:12pt; line-height:1.6; background:#fff !important; color:#000 !important; }
+  .print-btn { display:none !important; }
+  .site-header { border-bottom:2pt solid #000; padding:6pt 0; }
+  .unit-header { border:1.5pt solid #000; page-break-after:avoid; }
+  .concept { page-break-inside:avoid; }
+  .vis-wrap { page-break-inside:avoid; }
+  .term-box { grid-template-columns:1fr 1fr; }
+  table { page-break-inside:avoid; width:100%; max-width:100%; }
+  th { background:#e8e8e8 !important; color:#000 !important; border:1.5px solid #999 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  td { border:1.5px solid #bbb !important; background:#fff !important; }
+  .trap, .tip, .theory-note, .quiz-ex { page-break-inside:avoid; }
+  .quiz-mc { break-inside:avoid; page-break-inside:avoid; }
+  .ans-item { break-inside:avoid; page-break-inside:avoid; }
+  a { color:#000 !important; text-decoration:none; }
+  img, .vis-wrap img { max-width:100%; height:auto; }
+  .answer-section { break-before:page; page-break-before:always; }
+  @page {
+    size: A4 portrait;
+    margin: 12mm 12mm 12mm 18mm;
+  }
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+
+<header class="site-header">
+  <h1>철도교통안전관리자 — 철도공학</h1>
+  <div class="meta">07-04 건널목 신호·보안 | FINAL PUBLISH v1.0</div>
+</header>
+
+<div class="container">
+
+<div class="unit-header">
+  <h2>07-04 건널목 신호·보안 — 3종 분류·경보수치·전동차단기·제어방식·검지장치</h2>
+  <div class="nav-link">← <a href="unit-07-03_FINAL_PUBLISH_v1.1.html">07-03 선로전환기</a> &nbsp;|&nbsp; <strong>[현재]</strong> 07-04 건널목 신호·보안</div>
+</div>
+
+
+<!-- ══ § 0. 먼저 알고 가는 용어 ══ -->
+<div class="section">
+<div class="section-title">§ 0. 먼저 알고 가는 용어 — 이 단원을 이해하기 위한 선행 개념</div>
+
+<div class="concept">
+
+<div class="term-card">
+  <div class="tc-word">① 건널목 (Level Crossing)</div>
+  <div class="tc-def">도로와 철도 선로가 같은 평면에서 교차하는 장소. 차량·보행자와 열차가 동일 평면을 공유하므로 경보·차단 설비가 필수.</div>
+  <div class="tc-link"><strong>→ 연결:</strong> §1 건널목 3종 분류, §2 경보장치 수치</div>
+</div>
+
+<div class="term-card">
+  <div class="tc-word">② 전동차단기 (Electric Barrier)</div>
+  <div class="tc-def">전동기의 구동력으로 차단봉을 하강·상승시켜 건널목 차량 통행을 차단하는 장치.</div>
+  <div class="tc-link"><strong>→ 연결:</strong> §2 경보장치 수치(하강·상승 시간), §3 전동차단기 구성</div>
+</div>
+
+</div><!-- /concept -->
+</div><!-- /§0 -->
+
+
+<!-- ══ § 1. 건널목 3종 분류 ══ -->
+<div class="section">
+<div class="section-title">§1. 건널목 3종 분류 — 설비 수준별 구분</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념01</span>건널목 3종 분류 (설비 기준)</div>
+
+<table>
+  <thead><tr><th>종류</th><th>차단기</th><th>경보기</th><th>감시원</th></tr></thead>
+  <tbody>
+    <tr><td><strong>제1종</strong></td><td>○ (자동차단기)</td><td>○ (경보기)</td><td>○ (상주 근무)</td></tr>
+    <tr><td><strong>제2종</strong></td><td>✕</td><td>○ (경보기)</td><td>✕ (무인·자동)</td></tr>
+    <tr><td><strong>제3종</strong></td><td>✕</td><td>✕</td><td>✕ (안전표지만)</td></tr>
+  </tbody>
+</table>
+
+<div class="trap">★ 핵심 함정 — 제2종에는 차단기와 감시원이 없다! "경보기+안전표지"만. 문제에서 "2종에는 차단기 필요"라고 오답 제시.</div>
+
+<div class="theory-note">
+  <strong>이론 배경: </strong>제1종이 가장 안전(차단기+경보기+감시원 3중). 제3종은 안전표지(표지판)만 설치.
+</div>
+</div><!-- /concept -->
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념02</span>역구내 건널목 제어 방식</div>
+
+<div class="theory-note">
+  역구내 건널목은 <strong>자동제어가 기본</strong> (수동 기본 X). 부득이한 경우에만 수동으로 경보·차단 제어.
+</div>
+
+<div class="trap">★ "역구내 건널목은 수동 제어가 기본" → 오답. 자동이 기본.</div>
+</div><!-- /concept -->
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념03</span>건널목 보안설비 설치 고려 요소</div>
+
+<div class="theory-note">
+  아래 요소를 <strong>종합 판단</strong>하여 종류 결정:<br>
+  - 열차 운행 빈도 (열차 횟수)<br>
+  - 도로 교통량 (일일 통행 차량 수)<br>
+  - 건널목의 길이 및 폭<br>
+  - 전후 지형·시인성 (열차투시거리)
+</div>
+
+<div class="trap">★ "열차 편성량(열차 길이)"은 건널목 보안설비 설치 타당성과 <strong>직접 관련 없음</strong> → 고려 요소 제외</div>
+</div><!-- /concept -->
+</div><!-- /§1 -->
+
+
+<!-- ══ § 2. 경보장치 수치 ══ -->
+<div class="section">
+<div class="section-title">§2. 경보장치 수치 — 암기 필수 ★★★</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념04</span>경보장치 7가지 수치</div>
+
+<div class="vis-wrap">
+  <img src="../images/VIS-046_건널목경보장치수치암기카드.jpg" alt="VIS-046 건널목 경보장치 수치 암기카드">
+  <p class="vis-cap">VIS-046 건널목 경보장치 수치 암기카드</p>
+</div>
+
+<table>
+  <thead><tr><th>항목</th><th>기준값</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr><td><strong>직립형 경보등 점멸 횟수</strong></td><td><strong>분당 40 ± 10회</strong></td><td>30~50회 범위</td></tr>
+    <tr><td><strong>경보종 타종 횟수</strong></td><td><strong>분당 70 ~ 100회</strong></td><td>경보등과 혼동 주의</td></tr>
+    <tr><td><strong>경보종 코일 전류</strong></td><td><strong>정격값의 ± 10%</strong></td><td>코일 전류 허용 편차</td></tr>
+    <tr><td><strong>전동차단기 제어전압</strong></td><td><strong>정격값의 0.9 ~ 1.2배</strong></td><td>전압 허용 범위</td></tr>
+    <tr><td><strong>차단봉 위치 (궤도중심~)</strong></td><td><strong>2.8 m</strong></td><td>궤도중심에서 측단까지</td></tr>
+    <tr><td><strong>차단기 하강 시간 ★</strong></td><td><strong>8초 ± 2초</strong></td><td>최빈출 (6~10초 범위)</td></tr>
+    <tr><td><strong>차단기 상승 시간</strong></td><td><strong>12초 이하</strong></td><td>상승이 더 느려도 OK</td></tr>
+  </tbody>
+</table>
+
+<div class="trap">★★★ 최빈출 함정 3종 세트:<br>
+1. "하강=8초, 상승=8초" X → 하강 8±2초, 상승 12초 이하 (서로 다름)<br>
+2. "경보등=70~100회" X → 경보등은 40±10회, 종이 70~100회<br>
+3. "제어전압=±10%" X → 제어전압은 0.9~1.2배, ±10%는 코일 전류</div>
+</div><!-- /concept -->
+</div><!-- /§2 -->
+
+
+<!-- ══ § 3. 전동차단기 구성 ══ -->
+<div class="section">
+<div class="section-title">§3. 전동차단기 구성</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념05</span>전동차단기 3대 구성요소</div>
+
+<div class="flow-box">
+  <div class="fb-title">전동차단기 3대 구성요소</div>
+  ① 마찰연축기 (마찰 클러치) — 과부하 시 미끄러져 차단봉 보호<br>
+  ② 직류직권전동기 — 구동 전동기 (차단봉 승강 동력원)<br>
+  ③ 감속치차 — 전동기 속도를 감속하여 토크 증대
+</div>
+
+<div class="trap">★ <strong>전압검지장치는 전동차단기 구성요소가 아님!</strong> 오답 선택지로 자주 등장.</div>
+
+<div class="theory-note">
+  <strong>이론 배경: </strong>마찰연축기의 역할 = 이상 하중(차량 충돌 등)이 가해질 때 슬립(미끄러짐)으로 차단봉 파손 방지.
+</div>
+</div><!-- /concept -->
+</div><!-- /§3 -->
+
+
+<!-- ══ § 4. 건널목 경보제어 방식 ══ -->
+<div class="section">
+<div class="section-title">§4. 건널목 경보제어 방식</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념06</span>자동신호구간 경보제어 방식</div>
+
+<table>
+  <thead><tr><th>구간</th><th>제어 방식</th></tr></thead>
+  <tbody>
+    <tr><td><strong>자동신호구간</strong></td><td>궤도회로식 → 열차 접근 시 궤도 단락 감지 → 경보 자동 작동</td></tr>
+    <tr><td><strong>수동신호구간</strong></td><td>감시원이 직접 작동 (역구내 등)</td></tr>
+    <tr><td><strong>역구내 건널목</strong></td><td>자동이 기본 (예외 시만 수동)</td></tr>
+  </tbody>
+</table>
+</div><!-- /concept -->
+</div><!-- /§4 -->
+
+
+<!-- ══ § 5. 검지장치·기타 ══ -->
+<div class="section">
+<div class="section-title">§5. 검지장치 및 기타 설비</div>
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념07</span>건널목 지장물 검지장치</div>
+
+<div class="theory-note">
+  건널목에 차량·사람 등이 남아 있을 때 이를 검지하여 열차에 경보를 발하는 장치.<br>
+  종류(9종 예시): 끌림검지장치, 건널목 지장물 검지장치, 영상식 지장물 검지 등.
+</div>
+</div><!-- /concept -->
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">개념08</span>호륜레일</div>
+
+<div class="theory-note">
+  - 건널목 구간에서 차륜을 안내하는 레일<br>
+  - 직선 본선과의 간격: <strong>65 mm</strong>
+</div>
+</div><!-- /concept -->
+</div><!-- /§5 -->
+
+
+<!-- ══ § 6. 함정 정리 ══ -->
+<div class="section">
+<div class="section-title">§6. 시험 함정 정리</div>
+
+<div class="concept">
+<div class="trap">1. "2종 건널목에도 차단기가 있어야 한다" → ✕ 2종=경보기+표지만, 차단기 없음</div>
+<div class="trap">2. "역구내 건널목 = 수동 기본" → ✕ 자동이 기본</div>
+<div class="trap">3. "차단기 하강 시간 = 12초 이하" → ✕ 하강=8±2초, 12초 이하는 상승 시간</div>
+<div class="trap">4. "경보등 점멸 = 70~100회" → ✕ 경보등=40±10회 / 경보종이 70~100회</div>
+<div class="trap">5. "전동차단기 구성요소 = 전압검지장치" → ✕ 마찰연축기·직류직권전동기·감속치차 3가지</div>
+<div class="trap">6. "전동차단기 제어전압 허용 = ±10%" → ✕ 제어전압=0.9~1.2배 / ±10%는 코일 전류</div>
+<div class="trap">7. "열차 편성량 = 건널목 보안설비 설치 고려 요소" → ✕ 고려 요소 아님</div>
+</div><!-- /concept -->
+</div><!-- /§6 -->
+
+
+<!-- ══ § 7. CROSS-REF ══ -->
+<div class="section">
+<div class="section-title">§7. 연결 단원</div>
+
+<div class="concept">
+<div class="crossref-box">
+  <div class="cr-title">이 단원과 연결되는 핵심 개념</div>
+  - <strong>07-03 선로전환기:</strong> 전기선로전환기에도 마찰클러치·직류직권전동기 사용 → 전동차단기 구성과 비교<br>
+  - <strong>§검지장치 9종:</strong> 끌림검지장치 등 — 건널목 지장물 검지도 포함<br>
+  - <strong>철도안전법:</strong> 건널목 사고 예방 조치 (1종=자동차단기 의무, 사고다발=입체화 추진)
+</div>
+</div><!-- /concept -->
+</div><!-- /§7 -->
+
+
+<!-- ══ § 8. 기출·예상 문제 ══ -->
+<div class="section">
+<div class="section-title">§8. 기출·예상 문제</div>
+
+<!-- Q01 -->
+<div class="quiz-mc">
+  <div class="qm-src">기출 S등급 | 신호기출 #274</div>
+  <div class="qm-q">Q01. 건널목 전동차단기의 하강 시간 기준은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 5초 이하</div>
+    <div class="qm-choice">② 8초 ± 2초</div>
+    <div class="qm-choice">③ 12초 이하</div>
+    <div class="qm-choice">④ 20초 이내</div>
+  </div>
+</div>
+
+<!-- Q02 -->
+<div class="quiz-mc">
+  <div class="qm-src">기출 A+등급 | 신호기출 #275</div>
+  <div class="qm-q">Q02. 건널목 직립형 경보등의 점멸 횟수 기준은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 분당 20 ± 10회</div>
+    <div class="qm-choice">② 분당 40 ± 10회</div>
+    <div class="qm-choice">③ 분당 60 ± 10회</div>
+    <div class="qm-choice">④ 분당 70 ~ 100회</div>
+  </div>
+</div>
+
+<!-- Q03 -->
+<div class="quiz-mc">
+  <div class="qm-src">기출 A+등급 | 신호기출 #276</div>
+  <div class="qm-q">Q03. 건널목 경보종의 타종 횟수 기준은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 분당 40 ± 10회</div>
+    <div class="qm-choice">② 분당 60 ~ 90회</div>
+    <div class="qm-choice">③ 분당 70 ~ 100회</div>
+    <div class="qm-choice">④ 분당 100 ~ 120회</div>
+  </div>
+</div>
+
+<!-- Q04 -->
+<div class="quiz-mc">
+  <div class="qm-src">기출 A+등급 | 신호기출 #277</div>
+  <div class="qm-q">Q04. 전동차단기 제어전압의 허용 범위는?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 정격값의 0.8 ~ 1.1배</div>
+    <div class="qm-choice">② 정격값의 0.9 ~ 1.2배</div>
+    <div class="qm-choice">③ 정격값의 ± 10%</div>
+    <div class="qm-choice">④ 정격값의 1.0 ~ 1.3배</div>
+  </div>
+</div>
+
+<!-- Q05 -->
+<div class="quiz-mc">
+  <div class="qm-src">기출 A등급 | 철도공학기출 #72</div>
+  <div class="qm-q">Q05. 건널목 종류 중 가장 안전한 것으로, 차단기와 건널목 경보기·신호기를 모두 갖춘 건널목은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 제1종 건널목</div>
+    <div class="qm-choice">② 제2종 건널목</div>
+    <div class="qm-choice">③ 제3종 건널목</div>
+    <div class="qm-choice">④ 입체 건널목</div>
+  </div>
+</div>
+
+<!-- Q06 -->
+<div class="quiz-mc">
+  <div class="qm-src">철도왕 기출 | ch81 #16</div>
+  <div class="qm-q">Q06. 건널목의 정의로 틀린 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 제1종 건널목은 차단기, 경보기 및 건널목 안전표지를 설치하고 안내원을 배치한다</div>
+    <div class="qm-choice">② 제2종 건널목은 경보기와 건널목 안전표지만 설치되어 있다</div>
+    <div class="qm-choice">③ 제3종 건널목은 건널목 안전표지만 설치되어 있다</div>
+    <div class="qm-choice">④ 제2종 건널목에는 반드시 차단기와 안내원이 있어야 한다</div>
+  </div>
+</div>
+
+<!-- Q07 -->
+<div class="quiz-mc">
+  <div class="qm-src">철도왕 기출 | ch81 #17</div>
+  <div class="qm-q">Q07. 건널목 보안설비 설치 시 고려하지 않는 요소는?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 열차 운행 빈도(열차 횟수)</div>
+    <div class="qm-choice">② 도로 교통량(하루 통행 차량 수)</div>
+    <div class="qm-choice">③ 열차투시거리 및 열차 편성량</div>
+    <div class="qm-choice">④ 건널목의 길이 및 폭</div>
+  </div>
+</div>
+
+<!-- Q08 -->
+<div class="quiz-mc">
+  <div class="qm-src">철도왕 기출 | ch7 #100</div>
+  <div class="qm-q">Q08. [운행안전 및 철도보호] 건널목 보안 시설에 관한 설명으로 옳지 않은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 1종 건널목에는 자동 차단기와 경보기가 설치되어야 한다</div>
+    <div class="qm-choice">② 2종 건널목에는 경보기만 설치되어야 한다</div>
+    <div class="qm-choice">③ 3종 건널목에는 특별한 보안시설이 필요 없다</div>
+    <div class="qm-choice">④ 건널목 통행 방법은 도로교통법에 따른다</div>
+  </div>
+</div>
+
+<!-- Q09 -->
+<div class="quiz-mc">
+  <div class="qm-src">철도왕 기출 | ch7 #101</div>
+  <div class="qm-q">Q09. [운행안전 및 철도보호] 철도 건널목의 종류에 따른 설명으로 옳은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 1종: 차단기와 경보기, 2종: 경보기만, 3종: 표지만</div>
+    <div class="qm-choice">② 1종: 경보기만, 2종: 차단기와 경보기, 3종: 표지만</div>
+    <div class="qm-choice">③ 1종: 차단기만, 2종: 경보기만, 3종: 표지만</div>
+    <div class="qm-choice">④ 1종: 차단기와 경보기, 2종: 표지만, 3종: 시설 없음</div>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="quiz-mc">
+  <div class="qm-src">철도왕 신유형 | ch7 #154</div>
+  <div class="qm-q">Q10. [신유형] 철도안전법에 따른 건널목 사고 예방 조치로 옳지 않은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 1종 건널목에는 자동차단기를 설치한다</div>
+    <div class="qm-choice">② 건널목에는 경보장치를 설치한다</div>
+    <div class="qm-choice">③ 사고 다발 건널목은 입체화를 추진한다</div>
+    <div class="qm-choice">④ 2종 건널목에도 자동차단기를 의무 설치한다</div>
+  </div>
+</div>
+
+</div><!-- /§8 -->
+
+
+<!-- ══ 정답 및 해설 ══ -->
+<div class="answer-section">
+<h3>정답 및 해설</h3>
+
+<div class="ans-list">
+  <div class="ans-chip">Q01 <strong>②</strong></div>
+  <div class="ans-chip">Q02 <strong>②</strong></div>
+  <div class="ans-chip">Q03 <strong>③</strong></div>
+  <div class="ans-chip">Q04 <strong>②</strong></div>
+  <div class="ans-chip">Q05 <strong>①</strong></div>
+  <div class="ans-chip">Q06 <strong>④</strong></div>
+  <div class="ans-chip">Q07 <strong>③</strong></div>
+  <div class="ans-chip">Q08 <strong>③</strong></div>
+  <div class="ans-chip">Q09 <strong>①</strong></div>
+  <div class="ans-chip">Q10 <strong>④</strong></div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q01 [sig_274·S] 전동차단기 하강 시간</div>
+  <div class="ai-ans">정답 ② 8초 ± 2초</div>
+  <div class="ai-exp">전동차단기 하강 시간 = 8초 ± 2초 (6~10초 범위). 상승 시간 = 12초 이하.</div>
+  <div class="ai-trap">③ 12초는 상승 시간. '20초 이내'는 규정에 없는 오답.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q02 [sig_275·A+] 경보등 점멸 횟수</div>
+  <div class="ai-ans">정답 ② 분당 40 ± 10회</div>
+  <div class="ai-exp">직립형 경보등 점멸 = 분당 40 ± 10회 (30~50회). 경보종 타종수와 혼동 금지.</div>
+  <div class="ai-trap">④ 70~100회는 경보종(벨) 타종 횟수.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q03 [sig_276·A+] 경보종 타종 횟수</div>
+  <div class="ai-ans">정답 ③ 분당 70 ~ 100회</div>
+  <div class="ai-exp">경보종 타종수 = 분당 70~100회. 경보등 점멸(40±10회)과 구분.</div>
+  <div class="ai-trap">① 40±10회는 경보등. ② 60~90회는 오답 수치.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q04 [sig_277·A+] 전동차단기 제어전압</div>
+  <div class="ai-ans">정답 ② 정격값의 0.9 ~ 1.2배</div>
+  <div class="ai-exp">전동차단기 제어전압 = 정격값의 0.9~1.2배. 코일 전류 = ±10%.</div>
+  <div class="ai-trap">③ ±10%는 경보종 코일 전류 허용 편차. 제어전압과 혼동 금지.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q05 [eng_72·A] 가장 안전한 건널목</div>
+  <div class="ai-ans">정답 ① 제1종 건널목</div>
+  <div class="ai-exp">제1종 = 차단기+경보기+감시원(가장 안전). 제2종 = 경보기만. 제3종 = 안전표지만.</div>
+  <div class="ai-trap">신호기가 포함된다고 혼동하지 말 것. 1종>2종>3종 안전 순.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q06 [rk_ch81_16] 건널목 정의 틀린 것</div>
+  <div class="ai-ans">정답 ④ 제2종 건널목에는 반드시 차단기와 안내원이 있어야 한다</div>
+  <div class="ai-exp">제2종 = 경보기+안전표지만. 차단기·안내원 없음. ①③는 옳음.</div>
+  <div class="ai-trap">제2종을 1종처럼 설명한 선택지 → 오답.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q07 [rk_ch81_17] 보안설비 고려 불필요 요소</div>
+  <div class="ai-ans">정답 ③ 열차투시거리 및 열차 편성량</div>
+  <div class="ai-exp">열차투시거리는 고려하지만 열차 편성량(열차 길이)은 건널목 보안설비 설치와 직접 무관.</div>
+  <div class="ai-trap">'열차 편성량'이 함께 묶여 있어 혼동. 투시거리는 고려, 편성량은 제외.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q08 [rk_ch7_B5_08] 보안시설 옳지 않은 것</div>
+  <div class="ai-ans">정답 ③ 3종 건널목에는 특별한 보안시설이 필요 없다</div>
+  <div class="ai-exp">제3종에도 최소한의 안전표지(보안시설)는 필요하다. ①②는 옳음.</div>
+  <div class="ai-trap">'특별한 보안시설 없다' → 완전히 무시하는 것처럼 표현해 오답 유도.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q09 [rk_ch7_B5_09] 종류별 설명 옳은 것</div>
+  <div class="ai-ans">정답 ① 1종: 차단기와 경보기, 2종: 경보기만, 3종: 표지만</div>
+  <div class="ai-exp">3종 분류의 정확한 설비 조합. ②③④는 순서·설비 혼동.</div>
+</div>
+
+<div class="ans-item">
+  <div class="ai-no">Q10 [rk_ch7_NEW_26] 건널목 사고예방조치 옳지 않은 것</div>
+  <div class="ai-ans">정답 ④ 2종 건널목에도 자동차단기를 의무 설치한다</div>
+  <div class="ai-exp">자동차단기는 1종에만 의무 설치. 2종 = 경보기만.</div>
+  <div class="ai-trap">①②③은 모두 옳은 조치. ④만 틀린 내용.</div>
+</div>
+
+</div><!-- /answer-section -->
+
+<div class="meta-box">
+  GATE5 UNIT 07-04 건널목 신호·보안 | FINAL PUBLISH v1.0<br>
+  수록 문제: sig_274·275·276·277 / eng_72 / rk_ch81_16·17 / rk_ch7_B5_08·09·NEW_26 (10문항)<br>
+  VIS-046 사용
+</div>
+
+</div><!-- /container -->
+</body>
+</html>
