@@ -332,7 +332,7 @@
 |---|---|---|---|---|---|---|
 | **08-01** | **ATS·ATP·ATC·ATO** | ✅v1.5 | sig Part5 9개 | VIS-08A (PRIMARY) / VIS-041 KEEP-ASSET·NOT-USED / VIS-043 / VIS-040_CTC | V-Y-16 PRIMARY ✅ / V-Y-17 CROSS-REF (본문 직접 삽입 금지) | ⚠ **FINAL CHECK** (RETROFIT 완료 / YouTube Error 153 원인 미확정 — HTTP Referer·API Client ID 문제 추정, embed 금지 아님 / 배포 환경 확인 필요) |
 | **08-02** | **TTC·운전보안장치** | ✅v1.2 FINAL | sig_101·102·103·104·108·110·112·122·183·211·278·279 (12개) | VIS-087 (PRIMARY) / VIS-040_CTC_ATC비교도해 (CROSS-REF) | V-Y-03, V-Y-06 | **PUBLISHED** |
-| **08-03** | **CBTC·이동폐색** | ✅v1.0 FINAL | sig Part6 29개 (sig_126~150, 207, 213, 222, 234) | VIS-07E (CROSS-REF §3) | V-Y-16 RELATED | **PUBLISHED** |
+| **08-03** | **CBTC·이동폐색** | ✅v1.1 FINAL | sig Part6 29개 (sig_126~150, 207, 213, 222, 234) | VIS-07E (CROSS-REF §3, 이미지 삽입) | V-Y-16 RELATED | **PUBLISHED** |
 | 08-04 | 열차운전이론 | ❌미제작 | railway-king ch83 일부 | VIS-009, 010, 079 | V-Y-01, V-Y-04 | PENDING |
 | 08-05 | 열차운행 안전 | ❌미제작 | railway-king ch83 일부 | — | V-Y-05 | PENDING |
 | 08-06 | 열차통신·LTE-R | ❌미제작 | — | — | V-Y-18, V-Y-19 (PRIMARY) | PENDING |
