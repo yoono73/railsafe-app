@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08-05 열차운행 안전 v1.1</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* ===== 헤더 ===== */
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part  { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-lock  { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+
+  /* ===== 섹션 제목 ===== */
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+
+  /* ===== 선행용어 카드 ===== */
+  .term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
+  .term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+  .term-name { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 4px; }
+  .term-desc { font-size: 13px; color: #333; line-height: 1.6; }
+  .term-why { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+  /* ===== 영상 카드 ===== */
+  .yt-card {
+    margin: 10px 0 4px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.07);
+  }
+  .yt-thumb {
+    position: relative;
+    cursor: pointer;
+    background: #000;
+  }
+  .yt-thumb img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; opacity: .88; }
+  .yt-play {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  }
+  .yt-play-btn {
+    width: 52px; height: 52px; background: rgba(220,38,38,.9); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.4);
+  }
+  .yt-info {
+    padding: 7px 12px; display: flex; align-items: center; gap: 8px; background: #f9fafb;
+  }
+  .yt-badge {
+    background: #dc2626; color: #fff; font-size: 11px; padding: 2px 7px;
+    border-radius: 3px; font-weight: 600; white-space: nowrap;
+  }
+  .yt-title { font-size: 13px; color: #111; font-weight: 500; line-height: 1.3; }
+  .yt-iframe-wrap { display: none; position: relative; padding-bottom: 56.25%; background: #000; }
+  .yt-iframe-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+
+  /* ===== 개념 카드 ===== */
+  .concept-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .concept-head {
+    padding: 12px 16px;
+    background: #1e3a5f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .concept-num {
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255,255,255,.18);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+  .concept-name {
+    font-size: 15px;
+    font-weight: 800;
+  }
+  .concept-star {
+    font-size: 12px;
+    margin-left: auto;
+    opacity: .9;
+    white-space: nowrap;
+  }
+  .concept-body { padding: 16px 18px; font-size: 13.5px; line-height: 1.8; }
+
+  /* ===== 단계 박스 ===== */
+  .step-box {
+    border-left: 4px solid #1e3a5f;
+    background: #f0f4f8;
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    margin: 10px 0;
+    font-size: 13.5px;
+    line-height: 1.8;
+  }
+  .step-box-danger {
+    border-left: 4px solid #dc2626;
+    background: #fef2f2;
+  }
+
+  /* ===== TIP / TRAP ===== */
+  .tip-box {
+    background: #f0fdfa;
+    border: 1px solid #99f6e4;
+    border-radius: 5px;
+    padding: 9px 14px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: #134e4a;
+  }
+  .trap-box {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 5px;
+    padding: 9px 14px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: #7f1d1d;
+  }
+  .tip-box::before  { content: '💡 TIP: '; font-weight: 700; }
+  .trap-box::before { content: '⚠️ TRAP: '; font-weight: 700; }
+
+  /* ===== 이론 배경 ===== */
+  .theory-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    padding: 9px 14px;
+    margin: 8px 0;
+    font-size: 12.5px;
+    color: #475569;
+    line-height: 1.7;
+  }
+  .theory-box strong { color: #1e3a5f; display: block; margin-bottom: 2px; }
+
+  /* ===== 기출 예시 ===== */
+  .quiz-box {
+    border: 1.5px solid #1e3a5f;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    background: #f8fafc;
+    font-size: 13px;
+  }
+  .quiz-head { font-weight: 800; color: #1e3a5f; margin-bottom: 6px; font-size: 13px; }
+  .quiz-q { margin-bottom: 6px; color: #1a1a1a; }
+  .quiz-a { color: #065f46; font-weight: 700; margin-bottom: 4px; }
+  .quiz-wrong { color: #b45309; font-size: 12px; }
+
+  /* ===== 교재 참고수치 박스 ===== */
+  .ref-box {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 5px;
+    padding: 9px 14px;
+    margin: 8px 0;
+    font-size: 12.5px;
+    color: #78350f;
+  }
+  .ref-box strong { display: block; margin-bottom: 3px; color: #92400e; }
+
+  /* ===== 표 ===== */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0; border: 1.5px solid #cbd5e1; border-radius: 6px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; }
+  th { background: #1e3a5f; color: #fff; font-weight: 700; padding: 9px 12px; text-align: center; white-space: nowrap; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .td-key { font-weight: 700; color: #1e3a5f; white-space: nowrap; }
+
+  /* ===== meta 박스 ===== */
+  .meta { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 14px 16px; margin-top: 40px; font-size: 12px; color: #64748b; line-height: 1.8; }
+  .meta strong { color: #1a1a1a; }
+
+  /* ===== UNIT NAV ===== */
+  .unit-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding: 12px 0; border-top: 1px solid #e2e8f0; font-size: 13px; }
+  .unit-nav a { color: #1e3a5f; text-decoration: none; font-weight: 600; padding: 6px 12px; border: 1px solid #1e3a5f; border-radius: 4px; }
+  .unit-nav a:hover { background: #f0f4f8; }
+  .unit-nav .nav-none { color: #94a3b8; font-size: 12px; padding: 6px 12px; }
+  @media print { .unit-nav { display: none; } }
+
+  /* ===== 인쇄 버튼 ===== */
+  .print-btn {
+    position: fixed; top: 12px; right: 16px; z-index: 999;
+    background: #78350f; color: #fff; border: none; border-radius: 5px;
+    padding: 6px 14px; font-size: .85em; font-weight: bold; cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,.18);
+  }
+  .print-btn:hover { background: #5c2707; }
+
+  /* ===== 인쇄 ===== */
+  @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+  @media print {
+    .page-wrap { padding: 10px; }
+    .sec-title { margin-top: 18px; }
+    .concept-card, .quiz-box, .step-box { break-inside: avoid; page-break-inside: avoid; }
+    .sec-title { break-after: avoid; page-break-after: avoid; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .print-btn { display: none !important; }
+    .yt-card { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<button class="print-btn" type="button" aria-label="현재 학습자료 인쇄 또는 PDF 저장" onclick="window.print()">🖨 인쇄 / PDF</button>
+
+<div class="page-wrap">
+
+  <!-- ===== 헤더 ===== -->
+  <header class="unit-header">
+    <div class="unit-num">UNIT 08-05 · PART 08 열차제어 시스템</div>
+    <h1 class="unit-title">열차운행 안전</h1>
+    <div class="unit-sub">비상조치 기본 흐름 / 지상방호·무선방호 / 열차분리 자동정차 / 전차선 단선 / 구원운전·작업전호 / 화재 조치</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 08</span>
+      <span class="badge badge-grade">★★★</span>
+      <span class="badge badge-lock">FINAL PUBLISH v1.1</span>
+    </div>
+  </header>
+
+  <!-- ===== §0 선행 용어 ===== -->
+  <h2 class="sec-title">§0 선행 용어</h2>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">Fail-Safe (페일세이프)</div>
+      <div class="term-desc">시스템 고장·이상 시 반드시 안전한 쪽(정지·차단)으로 동작하도록 설계하는 원칙</div>
+      <div class="term-why">→ 열차분리 자동정차, 전차선 활선 간주 모두 이 원칙의 적용</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">관압 (管壓) / 제동관</div>
+      <div class="term-desc">제동관(Brake Pipe) = 열차 전체를 연결하는 공기압력 배관. 이 관의 압력(관압)이 떨어지면 자동식 공기제동이 작동</div>
+      <div class="term-why">→ 열차분리 시 관압 급감 → 자동 비상제동</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">작업전호 (作業傳號)</div>
+      <div class="term-desc">추진·퇴행 운전 시 맨 앞 차량의 직원이 기관사에게 정해진 방법으로 연락하는 신호 (법정 방법)</div>
+      <div class="term-why">→ 철도차량운전규칙 제102조 명시</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">활선 (活線)</div>
+      <div class="term-desc">전류가 흐르고 있는 전선. 전차선이 끊어져 땅에 떨어져도 전원이 차단되지 않으면 활선 상태</div>
+      <div class="term-why">→ 단전 확인 전까지 접근·접촉 절대 금지</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">지장지점 (支障地點)</div>
+      <div class="term-desc">사고·고장 등으로 열차 운행에 지장을 주는 지점 (열차 정차 위치 또는 선로 장애 지점)</div>
+      <div class="term-why">→ 방호 조치 기준점: 지장지점 외방</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">구원운전 (救援運轉)</div>
+      <div class="term-desc">고장·사고 열차를 구원하기 위해 별도의 구원열차를 편성하여 운전하는 것</div>
+      <div class="term-why">→ 관제 지시 + 연결 + 작업전호 후 운전</div>
+    </div>
+  </div>
+
+  <!-- ===== §1 관련 영상 ===== -->
+  <h2 class="sec-title">§1 관련 영상</h2>
+  <div class="yt-card">
+    <div class="yt-thumb" id="yt-v-y-05" onclick="playYT('al7QbyZkEcM','yt-v-y-05')">
+      <img src="https://img.youtube.com/vi/al7QbyZkEcM/hqdefault.jpg" alt="GTX-A 대심도 터널 화재 대응훈련" loading="lazy">
+      <div class="yt-play">
+        <div class="yt-play-btn">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="yt-info">
+      <span class="yt-badge">V-Y-05 RELATED</span>
+      <span class="yt-title">GTX-A 대심도 터널 화재 대응훈련 (KRRI)</span>
+    </div>
+    <div class="yt-iframe-wrap" id="yt-iframe-v-y-05"></div>
+  </div>
+
+  <!-- ===== §2 개념 학습카드 ===== -->
+  <h2 class="sec-title">§2 개념 학습카드 (6개 · SOURCE: 3.html PART 8)</h2>
+  <p style="font-size:12.5px;color:#64748b;margin-bottom:16px;">
+    ※ railway-king 대응 기출문항 없음 — 개념 학습 및 SOURCE 내 기출예시 중심으로 구성
+  </p>
+
+  <!-- C-36 -->
+  <div class="concept-card" id="C-36">
+    <div class="concept-head">
+      <span class="concept-num">C-36</span>
+      <span class="concept-name">비상조치 기본 흐름</span>
+      <span class="concept-star">★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="step-box">
+        <b>비상 발생 시 조치 순서 — 교재 기준</b><br>
+        ① <b>2차 사고 방지</b> — 방호 조치: 지장지점 외방 <b>200m 이상</b>에 정지수신호 제시, 무선통보<br>
+        ② <b>관제 보고</b> — 관제사에게 사고 내용·위치 즉시 보고<br>
+        ③ <b>승객 보호</b> — 안내방송, 대피 유도, 부상자 처치<br>
+        ④ <b>복구</b> — 구원열차 요청, 선로 정리
+      </div>
+      <div class="tip-box">기본 흐름 암기: ①방호(200m 이상 정지수신호) → ②관제보고 → ③승객보호 → ④복구</div>
+      <div class="theory-box">
+        <strong>취지</strong>
+        교재에서 제시하는 기본 흐름으로, 실제 사고 상황에서는 사고 유형·현장 상황·관제지시 등에 따라 필요한 조치를 병행할 수 있습니다.
+      </div>
+      <div class="quiz-box">
+        <div class="quiz-head">📝 기출 예시</div>
+        <div class="quiz-q">Q. 교재 기준으로 열차 사고 발생 시 비상조치 기본 흐름을 4단계로 쓰시오.</div>
+        <div class="quiz-a">정답: ①2차사고 방지(방호) → ②관제보고 → ③승객보호 → ④복구</div>
+        <div class="quiz-wrong">주의: "승객 보호를 가장 먼저"는 이 흐름과 다름 (교재 기준 순서는 ③)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-37 -->
+  <div class="concept-card" id="C-37">
+    <div class="concept-head">
+      <span class="concept-num">C-37</span>
+      <span class="concept-name">지상방호 · 무선방호</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>방호 방법</th><th>수단</th><th>거리 / 시점</th></tr>
+          <tr>
+            <td class="td-key">지상방호</td>
+            <td>지장지점 외방에 <b>정지수신호</b> 제시</td>
+            <td><b>지장지점 외방 200m 이상</b> 앞 지점 (교재 기준)</td>
+          </tr>
+          <tr>
+            <td class="td-key">무선방호</td>
+            <td>무선방호 채널(비상채널)로 인접 열차·관제에 즉시 통보</td>
+            <td>즉시 (거리 무관)</td>
+          </tr>
+        </table>
+      </div>
+      <div class="trap-box">교재 기준: <b>200m 이상</b> — 교재의 복선 300m·단선 600m는 운영기관 내규·교재 참고수치</div>
+      <div class="tip-box">단선은 양방향 열차 공유 → 반대편까지 방호 필요. 200m 이상 기준을 우선 적용</div>
+      <div class="ref-box">
+        <strong>📖 교재·내규 참고수치</strong>
+        · 복선: 300m 이상 이격 / 단선: 600m 이상 이격<br>
+        ⚠️ 시험에서는 200m 이상을 기준으로 답안 작성
+      </div>
+      <div class="theory-box">
+        <strong>이론 배경</strong>
+        지상방호의 핵심은 후방 열차가 지장지점에 도달하기 전에 정지수신호를 보고 멈출 수 있는 거리를 확보하는 것입니다. 무선방호는 지상방호를 보완하며 즉시·광범위 전파가 가능합니다.
+      </div>
+      <div class="quiz-box">
+        <div class="quiz-head">📝 기출 예시</div>
+        <div class="quiz-q">Q. 지상방호 조치 시 정지수신호 설치 위치 (교재 기준)?</div>
+        <div class="quiz-a">정답: 지장지점 외방 200m 이상 앞 지점</div>
+        <div class="quiz-wrong">오답함정: 교재의 복선 300m·단선 600m를 법령 기준으로 혼동</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-38 -->
+  <div class="concept-card" id="C-38">
+    <div class="concept-head">
+      <span class="concept-num">C-38</span>
+      <span class="concept-name">열차분리 자동정차 원리</span>
+      <span class="concept-star">★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="step-box">
+        <b>열차 분리 시 자동 비상제동 원리 (Fail-Safe)</b><br>
+        열차 분리 → <b>제동관(브레이크 관) 압력(관압) 급감</b> → <b>자동식 공기제동 자동 작동</b> → 비상정차<br>
+        ※ 자동식 공기제동의 핵심 특성: "압력 저하 시 제동"
+      </div>
+      <div class="theory-box">
+        <strong>Fail-Safe 원리</strong>
+        전기·신호가 끊겨도, 연결이 풀려도 반드시 안전 쪽(정지)으로 동작하는 설계 철학. 열차분리 → 관압 저하 → 자동 제동은 대표적인 Fail-Safe 사례입니다.
+      </div>
+      <div class="quiz-box">
+        <div class="quiz-head">📝 기출 예시</div>
+        <div class="quiz-q">Q. 열차 분리 시 자동으로 비상정차하는 제동 방식은?</div>
+        <div class="quiz-a">정답: 자동식 공기제동 (제동관 압력 저하 시 자동 제동)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-39 -->
+  <div class="concept-card" id="C-39">
+    <div class="concept-head">
+      <span class="concept-num">C-39</span>
+      <span class="concept-name">전차선 단선 시 취급 원칙</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="step-box step-box-danger">
+        <b>전차선 단선 시 — 무전압 확인 전까지 활선(活線)으로 간주</b><br>
+        → 단선된 전차선에 <b>절대 접근·접촉 금지</b><br>
+        → 전원 차단 확인은 반드시 관제·전기담당자 확인 후 수행
+      </div>
+      <div class="trap-box">전차선이 끊어져 땅에 떨어져도 → 단전 확인 전까지 <b>활선</b> 취급! 맨손 접촉 절대 금지</div>
+      <div class="theory-box">
+        <strong>왜 활선으로 간주하는가?</strong>
+        전차선은 고압 전류가 흐릅니다. 단선된 선이 땅에 닿아 있어도 전원이 차단되지 않는 한 그 선과 주변은 고압 위험 구역입니다. Fail-Safe 원칙 — 불확실하면 항상 위험한 쪽으로 간주합니다.
+      </div>
+      <div class="quiz-box">
+        <div class="quiz-head">📝 기출 예시</div>
+        <div class="quiz-q">Q. 전차선이 단선되어 선로에 떨어진 경우 기관사의 조치는?</div>
+        <div class="quiz-a">정답: 무전압 확인 전까지 활선으로 간주하고 접근·접촉 금지, 관제 즉시 보고</div>
+        <div class="quiz-wrong">오답함정: "끊어진 선이니 만져도 된다" — 절대 안 됨</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-40 -->
+  <div class="concept-card" id="C-40">
+    <div class="concept-head">
+      <span class="concept-num">C-40</span>
+      <span class="concept-name">구원운전 · 추진·퇴행 작업전호</span>
+      <span class="concept-star">★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>항목</th><th>핵심 내용</th></tr>
+          <tr>
+            <td class="td-key">구원운전</td>
+            <td>고장열차 구원 시 — 관제 지시 방향 확인 + 구원열차와 연결 + <b>작업전호</b> 확인 후 운전</td>
+          </tr>
+          <tr>
+            <td class="td-key">추진운전</td>
+            <td>동력차가 뒤에서 밀며 운전 — 맨 앞 차량에 직원 탑승 + 기관사와 <b>작업전호</b>로 연락</td>
+          </tr>
+          <tr>
+            <td class="td-key">퇴행운전</td>
+            <td>열차가 후방으로 이동 — 맨 앞 차량(후방 쪽)에 직원 탑승 + 기관사와 <b>작업전호</b>로 연락</td>
+          </tr>
+        </table>
+      </div>
+      <div class="trap-box">추진·퇴행 운전 시 — 직원 없이 진행 ❌ → 반드시 맨 앞 차량에 직원 탑승 필요</div>
+      <div class="tip-box">추진·퇴행 시 맨 앞 차량 직원과 기관사 간 연락 방법 — 작업전호 (교재 기준)</div>
+      <div class="theory-box">
+        <strong>이론 배경</strong>
+        추진·퇴행 운전에서 기관사는 진행 방향의 전방을 직접 볼 수 없습니다. 맨 앞 차량의 직원이 전방 감시 후 작업전호(정해진 신호)로 기관사에게 지시를 전달합니다. 단독 판단에 의한 충돌·탈선 사고를 방지하기 위한 안전 절차입니다.
+      </div>
+      <div class="quiz-box">
+        <div class="quiz-head">📝 기출 예시</div>
+        <div class="quiz-q">Q. 추진운전 시 맨 앞 차량에 탑승한 직원이 기관사와 연락하는 방법은?</div>
+        <div class="quiz-a">정답: 작업전호</div>
+        <div class="quiz-wrong">오답함정: "무선통신으로만 가능하다" — 작업전호가 규정된 방법</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-41 -->
+  <div class="concept-card" id="C-41">
+    <div class="concept-head">
+      <span class="concept-num">C-41</span>
+      <span class="concept-name">화재 발생 시 조치</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="step-box">
+        <b>열차 화재 시 조치 원칙</b><br>
+        ① 신속한 <b>승객 대피</b> 유도 (방송·안내)<br>
+        ② <b>관제 보고</b> (위치, 화재 규모)<br>
+        ③ 터널 내 화재: 가능하면 <b>터널 밖으로 이동</b> 후 대피 (정차 vs 탈출 판단)<br>
+        &nbsp;&nbsp;&nbsp;단, 진행 불가능하면 터널 내 정차 후 비상구 이용
+      </div>
+      <div class="trap-box">터널 내 화재 시 무조건 정차 ❌ → 탈출 가능 여부 판단 후 가능하면 터널 밖 이동이 우선</div>
+      <div class="theory-box">
+        <strong>이론 배경</strong>
+        터널은 밀폐 공간이라 연기가 급속히 축적됩니다. 열차가 이동 가능하면 개방 공간으로 탈출하는 것이 터널 내 대피보다 훨씬 안전합니다.
+      </div>
+      <div class="quiz-box">
+        <div class="quiz-head">📝 기출 예시</div>
+        <div class="quiz-q">Q. 열차 내 화재 발생 시 터널 구간에서의 기본 조치 방향은?</div>
+        <div class="quiz-a">정답: 열차 진행이 가능하면 터널 밖으로 이동 후 대피, 진행 불가 시 터널 내 정차 후 비상구 이용</div>
+        <div class="quiz-wrong">오답함정: "터널에서 반드시 즉시 정차한다" — 이동 가능 여부 먼저 판단</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== §3 SOURCE META ===== -->
+  <div class="meta">
+    <strong>SOURCE</strong><br>
+    · 3.html PART 8 비상조치 ★★★ (C-36~C-41)<br>
+    · railway-king 대응 문항: 0건 (전 chapter 검색 — 비상조치 주제 대응 문항 없음)<br>
+    · MASTER MAP 기재 수정: "railway-king ch83 일부" → "3.html PART 8 C-36~C-41 (railway-king 문항 없음)"<br>
+    <br>
+    <strong>관련 영상</strong><br>
+    · V-Y-05: GTX-A 대심도 터널 화재 대응훈련 (al7QbyZkEcM) — RELATED<br>
+    <br>
+    <strong>CHANGELOG</strong><br>
+    v1.1 (2026-10-09): SOURCE 밖 확장 문장 정리. C-36 "교재 기준"으로 표현 통일. C-37 법령조항(제94조) 단정 표현 삭제·약화. C-38 TRAP박스(직통식) 삭제. C-39 전압 수치 삭제. C-40 "전령자" → "직원", "법정"→"안전" 절차 수정. C-41 소화조치·승객수·유독가스·GTX 대심도 삭제.<br>
+    v1.0 (2026-10-09): 신규 생성. 3.html PART 8 C-36~C-41 기반 개념학습카드 6장. railway-king 전 chapter 검색 결과 대응 기출문항 없음 확인. 기출문항 0건, 기출예시(SOURCE 내) 6건 수록.
+  </div>
+
+  <!-- ===== NAV ===== -->
+  <nav class="unit-nav">
+    <a href="unit-08-04_FINAL_PUBLISH_v1.2.html">← 08-04 열차운전이론</a>
+    <span class="nav-none">08-06 준비중</span>
+  </nav>
+
+</div><!-- /page-wrap -->
+
+<script>
+function playYT(vid, cardId) {
+  const card = document.getElementById(cardId);
+  const thumb = card;
+  const iframeWrap = document.getElementById('yt-iframe-' + cardId.replace('yt-',''));
+  if (!iframeWrap) return;
+  thumb.style.display = 'none';
+  iframeWrap.style.display = 'block';
+  iframeWrap.innerHTML = '<iframe src="https://www.youtube.com/embed/' + vid + '?autoplay=1" allowfullscreen allow="autoplay"></iframe>';
+}
+// 영상 카드 전용 playYT 재정의
+document.querySelectorAll('.yt-thumb').forEach(function(el){
+  el.addEventListener('click', function(){
+    var vid = 'al7QbyZkEcM';
+    var wrap = el.nextElementSibling;
+    while(wrap && !wrap.classList.contains('yt-iframe-wrap')) wrap = wrap.nextElementSibling;
+    if(!wrap) return;
+    el.style.display = 'none';
+    wrap.style.display = 'block';
+    wrap.innerHTML = '<iframe src="https://www.youtube.com/embed/'+vid+'?autoplay=1" allowfullscreen allow="autoplay"></iframe>';
+  });
+});
+</script>
+</body>
+</html>
