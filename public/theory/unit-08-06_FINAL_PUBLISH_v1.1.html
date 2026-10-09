@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08-06 열차통신·LTE-R v1.1</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* ===== 헤더 ===== */
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part  { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-lock  { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+
+  /* ===== 섹션 제목 ===== */
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+
+  /* ===== 선행용어 카드 ===== */
+  .term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
+  .term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+  .term-name { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 4px; }
+  .term-desc { font-size: 13px; color: #333; line-height: 1.6; }
+  .term-why { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+  /* ===== 영상 카드 ===== */
+  .yt-card {
+    margin: 10px 0 4px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.07);
+  }
+  .yt-thumb {
+    position: relative;
+    cursor: pointer;
+    background: #000;
+  }
+  .yt-thumb img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; opacity: .88; }
+  .yt-play {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  }
+  .yt-play-btn {
+    width: 52px; height: 52px; background: rgba(220,38,38,.9); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.4);
+  }
+  .yt-info {
+    padding: 7px 12px; display: flex; align-items: center; gap: 8px; background: #f9fafb;
+  }
+  .yt-badge {
+    background: #dc2626; color: #fff; font-size: 11px; padding: 2px 7px;
+    border-radius: 3px; font-weight: 600; white-space: nowrap;
+  }
+  .yt-badge-rel {
+    background: #6b7280; color: #fff; font-size: 11px; padding: 2px 7px;
+    border-radius: 3px; font-weight: 600; white-space: nowrap;
+  }
+  .yt-title { font-size: 13px; color: #111; font-weight: 500; line-height: 1.3; }
+  .yt-iframe-wrap { display: none; position: relative; padding-bottom: 56.25%; background: #000; }
+  .yt-iframe-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+
+  /* ===== 개념 카드 ===== */
+  .concept-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .concept-head {
+    padding: 12px 16px;
+    background: #1e3a5f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .concept-num {
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255,255,255,.18);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+  .concept-name {
+    font-size: 15px;
+    font-weight: 800;
+  }
+  .concept-star {
+    font-size: 12px;
+    margin-left: auto;
+    opacity: .9;
+    white-space: nowrap;
+  }
+  .concept-body { padding: 16px 18px; font-size: 13.5px; line-height: 1.8; }
+
+  /* ===== TIP / TRAP ===== */
+  .tip-box {
+    background: #f0fdfa;
+    border: 1px solid #99f6e4;
+    border-radius: 5px;
+    padding: 9px 14px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: #134e4a;
+  }
+  .trap-box {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 5px;
+    padding: 9px 14px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: #7f1d1d;
+  }
+  .tip-box::before  { content: '💡 TIP: '; font-weight: 700; }
+  .trap-box::before { content: '⚠️ TRAP: '; font-weight: 700; }
+
+  /* ===== 이론 배경 ===== */
+  .theory-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    padding: 9px 14px;
+    margin: 8px 0;
+    font-size: 12.5px;
+    color: #475569;
+    line-height: 1.7;
+  }
+  .theory-box strong { color: #1e3a5f; display: block; margin-bottom: 2px; }
+
+  /* ===== 기출 예시 ===== */
+  .quiz-box {
+    border: 1.5px solid #1e3a5f;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    background: #f8fafc;
+    font-size: 13px;
+  }
+  .quiz-head { font-weight: 800; color: #1e3a5f; margin-bottom: 6px; font-size: 13px; }
+  .quiz-q { margin-bottom: 6px; color: #1a1a1a; }
+  .quiz-a { color: #065f46; font-weight: 700; margin-bottom: 4px; }
+  .quiz-wrong { color: #b45309; font-size: 12px; }
+
+  /* ===== 표 ===== */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0; border: 1.5px solid #cbd5e1; border-radius: 6px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; }
+  th { background: #1e3a5f; color: #fff; font-weight: 700; padding: 9px 12px; text-align: center; white-space: nowrap; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .td-key { font-weight: 700; color: #1e3a5f; white-space: nowrap; }
+  .td-hl { background: #fef9c3 !important; font-weight: 700; }
+
+  /* ===== 문제 영역 ===== */
+  .qst-block {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .qst-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #f0f4f8;
+  }
+  .qst-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: #1e3a5f;
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+  .qst-grade {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6b21a8;
+    background: #faf5ff;
+    border: 1px solid #6b21a8;
+    border-radius: 3px;
+    padding: 1px 7px;
+    white-space: nowrap;
+  }
+  .qst-title { font-size: 13px; font-weight: 600; color: #1a1a1a; flex: 1; }
+  .qst-body { padding: 14px 16px; font-size: 13px; }
+  .qst-q { margin-bottom: 10px; color: #1a1a1a; line-height: 1.7; font-size: 13.5px; }
+  .qst-choices { list-style: none; margin-bottom: 12px; }
+  .qst-choices li { padding: 5px 0 5px 8px; border-left: 3px solid #e2e8f0; margin-bottom: 4px; color: #334155; font-size: 13px; }
+  .qst-ans { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 8px 12px; font-size: 12.5px; color: #134e4a; }
+  .qst-ans strong { color: #065f46; }
+
+  /* ===== meta 박스 ===== */
+  .meta { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 14px 16px; margin-top: 40px; font-size: 12px; color: #64748b; line-height: 1.8; }
+  .meta strong { color: #1a1a1a; }
+
+  /* ===== UNIT NAV ===== */
+  .unit-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding: 12px 0; border-top: 1px solid #e2e8f0; font-size: 13px; }
+  .unit-nav a { color: #1e3a5f; text-decoration: none; font-weight: 600; padding: 6px 12px; border: 1px solid #1e3a5f; border-radius: 4px; }
+  .unit-nav a:hover { background: #f0f4f8; }
+  .unit-nav .nav-none { color: #94a3b8; font-size: 12px; padding: 6px 12px; }
+  @media print { .unit-nav { display: none; } }
+
+  /* ===== 인쇄 버튼 ===== */
+  .print-btn {
+    position: fixed; top: 12px; right: 16px; z-index: 999;
+    background: #78350f; color: #fff; border: none; border-radius: 5px;
+    padding: 6px 14px; font-size: .85em; font-weight: bold; cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,.18);
+  }
+  .print-btn:hover { background: #5c2707; }
+
+  /* ===== 인쇄 ===== */
+  @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+  @media print {
+    .page-wrap { padding: 10px; }
+    .sec-title { margin-top: 18px; }
+    .concept-card, .quiz-box, .qst-block { break-inside: avoid; page-break-inside: avoid; }
+    .sec-title { break-after: avoid; page-break-after: avoid; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .print-btn { display: none !important; }
+    .yt-card { display: none !important; }
+    .qst-body { display: block !important; }
+    img { max-width: 100%; height: auto; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<button class="print-btn" type="button" aria-label="현재 학습자료 인쇄 또는 PDF 저장" onclick="window.print()">🖨 인쇄 / PDF</button>
+
+<div class="page-wrap">
+
+  <!-- ===== 헤더 ===== -->
+  <header class="unit-header">
+    <div class="unit-num">UNIT 08-06 · PART 08 열차제어 시스템</div>
+    <h1 class="unit-title">열차통신·LTE-R</h1>
+    <div class="unit-sub">LTE-R 정의·역할 / KTCS-2 (LTE-R 기반·궤도회로 단순검지) / KTCS-3 (지상설비의존 최소화·LTE-R 위치검지) / 열차-지상 양방향 데이터 / KR S-07060 Rev.1</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 08</span>
+      <span class="badge badge-grade">★★★ 신유형</span>
+      <span class="badge badge-lock">FINAL PUBLISH v1.1</span>
+    </div>
+  </header>
+
+  <!-- ===== §0 선행 용어 ===== -->
+  <h2 class="sec-title">§0 선행 용어</h2>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">LTE-R (LTE-Railway)</div>
+      <div class="term-desc">철도 운용에 맞춰 구축한 철도전용 LTE 무선통신망. 열차-지상 간 데이터 통신에 활용되는 통신 인프라</div>
+      <div class="term-why">→ 열차제어시스템이 아님 — KTCS·CBTC의 통신 기반</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">KTCS (Korean Train Control System)</div>
+      <div class="term-desc">한국형 열차제어시스템. KTCS-2와 KTCS-3로 구분되며 LTE-R을 통신 인프라로 사용</div>
+      <div class="term-why">→ 숫자가 높을수록 지상설비 의존도 낮아짐</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">RBC (Radio Block Centre)</div>
+      <div class="term-desc">지상에 설치되어 각 열차에 운행권한(MA: Movement Authority)을 계산·부여하는 제어장치</div>
+      <div class="term-why">→ LTE-R을 통해 열차와 실시간 통신</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">MA (Movement Authority / 운행권한)</div>
+      <div class="term-desc">지상 RBC가 열차에 부여하는 진행 허가 거리. 이동폐색 구현의 핵심 명령</div>
+      <div class="term-why">→ KTCS-3에서는 LTE-R로 실시간 갱신</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">이동폐색 (Moving Block)</div>
+      <div class="term-desc">열차의 실시간 위치를 기반으로 선행열차와의 안전거리를 동적으로 계산하여 운행권한을 부여하는 폐색 방식</div>
+      <div class="term-why">→ KTCS-3 핵심 기술 — 궤도회로 불필요</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">KR S-07060 Rev.1</div>
+      <div class="term-desc">KTCS-2 관련 국가철도공단 설계기준. 2025-12-17 개정·시행된 최신 기준</div>
+      <div class="term-why">→ KTCS-2 설계기준 [최신]</div>
+    </div>
+  </div>
+
+  <!-- ===== §1 관련 영상 ===== -->
+  <h2 class="sec-title">§1 관련 영상</h2>
+  <div class="yt-card">
+    <div class="yt-thumb" id="yt-v-y-18" onclick="playYT('T_bBQCNl0eI','yt-v-y-18')">
+      <img src="https://img.youtube.com/vi/T_bBQCNl0eI/hqdefault.jpg" alt="열차의 통신은 유선? 무선? 어떤 방식이 있을까?" loading="lazy">
+      <div class="yt-play">
+        <div class="yt-play-btn">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="yt-info">
+      <span class="yt-badge">V-Y-18 PRIMARY</span>
+      <span class="yt-title">열차의 통신은 유선? 무선? 어떤 방식이 있을까? (KRRI)</span>
+    </div>
+    <div class="yt-iframe-wrap" id="yt-iframe-yt-v-y-18"></div>
+  </div>
+
+  <div class="yt-card">
+    <div class="yt-thumb" id="yt-v-y-19" onclick="playYT('hsPJl-IXSnY','yt-v-y-19')">
+      <img src="https://img.youtube.com/vi/hsPJl-IXSnY/hqdefault.jpg" alt="세계 최초 철도무선통신망(LTE-R) 국제인증기관 획득" loading="lazy">
+      <div class="yt-play">
+        <div class="yt-play-btn">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="yt-info">
+      <span class="yt-badge-rel">V-Y-19 RELATED</span>
+      <span class="yt-title">세계 최초 철도무선통신망(LTE-R) 국제인증기관 획득 (KRRI)</span>
+    </div>
+    <div class="yt-iframe-wrap" id="yt-iframe-yt-v-y-19"></div>
+  </div>
+
+  <!-- ===== §2 개념 학습카드 ===== -->
+  <h2 class="sec-title">§2 개념 학습카드 (5개 · SOURCE: 6.html PART 15 개념 42·45)</h2>
+
+  <!-- C-42 LTE-R -->
+  <div class="concept-card" id="C-42">
+    <div class="concept-head">
+      <span class="concept-num">C-42</span>
+      <span class="concept-name">LTE-R — 철도전용 무선통신망</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <p style="margin-bottom:10px;"><b>LTE-R (LTE-Railway)</b>: 철도 운용에 맞춰 구축한 <b>철도전용 무선통신망</b>으로, 열차-지상 간 데이터 통신에 활용되는 통신 인프라이다.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>구분</th><th>내용</th></tr></thead>
+          <tbody>
+            <tr><td class="td-key">풀네임</td><td>LTE-Railway</td></tr>
+            <tr><td class="td-key">역할</td><td>철도 전용 LTE 무선통신 인프라 — KTCS-3·CBTC의 <b>통신 기반</b></td></tr>
+            <tr><td class="td-key">활용</td><td>열차-지상 간 위치·상태·운행제어정보 실시간 교환</td></tr>
+            <tr class="td-hl"><td class="td-key">핵심 구분</td><td>LTE-R은 <b>통신 인프라</b> — 열차제어시스템이 아님 ★★</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trap-box">LTE-R = 열차제어시스템 → ❌ / LTE-R은 <b>통신 인프라</b>이다. KTCS·CBTC가 이를 기반으로 동작함</div>
+      <div class="tip-box">LTE-R은 "통신망(인프라)" — KTCS-2와 KTCS-3 모두 LTE-R을 활용하지만 열차제어는 KTCS가 담당</div>
+
+      <div class="theory-box">
+        <strong>이론 배경 (SOURCE: 6.html PART 15 개념 42)</strong>
+        LTE-R은 철도 운용에 맞춰 구축한 철도전용 무선통신망으로 열차-지상 간 데이터 통신에 활용된다. KTCS-2는 LTE-R로 지상-차상 간 제어 데이터를 교환하고, KTCS-3는 LTE-R을 통해 열차 위치를 실시간으로 연속 전송하여 이동폐색을 구현한다. LTE-R은 이 모든 것의 통신 인프라이지 열차제어시스템 그 자체가 아니다.
+      </div>
+
+      <div class="quiz-box">
+        <div class="quiz-head">기출 예시 ★★★ (SOURCE 내)</div>
+        <div class="quiz-q">Q. "철도 운용에 맞춰 구축한 철도전용 무선통신망으로 열차-지상 간 데이터 통신에 활용된다." 이에 해당하는 것은?</div>
+        <div class="quiz-a">정답: LTE-R</div>
+        <div class="quiz-wrong">오답함정: KTCS-3 — KTCS-3는 LTE-R을 사용하는 열차제어시스템, LTE-R은 그 통신 인프라</div>
+      </div>
+
+      <div class="quiz-box">
+        <div class="quiz-head">기출 예시</div>
+        <div class="quiz-q">Q. 다음 중 LTE-R에 대한 설명으로 옳은 것은?<br>① 철도 운용에 맞춰 구축한 철도전용 무선통신망으로 열차-지상 간 데이터 통신에 활용된다.<br>② 이동폐색과 함께 자동운전 기술이 성능검증 대상에 포함된 차세대 기능이다.<br>③ KTCS-2 관련 국가철도공단 설계기준으로 2025-12-17 개정·시행된 기준이다.<br>④ 열차별 동적 안전간격을 적용해 운전시격 단축과 선로용량 증대를 목표로 하는 기능이다.</div>
+        <div class="quiz-a">정답: ①</div>
+        <div class="quiz-wrong">오답함정: ②는 KTCS-3 자동운전, ③은 KR S-07060 Rev.1, ④는 이동폐색에 대한 설명</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIMARY VIS A — LTE-R 전체 시스템 구조 / ChatGPT 이미지 대기 -->
+
+  <!-- C-43 KTCS-2 -->
+  <div class="concept-card" id="C-43">
+    <div class="concept-head">
+      <span class="concept-num">C-43</span>
+      <span class="concept-name">KTCS-2 — LTE-R 기반 한국형 무선열차제어</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>항목</th><th>내용</th></tr></thead>
+          <tbody>
+            <tr><td class="td-key">풀네임</td><td>Korean Train Control System Level 2</td></tr>
+            <tr><td class="td-key">통신 방식</td><td><b>LTE-R</b>을 이용하는 한국형 무선기반 열차제어 시스템</td></tr>
+            <tr class="td-hl"><td class="td-key">궤도회로 역할</td><td>완전 제거가 아닌 <b>열차 점유 여부 검지</b> 용도로 활용 ★★</td></tr>
+            <tr><td class="td-key">폐색 방식</td><td>고정폐색 (KTCS-2는 이동폐색 아님)</td></tr>
+            <tr><td class="td-key">설계기준</td><td>KR S-07060 Rev.1 (2025-12-17 개정·시행)</td></tr>
+            <tr><td class="td-key">적용 사례</td><td>KTX 등 고속선 (발리스+RBC 무선)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trap-box">KTCS-2에서 궤도회로를 완전히 제거한다 → ❌ / KTCS-2는 궤도회로를 <b>열차 점유 여부 검지</b>에 활용</div>
+      <div class="trap-box">KTCS-2 = 이동폐색 → ❌ / 이동폐색은 KTCS-3의 특징. KTCS-2는 <b>고정폐색</b></div>
+      <div class="tip-box">KTCS-2 암기: LTE-R 사용 + 궤도회로 단순검지 유지 + 고정폐색 + KR S-07060 Rev.1</div>
+
+      <div class="theory-box">
+        <strong>이론 배경 (SOURCE: 6.html PART 15 개념 42)</strong>
+        KTCS-2는 지상 궤도회로와 발리스로 열차 위치를 확인하고, LTE-R을 통해 지상(RBC)과 차상이 통신하는 고정폐색 기반 열차제어시스템이다. 궤도회로를 완전히 제거하지 않고 열차 점유 감지에 활용하는 것이 KTCS-3와의 핵심 차이점이다.
+      </div>
+
+      <div class="quiz-box">
+        <div class="quiz-head">기출 예시 ★★ (SOURCE 내)</div>
+        <div class="quiz-q">Q. "LTE-R을 이용하는 한국형 무선기반 열차제어 시스템으로, 지상 궤도회로는 단순 열차검지에 활용한다." 이에 해당하는 것은?</div>
+        <div class="quiz-a">정답: KTCS-2</div>
+        <div class="quiz-wrong">오답함정: KTCS-3 — KTCS-3는 궤도회로 자체를 사용하지 않음</div>
+      </div>
+
+      <div class="quiz-box">
+        <div class="quiz-head">기출 예시</div>
+        <div class="quiz-q">Q. KTCS-2에서 궤도회로의 역할로 옳은 것은?<br>① 궤도회로를 완전히 제거하여 지상설비 비용을 절감한다<br>② 열차 점유 여부를 검지하는 용도로 활용한다<br>③ LTE-R 통신의 보조 수단으로만 사용된다<br>④ 이동폐색 구현을 위한 핵심 설비로 기능한다</div>
+        <div class="quiz-a">정답: ②</div>
+        <div class="quiz-wrong">오답함정: ①처럼 궤도회로를 완전 제거하는 것은 KTCS-3의 방향성. KTCS-2는 단순검지용으로 유지</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-44 KTCS-3 -->
+  <div class="concept-card" id="C-44">
+    <div class="concept-head">
+      <span class="concept-num">C-44</span>
+      <span class="concept-name">KTCS-3 — 지상설비의존 최소화·LTE-R 위치검지</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>항목</th><th>KTCS-2</th><th>KTCS-3</th></tr></thead>
+          <tbody>
+            <tr><td class="td-key">폐색 방식</td><td>고정폐색</td><td class="td-hl"><b>이동폐색</b> ★</td></tr>
+            <tr><td class="td-key">궤도회로</td><td>필요 (열차 점유 감지)</td><td class="td-hl"><b>불필요</b> ★</td></tr>
+            <tr><td class="td-key">위치 확인</td><td>발리스(지점 방식)</td><td class="td-hl"><b>LTE-R 연속 위치 전송</b> ★</td></tr>
+            <tr><td class="td-key">통신 방식</td><td>GSM-R / LTE-R</td><td><b>LTE-R 전용</b></td></tr>
+            <tr><td class="td-key">자동운전(ATO)</td><td>부분 가능</td><td><b>완전 자동운전 지원</b></td></tr>
+            <tr><td class="td-key">지상설비 의존</td><td>높음</td><td class="td-hl"><b>최소화</b> (차상 중심) ★</td></tr>
+            <tr><td class="td-key">운행권한(MA)</td><td>RBC에서 부여</td><td><b>LTE-R로 실시간 갱신</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trap-box">KTCS-3 = 고정폐색 → ❌ / KTCS-3은 <b>이동폐색</b></div>
+      <div class="trap-box">KTCS-3 궤도회로 없음 = 위치검지 불가 → ❌ / KTCS-3은 <b>LTE-R 연속 전송</b>으로 위치 파악</div>
+      <div class="tip-box">KTCS-3 = 지상설비의존 최소화 + LTE-R 기반 실시간 위치검지 + 이동폐색 + 완전자동운전 지원</div>
+
+      <div class="theory-box">
+        <strong>이론 배경 (SOURCE: 6.html PART 15 개념 42)</strong>
+        KTCS-3는 차상에서 LTE-R로 열차 위치를 연속적으로 지상(RBC)에 전송하고, 궤도회로를 사용하지 않는 이동폐색을 구현하는 차세대 시스템이다. 지상 열차검지장치 의존을 크게 줄이고 LTE-R 기반 위치정보로 완전 자동운전까지 지향한다. Level 숫자가 높을수록 지상설비 의존도가 낮아진다.
+      </div>
+
+      <div class="quiz-box">
+        <div class="quiz-head">기출 예시 ★★★ (SOURCE 내)</div>
+        <div class="quiz-q">Q. KTCS-3에서 궤도회로가 없어도 열차 위치를 파악할 수 있는 이유는?</div>
+        <div class="quiz-a">정답: LTE-R을 통해 차상에서 실시간으로 연속 위치 정보를 전송하기 때문</div>
+        <div class="quiz-wrong">오답함정: 위치검지 불가 — 궤도회로 없음과 위치검지 불가는 다름. KTCS-3은 차상 중심으로 LTE-R을 통해 위치 파악</div>
+      </div>
+
+      <div class="quiz-box">
+        <div class="quiz-head">기출 예시 ★★★ (SOURCE 내)</div>
+        <div class="quiz-q">Q. 이동폐색 방식을 채택하여 궤도회로가 불필요한 한국형 열차제어시스템은?</div>
+        <div class="quiz-a">정답: KTCS-3</div>
+        <div class="quiz-wrong">오답함정: KTCS-2 — KTCS-2는 고정폐색이며 궤도회로가 필요함</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIMARY VIS B — KTCS-2 vs KTCS-3 구조 비교 / ChatGPT 이미지 대기 -->
+
+  <!-- C-45 KR S-07060 Rev.1 -->
+  <div class="concept-card" id="C-45">
+    <div class="concept-head">
+      <span class="concept-num">C-45</span>
+      <span class="concept-name">KR S-07060 Rev.1 — KTCS-2 설계기준 [최신]</span>
+      <span class="concept-star">★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>항목</th><th>내용</th></tr></thead>
+          <tbody>
+            <tr><td class="td-key">명칭</td><td>KR S-07060 Rev.1</td></tr>
+            <tr class="td-hl"><td class="td-key">내용</td><td><b>KTCS-2 관련 국가철도공단 설계기준</b> ★</td></tr>
+            <tr class="td-hl"><td class="td-key">시행일</td><td><b>2025-12-17 개정·시행</b> ★ [최신]</td></tr>
+            <tr><td class="td-key">관할</td><td>국가철도공단</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trap-box">KR S-07060 Rev.1 = LTE-R에 대한 기준 → ❌ / KR S-07060 Rev.1은 <b>KTCS-2</b> 관련 설계기준</div>
+      <div class="tip-box">KR S-07060 Rev.1 암기: KTCS-2 설계기준 + 국가철도공단 + 2025-12-17 개정·시행</div>
+
+      <div class="theory-box">
+        <strong>이론 배경 (SOURCE: 6.html PART 15 개념 42)</strong>
+        KR S-07060 Rev.1은 KTCS-2의 설계·구축 기준을 정의한 국가철도공단 설계기준으로, 2025-12-17 개정·시행된 최신 기준이다.
+      </div>
+
+      <div class="quiz-box">
+        <div class="quiz-head">기출 예시 ★★ [최신] (SOURCE 내)</div>
+        <div class="quiz-q">Q. "KTCS-2 관련 국가철도공단 설계기준으로 2025-12-17 개정·시행된 기준이다." 이에 해당하는 것은?</div>
+        <div class="quiz-a">정답: KR S-07060 Rev.1</div>
+        <div class="quiz-wrong">오답함정: LTE-R 또는 KTCS-3 — KR S-07060은 KTCS-2 설계기준이며 LTE-R 자체나 KTCS-3의 기준이 아님</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-46 열차-지상 양방향 데이터 -->
+  <div class="concept-card" id="C-46">
+    <div class="concept-head">
+      <span class="concept-num">C-46</span>
+      <span class="concept-name">열차-지상 양방향 데이터 통신 특성</span>
+      <span class="concept-star">★★</span>
+    </div>
+    <div class="concept-body">
+      <p style="margin-bottom:10px;"><b>열차-지상 양방향 데이터</b>: KTCS 계열에서 열차 위치·상태와 운행제어정보를 무선으로 상호 전달하는 통신 구조이다.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>방향</th><th>전송 정보</th></tr></thead>
+          <tbody>
+            <tr><td class="td-key">열차 → 지상(RBC)</td><td>열차 위치, 속도, 상태 정보 실시간 전송</td></tr>
+            <tr><td class="td-key">지상(RBC) → 열차</td><td>운행권한(MA), 속도제한, 진로정보 전송</td></tr>
+            <tr class="td-hl"><td class="td-key">통신 특성</td><td><b>양방향(Bidirectional)</b> — 단방향이 아님 ★★</td></tr>
+            <tr><td class="td-key">통신망</td><td>LTE-R (KTCS 계열 전용)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trap-box">KTCS 열차-지상 통신 = 단방향 → ❌ / <b>양방향(Bidirectional)</b> 통신이다 ★★</div>
+      <div class="tip-box">양방향: 열차가 위치를 보내고 지상이 운행권한(MA)을 받는 구조 — 상호 교환이 핵심</div>
+
+      <div class="theory-box">
+        <strong>이론 배경 (SOURCE: 6.html PART 15 개념 45)</strong>
+        KTCS 계열(KTCS-2·KTCS-3)에서 열차와 지상 제어장치는 LTE-R을 통해 열차 위치·상태와 운행권한·속도조건을 상호 교환한다. 이 양방향 통신이 이동폐색 구현의 기반이 된다.
+      </div>
+
+      <div class="quiz-box">
+        <div class="quiz-head">기출 예시 ★★ (SOURCE 내)</div>
+        <div class="quiz-q">Q. "KTCS 계열에서 열차 위치·상태와 운행제어정보를 무선으로 상호 전달하는 구조이다." 이에 해당하는 것은?</div>
+        <div class="quiz-a">정답: 열차-지상 양방향 데이터</div>
+        <div class="quiz-wrong">오답함정: 단방향 통신 — KTCS는 열차↔지상 간 양방향 통신 구조를 사용함</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIMARY VIS C — 열차-지상 양방향 데이터 / ChatGPT 이미지 대기 -->
+
+  <!-- ===== §3 문제 ===== -->
+  <h2 class="sec-title">§3 문제 (14개 · signal-exam-data.ts Part 7: sig_151~sig_164)</h2>
+  <p style="font-size:12.5px;color:#64748b;margin-bottom:16px;">
+    ※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.
+  </p>
+
+  <!-- Q1 sig_151 -->
+  <div class="qst-block">
+    <div class="qst-head">
+      <span class="qst-num">Q1 · sig_151</span>
+      <span class="qst-grade">S</span>
+      <span class="qst-title">LTE-R 정의 일치 문항</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br><b>"철도 운용에 맞춰 구축한 철도전용 무선통신망으로 열차-지상 간 데이터 통신에 활용된다."</b></div>
+      <ul class="qst-choices">
+        <li>① LTE-R</li>
+        <li>② KTCS-3</li>
+        <li>③ KR S-07060 Rev.1</li>
+        <li>④ KTCS-3의 궤도회로 미사용</li>
+      </ul>
+      <div class="qst-ans"><strong>정답: ①</strong> — LTE-R: 철도 운용에 맞춰 구축한 철도전용 무선통신망으로 열차-지상 간 데이터 통신에 활용된다.</div>
+    </div>
+  </div>
+
+  <!-- Q2 sig_152 -->
+  <div class="qst-block">
+    <div class="qst-head">
+      <span class="qst-num">Q2 · sig_152</span>
+      <span class="qst-grade">S</span>
+      <span class="qst-title">LTE-R 옳은 설명 선택</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">다음 중 「LTE-R」에 대한 설명으로 옳은 것은?</div>
+      <ul class="qst-choices">
+        <li>① 철도 운용에 맞춰 구축한 철도전용 무선통신망으로 열차-지상 간 데이터 통신에 활용된다.</li>
+        <li>② 국가철도공단이 KTCS-3 이동폐색·자동운전 기술 성능검증 성과를 공개한 시점이다.</li>
+        <li>③ 이동폐색과 함께 자동운전 기술이 성능검증 대상에 포함된 차세대 기능이다.</li>
+        <li>④ KTCS-2 관련 국가철도공단 설계기준으로 2025-12-17 개정·시행된 기준이다.</li>
+      </ul>
+      <div class="qst-ans"><strong>정답: ①</strong> — LTE-R: 철도 운용에 맞춰 구축한 철도전용 무선통신망으로 열차-지상 간 데이터 통신에 활용된다.</div>
+    </div>
+  </div>
+
+  <!-- Q3 sig_153 -->
+  <div class="qst-block">
+    <div class="qst-head">
+      <span class="qst-num">Q3 · sig_153</span>
+      <span class="qst-grade">S</span>
+      <span class="qst-title">KTCS-2 정의 일치 문항</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br><b>"LTE-R을 이용하는 한국형 무선기반 열차제어 시스템으로, 지상 궤도회로는 단순 열차검지에 활용한다."</b></div>
+      <ul class="qst-choices">
+        <li>① KTCS-2</li>
+        <li>② 열차-지상 양방향 데이터</li>
+        <li>③ KTCS-3의 이동폐색</li>
+        <li>④ KTCS-3 자동운전</li>
+      </ul>
+      <div class="qst-ans"><strong>정답: ①</strong> — KTCS-2: LTE-R을 이용하는 한국형 무선기반 열차제어 시스템으로, 지상 궤도회로는 단순 열차검지에 활용한다.</div>
+    </div>
+  </div>
+
+  <!-- Q4 sig_154 -->
+  <div class="qst-block">
+    <div class="qst-head">
+      <span class="qst-num">Q4 · sig_154</span>
+      <span class="qst-grade">S</span>
+      <span class="qst-title">KTCS-2 옳은 설명 선택</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">다음 중 「KTCS-2」에 대한 설명으로 옳은 것은?</div>
+      <ul class="qst-choices">
+        <li>① 열차의 위치·상태 정보를 LTE-R 기반 무선통신으로 실시간 교환해 제어에 활용한다.</li>
+        <li>② LTE-R을 이용하는 한국형 무선기반 열차제어 시스템으로, 지상 궤도회로는 단순 열차검지에 활용한다.</li>
+        <li>③ 국가철도공단이 KTCS-3 이동폐색·자동운전 기술 성능검증 성과를 공개한 시점이다.</li>
+        <li>④ 열차 위치검지를 위해 기존 궤도회로에 의존하지 않는 것이 KTCS-3의 핵심 특징이다.</li>
+      </ul>
+      <div class="qst-ans"><strong>정답: ②</strong> — KTCS-2: LTE-R을 이용하는 한국형 무선기반 열차제어 시스템으로, 지상 궤도회로는 단순 열차검지에 활용한다. ①은 KTCS-3의 LTE-R 위치검지에 해당.</div>
+    </div>
+  </div>
+
+  <!-- Q5 sig_155 -->
+  <div class="qst-block">
+    <div class="qst-head">
+      <span class="qst-num">Q5 · sig_155</span>
+      <span class="qst-grade">S</span>
+      <span class="qst-title">KTCS-2에서 궤도회로 역할</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">KTCS-2에서 궤도회로의 역할로 옳은 것은?</div>
+      <ul class="qst-choices">
+        <li>① 궤도회로를 완전히 제거하여 지상설비 비용을 절감한다</li>
+        <li>② 열차 점유 여부를 검지하는 용도로 활용한다</li>
+        <li>③ LTE-R 통신의 보조 수단으로만 사용된다</li>
+        <li>④ 이동폐색 구현을 위한 핵심 설비로 기능한다</li>
+      </ul>
+      <div class="qst-ans"><strong>정답: ②</strong> — KTCS-2의 궤도회로 역할: 궤도회로를 완전히 제거하는 것이 아니라 열차 점유 여부를 검지하는 용도로 활용한다.</div>
+    </div>
+  </div>
+
+  <!-- Q6 sig_156 -->
+  <div class="qst-block">
+    <div class="qst-head">
+      <span class="qst-num">Q6 · sig_156</span>
+      <span class="qst-grade">S</span>
+      <span class="qst-title">KTCS-2 궤도회로 역할 옳은 설명</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">다음 중 「KTCS-2의 궤도회로 역할」에 대한 설명으로 옳은 것은?</div>
+      <ul class="qst-choices">
+        <li>① 열차의 위치·상태 정보를 LTE-R 기반 무선통신으로 실시간 교환해 제어에 활용한다.</li>
+        <li>② 궤도회로를 완전히 제거하는 것이 아니라 열차 점유 여부를 검지하는 용도로 활용한다.</li>
+        <li>③ LTE-R을 이용하는 한국형 무선기반 열차제어 시스템으로, 지상 궤도회로는 단순 열차검지에 활용한다.</li>
+        <li>④ KTCS-2는 궤도회로 검지를 활용하지만 KTCS-3는 궤도회로 미사용과 이동폐색을 핵심으로 한다.</li>
+      </ul>
+      <div class="qst-ans"><strong>정답: ②</strong> — KTCS-2의 궤도회로 역할: 궤도회로를 완전히 제거하는 것이 아니라 열차 점유 여부를 검지하는 용도로 활용한다.</div>
+    </div>
+  </div>
+
+  <!-- Q7 sig_157 -->
+  <div class="qst-block">
+    <div class="qst-head">
+      <span class="qst-num">Q7 · sig_157</span>
+      <span class="qst-grade">A</span>
+      <span class="qst-title">KR S-07060 Rev.1 정의 일치 [최신]</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br><b>"KTCS-2 관련 국가철도공단 설계기준으로 2025-12-17 개정·시행된 기준이다."</b> [최신]</div>
+      <ul class="qst-choices">
+        <li>① KTCS-3</li>
+        <li>② KTCS-2의 궤도회로 역할</li>
+        <li>③ LTE-R</li>
+        <li>④ KR S-07060 Rev.1</li>
+      </ul>
+      <div class="qst-ans"><strong>정답: ④</strong> — KR S-07060 Rev.1: KTCS-2 관련 국가철도공단 설계기준으로 2025-12-17 개정·시행된 기준이다.</div>
+    </div>
+  </div>
+
+  <!-- Q8 sig_158 -->
+  <div class="qst-block">
+    <div class="qst-head">
+      <span class="qst-num">Q8 · sig_158</span>
+      <span class="qst-grade">A</span>
+      <span class="qst-title">KR S-07060 Rev.1 옳은 설명 [최신]</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">다음 중 「KR S-07060 Rev.1」에 대한 설명으로 옳은 것은? [최신]</div>
+      <ul class="qst-choices">
+        <li>① 철도 운용에 맞춰 구축한 철도전용 무선통신망으로 열차-지상 간 데이터 통신에 활용된다.</li>
+        <li>② 지상 열차검지장치 의존을 크게 줄이고 LTE-R 기반 위치정보와 이동폐색·자동운전을 지향하는 차세대 시스템이다.</li>
+        <li>③ KTCS-2 관련 국가철도공단 설계기준으로 2025-12-17 개정·시행된 기준이다.</li>
+        <li>④ 열차별 동적 안전간격을 적용해 운전시격 단축과 선로용량 증대를 목표로 하는 기능이다.</li>
+      </ul>
+      <div class="qst-ans"><strong>정답: ③</strong> — KR S-07060 Rev.1: KTCS-2 관련 국가철도공단 설계기준으로 2025-12-17 개정·시행된 기준이다.</div>
+    </div>
+  </div>
+
+  <!-- Q9 sig_159 -->
+  <div class="qst-block">
+    <div class="qst-head">
+      <span class="qst-num">Q9 · sig_159</span>
+      <span class="qst-grade">S</span>
+      <span class="qst-title">KTCS-3 정의 일치 문항</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br><b>"지상 열차검지장치 의존을 크게 줄이고 LTE-R 기반 위치정보와 이동폐색·자동운전을 지향하는 차세대 시스템이다."</b></div>
+      <ul class="qst-choices">
+        <li>① KTCS-2</li>
+        <li>② KTCS-2와 KTCS-3의 핵심 차이</li>
+        <li>③ KR S-07060 Rev.1</li>
+        <li>④ KTCS-3</li>
+      </ul>
+      <div class="qst-ans"><strong>정답: ④</strong> — KTCS-3: 지상 열차검지장치 의존을 크게 줄이고 LTE-R 기반 위치정보와 이동폐색·자동운전을 지향하는 차세대 시스템이다.</div>
+    </div>
+  </div>
+
+  <!-- Q10 sig_160 -->
+  <div class="qst-block">
+    <div class="qst-head">
+      <span class="qst-num">Q10 · sig_160</span>
+      <span class="qst-grade">S</span>
+      <span class="qst-title">KTCS-3 옳은 설명 선택</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">다음 중 「KTCS-3」에 대한 설명으로 옳은 것은?</div>
+      <ul class="qst-choices">
+        <li>① 지상 열차검지장치 의존을 크게 줄이고 LTE-R 기반 위치정보와 이동폐색·자동운전을 지향하는 차세대 시스템이다.</li>
+        <li>② 열차별 동적 안전간격을 적용해 운전시격 단축과 선로용량 증대를 목표로 하는 기능이다.</li>
+        <li>③ 열차 위치검지를 위해 기존 궤도회로에 의존하지 않는 것이 KTCS-3의 핵심 특징이다.</li>
+        <li>④ 이동폐색과 함께 자동운전 기술이 성능검증 대상에 포함된 차세대 기능이다.</li>
+      </ul>
+      <div class="qst-ans"><strong>정답: ①</strong> — KTCS-3: 지상 열차검지장치 의존을 크게 줄이고 LTE-R 기반 위치정보와 이동폐색·자동운전을 지향하는 차세대 시스템이다.</div>
+    </div>
+  </div>
+
+  <!-- Q11 sig_161 -->
+  <div class="qst-block">
+    <div class="qst-head">
+      <span class="qst-num">Q11 · sig_161</span>
+      <span class="qst-grade">S</span>
+      <span class="qst-title">KTCS-3의 궤도회로 미사용 일치 문항</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">다음 설명에 해당하는 용어·장치로 가장 적절한 것은?<br><b>"열차 위치검지를 위해 기존 궤도회로에 의존하지 않는 것이 KTCS-3의 핵심 특징이다."</b></div>
+      <ul class="qst-choices">
+        <li>① KTCS-3</li>
+        <li>② KR S-07060 Rev.1</li>
+        <li>③ KTCS-2의 궤도회로 역할</li>
+        <li>④ KTCS-3의 궤도회로 미사용</li>
+      </ul>
+      <div class="qst-ans"><strong>정답: ④</strong> — KTCS-3의 궤도회로 미사용: 열차 위치검지를 위해 기존 궤도회로에 의존하지 않는 것이 KTCS-3의 핵심 특징이다.</div>
+    </div>
+  </div>
+
+  <!-- Q12 sig_162 -->
+  <div class="qst-block">
+    <div class="qst-head">
+      <span class="qst-num">Q12 · sig_162</span>
+      <span class="qst-grade">S</span>
+      <span class="qst-title">KTCS-3 궤도회로 미사용 옳은 설명</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">다음 중 「KTCS-3의 궤도회로 미사용」에 대한 설명으로 옳은 것은?</div>
+      <ul class="qst-choices">
+        <li>① 열차의 위치·상태 정보를 LTE-R 기반 무선통신으로 실시간 교환해 제어에 활용한다.</li>
+        <li>② 궤도회로를 완전히 제거하는 것이 아니라 열차 점유 여부를 검지하는 용도로 활용한다.</li>
+        <li>③ KTCS-2는 궤도회로 검지를 활용하지만 KTCS-3는 궤도회로 미사용과 이동폐색을 핵심으로 한다.</li>
+        <li>④ 열차 위치검지를 위해 기존 궤도회로에 의존하지 않는 것이 KTCS-3의 핵심 특징이다.</li>
+      </ul>
+      <div class="qst-ans"><strong>정답: ③</strong> — KTCS-3의 궤도회로 미사용: KTCS-2는 궤도회로 검지를 활용하지만 KTCS-3는 궤도회로 미사용과 이동폐색을 핵심으로 한다.</div>
+    </div>
+  </div>
+
+  <!-- Q13 sig_163 -->
+  <div class="qst-block">
+    <div class="qst-head">
+      <span class="qst-num">Q13 · sig_163</span>
+      <span class="qst-grade">A+</span>
+      <span class="qst-title">KTCS-3 열차 위치 파악 방법</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">KTCS-3에서 열차 위치를 파악하는 방법으로 옳은 것은?</div>
+      <ul class="qst-choices">
+        <li>① 궤도회로 신호로 열차 점유 여부를 감지한다</li>
+        <li>② 발리스에서 주기적으로 위치를 수신한다</li>
+        <li>③ 지상 ATC 장치가 열차 위치를 계산한다</li>
+        <li>④ LTE-R 기반 무선통신으로 열차 위치·상태 정보를 실시간 교환한다</li>
+      </ul>
+      <div class="qst-ans"><strong>정답: ④</strong> — KTCS-3의 LTE-R 위치검지: 열차의 위치·상태 정보를 LTE-R 기반 무선통신으로 실시간 교환해 제어에 활용한다.</div>
+    </div>
+  </div>
+
+  <!-- Q14 sig_164 -->
+  <div class="qst-block">
+    <div class="qst-head">
+      <span class="qst-num">Q14 · sig_164</span>
+      <span class="qst-grade">A+</span>
+      <span class="qst-title">KTCS-3 LTE-R 위치검지 옳은 설명</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">다음 중 「KTCS-3의 LTE-R 위치검지」에 대한 설명으로 옳은 것은?</div>
+      <ul class="qst-choices">
+        <li>① KTCS-2 관련 국가철도공단 설계기준으로 2025-12-17 개정·시행된 기준이다.</li>
+        <li>② 궤도회로를 완전히 제거하는 것이 아니라 열차 점유 여부를 검지하는 용도로 활용한다.</li>
+        <li>③ 열차의 위치·상태 정보를 LTE-R 기반 무선통신으로 실시간 교환해 제어에 활용한다.</li>
+        <li>④ KTCS-2는 궤도회로 검지를 활용하지만 KTCS-3는 궤도회로 미사용과 이동폐색을 핵심으로 한다.</li>
+      </ul>
+      <div class="qst-ans"><strong>정답: ③</strong> — KTCS-3의 LTE-R 위치검지: 열차의 위치·상태 정보를 LTE-R 기반 무선통신으로 실시간 교환해 제어에 활용한다.</div>
+    </div>
+  </div>
+
+  <!-- ===== §4 SOURCE META ===== -->
+  <div class="meta">
+    <strong>SOURCE</strong><br>
+    · 6.html PART 15 개념 42 (KTCS-2·KTCS-3·LTE-R ★★★ 신유형)<br>
+    · 6.html PART 15 개념 45 (CBTC 세부 — 양방향통신·Fail-safe·ATO 연계 ★★★ 빈출) 중 열차-지상 양방향 데이터 부분<br>
+    · signal-exam-data.ts Part 7 (sig_151~sig_164) — 14문항<br>
+    · railway-king 대응 문항: 없음 (ch81·ch82·ch83 전 문항 검색 — LTE-R·KTCS 특화 문항 없음)<br>
+    <br>
+    <strong>관련 영상</strong><br>
+    · V-Y-18: 열차의 통신은 유선? 무선? 어떤 방식이 있을까? (T_bBQCNl0eI) — PRIMARY<br>
+    · V-Y-19: 세계 최초 철도무선통신망(LTE-R) 국제인증기관 획득 (hsPJl-IXSnY) — RELATED<br>
+    <br>
+    <strong>제외 범위</strong><br>
+    · CBTC·이동폐색 세부 → 08-03에서 다룸<br>
+    · ATS·ATP·ATC·ATO → 08-01에서 다룸<br>
+    · TTC·CTC → 08-02에서 다룸<br>
+    · sig_165~sig_172 (이동폐색·자동운전 심화) → 08-03 경계 / 제외<br>
+    <br>
+    <strong>CHANGELOG</strong><br>
+    v1.1 (2026-10-10): accordion UI 삭제→기본펼침형, 정답선노출 14건제거, SOURCE 재검수, 본문기술모순정리, VIS placeholder 3건<br>
+    v1.0 (2026-10-09): 신규 생성. 6.html PART 15 개념 42·45 기반 개념학습카드 5장. signal-exam-data.ts Part 7 sig_151~sig_164 14문항 수록. V-Y-18(PRIMARY)·V-Y-19(RELATED) 영상 카드 삽입.
+  </div>
+
+  <!-- ===== NAV ===== -->
+  <nav class="unit-nav">
+    <a href="unit-08-05_FINAL_PUBLISH_v1.1.html">← 08-05 열차운행 안전</a>
+    <span class="nav-none">08-07 준비중</span>
+  </nav>
+
+</div><!-- /page-wrap -->
+
+<script>
+function playYT(vid, cardId) {
+  var thumb = document.getElementById(cardId);
+  var iframeWrap = document.getElementById('yt-iframe-' + cardId);
+  if (!iframeWrap) return;
+  thumb.style.display = 'none';
+  iframeWrap.style.display = 'block';
+  iframeWrap.innerHTML = '<iframe src="https://www.youtube.com/embed/' + vid + '?autoplay=1" allowfullscreen allow="autoplay"></iframe>';
+}
+</script>
+</body>
+</html>
