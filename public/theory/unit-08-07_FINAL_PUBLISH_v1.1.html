@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08-07 TTC와 CTC — 제어범위와 구성 v1.1</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* ===== 헤더 ===== */
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part  { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-lock  { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+
+  /* ===== 섹션 제목 ===== */
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+
+  /* ===== 선행용어 카드 ===== */
+  .term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
+  .term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+  .term-name { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 4px; }
+  .term-desc { font-size: 13px; color: #333; line-height: 1.6; }
+  .term-why { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+  /* ===== 개념 카드 ===== */
+  .concept-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .concept-head {
+    padding: 12px 16px;
+    background: #1e3a5f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .concept-num {
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255,255,255,.18);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+  .concept-name {
+    font-size: 15px;
+    font-weight: 800;
+  }
+  .concept-star {
+    font-size: 12px;
+    margin-left: auto;
+    opacity: .9;
+    white-space: nowrap;
+  }
+  .concept-body { padding: 16px 18px; font-size: 13.5px; line-height: 1.8; }
+
+  /* ===== TIP / TRAP ===== */
+  .tip-box {
+    background: #f0fdfa;
+    border: 1px solid #99f6e4;
+    border-radius: 5px;
+    padding: 9px 14px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: #134e4a;
+  }
+  .trap-box {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 5px;
+    padding: 9px 14px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: #7f1d1d;
+  }
+  .tip-box::before  { content: '💡 TIP: '; font-weight: 700; }
+  .trap-box::before { content: '⚠️ TRAP: '; font-weight: 700; }
+
+  /* ===== 이론 배경 ===== */
+  .theory-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    padding: 9px 14px;
+    margin: 8px 0;
+    font-size: 12.5px;
+    color: #475569;
+    line-height: 1.7;
+  }
+  .theory-box strong { color: #1e3a5f; display: block; margin-bottom: 2px; }
+
+  /* ===== 표 ===== */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0; border: 1.5px solid #cbd5e1; border-radius: 6px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; }
+  th { background: #1e3a5f; color: #fff; font-weight: 700; padding: 9px 12px; text-align: center; white-space: nowrap; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .td-key { font-weight: 700; color: #1e3a5f; white-space: nowrap; }
+  .td-hl { background: #fef9c3 !important; font-weight: 700; }
+
+  /* ===== 시험 포인트 박스 ===== */
+  .exam-box {
+    background: #fffbeb;
+    border: 1.5px solid #fbbf24;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin: 12px 0;
+    font-size: 13px;
+    color: #78350f;
+  }
+  .exam-box-title { font-weight: 800; font-size: 14px; margin-bottom: 8px; color: #78350f; }
+  .exam-box ul { padding-left: 18px; }
+  .exam-box li { margin-bottom: 5px; }
+
+  /* ===== SOURCE 예시 박스 ===== */
+  .source-example {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 5px;
+    padding: 10px 14px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: #0c4a6e;
+  }
+  .se-label {
+    font-weight: 800;
+    margin-right: 8px;
+    background: #0369a1;
+    color: #fff;
+    padding: 1px 7px;
+    border-radius: 3px;
+    font-size: 11px;
+  }
+
+  /* ===== CROSS-REF 박스 ===== */
+  .cross-ref-box {
+    background: #f5f3ff;
+    border: 1px solid #c4b5fd;
+    border-radius: 5px;
+    padding: 9px 14px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: #4c1d95;
+    font-weight: 600;
+  }
+
+  /* ===== VIS 블록 ===== */
+  .vis-block { margin: 20px 0; }
+
+  /* ===== 문제 영역 ===== */
+  .qst-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    padding: 16px 18px;
+    background: #fff;
+  }
+  .qst-num {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: #1e3a5f;
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-bottom: 8px;
+  }
+  .qst-src {
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 6px;
+  }
+  .qst-q { font-size: 13.5px; color: #1a1a1a; margin-bottom: 10px; font-weight: 600; }
+  .qst-choices { list-style: none; margin-bottom: 12px; }
+  .qst-choices li { padding: 5px 0 5px 8px; border-left: 3px solid #e2e8f0; margin-bottom: 4px; color: #334155; font-size: 13px; }
+  .qst-ans { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 8px 12px; font-size: 12.5px; color: #134e4a; }
+  .qst-ans strong { color: #065f46; }
+
+  /* ===== meta 박스 ===== */
+  .meta { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 14px 16px; margin-top: 40px; font-size: 12px; color: #64748b; line-height: 1.8; }
+  .meta strong { color: #1a1a1a; }
+
+  /* ===== UNIT NAV ===== */
+  .unit-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding: 12px 0; border-top: 1px solid #e2e8f0; font-size: 13px; }
+  .unit-nav a { color: #1e3a5f; text-decoration: none; font-weight: 600; padding: 6px 12px; border: 1px solid #1e3a5f; border-radius: 4px; }
+  .unit-nav a:hover { background: #f0f4f8; }
+  .unit-nav .nav-none { color: #94a3b8; font-size: 12px; padding: 6px 12px; }
+  @media print { .unit-nav { display: none; } }
+
+  /* ===== 인쇄 버튼 ===== */
+  .print-btn {
+    position: fixed; top: 12px; right: 16px; z-index: 999;
+    background: #78350f; color: #fff; border: none; border-radius: 5px;
+    padding: 6px 14px; font-size: .85em; font-weight: bold; cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,.18);
+  }
+  .print-btn:hover { background: #5c2707; }
+
+  /* ===== 인쇄 ===== */
+  @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+  @media print {
+    .page-wrap { padding: 10px; }
+    .sec-title { margin-top: 18px; }
+    .concept-card, .qst-card { break-inside: avoid; page-break-inside: avoid; }
+    .sec-title { break-after: avoid; page-break-after: avoid; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .print-btn { display: none !important; }
+    img { max-width: 100%; height: auto; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<button class="print-btn" type="button" aria-label="현재 학습자료 인쇄 또는 PDF 저장" onclick="window.print()">🖨 인쇄 / PDF</button>
+
+<div class="page-wrap">
+
+  <!-- ===== 헤더 ===== -->
+  <header class="unit-header">
+    <div class="unit-num">UNIT 08-07 · PART 08 열차제어 시스템</div>
+    <h1 class="unit-title">TTC와 CTC — 제어범위와 구성</h1>
+    <div class="unit-sub">TTC 정의·구성요소(표시반·제어용콘솔·데이터전송장치) / TTC 정보 흐름 / TTC vs CTC 제어범위 비교 / 시험 함정 패턴</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 08</span>
+      <span class="badge badge-grade">★★★ 빈출</span>
+      <span class="badge badge-lock">FINAL PUBLISH v1.1</span>
+    </div>
+  </header>
+
+  <!-- ===== §0 선행 용어 ===== -->
+  <h2 class="sec-title">§0 선행 용어</h2>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">TTC (Total Traffic Control)</div>
+      <div class="term-desc">열차종합제어장치. 1개 역 내부의 신호·선로전환기·조명 등 모든 설비를 원격으로 집중 제어하는 시스템</div>
+      <div class="term-why">→ 제어 범위: 역 내부 전체 설비</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">CTC (Centralized Traffic Control)</div>
+      <div class="term-desc">열차집중제어장치. 복수 역·광역 선구 전체의 열차운행을 중앙 사령실에서 원격 제어하는 시스템</div>
+      <div class="term-why">→ 제어 범위: 선구 전체 (다수 역)</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">표시반 (Display Panel)</div>
+      <div class="term-desc">TTC 구성요소 중 하나. 역 내 신호·설비 상태를 한눈에 표시하는 패널</div>
+      <div class="term-why">→ TTC 3대 구성요소 중 하나</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">제어용콘솔 (Control Console)</div>
+      <div class="term-desc">TTC 구성요소 중 하나. 운전사령원이 역내 설비를 원격으로 조작·제어하는 콘솔 장치</div>
+      <div class="term-why">→ TTC 3대 구성요소 중 하나</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">데이터전송장치 (Data Transmission Unit)</div>
+      <div class="term-desc">TTC 구성요소 중 하나. 중앙 제어실과 현장 설비 간 제어 명령 및 상태 데이터를 전송하는 장치</div>
+      <div class="term-why">→ TTC 3대 구성요소 중 하나</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">연동장치</div>
+      <div class="term-desc">신호기·선로전환기의 안전 조건을 검증하는 장치. TTC 구성요소가 아님</div>
+      <div class="term-why">→ TRAP: 연동장치 = TTC 구성요소 아님 ★</div>
+    </div>
+  </div>
+
+  <!-- ===== §1 TTC 정의 ===== -->
+  <h2 class="sec-title">§1 TTC 정의 — 열차종합제어장치</h2>
+
+  <div class="concept-card" id="C-TTC-01">
+    <div class="concept-head">
+      <span class="concept-num">C-29-A</span>
+      <span class="concept-name">TTC(열차종합제어장치) 정의 및 특징</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <p style="margin-bottom:10px;"><b>TTC (Total Traffic Control, 열차종합제어장치)</b>: 1개 역 내부의 신호기·선로전환기·조명 등 모든 설비를 중앙에서 원격으로 집중 제어하는 시스템이다. 역무원 없이 무인 운영이 가능하다.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>항목</th><th>내용</th></tr></thead>
+          <tbody>
+            <tr><td class="td-key">정식 명칭</td><td>Total Traffic Control (열차종합제어장치)</td></tr>
+            <tr><td class="td-key">제어 범위</td><td><b>1개 역 내부</b> 전체 설비 — 신호기·선로전환기·조명 등</td></tr>
+            <tr class="td-hl"><td class="td-key">구성요소</td><td><b>표시반 / 제어용콘솔 / 데이터전송장치</b> ★★★</td></tr>
+            <tr><td class="td-key">역무원 운용</td><td>역무원 없이 원격 운영 <b>가능</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trap-box">연동장치 = TTC 구성요소 → ❌ / 연동장치는 안전 조건 검증 장치이며 TTC 구성요소가 <b>아님</b></div>
+      <div class="tip-box">TTC 구성요소 3가지: <b>표시반 · 제어용콘솔 · 데이터전송장치</b> — "표제데"로 암기</div>
+
+      <div class="theory-box">
+        <strong>이론 배경 (SOURCE: 6.html 개념 29 + 보충 3)</strong>
+        TTC는 1개 역 내 신호·선로전환기·조명 등 모든 설비를 원격 집중 제어하는 시스템이다. 표시반(Display Panel)은 역 내 상태 표시, 제어용콘솔은 원격 조작, 데이터전송장치는 명령·상태 데이터 전송을 담당한다. 연동장치는 TTC와 별도 장치이므로 TTC 구성요소에 해당하지 않는다.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== §2 TTC 구성요소 ===== -->
+  <h2 class="sec-title">§2 TTC 구성요소 상세</h2>
+
+  <div class="concept-card" id="C-TTC-02">
+    <div class="concept-head">
+      <span class="concept-num">C-29-B</span>
+      <span class="concept-name">TTC 3대 구성요소 — 표시반·제어용콘솔·데이터전송장치</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>구성요소</th><th>역할</th><th>핵심 키워드</th></tr></thead>
+          <tbody>
+            <tr class="td-hl">
+              <td class="td-key">표시반</td>
+              <td>역 내 신호기·선로전환기·조명 등 설비 상태를 한눈에 표시. 운전사령원이 역 전체 상황을 파악하는 모니터링 패널</td>
+              <td>상태 표시 · 모니터링</td>
+            </tr>
+            <tr>
+              <td class="td-key">제어용콘솔</td>
+              <td>운전사령원이 역내 설비를 원격으로 직접 조작·제어하는 입력 장치</td>
+              <td>원격 조작 · 제어 입력</td>
+            </tr>
+            <tr class="td-hl">
+              <td class="td-key">데이터전송장치</td>
+              <td>중앙 제어실과 현장 설비 간 제어 명령 및 상태 정보를 양방향으로 전송하는 통신 장치</td>
+              <td>명령·상태 데이터 전송</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trap-box">TTC 구성요소에 해당하지 않는 것 → <b>연동장치</b> (안전 검증 전담, TTC와 별도)</div>
+      <div class="tip-box">TTC는 <b>제어</b>만 담당 — 안전 최종 검증은 연동장치가 별도 수행</div>
+
+      <div class="theory-box">
+        <strong>이론 배경 (SOURCE: 6.html 개념 29)</strong>
+        TTC의 3대 구성요소는 각각 역할이 구분된다. 표시반은 현장 상태를 사령원에게 시각화하고, 제어용콘솔은 사령원의 조작 명령을 입력받으며, 데이터전송장치는 명령과 상태를 현장 설비와 교환한다.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== §3 TTC 정보 흐름 ===== -->
+  <h2 class="sec-title">§3 TTC 정보 흐름</h2>
+
+  <div class="concept-card" id="C-TTC-03">
+    <div class="concept-head">
+      <span class="concept-num">C-29-C</span>
+      <span class="concept-name">TTC 정보 흐름 — 사령실에서 현장까지</span>
+      <span class="concept-star">★★</span>
+    </div>
+    <div class="concept-body">
+      <p style="margin-bottom:10px;">TTC 시스템에서 정보는 <b>중앙 제어실(사령원) → 데이터전송장치 → 현장 설비</b>의 방향으로 흐르며, 현장 상태는 역방향으로 <b>데이터전송장치 → 표시반</b>으로 환류된다.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>흐름 방향</th><th>경로</th><th>내용</th></tr></thead>
+          <tbody>
+            <tr class="td-hl">
+              <td class="td-key">제어 명령 (하향)</td>
+              <td>제어용콘솔 → 데이터전송장치 → 현장 설비</td>
+              <td>역내 설비에 대한 제어 명령 전송</td>
+            </tr>
+            <tr>
+              <td class="td-key">상태 정보 (상향)</td>
+              <td>현장 설비 → 데이터전송장치 → 표시반</td>
+              <td>현장 설비의 동작 상태 정보 전송</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tip-box">TTC는 <b>양방향</b> 정보 흐름 — 명령(하향) + 상태(상향)</div>
+      <div class="trap-box">연동장치 = TTC 구성요소 아님 ← TTC와 별도 장치</div>
+    </div>
+  </div>
+
+  <!-- VIS-B: TTC 구성요소와 정보 흐름 -->
+  <section class="vis-block">
+    <figure>
+      <img
+        src="images/TTC 구성요소와 정보 흐름.png"
+        alt="TTC 구성요소와 정보 흐름 — 표시반·제어용콘솔·데이터전송장치"
+        loading="lazy"
+        style="display:block;width:100%;max-width:100%;height:auto;margin:14px 0;border:1px solid #e2e8f0;border-radius:6px;page-break-inside:avoid;"
+      >
+      <figcaption style="text-align:center;font-size:0.82rem;color:#64748b;margin-top:4px;">▲ TTC 구성요소와 정보 흐름</figcaption>
+    </figure>
+  </section>
+
+  <!-- ===== §4 TTC vs CTC 제어범위 비교 ===== -->
+  <h2 class="sec-title">§4 TTC vs CTC 제어범위 비교</h2>
+
+  <div class="concept-card" id="C-TTC-04">
+    <div class="concept-head">
+      <span class="concept-num">보충 3</span>
+      <span class="concept-name">TTC vs CTC — 제어범위와 목적 비교 [빈출]</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>TTC (Total Traffic Control)</th>
+              <th>CTC (Centralized Traffic Control)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="td-hl">
+              <td class="td-key">의미</td>
+              <td>열차종합제어장치 — 역내 모든 설비를 <b>원격 집중 제어</b></td>
+              <td>열차집중제어장치 — <b>광역 선구</b>의 열차운행 중앙 제어</td>
+            </tr>
+            <tr>
+              <td class="td-key">제어 범위</td>
+              <td><b>1개 역 내부</b> 전체 설비 (신호·선로전환기·조명 등)</td>
+              <td><b>복수 역·선구 전체</b> 신호기·선로전환기</td>
+            </tr>
+            <tr class="td-hl">
+              <td class="td-key">역무원 유무</td>
+              <td>역무원 없이 원격 운영 <b>가능</b></td>
+              <td>중앙 사령실에서 집중 운용</td>
+            </tr>
+            <tr class="td-hl">
+              <td class="td-key">구성요소</td>
+              <td><b>표시반 / 제어용콘솔 / 데이터전송장치</b></td>
+              <td>→ 08-02 참조</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trap-box">❌ "CTC = 1개 역 장치 제어" → CTC는 <b>선구 전체</b> 열차 집중 제어 (1개 역은 TTC)</div>
+      <div class="trap-box">❌ "TTC와 CTC는 같은 의미" → <b>제어 범위와 목적이 다름</b></div>
+      <div class="tip-box">암기법: TTC = <b>T</b>otal(총체적) → 역 <b>내</b> 전체 / CTC = <b>C</b>entralized(집중) → 선구 <b>전체</b> 열차</div>
+
+      <div class="theory-box">
+        <strong>이론 배경 (SOURCE: 6.html 보충 3)</strong>
+        TTC(Total Traffic Control)는 1개 역 내 신호·선로전환기·조명 등 모든 설비를 원격 집중 제어하는 시스템이다. CTC(Centralized Traffic Control)는 복수 역·광역 선구 전체의 열차운행을 중앙에서 제어한다. 이름이 비슷해 혼동하기 쉬우나 제어 범위(역 내 vs 선구 전체)가 근본적으로 다르다.
+      </div>
+
+      <div class="source-example">
+        <span class="se-label">SOURCE 예시</span>
+        "역내 모든 설비를 원격으로 집중 제어하는 장치" → <b>TTC</b> (CTC 아님 — CTC는 광역 선구 제어)
+      </div>
+
+      <div class="cross-ref-box">
+        ☞ CTC(열차집중제어장치) 상세 → UNIT 08-02 참조
+      </div>
+    </div>
+  </div>
+
+  <!-- VIS-A: TTC vs CTC 제어범위 비교 -->
+  <section class="vis-block">
+    <figure>
+      <img
+        src="images/TTC vs CTC 제어범위 비교.png"
+        alt="TTC vs CTC 제어범위 비교 — 역 내부(TTC)와 선구 전체(CTC) 대비"
+        loading="lazy"
+        style="display:block;width:100%;max-width:100%;height:auto;margin:14px 0;border:1px solid #e2e8f0;border-radius:6px;page-break-inside:avoid;"
+      >
+      <figcaption style="text-align:center;font-size:0.82rem;color:#64748b;margin-top:4px;">▲ TTC vs CTC 제어범위 비교</figcaption>
+    </figure>
+  </section>
+
+  <!-- ===== §5 시험 포인트 · 함정 ===== -->
+  <h2 class="sec-title">§5 시험 포인트 · 함정 패턴</h2>
+
+  <div class="exam-box">
+    <div class="exam-box-title">시험 포인트 총정리</div>
+    <ul>
+      <li><b>[구성요소 함정]</b> TTC 구성요소 = 표시반·제어용콘솔·데이터전송장치 ← <b>연동장치 제외</b></li>
+      <li><b>[정의 혼동]</b> TTC ≠ CTC — 제어 범위가 다름: TTC(역 내) vs CTC(선구 전체)</li>
+      <li><b>[범위 혼동]</b> "CTC = 1개 역 장치 제어" → 오답 — 1개 역은 TTC, CTC는 선구 전체</li>
+    </ul>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>함정 유형</th><th>오답 선택지</th><th>정답·이유</th></tr></thead>
+      <tbody>
+        <tr class="td-hl">
+          <td class="td-key">구성요소 함정</td>
+          <td>연동장치가 TTC 구성요소</td>
+          <td>연동장치는 TTC 구성요소 아님 — 안전 검증 전담 장치</td>
+        </tr>
+        <tr>
+          <td class="td-key">정의 혼동</td>
+          <td>CTC = 1개 역 제어</td>
+          <td>CTC = 선구 전체 / TTC = 1개 역 내부</td>
+        </tr>
+        <tr>
+          <td class="td-key">명칭 혼동</td>
+          <td>TTC = Total Traffic Center</td>
+          <td>TTC = Total <b>Traffic Control</b></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== §4 SOURCE META ===== -->
+  <div class="meta">
+    <strong>UNIT</strong> : 08-07<br>
+    <strong>제목</strong> : TTC와 CTC — 제어범위와 구성<br>
+    <strong>VERSION</strong> : v1.1<br>
+    <br>
+    <strong>SOURCE:</strong><br>
+    · 6.html PART 10 개념 29 (TTC 구성요소 — 표시반·제어용콘솔·데이터전송장치)<br>
+    · 6.html PART 16 보충 3 (TTC vs CTC 제어범위 비교 [빈출])<br>
+    <br>
+    <strong>CROSS-REF:</strong><br>
+    · 6.html 개념 28 (CTC) → 08-02 PRIMARY 소진<br>
+    <br>
+    <strong>문제</strong> : 0문항 (rk_ch82_06 EXCLUDE — 해당 TTC는 차량운행장치, SOURCE TTC와 다른 개념)<br>
+    <strong>SOURCE 예시</strong> : 1건<br>
+    <strong>PRIMARY VIS</strong> : 2장 (VIS-A TTC vs CTC 제어범위 / VIS-B TTC 구성요소 흐름)<br>
+    <strong>영상</strong> : 0개<br>
+    <br>
+    <strong>CHANGELOG:</strong><br>
+    v1.0 (2026-10-10): 신규 생성. TTC 구성요소·정보흐름·TTC vs CTC 비교. rk_ch82_06 1문항. VIS-A·B 실삽입.<br>
+    v1.1 (2026-10-10): HOLD 해제 수정. rk_ch82_06 EXCLUDE(TTC 개념 충돌). SOURCE 밖 확장 문구 제거(정보흐름 세부기능·CTC 구성요소 TCC·MSC·LCP·주요 적용 행). 시험포인트 SOURCE 범위로 정리.
+  </div>
+
+  <!-- ===== NAV ===== -->
+  <nav class="unit-nav">
+    <a href="unit-08-06_FINAL_PUBLISH_v1.1.html">← 08-06 열차통신·LTE-R</a>
+    <span class="nav-none">08-08 준비중</span>
+  </nav>
+
+</div><!-- /page-wrap -->
+
+</body>
+</html>
