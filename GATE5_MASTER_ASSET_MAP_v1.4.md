@@ -334,7 +334,7 @@
 | **08-02** | **TTC·운전보안장치** | ✅v1.2 FINAL | sig_101·102·103·104·108·110·112·122·183·211·278·279 (12개) | VIS-087 (PRIMARY) / VIS-040_CTC_ATC비교도해 (CROSS-REF) | V-Y-03, V-Y-06 | **PUBLISHED** |
 | **08-03** | **CBTC·이동폐색** | ✅v1.1 FINAL | sig Part6 29개 (sig_126~150, 207, 213, 222, 234) | VIS-07E (CROSS-REF §3, 이미지 삽입) | V-Y-16 RELATED | **PUBLISHED** |
 | **08-04** | **열차운전이론** | ✅v1.2 FINAL | railway-king ch83 18문항 (rk_ch83_01,04,08,11,13,15,16,17,18,29,32,34,35,36,37,38,39) ※rk_ch83_09·33 EXCLUDE(SOURCE C-23/C-29 근거없음) | VIS-079 (PRIMARY) / VIS-009 정지거리도해 (CROSS-REF) ※VIS-010 제외(본문 근거 없음) / 전기제동_3종_비교_인포그래픽 (§4) / VIS-08D_사행동 (§5) / 차체_3축_회전운동_인포그래픽 (§6) / 냉동사이클_압응팽증_인포그래픽 (§7) / LIM_구조와추진원리_인포그래픽 (§7) | V-Y-01, V-Y-04 | **PUBLISHED** |
-| 08-05 | 열차운행 안전 | ❌미제작 | railway-king ch83 일부 | — | V-Y-05 | PENDING |
+| 08-05 | 열차운행 안전 | ✅v1.0 FINAL | 3.html PART 8 C-36~C-41 (railway-king 문항 없음) | — | V-Y-05 | PUBLISHED |
 | 08-06 | 열차통신·LTE-R | ❌미제작 | — | — | V-Y-18, V-Y-19 (PRIMARY) | PENDING |
 | 08-07 | CTC·TMS | ❌미제작 | sig Part5 일부 | VIS-087 | V-Y-15 RELATED | PENDING |
 
