@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08-04 열차운전이론 v1.2</title>
+<style>
+  /* ===== 기본 리셋 ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ===== 페이지 래퍼 ===== */
+  .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+
+  /* ===== 상단 헤더 ===== */
+  .unit-header {
+    border-bottom: 2px solid #1e3a5f;
+    padding-bottom: 14px;
+    margin-bottom: 28px;
+  }
+  .unit-num {
+    font-size: 12px;
+    color: #1e3a5f;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .unit-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 4px 0 6px;
+  }
+  .unit-sub {
+    font-size: 13px;
+    color: #555;
+  }
+  .badge-row {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 3px;
+    border: 1px solid;
+  }
+  .badge-part  { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-lock  { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+
+  /* ===== 섹션 제목 ===== */
+  .sec-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1e3a5f;
+    border-left: 4px solid #1e3a5f;
+    padding-left: 10px;
+    margin: 32px 0 14px;
+  }
+  .sec-sub {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 20px 0 8px;
+    padding: 4px 10px;
+    background: #f5f7fa;
+    border-left: 3px solid #64748b;
+  }
+
+  /* ===== 선행용어 카드 ===== */
+  .term-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .term-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 12px 14px;
+    background: #fff;
+  }
+  .term-name {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1e3a5f;
+    margin-bottom: 4px;
+  }
+  .term-desc {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.6;
+  }
+  .term-why {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  /* ===== 본문 박스 ===== */
+  .content-box {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 16px 18px;
+    background: #fff;
+    margin-bottom: 14px;
+    font-size: 14px;
+  }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+  .content-box ul { padding-left: 18px; margin: 6px 0; }
+  .content-box li { margin-bottom: 4px; }
+
+  /* ===== 카드형 박스 ===== */
+  .sys-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .sys-header {
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sys-header .abbr {
+    font-size: 18px;
+    font-weight: 900;
+  }
+  .sys-header .fullname {
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.85;
+  }
+  .sys-body {
+    padding: 14px 16px;
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+  .sys-body ul { padding-left: 18px; margin: 4px 0; }
+  .sys-body li { margin-bottom: 4px; }
+  .sys-body strong { color: #1a1a1a; }
+
+  /* 카드 색상 */
+  .sys-blue .sys-header { background: #eff6ff; color: #1d4ed8; border-bottom: 1px solid #bfdbfe; }
+  .sys-green .sys-header { background: #f0fdfa; color: #0f766e; border-bottom: 1px solid #99f6e4; }
+  .sys-amber .sys-header { background: #fef3c7; color: #92400e; border-bottom: 1px solid #fde68a; }
+  .sys-purple .sys-header { background: #fdf4ff; color: #7e22ce; border-bottom: 1px solid #e9d5ff; }
+  .sys-red .sys-header { background: #fef2f2; color: #991b1b; border-bottom: 1px solid #fecaca; }
+  .sys-slate .sys-header { background: #f8fafc; color: #334155; border-bottom: 1px solid #e2e8f0; }
+
+  /* ===== 표 ===== */
+  .tbl-wrap {
+    overflow-x: auto;
+    margin: 12px 0;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: #fff;
+  }
+  th {
+    background: #1e3a5f;
+    color: #fff;
+    font-weight: 700;
+    padding: 9px 12px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .td-center { text-align: center; }
+  .td-key { font-weight: 700; color: #1e3a5f; white-space: nowrap; }
+
+  /* ===== CROSS-REF 박스 ===== */
+  .cross-ref {
+    border: 1.5px solid #0ea5e9;
+    border-radius: 6px;
+    padding: 12px 16px;
+    background: #f0f9ff;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .cross-ref-title {
+    font-weight: 800;
+    color: #0369a1;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .cross-ref ul { padding-left: 18px; margin: 0; }
+  .cross-ref li { margin-bottom: 3px; }
+
+  /* ===== 시험포인트 ===== */
+  .exam-item {
+    padding: 10px 14px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    border: 1.5px solid;
+  }
+  .exam-key {
+    border-color: #1e3a5f;
+    background: #f0f4f8;
+    color: #1a1a1a;
+  }
+  .exam-trap {
+    border-color: #dc2626;
+    background: #fef2f2;
+    color: #1a1a1a;
+  }
+  .exam-item strong { display: block; margin-bottom: 3px; }
+
+  /* ===== 문제 영역 ===== */
+  .qst-box {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    background: #fff;
+  }
+  .qst-meta {
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 6px;
+  }
+  .qst-num {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1e3a5f;
+    margin-bottom: 8px;
+  }
+  .qst-q {
+    font-size: 14px;
+    color: #1a1a1a;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .choice-list {
+    list-style: none;
+    padding: 0;
+  }
+  .choice-list li {
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    margin-bottom: 5px;
+    border: 1px solid #e2e8f0;
+    line-height: 1.6;
+    background: #fff;
+  }
+
+  /* ===== 정답 해설 ===== */
+  .ans-box {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    background: #f8fafc;
+  }
+  .ans-header {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1e3a5f;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .ans-num { font-size: 13px; font-weight: 700; color: #1e3a5f; }
+  .ans-answer {
+    display: inline-block;
+    background: #1e3a5f;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 2px 9px;
+    border-radius: 3px;
+  }
+  .ans-exp {
+    font-size: 13.5px;
+    color: #1a1a1a;
+    line-height: 1.7;
+  }
+  .ans-exp ul { padding-left: 18px; margin: 6px 0; }
+  .ans-exp li { margin-bottom: 4px; }
+
+  /* ===== meta 박스 ===== */
+  .meta {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 40px;
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.8;
+  }
+  .meta strong { color: #1a1a1a; }
+
+  /* ===== UNIT NAV ===== */
+  .unit-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    padding: 12px 0;
+    border-top: 1px solid #e2e8f0;
+    font-size: 13px;
+  }
+  .unit-nav a {
+    color: #1e3a5f;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 6px 12px;
+    border: 1px solid #1e3a5f;
+    border-radius: 4px;
+    transition: background .15s;
+  }
+  .unit-nav a:hover { background: #f0f4f8; }
+  .unit-nav .nav-none {
+    color: #94a3b8;
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+  @media print { .unit-nav { display: none; } }
+
+  /* ===== 인쇄 버튼 ===== */
+  .print-btn {
+    position: fixed; top: 12px; right: 16px; z-index: 999;
+    background: #78350f; color: #fff; border: none; border-radius: 5px;
+    padding: 6px 14px; font-size: .85em; font-weight: bold; cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,.18);
+  }
+  .print-btn:hover { background: #5c2707; }
+
+  /* ===== 인쇄 ===== */
+  @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+  @media print {
+    .page-wrap { padding: 10px; }
+    .sec-title { margin-top: 18px; }
+    img { max-width: 100%; height: auto; }
+    table { width: 100%; max-width: 100%; }
+    .sys-card, .qst-box, .content-box, .exam-item, .ans-box { break-inside: avoid; page-break-inside: avoid; }
+    .sec-title, .sec-sub { break-after: avoid; page-break-after: avoid; }
+    tr { break-inside: avoid; page-break-inside: avoid; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .answer-section { break-before: page; page-break-before: always; }
+    .print-btn { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<button class="print-btn" type="button" aria-label="현재 학습자료 인쇄 또는 PDF 저장" onclick="window.print()">🖨 인쇄 / PDF</button>
+
+<div class="page-wrap">
+
+  <!-- ===== 헤더 ===== -->
+  <header class="unit-header">
+    <div class="unit-num">UNIT 08-04 · PART 08 열차제어 시스템</div>
+    <h1 class="unit-title">열차운전이론</h1>
+    <div class="unit-sub">운전의 3요소 / 동력집중·분산식 / 제동방식 분류 / 사행동 / 차체 진동 / LIM·냉동사이클 / 열차저항 / 관절대차</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 08</span>
+      <span class="badge badge-grade">★★☆</span>
+      <span class="badge badge-lock">FINAL PUBLISH v1.2</span>
+    </div>
+  </header>
+
+  <!-- ===== §0 선행 용어 ===== -->
+  <h2 class="sec-title">§0 선행 용어</h2>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">운전의 3요소</div>
+      <div class="term-desc">기관사 · 궤도 · 차량</div>
+      <div class="term-why">열차 운전 성립에 반드시 필요한 3가지 요소</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">동력집중식</div>
+      <div class="term-desc">기관차 1대가 객차를 견인하는 방식</div>
+      <div class="term-why">장거리·대량 수송 / 유지보수 용이</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">동력분산식</div>
+      <div class="term-desc">여러 차량에 동력이 분산 탑재된 방식</div>
+      <div class="term-why">가속력 우수 / 상구배 유리 (전동차·KTX 등)</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">공주거리</div>
+      <div class="term-desc">제동 조작 후 실제로 감속이 시작될 때까지 이동한 거리</div>
+      <div class="term-why">공주거리 = 속도 × 반응시간</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">사행동 (Hunting)</div>
+      <div class="term-desc">차륜이 레일 위에서 좌우로 반복 진동하는 현상</div>
+      <div class="term-why">1차(차축) vs 2차(대차) 구분이 시험 핵심</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">LIM</div>
+      <div class="term-desc">Linear Induction Motor. 선형 유도전동기</div>
+      <div class="term-why">직선 추진력 발생 / 급구배·급곡선에 유리</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">회생제동</div>
+      <div class="term-desc">전동기를 발전기로 전환 → 전차선에 전기 반환</div>
+      <div class="term-why">도시철도·KTX 주력 / 에너지 20~30% 절감</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">관절대차</div>
+      <div class="term-desc">두 차량이 하나의 대차를 공유하는 구조</div>
+      <div class="term-why">곡선 통과 우수 / 승차감 향상</div>
+    </div>
+  </div>
+
+  <!-- ===== §1 열차 운전의 3요소 ===== -->
+  <h2 class="sec-title">§1 열차 운전의 3요소</h2>
+
+  <div class="content-box">
+    <p><strong>열차 운전의 3요소: 기관사 · 궤도 · 차량</strong></p>
+    <p>열차 운전이 성립하기 위해 반드시 필요한 3가지 요소입니다. 통신은 보조적 요소로 3요소에 포함되지 않습니다.</p>
+    <ul>
+      <li><strong>기관사</strong>: 열차를 직접 조작·운전하는 인적 요소</li>
+      <li><strong>궤도</strong>: 열차가 달리는 레일·선로 시설</li>
+      <li><strong>차량</strong>: 열차 차체·기관차·동력장치</li>
+    </ul>
+  </div>
+
+  <!-- PRIMARY VIS — VIS-079 -->
+  <div class="cross-ref">
+    <div class="cross-ref-title">📌 PRIMARY VIS — 열차 운전의 3요소 (VIS-079)</div>
+    <img src="images/VIS-079_열차운전3요소비교카드.png"
+         alt="VIS-079 열차 운전의 3요소 비교카드"
+         style="display:block;max-width:100%;height:auto;margin:12px 0;border:1px solid #e2e8f0;border-radius:4px;">
+  </div>
+
+  <!-- ===== §2 동력집중식 vs 동력분산식 ===== -->
+  <h2 class="sec-title">§2 동력집중식 vs 동력분산식</h2>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>동력집중식</th>
+          <th>동력분산식</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key">원리</td>
+          <td>기관차 1대가 동력을 집중하여 객차 견인</td>
+          <td>여러 차량에 동력(견인전동기) 분산 탑재</td>
+        </tr>
+        <tr>
+          <td class="td-key">대표 차량</td>
+          <td>디젤기관차·전기기관차가 견인하는 무궁화열차</td>
+          <td>전기동차, ITX새마을, KTX</td>
+        </tr>
+        <tr>
+          <td class="td-key">가속력</td>
+          <td>낮음 ↓</td>
+          <td>높음 ↑</td>
+        </tr>
+        <tr>
+          <td class="td-key">상구배</td>
+          <td>불리</td>
+          <td>유리</td>
+        </tr>
+        <tr>
+          <td class="td-key">유지보수</td>
+          <td>간단 (기관차만)</td>
+          <td>복잡 (각 차량 분산)</td>
+        </tr>
+        <tr>
+          <td class="td-key">구조</td>
+          <td>단순</td>
+          <td>복잡</td>
+        </tr>
+        <tr>
+          <td class="td-key">장거리·대량 수송</td>
+          <td>적합</td>
+          <td>도심 단거리에 유리</td>
+        </tr>
+        <tr>
+          <td class="td-key">객실 소음</td>
+          <td>낮음</td>
+          <td>각 차량 모터→ 높을 수 있음</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="content-box">
+    <p><strong>전동차 정의</strong>: 동력분산식 전기차량. 여러 차량에 견인전동기가 장착되어 별도의 기관차 없이 전차선으로부터 전기를 받아 자력 운행합니다. 전기기관차(동력집중식)와 구별되는 핵심 특징입니다.</p>
+  </div>
+
+  <h2 class="sec-title">§3 관절대차 · 고정축거</h2>
+
+  <div class="sys-card sys-green">
+    <div class="sys-header">
+      <span class="abbr">관절대차</span>
+      <span class="fullname">Articulated Bogie</span>
+    </div>
+    <div class="sys-body">
+      <ul>
+        <li>두 차량이 하나의 대차를 공유하는 구조</li>
+        <li>곡선 통과 성능 우수 / 승차감 향상</li>
+        <li>단점: 구조 복잡 → 중량 증가 (가볍지 않음)</li>
+      </ul>
+      <p style="margin-top:8px;font-size:13px;color:#dc2626;"><strong>⚠ 함정:</strong> "무게가 가볍다" → 오답. 관절대차는 중량이 늘어납니다.</p>
+    </div>
+  </div>
+
+  <!-- ===== §4 제동방식 ===== -->
+  <h2 class="sec-title">§4 제동방식 분류</h2>
+
+  <div class="content-box">
+    <p>열차의 제동은 단순히 바퀴를 마찰시켜 멈추는 방식만 있는 것이 아니다. 전동차에서는 견인전동기를 발전기처럼 이용하는 <strong>전기제동</strong>과 압축공기 또는 직접적인 제동력을 이용하는 방식이 함께 사용된다.</p>
+    <p><strong>전기제동 3종: 발전제동 · 회생제동 · 와류제동</strong></p>
+    <p style="margin-top:6px;font-size:13px;background:#fef9e7;border-left:3px solid #f59e0b;padding:6px 10px;border-radius:0 4px 4px 0;">
+      <strong>발전제동은 발생한 전기를 열로 소모하고, 회생제동은 발생한 전기를 전차선으로 반환한다.</strong>
+    </p>
+    <p style="margin-top:8px;">전기제동은 모두 열차를 감속시키는 데 사용되지만, <strong>제동 과정에서 만들어지거나 이용되는 에너지를 어떻게 처리하는가</strong>가 서로 다릅니다.</p>
+    <ul>
+      <li><strong>발전제동</strong>: 견인전동기를 발전기로 전환한 뒤 발생한 전기를 저항기에서 <em>열로 소모</em></li>
+      <li><strong>회생제동</strong>: 발전기로 전환한다는 점은 발전제동과 같지만, 발생한 전기를 <em>전차선으로 반환</em></li>
+      <li><strong>와류제동</strong>: 전자석에 의해 발생하는 와전류를 이용하여 제동력 획득</li>
+    </ul>
+    <p style="margin-top:8px;font-size:13px;color:#1e3a5f;"><strong>핵심 구분법</strong>: 발전 = 만들어진 전기를 <em>버린다(열 소멸)</em> / 회생 = 만들어진 전기를 <em>돌려보낸다(전차선 반환)</em> / 와류 = <em>전자석과 와전류</em>를 이용</p>
+  </div>
+
+  <div class="sec-sub">4-1. 전기제동 3종 (암기: 발·회·와)</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>제동 방식</th>
+          <th>원리</th>
+          <th>에너지 처리</th>
+          <th>특징</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key">발전제동</td>
+          <td>견인전동기를 발전기로 전환 → 저항기에서 열로 소모</td>
+          <td class="td-center">열 소멸</td>
+          <td>전차선 불필요 / 속도 저하 시 제동력 약화</td>
+        </tr>
+        <tr>
+          <td class="td-key">회생제동</td>
+          <td>발전기로 전환 → 전기를 전차선으로 반환</td>
+          <td class="td-center">전차선 반환</td>
+          <td>도시철도·KTX 주력 / 에너지 20~30% 절감</td>
+        </tr>
+        <tr>
+          <td class="td-key">와류제동<br>(맴돌이전류)</td>
+          <td>전자석으로 와전류 발생 → 제동력</td>
+          <td class="td-center">열 소멸</td>
+          <td>레일 접촉 없이 제동 / 고속 구간 사용</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <section class="vis-block">
+    <div class="vis-label">PRIMARY VIS</div>
+    <figure>
+      <img src="images/전기제동_3종_비교_인포그래픽.png"
+           alt="전기제동 3종 비교 — 발전제동·회생제동·와류제동"
+           loading="lazy"
+           style="display:block;max-width:100%;height:auto;margin:12px 0;border:1px solid #e2e8f0;border-radius:4px;page-break-inside:avoid;">
+      <figcaption style="font-size:12px;color:#64748b;text-align:center;margin-bottom:8px;">
+        [전기제동 3종 비교] 발전제동은 열로 소모하고, 회생제동은 전차선으로 반환하며, 와류제동은 전자석과 와전류를 이용한다.
+      </figcaption>
+    </figure>
+    <div class="exam-item" style="background:#f0fdf4;border-left-color:#22c55e;font-size:13px;padding:8px 12px;">
+      <strong>핵심:</strong> 발 = 열 소모 / 회 = 전차선 반환 / 와 = 전자석·와전류
+    </div>
+  </section>
+
+  <div class="sec-sub">4-2. 기계제동 및 공기제동</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>제동 방식</th>
+          <th>원리</th>
+          <th>용도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key">공기제동</td>
+          <td>압축공기로 브레이크 패드/슈를 바퀴·디스크에 밀착</td>
+          <td>모든 열차 공통 기본 제동 / 비상·정차 유지</td>
+        </tr>
+        <tr>
+          <td class="td-key">수용제동</td>
+          <td>회생전력을 차량 내부 부하(냉난방·저항기)에서 소비</td>
+          <td>회생제동 불가 시 보조 수단</td>
+        </tr>
+        <tr>
+          <td class="td-key">레일제동</td>
+          <td>궤도 위에 전자석을 밀착 → 자력으로 직접 제동</td>
+          <td>기계적·자기적 직접 제동 (전기제동 아님)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="exam-item exam-trap">
+    <strong>⚠ 함정: 레일제동은 전기제동이 아니다</strong>
+    전기제동 3종 = 발전제동 · 회생제동 · 와류제동<br>
+    레일제동은 전자석을 이용하지만 전기제동 분류에 포함되지 않는 기계적 제동
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>⚠ 함정: "자연제동"은 정식 제동방식이 아니다</strong>
+    열차 제동방식: 공기제동 · 발전제동 · 회생제동 · 수용제동 등<br>
+    "자연제동"은 시험에서 함정 선택지로 출제됨
+  </div>
+
+  <!-- ===== §5 사행동 ===== -->
+  <h2 class="sec-title">§5 사행동 (Hunting)</h2>
+
+  <div class="content-box">
+    <p><strong>사행동</strong>: 차륜이 레일 위를 주행하면서 좌우로 반복 진동하는 현상. <strong>어느 부분이 흔들리는가</strong>에 따라 1차·2차로 구분합니다.</p>
+    <ul>
+      <li><strong>1차 사행동 = 차축 사행동</strong>: 비교적 낮은 속도에서 발생, 속도 증가 시 진동 감쇠</li>
+      <li><strong>2차 사행동 = 대차 사행동</strong>: 특정 임계속도 이상에서 발생, 속도 증가해도 감쇠 없이 증폭</li>
+    </ul>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>1차 사행동 (차축 사행동)</th>
+          <th>2차 사행동 (대차 사행동)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key">발생 속도</td>
+          <td>비교적 낮은 속도</td>
+          <td>특정 임계속도 이상</td>
+        </tr>
+        <tr>
+          <td class="td-key">속도 증가 시</td>
+          <td>진동 감쇠 (줄어듦)</td>
+          <td>감쇠 안 됨 → 오히려 증폭</td>
+        </tr>
+        <tr>
+          <td class="td-key">파장</td>
+          <td>약 14m</td>
+          <td>1차에 비례하지 않음</td>
+        </tr>
+        <tr>
+          <td class="td-key">궤간 관계</td>
+          <td>궤간 넓을수록 커짐</td>
+          <td>궤간 좁을수록 커짐 (반비례)</td>
+        </tr>
+        <tr>
+          <td class="td-key">답면기울기</td>
+          <td>클수록 작아짐</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <section class="vis-block">
+    <div class="vis-label">PRIMARY VIS</div>
+    <figure>
+      <img src="images/VIS-08D_사행동_1차2차와저감원리_FINAL.png"
+           alt="사행동 1차·2차 비교와 저감원리"
+           loading="lazy"
+           style="display:block;max-width:100%;height:auto;margin:12px 0;border:1px solid #e2e8f0;border-radius:4px;page-break-inside:avoid;">
+      <figcaption style="font-size:12px;color:#64748b;text-align:center;margin-bottom:8px;">
+        [사행동 1차·2차 비교 및 저감원리]
+      </figcaption>
+    </figure>
+    <div class="exam-item" style="background:#f0fdf4;border-left-color:#22c55e;font-size:13px;padding:8px 12px;">
+      <strong>핵심:</strong> 1차 = 차축 / 2차 = 대차<br>
+      저감: 차륜 크게 / 답면기울기 작게 / 축거 크게 / 선회저항 크게
+    </div>
+  </section>
+
+  <div class="sec-sub">사행동 저감 방법 (파장을 크게 → 사행동 최소화)</div>
+  <div class="content-box">
+    <p>각각 따로 외우지 말고 한 문장으로 묶습니다: <strong>차륜은 크게, 답면기울기는 작게, 축거는 크게, 선회저항은 크게.</strong></p>
+    <ul>
+      <li>차륜 지름 크게</li>
+      <li>차륜 답면 기울기 작게</li>
+      <li>고정축간 거리(축거) 크게</li>
+      <li>대차의 선회저항 크게</li>
+    </ul>
+  </div>
+
+  <div class="exam-item exam-trap">
+    <strong>⚠ 함정: 2차 사행동의 궤간 관계</strong>
+    "2차 사행동은 궤간이 좁을수록 작아진다" → 오답<br>
+    2차 사행동은 궤간에 반비례 → 궤간 좁을수록 커진다
+  </div>
+
+  <!-- ===== §6 차체 3축 회전운동 ===== -->
+  <h2 class="sec-title">§6 차체 3축 회전운동</h2>
+
+  <div class="content-box">
+    <p><strong>어느 축을 중심으로 회전하는가</strong>를 먼저 연결해야 혼동하지 않습니다.</p>
+    <ul>
+      <li><strong>롤링(Rolling)</strong>: 진행방향 축(X축) — 차체가 좌우로 기울어짐</li>
+      <li><strong>피칭(Pitching)</strong>: 폭방향 축(Y축) — 차체가 앞뒤로 들썩임</li>
+      <li><strong>요잉(Yawing)</strong>: 수직축(Z축) — 차체가 수평면에서 좌우로 비틀림</li>
+    </ul>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>명칭</th>
+          <th>기준 축</th>
+          <th>운동 방향</th>
+          <th>설명</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key">롤링 (Rolling)</td>
+          <td class="td-center">X축 (진행방향)</td>
+          <td class="td-center">좌우 기울어짐</td>
+          <td>차체가 진행방향 축을 중심으로 좌우로 기울어지는 운동</td>
+        </tr>
+        <tr>
+          <td class="td-key">피칭 (Pitching)</td>
+          <td class="td-center">Y축 (폭방향)</td>
+          <td class="td-center">앞뒤 들썩임</td>
+          <td>차체가 폭방향 축을 중심으로 앞뒤로 들썩이는 운동</td>
+        </tr>
+        <tr>
+          <td class="td-key">요잉 (Yawing)</td>
+          <td class="td-center">Z축 (수직)</td>
+          <td class="td-center">수평 비틀림</td>
+          <td>차체가 수직축을 중심으로 수평면 내에서 좌우 비틀리는 운동</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <section class="vis-block">
+    <div class="vis-label">PRIMARY VIS</div>
+    <figure>
+      <img src="images/차체_3축_회전운동_인포그래픽.png"
+           alt="차체 3축 회전운동 — 롤링·피칭·요잉"
+           loading="lazy"
+           style="display:block;max-width:100%;height:auto;margin:12px 0;border:1px solid #e2e8f0;border-radius:4px;page-break-inside:avoid;">
+      <figcaption style="font-size:12px;color:#64748b;text-align:center;margin-bottom:8px;">
+        [차체 3축 회전운동] 롤링(X축·진행방향) / 피칭(Y축·폭방향) / 요잉(Z축·수직)
+      </figcaption>
+    </figure>
+    <div class="exam-item" style="background:#f0fdf4;border-left-color:#22c55e;font-size:13px;padding:8px 12px;">
+      <strong>핵심:</strong> 롤링 = 진행방향 축(X) / 피칭 = 폭방향 축(Y) / 요잉 = 수직축(Z)
+    </div>
+  </section>
+
+  <div class="exam-item exam-trap">
+    <strong>⚠ 함정: "곡률변화"는 차량 진동 종류가 아니다</strong>
+    차량 진동 = 롤링 · 피칭 · 요잉 (3종)<br>
+    "곡률변화"는 선로 형태를 나타내는 용어지 진동 종류가 아님
+  </div>
+
+  <!-- ===== §7 냉동사이클·LIM·보호장치 ===== -->
+  <h2 class="sec-title">§7 냉동사이클 · LIM · 보호장치</h2>
+
+  <div class="sec-sub">7-1. 냉동사이클 순서</div>
+  <div class="content-box">
+    <p><strong>냉동사이클 순서 (암기: 압응팽증)</strong>: 압축 → 응축 → 팽창 → 증발</p>
+    <ul>
+      <li><strong>압축</strong>: 압축기에서 냉매 고온·고압으로 압축</li>
+      <li><strong>응축</strong>: 응축기에서 <em>열 방출</em> → 냉매 액화</li>
+      <li><strong>팽창</strong>: 팽창밸브에서 압력 저하 → 냉매 저온·저압</li>
+      <li><strong>증발</strong>: 증발기에서 <em>열 흡수</em> → 냉각 효과 발생</li>
+    </ul>
+    <p style="margin-top:8px;font-size:13px;color:#1e3a5f;"><strong>순서 암기법</strong>: 압축 다음 = 응축 / 팽창 다음 = 증발. 열 방향: 응축=방출 / 증발=흡수</p>
+  </div>
+
+  <section class="vis-block">
+    <div class="vis-label">PRIMARY VIS</div>
+    <figure>
+      <img src="images/냉동사이클_압응팽증_인포그래픽.png"
+           alt="냉동사이클 압응팽증 순환도"
+           loading="lazy"
+           style="display:block;max-width:100%;height:auto;margin:12px 0;border:1px solid #e2e8f0;border-radius:4px;page-break-inside:avoid;">
+      <figcaption style="font-size:12px;color:#64748b;text-align:center;margin-bottom:8px;">
+        [냉동사이클] 압축→응축(열 방출)→팽창→증발(열 흡수) 순환
+      </figcaption>
+    </figure>
+    <div class="exam-item" style="background:#f0fdf4;border-left-color:#22c55e;font-size:13px;padding:8px 12px;">
+      <strong>핵심:</strong> 응축 = 열 방출 / 증발 = 열 흡수
+    </div>
+  </section>
+
+  <div class="sec-sub">7-2. LIM (선형 유도전동기)</div>
+  <div class="sys-card sys-blue">
+    <div class="sys-header">
+      <span class="abbr">LIM</span>
+      <span class="fullname">Linear Induction Motor — 선형 유도전동기</span>
+    </div>
+    <div class="sys-body">
+      <ul>
+        <li>회전형 유도전동기를 평면 형태로 전개하여 <strong>직선 방향의 추진력</strong> 발생</li>
+        <li>추진 과정: 1차 코일 전류 → 이동자계 형성 → 2차 도체(레일)에 유도전류 → 추진력</li>
+        <li>점착력에 크게 의존하지 않아 <strong>급구배·급곡선 운행에 유리</strong></li>
+        <li>기어·차륜 마모 감소 (구동부가 회전하지 않음)</li>
+      </ul>
+      <p style="margin-top:8px;font-size:13px;color:#dc2626;"><strong>⚠ 함정:</strong> "급구배 운행에 불리하다" → 오답. LIM은 오히려 유리합니다.</p>
+    </div>
+  </div>
+
+  <section class="vis-block">
+    <div class="vis-label">PRIMARY VIS</div>
+    <figure>
+      <img src="images/LIM_구조와추진원리_인포그래픽.png"
+           alt="LIM 구조와 추진원리"
+           loading="lazy"
+           style="display:block;max-width:100%;height:auto;margin:12px 0;border:1px solid #e2e8f0;border-radius:4px;page-break-inside:avoid;">
+      <figcaption style="font-size:12px;color:#64748b;text-align:center;margin-bottom:8px;">
+        [LIM 추진원리] 1차 코일 전류 → 이동자계 → 2차 도체 유도전류 → 추진력
+      </figcaption>
+    </figure>
+  </section>
+
+  <div class="sec-sub">7-3. 보호장치 (피뢰기 구분)</div>
+  <div class="content-box">
+    <p>보호장치는 <strong>어떤 이상 상태에서 어떤 장치가 작동하는지</strong>를 연결해서 기억한다.</p>
+    <p style="font-size:13px;color:#1e3a5f;margin-top:4px;">
+      교류모진 → 직류피뢰기 / 직류 과전류 → 주퓨즈 / 낙뢰·서지 → 교류피뢰기 / 교직류 전환 → ADCg
+    </p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>장치</th>
+          <th>보호 대상</th>
+          <th>작동 조건</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key">직류피뢰기</td>
+          <td>교류모진 시 회로 보호</td>
+          <td>교류 전원이 직류 회로에 침입할 때</td>
+        </tr>
+        <tr>
+          <td class="td-key">주퓨즈</td>
+          <td>직류모진 시 회로 보호</td>
+          <td>직류 과전류 발생 시</td>
+        </tr>
+        <tr>
+          <td class="td-key">교류피뢰기</td>
+          <td>낙뢰·서지전압으로부터 보호</td>
+          <td>급격한 이상 전압 발생 시</td>
+        </tr>
+        <tr>
+          <td class="td-key">ADCg</td>
+          <td>교직류 절환</td>
+          <td>교류↔직류 구간 이행 시</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== §8 열차저항 ===== -->
+  <h2 class="sec-title">§8 열차저항과 곡선저항</h2>
+
+  <div class="content-box">
+    <p><strong>열차저항 4종</strong>: 주행저항 · 구배저항 · 곡선저항 · 가속저항</p>
+    <p style="font-size:13px;color:#64748b;margin-bottom:8px;">발생 상황을 기준으로 구분합니다.</p>
+    <ul>
+      <li><strong>주행저항</strong>: 주행 중 항상 발생 — 공기저항, 레일·차륜 마찰 등</li>
+      <li><strong>구배저항</strong>: 경사진 선로 → 중력 성분에 의한 저항</li>
+      <li><strong>곡선저항</strong>: 곡선 선로 → 원심력·플랜지 마찰 등에 의한 저항</li>
+      <li><strong>가속저항</strong>: 가속 시 → 관성력 극복에 필요한 저항</li>
+    </ul>
+  </div>
+
+  <!-- PRIMARY VIS — VIS-08H (이미지 있음) -->
+  <div class="cross-ref">
+    <div class="cross-ref-title">📌 PRIMARY VIS — 열차저항 4종 개념도 (VIS-08H)</div>
+    <img src="images/VIS-08H_열차저항4종_개념도_FINAL.png"
+         alt="VIS-08H 열차저항 4종 개념도"
+         style="display:block;max-width:100%;height:auto;margin:12px 0;border:1px solid #e2e8f0;border-radius:4px;">
+  </div>
+
+  <div class="content-box">
+    <p><strong>곡선저항 산정 공식 (모리슨 공식)</strong></p>
+    <p style="font-size:15px;font-weight:700;color:#1e3a5f;text-align:center;padding:8px 0;">R = 700 / f (kg/ton)</p>
+    <p>f = 곡선반경(m). 제안자: <strong>모리슨</strong></p>
+    <p style="font-size:13px;color:#64748b;margin-top:4px;">조지 스티븐슨(증기기관차 발명), 킹덤 브루넬(현수교), 조지 웨스팅하우스(공기제동)와 혼동 주의</p>
+  </div>
+
+  <!-- ===== §9 공주거리·제동거리 ===== -->
+  <h2 class="sec-title">§9 공주거리 · 제동거리</h2>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>정의</th>
+          <th>계산</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key">공주거리</td>
+          <td>제동 조작 후 실제 감속이 시작될 때까지 이동한 거리</td>
+          <td>= 속도 × 반응시간</td>
+        </tr>
+        <tr>
+          <td class="td-key">제동거리</td>
+          <td>실제 감속이 시작된 후 완전히 정지할 때까지 이동한 거리</td>
+          <td>감속도와 속도에 의존</td>
+        </tr>
+        <tr>
+          <td class="td-key">정지거리</td>
+          <td>공주거리 + 제동거리</td>
+          <td>총 이동 거리</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CROSS-REF — VIS-009 -->
+  <div class="cross-ref">
+    <div class="cross-ref-title">📌 CROSS-REF — 정지거리 도해 (VIS-009)</div>
+    <img src="images/VIS-009_정지거리도해.jpg"
+         alt="VIS-009 정지거리 도해"
+         style="display:block;max-width:100%;height:auto;margin:12px 0;border:1px solid #e2e8f0;border-radius:4px;">
+  </div>
+
+  <!-- ===== §10 시험 핵심 포인트 ===== -->
+  <h2 class="sec-title">§10 시험 핵심 포인트</h2>
+
+  <div class="exam-item exam-key">
+    <strong>✅ 운전의 3요소: 기관사 · 궤도 · 차량</strong>
+    통신은 포함되지 않음. 선택지에서 "통신"이 있으면 오답.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>✅ 동력분산식 단점: 객실 내 소음이 높을 수 있음</strong>
+    각 차량에 모터 → 소음 증가. "소음이 낮다"가 함정 선택지.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>✅ 전기제동 3종: 발전·회생·와류 (레일제동은 제외)</strong>
+    "수용제동"은 전기제동이 아니라 별도 방식으로 분류.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>✅ 냉동사이클: 압축→응축→팽창→증발 (암기: 압응팽증)</strong>
+    증발이 마지막 단계. "증발→압축→팽창→응축" 순서 함정 주의.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>✅ LIM: 급구배·급곡선에 유리</strong>
+    "불리하다"가 선택지에 있으면 오답.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>✅ 관절대차: 중량 증가 (가볍지 않음)</strong>
+    "무게가 가볍다" → 오답. 두 차량 공유 → 구조 복잡 → 중량↑
+  </div>
+  <div class="exam-item exam-key">
+    <strong>✅ 2차 사행동: 속도 증가해도 감쇠 안 됨 (오히려 증폭)</strong>
+    1차는 속도 높아지면 감쇠. 2차는 임계속도 이상에서 증폭.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>✅ 곡선저항 R=700/f 제안자: 모리슨</strong>
+    조지 스티븐슨·웨스팅하우스 등과 혼동 주의.
+  </div>
+
+  <!-- ===== 기출문제 ===== -->
+  <h2 class="sec-title">📝 기출문제 (18문항)</h2>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_29 · SOURCE: 3.html C-28</div>
+    <div class="qst-num">Q01</div>
+    <div class="qst-q">열차 운전의 3요소에 해당하지 않는 것은?</div>
+    <ol class="choice-list">
+      <li>① 궤도</li>
+      <li>② 통신</li>
+      <li>③ 차량</li>
+      <li>④ 기관사</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_36 · SOURCE: 3.html C-24</div>
+    <div class="qst-num">Q02</div>
+    <div class="qst-q">동력집중식 특징으로 틀린 것은?</div>
+    <ol class="choice-list">
+      <li>① 소음이 크다</li>
+      <li>② 유지보수가 간단하다</li>
+      <li>③ 효율이 높다</li>
+      <li>④ 가속력이 떨어진다</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_37 · SOURCE: 3.html C-24</div>
+    <div class="qst-num">Q03</div>
+    <div class="qst-q">동력집중식의 장점으로 옳지 않은 것은?</div>
+    <ol class="choice-list">
+      <li>① 구조가 단순하다</li>
+      <li>② 유지보수가 용이하다</li>
+      <li>③ 상구배(오르막)에서 유리하다</li>
+      <li>④ 장거리·대량 수송에 적합하다</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_38 · SOURCE: 3.html C-24</div>
+    <div class="qst-num">Q04</div>
+    <div class="qst-q">동력집중식 차량으로 맞는 것은?</div>
+    <ol class="choice-list">
+      <li>① ITX새마을</li>
+      <li>② 전기동차</li>
+      <li>③ 디젤동차가 견인하는 무궁화열차</li>
+      <li>④ 디젤기관차가 견인하는 무궁화열차</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_39 · SOURCE: 3.html C-24</div>
+    <div class="qst-num">Q05</div>
+    <div class="qst-q">동력분산식의 장점으로 아닌 것은?</div>
+    <ol class="choice-list">
+      <li>① 객실 내 소음 수준이 낮다</li>
+      <li>② 가속 성능이 우수하다</li>
+      <li>③ 에너지 효율이 높다</li>
+      <li>④ 승차감이 우수하고 정차·출발이 부드럽다</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_13 · SOURCE: 3.html C-24</div>
+    <div class="qst-num">Q06</div>
+    <div class="qst-q">전동차의 정의로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 전기 에너지를 이용하여 차량 여러 대에 동력이 분산된 자력 운행 차량</li>
+      <li>② 전기 에너지를 받아 한 대의 기관차가 객차를 끄는 집중식 철도차량</li>
+      <li>③ 디젤엔진으로 발전기를 돌려 전동기를 구동하는 차량</li>
+      <li>④ 전기를 사용하지만 기관차에 동력이 집중된 차량</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_35 · SOURCE: 3.html C-25</div>
+    <div class="qst-num">Q07</div>
+    <div class="qst-q">관절대차 특징으로 아닌 것은?</div>
+    <ol class="choice-list">
+      <li>① 곡선 통과 성능이 우수하다</li>
+      <li>② 두 차량이 하나의 대차를 공유한다</li>
+      <li>③ 무게가 가볍다</li>
+      <li>④ 승차감이 향상된다</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_08 · SOURCE: 3.html C-23 C-29</div>
+    <div class="qst-num">Q08</div>
+    <div class="qst-q">전기제동방식이 아닌 것은?</div>
+    <ol class="choice-list">
+      <li>① 와류제동</li>
+      <li>② 회생제동</li>
+      <li>③ 레일제동</li>
+      <li>④ 발전제동</li>
+    </ol>
+  </div>
+
+
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_34 · SOURCE: 3.html C-23</div>
+    <div class="qst-num">Q09</div>
+    <div class="qst-q">열차 제동방식이 아닌 것은?</div>
+    <ol class="choice-list">
+      <li>① 발전제동</li>
+      <li>② 자연제동</li>
+      <li>③ 수용제동</li>
+      <li>④ 회생제동</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_16 · SOURCE: 3.html C-30</div>
+    <div class="qst-num">Q10</div>
+    <div class="qst-q">주행 속도를 높여도 감쇠되지 않는 사행동은?</div>
+    <ol class="choice-list">
+      <li>① 1차 사행동</li>
+      <li>② 2차 사행동(대차사행동)</li>
+      <li>③ 차량 전체 사행동</li>
+      <li>④ 축간 사행동</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_17 · SOURCE: 3.html C-30</div>
+    <div class="qst-num">Q11</div>
+    <div class="qst-q">열차의 사행동에 대한 설명으로 옳지 않은 것은?</div>
+    <ol class="choice-list">
+      <li>① 1축 사행동은 궤간이 넓을수록 커지고, 차륜 답면의 구배가 클수록 작아진다</li>
+      <li>② 2축 사행동(대차사행동)은 1축 사행동에 비례한다</li>
+      <li>③ 2축 사행동(대차사행동)은 궤간이 좁을수록 작아지고, 축거가 길수록 작아진다</li>
+      <li>④ 1축 사행동은 속도가 높아지면 진동수가 높아지고 14m의 파장을 갖는다</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_18 · SOURCE: 3.html C-30</div>
+    <div class="qst-num">Q12</div>
+    <div class="qst-q">대차 사행동을 줄이는 방법으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 차륜 지름을 작게 한다</li>
+      <li>② 차륜답면 기울기를 크게 한다</li>
+      <li>③ 고정축 간거리를 작게 한다</li>
+      <li>④ 대차의 선회저항을 크게 한다</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_32 · SOURCE: 3.html C-31</div>
+    <div class="qst-num">Q13</div>
+    <div class="qst-q">차량진동 종류가 아닌 것은?</div>
+    <ol class="choice-list">
+      <li>① 롤링</li>
+      <li>② 피칭</li>
+      <li>③ 요잉</li>
+      <li>④ 곡률변화</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_01 · SOURCE: 3.html C-32</div>
+    <div class="qst-num">Q14</div>
+    <div class="qst-q">철도차량의 공기조화장치(냉방장치)의 냉동사이클 순서는?</div>
+    <ol class="choice-list">
+      <li>① 증발→압축→팽창→응축</li>
+      <li>② 압축→응축→팽창→증발</li>
+      <li>③ 압축→팽창→응축→증발</li>
+      <li>④ 응축→압축→증발→팽창</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_04 · SOURCE: 3.html C-32</div>
+    <div class="qst-num">Q15</div>
+    <div class="qst-q">LIM에 대한 설명으로 옳지 않은 것은?</div>
+    <ol class="choice-list">
+      <li>① LIM은 회전 운동을 하지 않고 직선 운동을 통해 추진력을 얻는 전동기이다</li>
+      <li>② 회전형 유도전동기를 평면 형태로 전개한 구조이다</li>
+      <li>③ LIM 구동 방식은 일반 철도에서 사용하는 차륜 구동 방식보다 급구배(경사) 운행에 불리하다</li>
+      <li>④ 구동부가 회전하지 않아 기어나 차륜의 마모가 줄어든다</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_15 · SOURCE: 3.html C-32</div>
+    <div class="qst-num">Q16</div>
+    <div class="qst-q">차량에 설치된 선형 유도전동기를 이용하여 레일과의 점착에 크게 의존하지 않고 추진력을 얻으며, 급구배·급곡선에 유리한 방식의 차량은?</div>
+    <ol class="choice-list">
+      <li>① LIM</li>
+      <li>② 모노레일</li>
+      <li>③ 바이모달트램</li>
+      <li>④ AGT</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_09 · SOURCE: 3.html C-27</div>
+    <div class="qst-num">Q17</div>
+    <div class="qst-q">교류모진이 발생할 때 작동하여 회로를 보호하는 장치는?</div>
+    <ol class="choice-list">
+      <li>① ADCg</li>
+      <li>② 주퓨즈</li>
+      <li>③ 직류피뢰기</li>
+      <li>④ 교류피뢰기</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">rk_ch83_11 · SOURCE: 3.html C-34</div>
+    <div class="qst-num">Q18</div>
+    <div class="qst-q">철도 차량이 곡선 선로를 주행할 때 발생하는 곡선저항을 산정하기 위한 공식인 'R=700/f (kg/ton)'을 제안한 인물은?</div>
+    <ol class="choice-list">
+      <li>① 조지 스티븐슨</li>
+      <li>② 킹덤 브루넬</li>
+      <li>③ 조지 웨스팅하우스</li>
+      <li>④ 모리슨</li>
+    </ol>
+  </div>
+
+  <!-- ===== 정답 및 해설 ===== -->
+  <div class="answer-section">
+  <h2 class="sec-title">✅ 정답 및 해설</h2>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q01</span>
+      <span class="ans-answer">정답 ②</span>
+    </div>
+    <div class="ans-exp">통신은 운전의 보조적 요소. 열차 운전의 3요소 = <strong>기관사 · 궤도 · 차량</strong>. 통신은 포함되지 않는다.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q02</span>
+      <span class="ans-answer">정답 ①</span>
+    </div>
+    <div class="ans-exp">"소음이 크다"는 동력집중식의 특징이 아니라 동력분산식(각 차량 모터)의 단점이다. 동력집중식 특징: 유지보수 간단 / 효율 높음 / 가속력 낮음.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q03</span>
+      <span class="ans-answer">정답 ③</span>
+    </div>
+    <div class="ans-exp">동력집중식은 상구배(오르막)에서 <strong>불리</strong>하다. 상구배에 유리한 것은 동력분산식이다. 동력집중식 장점: 구조 단순 / 유지보수 용이 / 장거리·대량 수송 적합.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q04</span>
+      <span class="ans-answer">정답 ④</span>
+    </div>
+    <div class="ans-exp">동력집중식: 기관차(디젤기관차·전기기관차)가 객차를 견인하는 방식. ITX새마을·전기동차는 동력분산식.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q05</span>
+      <span class="ans-answer">정답 ①</span>
+    </div>
+    <div class="ans-exp">동력분산식 단점: 각 차량마다 모터·전기장치 설치로 <strong>객실 내 소음이 커질 수 있다</strong>. "소음 수준이 낮다"는 오답. 가속 성능 우수·에너지 효율 높음·승차감 향상은 장점이다.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q06</span>
+      <span class="ans-answer">정답 ①</span>
+    </div>
+    <div class="ans-exp">전동차: <strong>동력분산식</strong> 전기차량. 여러 차량에 견인전동기가 장착되어 별도의 기관차 없이 전차선으로부터 전기를 받아 자력 운행. 전기기관차(동력집중식)와 구별되는 핵심 특징.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q07</span>
+      <span class="ans-answer">정답 ③</span>
+    </div>
+    <div class="ans-exp">관절대차: 두 차량 공유 구조 → 구조 복잡 → <strong>중량 증가</strong>. "무게가 가볍다"는 오답. 곡선 통과 성능 우수 · 승차감 향상은 장점이다.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q08</span>
+      <span class="ans-answer">정답 ③</span>
+    </div>
+    <div class="ans-exp">전기제동 3종 (암기: 발·회·와): 발전제동 · 회생제동 · 와류제동. <strong>레일제동</strong>은 궤도 위에 전자석을 밀착시켜 자력으로 제동하는 기계적 직접제동 → 전기제동 분류에 포함되지 않는다.</div>
+  </div>
+
+
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q09</span>
+      <span class="ans-answer">정답 ②</span>
+    </div>
+    <div class="ans-exp"><strong>자연제동</strong>은 정식 제동방식이 아니다. 열차 제동방식: 공기제동 · 발전제동 · 회생제동 · 수용제동 등.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q10</span>
+      <span class="ans-answer">정답 ②</span>
+    </div>
+    <div class="ans-exp"><strong>2차 사행동(대차사행동)</strong>: 특정 임계속도 이상에서 진동이 감쇠되지 않고 오히려 증폭. 1차 사행동은 속도 증가에 따라 진동이 줄어드는 감쇠 특성.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q11</span>
+      <span class="ans-answer">정답 ③</span>
+    </div>
+    <div class="ans-exp">2차 사행동은 궤간에 <strong>반비례</strong> → 궤간 좁을수록 <strong>커진다</strong>. "좁을수록 작아진다"는 오답. 축거가 길수록 작아지는 것은 맞다.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q12</span>
+      <span class="ans-answer">정답 ④</span>
+    </div>
+    <div class="ans-exp">사행동 파장을 크게 하면 사행동이 최소화. 파장을 크게 하려면: 차륜 지름↑ / 차륜답면 기울기↓ / 고정축간 거리↑ / <strong>대차의 선회저항↑</strong>.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q13</span>
+      <span class="ans-answer">정답 ④</span>
+    </div>
+    <div class="ans-exp">차량 진동 3종: 롤링(좌우 흔들림) · 피칭(앞뒤 들썩임) · 요잉(수평 비틀림). <strong>곡률변화</strong>는 선로 형태를 나타내는 용어로 진동 종류가 아니다.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q14</span>
+      <span class="ans-answer">정답 ②</span>
+    </div>
+    <div class="ans-exp">냉동사이클 순서 (암기: 압응팽증): <strong>압축 → 응축 → 팽창 → 증발</strong>. 압축기→응축기→팽창밸브→증발기 순서.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q15</span>
+      <span class="ans-answer">정답 ③</span>
+    </div>
+    <div class="ans-exp">LIM은 점착력에 크게 의존하지 않아 <strong>급구배·급곡선 운행에 유리</strong>하다. "불리하다"는 오답.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q16</span>
+      <span class="ans-answer">정답 ①</span>
+    </div>
+    <div class="ans-exp"><strong>LIM(선형 유도전동기)</strong> 구동 차량. 직선 추진력 / 급구배·급곡선 유리 / 점착력 의존 최소화.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q17</span>
+      <span class="ans-answer">정답 ③</span>
+    </div>
+    <div class="ans-exp"><strong>직류피뢰기</strong>: 교류모진(교류가 직류 회로에 침입) 시 회로 보호. 주퓨즈: 직류모진 시 보호. 교류피뢰기: 낙뢰·서지전압 시 보호. ADCg: 교직류 절환 장치.</div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-header">
+      <span class="ans-num">Q18</span>
+      <span class="ans-answer">정답 ④</span>
+    </div>
+    <div class="ans-exp">곡선저항 공식 R=700/f(kg/ton) 제안자: <strong>모리슨</strong>. 조지 스티븐슨(증기기관차), 킹덤 브루넬(현수교), 조지 웨스팅하우스(공기제동)와 혼동 주의.</div>
+  </div>
+
+  </div><!-- /answer-section -->
+
+  <!-- ===== UNIT NAV ===== -->
+  <nav class="unit-nav">
+    <a href="unit-08-03_FINAL_PUBLISH_v1.1.html">← 08-03 CBTC · 이동폐색</a>
+    <span class="nav-none">다음 UNIT 미제작</span>
+  </nav>
+
+  <!-- ===== META ===== -->
+  <div class="meta">
+    <strong>UNIT:</strong> 08-04 열차운전이론<br>
+    <strong>SOURCE:</strong> 3.html PART 6 (C-23~C-27) + PART 7 (C-28~C-35) / railway-king ch83 선별 18문항<br>
+    <strong>문제 ID:</strong> rk_ch83_01, 04, 08, 11, 13, 15, 16, 17, 18, 29, 32, 34, 35, 36, 37, 38, 39 (※rk_ch83_09·33 EXCLUDE)<br>
+    <strong>문제 수:</strong> 18문항<br>
+    <strong>VIS:</strong> VIS-079 열차운전3요소비교카드 (PRIMARY §1) / 전기제동_3종_비교_인포그래픽.png (§4) / VIS-08D 사행동 (§5) / 차체_3축_회전운동_인포그래픽.png (§6) / 냉동사이클_압응팽증_인포그래픽.png (§7-1) / LIM_구조와추진원리_인포그래픽.png (§7-2) / VIS-08H 열차저항 (§8) / VIS-009 정지거리도해 (CROSS-REF §9)<br>
+    <strong>LINKAGE:</strong> new_4.html / GATE5_PRINT_ALL_v1.1.html / GATE5_MASTER_ASSET_MAP_v1.4.md<br>
+    <strong>PRINT:</strong> @page A4 portrait; margin 12mm 12mm 12mm 18mm<br>
+    <!-- CHANGELOG
+      v1.0 (2026-10-08): 최초 제작. 3.html PART 6~7 기반 19문항 수록. §0~§10 이론 + Q01~Q19 + 정답 19개.
+      v1.1 (2026-10-09): §4~§8 설명 보강. 전기제동 3종 이미지 삽입. 사행동 이미지 삽입. 차체 3축 회전운동 이미지 삽입. 냉동사이클 이미지 삽입. LIM 이미지 삽입. 열차저항 이미지 유지. SOURCE 범위 재검수.
+      v1.2 (2026-10-09): Q09(rk_ch83_33 기계적 제동장치) EXCLUDE — SOURCE C-23에서 수용제동=전기제동 분류, C-29에서 기계제동=레일제동만 명시. SOURCE 근거 없는 분류이므로 제외. 19→18문항. Q10~Q19→Q09~Q18 재정렬.
+    -->
+  </div>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
