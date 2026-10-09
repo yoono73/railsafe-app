@@ -335,7 +335,7 @@
 | **08-03** | **CBTC·이동폐색** | ✅v1.1 FINAL | sig Part6 29개 (sig_126~150, 207, 213, 222, 234) | VIS-07E (CROSS-REF §3, 이미지 삽입) | V-Y-16 RELATED | **PUBLISHED** |
 | **08-04** | **열차운전이론** | ✅v1.2 FINAL | railway-king ch83 18문항 (rk_ch83_01,04,08,11,13,15,16,17,18,29,32,34,35,36,37,38,39) ※rk_ch83_09·33 EXCLUDE(SOURCE C-23/C-29 근거없음) | VIS-079 (PRIMARY) / VIS-009 정지거리도해 (CROSS-REF) ※VIS-010 제외(본문 근거 없음) / 전기제동_3종_비교_인포그래픽 (§4) / VIS-08D_사행동 (§5) / 차체_3축_회전운동_인포그래픽 (§6) / 냉동사이클_압응팽증_인포그래픽 (§7) / LIM_구조와추진원리_인포그래픽 (§7) | V-Y-01, V-Y-04 | **PUBLISHED** |
 | **08-05** | **열차운행 안전** | ✅v1.1 FINAL | 3.html PART 8 C-36~C-41 (railway-king 문항 없음) | VIS: 5장 (비상조치_4단계와_열차방호_안내 / 열차분리_시_자동정차_원리_인포그래픽 / 전차선 단선 시 취급 원칙 / 구원운전·추진운전·퇴행운전과 작업전호 / 터널 내 열차 화재 시 조치) | V-Y-05 | **PUBLISHED** |
-| **08-06** | **열차통신·LTE-R** | ✅v1.1 FINAL | 6.html PART 15 개념 42·45 (sig_151~sig_164 14개) | VIS-A·B·C placeholder (ChatGPT 이미지 대기) | V-Y-18 PRIMARY, V-Y-19 RELATED | **PUBLISHED** |
+| **08-06** | **열차통신·LTE-R** | ✅v1.1 FINAL | 이론: 6.html PART 15 개념 42 (LTE-R·KTCS-2·KTCS-3) + 개념 45 (CBTC) / 문제: 철도신호 CBT 기출문제 14문항 (LTE-R·KTCS 파트) | VIS-A·B·C placeholder (ChatGPT 이미지 대기) | V-Y-18 PRIMARY, V-Y-19 RELATED | **PUBLISHED** |
 | 08-07 | CTC·TMS | ❌미제작 | sig Part5 일부 | VIS-087 | V-Y-15 RELATED | PENDING |
 
 ### PART 09 전기철도·전력공급 (I-01~I-02)
