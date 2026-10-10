@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>09-03 교류 전차선로 접지시설 기준 — 60V·150V v1.0</title>
+<!--
+  UNIT : 09-03
+  제목 : 교류 전차선로 접지시설 기준 — 60V·150V
+  VERSION : v1.0
+  STATUS : FINAL PUBLISH
+
+  PRIMARY SOURCE :
+  - 4.html 개념82 중 접지시설 기준
+
+  QUESTIONS :
+  - rk_ch82_16
+
+  문제 수 : 1
+
+  PRIMARY VIS :
+  - 교류 전차선로 접지시설 기준 60V·150V.png
+
+  VIDEO : 0
+
+  09-01 중복 : 0
+  09-02 중복 : 0
+  09-04~09-06 침범 : 0
+  SOURCE 밖 항목 : 0
+-->
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* ===== 헤더 ===== */
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-lock  { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+
+  /* ===== 섹션 제목 ===== */
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+
+  /* ===== 선행 용어 ===== */
+  .term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
+  .term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+  .term-name { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 4px; }
+  .term-desc { font-size: 13px; color: #333; line-height: 1.6; }
+
+  /* ===== 개념 카드 ===== */
+  .concept-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .concept-head {
+    padding: 12px 16px;
+    background: #1e3a5f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .concept-num {
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255,255,255,.18);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+  .concept-name { font-size: 15px; font-weight: 800; }
+  .concept-star { font-size: 12px; margin-left: auto; opacity: .9; white-space: nowrap; }
+  .concept-body { padding: 16px 18px; font-size: 13.5px; line-height: 1.8; }
+
+  /* ===== TIP / TRAP ===== */
+  .tip-box {
+    background: #f0fdfa;
+    border: 1px solid #99f6e4;
+    border-radius: 5px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: #134e4a;
+    margin-top: 12px;
+  }
+  .trap-box {
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    border-radius: 5px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: #7c2d12;
+    margin-top: 10px;
+  }
+  .trap-box strong { color: #9a3412; }
+
+  /* ===== 표 ===== */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #1e3a5f; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+  td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  tr.hl td { background: #eff6ff; }
+  td strong { color: #1e3a5f; }
+
+  /* ===== VIS 이미지 ===== */
+  .vis-wrap { text-align: center; margin: 16px 0; }
+  .vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+
+  /* ===== 지역 구분 카드 ===== */
+  .region-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+  .region-card { border-radius: 7px; padding: 14px 16px; font-size: 13px; line-height: 1.7; }
+  .region-easy { background: #eff6ff; border: 1.5px solid #60a5fa; }
+  .region-hard { background: #f0fdf4; border: 1.5px solid #4ade80; }
+  .region-label { font-weight: 800; font-size: 13.5px; margin-bottom: 8px; }
+  .region-easy .region-label { color: #1e40af; }
+  .region-hard .region-label { color: #166534; }
+  .region-key { font-size: 18px; font-weight: 900; }
+  .region-easy .region-key { color: #1e40af; }
+  .region-hard .region-key { color: #166534; }
+  .region-sub { font-size: 12px; color: #64748b; }
+
+  /* ===== 시험 포인트 박스 ===== */
+  .exam-box { border: 1.5px solid #1e3a5f; border-radius: 7px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; }
+  .exam-box-title { font-weight: 800; color: #1e3a5f; font-size: 13.5px; margin-bottom: 8px; }
+  .exam-box ul { padding-left: 16px; }
+  .exam-box li { margin-bottom: 4px; }
+
+  /* ===== 함정 표 ===== */
+  .trap-tbl th { background: #7c2d12; }
+  .trap-tbl td { font-size: 12.5px; }
+
+  /* ===== 문제 카드 ===== */
+  .qst-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .qst-head {
+    padding: 8px 14px;
+    background: #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: #475569;
+  }
+  .qst-num { font-weight: 800; color: #1e3a5f; font-size: 13px; }
+  .qst-src { font-size: 11px; color: #64748b; }
+  .qst-body { padding: 14px 16px; }
+  .qst-q { font-size: 13.5px; color: #1a1a1a; font-weight: 600; margin-bottom: 10px; }
+  .qst-choices { list-style: none; margin-bottom: 12px; }
+  .qst-choices li { padding: 5px 0 5px 8px; border-left: 3px solid #e2e8f0; margin-bottom: 4px; color: #334155; font-size: 13px; }
+  .qst-ans { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 8px 12px; font-size: 12.5px; color: #134e4a; }
+  .qst-ans strong { color: #065f46; }
+
+  /* ===== 인쇄 버튼 ===== */
+  .print-btn {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 7px 16px;
+    background: #7c2d12;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .print-btn:hover { background: #5c2707; }
+
+  /* ===== NAV ===== */
+  .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; margin-bottom: 12px; font-size: 12.5px; }
+  .nav-btn { display: inline-block; padding: 5px 12px; border: 1.5px solid #1e3a5f; border-radius: 4px; color: #1e3a5f; text-decoration: none; font-weight: 700; font-size: 12px; }
+  .nav-btn:hover { background: #f0f4f8; }
+  .nav-btn.disabled { opacity: .35; cursor: default; pointer-events: none; }
+  .nav-center { font-size: 11px; color: #64748b; text-align: center; }
+
+  @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+  @media print {
+    .page-wrap { padding: 10px; }
+    .sec-title { break-after: avoid; page-break-after: avoid; }
+    .concept-card, .qst-card { break-inside: avoid; page-break-inside: avoid; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .print-btn { display: none !important; }
+    .nav-bar { display: none !important; }
+    .yt-section { display: none !important; }
+    img { max-width: 100%; height: auto; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- NAV -->
+  <nav class="nav-bar">
+    <a href="unit-09-02_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 09-02 변전소 보호설비</a>
+    <span class="nav-center">GATE5 PART 09 · 전기철도·전력공급</span>
+    <span class="nav-btn disabled">09-04 준비중 →</span>
+  </nav>
+
+  <!-- 인쇄 버튼 -->
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+
+  <!-- 헤더 -->
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 09 · UNIT 09-03</div>
+    <div class="unit-title">교류 전차선로 접지시설 기준 — 60V·150V</div>
+    <div class="unit-sub">전기철도·전력공급 | 출제빈도 ★★★ A등급</div>
+    <div class="badge-row">
+      <span class="badge badge-grade">★★★ A등급</span>
+      <span class="badge badge-lock">FINAL PUBLISH v1.0</span>
+    </div>
+  </div>
+
+  <!-- §0 선행 용어 -->
+  <div class="sec-title">§0 선행 용어</div>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">연속 정격전위 (Continuous Touch Voltage)</div>
+      <div class="term-desc">장시간 지속되는 접촉 가능 전위. 인체 안전을 위해 지역별 상한을 규정한다.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">인체통과전류 (Body Current)</div>
+      <div class="term-desc">인체에 흐를 수 있는 전류. 15mA 이하를 안전 기준으로 적용한다.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">순간 정격전위 (Instantaneous Touch Voltage)</div>
+      <div class="term-desc">단시간(고장 등) 발생하는 접촉 전위. 지역 구분 없이 650V 이하를 적용한다.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">접지시설 (Earthing Installation)</div>
+      <div class="term-desc">전차선로의 금속 부분을 대지에 접속하여 감전·장해를 방지하는 설비.</div>
+    </div>
+  </div>
+
+  <!-- §1 접지시설 기준 개요 -->
+  <div class="sec-title">§1 접지시설 기준 개요</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">개념 82-접지</span>
+      <span class="concept-name">교류 전차선로 접지시설 설치 기준</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <p>교류 전차선로에서는 일반인이 접근하는 정도에 따라 접지 기준의 <strong>연속 정격전위</strong>를 달리 적용한다.</p>
+      <p style="margin-top:10px;">인체통과전류(15mA)와 순간 정격전위(650V)는 <strong>두 지역 공통</strong>으로 동일하게 적용된다.</p>
+      <div class="tip-box">💡 <strong>핵심 구별 포인트</strong> — 연속 정격전위만 다르다: 접근 용이 지역 60V, 접근 어려운 지역 150V</div>
+    </div>
+  </div>
+
+  <!-- §2 접근 쉬운 지역 -->
+  <div class="sec-title">§2 일반인이 접근하기 쉬운 지역</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">기준 A</span>
+      <span class="concept-name">접근 용이 지역 — 연속 정격전위 60V 이하</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <ul style="padding-left:18px; font-size:13.5px; line-height:2;">
+        <li>연속 정격전위 : <strong>60V 이하</strong></li>
+        <li>인체통과전류 : <strong>15mA 이하</strong></li>
+        <li>순간 정격전위 : <strong>650V 이하</strong></li>
+      </ul>
+      <div class="tip-box">🏙 일반인이 쉽게 접근하는 지역은 <strong>더 엄격한 기준(60V)</strong>을 적용한다.</div>
+    </div>
+  </div>
+
+  <!-- §3 접근 어려운 지역 -->
+  <div class="sec-title">§3 일반인이 접근하기 어려운 지역</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">기준 B</span>
+      <span class="concept-name">접근 어려운 지역 — 연속 정격전위 150V 이하</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <ul style="padding-left:18px; font-size:13.5px; line-height:2;">
+        <li>연속 정격전위 : <strong>150V 이하</strong></li>
+        <li>인체통과전류 : <strong>15mA 이하</strong></li>
+        <li>순간 정격전위 : <strong>650V 이하</strong></li>
+      </ul>
+      <div class="tip-box">🔒 접근이 어려운 지역은 <strong>완화된 기준(150V)</strong>을 적용한다. 15mA와 650V는 동일.</div>
+    </div>
+  </div>
+
+  <!-- §4 60V vs 150V 비교 + VIS -->
+  <div class="sec-title">§4 60V vs 150V 비교</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">비교표</span>
+      <span class="concept-name">두 지역 기준 한눈에 보기</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>접근하기 쉬운 지역</th>
+              <th>접근하기 어려운 지역</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>연속 정격전위</strong></td>
+              <td><strong>60V 이하</strong></td>
+              <td><strong>150V 이하</strong></td>
+            </tr>
+            <tr>
+              <td>인체통과전류</td>
+              <td>15mA 이하</td>
+              <td>15mA 이하</td>
+            </tr>
+            <tr>
+              <td>순간 정격전위</td>
+              <td>650V 이하</td>
+              <td>650V 이하</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PRIMARY VIS -->
+      <div class="vis-wrap">
+        <img src="images/교류 전차선로 접지시설 기준 60V·150V.png" alt="교류 전차선로 접지시설 기준 60V·150V">
+        <div class="vis-cap">▲ 교류 전차선로 접지시설 기준 60V·150V 비교</div>
+      </div>
+
+      <div class="region-grid">
+        <div class="region-card region-easy">
+          <div class="region-label">접근하기 쉬운 지역</div>
+          <div class="region-key">60V 이하</div>
+          <div class="region-sub">인체통과 15mA / 순간 650V</div>
+        </div>
+        <div class="region-card region-hard">
+          <div class="region-label">접근하기 어려운 지역</div>
+          <div class="region-key">150V 이하</div>
+          <div class="region-sub">인체통과 15mA / 순간 650V</div>
+        </div>
+      </div>
+
+      <div class="tip-box" style="margin-top:14px;">
+        💡 <strong>차이 = 연속 정격전위만</strong> (60V ↔ 150V)<br>
+        공통 = 인체통과전류 15mA / 순간 정격전위 650V
+      </div>
+    </div>
+  </div>
+
+  <!-- §5 시험 포인트·함정 -->
+  <div class="sec-title">§5 시험 포인트 · 함정</div>
+  <div class="exam-box">
+    <div class="exam-box-title">🎯 시험 포인트</div>
+    <ul>
+      <li>연속 정격전위 — <strong>접근 용이: 60V / 접근 어려움: 150V</strong></li>
+      <li>인체통과전류 — <strong>두 지역 공통: 15mA 이하</strong></li>
+      <li>순간 정격전위 — <strong>두 지역 공통: 650V 이하</strong></li>
+      <li>차이는 연속 정격전위뿐 — 나머지 두 항목은 동일</li>
+    </ul>
+  </div>
+  <div class="tbl-wrap">
+    <table class="trap-tbl">
+      <thead>
+        <tr>
+          <th>함정 선택지</th>
+          <th>정오</th>
+          <th>근거</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"접근 어려운 지역: 연속 정격전위 <strong>100V</strong> 이하"</td>
+          <td>❌ 오답</td>
+          <td>정답은 <strong>150V</strong> 이하</td>
+        </tr>
+        <tr>
+          <td>"접근 쉬운 지역: 연속 정격전위 <strong>150V</strong> 이하"</td>
+          <td>❌ 오답</td>
+          <td>정답은 <strong>60V</strong> 이하</td>
+        </tr>
+        <tr>
+          <td>"인체통과전류는 접근 어려운 지역에서 완화"</td>
+          <td>❌ 오답</td>
+          <td>15mA는 두 지역 <strong>공통</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="trap-box">
+    <strong>⚠ 절대 혼동 금지</strong> — "접근 어려운 지역 = 100V 이하"는 오답이다.<br>
+    SOURCE 기준: 접근 어려운 지역 = <strong>150V 이하</strong>
+  </div>
+
+  <!-- §6 기출문제 -->
+  <div class="sec-title">§6 기출문제</div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">문제 1</span>
+      <span class="qst-src">rk_ch82_16 · 교류 전차선로 접지시설</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">교류 전차선로의 접지시설 설치 기준에 대한 설명으로 옳지 않은 것은?</div>
+      <ul class="qst-choices">
+        <li>① 위험 경고표지를 설치해야 하며 접지시설 설치 시 낙뢰 등으로부터 보호하기 위한 조치를 해야 한다</li>
+        <li>② 모든 접지는 서로 연결되는 통합접지방식으로 설치해야 한다</li>
+        <li>③ 일반인이 접근하기 어려운 지역: 연속 정격전위 100V 이하</li>
+        <li>④ 일반인이 접근하기 쉬운 지역: 연속 정격전위 60V 이하</li>
+      </ul>
+      <div class="qst-ans">
+        <strong>정답: ③</strong><br>
+        일반인이 접근하기 어려운 지역의 연속 정격전위 기준은 <strong>150V 이하</strong>이다 (100V 아님).<br>
+        일반인이 접근하기 쉬운 지역은 60V 이하이며, 두 경우 모두 인체통과 기준 15mA 이하가 공통으로 적용된다.
+      </div>
+    </div>
+  </div>
+
+  <!-- 하단 NAV -->
+  <nav class="nav-bar" style="margin-top: 40px;">
+    <a href="unit-09-02_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 09-02 변전소 보호설비</a>
+    <span class="nav-center">GATE5 PART 09 · 전기철도·전력공급</span>
+    <span class="nav-btn disabled">09-04 준비중 →</span>
+  </nav>
+
+</div>
+</body>
+</html>
