@@ -182,12 +182,16 @@
   .nav-btn:hover { background: #f0f4f8; }
   .nav-center { font-size: 11px; color: #64748b; text-align: center; }
 
-  @page { margin: 15mm; size: A4; }
+  @page { size: A4 portrait; margin: 15mm; }
   @media print {
+    .page-wrap { padding: 10px; }
+    .sec-title { margin-top: 18px; break-after: avoid; page-break-after: avoid; }
     .concept-card, .qst-card { break-inside: avoid; page-break-inside: avoid; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .yt-thumb, .yt-iframe-wrap, .yt-section { display: none !important; }
     .print-btn { display: none !important; }
     .nav-bar { display: none !important; }
+    img { max-width: 100%; height: auto; page-break-inside: avoid; }
   }
 </style>
 </head>
@@ -197,7 +201,7 @@
 <nav class="nav-bar">
   <a class="nav-btn" href="unit-08-07_FINAL_PUBLISH_v1.1.html">← 08-07</a>
   <span class="nav-center">GATE 5 · PART 09</span>
-  <a class="nav-btn" href="unit-09-02_FINAL_PUBLISH_v1.0.html">09-02 →</a>
+  <span class="nav-btn" style="opacity:.35;cursor:default">09-02 →</span>
 </nav>
 
 <button class="print-btn" type="button" onclick="window.print()">🖨 인쇄 / PDF</button>
@@ -209,9 +213,8 @@
   <div class="unit-sub">교류·직류 전기방식 비교 / 교류식 전기철도 장점 / BT급전 vs AT급전</div>
   <div class="badge-row">
     <span class="badge badge-part">PART 09 전기철도·전력공급</span>
-    <span class="badge badge-grade">A등급</span>
-    <span class="badge badge-lock">LOCAL LOCK ✅ v1.0</span>
-    <span class="badge badge-lock">STATUS: FINAL PUBLISH</span>
+    <span class="badge badge-grade">★★★</span>
+    <span class="badge badge-lock">FINAL PUBLISH v1.0</span>
   </div>
 </div>
 
@@ -264,7 +267,7 @@
   <div class="concept-head">
     <span class="concept-num">SOURCE 개념09</span>
     <span class="concept-name">전기방식 비교</span>
-    <span class="concept-star">★★★ 최빈출</span>
+    <span class="concept-star">★★★</span>
   </div>
   <div class="concept-body">
     <div class="tbl-wrap">
@@ -343,7 +346,7 @@
   <div class="concept-head">
     <span class="concept-num">SOURCE 개념95</span>
     <span class="concept-name">BT급전 vs AT급전</span>
-    <span class="concept-star">★★★ · 고난도</span>
+    <span class="concept-star">★★★</span>
   </div>
   <div class="concept-body">
     <div class="tbl-wrap">
