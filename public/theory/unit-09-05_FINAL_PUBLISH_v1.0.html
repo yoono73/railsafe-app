@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>09-05 절연구간·통과방법 v1.0</title>
+<!--
+  UNIT : 09-05
+  제목 : 절연구간·통과방법
+  VERSION : v1.0
+  STATUS : FINAL PUBLISH
+
+  PRIMARY SOURCE :
+  - 4.html 개념81 (교류 25kV 절연·편위 기준 — 300mm / 250mm)
+  - 4.html 개념96 line 1679 (절연구간 Section Gap — 전원 경계 처리)
+
+  CROSS-REF : 없음
+
+  EXCLUDE :
+  - 개념83: 심플커티너리·강체조가·에어조인트 등 (09-06 RESERVED)
+
+  QUESTIONS :
+  - rk_ch82_13 (300mm)
+  - rk_ch82_14 (250mm)
+
+  문제 수 : 2
+
+  PRIMARY VIS :
+  - 전차선 절연 이격거리 300mm와 편위 250mm.png (신규 — placeholder)
+
+  VIDEO : 0
+
+  09-01 중복 : 0
+  09-02 중복 : 0
+  09-03 중복 : 0
+  09-04 중복 : 0
+  09-06 침범 : 0
+  SOURCE 밖 항목 : 0
+-->
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* ===== 헤더 ===== */
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-lock  { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+
+  /* ===== 섹션 제목 ===== */
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+
+  /* ===== 선행 용어 ===== */
+  .term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
+  .term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+  .term-name { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 4px; }
+  .term-desc { font-size: 13px; color: #333; line-height: 1.6; }
+
+  /* ===== 개념 카드 ===== */
+  .concept-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .concept-head {
+    padding: 12px 16px;
+    background: #1e3a5f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .concept-num {
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255,255,255,.18);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+  .concept-name { font-size: 15px; font-weight: 800; }
+  .concept-star { font-size: 12px; margin-left: auto; opacity: .9; white-space: nowrap; }
+  .concept-body { padding: 16px 18px; font-size: 13.5px; line-height: 1.8; }
+
+  /* ===== TIP / TRAP ===== */
+  .tip-box {
+    background: #f0fdfa;
+    border: 1px solid #99f6e4;
+    border-radius: 5px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: #134e4a;
+    margin-top: 12px;
+  }
+  .trap-box {
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    border-radius: 5px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: #7c2d12;
+    margin-top: 10px;
+  }
+  .trap-box strong { color: #9a3412; }
+
+  /* ===== 표 ===== */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #1e3a5f; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+  td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  tr.hl td { background: #eff6ff; }
+  td strong { color: #1e3a5f; }
+
+  /* ===== VIS 이미지 ===== */
+  .vis-wrap { text-align: center; margin: 16px 0; }
+  .vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+  .vis-placeholder {
+    border: 2px dashed #94a3b8;
+    border-radius: 8px;
+    padding: 30px 20px;
+    text-align: center;
+    color: #64748b;
+    font-size: 13px;
+    background: #f8fafc;
+    margin: 16px 0;
+  }
+
+  /* ===== 수치 강조 박스 ===== */
+  .num-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+  .num-card { border-radius: 7px; padding: 16px; text-align: center; }
+  .num-card-300 { background: #fff7ed; border: 2px solid #fb923c; }
+  .num-card-250 { background: #eff6ff; border: 2px solid #60a5fa; }
+  .num-label { font-size: 12px; font-weight: 700; color: #555; margin-bottom: 8px; }
+  .num-value { font-size: 28px; font-weight: 900; }
+  .num-card-300 .num-value { color: #9a3412; }
+  .num-card-250 .num-value { color: #1e40af; }
+  .num-desc { font-size: 12px; color: #555; margin-top: 6px; line-height: 1.5; }
+
+  /* ===== 기출 문제 ===== */
+  .qst-card {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .qst-head {
+    padding: 10px 14px;
+    background: #334155;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .qst-body { padding: 14px 16px; font-size: 13.5px; }
+  .qst-q { font-weight: 600; color: #1a1a1a; margin-bottom: 10px; line-height: 1.7; }
+  .qst-choices { list-style: none; padding: 0; margin-bottom: 10px; }
+  .qst-choices li { padding: 4px 0; font-size: 13px; color: #333; }
+  /* .qst-choices li.ans — 정답 선노출 금지 원칙상 사용하지 않음 */
+  .qst-divider { border: none; border-top: 1px dashed #e2e8f0; margin: 10px 0; }
+  .qst-explain { font-size: 12.5px; color: #334155; line-height: 1.7; }
+
+  /* ===== 시험 포인트 박스 ===== */
+  .exam-box { border: 1.5px solid #1e3a5f; border-radius: 7px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; }
+  .exam-box-title { font-weight: 800; color: #1e3a5f; font-size: 13.5px; margin-bottom: 8px; }
+  .exam-box ul { padding-left: 16px; }
+  .exam-box li { margin-bottom: 4px; }
+
+  /* ===== 함정 표 ===== */
+  .trap-tbl th { background: #7c2d12; }
+  .trap-tbl td { font-size: 12.5px; }
+
+  /* ===== SOURCE 예시 ===== */
+  .src-box {
+    border: 1.5px solid #7c3aed;
+    border-radius: 7px;
+    background: #f5f3ff;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    font-size: 13px;
+  }
+  .src-box-title { font-weight: 800; color: #5b21b6; font-size: 13px; margin-bottom: 8px; }
+  .src-q { font-weight: 600; color: #1a1a1a; margin-bottom: 6px; }
+  .src-a { background: #ede9fe; border-radius: 4px; padding: 6px 10px; color: #3730a3; font-size: 12.5px; }
+  .src-wrong { font-size: 12px; color: #7c2d12; margin-top: 5px; }
+
+  /* ===== 인쇄 버튼 ===== */
+  .print-btn {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 7px 16px;
+    background: #7c2d12;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .print-btn:hover { background: #5c2707; }
+
+  /* ===== NAV ===== */
+  .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; margin-bottom: 12px; font-size: 12.5px; }
+  .nav-btn { display: inline-block; padding: 5px 12px; border: 1.5px solid #1e3a5f; border-radius: 4px; color: #1e3a5f; text-decoration: none; font-weight: 700; font-size: 12px; }
+  .nav-btn:hover { background: #f0f4f8; }
+  .nav-btn.disabled { opacity: .35; cursor: default; pointer-events: none; }
+  .nav-center { font-size: 11px; color: #64748b; text-align: center; }
+
+  @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+  @media print {
+    .page-wrap { padding: 10px; }
+    .sec-title { break-after: avoid; page-break-after: avoid; }
+    .concept-card, .qst-card { break-inside: avoid; page-break-inside: avoid; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .print-btn, .nav-bar { display: none !important; }
+    img { max-width: 100%; height: auto; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- NAV -->
+  <nav class="nav-bar">
+    <a href="unit-09-04_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 09-04 귀선전류와 임피던스본드</a>
+    <span class="nav-center">GATE5 PART 09 · 전기철도·전력공급</span>
+    <span class="nav-btn disabled">09-06 준비중 →</span>
+  </nav>
+
+  <!-- 인쇄 버튼 -->
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+
+  <!-- 헤더 -->
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 09 · UNIT 09-05</div>
+    <div class="unit-title">절연구간·통과방법</div>
+    <div class="unit-sub">전기철도·전력공급</div>
+    <div class="badge-row">
+      <span class="badge badge-lock">FINAL PUBLISH v1.0</span>
+    </div>
+  </div>
+
+  <!-- §0 선행 용어 -->
+  <div class="sec-title">§0 선행 용어</div>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">절연 이격거리</div>
+      <div class="term-desc">전차선·급전선과 접지 구조물(접지물) 사이에 필요한 최소 간격. 교류 25kV에서 300mm 이상.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">전차선 편위</div>
+      <div class="term-desc">궤도 중심선 기준 전차선의 수평 이동 허용치. 절연구간에서 250mm.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">절연구간 (Section Gap)</div>
+      <div class="term-desc">서로 다른 급전구간 사이에서 전차선을 전기적으로 분리하는 구간. 이종 전원 혼입 방지.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">타력 통과</div>
+      <div class="term-desc">열차가 절연구간 통과 시 팬터그래프를 하강하고 열차 타성(관성)으로 통과하는 방법.</div>
+    </div>
+  </div>
+
+  <!-- §1 절연 이격거리 — 300mm -->
+  <div class="sec-title">§1 교류 25kV 절연 이격거리 — 300mm</div>
+
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">개념 81</span>
+      <span class="concept-name">교류 25kV 절연·편위 기준</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>항목</th><th>기준값</th><th>대상 / 적용</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>교류 25kV 절연 이격거리</strong></td>
+              <td><strong>300mm 이상</strong></td>
+              <td>전선(급전선) 및 전차선과 접지물 사이</td>
+            </tr>
+            <tr>
+              <td><strong>전차선 절연구간 편위</strong></td>
+              <td><strong>250mm</strong></td>
+              <td>전차선 절연구간 내</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trap-box">
+        ⚠️ <strong>300mm ≠ 250mm 혼동 주의</strong><br>
+        300mm = 절연 이격거리 (전차선·접지물 사이) / 250mm = 절연구간 편위
+      </div>
+    </div>
+  </div>
+
+  <!-- 수치 카드 -->
+  <div class="num-grid">
+    <div class="num-card num-card-300">
+      <div class="num-label">교류 25kV 절연 이격거리</div>
+      <div class="num-value">300mm</div>
+      <div class="num-desc">이상<br>전차선·급전선과 접지물 사이</div>
+    </div>
+    <div class="num-card num-card-250">
+      <div class="num-label">전차선 절연구간 편위</div>
+      <div class="num-value">250mm</div>
+      <div class="num-desc">전차선 절연구간 내</div>
+    </div>
+  </div>
+
+  <!-- VIS placeholder -->
+  <div class="vis-placeholder">
+    📐 [이미지 준비 중] 전차선 절연 이격거리 300mm와 편위 250mm<br>
+    <span style="font-size:11px; color:#94a3b8;">ChatGPT 제작 후 삽입 예정 — 파일명: 전차선 절연 이격거리 300mm와 편위 250mm.png</span>
+  </div>
+
+  <!-- §2 절연구간(Section Gap) -->
+  <div class="sec-title">§2 절연구간 (Section Gap)</div>
+
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">개념 96</span>
+      <span class="concept-name">절연구간(Section Gap) — 전원 경계 처리</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>항목</th><th>내용</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>정의</strong></td>
+              <td>서로 다른 급전구간 사이에서 전차선을 전기적으로 분리하는 구간</td>
+            </tr>
+            <tr>
+              <td><strong>설치 목적</strong></td>
+              <td>① 이종 전원 혼입 방지 ② 변전소 간 단락사고 방지 ③ 아크 방지</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>통과 방법</strong></td>
+              <td><strong>타력 통과</strong>: 팬터그래프 하강 + 열차 타성(관성)으로 통과</td>
+            </tr>
+            <tr>
+              <td><strong>과전류 위험</strong></td>
+              <td>절연구간 내에서 전원 투입 시 단락</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tip-box">
+        💡 절연구간 = <strong>전원 경계</strong> → 타력(관성)으로만 통과 / AT급전에서도 반드시 존재
+      </div>
+      <div class="trap-box">
+        ⚠️ <strong>함정 주의</strong>: 절연구간 통과 중에는 팬터그래프 하강 또는 주회로 개방 — <strong>전원 공급 불가</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- §3 비교표 -->
+  <div class="sec-title">§3 300mm·250mm·절연구간 비교</div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>구분</th><th>수치/명칭</th><th>적용 대상·조건</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl">
+          <td><strong>절연 이격거리</strong></td>
+          <td><strong>300mm 이상</strong></td>
+          <td>교류 25kV 전차선·급전선과 접지물 사이</td>
+        </tr>
+        <tr>
+          <td><strong>전차선 편위</strong></td>
+          <td><strong>250mm</strong></td>
+          <td>전차선 절연구간 내</td>
+        </tr>
+        <tr class="hl">
+          <td><strong>절연구간</strong></td>
+          <td>Section Gap</td>
+          <td>서로 다른 급전구간 사이 전기적 분리 구간</td>
+        </tr>
+        <tr>
+          <td><strong>통과방법</strong></td>
+          <td>타력 통과</td>
+          <td>팬터그래프 하강 + 관성 통과 / 통과 중 전원 투입 금지</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- §4 시험 포인트·함정 -->
+  <div class="sec-title">§4 시험 포인트 · 함정</div>
+
+  <div class="exam-box">
+    <div class="exam-box-title">🎯 시험 포인트</div>
+    <ul>
+      <li>300mm = <strong>절연 이격거리</strong> (전차선·급전선 ↔ 접지물) — 교류 25kV 기준</li>
+      <li>250mm = <strong>전차선 절연구간 편위</strong></li>
+      <li>절연구간 통과 = <strong>타력 통과</strong> (팬터그래프 하강 + 관성)</li>
+      <li>절연구간 내 전원 투입 시 → 단락</li>
+      <li>절연구간은 AT급전 방식에서도 반드시 존재</li>
+    </ul>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="trap-tbl">
+      <thead>
+        <tr><th>함정 표현</th><th>정오</th><th>올바른 내용</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"절연 이격거리는 250mm"</td>
+          <td>❌ 오답</td>
+          <td>이격거리 = <strong>300mm 이상</strong> / 250mm는 편위</td>
+        </tr>
+        <tr>
+          <td>"전차선 절연구간 편위는 300mm"</td>
+          <td>❌ 오답</td>
+          <td>편위 = <strong>250mm</strong> / 300mm는 이격거리</td>
+        </tr>
+        <tr>
+          <td>"절연구간에서 전원을 공급받을 수 있다"</td>
+          <td>❌ 오답</td>
+          <td>절연구간은 전원 경계 → <strong>전원 공급 불가</strong></td>
+        </tr>
+        <tr>
+          <td>"AT급전에는 절연구간이 없다"</td>
+          <td>❌ 오답</td>
+          <td>AT급전에도 절연구간 <strong>반드시 존재</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- §5 기출문제 -->
+  <div class="sec-title">§5 기출문제</div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span>Q1</span>
+      <span>교류 25kV 절연 이격거리</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">교류 25kV 전차선로의 가압 구간에서 급전선 및 전차선과 접지물 사이에 필요한 절연 이격거리로 옳은 것은?</div>
+      <ul class="qst-choices">
+        <li>① 100mm 이상</li>
+        <li>② 200mm 이상</li>
+        <li>③ 300mm 이상</li>
+        <li>④ 150mm 이상</li>
+      </ul>
+      <hr class="qst-divider">
+      <div class="qst-explain">교류 25kV 전차선로에서 전선(급전선) 및 전차선과 접지물 사이의 절연 이격거리는 300mm 이상이다.</div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span>Q2</span>
+      <span>전차선 절연구간 편위</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">전차선 절연구간의 편위로 옳은 것은?</div>
+      <ul class="qst-choices">
+        <li>① 100mm</li>
+        <li>② 150mm</li>
+        <li>③ 200mm</li>
+        <li>④ 250mm</li>
+      </ul>
+      <hr class="qst-divider">
+      <div class="qst-explain">전차선 절연구간의 편위는 250mm이다.</div>
+    </div>
+  </div>
+
+  <!-- §6 SOURCE 예시 -->
+  <div class="sec-title">§6 SOURCE 예시</div>
+
+  <div class="src-box">
+    <div class="src-box-title">📝 SOURCE 예시 (4.html 개념81 quiz-ex)</div>
+    <div class="src-q">Q. 교류 25kV 전기철도에서 전선과 접지물 사이의 절연 이격거리 기준은?</div>
+    <div class="src-a">정답: 300mm 이상</div>
+    <div class="src-wrong">오답함정: "250mm" — 250mm는 절연구간 편위 기준, 이격거리는 300mm</div>
+  </div>
+
+  <!-- 하단 NAV -->
+  <nav class="nav-bar" style="margin-top: 40px;">
+    <a href="unit-09-04_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 09-04 귀선전류와 임피던스본드</a>
+    <span class="nav-center">GATE5 PART 09 · 전기철도·전력공급</span>
+    <span class="nav-btn disabled">09-06 준비중 →</span>
+  </nav>
+
+</div>
+</body>
+</html>
