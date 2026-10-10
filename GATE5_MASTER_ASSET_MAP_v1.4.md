@@ -342,7 +342,7 @@
 
 | UNIT | 단원명 | HTML | 문제 | VIS | 영상 | 상태 |
 |---|---|---|---|---|---|---|
-| 09-01 | 전력방식·급전계통 | ❌미제작 | engineering 일부 | VIS-078, VIS-105 | V-Y-07 | PENDING |
+| **09-01** | **전력방식·급전계통** | ✅v1.0 FINAL | 이론: 4.html 개념09 (교류25kV/직류1.5kV) + 개념82일부 (교류식장점) + 개념95 (BT/AT급전) / 문제: eng_id25 + rk_ch82_15 (2문항) | VIS-078 (교류직류비교), VIS-105 (AT급전시스템) 실삽입 | V-Y-07 PRIMARY | **PUBLISHED** |
 | 09-02 | 변전소·급전방식 | ❌미제작 | engineering 일부 | VIS-105 | — | PENDING |
 | 09-03 | 전기철도 특성 | ❌미제작 | engineering 일부 | — | V-Y-07 | PENDING |
 | 09-04 | 귀선·임피던스본드 | ❌미제작 | engineering 일부 | VIS-104 | — | PENDING |

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>09-01 전력방식·급전계통 v1.0</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* ===== 헤더 ===== */
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part  { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-lock  { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+
+  /* ===== 섹션 제목 ===== */
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+
+  /* ===== 선행 용어 ===== */
+  .term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
+  .term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+  .term-name { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 4px; }
+  .term-desc { font-size: 13px; color: #333; line-height: 1.6; }
+
+  /* ===== 개념 카드 ===== */
+  .concept-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .concept-head {
+    padding: 12px 16px;
+    background: #1e3a5f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .concept-num {
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255,255,255,.18);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+  .concept-name { font-size: 15px; font-weight: 800; }
+  .concept-star { font-size: 12px; margin-left: auto; opacity: .9; white-space: nowrap; }
+  .concept-body { padding: 16px 18px; font-size: 13.5px; line-height: 1.8; }
+
+  /* ===== TIP / TRAP ===== */
+  .tip-box {
+    background: #f0fdfa;
+    border: 1px solid #99f6e4;
+    border-radius: 5px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: #134e4a;
+    margin-top: 12px;
+  }
+  .trap-box {
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    border-radius: 5px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: #7c2d12;
+    margin-top: 10px;
+  }
+  .trap-box strong { color: #9a3412; }
+
+  /* ===== 표 ===== */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #1e3a5f; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+  td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  tr.hl td { background: #eff6ff; }
+  td strong { color: #1e3a5f; }
+
+  /* ===== VIS 이미지 ===== */
+  .vis-wrap { text-align: center; margin: 16px 0; }
+  .vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+
+  /* ===== 유튜브 영상 ===== */
+  .yt-section { margin: 10px 0 20px; }
+  .yt-card { border: 1.5px solid #cbd5e1; border-radius: 8px; overflow: hidden; }
+  .yt-card-head { background: #dc2626; color: #fff; padding: 8px 14px; font-size: 13px; font-weight: 700; }
+  .yt-thumb { position: relative; cursor: pointer; background: #000; }
+  .yt-thumb img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; opacity: .88; }
+  .yt-play {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .yt-play-btn {
+    width: 56px; height: 40px;
+    background: #ff0000;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .yt-play-btn::after {
+    content: '';
+    border-style: solid;
+    border-width: 10px 0 10px 18px;
+    border-color: transparent transparent transparent #fff;
+    margin-left: 4px;
+  }
+  .yt-iframe-wrap { display: none; position: relative; padding-bottom: 56.25%; background: #000; }
+  .yt-iframe-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+  .yt-card-info { padding: 10px 14px; font-size: 12.5px; color: #334155; background: #f8fafc; }
+
+  /* ===== 시험 포인트 박스 ===== */
+  .exam-box { border: 1.5px solid #1e3a5f; border-radius: 7px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; }
+  .exam-box-title { font-weight: 800; color: #1e3a5f; font-size: 13.5px; margin-bottom: 8px; }
+  .exam-box ul { padding-left: 16px; }
+  .exam-box li { margin-bottom: 4px; }
+
+  /* ===== 함정 표 ===== */
+  .trap-tbl th { background: #7c2d12; }
+  .trap-tbl td { font-size: 12.5px; }
+
+  /* ===== 문제 카드 ===== */
+  .qst-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .qst-head {
+    padding: 8px 14px;
+    background: #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: #475569;
+  }
+  .qst-num { font-weight: 800; color: #1e3a5f; font-size: 13px; }
+  .qst-src { font-size: 11px; color: #64748b; }
+  .qst-body { padding: 14px 16px; }
+  .qst-q { font-size: 13.5px; color: #1a1a1a; font-weight: 600; margin-bottom: 10px; }
+  .qst-choices { list-style: none; margin-bottom: 12px; }
+  .qst-choices li { padding: 5px 0 5px 8px; border-left: 3px solid #e2e8f0; margin-bottom: 4px; color: #334155; font-size: 13px; }
+  .qst-ans { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 8px 12px; font-size: 12.5px; color: #134e4a; }
+  .qst-ans strong { color: #065f46; }
+
+  /* ===== 인쇄 ===== */
+  .print-btn {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 7px 16px;
+    background: #7c2d12;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .print-btn:hover { background: #5c2707; }
+
+  /* ===== NAV ===== */
+  .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; margin-bottom: 12px; font-size: 12.5px; }
+  .nav-btn { display: inline-block; padding: 5px 12px; border: 1.5px solid #1e3a5f; border-radius: 4px; color: #1e3a5f; text-decoration: none; font-weight: 700; font-size: 12px; }
+  .nav-btn:hover { background: #f0f4f8; }
+  .nav-center { font-size: 11px; color: #64748b; text-align: center; }
+
+  @page { margin: 15mm; size: A4; }
+  @media print {
+    .concept-card, .qst-card { break-inside: avoid; page-break-inside: avoid; }
+    .yt-thumb, .yt-iframe-wrap, .yt-section { display: none !important; }
+    .print-btn { display: none !important; }
+    .nav-bar { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<nav class="nav-bar">
+  <a class="nav-btn" href="unit-08-07_FINAL_PUBLISH_v1.1.html">← 08-07</a>
+  <span class="nav-center">GATE 5 · PART 09</span>
+  <a class="nav-btn" href="unit-09-02_FINAL_PUBLISH_v1.0.html">09-02 →</a>
+</nav>
+
+<button class="print-btn" type="button" onclick="window.print()">🖨 인쇄 / PDF</button>
+
+<!-- ===== 헤더 ===== -->
+<div class="unit-header">
+  <div class="unit-num">GATE 5 · PART 09 · UNIT 09-01</div>
+  <h1 class="unit-title">전력방식·급전계통</h1>
+  <div class="unit-sub">교류·직류 전기방식 비교 / 교류식 전기철도 장점 / BT급전 vs AT급전</div>
+  <div class="badge-row">
+    <span class="badge badge-part">PART 09 전기철도·전력공급</span>
+    <span class="badge badge-grade">A등급</span>
+    <span class="badge badge-lock">LOCAL LOCK ✅ v1.0</span>
+    <span class="badge badge-lock">STATUS: FINAL PUBLISH</span>
+  </div>
+</div>
+
+<!-- ===== 영상 ===== -->
+<h2 class="sec-title">🎬 핵심 영상 — V-Y-07</h2>
+<div class="yt-section">
+  <div class="yt-card">
+    <div class="yt-card-head">▶ PRIMARY 영상 — 전기열차는 어떻게 움직이는가?</div>
+    <div class="yt-thumb" id="yt-v-y-07" onclick="playYT('BF7x5Mrywb0','yt-v-y-07')">
+      <img src="https://img.youtube.com/vi/BF7x5Mrywb0/hqdefault.jpg" alt="전기열차는 어떻게 움직이는가?" loading="lazy">
+      <div class="yt-play"><div class="yt-play-btn"></div></div>
+    </div>
+    <div class="yt-iframe-wrap" id="yt-iframe-yt-v-y-07"></div>
+    <div class="yt-card-info">전기철도 전력공급·집전·구동 원리 전반. 전력방식·급전계통 이해에 필수.</div>
+  </div>
+</div>
+
+<!-- ===== §1 선행 용어 ===== -->
+<h2 class="sec-title">§1 선행 용어</h2>
+<div class="term-grid">
+  <div class="term-card">
+    <div class="term-name">AC (교류, Alternating Current)</div>
+    <div class="term-desc">방향이 주기적으로 바뀌는 전류. 우리나라 전기철도 표준 방식(25,000V).</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">DC (직류, Direct Current)</div>
+    <div class="term-desc">한 방향으로만 흐르는 전류. 구형 도시철도에서 1,500V 사용.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">급전 (給電)</div>
+    <div class="term-desc">변전소에서 전차선을 통해 열차에 전력을 공급하는 것.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">귀선전류 (歸線電流)</div>
+    <div class="term-desc">열차 구동 후 레일을 통해 변전소로 돌아오는 전류.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">통신유도장애</div>
+    <div class="term-desc">전철 전류가 인근 통신선에 유도 전류를 일으켜 잡음·오작동을 유발하는 현상.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">변압비</div>
+    <div class="term-desc">변압기 1차측·2차측 전압 비율. AT급전에서 변압비 1:1 사용.</div>
+  </div>
+</div>
+
+<!-- ===== §2 전기방식 비교 ===== -->
+<h2 class="sec-title">§2 전기방식 비교 — 교류 25,000V vs 직류 1,500V</h2>
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">SOURCE 개념09</span>
+    <span class="concept-name">전기방식 비교</span>
+    <span class="concept-star">★★★ 최빈출</span>
+  </div>
+  <div class="concept-body">
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>방식</th><th>대표 적용</th><th>특징</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hl">
+            <td><strong>교류 25,000V</strong></td>
+            <td>국철 전기철도<br>(KTX·새마을 등)</td>
+            <td>점착성능 우수 / 소형이어도 대량 견인 / <strong>변전소 간격 넓음</strong></td>
+          </tr>
+          <tr>
+            <td><strong>직류 1,500V</strong></td>
+            <td>구형 도시철도</td>
+            <td>터널 단면 작음 / <strong>통신유도장애 적음</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="trap-box">
+      ⚠️ <strong>함정 ①</strong> — <strong>직류 25,000V</strong> → 존재하지 않음! 교류 25,000V가 국철 표준.<br>
+      ⚠️ <strong>함정 ②</strong> — "교류가 통신유도장애가 적다" → <strong>틀림.</strong> 통신유도장애가 적은 것은 <strong>직류</strong>다.
+    </div>
+
+    <div class="tip-box">
+      ★ 기억법: <strong>교류 = 25,000V (高電壓)</strong> · <strong>직류 = 1,500V (低電壓)</strong><br>
+      교류 = 변압기로 전압 변환 쉬움 → <strong>변전소 간격 넓게</strong> 설치 가능 → 시설비 절감
+    </div>
+
+    <div class="vis-wrap">
+      <img src="images/VIS-078_교류직류전압비교카드.png" alt="교류·직류 전압 비교 카드" loading="lazy">
+      <p class="vis-cap">VIS-078 — 교류 25kV vs 직류 1.5kV 전기방식 비교 카드</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §3 교류식 전기철도 장점 ===== -->
+<h2 class="sec-title">§3 교류식 전기철도 장점</h2>
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">SOURCE 개념82 (일부)</span>
+    <span class="concept-name">교류식 전기철도 장점</span>
+    <span class="concept-star">★★</span>
+  </div>
+  <div class="concept-body">
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>항목</th><th>내용</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hl">
+            <td><strong>교류식 장점</strong></td>
+            <td>① 소형으로 중량 열차 운행 가능<br>② 장거리·경사 구간에 유리<br>③ 전력 손실 적음<br>④ 변전소 간격 넓음 (25kV 고압 → 변압 용이)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="trap-box">
+      ⚠️ <strong>함정</strong> — "교류식은 통신유도장애가 적다" → <strong>틀림.</strong> 교류식은 통신유도장애가 크다. 적은 것은 직류식.
+    </div>
+
+    <div class="tip-box">
+      ★ 교류 25kV → 고전압 송전 → 같은 전력을 더 작은 전류로 전달 → 전력 손실↓ · 소형으로도 대출력 견인 가능
+    </div>
+  </div>
+</div>
+
+<!-- ===== §4 BT급전 vs AT급전 ===== -->
+<h2 class="sec-title">§4 BT급전 vs AT급전</h2>
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">SOURCE 개념95</span>
+    <span class="concept-name">BT급전 vs AT급전</span>
+    <span class="concept-star">★★★ · 고난도</span>
+  </div>
+  <div class="concept-body">
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>구분</th><th>명칭</th><th>원리</th><th>특징</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hl">
+            <td><strong>BT급전</strong></td>
+            <td>흡상변압기<br>(Booster Transformer)</td>
+            <td>귀선전류를 레일→귀선선(BT선)으로 흡상</td>
+            <td>통신유도장애 감소<br><strong>급전거리 짧음</strong></td>
+          </tr>
+          <tr>
+            <td><strong>AT급전</strong></td>
+            <td>단권변압기<br>(Auto Transformer)</td>
+            <td>급전선(+25kV) + 전차선(−25kV) = 합계 50kV<br>변압비 1:1</td>
+            <td>전압강하 적음<br><strong>급전거리 길어짐</strong><br>고속선(KTX) 표준</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="trap-box">
+      ⚠️ <strong>핵심 함정</strong> — AT급전이 BT급전보다 전압강하 <strong>적고</strong> 급전거리 <strong>길다</strong><br>
+      → 시험에서 "BT급전이 급전거리가 길다"로 반전시켜 출제 ← 오답
+    </div>
+
+    <div class="tip-box">
+      ★ <strong>우리나라 KTX = AT급전</strong> / 구형 전기철도 = BT급전 또는 직접급전<br>
+      ★ AT급전: 단권변압기를 일정 간격으로 설치 → 전차선-급전선 전압 균등 유지 → 장거리 급전에 유리
+    </div>
+
+    <div class="vis-wrap">
+      <img src="images/VIS-105_AT방식전력공급시스템.png" alt="AT방식 전력공급 시스템" loading="lazy">
+      <p class="vis-cap">VIS-105 — AT급전 전력공급 시스템 (BT급전과 비교하여 학습)</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §5 시험 포인트 & 함정 패턴 ===== -->
+<h2 class="sec-title">§5 시험 포인트 · 함정 패턴</h2>
+
+<div class="exam-box">
+  <div class="exam-box-title">📌 핵심 암기 포인트</div>
+  <ul>
+    <li>교류 = <strong>25,000V</strong> / 직류 = <strong>1,500V</strong> — 수치 혼동 절대 금지</li>
+    <li>직류 25,000V → <strong>존재하지 않음</strong></li>
+    <li>통신유도장애 적음 → <strong>직류</strong> (교류가 아님)</li>
+    <li>교류식 = 변전소 간격 <strong>넓음</strong> (직류식보다)</li>
+    <li>AT급전 = 전압강하 <strong>적음</strong>, 급전거리 <strong>길어짐</strong></li>
+    <li>BT급전 = 급전거리 <strong>짧음</strong>, 통신유도장애 감소 효과 있음</li>
+    <li>KTX = <strong>AT급전</strong></li>
+  </ul>
+</div>
+
+<div class="tbl-wrap">
+  <table class="trap-tbl">
+    <thead>
+      <tr><th>함정 유형</th><th>오답 선택지</th><th>정답 방향</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>전압 수치 교체</td>
+        <td>"직류 25,000V가 표준"</td>
+        <td>직류 25,000V 없음. 교류 25,000V가 국철 표준</td>
+      </tr>
+      <tr>
+        <td>통신유도장애 주체 반전</td>
+        <td>"교류식이 통신유도장애 적다"</td>
+        <td>통신유도장애 적은 것 = 직류식</td>
+      </tr>
+      <tr>
+        <td>AT/BT 특징 반전</td>
+        <td>"BT급전이 급전거리 길다"</td>
+        <td>급전거리 긴 것 = AT급전 / 짧은 것 = BT급전</td>
+      </tr>
+      <tr>
+        <td>변전소 간격 반전</td>
+        <td>"교류식이 변전소 간격 짧다"</td>
+        <td>교류 = 변전소 간격 길다. 직류 = 짧다</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== §6 기출문제 ===== -->
+<h2 class="sec-title">📝 기출문제 (2문항)</h2>
+<p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
+
+<!-- Q1 -->
+<div class="qst-card">
+  <div class="qst-head">
+    <span class="qst-num">Q1</span>
+    <span class="qst-src">eng_id25 · SOURCE: 4.html 개념09 · R1 2024.12 공개복원</span>
+  </div>
+  <div class="qst-body">
+    <div class="qst-q">교류 전철 방식의 장점으로 옳은 것은?</div>
+    <ol class="qst-choices">
+      <li>① 변전소 간격이 직류보다 짧아 전력 공급이 안정적이다</li>
+      <li>② 직류 방식보다 변전소 간격을 길게 할 수 있어 시설 비용이 적다</li>
+      <li>③ 통신 유도 장해가 직류보다 적다</li>
+      <li>④ 전압이 낮아 전기 안전성이 높다</li>
+    </ol>
+    <div class="qst-ans">
+      <strong>정답: ②</strong> — 교류 전철(AC): 고전압 송전 → 변전소 간격 길게 → 시설비 절감.<br>
+      <strong>함정:</strong> ①은 반대(교류가 간격 길다 / 직류가 짧다), ③은 반대(통신유도장해 적은 것은 직류), ④는 반대(교류는 고전압)
+    </div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="qst-card">
+  <div class="qst-head">
+    <span class="qst-num">Q2</span>
+    <span class="qst-src">rk_ch82_15 · SOURCE: 4.html 개념82 · ch82 전기·신호</span>
+  </div>
+  <div class="qst-body">
+    <div class="qst-q">교류식 전기철도의 특징 중 장점은?</div>
+    <ol class="qst-choices">
+      <li>① 차량 구조가 간단하다</li>
+      <li>② 절연 이격 거리를 줄일 수 있다</li>
+      <li>③ 높은 견인력을 가져 소형으로도 무거운 열차를 끌 수 있다</li>
+      <li>④ 통신유도장해가 적다</li>
+    </ol>
+    <div class="qst-ans">
+      <strong>정답: ③</strong> — 교류식 전기철도: 고전압 송전으로 동일 전력을 더 작은 전류로 전달 → 전력 손실 적고 대출력 견인 가능 → 소형으로도 중량 열차 운행.<br>
+      <strong>함정:</strong> ②는 반대(교류식은 절연 이격 거리가 넓어야 함), ④는 반대(통신유도장해는 직류가 적음)
+    </div>
+  </div>
+</div>
+
+</div><!-- /page-wrap -->
+
+<script>
+function playYT(vid, cardId) {
+  var thumb = document.getElementById(cardId);
+  var iframeWrap = document.getElementById('yt-iframe-' + cardId);
+  if (!iframeWrap) return;
+  thumb.style.display = 'none';
+  iframeWrap.style.display = 'block';
+  iframeWrap.innerHTML = '<iframe src="https://www.youtube.com/embed/' + vid + '?autoplay=1" allowfullscreen allow="autoplay"></iframe>';
+}
+</script>
+
+<!--
+=============================================================
+GATE5 UNIT META — 09-01 전력방식·급전계통
+=============================================================
+VERSION     : v1.0
+DATE        : 2026-10-10
+STATUS      : FINAL PUBLISH
+
+PRIMARY SOURCE :
+  4.html 개념09 (line 384-399)  — 전기방식 비교
+  4.html 개념82 (line 1350-1351) — 교류식 장점 부분
+  4.html 개념95 (line 1557-1568) — BT급전 vs AT급전
+
+EXCLUDE / RESERVED :
+  개념82 접지기준 (60V/150V) → 09-03
+  rk_ch82_16 (접지기준 문항) → 09-03
+
+QUESTIONS   : 2문항
+  eng_id25  (교류전철방식 장점 — 변전소 간격)
+  rk_ch82_15 (교류식 전기철도 장점 — 소형으로 중량 견인)
+
+VIS :
+  VIS-078_교류직류전압비교카드.png ← §2
+  VIS-105_AT방식전력공급시스템.png  ← §4
+
+VIDEO : V-Y-07 (BF7x5Mrywb0)
+
+기존 UNIT 중복 : 0건
+문제 중복     : 0건
+문제 이동     : 0건
+SOURCE 밖 항목 : 0건
+=============================================================
+-->
+</body>
+</html>
