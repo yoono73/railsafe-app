@@ -621,7 +621,7 @@ function loadFromURL() {
   const unitId = params.get('unit');
   if (unitId) {
     const unit = UNITS.find(u => u.id === unitId);
-    if (unit && unit.status === 'published') {
+    if (canOpen(unit)) {
       activateUnit(unitId, unit);
       return;
     }
