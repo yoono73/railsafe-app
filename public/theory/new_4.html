@@ -184,6 +184,10 @@ body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #f0
   transition: background 0.12s;
   border-left: 3px solid transparent;
 }
+.unit-item.hold-open {
+  cursor: pointer;
+}
+.unit-item.hold-open:hover { background: #fff8f0; color: #b45309; }
 .unit-item.published {
   color: #37474f;
   cursor: pointer;
@@ -482,10 +486,11 @@ function buildTOC() {
 
     list.forEach(u => {
       const li = document.createElement('div');
-      li.className = 'unit-item' + (u.status === 'published' ? ' published' : '');
+      const openable = u.status === 'published' || (u.status === 'hold' && u.file);
+      li.className = 'unit-item' + (u.status === 'published' ? ' published' : '') + (openable && u.status === 'hold' ? ' hold-open' : '');
       li.id = 'unit-item-' + u.id;
       li.dataset.id = u.id;
-      if (u.status === 'published') {
+      if (openable) {
         li.onclick = () => loadUnit(u.id);
       }
       const badge = u.status === 'hold' ? '<span class="pending-badge" style="background:#d97706;">HOLD</span>' : u.status !== 'published' ? '<span class="pending-badge">준비중</span>' : '';
