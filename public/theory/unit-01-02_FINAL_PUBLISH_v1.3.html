@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01-02 철도 법제·분류</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-lock { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+  .sec-sub { font-size: 14px; font-weight: 700; color: #1a1a1a; margin: 20px 0 8px; padding: 4px 10px; background: #f5f7fa; border-left: 3px solid #64748b; }
+
+  .content-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; background: #fff; margin-bottom: 14px; }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+
+  /* 법제 분류 카드 */
+  .law-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 10px; }
+  .law-card { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 12px 14px; background: #f0f4f8; text-align: center; }
+  .law-name { font-size: 15px; font-weight: 800; color: #1e3a5f; }
+  .law-note { font-size: 12px; color: #555; margin-top: 4px; }
+
+  /* TRAP */
+  .trap-box { border: 1.5px solid #dc2626; border-radius: 6px; padding: 14px 16px; background: #fef2f2; margin-bottom: 14px; }
+  .trap-title { font-size: 13px; font-weight: 800; color: #dc2626; margin-bottom: 8px; }
+  .trap-item { font-size: 13.5px; color: #1a1a1a; margin-bottom: 5px; line-height: 1.6; }
+  .x { color: #dc2626; font-weight: 800; margin-right: 4px; }
+
+  /* 표 */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0; border: 1.5px solid #cbd5e1; border-radius: 6px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; }
+  th { background: #1e3a5f; color: #fff; font-weight: 700; padding: 9px 12px; text-align: center; white-space: nowrap; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .td-center { text-align: center; }
+  .td-key { font-weight: 700; color: #1e3a5f; white-space: nowrap; }
+
+  /* 모노레일 장단점 */
+  .mono-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+  .mono-card { border-radius: 6px; padding: 12px 14px; font-size: 13px; }
+  .mono-good { border: 1.5px solid #059669; background: #ecfdf5; }
+  .mono-bad { border: 1.5px solid #dc2626; background: #fef2f2; }
+  .mono-title { font-weight: 800; margin-bottom: 8px; }
+  .mono-good .mono-title { color: #065f46; }
+  .mono-bad .mono-title { color: #991b1b; }
+  .mono-card ul { padding-left: 16px; margin: 0; }
+  .mono-card li { margin-bottom: 4px; line-height: 1.55; }
+
+  /* 핵심암기 */
+  .memo-box { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 14px 18px; background: #f0f4f8; margin-bottom: 14px; }
+  .memo-title { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .memo-text { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.8; }
+
+  /* 시험포인트 */
+  .exam-item { padding: 10px 14px; border-radius: 5px; margin-bottom: 8px; font-size: 13.5px; border: 1.5px solid; }
+  .exam-key { border-color: #1e3a5f; background: #f0f4f8; }
+  .exam-trap { border-color: #dc2626; background: #fef2f2; }
+  .exam-item strong { display: block; margin-bottom: 3px; }
+
+  /* 문제 */
+  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
+  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+  .choice-list { list-style: none; padding: 0; }
+  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
+  .choice-list li:hover { background: #f8fafc; }
+
+  /* 정답·해설 섹션 (하단 통합) */
+  .answer-section { margin-top: 40px; }
+  .answer-section .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .answer-section .ans-num { font-size: 14px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; display: block; }
+  .answer-section .ans-answer { display: block; font-size: 13.5px; color: #1a1a1a; line-height: 1.7; margin-bottom: 6px; }
+  .answer-section .ans-answer ul { padding-left: 18px; margin: 6px 0; }
+  .answer-section .ans-answer li { margin-bottom: 4px; }
+  .answer-section .trap-box { margin-top: 8px; margin-bottom: 0; font-size: 13px; }
+
+  /* VIS */
+  .vis-wrap { margin: 14px 0; text-align: center; }
+  .vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
+
+  .unit-nav { display:flex; justify-content:space-between; align-items:center; margin:32px 0 16px; padding:12px 0; border-top:2px solid #e5e7eb; }
+  .unit-nav a { color:#78350f; text-decoration:none; font-weight:600; font-size:15px; padding:6px 12px; border-radius:6px; background:#fef3c7; }
+  .unit-nav a:hover { background:#fde68a; }
+
+  @media (max-width: 600px) {
+    .mono-grid { grid-template-columns: 1fr; }
+    .law-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .print-btn {
+    position: fixed; top: 12px; right: 16px; z-index: 999;
+    background: #78350f; color: #fff; border: none;
+    padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px;
+  }
+  .print-btn:hover { background: #5c2707; }
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    .page-wrap { padding: 10px; }
+    .sys-card, .qst-box, .content-box { break-inside: avoid; }
+    img, .vis-wrap img { max-width: 100%; height: auto; }
+    table { width: 100%; max-width: 100%; }
+    .qst-box, .sys-card, .content-box { break-inside: avoid; page-break-inside: avoid; }
+    .answer-section { break-before: page; page-break-before: always; }
+    .print-btn { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+<div class="page-wrap">
+
+  <!-- 헤더 -->
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 01 · UNIT 01-02</div>
+    <div class="unit-title">철도 법제·분류</div>
+    <div class="unit-sub">법제상 분류 4종 · 구동방식별 철도 종류 · 모노레일 특징</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 01 철도공학 개론</span>
+      <span class="badge badge-grade">★★★ 핵심</span>
+    </div>
+  </div>
+
+  <!-- §1 법제상 분류 -->
+  <div class="sec-title">§1. 법제상 분류</div>
+
+  <div class="content-box">
+    <p>법제상 분류는 다음 4종이다.<br>
+    <strong>공영철도는 이 분류에 포함되지 않는다</strong>는 것이 핵심 함정이다.</p>
+  </div>
+
+  <div class="law-grid">
+    <div class="law-card"><div class="law-name">국유철도</div><div class="law-note">국가 소유·관리</div></div>
+    <div class="law-card"><div class="law-name">지방철도</div><div class="law-note">지방자치단체 소유·관리</div></div>
+    <div class="law-card"><div class="law-name">경편철도</div><div class="law-note">경량·간편 규격 철도</div></div>
+    <div class="law-card"><div class="law-name">전용철도</div><div class="law-note">특정 목적·구역 전용</div></div>
+  </div>
+
+  <div class="trap-box" style="margin-top:14px;">
+    <div class="trap-title">❌ 대표 함정</div>
+    <div class="trap-item"><span class="x">✕</span><strong>공영철도</strong> → 법제상 분류에 없음. 오답 선지.</div>
+  </div>
+
+  <!-- §2 철도 종류 분류 -->
+  <div class="sec-title">§2. 철도 종류 분류</div>
+
+  <!-- VIS -->
+  <div class="vis-wrap">
+    <img src="images/VIS-027_철도종류분류.png" alt="철도 종류 분류도" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <div class="vis-caption" style="display:none; border:1px dashed #cbd5e1; padding:20px; border-radius:6px; color:#94a3b8;">
+      [VIS-027 철도종류분류 이미지 — 경로 확인 필요]
+    </div>
+    <div class="vis-caption">VIS-027_철도종류분류.png</div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>종류</th>
+          <th>구동방식</th>
+          <th>특징</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key">점착(마찰)철도</td>
+          <td class="td-center">차륜-레일 마찰력</td>
+          <td>일반 철도의 기본 방식</td>
+        </tr>
+        <tr>
+          <td class="td-key">치궤조(치차)철도</td>
+          <td class="td-center">Rack 레일 + 치차</td>
+          <td>급구배 운전 가능</td>
+        </tr>
+        <tr>
+          <td class="td-key">강색철도</td>
+          <td class="td-center">강선(와이어) 견인</td>
+          <td>급경사 구간에 사용</td>
+        </tr>
+        <tr>
+          <td class="td-key">모노레일</td>
+          <td class="td-center">고무타이어</td>
+          <td>급구배·급곡선 용이</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- §3 모노레일 -->
+  <div class="sec-title">§3. 모노레일 특징</div>
+
+  <div class="mono-grid">
+    <div class="mono-card mono-good">
+      <div class="mono-title">장점</div>
+      <ul>
+        <li>소음·진동·대기오염이 거의 없음</li>
+        <li>고무타이어 방식 → 급구배·급곡선에 유리</li>
+        <li>지하철 대비 건설비 저렴·공기 단축</li>
+      </ul>
+    </div>
+    <div class="mono-card mono-bad">
+      <div class="mono-title">단점</div>
+      <ul>
+        <li>분기장치가 복잡</li>
+        <li>분기 작동시간이 김</li>
+        <li>타 교통기관과 승환이 어려움</li>
+        <li>차량 고장 시 피난 시간이 오래 걸림</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="trap-box" style="margin-top:14px;">
+    <div class="trap-title">❌ 모노레일 대표 함정</div>
+    <div class="trap-item"><span class="x">✕</span>"모노레일은 소음·진동·대기오염이 많다" → 오답 (장점이 소음 없음)</div>
+    <div class="trap-item"><span class="x">✕</span>"모노레일은 급곡선 통과가 어렵다" → 오답 (급곡선 용이가 장점)</div>
+  </div>
+
+  <!-- §4 핵심암기 -->
+  <div class="sec-title">§4. 핵심암기</div>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 암기 공식</div>
+    <div class="memo-text">
+      법제 분류 = <span style="color:#1e3a5f;">국·지·경·전</span> / <span style="color:#dc2626;">공영 제외</span><br>
+      치궤조 = Rack+치차 / 강색 = 와이어 / 모노레일 = 고무타이어<br>
+      모노레일 장점 = 급구배·급곡선·소음없음 / 단점 = 분기복잡·승환어려움
+    </div>
+  </div>
+
+  <!-- §5 시험포인트 -->
+  <div class="sec-title">§5. 시험포인트</div>
+
+  <div class="exam-item exam-trap">
+    <strong>함정 ①</strong>공영철도 → 법제 분류 아님 → 오답 선지
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ①</strong>급구배 구간 운전에 사용하는 방식 → 치궤조(치차)철도 (Rack 레일)
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ②</strong>모노레일 장점: 소음·진동 거의 없음, 급구배·급곡선 유리
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>함정 ②</strong>"모노레일 급곡선 통과 어렵다" → 오답 (급곡선이 장점)
+  </div>
+
+  <!-- §6 문제 연결 -->
+  <div class="sec-title">§6. 문제 연결</div>
+
+  <div class="qst-box">
+    <div class="qst-meta">4지선다형</div>
+    <div class="qst-num">Q1.</div>
+    <div class="qst-q">철도 법제상 분류에 <u>해당하지 않는</u> 것은?</div>
+    <ol class="choice-list">
+      <li>① 국유철도</li>
+      <li>② 공영철도</li>
+      <li>③ 경편철도</li>
+      <li>④ 전용철도</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">4지선다형</div>
+    <div class="qst-num">Q2.</div>
+    <div class="qst-q">급구배 구간 운전에 사용하는 구동방식으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 점착철도</li>
+      <li>② 강색철도</li>
+      <li>③ 치궤조철도</li>
+      <li>④ 모노레일</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">4지선다형</div>
+    <div class="qst-num">Q3.</div>
+    <div class="qst-q">모노레일의 특징으로 <u>옳지 않은</u> 것은?</div>
+    <ol class="choice-list">
+      <li>① 소음·진동이 거의 없다.</li>
+      <li>② 급구배·급곡선 통과에 유리하다.</li>
+      <li>③ 분기장치가 간단하다.</li>
+      <li>④ 지하철보다 건설비가 저렴하다.</li>
+    </ol>
+  </div>
+
+  <!-- 정답 및 해설 (하단 통합 섹션) -->
+  <section class="answer-section">
+    <h2 class="sec-title">정답 및 해설</h2>
+
+    <div class="ans-box">
+      <p class="ans-num">Q1 정답 ②</p>
+      <p class="ans-answer">
+        <ul>
+          <li>법제상 분류: <strong>국유·지방·경편·전용</strong></li>
+          <li>② <strong>공영철도</strong>는 이 분류에 포함되지 않음.</li>
+        </ul>
+      </p>
+      <div class="trap-box">
+        <span class="trap-title">⚠ TRAP:</span> 공영철도는 실제 존재하지만 법제상 4종 분류(국유·지방·경편·전용)에는 해당하지 않는다.
+      </div>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q2 정답 ③</p>
+      <p class="ans-answer">
+        <ul>
+          <li>③ <strong>치궤조철도</strong>: Rack 레일 + 치차(齒車) 방식 → 급구배 운전 가능.</li>
+          <li>강색철도도 급경사에 사용하지만, "급구배"의 대표 답은 치궤조.</li>
+          <li>점착철도는 일반 평탄선 기본 방식.</li>
+        </ul>
+      </p>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q3 정답 ③</p>
+      <p class="ans-answer">
+        <ul>
+          <li>③ <strong>분기장치가 간단하다</strong> → 오답. 모노레일은 분기장치가 <strong>복잡</strong>하고 분기 작동시간이 긴 것이 단점.</li>
+          <li>①②④는 모두 모노레일의 장점.</li>
+        </ul>
+      </p>
+      <div class="trap-box">
+        <span class="trap-title">⚠ TRAP:</span> "분기장치가 간단하다"는 모노레일의 특징이 아니라 단점의 반대 표현이다. 모노레일 단점 = 분기 복잡, 분기 작동시간 김.
+      </div>
+    </div>
+  </section>
+
+  <nav class="unit-nav">
+    <a href="unit-01-01_FINAL_PUBLISH_v1.3.html">← UNIT 01-01</a>
+    <a href="unit-01-03_FINAL_PUBLISH_v1.3.html">다음 UNIT 01-03 →</a>
+  </nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>

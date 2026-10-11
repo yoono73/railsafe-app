@@ -334,12 +334,12 @@ body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #f0
    ============================================================ */
 const UNITS = [
   // PART 01 철도일반
-  { id:'01-01', part:'01', title:'철도 특성·역할',        status:'pending' },
-  { id:'01-02', part:'01', title:'철도 법제·분류',        status:'pending' },
-  { id:'01-03', part:'01', title:'철도 역사',             status:'pending' },
-  { id:'01-04', part:'01', title:'철도 계획·수요예측',    status:'pending' },
-  { id:'01-05', part:'01', title:'교통투자·경제성',       status:'pending' },
-  { id:'01-06', part:'01', title:'RAMS·안전관리',         status:'pending' },
+  { id:'01-01', part:'01', title:'철도 특성·역할',        status:'published', file:'unit-01-01_FINAL_PUBLISH_v1.3.html', version:'v1.3' },
+  { id:'01-02', part:'01', title:'철도 법제·분류',        status:'published', file:'unit-01-02_FINAL_PUBLISH_v1.3.html', version:'v1.3' },
+  { id:'01-03', part:'01', title:'철도 역사',             status:'published', file:'unit-01-03_FINAL_PUBLISH_v1.3.html', version:'v1.3' },
+  { id:'01-04', part:'01', title:'철도 계획·수요예측',    status:'hold' },
+  { id:'01-05', part:'01', title:'교통투자·경제성',       status:'published', file:'unit-01-05_FINAL_PUBLISH_v1.3.html', version:'v1.3' },
+  { id:'01-06', part:'01', title:'RAMS·안전관리',         status:'published', file:'unit-01-06_FINAL_PUBLISH_v1.3.html', version:'v1.3' },
   // PART 02 선로계획·설계
   { id:'02-01', part:'02', title:'선로 계획·기준',        status:'pending' },
   { id:'02-02', part:'02', title:'건축한계·차량한계',     status:'pending' },
@@ -488,7 +488,8 @@ function buildTOC() {
       if (u.status === 'published') {
         li.onclick = () => loadUnit(u.id);
       }
-      li.innerHTML = `<span class="unit-dot"></span><span class="unit-label">${u.id} ${u.title}${u.status !== 'published' ? '<span class="pending-badge">준비중</span>' : ''}</span>`;
+      const badge = u.status === 'hold' ? '<span class="pending-badge" style="background:#d97706;">HOLD</span>' : u.status !== 'published' ? '<span class="pending-badge">준비중</span>' : '';
+      li.innerHTML = `<span class="unit-dot"></span><span class="unit-label">${u.id} ${u.title}${badge}</span>`;
       ul.appendChild(li);
     });
 

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01-03 철도 역사</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+
+  /* 타임라인 */
+  .timeline { position: relative; padding-left: 32px; margin-bottom: 14px; }
+  .timeline::before { content: ''; position: absolute; left: 12px; top: 0; bottom: 0; width: 2px; background: #1e3a5f; }
+  .tl-item { position: relative; margin-bottom: 20px; }
+  .tl-item::before { content: ''; position: absolute; left: -24px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: #1e3a5f; border: 2px solid #fff; box-shadow: 0 0 0 2px #1e3a5f; }
+  .tl-year { font-size: 20px; font-weight: 900; color: #1e3a5f; line-height: 1.2; }
+  .tl-event { font-size: 15px; font-weight: 700; color: #1a1a1a; margin: 2px 0; }
+  .tl-detail { font-size: 13px; color: #555; line-height: 1.6; }
+
+  /* 핵심 연도 표 */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0; border: 1.5px solid #cbd5e1; border-radius: 6px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; }
+  th { background: #1e3a5f; color: #fff; font-weight: 700; padding: 9px 12px; text-align: center; white-space: nowrap; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .td-center { text-align: center; }
+  .td-key { font-weight: 700; color: #1e3a5f; }
+  .td-trap { font-size: 12px; color: #dc2626; }
+
+  /* TRAP */
+  .trap-box { border: 1.5px solid #dc2626; border-radius: 6px; padding: 14px 16px; background: #fef2f2; margin-bottom: 14px; }
+  .trap-title { font-size: 13px; font-weight: 800; color: #dc2626; margin-bottom: 8px; }
+  .trap-item { font-size: 13.5px; color: #1a1a1a; margin-bottom: 5px; line-height: 1.6; }
+  .x { color: #dc2626; font-weight: 800; margin-right: 4px; }
+
+  /* 핵심암기 */
+  .memo-box { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 14px 18px; background: #f0f4f8; margin-bottom: 14px; }
+  .memo-title { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .memo-text { font-size: 15px; font-weight: 800; color: #1a1a1a; line-height: 1.8; letter-spacing: 0.02em; }
+
+  /* 시험포인트 */
+  .exam-item { padding: 10px 14px; border-radius: 5px; margin-bottom: 8px; font-size: 13.5px; border: 1.5px solid; }
+  .exam-key { border-color: #1e3a5f; background: #f0f4f8; }
+  .exam-trap { border-color: #dc2626; background: #fef2f2; }
+  .exam-item strong { display: block; margin-bottom: 3px; }
+
+  /* 문제 */
+  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
+  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+  .choice-list { list-style: none; padding: 0; }
+  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
+  .choice-list li:hover { background: #f8fafc; }
+  .qst-choices { list-style: none; padding: 0; }
+  .qst-choices li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; counter-increment: qst-item; }
+  .qst-choices { counter-reset: qst-item; }
+  .qst-choices li::before { content: counter(qst-item, cjk-heavenly-stem) " "; font-weight: 700; color: #1e3a5f; }
+
+  /* 정답 및 해설 섹션 */
+  .answer-section { margin-top: 40px; border-top: 2px solid #1e3a5f; padding-top: 20px; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-answer { font-size: 13.5px; color: #1a1a1a; line-height: 1.7; margin: 0; }
+
+  .unit-nav { display:flex; justify-content:space-between; align-items:center; margin:32px 0 16px; padding:12px 0; border-top:2px solid #e5e7eb; }
+  .unit-nav a { color:#78350f; text-decoration:none; font-weight:600; font-size:15px; padding:6px 12px; border-radius:6px; background:#fef3c7; }
+  .unit-nav a:hover { background:#fde68a; }
+
+  /* PRINT LOCK */
+  .print-btn {
+    position: fixed; top: 12px; right: 16px; z-index: 999;
+    background: #78350f; color: #fff; border: none;
+    padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px;
+  }
+  .print-btn:hover { background: #5c2707; }
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    .page-wrap { padding: 10px; }
+    .sys-card, .qst-box, .content-box { break-inside: avoid; }
+    img, .vis-wrap img { max-width: 100%; height: auto; }
+    table { width: 100%; max-width: 100%; }
+    .qst-box, .sys-card, .content-box { break-inside: avoid; page-break-inside: avoid; }
+    .answer-section { break-before: page; page-break-before: always; }
+    .print-btn { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+<div class="page-wrap">
+
+  <!-- 헤더 -->
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 01 · UNIT 01-03</div>
+    <div class="unit-title">철도 역사</div>
+    <div class="unit-sub">세계 최초 여객철도(1830) · 경인선(1899) · 경부선(1905) 연도 확실히 구분</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 01 철도공학 개론</span>
+      <span class="badge badge-grade">★★ 암기</span>
+    </div>
+  </div>
+
+  <!-- §1 핵심 연도 -->
+  <div class="sec-title">§1. 핵심 연도 3개</div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>사건</th>
+          <th>연도</th>
+          <th>자주 나오는 함정 연도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>세계 최초 여객철도 — 영국 리버풀~맨체스터</td>
+          <td class="td-center td-key">1830년</td>
+          <td class="td-center td-trap">1825, 1835 등</td>
+        </tr>
+        <tr>
+          <td>우리나라 최초 철도 — <strong>경인선</strong></td>
+          <td class="td-center td-key">1899년</td>
+          <td class="td-center td-trap">1898, 1900</td>
+        </tr>
+        <tr>
+          <td>경부선 전구간 개통</td>
+          <td class="td-center td-key">1905년</td>
+          <td class="td-center td-trap">1903, 1907</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- §2 타임라인 -->
+  <div class="sec-title">§2. 타임라인</div>
+
+  <div class="vis-wrap" style="text-align:center;margin:16px 0;">
+    <img src="images/철도 역사 3대 연도 타임라인.png"
+         alt="철도 역사 3대 연도 타임라인 (1830·1899·1905)"
+         style="max-width:100%;border-radius:8px;"
+         onerror="this.style.display='none'">
+    <p style="font-size:12px;color:#6b7280;margin-top:4px;">철도 역사 3대 연도 타임라인</p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">1830</div>
+      <div class="tl-event">세계 최초 여객철도 — 영국 리버풀~맨체스터</div>
+      <div class="tl-detail">세계 최초 여객철도 개통.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1899</div>
+      <div class="tl-event">우리나라 최초 철도 — 경인선</div>
+      <div class="tl-detail">대한민국 최초 철도. "경인선 = 1899" 암기 필수.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1905</div>
+      <div class="tl-event">경부선 전구간 개통</div>
+      <div class="tl-detail">서울~부산 전구간 완전 개통 연도.</div>
+    </div>
+  </div>
+
+  <!-- §3 핵심암기 -->
+  <div class="sec-title">§3. 핵심암기</div>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 암기 순서</div>
+    <div class="memo-text">
+      1830 리버풀-맨체스터 → 1899 경인선 → 1905 경부선
+    </div>
+  </div>
+
+  <!-- §4 시험포인트 -->
+  <div class="sec-title">§4. 시험포인트</div>
+
+  <div class="exam-item exam-key">
+    <strong>핵심 ①</strong>대한민국 최초 철도 = 경인선 = <strong>1899년</strong>
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ②</strong>경부선 전구간 개통 = <strong>1905년</strong>
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ③</strong>세계 최초 여객철도 = 1830 영국 리버풀~맨체스터
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>함정 ①</strong>"경인선 = 1898년(또는 1900년)" → 오답. 정답은 1899년.
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>함정 ②</strong>"1825 스톡턴-달링턴이 세계 최초" → 다른 역사적 정의. 시험 기준은 1830 리버풀-맨체스터.
+  </div>
+
+  <!-- §5 문제 연결 -->
+  <div class="sec-title">§5. 문제 연결</div>
+
+  <div class="qst-box">
+    <div class="qst-meta">단답형</div>
+    <div class="qst-num">Q1.</div>
+    <div class="qst-q">우리나라 최초 철도인 경인선이 개통된 연도는?</div>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">4지선다형</div>
+    <div class="qst-num">Q2.</div>
+    <div class="qst-q">다음 ( ) 안에 알맞은 연도를 고르시오.<br><br>
+      우리나라 최초의 철도인 경인선은 ( ⓐ )년에 개통되었고,<br>
+      경부선은 ( ⓑ )년에 전구간이 개통되었다.</div>
+    <ol class="choice-list">
+      <li>① ⓐ 1898 — ⓑ 1904</li>
+      <li>② ⓐ 1899 — ⓑ 1905</li>
+      <li>③ ⓐ 1900 — ⓑ 1905</li>
+      <li>④ ⓐ 1899 — ⓑ 1907</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">4지선다형</div>
+    <div class="qst-num">Q3.</div>
+    <div class="qst-q">세계 최초 여객철도가 개통된 연도와 노선으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 1825년 — 스톡턴~달링턴</li>
+      <li>② 1830년 — 리버풀~맨체스터</li>
+      <li>③ 1835년 — 리버풀~맨체스터</li>
+      <li>④ 1830년 — 런던~버밍엄</li>
+    </ol>
+  </div>
+
+  <div class="qst-box" id="q-id10">
+    <p class="qst-meta">R1 공개복원 | A등급 | 경인선</p>
+    <p class="qst-q">Q4. 우리나라 최초의 철도 노선은?</p>
+    <ol class="qst-choices">
+      <li>경부선</li>
+      <li>경의선</li>
+      <li>경인선</li>
+      <li>호남선</li>
+    </ol>
+  </div>
+
+  <!-- 정답 및 해설 -->
+  <section class="answer-section">
+    <h2 class="sec-title">정답 및 해설</h2>
+
+    <div class="ans-box">
+      <p class="ans-num">Q1 정답 — 1899년</p>
+      <p class="ans-answer">경인선 = 우리나라 최초 철도 = 1899년. 1898·1900은 자주 등장하는 함정 연도이므로 주의.</p>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q2 정답 ②</p>
+      <p class="ans-answer">경인선 = 1899년 / 경부선 전구간 = 1905년. 암기: 1830 → 1899 → 1905.</p>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q3 정답 ②</p>
+      <p class="ans-answer">시험 기준: 1830년 영국 리버풀~맨체스터. 1825 스톡턴-달링턴은 다른 역사적 정의(화물 중심)로 시험에서 함정으로 출제되는 연도.</p>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q4 정답 ③</p>
+      <p class="ans-answer">경인선(1899년)은 우리나라 최초 철도. 노량진~제물포 개통.</p>
+    </div>
+  </section>
+
+  <nav class="unit-nav">
+    <a href="unit-01-02_FINAL_PUBLISH_v1.3.html">← UNIT 01-02</a>
+    <a href="unit-01-04_HOLD_VERIFY_v1.1.html">다음 UNIT 01-04 (HOLD) →</a>
+  </nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
