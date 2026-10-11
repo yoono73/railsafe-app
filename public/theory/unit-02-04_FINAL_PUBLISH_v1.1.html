@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02-04 복선화 [FINAL PUBLISH v1.1]</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-final { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+  .sec-sub { font-size: 14px; font-weight: 700; color: #1a1a1a; margin: 20px 0 8px; padding: 4px 10px; background: #f5f7fa; border-left: 3px solid #64748b; }
+
+  .content-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; background: #fff; margin-bottom: 14px; }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13.5px; }
+  th { background: #f0f4f8; color: #1e3a5f; font-weight: 700; padding: 8px 10px; border: 1px solid #cbd5e1; text-align: left; }
+  td { padding: 7px 10px; border: 1px solid #cbd5e1; vertical-align: top; }
+  tr:hover td { background: #f8fafc; }
+
+  .trap-box { border: 1.5px solid #dc2626; border-radius: 6px; padding: 14px 16px; background: #fef2f2; margin-bottom: 14px; }
+  .trap-title { font-size: 13px; font-weight: 800; color: #dc2626; margin-bottom: 8px; }
+  .trap-item { font-size: 13.5px; color: #1a1a1a; margin-bottom: 5px; line-height: 1.6; }
+  .trap-item .x { color: #dc2626; font-weight: 800; margin-right: 4px; }
+  .trap-item .o { color: #059669; font-weight: 800; margin-right: 4px; }
+
+  .memo-box { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 14px 18px; background: #f0f4f8; margin-bottom: 14px; }
+  .memo-title { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .memo-text { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.8; }
+
+  .term-box { border: 1.5px solid #0891b2; border-radius: 5px; padding: 10px 14px; background: #f0f9ff; margin-bottom: 10px; }
+  .term-label { font-size: 12px; font-weight: 800; color: #0369a1; margin-bottom: 4px; }
+  .term-text { font-size: 13.5px; color: #1a1a1a; }
+
+  .crossref-box { border: 1.5px solid #059669; border-radius: 6px; padding: 12px 16px; background: #f0fdf4; margin-bottom: 14px; }
+  .crossref-title { font-size: 12px; font-weight: 800; color: #059669; margin-bottom: 6px; }
+  .crossref-text { font-size: 13px; color: #1a1a1a; }
+
+  .exam-item { padding: 10px 14px; border-radius: 5px; margin-bottom: 8px; font-size: 13.5px; border: 1.5px solid; }
+  .exam-key { border-color: #1e3a5f; background: #f0f4f8; }
+  .exam-trap { border-color: #dc2626; background: #fef2f2; }
+  .exam-item strong { display: block; margin-bottom: 3px; }
+
+  .vis-wrap { margin: 14px 0; text-align: center; }
+  .vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
+
+  .print-btn {
+    position: fixed; top: 12px; right: 16px; z-index: 999;
+    background: #065f46; color: #fff; border: none;
+    padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px;
+  }
+  .print-btn:hover { background: #047857; }
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    .page-wrap { padding: 10px; }
+    .content-box { break-inside: avoid; page-break-inside: avoid; }
+    img, .vis-wrap img { max-width: 100%; height: auto; }
+    table { width: 100%; max-width: 100%; }
+    .print-btn { display: none !important; }
+  }
+
+  .unit-nav { display:flex; justify-content:space-between; align-items:center; margin:32px 0 16px; padding:12px 0; border-top:2px solid #e5e7eb; }
+  .unit-nav a { color:#065f46; text-decoration:none; font-weight:600; font-size:15px; padding:6px 12px; border-radius:6px; background:#ecfdf5; }
+  .unit-nav a:hover { background:#d1fae5; }
+  .unit-nav .nav-gap { flex:1; }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">인쇄 / PDF</button>
+<div class="page-wrap">
+
+  <!-- 헤더 -->
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 02 · UNIT 02-04</div>
+    <div class="unit-title">복선화</div>
+    <div class="unit-sub">단선→복선 전환, 교행제약 감소, 운전취급 단순화, 선로용량 증대 효과</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 02 선로계획·설계</span>
+      <span class="badge badge-grade">★★☆ 중요</span>
+      <span class="badge badge-final">FINAL PUBLISH</span>
+    </div>
+  </div>
+
+  <!-- CROSS-REF -->
+  <div class="crossref-box">
+    <div class="crossref-title">CROSS-REF → UNIT 02-03</div>
+    <div class="crossref-text">복선화는 선로용량 증대 방법 중 하나. 단선 약 80회/일 → 복선 약 240회/일(3배). 선로이용률·포화도 계산식은 UNIT 02-03 참조.</div>
+  </div>
+
+  <!-- §1 용어정의 -->
+  <div class="sec-title">§1. 핵심 용어정의</div>
+
+  <div class="term-box">
+    <div class="term-label">용어정의 | 복선화(複線化)</div>
+    <div class="term-text">한 가닥 선로를 상·하행 열차가 공용하는 단선 선로를 상·하행 방향을 분리한 두 가닥의 선로(복선)로 확장하는 것. 교행 대기 없이 상·하행 열차가 동시에 달릴 수 있어 용량이 크게 늘어난다.</div>
+  </div>
+  <div class="term-box">
+    <div class="term-label">용어정의 | 교행(交行)</div>
+    <div class="term-text">단선 선로에서 상행 열차와 하행 열차가 서로 반대 방향으로 지나쳐야 할 때, 한쪽이 대피선에서 기다리는 것. 복선화로 교행 대기가 불필요해진다.</div>
+  </div>
+
+  <!-- §2 복선화 효과 -->
+  <div class="sec-title">§2. 복선화 효과 (SOURCE 56)</div>
+
+  <div class="vis-wrap">
+    <img src="images/VIS-106_복선화.png" alt="복선화 개념도 — 단선→복선 용량 3배"
+         onerror="this.style.display='none'">
+    <div class="vis-caption">VIS-106 복선화 — 단선 대비 복선의 수송 용량 증대 (SOURCE 56)</div>
+  </div>
+
+  <table>
+    <tr><th>구분</th><th>단선</th><th>복선</th></tr>
+    <tr><td><strong>상·하행 분리</strong></td><td>한 가닥 공용 (교행 필요)</td><td>상행·하행 독립 운행</td></tr>
+    <tr><td><strong>교행 제약</strong></td><td>있음 (대피선 대기)</td><td>없음</td></tr>
+    <tr><td><strong>선로용량</strong></td><td>약 80회/일</td><td>약 240회/일</td></tr>
+    <tr><td><strong>운전취급</strong></td><td>복잡 (교행 조정 필요)</td><td>단순화</td></tr>
+  </table>
+
+  <div class="content-box">
+    <p><strong>복선화의 주요 효과:</strong></p>
+    <p>① <strong>교행 제약 감소</strong> — 상·하행이 서로 방해받지 않고 독립 운행</p>
+    <p>② <strong>운전취급 단순화</strong> — 교행 대기·조정 불필요</p>
+    <p>③ <strong>수송력(선로용량) 증가</strong> — 단선 대비 약 3배 (80회 → 240회/일)</p>
+    <p>④ <strong>정시성 향상</strong> — 교행 지연 요인 제거</p>
+  </div>
+
+  <!-- §3 주의사항 -->
+  <div class="sec-title">§3. 주의사항 — 단순화 금지</div>
+
+  <div class="trap-box">
+    <div class="trap-title">일반화 금지 사항</div>
+    <div class="trap-item"><span class="x">X</span>"복선화 시 용량은 항상 정확히 3배이다" → 단순 일반화 주의. SOURCE 기준 단선 약 80, 복선 약 240으로 <strong>약 3배</strong>이나, 실제는 선형·신호·운행 조건에 따라 달라질 수 있음.</div>
+    <div class="trap-item"><span class="o">O</span>SOURCE 56: 단선 약 80회/일, 복선 약 240회/일 → 3배 효과 (SOURCE 기준 암기)</div>
+  </div>
+
+  <!-- §4 단선 vs 복선 비교 -->
+  <div class="sec-title">§4. 선로 형식 비교</div>
+
+  <table>
+    <tr><th>항목</th><th>단선</th><th>복선</th><th>비고</th></tr>
+    <tr><td>선로 수</td><td>1개</td><td>2개 (상·하 각 1)</td><td>—</td></tr>
+    <tr><td>교행 필요 여부</td><td>필요</td><td>불필요</td><td>복선 우위</td></tr>
+    <tr><td>선로용량</td><td>약 80회/일</td><td>약 240회/일</td><td>SOURCE 56 기준</td></tr>
+    <tr><td>운전취급 복잡도</td><td>복잡</td><td>단순</td><td>복선 우위</td></tr>
+    <tr><td>건설비</td><td>낮음</td><td>높음</td><td>단선 우위</td></tr>
+  </table>
+
+  <!-- §5 핵심암기 -->
+  <div class="sec-title">§5. 핵심암기</div>
+
+  <div class="memo-box">
+    <div class="memo-title">암기 공식</div>
+    <div class="memo-text">
+      복선화 = 한 가닥 공용 단선 → 상·하행 분리 복선으로 전환<br>
+      효과: 교행제약감소 · 운전취급단순화 · 수송력증가(≈3배)<br>
+      단선 80회/일 → 복선 240회/일 (SOURCE 56 기준)<br>
+      "항상 정확히 3배" 단순 일반화 금지
+    </div>
+  </div>
+
+  <!-- §6 시험포인트 -->
+  <div class="sec-title">§6. 시험포인트</div>
+
+  <div class="exam-item exam-key">
+    <strong>핵심 ①</strong>
+    복선화 효과 3가지: 교행 제약 감소, 운전취급 단순화, 선로용량 증가.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ②</strong>
+    단선 약 80회/일 → 복선 약 240회/일 (약 3배). SOURCE 56 기준.
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>함정 ①</strong>
+    복선화 시 선로용량이 반드시 3배라고 단정하는 선지 → "약 3배" 수준의 표현이 정확.
+  </div>
+
+  <nav class="unit-nav">
+    <a href="unit-02-03_FINAL_PUBLISH_v1.1.html">&larr; 이전 UNIT 02-03</a>
+    <span class="nav-gap"></span>
+    <a href="unit-02-05_HOLD_VERIFY_v1.1.html">다음 UNIT 02-05 &rarr;</a>
+  </nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
