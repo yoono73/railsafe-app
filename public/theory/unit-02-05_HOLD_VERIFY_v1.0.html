@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02-05 정거장·선로설비 개요 [HOLD-VERIFY]</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-hold { color: #b45309; border-color: #b45309; background: #fffbeb; }
+
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+  .sec-sub { font-size: 14px; font-weight: 700; color: #1a1a1a; margin: 20px 0 8px; padding: 4px 10px; background: #f5f7fa; border-left: 3px solid #64748b; }
+
+  .content-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; background: #fff; margin-bottom: 14px; }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13.5px; }
+  th { background: #f0f4f8; color: #1e3a5f; font-weight: 700; padding: 8px 10px; border: 1px solid #cbd5e1; text-align: left; }
+  td { padding: 7px 10px; border: 1px solid #cbd5e1; vertical-align: top; }
+  tr:hover td { background: #f8fafc; }
+
+  .trap-box { border: 1.5px solid #dc2626; border-radius: 6px; padding: 14px 16px; background: #fef2f2; margin-bottom: 14px; }
+  .trap-title { font-size: 13px; font-weight: 800; color: #dc2626; margin-bottom: 8px; }
+  .trap-item { font-size: 13.5px; color: #1a1a1a; margin-bottom: 5px; line-height: 1.6; }
+  .trap-item .x { color: #dc2626; font-weight: 800; margin-right: 4px; }
+  .trap-item .o { color: #059669; font-weight: 800; margin-right: 4px; }
+
+  .memo-box { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 14px 18px; background: #f0f4f8; margin-bottom: 14px; }
+  .memo-title { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .memo-text { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.8; }
+
+  .verify-box { border: 1.5px solid #b45309; border-radius: 6px; padding: 12px 16px; background: #fffbeb; margin-bottom: 14px; }
+  .verify-title { font-size: 13px; font-weight: 800; color: #b45309; margin-bottom: 6px; }
+  .verify-text { font-size: 13px; color: #1a1a1a; }
+
+  .term-box { border: 1.5px solid #0891b2; border-radius: 5px; padding: 10px 14px; background: #f0f9ff; margin-bottom: 10px; }
+  .term-label { font-size: 12px; font-weight: 800; color: #0369a1; margin-bottom: 4px; }
+  .term-text { font-size: 13.5px; color: #1a1a1a; }
+
+  .exam-item { padding: 10px 14px; border-radius: 5px; margin-bottom: 8px; font-size: 13.5px; border: 1.5px solid; }
+  .exam-key { border-color: #1e3a5f; background: #f0f4f8; }
+  .exam-trap { border-color: #dc2626; background: #fef2f2; }
+  .exam-item strong { display: block; margin-bottom: 3px; }
+
+  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
+  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+  .choice-list { list-style: none; padding: 0; }
+  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
+  .choice-list li:hover { background: #f8fafc; }
+
+  .answer-section { margin-top: 40px; border-top: 2px solid #1e3a5f; padding-top: 20px; }
+  .answer-section .sec-title { margin-top: 0; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-answer { font-size: 13.5px; color: #1a1a1a; line-height: 1.7; margin-bottom: 6px; }
+  .ans-box .ans-trap { border: 1.5px solid #dc2626; border-radius: 5px; padding: 8px 12px; background: #fef2f2; font-size: 13px; color: #7f1d1d; margin-top: 8px; }
+
+  .vis-placeholder { border: 2px dashed #b45309; border-radius: 6px; padding: 24px; background: #fffbeb; text-align: center; color: #b45309; font-size: 13px; font-weight: 700; margin-bottom: 14px; }
+
+  .print-btn {
+    position: fixed; top: 12px; right: 16px; z-index: 999;
+    background: #78350f; color: #fff; border: none;
+    padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px;
+  }
+  .print-btn:hover { background: #5c2707; }
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    .page-wrap { padding: 10px; }
+    .qst-box, .content-box, .ans-box { break-inside: avoid; page-break-inside: avoid; }
+    img, .vis-wrap img { max-width: 100%; height: auto; }
+    table { width: 100%; max-width: 100%; }
+    .answer-section { break-before: page; page-break-before: always; }
+    .print-btn { display: none !important; }
+  }
+
+  .unit-nav { display:flex; justify-content:space-between; align-items:center; margin:32px 0 16px; padding:12px 0; border-top:2px solid #e5e7eb; }
+  .unit-nav a { color:#78350f; text-decoration:none; font-weight:600; font-size:15px; padding:6px 12px; border-radius:6px; background:#fef3c7; }
+  .unit-nav a:hover { background:#fde68a; }
+  .unit-nav .nav-gap { flex:1; }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+<div class="page-wrap">
+
+  <!-- 헤더 -->
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 02 · UNIT 02-05</div>
+    <div class="unit-title">정거장·선로설비 개요</div>
+    <div class="unit-sub">유효장·차막이, 신호기 가시거리, 안전측선 vs 피난측선, 낙석방지시설</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 02 선로계획·설계</span>
+      <span class="badge badge-grade">★★☆ 중요</span>
+      <span class="badge badge-hold">HOLD-VERIFY (V-02-A)</span>
+    </div>
+  </div>
+
+  <!-- VERIFY 안내 -->
+  <div class="verify-box">
+    <div class="verify-title">⚠ HOLD-VERIFY: V-02-A</div>
+    <div class="verify-text">"시거리" 용어의 4.html 직접 SOURCE 미확인. 신호기 "가시거리"(철도왕 교재 p208)는 확인됨. GATE 4 개념명의 "시거리"가 가시거리와 동일한지, 별도 정지시거 개념인지 검수 후 FINAL 전환 필요.</div>
+  </div>
+
+  <!-- §1 용어정의 -->
+  <div class="sec-title">§1. 핵심 용어정의</div>
+
+  <div class="term-box">
+    <div class="term-label">📘 용어정의 | 유효장(有效長)</div>
+    <div class="term-text">열차가 안전하게 정차할 수 있는 선로의 실제 가용 길이. 출발신호기 안쪽(내방)에서 선로 끝 차막이까지의 거리로 측정한다.</div>
+  </div>
+  <div class="term-box">
+    <div class="term-label">📘 용어정의 | 내방(內方)</div>
+    <div class="term-text">신호기를 기준으로 열차가 진행하는 방향의 안쪽, 즉 역 구내 쪽을 가리키는 방향 표현.</div>
+  </div>
+  <div class="term-box">
+    <div class="term-label">📘 용어정의 | 차막이(車擋, Buffer Stop)</div>
+    <div class="term-text">선로의 끝단에 설치하는 안전 구조물. 열차가 선로 끝을 넘어 이탈하지 않도록 막는다. 유효장의 끝점이기도 하다.</div>
+  </div>
+  <div class="term-box">
+    <div class="term-label">📘 용어정의 | 가시거리(可視距離, Sight Distance)</div>
+    <div class="term-text">기관사(운전자)가 신호기를 정상적으로 확인할 수 있는 최소 거리. 이 거리 이내에서 신호를 보지 못하면 적시에 대응하기 어렵다. (철도왕 교재 p208)</div>
+  </div>
+  <div class="term-box">
+    <div class="term-label">📘 용어정의 | 역행(逆行)</div>
+    <div class="term-text">열차가 경사진 선로(구배)에서 제동 실패 등으로 인해 원래 진행 방향의 반대로 미끄러져 내려가는 현상.</div>
+  </div>
+
+  <!-- §2 차막이·유효장 -->
+  <div class="sec-title">§2. 차막이·유효장 (SOURCE 35·36)</div>
+
+  <div class="vis-placeholder">
+    NEW VIS REQUIRED — 유효장 측정 범위 도해 (출발신호기 내방 ~ 차막이)
+  </div>
+
+  <table>
+    <tr><th>항목</th><th>내용</th></tr>
+    <tr><td><strong>유효장 정의</strong></td><td>열차가 안전하게 정차할 수 있는 선로의 유효 길이</td></tr>
+    <tr><td><strong>측정 범위</strong></td><td><strong>출발신호기 내방(內方) ~ 차막이</strong>(또는 입환신호기) 사이</td></tr>
+    <tr><td><strong>차막이 역할</strong></td><td>선로 끝단 안전장치 — 열차 이상 진입 차단</td></tr>
+    <tr><td><strong>두단식 승강장</strong></td><td>종착역·차고지 전용 — 차막이 구조 (SOURCE 36)</td></tr>
+  </table>
+
+  <div class="trap-box">
+    <div class="trap-title">❌ 오답 선지 판별</div>
+    <div class="trap-item"><span class="x">✕</span>"유효장 = 역 구내 전체 선로 길이" → 오답. <strong>신호기 내방~차막이</strong> 범위만 해당.</div>
+    <div class="trap-item"><span class="x">✕</span>"대피선은 유효장 적용 대상이 아니다" → 오답. 대피선도 본선으로 유효장 적용 대상에 포함.</div>
+  </div>
+
+  <!-- §3 신호기 가시거리 -->
+  <div class="sec-title">§3. 신호기 가시거리 [V-02-A VERIFY] (철도왕 교재 p208)</div>
+
+  <div class="verify-box">
+    <div class="verify-title">⚠ V-02-A 항목 포함</div>
+    <div class="verify-text">아래 수치는 철도왕 교재 p208 확인. "시거리" 용어의 4.html 직접 SOURCE는 미확인. 수치 자체는 교재 출처 확보.</div>
+  </div>
+
+  <table>
+    <tr><th>신호기 종류</th><th>가시거리 기준</th></tr>
+    <tr><td>장내·출발·폐색·엄호신호기</td><td><strong>600m 이상</strong></td></tr>
+    <tr><td>원방신호기</td><td><strong>600m 이상</strong></td></tr>
+    <tr><td>입환·중계신호기</td><td><strong>200m 이상</strong></td></tr>
+    <tr><td>수신호 (차량 정지 필요 시)</td><td>사고 지점으로부터 <strong>400m 이상</strong></td></tr>
+    <tr><td>유도신호기</td><td><strong>100m 이상</strong></td></tr>
+  </table>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 가시거리 암기 순서</div>
+    <div class="memo-text">600 · 600 · 200 · 400 · 100<br>(장내출발폐색엄호 · 원방 · 입환중계 · 수신호 · 유도)</div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">❌ 오답 선지 판별</div>
+    <div class="trap-item"><span class="x">✕</span>"원방신호기 가시거리 = 400m" → 오답. 원방신호기도 <strong>600m 이상</strong>. 400m는 수신호 기준.</div>
+  </div>
+
+  <!-- §4 안전측선 vs 피난측선 -->
+  <div class="sec-title">§4. 안전측선 vs 피난측선 (SOURCE 31)</div>
+
+  <table>
+    <tr><th>시설</th><th>목적</th><th>암기</th></tr>
+    <tr><td><strong>안전측선</strong></td><td>정거장에서 동시진입하는 열차 간 <strong>충돌 방지</strong></td><td>안충(安衝)</td></tr>
+    <tr><td><strong>피난측선</strong></td><td>급구배에서 <strong>역행(逆行)하는 차량의 충돌 방지</strong></td><td>피역(避逆)</td></tr>
+    <tr><td><strong>차막이</strong></td><td>선로 끝단 안전장치 — 열차 이탈 방지</td><td>끝단 고정</td></tr>
+  </table>
+
+  <div class="trap-box">
+    <div class="trap-title">❌ 오답 선지 판별</div>
+    <div class="trap-item"><span class="x">✕</span>"안전측선 = 역행 차량을 막는 시설" → 오답. 역행 방호는 <strong>피난측선</strong>.</div>
+    <div class="trap-item"><span class="x">✕</span>"피난측선 = 동시진입 충돌 방지" → 오답. 동시진입 충돌 방지는 <strong>안전측선</strong>.</div>
+    <div class="trap-item"><span class="o">○</span>안전측선=동시진입충돌방지 / 피난측선=역행차량충돌방지 / 차막이=선로끝단</div>
+  </div>
+
+  <!-- §5 낙석방지시설 -->
+  <div class="sec-title">§5. 낙석방지시설 (engineering id:9)</div>
+
+  <table>
+    <tr><th>시설</th><th>낙석방지시설 해당 여부</th></tr>
+    <tr><td>낙석방지 울타리</td><td>해당 (O)</td></tr>
+    <tr><td>낙석방지망</td><td>해당 (O)</td></tr>
+    <tr><td>낙석방지 옹벽</td><td>해당 (O)</td></tr>
+    <tr><td>가드레일(탈선방지레일)</td><td><strong>해당하지 않음 (X)</strong> — 탈선 방지 목적</td></tr>
+  </table>
+
+  <div class="trap-box">
+    <div class="trap-title">❌ 오답 선지 판별</div>
+    <div class="trap-item"><span class="x">✕</span>"가드레일 = 낙석방지시설" → 오답. 가드레일(탈선방지레일)은 <strong>탈선 방지</strong> 목적이며 낙석방지시설이 아님.</div>
+  </div>
+
+  <!-- §6 핵심암기 -->
+  <div class="sec-title">§6. 핵심암기</div>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 암기 공식</div>
+    <div class="memo-text">
+      차막이: 선로 끝단 안전장치<br>
+      유효장 측정: 출발신호기 내방 ~ 차막이(또는 입환신호기)<br>
+      &nbsp;&nbsp;→ 대피선도 본선 포함 / 전체 선로 길이 ≠ 유효장<br>
+      <br>
+      가시거리(시거리) [V-02-A VERIFY]:<br>
+      &nbsp;&nbsp;600m: 장내·출발·폐색·엄호·원방신호기<br>
+      &nbsp;&nbsp;200m: 입환·중계신호기<br>
+      &nbsp;&nbsp;400m: 수신호<br>
+      &nbsp;&nbsp;100m: 유도신호기<br>
+      <br>
+      낙석방지: 울타리·망·옹벽 O / 가드레일 X<br>
+      안전측선=동시진입충돌방지 / 피난측선=역행차량충돌방지
+    </div>
+  </div>
+
+  <!-- §7 시험포인트 -->
+  <div class="sec-title">§7. 시험포인트</div>
+
+  <div class="exam-item exam-trap">
+    <strong>함정 ①</strong>
+    "원방신호기 가시거리 = 400m" → 오답. 원방도 600m. 400m는 수신호.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ①</strong>
+    가드레일(탈선방지레일)은 낙석방지시설이 아니다. — engineering id:9 Q형 출제.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ②</strong>
+    안전측선=충돌방지(동시진입) / 피난측선=역행방호. 두 개념 구별 필수.
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>함정 ②</strong>
+    유효장 = 역 구내 전체 선로 길이 → 오답. 반드시 출발신호기 내방~차막이 사이.
+  </div>
+
+  <!-- §8 문제 연결 -->
+  <div class="sec-title">§8. 문제 연결</div>
+
+  <div class="qst-box">
+    <div class="qst-meta">4지선다형 · [Q] engineering id:9</div>
+    <div class="qst-num">Q1.</div>
+    <div class="qst-q">낙석이 선로로 유입되는 것을 막기 위해 설치하는 시설의 종류로 옳지 않은 것은?</div>
+    <ol class="choice-list">
+      <li>① 낙석방지 울타리</li>
+      <li>② 낙석방지망</li>
+      <li>③ 낙석방지 옹벽</li>
+      <li>④ 가드레일(탈선방지레일)</li>
+    </ol>
+  </div>
+
+  <!-- 정답 및 해설 -->
+  <section class="answer-section">
+    <h2 class="sec-title">정답 및 해설</h2>
+
+    <div class="ans-box">
+      <p class="ans-num">Q1 정답 ④</p>
+      <p class="ans-answer">④ <strong>가드레일(탈선방지레일)</strong>이 정답이다. 가드레일은 탈선 방지를 목적으로 설치하는 시설로, 낙석이 선로로 유입되는 것을 막는 낙석방지시설이 아니다. ①②③(낙석방지 울타리·망·옹벽)은 모두 낙석방지시설에 해당한다.</p>
+      <p class="ans-trap">⚠ TRAP: 가드레일 = 탈선방지용이지 낙석방지용이 아님. 자주 출제되는 오답 선지.</p>
+    </div>
+  </section>
+
+  <nav class="unit-nav">
+    <a href="unit-02-04_FINAL_PUBLISH_v1.0.html">← 이전 UNIT 02-04</a>
+    <span class="nav-gap"></span>
+  </nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
