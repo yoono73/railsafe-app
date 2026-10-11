@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03-03 구배·하중·선로저항 v1.1</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-hold { color: #92400e; border-color: #b45309; background: #fef3c7; }
+
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+
+  .content-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; background: #fff; margin-bottom: 14px; }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+
+  .formula-box { border: 2px solid #1e3a5f; border-radius: 6px; padding: 16px 18px; background: #f0f4f8; margin-bottom: 14px; text-align: center; }
+  .formula-text { font-size: 18px; font-weight: 800; color: #1e3a5f; letter-spacing: 0.05em; margin-bottom: 8px; }
+  .formula-vars { font-size: 13px; color: #333; line-height: 1.8; text-align: left; }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13.5px; }
+  table th { background: #1e3a5f; color: #fff; padding: 8px 12px; text-align: left; font-size: 13px; }
+  table td { border: 1px solid #cbd5e1; padding: 8px 12px; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f8fafc; }
+
+  .trap-box { border: 1.5px solid #dc2626; border-radius: 6px; padding: 14px 16px; background: #fef2f2; margin-bottom: 14px; }
+  .trap-title { font-size: 13px; font-weight: 800; color: #dc2626; margin-bottom: 8px; }
+  .trap-item { font-size: 13.5px; color: #1a1a1a; margin-bottom: 5px; line-height: 1.6; }
+  .trap-item .x { color: #dc2626; font-weight: 800; margin-right: 4px; }
+  .trap-item .o { color: #059669; font-weight: 800; margin-right: 4px; }
+
+  .memo-box { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 14px 18px; background: #f0f4f8; margin-bottom: 14px; }
+  .memo-title { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .memo-text { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.8; }
+
+  .exam-item { padding: 10px 14px; border-radius: 5px; margin-bottom: 8px; font-size: 13.5px; border: 1.5px solid; }
+  .exam-key { border-color: #1e3a5f; background: #f0f4f8; }
+  .exam-trap { border-color: #dc2626; background: #fef2f2; }
+  .exam-item strong { display: block; margin-bottom: 3px; }
+
+  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
+  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+  .choice-list { list-style: none; padding: 0; }
+  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
+  .choice-list li:hover { background: #f8fafc; }
+
+  .answer-section { margin-top: 40px; border-top: 2px solid #1e3a5f; padding-top: 20px; }
+  .answer-section .sec-title { margin-top: 0; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-answer { font-size: 13.5px; color: #1a1a1a; line-height: 1.7; margin-bottom: 6px; }
+  .ans-box .ans-trap { border: 1.5px solid #dc2626; border-radius: 5px; padding: 8px 12px; background: #fef2f2; font-size: 13px; color: #7f1d1d; margin-top: 8px; }
+
+  .vis-wrap { margin: 14px 0; text-align: center; }
+  .vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
+
+  .hold-notice { border: 2px solid #b45309; border-radius: 6px; padding: 12px 16px; background: #fffbeb; margin-bottom: 20px; font-size: 13px; color: #78350f; }
+  .hold-notice strong { display: block; margin-bottom: 4px; font-size: 13.5px; }
+
+  .verify-note { font-size: 12px; color: #92400e; background: #fef3c7; border: 1px solid #b45309; border-radius: 4px; padding: 4px 10px; display: inline-block; margin-left: 6px; }
+
+  @media (max-width: 600px) { table { font-size: 12.5px; } }
+
+  .print-btn { position: fixed; top: 12px; right: 16px; z-index: 999; background: #78350f; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  .print-btn:hover { background: #5c2707; }
+
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    .page-wrap { padding: 10px; }
+    .qst-box, .content-box, .ans-box, .formula-box { break-inside: avoid; page-break-inside: avoid; }
+    img, .vis-wrap img { max-width: 100%; height: auto; }
+    table { width: 100%; max-width: 100%; }
+    .answer-section { break-before: page; page-break-before: always; }
+    .print-btn { display: none !important; }
+  }
+
+  .unit-nav { display:flex; justify-content:space-between; align-items:center; margin:32px 0 16px; padding:12px 0; border-top:2px solid #e5e7eb; }
+  .unit-nav a { color:#78350f; text-decoration:none; font-weight:600; font-size:15px; padding:6px 12px; border-radius:6px; background:#fef3c7; }
+  .unit-nav a:hover { background:#fde68a; }
+  .unit-nav .nav-gap { flex:1; }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+<div class="page-wrap">
+
+  <!-- HOLD 공지 -->
+  <div class="hold-notice">
+    <strong>⚠ HOLD_VERIFY 상태 (v1.1)</strong>
+    SOURCE 68 곡선저항 정량식 미확정.<br>
+    <strong>② 오기 미수정 HOLD</strong>: §6 횡방향력 표 ②번 원인이 SOURCE66 원문 <strong>「레일 압도」</strong>이나 v1.0에서 「레일 횡압력」으로 오기됨. v1.1에서 정정하였으나 ChatGPT 재검수 전까지 Q3 문제 및 정답해설도 HOLD 상태 유지.<br>
+    환산구배 공식·활하중·횡방향력 5종 명칭은 SOURCE 71·66에서 확인 완료.
+  </div>
+
+  <!-- 헤더 -->
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 03 · UNIT 03-03</div>
+    <div class="unit-title">구배·하중·선로저항</div>
+    <div class="unit-sub">구배 정의·‰ 표시, 일반선·고속선 최대구배, 환산구배 공식, 활하중, 횡방향력 5종, 곡선저항</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 03 선로·곡선설비</span>
+      <span class="badge badge-grade">★★★ 핵심</span>
+      <span class="badge badge-hold">HOLD_VERIFY</span>
+    </div>
+  </div>
+
+  <!-- §1 구배 정의 -->
+  <div class="sec-title">§1. 구배의 정의 (SOURCE 47)</div>
+
+  <div class="content-box">
+    <p>구배(勾配)는 선로의 <strong>수평거리 대비 높이 변화 정도</strong>를 나타내는 값이다.</p>
+    <p>철도에서는 <strong>‰(퍼밀, permil)</strong>로 표시한다.</p>
+    <p>예시: 10‰ = 수평거리 1,000m 진행할 때 높이 10m 변화</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">❌ 함정 — 단위 혼동</div>
+    <div class="trap-item"><span class="x">✕</span>"철도 구배는 %로 표시한다" → 오답. 철도는 ‰(퍼밀) 사용.</div>
+    <div class="trap-item"><span class="o">○</span>10‰은 1,000m에서 10m 높이 변화 → 정답.</div>
+  </div>
+
+  <!-- §2 구배의 종류 -->
+  <div class="sec-title">§2. 구배의 종류 (SOURCE 47·54)</div>
+
+  <div class="content-box">
+    <p><strong>방향에 따른 분류:</strong><br>
+    ① <strong>상향구배</strong>: 열차 진행방향으로 높아지는 구간<br>
+    ② <strong>하향구배</strong>: 열차 진행방향으로 낮아지는 구간<br>
+    ③ <strong>수평구배(수평)</strong>: 높이 변화 없음 (0‰)</p>
+    <p><strong>상향구배</strong>는 열차에 추가 저항으로 작용 → 견인력 요구 증가<br>
+    <strong>하향구배</strong>는 중력방향 성분으로 가속하려는 경향 → 제동성능 관리 중요</p>
+  </div>
+
+  <!-- §3 제한구배·최대구배 -->
+  <div class="sec-title">§3. 제한구배·최대구배 (SOURCE 55)</div>
+
+  <div class="content-box">
+    <p><strong>제한구배</strong>: 열차 운전성능 등을 고려해 일반적으로 적용하는 최대 기울기 제한값</p>
+    <p><strong>최대구배</strong>: 특정 선로조건에서 허용되는 최대 기울기</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>선종</th><th>최대 허용구배</th><th>비고</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>일반선</strong></td>
+        <td>25 ‰</td>
+        <td>SOURCE 47·55 확인</td>
+      </tr>
+      <tr>
+        <td><strong>고속선</strong><br>(200 &lt; V ≤ 350 km/h)</td>
+        <td>35 ‰</td>
+        <td>SOURCE 47·55 확인</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="vis-wrap">
+    <img src="images/VIS-074_구배체계수치비교도해.png" alt="구배 수치 비교 도해"
+         style="max-width:680px; width:100%; height:auto; display:block; margin:0 auto;"
+         onerror="this.onerror=null; this.style.display='none';">
+    <div class="vis-caption">VIS-074 구배 체계·수치 비교 도해 (SOURCE 47)</div>
+  </div>
+
+  <div class="vis-wrap">
+    <img src="images/VIS-098_철도_제한구배_최대구배.png" alt="철도 제한구배·최대구배"
+         style="max-width:680px; width:100%; height:auto; display:block; margin:0 auto;"
+         onerror="this.onerror=null; this.style.display='none';">
+    <div class="vis-caption">VIS-098 철도 제한구배·최대구배 (SOURCE 55)</div>
+  </div>
+
+  <!-- §4 환산구배 -->
+  <div class="sec-title">§4. 환산구배 공식 (SOURCE 71)</div>
+
+  <div class="content-box">
+    <p>환산구배란 실제 구배에 <strong>곡선저항을 구배로 환산하여 더한 값</strong>이다. 열차의 실질 주행 부담을 평가할 때 사용한다.</p>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-text">le = l + 700 / R</div>
+    <div class="formula-vars">
+      le : 환산구배 (‰)<br>
+      l &nbsp;: 실제 구배 (‰)<br>
+      R &nbsp;: 곡선반경 (m)
+    </div>
+  </div>
+
+  <div class="content-box">
+    <p><strong>예시</strong>: 실제 구배 l = 25‰, 곡선반경 R = 700m 일 때<br>
+    le = 25 + 700/700 = 25 + 1 = <strong>26‰</strong></p>
+  </div>
+
+  <!-- §5 활하중 -->
+  <div class="sec-title">§5. 활하중 (SOURCE 71)</div>
+
+  <div class="content-box">
+    <p><strong>고정하중</strong>: 구조물 자체 중량처럼 지속적으로 작용하는 하중<br>
+    <strong>활하중(活荷重)</strong>: 열차처럼 이동하면서 선로·구조물에 작용하는 동적 하중</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>구분</th><th>적용 기호</th><th>적용 노선</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>일반철도</strong></td>
+        <td>LS-22</td>
+        <td>국내 일반 노선 표준</td>
+      </tr>
+      <tr>
+        <td><strong>고속철도</strong></td>
+        <td>HL-25</td>
+        <td>고속철도용</td>
+      </tr>
+      <tr>
+        <td><strong>경전철</strong></td>
+        <td>LS-18-20</td>
+        <td>경전철·저하중 노선</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- §6 횡방향력 -->
+  <div class="sec-title">§6. 레일에 작용하는 횡방향력 (SOURCE 66)</div>
+
+  <div class="content-box">
+    <p>횡방향력(횡압)은 레일을 좌우로 밀어내는 힘으로 <strong>탈선 위험과 직결</strong>된다. 고속 주행, 급곡선, 급제동 시 특히 크게 발생하며 궤도 이격·변위의 원인이 된다.</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>번호</th><th>원인</th><th>설명</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>①</td>
+        <td><strong>차량 무게에 의한 축력</strong></td>
+        <td>하중에 따른 레일 횡압</td>
+      </tr>
+      <tr>
+        <td>②</td>
+        <td><strong>레일 압도</strong> <span class="verify-note">SOURCE66 원문 — v1.0 오기 수정</span></td>
+        <td>레일에 작용하는 횡압력 <span style="color:#92400e; font-size:12px;">(v1.0: 「레일 횡압력」→ SOURCE66 원문은 「레일 압도」)</span></td>
+      </tr>
+      <tr>
+        <td>③</td>
+        <td><strong>제동·시동하중</strong></td>
+        <td>급제동·급가속 시 발생</td>
+      </tr>
+      <tr>
+        <td>④</td>
+        <td><strong>관성력</strong></td>
+        <td>속도 변화에 의한 관성</td>
+      </tr>
+      <tr>
+        <td>⑤</td>
+        <td><strong>사행동</strong></td>
+        <td>차륜의 좌우 진동 (사행동 = 뱀처럼 좌우로 흔들림)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="trap-box">
+    <div class="trap-title">❌ 함정 — 횡방향력 원인 단순화</div>
+    <div class="trap-item"><span class="x">✕</span>"횡방향력은 차량 하중만으로 발생한다" → 오답. 5가지 복합 원인.</div>
+    <div class="trap-item"><span class="o">○</span>제동하중·관성·사행동 등 5가지 원인이 복합적으로 작용한다.</div>
+  </div>
+
+  <div class="vis-wrap">
+    <img src="images/VIS-128_열차하중_횡방향력_곡선저항_관계도_FINAL.png" alt="열차하중·횡방향력·곡선저항 관계도"
+         style="max-width:680px; width:100%; height:auto; display:block; margin:0 auto;"
+         onerror="this.onerror=null; this.style.display='none';">
+    <div class="vis-caption">VIS-128 열차하중·횡방향력·곡선저항 관계도 (SOURCE 66·68)</div>
+  </div>
+
+  <!-- §7 곡선저항 -->
+  <div class="sec-title">§7. 곡선저항 (SOURCE 68)</div>
+
+  <div class="content-box">
+    <p>곡선부에서는 직선보다 차량 주행저항이 증가한다. 이를 <strong>곡선저항</strong>이라 한다.</p>
+    <p><strong>곡선저항 영향인자 (SOURCE 68):</strong><br>
+    ① 곡선반경<br>
+    ② 차륜과 레일의 접촉 상태<br>
+    ③ 차량의 고정축거<br>
+    ④ 속도 및 차량조건</p>
+    <p><span class="verify-note">VERIFY</span> SOURCE 68은 곡선저항 영향인자만 명확히 등록되어 있고, 정량 공식은 SOURCE에서 확보되지 않아 기술하지 않는다.</p>
+  </div>
+
+  <!-- §8 구배와 열차운전의 관계 -->
+  <div class="sec-title">§8. 구배와 열차운전의 관계 (SOURCE 47·54)</div>
+
+  <table>
+    <thead>
+      <tr><th>구배 유형</th><th>열차에 미치는 영향</th><th>핵심 고려사항</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>상향구배</strong></td>
+        <td>추가 저항으로 작용</td>
+        <td>견인력 요구 증가, 견인성능 중요</td>
+      </tr>
+      <tr>
+        <td><strong>하향구배</strong></td>
+        <td>중력방향으로 가속하려는 경향</td>
+        <td>제동성능·속도관리 중요</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="content-box">
+    <p>구배는 <strong>견인성능·제동성능·열차중량·운전속도</strong>와 함께 고려해야 한다.</p>
+  </div>
+
+  <!-- 핵심암기 -->
+  <div class="sec-title">핵심암기</div>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 암기 포인트</div>
+    <div class="memo-text">
+      구배 = 높이변화/수평거리, 단위 ‰<br>
+      일반선 최대구배 25‰ &nbsp;&nbsp; 고속선 35‰<br>
+      환산구배: le = l + 700/R<br>
+      활하중: 일반선 LS-22 / 고속 HL-25 / 경전철 LS-18-20<br>
+      횡방향력 5종: ①축력 ②<strong>레일압도</strong><span class="verify-note">SOURCE66 원문 (v1.0 오기: 레일횡압)</span> ③제동시동 ④관성력 ⑤사행동<br>
+      <span style="color:#dc2626;">구배 단위 % 아님 — ‰(퍼밀)</span>
+    </div>
+  </div>
+
+  <!-- 시험포인트 -->
+  <div class="sec-title">시험 포인트</div>
+
+  <div class="exam-item exam-key">
+    <strong>핵심 ①</strong>
+    일반선 최대구배 25‰, 고속선(200&lt;V≤350) 35‰. (SOURCE 55 확인값)
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ②</strong>
+    환산구배 공식: le = l + 700/R (l: 실제구배‰, R: 반경m). (SOURCE 71)
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ③</strong>
+    횡방향력 5종: ①축력 ②<strong>레일 압도</strong>(SOURCE66 원문 — v1.0 오기: 레일횡압력) ③제동·시동하중 ④관성력 ⑤사행동. <span class="verify-note">② 명칭 정정 확인 필요</span>
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>함정 ①</strong>
+    "철도 구배는 %로 표시한다" → X. ‰(퍼밀)로 표시한다.
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>함정 ②</strong>
+    일반선 25‰ ↔ 고속선 35‰ 수치 바꾸기 → 오답.
+  </div>
+
+  <!-- 문제 -->
+  <div class="sec-title">연습 문제</div>
+
+  <div class="qst-box">
+    <div class="qst-meta">SOURCE 기반 연습문제 · 4지선다형</div>
+    <div class="qst-num">Q1.</div>
+    <div class="qst-q">다음 중 철도 구배의 단위와 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 구배는 %(퍼센트)로 표시하며, 10%는 100m에서 10m 높이 변화이다.</li>
+      <li>② 구배는 ‰(퍼밀)로 표시하며, 10‰는 1,000m에서 10m 높이 변화이다.</li>
+      <li>③ 구배는 ‰(퍼밀)로 표시하며, 10‰는 100m에서 10m 높이 변화이다.</li>
+      <li>④ 구배는 %(퍼센트)로 표시하며, 10%는 1,000m에서 10m 높이 변화이다.</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">SOURCE 기반 연습문제 · 4지선다형</div>
+    <div class="qst-num">Q2.</div>
+    <div class="qst-q">실제 구배(l)가 25‰이고 곡선반경(R)이 700m일 때, 환산구배(le)는?</div>
+    <ol class="choice-list">
+      <li>① 24‰</li>
+      <li>② 25‰</li>
+      <li>③ 26‰</li>
+      <li>④ 35‰</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">SOURCE 기반 연습문제 · 4지선다형</div>
+    <div class="qst-num">Q3.</div>
+    <div class="qst-q">레일에 작용하는 횡방향력(횡압)의 원인으로 <u>옳지 않은</u> 것은?</div>
+    <ol class="choice-list">
+      <li>① 차량 무게에 의한 축력</li>
+      <li>② 제동·시동하중</li>
+      <li>③ 차량 무게에 의한 수직하중만</li>
+      <li>④ 사행동(차륜의 좌우 진동)</li>
+    </ol>
+  </div>
+
+  <!-- 정답 및 해설 -->
+  <section class="answer-section">
+    <div class="sec-title">정답 및 해설</div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q1 정답 ②</p>
+      <p class="ans-answer">② 철도 구배는 <strong>‰(퍼밀)</strong>로 표시하며, 10‰는 수평거리 1,000m 진행 시 높이 10m 변화를 의미한다(SOURCE 47).<br>
+      ① ④ %는 도로 경사에서 주로 사용. 철도는 ‰ 사용.<br>
+      ③ 10‰ = 1,000m당 10m 변화. 100m당이 아님.</p>
+      <div class="ans-trap">⚠ TRAP: 철도에서 구배 단위는 %(퍼센트)가 아닌 ‰(퍼밀)이다.</div>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q2 정답 ③</p>
+      <p class="ans-answer">환산구배 공식 le = l + 700/R 적용:<br>
+      le = 25 + 700/700 = 25 + 1 = <strong>26‰</strong> (SOURCE 71)</p>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q3 정답 ③</p>
+      <p class="ans-answer">③ "차량 무게에 의한 수직하중만"은 오답이다. 횡방향력은 수직하중이 아닌 <strong>횡방향</strong>으로 작용하는 힘으로, 5가지 원인(①축력 ②<strong>레일 압도</strong> ③제동·시동하중 ④관성력 ⑤사행동)이 복합적으로 작용한다(SOURCE 66).<br>
+      ①②④는 모두 실제 횡방향력의 원인이다.</p>
+      <p><span class="verify-note">② 명칭: SOURCE66 원문 「레일 압도」— v1.0에서 「레일횡압력」으로 오기됨, v1.1에서 정정. ChatGPT 재검수 전 HOLD.</span></p>
+      <div class="ans-trap">⚠ TRAP: "횡방향력 = 차량 하중만" → 틀림. 5가지 복합 원인 모두 암기.</div>
+    </div>
+  </section>
+
+  <nav class="unit-nav">
+    <a href="unit-03-02_HOLD_VERIFY_v1.1.html">← 이전 UNIT 03-02</a>
+    <span class="nav-gap"></span>
+    <span style="color:#94a3b8; font-size:14px;">다음 UNIT 04-01 (미제작)</span>
+  </nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
