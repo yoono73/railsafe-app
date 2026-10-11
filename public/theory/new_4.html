@@ -519,9 +519,13 @@ function openPart(partKey) {
    ============================================================ */
 let activeUnitId = null;
 
+function canOpen(unit) {
+  return unit && (unit.status === 'published' || (unit.status === 'hold' && unit.file));
+}
+
 function loadUnit(unitId) {
   const unit = UNITS.find(u => u.id === unitId);
-  if (!unit || unit.status !== 'published') return;
+  if (!canOpen(unit)) return;
 
   // URL 상태 반영
   const url = new URL(window.location.href);
@@ -533,7 +537,7 @@ function loadUnit(unitId) {
 
 function activateUnit(unitId, unit) {
   if (!unit) unit = UNITS.find(u => u.id === unitId);
-  if (!unit || unit.status !== 'published') return;
+  if (!canOpen(unit)) return;
 
   // 이전 active 해제
   if (activeUnitId) {
