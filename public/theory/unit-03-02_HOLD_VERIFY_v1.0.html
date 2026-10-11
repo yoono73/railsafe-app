@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03-02 캔트·슬랙</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-hold { color: #92400e; border-color: #b45309; background: #fef3c7; }
+
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+
+  .content-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; background: #fff; margin-bottom: 14px; }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+
+  .formula-box { border: 2px solid #1e3a5f; border-radius: 6px; padding: 16px 18px; background: #f0f4f8; margin-bottom: 14px; text-align: center; }
+  .formula-text { font-size: 18px; font-weight: 800; color: #1e3a5f; letter-spacing: 0.05em; margin-bottom: 8px; }
+  .formula-vars { font-size: 13px; color: #333; line-height: 1.8; text-align: left; }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13.5px; }
+  table th { background: #1e3a5f; color: #fff; padding: 8px 12px; text-align: left; font-size: 13px; }
+  table td { border: 1px solid #cbd5e1; padding: 8px 12px; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f8fafc; }
+
+  .trap-box { border: 1.5px solid #dc2626; border-radius: 6px; padding: 14px 16px; background: #fef2f2; margin-bottom: 14px; }
+  .trap-title { font-size: 13px; font-weight: 800; color: #dc2626; margin-bottom: 8px; }
+  .trap-item { font-size: 13.5px; color: #1a1a1a; margin-bottom: 5px; line-height: 1.6; }
+  .trap-item .x { color: #dc2626; font-weight: 800; margin-right: 4px; }
+  .trap-item .o { color: #059669; font-weight: 800; margin-right: 4px; }
+
+  .memo-box { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 14px 18px; background: #f0f4f8; margin-bottom: 14px; }
+  .memo-title { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .memo-text { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.8; }
+
+  .exam-item { padding: 10px 14px; border-radius: 5px; margin-bottom: 8px; font-size: 13.5px; border: 1.5px solid; }
+  .exam-key { border-color: #1e3a5f; background: #f0f4f8; }
+  .exam-trap { border-color: #dc2626; background: #fef2f2; }
+  .exam-item strong { display: block; margin-bottom: 3px; }
+
+  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
+  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+  .choice-list { list-style: none; padding: 0; }
+  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
+  .choice-list li:hover { background: #f8fafc; }
+
+  .answer-section { margin-top: 40px; border-top: 2px solid #1e3a5f; padding-top: 20px; }
+  .answer-section .sec-title { margin-top: 0; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-answer { font-size: 13.5px; color: #1a1a1a; line-height: 1.7; margin-bottom: 6px; }
+  .ans-box .ans-trap { border: 1.5px solid #dc2626; border-radius: 5px; padding: 8px 12px; background: #fef2f2; font-size: 13px; color: #7f1d1d; margin-top: 8px; }
+
+  .vis-wrap { margin: 14px 0; text-align: center; }
+  .vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
+
+  .hold-notice { border: 2px solid #b45309; border-radius: 6px; padding: 12px 16px; background: #fffbeb; margin-bottom: 20px; font-size: 13px; color: #78350f; }
+  .hold-notice strong { display: block; margin-bottom: 4px; font-size: 13.5px; }
+
+  .verify-note { font-size: 12px; color: #92400e; background: #fef3c7; border: 1px solid #b45309; border-radius: 4px; padding: 4px 10px; display: inline-block; margin-left: 6px; }
+
+  @media (max-width: 600px) { table { font-size: 12.5px; } }
+
+  .print-btn { position: fixed; top: 12px; right: 16px; z-index: 999; background: #78350f; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  .print-btn:hover { background: #5c2707; }
+
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    .page-wrap { padding: 10px; }
+    .qst-box, .content-box, .ans-box, .formula-box { break-inside: avoid; page-break-inside: avoid; }
+    img, .vis-wrap img { max-width: 100%; height: auto; }
+    table { width: 100%; max-width: 100%; }
+    .answer-section { break-before: page; page-break-before: always; }
+    .print-btn { display: none !important; }
+  }
+
+  .unit-nav { display:flex; justify-content:space-between; align-items:center; margin:32px 0 16px; padding:12px 0; border-top:2px solid #e5e7eb; }
+  .unit-nav a { color:#78350f; text-decoration:none; font-weight:600; font-size:15px; padding:6px 12px; border-radius:6px; background:#fef3c7; }
+  .unit-nav a:hover { background:#fde68a; }
+  .unit-nav .nav-gap { flex:1; }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+<div class="page-wrap">
+
+  <!-- HOLD 공지 -->
+  <div class="hold-notice">
+    <strong>⚠ HOLD_VERIFY 상태</strong>
+    일반선 160mm·고속선 180mm·슬랙 30mm 현행 기술기준 원문 미대조. SOURCE 수치는 확인되었으나 현행값 단정 전 VERIFY 유지.
+  </div>
+
+  <!-- 헤더 -->
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 03 · UNIT 03-02</div>
+    <div class="unit-title">캔트·슬랙</div>
+    <div class="unit-sub">캔트 정의·공식·최대값, 슬랙 정의·최대값, 부족캔트·초과캔트, 캔트 vs 슬랙 비교</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 03 선로·곡선설비</span>
+      <span class="badge badge-grade">★★★ 핵심</span>
+      <span class="badge badge-hold">HOLD_VERIFY</span>
+    </div>
+  </div>
+
+  <!-- §1 캔트 -->
+  <div class="sec-title">§1. 캔트(Cant)의 정의와 목적 (SOURCE 19)</div>
+
+  <div class="content-box">
+    <p>캔트(Cant)는 곡선부에서 원심력에 대응하기 위해 <strong>바깥쪽(외측) 레일을 안쪽(내측) 레일보다 높게 설치한 높이 차</strong>이다.</p>
+    <p><strong>캔트 설치 목적:</strong><br>
+    ① 곡선부 원심력의 영향 완화<br>
+    ② 승차감 향상<br>
+    ③ 차량과 궤도에 작용하는 횡압 감소<br>
+    ④ 곡선 통과 안정성 향상</p>
+  </div>
+
+  <div class="vis-wrap">
+    <img src="images/VIS-097_철도_캔트.png" alt="철도 캔트 원리 도해"
+         style="max-width:640px; width:100%; height:auto; display:block; margin:0 auto;"
+         onerror="this.onerror=null; this.style.display='none';">
+    <div class="vis-caption">VIS-097 캔트(외측 레일 높임) 원리 도해 (SOURCE 19)</div>
+  </div>
+
+  <!-- §2 캔트 공식 -->
+  <div class="sec-title">§2. 캔트 공식 (SOURCE 19)</div>
+
+  <div class="formula-box">
+    <div class="formula-text">C = G·V² / (127·R)</div>
+    <div class="formula-vars">
+      C : 캔트 (mm)<br>
+      G : 궤간 (m) &nbsp;[4.html 개념19 확인됨]<br>
+      V : 열차속도 (km/h)<br>
+      R : 곡선반경 (m)
+    </div>
+  </div>
+
+  <div class="content-box">
+    <p>이 공식은 SOURCE 19에서 KEEP 확정된 공식이다. G의 단위는 4.html 개념19에서 <strong>궤간(m)</strong>으로 확인됨.</p>
+    <p><span class="verify-note">VERIFY</span> 현행 기술기준 원문 대조 전 계산형 확장 주의.</p>
+  </div>
+
+  <!-- §3 최대 캔트 수치 -->
+  <div class="sec-title">§3. 최대 캔트 기준값 (SOURCE 19) <span class="verify-note">VERIFY — 기술기준 원문 미대조</span></div>
+
+  <table>
+    <thead>
+      <tr><th>선종</th><th>최대캔트</th><th>비고</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>일반선</strong></td>
+        <td>160 mm</td>
+        <td>SOURCE 19 학습값</td>
+      </tr>
+      <tr>
+        <td><strong>고속선</strong></td>
+        <td>180 mm</td>
+        <td>SOURCE 19 학습값</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="trap-box">
+    <div class="trap-title">❌ 함정 — 수치 바꿔치기</div>
+    <div class="trap-item"><span class="x">✕</span>일반선 180mm, 고속선 160mm → 오답 (수치 교환)</div>
+    <div class="trap-item"><span class="o">○</span>일반선 160mm, 고속선 180mm → SOURCE 기준값</div>
+  </div>
+
+  <!-- §4 부족캔트·초과캔트 -->
+  <div class="sec-title">§4. 부족캔트·초과캔트 (SOURCE 19·54)</div>
+
+  <div class="content-box">
+    <p><strong>균형캔트</strong>: 주행 속도에서 정확히 균형을 이루는 이론적 캔트값</p>
+    <p><strong>부족캔트</strong>: 설정캔트 &lt; 균형캔트 → 고속 주행 시 외측으로 쏠리는 경향 (외측 탈선 위험)</p>
+    <p><strong>초과캔트(과다캔트)</strong>: 설정캔트 &gt; 균형캔트 → 저속 주행 시 내측으로 쏠리는 경향 (내측 탈선 위험)</p>
+    <p>※ 정량 공식은 SOURCE에서 충분히 확보되지 않아 기술하지 않는다.</p>
+  </div>
+
+  <!-- §5 슬랙 -->
+  <div class="sec-title">§5. 슬랙(Slack)의 정의와 목적 (SOURCE 19)</div>
+
+  <div class="content-box">
+    <p>슬랙(Slack)은 곡선부에서 차량이 원활하게 통과하도록 <strong>궤간(선로 폭)을 넓혀주는 값</strong>이다.</p>
+    <p><strong>슬랙 설치 목적:</strong><br>
+    ① 고정축거를 가진 차량이 급곡선을 원활히 통과하도록 도움<br>
+    ② 차륜과 레일의 과도한 접촉·저항 감소</p>
+    <p><strong>최대 슬랙: 30 mm</strong> (SOURCE 19 학습값) <span class="verify-note">VERIFY</span></p>
+  </div>
+
+  <div class="content-box">
+    <p><strong>고정축거와 슬랙</strong>: 고정축거(차량에서 차축 간격이 고정된 부분)가 길수록 곡선 통과 시 차륜이 레일을 따라가기 어려워진다. 따라서 곡선부에서는 슬랙을 두어 통과를 원활하게 한다.</p>
+    <p>※ 정량관계 공식은 SOURCE에서 확보되지 않아 기술하지 않는다.</p>
+  </div>
+
+  <!-- §6 캔트 vs 슬랙 비교 -->
+  <div class="sec-title">§6. 캔트 vs 슬랙 비교 (SOURCE 19)</div>
+
+  <table>
+    <thead>
+      <tr><th>구분</th><th>캔트(Cant)</th><th>슬랙(Slack)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>무엇을 바꾸나</strong></td>
+        <td>좌우 레일의 높이 차 (외측 레일 높임)</td>
+        <td>궤간 폭 (선로 넓히기)</td>
+      </tr>
+      <tr>
+        <td><strong>주목적</strong></td>
+        <td>원심력 대응, 횡압 감소</td>
+        <td>곡선 통과 원활화</td>
+      </tr>
+      <tr>
+        <td><strong>관련 요소</strong></td>
+        <td>속도·곡선반경</td>
+        <td>곡선반경·차량 고정축거</td>
+      </tr>
+      <tr>
+        <td><strong>SOURCE 수치</strong></td>
+        <td>일반 160 / 고속 180 mm</td>
+        <td>최대 30 mm</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 핵심암기 -->
+  <div class="sec-title">핵심암기</div>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 암기 포인트</div>
+    <div class="memo-text">
+      캔트 = 외측(바깥쪽) 레일을 높이는 것 (높이 차)<br>
+      슬랙 = 궤간(선로 폭)을 넓히는 것<br>
+      공식: C = G·V² / (127·R) &nbsp;&nbsp;G=궤간(m)<br>
+      일반선 최대캔트: 160mm &nbsp; 고속선: 180mm<br>
+      슬랙 최대: 30mm<br>
+      <span style="color:#dc2626;">캔트 ≠ 궤간 확대 &nbsp;·&nbsp; 슬랙 ≠ 레일 높임</span>
+    </div>
+  </div>
+
+  <!-- 시험포인트 -->
+  <div class="sec-title">시험 포인트</div>
+
+  <div class="exam-item exam-key">
+    <strong>핵심 ①</strong>
+    캔트 = 외측 레일을 높이는 것 (높이 차). 슬랙 = 궤간을 넓히는 것. 이 둘을 절대 바꾸어 쓰지 않는다.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ②</strong>
+    공식 C = G·V²/(127·R). G는 궤간(m), V는 속도(km/h), R은 반경(m).
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>함정 ①</strong>
+    "캔트는 궤간 자체를 넓히는 값이다" → X (궤간 확대는 슬랙)
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>함정 ②</strong>
+    "슬랙은 외측 레일을 높이는 값이다" → X (외측 레일 높임은 캔트)
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>함정 ③</strong>
+    일반선과 고속선 최대캔트 수치를 바꾸어 제시하는 경우 → 일반선 160, 고속선 180이 SOURCE 기준
+  </div>
+
+  <!-- 문제 -->
+  <div class="sec-title">연습 문제</div>
+
+  <div class="qst-box">
+    <div class="qst-meta">SOURCE 기반 연습문제 · 4지선다형</div>
+    <div class="qst-num">Q1.</div>
+    <div class="qst-q">철도 곡선부에서 캔트(Cant)를 설치하는 목적으로 <u>옳지 않은</u> 것은?</div>
+    <ol class="choice-list">
+      <li>① 곡선부 원심력의 영향을 완화한다.</li>
+      <li>② 곡선부 궤간(선로 폭)을 넓혀 차량 통과를 원활하게 한다.</li>
+      <li>③ 차량과 궤도에 작용하는 횡압을 감소시킨다.</li>
+      <li>④ 승차감을 향상시킨다.</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">SOURCE 기반 연습문제 · 4지선다형</div>
+    <div class="qst-num">Q2.</div>
+    <div class="qst-q">캔트와 슬랙에 대한 설명으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 캔트는 곡선부에서 궤간을 넓히는 값이다.</li>
+      <li>② 슬랙은 외측 레일을 높이는 값이다.</li>
+      <li>③ 캔트는 외측 레일을 내측 레일보다 높게 설치한 높이 차이다.</li>
+      <li>④ 캔트와 슬랙은 동일한 목적을 가진다.</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">SOURCE 기반 연습문제 · 단답형</div>
+    <div class="qst-num">Q3.</div>
+    <div class="qst-q">다음 캔트(Cant) 공식에서 기호의 의미를 쓰시오.<br><br>
+    C = G·V² / (127·R)<br><br>
+    G = _________, V = _________, R = _________</div>
+  </div>
+
+  <!-- 정답 및 해설 -->
+  <section class="answer-section">
+    <div class="sec-title">정답 및 해설</div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q1 정답 ②</p>
+      <p class="ans-answer">② 궤간을 넓혀 차량 통과를 원활하게 하는 것은 <strong>슬랙(Slack)</strong>의 목적이다. 캔트는 외측 레일을 높여 원심력을 대응하는 것이다. ①③④(원심력 완화·횡압 감소·승차감 향상)는 모두 캔트 설치 목적이다.</p>
+      <div class="ans-trap">⚠ TRAP: 캔트(높이 차) vs 슬랙(궤간 확대) 혼동 주의.</div>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q2 정답 ③</p>
+      <p class="ans-answer">③ <strong>캔트는 외측 레일을 내측 레일보다 높게 설치한 높이 차</strong>다(SOURCE 19).<br>
+      ① 궤간 확대 = 슬랙<br>
+      ② 외측 레일 높임 = 캔트<br>
+      ④ 캔트는 원심력 대응, 슬랙은 곡선 통과 원활화로 목적이 다르다.</p>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q3 정답</p>
+      <p class="ans-answer">G = <strong>궤간 (m)</strong>, V = <strong>열차속도 (km/h)</strong>, R = <strong>곡선반경 (m)</strong><br>
+      (SOURCE 19 / 4.html 개념19 확인)</p>
+    </div>
+  </section>
+
+  <nav class="unit-nav">
+    <a href="unit-03-01_HOLD_VERIFY_v1.0.html">← 이전 UNIT 03-01</a>
+    <span class="nav-gap"></span>
+    <a href="unit-03-03_HOLD_VERIFY_v1.0.html">다음 UNIT 03-03 →</a>
+  </nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03-01 곡선·완화곡선</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-hold { color: #92400e; border-color: #b45309; background: #fef3c7; }
+
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+  .sec-sub { font-size: 14px; font-weight: 700; color: #1a1a1a; margin: 20px 0 8px; padding: 4px 10px; background: #f5f7fa; border-left: 3px solid #64748b; }
+
+  .content-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; background: #fff; margin-bottom: 14px; }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+
+  .term-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13.5px; }
+  .term-table th { background: #1e3a5f; color: #fff; padding: 8px 12px; text-align: left; font-size: 13px; }
+  .term-table td { border: 1px solid #cbd5e1; padding: 8px 12px; vertical-align: top; }
+  .term-table tr:nth-child(even) td { background: #f8fafc; }
+  .term-name { font-weight: 700; color: #1e3a5f; }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13.5px; }
+  table th { background: #1e3a5f; color: #fff; padding: 8px 12px; text-align: left; font-size: 13px; }
+  table td { border: 1px solid #cbd5e1; padding: 8px 12px; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f8fafc; }
+
+  .trap-box { border: 1.5px solid #dc2626; border-radius: 6px; padding: 14px 16px; background: #fef2f2; margin-bottom: 14px; }
+  .trap-title { font-size: 13px; font-weight: 800; color: #dc2626; margin-bottom: 8px; }
+  .trap-item { font-size: 13.5px; color: #1a1a1a; margin-bottom: 5px; line-height: 1.6; }
+  .trap-item .x { color: #dc2626; font-weight: 800; margin-right: 4px; }
+  .trap-item .o { color: #059669; font-weight: 800; margin-right: 4px; }
+
+  .memo-box { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 14px 18px; background: #f0f4f8; margin-bottom: 14px; }
+  .memo-title { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .memo-text { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.8; }
+
+  .exam-item { padding: 10px 14px; border-radius: 5px; margin-bottom: 8px; font-size: 13.5px; border: 1.5px solid; }
+  .exam-key { border-color: #1e3a5f; background: #f0f4f8; }
+  .exam-trap { border-color: #dc2626; background: #fef2f2; }
+  .exam-item strong { display: block; margin-bottom: 3px; }
+
+  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
+  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+  .choice-list { list-style: none; padding: 0; }
+  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
+  .choice-list li:hover { background: #f8fafc; }
+
+  .answer-section { margin-top: 40px; border-top: 2px solid #1e3a5f; padding-top: 20px; }
+  .answer-section .sec-title { margin-top: 0; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-answer { font-size: 13.5px; color: #1a1a1a; line-height: 1.7; margin-bottom: 6px; }
+  .ans-box .ans-trap { border: 1.5px solid #dc2626; border-radius: 5px; padding: 8px 12px; background: #fef2f2; font-size: 13px; color: #7f1d1d; margin-top: 8px; }
+
+  .vis-wrap { margin: 14px 0; text-align: center; }
+  .vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
+
+  .hold-notice { border: 2px solid #b45309; border-radius: 6px; padding: 12px 16px; background: #fffbeb; margin-bottom: 20px; font-size: 13px; color: #78350f; }
+  .hold-notice strong { display: block; margin-bottom: 4px; font-size: 13.5px; }
+
+  @media (max-width: 600px) { table { font-size: 12.5px; } }
+
+  .print-btn { position: fixed; top: 12px; right: 16px; z-index: 999; background: #78350f; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  .print-btn:hover { background: #5c2707; }
+
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    .page-wrap { padding: 10px; }
+    .qst-box, .content-box, .ans-box { break-inside: avoid; page-break-inside: avoid; }
+    img, .vis-wrap img { max-width: 100%; height: auto; }
+    table { width: 100%; max-width: 100%; }
+    .answer-section { break-before: page; page-break-before: always; }
+    .print-btn { display: none !important; }
+  }
+
+  .unit-nav { display:flex; justify-content:space-between; align-items:center; margin:32px 0 16px; padding:12px 0; border-top:2px solid #e5e7eb; }
+  .unit-nav a { color:#78350f; text-decoration:none; font-weight:600; font-size:15px; padding:6px 12px; border-radius:6px; background:#fef3c7; }
+  .unit-nav a:hover { background:#fde68a; }
+  .unit-nav .nav-gap { flex:1; }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+<div class="page-wrap">
+
+  <!-- HOLD 공지 -->
+  <div class="hold-notice">
+    <strong>⚠ HOLD_VERIFY 상태</strong>
+    완화곡선 길이 공식·세부 설치기준 및 종곡선 세부식 미확정. SOURCE 원문 추가 대조 후 FINAL 전환 예정.
+  </div>
+
+  <!-- 헤더 -->
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 03 · UNIT 03-01</div>
+    <div class="unit-title">곡선·완화곡선</div>
+    <div class="unit-sub">직선→완화곡선→원곡선 구조, 클로소이드, 체감(Transition), 완화곡선 vs 종곡선 구분</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 03 선로·곡선설비</span>
+      <span class="badge badge-grade">★★★ 핵심</span>
+      <span class="badge badge-hold">HOLD_VERIFY</span>
+    </div>
+  </div>
+
+  <!-- 핵심 용어 -->
+  <div class="sec-title">핵심 용어</div>
+
+  <table class="term-table">
+    <thead>
+      <tr><th>용어</th><th>정의 (SOURCE 20)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="term-name">완화곡선</td>
+        <td>직선과 원곡선 사이에 삽입하는 곡선. 곡률·캔트·슬랙을 점진적으로 변화시켜 원심력의 급변을 완화한다. 대표 형식: 클로소이드, 3차포물선.</td>
+      </tr>
+      <tr>
+        <td class="term-name">클로소이드</td>
+        <td>진행 거리에 따라 곡률이 점진적으로 변하는 곡선. 직선과 원곡선 사이 연결에 사용되는 대표적 완화곡선 형식.</td>
+      </tr>
+      <tr>
+        <td class="term-name">체감(Transition)</td>
+        <td>캔트·슬랙을 직선과 곡선 사이에서 점차 변화시키는 구간. 완화곡선 구간 내에서 함께 이루어진다.</td>
+      </tr>
+      <tr>
+        <td class="term-name">종곡선</td>
+        <td>종단 선형에서 서로 다른 구배(기울기)를 부드럽게 연결하는 곡선. 평면 선형의 완화곡선과 다름.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- §1 곡선부 개요 -->
+  <div class="sec-title">§1. 곡선부에서 고려해야 하는 요소 (SOURCE 20)</div>
+
+  <div class="content-box">
+    <p>열차가 곡선부를 통과할 때는 직선 주행과 달리 <strong>횡방향 힘과 차량의 편기·기울기</strong>가 발생한다. 이에 대응하기 위해 다음 요소를 함께 고려한다.</p>
+    <p><strong>곡선반경 / 열차속도 / 원심력 / 캔트 / 슬랙 / 완화곡선 / 건축한계 확대</strong></p>
+    <p>캔트·슬랙의 상세 내용은 UNIT 03-02에서 다룬다. 이 UNIT은 <strong>곡선과 완화곡선의 구조적 역할</strong>에 집중한다.</p>
+  </div>
+
+  <!-- §2 완화곡선 -->
+  <div class="sec-title">§2. 완화곡선이 필요한 이유 (SOURCE 20)</div>
+
+  <div class="content-box">
+    <p>직선에서는 곡률이 0이고, 원곡선에서는 일정한 곡률을 가진다.</p>
+    <p>직선에서 곧바로 원곡선으로 진입하면 곡률과 원심력의 변화가 <strong>갑자기</strong> 발생한다. 이를 완만하게 연결하기 위해 직선과 원곡선 사이에 <strong>완화곡선</strong>을 설치한다.</p>
+  </div>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 핵심 구조</div>
+    <div class="memo-text">직선 → 완화곡선 → 원곡선</div>
+  </div>
+
+  <div class="content-box">
+    <p><strong>완화곡선의 목적</strong></p>
+    <p>① 원심력의 급격한 변화 완화<br>
+    ② 캔트를 점진적으로 증가·감소<br>
+    ③ 슬랙을 점진적으로 변화<br>
+    ④ 승차감과 주행안정성 향상</p>
+  </div>
+
+  <div class="vis-wrap">
+    <img src="images/VIS-076_완화곡선클로소이드도해.png" alt="완화곡선·클로소이드 도해"
+         style="max-width:680px; width:100%; height:auto; display:block; margin:0 auto;"
+         onerror="this.onerror=null; this.style.display='none';">
+    <div class="vis-caption">VIS-076 완화곡선·클로소이드 도해 (SOURCE 20)</div>
+  </div>
+
+  <!-- §3 클로소이드 -->
+  <div class="sec-title">§3. 완화곡선의 대표 형식 — 클로소이드 (SOURCE 20)</div>
+
+  <div class="content-box">
+    <p>클로소이드(Clothoid)는 <strong>곡선 진행에 따라 곡률이 점진적으로 변하는</strong> 곡선으로, 직선과 원곡선 사이 연결에 가장 적합하다.</p>
+    <p>프로젝트 용어정의: <em>완화곡선 = 직선과 원곡선 사이에 삽입하는 곡선(클로소이드, 3차포물선)</em></p>
+    <p>※ 상세 수학식은 현재 프로젝트 SOURCE에 명확히 제시되지 않아 기술하지 않는다.</p>
+  </div>
+
+  <!-- §4 체감 -->
+  <div class="sec-title">§4. 체감(Transition) (SOURCE 20)</div>
+
+  <div class="content-box">
+    <p>체감이란 <strong>캔트·슬랙을 직선과 곡선 사이에서 점차 변화시키는 구간</strong>을 말한다.</p>
+    <p>완화곡선은 단순히 평면상 곡률만 바꾸는 것이 아니라, <strong>실제 선로에서는 캔트와 슬랙의 점진적 변화</strong>와 연결해서 이해해야 한다. 체감 구간은 완화곡선 구간 내에서 함께 이루어진다.</p>
+  </div>
+
+  <!-- §5 완화곡선 vs 종곡선 -->
+  <div class="sec-title">§5. 완화곡선 vs 종곡선 (SOURCE 20·21)</div>
+
+  <table>
+    <thead>
+      <tr><th>구분</th><th>완화곡선</th><th>종곡선</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>적용 선형</strong></td>
+        <td>평면 선형</td>
+        <td>종단 선형</td>
+      </tr>
+      <tr>
+        <td><strong>목적</strong></td>
+        <td>직선과 원곡선을 부드럽게 연결</td>
+        <td>서로 다른 구배(기울기)를 부드럽게 연결</td>
+      </tr>
+      <tr>
+        <td><strong>핵심 변화</strong></td>
+        <td>곡률 (수평면)</td>
+        <td>기울기 (수직면)</td>
+      </tr>
+      <tr>
+        <td><strong>관련 요소</strong></td>
+        <td>캔트·슬랙·원심력</td>
+        <td>구배·종단선형</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- §6 곡선반경과 주행 특성 -->
+  <div class="sec-title">§6. 곡선반경과 주행 특성 (SOURCE 20)</div>
+
+  <div class="content-box">
+    <p>고속선에서는 큰 곡선반경이 필요하다. 일반적으로:</p>
+    <p>① 곡선반경이 작을수록 곡선이 급해짐<br>
+    ② 같은 속도라면 원심력 영향이 커짐<br>
+    ③ 더 큰 캔트 또는 속도제한이 필요할 수 있음</p>
+    <p>※ 정량식은 현재 UNIT SOURCE 범위에서 LOCK된 공식이 없어 기술하지 않는다. (→ UNIT 03-02 참조)</p>
+  </div>
+
+  <!-- 핵심암기 -->
+  <div class="sec-title">핵심암기</div>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 암기 포인트</div>
+    <div class="memo-text">
+      완화곡선 = 직선 → 완화곡선 → 원곡선<br>
+      완화곡선 목적 = 곡률·캔트·슬랙을 서서히 변화<br>
+      클로소이드 = 진행 거리에 따라 곡률이 점진 변화<br>
+      체감(Transition) = 캔트·슬랙의 점진 변화 구간<br>
+      <span style="color:#dc2626;">종곡선 = 평면 아님, 종단 선형 (구배 연결)</span>
+    </div>
+  </div>
+
+  <!-- 시험포인트 -->
+  <div class="sec-title">시험 포인트</div>
+
+  <div class="exam-item exam-key">
+    <strong>핵심 ①</strong>
+    완화곡선은 직선과 원곡선 사이에 설치한다. 직선에서 바로 원곡선으로 연결하면 원심력이 갑자기 변한다.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ②</strong>
+    클로소이드는 대표적인 완화곡선 형식이다. (3차포물선도 가능)
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>함정 ①</strong>
+    "종곡선은 직선과 원곡선 사이의 평면곡선이다" → X<br>
+    종곡선은 종단 선형에서 다른 구배를 연결하는 것이다.
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>함정 ②</strong>
+    "완화곡선은 캔트 변화와 무관하다" → X<br>
+    완화곡선 구간에서 캔트·슬랙이 함께 점진적으로 변한다.
+  </div>
+
+  <!-- 문제 -->
+  <div class="sec-title">연습 문제</div>
+
+  <div class="qst-box">
+    <div class="qst-meta">SOURCE 기반 연습문제 · 4지선다형</div>
+    <div class="qst-num">Q1.</div>
+    <div class="qst-q">철도 선로에서 완화곡선을 설치하는 목적으로 <u>옳지 않은</u> 것은?</div>
+    <ol class="choice-list">
+      <li>① 원심력의 급격한 변화를 완화한다.</li>
+      <li>② 캔트를 점진적으로 증가·감소시킨다.</li>
+      <li>③ 직선 구간에서 서로 다른 구배를 부드럽게 연결한다.</li>
+      <li>④ 슬랙을 점진적으로 변화시킨다.</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">SOURCE 기반 연습문제 · 4지선다형</div>
+    <div class="qst-num">Q2.</div>
+    <div class="qst-q">다음 중 완화곡선의 대표적 형식으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 포물선만 사용된다.</li>
+      <li>② 클로소이드와 3차포물선이 사용된다.</li>
+      <li>③ 원곡선만 사용된다.</li>
+      <li>④ 종곡선과 동일하다.</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">SOURCE 기반 연습문제 · OX형</div>
+    <div class="qst-num">Q3.</div>
+    <div class="qst-q">다음 각 설명의 맞고 틀림을 판단하시오.
+    <br><br>
+    (가) 완화곡선은 직선과 원곡선 사이에 설치하는 곡선이다.<br>
+    (나) 종곡선은 평면상 직선과 원곡선을 연결하는 곡선이다.<br>
+    (다) 체감은 완화곡선 구간에서 캔트·슬랙을 점진적으로 변화시키는 구간이다.</div>
+    <ol class="choice-list">
+      <li>① (가) O, (나) O, (다) O</li>
+      <li>② (가) O, (나) X, (다) O</li>
+      <li>③ (가) X, (나) O, (다) O</li>
+      <li>④ (가) O, (나) O, (다) X</li>
+    </ol>
+  </div>
+
+  <!-- 정답 및 해설 -->
+  <section class="answer-section">
+    <div class="sec-title">정답 및 해설</div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q1 정답 ③</p>
+      <p class="ans-answer">③은 <strong>종곡선</strong>의 역할(서로 다른 구배를 부드럽게 연결)이다. 완화곡선은 평면 선형에서 직선과 원곡선을 연결하며, ①②④(원심력 완화·캔트 점진 변화·슬랙 점진 변화)가 모두 완화곡선의 목적이다.</p>
+      <div class="ans-trap">⚠ TRAP: 종곡선(종단 선형의 구배 연결)과 완화곡선(평면 선형의 곡률 연결)을 혼동하지 말 것.</div>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q2 정답 ②</p>
+      <p class="ans-answer">완화곡선의 대표 형식은 <strong>클로소이드</strong>와 <strong>3차포물선</strong>이다(SOURCE 20). 클로소이드는 진행 거리에 따라 곡률이 점진적으로 변하는 특성이 있어 직선과 원곡선 사이 연결에 적합하다.</p>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q3 정답 ②</p>
+      <p class="ans-answer">
+        (가) O — 완화곡선은 직선과 원곡선 사이에 설치한다.<br>
+        (나) X — 종곡선은 <strong>종단 선형</strong>에서 서로 다른 구배를 연결하는 것이다. 평면 선형과 무관.<br>
+        (다) O — 체감은 완화곡선 구간 내에서 캔트·슬랙을 점진 변화시키는 구간이다.
+      </p>
+      <div class="ans-trap">⚠ TRAP: "종곡선 = 평면상 원곡선 연결" → 절대 오답. 종곡선은 수직면(종단) 방향이다.</div>
+    </div>
+  </section>
+
+  <nav class="unit-nav">
+    <a href="unit-02-05_HOLD_VERIFY_v1.1.html">← 이전 UNIT 02-05</a>
+    <span class="nav-gap"></span>
+    <a href="unit-03-02_HOLD_VERIFY_v1.0.html">다음 UNIT 03-02 →</a>
+  </nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
