@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>04-03 장대레일과 온도응력</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-hold { color: #92400e; border-color: #b45309; background: #fef3c7; }
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+  .content-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; background: #fff; margin-bottom: 14px; }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+  .term-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13.5px; }
+  .term-table th { background: #1e3a5f; color: #fff; padding: 8px 12px; text-align: left; font-size: 13px; }
+  .term-table td { border: 1px solid #cbd5e1; padding: 8px 12px; vertical-align: top; }
+  .term-table tr:nth-child(even) td { background: #f8fafc; }
+  .term-name { font-weight: 700; color: #1e3a5f; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13.5px; }
+  table th { background: #1e3a5f; color: #fff; padding: 8px 12px; text-align: left; font-size: 13px; }
+  table td { border: 1px solid #cbd5e1; padding: 8px 12px; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f8fafc; }
+  .trap-box { border: 1.5px solid #dc2626; border-radius: 6px; padding: 14px 16px; background: #fef2f2; margin-bottom: 14px; }
+  .trap-title { font-size: 13px; font-weight: 800; color: #dc2626; margin-bottom: 8px; }
+  .trap-item { font-size: 13.5px; color: #1a1a1a; margin-bottom: 5px; line-height: 1.6; }
+  .trap-item .x { color: #dc2626; font-weight: 800; margin-right: 4px; }
+  .trap-item .o { color: #059669; font-weight: 800; margin-right: 4px; }
+  .memo-box { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 14px 18px; background: #f0f4f8; margin-bottom: 14px; }
+  .memo-title { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .memo-text { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.8; }
+  .exam-item { padding: 10px 14px; border-radius: 5px; margin-bottom: 8px; font-size: 13.5px; border: 1.5px solid; }
+  .exam-key { border-color: #1e3a5f; background: #f0f4f8; }
+  .exam-trap { border-color: #dc2626; background: #fef2f2; }
+  .exam-item strong { display: block; margin-bottom: 3px; }
+  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
+  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+  .choice-list { list-style: none; padding: 0; }
+  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
+  .choice-list li:hover { background: #f8fafc; }
+  .answer-section { margin-top: 40px; border-top: 2px solid #1e3a5f; padding-top: 20px; }
+  .answer-section .sec-title { margin-top: 0; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-answer { font-size: 13.5px; color: #1a1a1a; line-height: 1.7; margin-bottom: 6px; }
+  .ans-box .ans-trap { border: 1.5px solid #dc2626; border-radius: 5px; padding: 8px 12px; background: #fef2f2; font-size: 13px; color: #7f1d1d; margin-top: 8px; }
+  .vis-wrap { margin: 14px 0; text-align: center; }
+  .vis-wrap img { width: 100%; height: auto; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
+  .hold-notice { border: 2px solid #b45309; border-radius: 6px; padding: 12px 16px; background: #fffbeb; margin-bottom: 20px; font-size: 13px; color: #78350f; }
+  .hold-notice strong { display: block; margin-bottom: 4px; font-size: 13.5px; }
+  .crossref-box { border: 1.5px solid #7c3aed; border-radius: 6px; padding: 12px 16px; background: #f5f3ff; margin-bottom: 14px; font-size: 13px; color: #4c1d95; }
+  .crossref-box strong { display: block; margin-bottom: 4px; }
+  @media (max-width: 600px) { table { font-size: 12.5px; } }
+  .print-btn { position: fixed; top: 12px; right: 16px; z-index: 999; background: #1e3a5f; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  .print-btn:hover { background: #162d4a; }
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    .page-wrap { padding: 10px; }
+    .qst-box, .content-box, .ans-box { break-inside: avoid; page-break-inside: avoid; }
+    img, .vis-wrap img { max-width: 100%; height: auto; }
+    table { width: 100%; max-width: 100%; }
+    .answer-section { break-before: page; page-break-before: always; }
+    .print-btn { display: none !important; }
+  }
+  .unit-nav { display:flex; justify-content:space-between; align-items:center; margin:32px 0 16px; padding:12px 0; border-top:2px solid #e5e7eb; }
+  .unit-nav a { color:#1e3a5f; text-decoration:none; font-weight:600; font-size:15px; padding:6px 12px; border-radius:6px; background:#f0f4f8; }
+  .unit-nav a:hover { background:#dbe4f0; }
+  .unit-nav .nav-gap { flex:1; }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+<div class="page-wrap">
+
+  <div class="hold-notice">
+    <strong>⚠ HOLD_VERIFY 상태</strong>
+    중립온도 정의 수치·온도축력 정량 계산식은 SOURCE 원문 추가 대조 후 확정 예정. 정성적 개념 설명은 LOCK.
+  </div>
+
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 04 · UNIT 04-03</div>
+    <div class="unit-title">장대레일과 온도응력</div>
+    <div class="unit-sub">장대레일 정의, 온도변화에 따른 축력·응력, 부동구간, 궤도복진·좌굴</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 04 궤도 재료·구조</span>
+      <span class="badge badge-grade">★★★ 핵심</span>
+      <span class="badge badge-hold">HOLD_VERIFY</span>
+    </div>
+  </div>
+
+  <!-- 핵심 용어 -->
+  <div class="sec-title">핵심 용어</div>
+
+  <table class="term-table">
+    <thead>
+      <tr><th>용어</th><th>정의 (SOURCE 26·60)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="term-name">장대레일</td>
+        <td>이음매 없이 연속 용접된 레일. 정해진 기준 이상의 길이(통상 200m 이상)로 부설하여 이음매부 충격·소음을 없애고 안정성을 높인다.</td>
+      </tr>
+      <tr>
+        <td class="term-name">온도축력</td>
+        <td>장대레일이 온도 변화로 팽창·수축하려 할 때 구속에 의해 발생하는 레일 축방향 힘.</td>
+      </tr>
+      <tr>
+        <td class="term-name">중립온도<br><span style="font-weight:400;color:#b45309;">VERIFY</span></td>
+        <td>장대레일 부설 시 레일에 축력이 0인 상태의 온도. 이보다 높으면 압축력, 낮으면 인장력 발생.</td>
+      </tr>
+      <tr>
+        <td class="term-name">부동구간</td>
+        <td>장대레일 중앙부에서 온도 변화에도 레일이 이동하지 않는 구간. 도상횡저항력과 침목 저항이 충분한 구간.</td>
+      </tr>
+      <tr>
+        <td class="term-name">궤도복진</td>
+        <td>레일 또는 궤도 전체가 열차 진행 방향으로 종방향 이동하는 현상.</td>
+      </tr>
+      <tr>
+        <td class="term-name">궤도좌굴</td>
+        <td>여름철 고온 시 장대레일의 압축력이 도상 횡저항력을 초과할 때 궤도 전체가 횡방향으로 휘어지는 현상.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- §1 장대레일 정의 -->
+  <div class="sec-title">§1. 장대레일의 정의와 장점 (SOURCE 26)</div>
+
+  <div class="content-box">
+    <p><strong>장대레일(Long Welded Rail)</strong>: 단레일을 현장 또는 공장에서 연속 용접하여 이음매를 없앤 레일.</p>
+    <p>장점:</p>
+    <p>① 이음매 충격·소음 제거 → 승차감 향상<br>
+    ② 유지보수 주기 연장<br>
+    ③ 열차 고속 운행에 유리<br>
+    ④ 궤도 틀림 감소</p>
+    <p>단점:</p>
+    <p>① 온도 변화 시 축력 발생 → 좌굴·파단 위험<br>
+    ② 부설·관리 기술 요구 수준 높음</p>
+  </div>
+
+  <!-- §2 온도응력과 축력 -->
+  <div class="sec-title">§2. 온도변화와 축력·응력 (SOURCE 26·60)</div>
+
+  <div class="content-box">
+    <p>장대레일은 양 끝이 고정되어 있어 온도 변화 시 자유롭게 신축하지 못한다.</p>
+    <p>① <strong>여름(고온)</strong>: 팽창하려 하지만 구속 → <strong>압축 축력</strong> 발생 → 궤도좌굴 위험<br>
+    ② <strong>겨울(저온)</strong>: 수축하려 하지만 구속 → <strong>인장 축력</strong> 발생 → 레일 파단 위험</p>
+    <p>※ 온도축력 정량 계산식(EA·α·ΔT): SOURCE 원문 수치 확인 전 VERIFY. 암기 대신 개념 이해 우선.</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>온도 조건</th><th>레일 거동</th><th>발생 축력</th><th>위험</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>고온(여름)</td>
+        <td>팽창하려 함 → 구속</td>
+        <td>압축력</td>
+        <td>궤도좌굴</td>
+      </tr>
+      <tr>
+        <td>저온(겨울)</td>
+        <td>수축하려 함 → 구속</td>
+        <td>인장력</td>
+        <td>레일 파단</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- §3 부동구간 -->
+  <div class="sec-title">§3. 부동구간과 신축구간 (SOURCE 26)</div>
+
+  <div class="content-box">
+    <p>장대레일은 구간별 거동이 다르다.</p>
+    <p><strong>부동구간</strong>: 레일 중앙부. 도상 저항력이 충분하여 온도 변화에도 이동 없음. 축력이 온도 변화에 정비례하여 증감.</p>
+    <p><strong>신축구간</strong>: 장대레일 양단부. 도상 저항력이 작아 레일이 신축하는 구간. 신축이음매를 설치하여 열변위 흡수.</p>
+  </div>
+
+  <div class="vis-wrap">
+    <img src="images/VIS-036_장대레일부동구간.jpg" alt="장대레일 부동구간과 신축구간"
+         style="width:100%; height:auto; display:block;"
+         onerror="this.onerror=null;
+                  this.src='images/VIS-036_장대레일부동구간.png';
+                  this.onerror=null;">
+    <div class="vis-caption">VIS-036 장대레일 부동구간·신축구간 개념도 (SOURCE 26)</div>
+  </div>
+
+  <!-- §4 궤도복진 -->
+  <div class="sec-title">§4. 궤도복진과 좌굴 (SOURCE 60)</div>
+
+  <div class="content-box">
+    <p><strong>궤도복진</strong>: 레일·침목이 열차 진행 방향으로 종방향 이동하는 현상.</p>
+    <p>발생 원인: 이음매부 약화, 편구배, 잦은 제동·견인력, 불량 도상.</p>
+    <p>대책: 레일 앵커(Rail Anchor) 설치, 도상 다짐, 신축이음매 관리.</p>
+  </div>
+
+  <div class="content-box">
+    <p><strong>궤도좌굴</strong>: 여름 고온 시 장대레일 압축축력 > 도상횡저항력 → 궤도가 横방향으로 휨.</p>
+    <p>대책: 도상 다짐 강화, 도상횡저항력 확보, 충분한 자갈 다짐, 중립온도 관리.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠ 시험 함정 — 좌굴 vs 복진 구분</div>
+    <p class="trap-item"><span class="x">✗</span>궤도복진 = 횡방향 이동 → <strong>오답</strong></p>
+    <p class="trap-item"><span class="o">✓</span>궤도복진 = <strong>종방향</strong>(진행 방향) 이동</p>
+    <p class="trap-item"><span class="o">✓</span>궤도좌굴 = <strong>횡방향</strong> 이동(궤도 가로로 휨)</p>
+  </div>
+
+  <!-- §5 도상횡저항력 -->
+  <div class="sec-title">§5. 도상횡저항력 (SOURCE 60)</div>
+
+  <div class="content-box">
+    <p><strong>도상횡저항력</strong>: 침목이 횡방향(레일 수직 방향)으로 이동하려 할 때 자갈 도상이 저항하는 힘.</p>
+    <p>장대레일 좌굴 안전의 핵심 인자. 도상횡저항력이 클수록 압축 축력에 더 잘 저항한다.</p>
+    <p>증대 방법: 자갈 도상 다짐 강화, 도상 폭 확대, PC침목 사용(중량 증가).</p>
+  </div>
+
+  <!-- 영상 CROSS-REF -->
+  <div class="crossref-box">
+    <strong>🎬 영상 CROSS-REF — 04-07 참조</strong>
+    「시속 300km KTX, 달리는 순간 벌어지는 소름 돋는 공학의 비밀」<br>
+    장대레일 열팽창·중립온도·온도응력 관련 내용 → UNIT 04-07 PRIMARY 영상에서 확인.<br>
+    ※ 영상 속 수치는 SOURCE 원문 대조 후에만 암기값으로 채택.
+  </div>
+
+  <!-- 핵심암기 -->
+  <div class="sec-title">핵심암기</div>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 장대레일 온도 거동 암기</div>
+    <div class="memo-text">
+      고온 → 압축력 → 궤도좌굴<br>
+      저온 → 인장력 → 레일 파단<br>
+      부동구간 = 중앙, 이동 없음<br>
+      신축구간 = 양단, 신축이음매 설치<br>
+      <span style="color:#dc2626;">궤도복진 = 종방향 이동 (≠ 횡방향)</span><br>
+      <span style="color:#dc2626;">궤도좌굴 = 횡방향 이동 (고온·압축력)</span>
+    </div>
+  </div>
+
+  <!-- 시험 포인트 -->
+  <div class="sec-title">시험 포인트</div>
+
+  <div class="exam-item exam-key">
+    <strong>핵심 ①</strong>
+    장대레일 부설 시 발생하는 축방향 힘 = 온도축력. 고온→압축력(좌굴), 저온→인장력(파단).
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ②</strong>
+    도상횡저항력: 침목이 횡방향 이동 시 도상이 저항하는 힘 → 장대레일 좌굴 안전의 핵심 인자.
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>함정</strong>
+    궤도복진 = 종방향 이동 / 궤도좌굴 = 횡방향 이동. 방향 혼동 금지.
+  </div>
+
+  <!-- 기출 문제 -->
+  <div class="sec-title">기출 문제</div>
+
+  <div class="qst-box">
+    <div class="qst-meta">기출 · SOURCE 26 · 4지선다형</div>
+    <div class="qst-num">Q1.</div>
+    <div class="qst-q">장대레일 부설 시 온도 변화로 레일에 발생하는 축방향 힘은?</div>
+    <ol class="choice-list">
+      <li>① 횡압</li>
+      <li>② 온도축력</li>
+      <li>③ 도상횡저항력</li>
+      <li>④ 충격하중</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">기출 · SOURCE 60 · 4지선다형</div>
+    <div class="qst-num">Q2.</div>
+    <div class="qst-q">레일 또는 궤도가 열차 진행 방향으로 종방향 이동하는 현상은?</div>
+    <ol class="choice-list">
+      <li>① 좌굴</li>
+      <li>② 궤도복진</li>
+      <li>③ 처짐</li>
+      <li>④ 줄틀림</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">기출 · SOURCE 60 · 4지선다형</div>
+    <div class="qst-num">Q3.</div>
+    <div class="qst-q">장대레일의 좌굴 안전을 결정하는 주요 인자인 도상횡저항력에 관한 설명으로 <u>옳은</u> 것은?</div>
+    <ol class="choice-list">
+      <li>① 레일 종방향 온도력에 저항하는 힘</li>
+      <li>② 침목이 측면 방향으로 이동하려 할 때 도상이 저항하는 힘</li>
+      <li>③ 차륜이 레일을 횡방향으로 미는 힘</li>
+      <li>④ 레일 이음매에서 발생하는 횡방향 충격력</li>
+    </ol>
+  </div>
+
+  <!-- 정답 및 해설 -->
+  <section class="answer-section">
+    <div class="sec-title">정답 및 해설</div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q1 정답 ②</p>
+      <p class="ans-answer">장대레일에 온도 변화가 생기면 신축하려 하지만 구속되어 <strong>온도축력</strong>(축방향 힘)이 발생한다. 고온 → 압축축력, 저온 → 인장축력.</p>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q2 정답 ②</p>
+      <p class="ans-answer"><strong>궤도복진</strong>: 레일·침목이 열차 진행 방향(종방향)으로 이동하는 현상. 온도·제동·견인력·도상 상태 영향.</p>
+      <div class="ans-trap">⚠ TRAP: 궤도복진 = 종방향. 궤도좌굴 = 횡방향. 반드시 구분.</div>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q3 정답 ②</p>
+      <p class="ans-answer"><strong>도상횡저항력</strong>: 침목이 횡방향(레일 수직 방향)으로 이동하려 할 때 자갈 도상이 저항하는 힘. 장대레일 좌굴 방지의 핵심.</p>
+      <div class="ans-trap">⚠ ①은 종방향(온도축력에 대한 저항이 아님), ③은 차륜 횡압, ④는 이음매 충격력 — 모두 도상횡저항력과 다른 개념.</div>
+    </div>
+  </section>
+
+  <nav class="unit-nav">
+    <a href="unit-04-02_FINAL_PUBLISH_v1.0.html">← 이전 UNIT 04-02</a>
+    <span class="nav-gap"></span>
+    <a href="unit-04-04_FINAL_PUBLISH_v1.0.html">다음 UNIT 04-04 →</a>
+  </nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>

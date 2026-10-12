@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>04-08 분기기와 선로전환기</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-final { color: #065f46; border-color: #059669; background: #ecfdf5; }
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+  .content-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; background: #fff; margin-bottom: 14px; }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13.5px; }
+  table th { background: #1e3a5f; color: #fff; padding: 8px 12px; text-align: left; font-size: 13px; }
+  table td { border: 1px solid #cbd5e1; padding: 8px 12px; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f8fafc; }
+  .vis-block { text-align: center; margin: 18px 0; }
+  .vis-block img { max-width: 100%; border: 1px solid #e2e8f0; border-radius: 6px; }
+  .vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
+  .memo-box { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 14px 18px; background: #f0f4f8; margin-bottom: 14px; }
+  .memo-title { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .memo-text { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.8; }
+  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
+  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+  .choice-list { list-style: none; padding: 0; }
+  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
+  .answer-section { margin-top: 40px; border-top: 2px solid #1e3a5f; padding-top: 20px; }
+  .answer-section .sec-title { margin-top: 0; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-answer { font-size: 13.5px; color: #1a1a1a; line-height: 1.7; }
+  .print-btn { position: fixed; top: 12px; right: 16px; z-index: 999; background: #1e3a5f; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    .page-wrap { padding: 10px; }
+    .qst-box, .content-box, .ans-box { break-inside: avoid; page-break-inside: avoid; }
+    .answer-section { break-before: page; page-break-before: always; }
+    .print-btn { display: none !important; }
+  }
+  .unit-nav { display:flex; justify-content:space-between; align-items:center; margin:32px 0 16px; padding:12px 0; border-top:2px solid #e5e7eb; }
+  .unit-nav a { color:#1e3a5f; text-decoration:none; font-weight:600; font-size:15px; padding:6px 12px; border-radius:6px; background:#f0f4f8; }
+  .unit-nav a:hover { background:#dbe4f0; }
+  .unit-nav .nav-gap { flex:1; }
+  .cross-ref-box { border: 1.5px dashed #94a3b8; border-radius: 6px; padding: 12px 16px; background: #f8fafc; margin-bottom: 14px; font-size: 13.5px; color: #475569; }
+  .cross-ref-box a { color: #1e3a5f; font-weight: 700; }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">&#128424; 인쇄 / PDF</button>
+<div class="page-wrap">
+
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 04 · UNIT 04-08</div>
+    <div class="unit-title">분기기와 선로전환기</div>
+    <div class="unit-sub">탄성분기기·탈선분기기·다이아몬드크로싱 (SOURCE 28) / 대향=탈선·배향=할출 (SOURCE 64)</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 04 궤도 재료·구조</span>
+      <span class="badge badge-grade">★★★ 중요</span>
+      <span class="badge badge-final">FINAL PUBLISH</span>
+    </div>
+  </div>
+
+  <!-- §1 분기기 종류 (SOURCE 28) -->
+  <div class="sec-title">§1. 분기기(Turnout) 종류 (SOURCE 28)</div>
+
+  <div class="content-box">
+    <p><strong>분기기(Turnout/Switch)</strong>: 열차가 한 선로에서 다른 선로로 이동할 수 있게 해주는 궤도 구조물. 포인트(Point)·리드(Lead)·크로싱(Crossing) 3부분으로 구성.</p>
+  </div>
+
+  <!-- VIS-032 분기기 구성 구조도 -->
+  <div class="vis-block">
+    <img
+      src="images/VIS-032_분기기구성구조도.jpg"
+      onerror="this.onerror=null; this.src='images/VIS-032_분기기구성구조도.png';"
+      alt="VIS-032 분기기 구성 구조도"
+    >
+    <div class="vis-caption">VIS-032 분기기 구성 구조도 — 포인트·리드·크로싱</div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>종류</th><th>특징</th><th>적용</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>탄성분기기</strong></td>
+        <td>텅레일과 리드레일을 일체화하여 힐 이음매(Heel Joint)가 없는 구조. 탄성 변형으로 텅레일이 굽혀지며 전환됨. 고속 주행 시 진동·소음 감소, 유지보수 간격 연장.</td>
+        <td>고속선·주요 간선 분기기</td>
+      </tr>
+      <tr>
+        <td><strong>탈선분기기</strong></td>
+        <td>열차가 분기기에 진입할 때 의도적으로 탈선시켜 충돌을 방지하는 안전장치용 분기기.</td>
+        <td>안전 측선, 보조 선로</td>
+      </tr>
+      <tr>
+        <td><strong>다이아몬드크로싱(Diamond Crossing)</strong></td>
+        <td>두 선로가 X자형으로 교차하는 구조. 선로 간 이동 불가(단순 교차). 교차각에 따라 예각·직각 등.</td>
+        <td>복잡 구내 선로 교차부</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- §2 선로전환기 — 대향·배향 (SOURCE 64) -->
+  <div class="sec-title">§2. 선로전환기 — 대향과 배향 (SOURCE 64)</div>
+
+  <div class="content-box">
+    <p><strong>선로전환기(Point Machine)</strong>: 분기기의 텅레일을 전환하여 열차의 진로를 바꾸는 장치. 전기식·수동식 등이 있으며 신호와 연동하여 작동.</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>구분</th><th>정의</th><th>위험</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>대향(對向)<br>포인트를 향해 진입</strong></td>
+        <td>열차가 분기기의 포인트(텅레일)를 향해 진입. 텅레일이 열차 진행 방향을 결정.</td>
+        <td><strong>탈선 위험</strong>: 포인트가 반대 방향으로 열려 있으면 탈선 발생. 반드시 진로 정위 확인 필요.</td>
+      </tr>
+      <tr>
+        <td><strong>배향(背向)<br>크로싱부→포인트부 방향</strong></td>
+        <td>열차가 크로싱부에서 포인트부 방향으로 진행. 포인트가 열차 뒤쪽에 위치하며 통과.</td>
+        <td><strong>할출(割出) 위험</strong>: 잠금되지 않은 포인트를 열차 차륜이 밀어 열면서 분기되는 현상.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="memo-box" style="border-color:#dc2626; background:#fef2f2;">
+    <div class="memo-title" style="color:#dc2626;">⚠️ 대향·배향 핵심 암기</div>
+    <div class="memo-text" style="color:#7f1d1d;">
+      대향(對向) = 포인트를 향해 진입 → 탈선(脫線) 위험<br>
+      배향(背向) = 크로싱부→포인트부 방향 진행 → 할출(割出) 위험
+    </div>
+  </div>
+
+  <!-- CROSS-REF 영상 -->
+  <div class="cross-ref-box">
+    📹 분기기 동작 원리 참고 영상 (CROSS-REF):<br>
+    <a href="https://www.youtube.com/watch?v=eW5JF-AA-uY" target="_blank" rel="noopener noreferrer">
+      https://www.youtube.com/watch?v=eW5JF-AA-uY
+    </a>
+  </div>
+
+  <!-- 핵심암기 -->
+  <div class="sec-title">핵심암기</div>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 분기기·선로전환기 핵심</div>
+    <div class="memo-text">
+      분기기 3부분 = 포인트·리드·크로싱<br>
+      탄성분기기 = 텅레일+리드레일 일체화 → 힐이음매 없음 / 고속선 적용<br>
+      다이아몬드크로싱 = X자 교차 (이동 불가)<br>
+      대향 → 탈선 위험 / 배향 → 할출 위험<br>
+      할출 = 포인트를 차륜이 밀어 열어버리는 현상
+    </div>
+  </div>
+
+  <!-- 기출 문제 -->
+  <div class="sec-title">기출 문제</div>
+
+  <div class="qst-box">
+    <div class="qst-meta">연습 · SOURCE 28</div>
+    <div class="qst-num">Q1.</div>
+    <div class="qst-q">두 선로가 X자형으로 단순 교차하는 구조로, 선로 간 이동이 불가능한 분기기 구조는?</div>
+    <ol class="choice-list">
+      <li>① 탄성분기기</li>
+      <li>② 탈선분기기</li>
+      <li>③ 다이아몬드크로싱</li>
+      <li>④ 슬립스위치</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">연습 · SOURCE 64</div>
+    <div class="qst-num">Q2.</div>
+    <div class="qst-q">열차가 분기기의 포인트(텅레일)를 향해 진입하는 방향으로, 포인트가 반대 방향으로 개통되어 있으면 탈선 위험이 있는 것은?</div>
+    <ol class="choice-list">
+      <li>① 배향 운전</li>
+      <li>② 대향 운전</li>
+      <li>③ 할출 운전</li>
+      <li>④ 단향 운전</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">연습 · SOURCE 64</div>
+    <div class="qst-num">Q3.</div>
+    <div class="qst-q">배향(背向) 운전 시 발생할 수 있는 위험으로, 잠금되지 않은 포인트를 차륜이 밀어 열면서 분기되는 현상은?</div>
+    <ol class="choice-list">
+      <li>① 탈선(脫線)</li>
+      <li>② 할출(割出)</li>
+      <li>③ 분류(分流)</li>
+      <li>④ 역진(逆進)</li>
+    </ol>
+  </div>
+
+  <!-- 정답 및 해설 -->
+  <section class="answer-section">
+    <div class="sec-title">정답 및 해설</div>
+    <div class="ans-box">
+      <p class="ans-num">Q1 정답 ③</p>
+      <p class="ans-answer">다이아몬드크로싱(Diamond Crossing): 두 선로가 X자형으로 교차. 단순 교차이므로 선로 간 이동 불가. 탄성분기기는 텅레일 탄성 방식, 탈선분기기는 안전 측선용.</p>
+    </div>
+    <div class="ans-box">
+      <p class="ans-num">Q2 정답 ②</p>
+      <p class="ans-answer">대향(對向) 운전: 열차가 포인트(텅레일)를 향해 진입. 포인트가 반대 방향으로 열려 있으면 탈선 위험. 배향은 크로싱부에서 포인트부 방향으로 진행하며 할출 위험.</p>
+    </div>
+    <div class="ans-box">
+      <p class="ans-num">Q3 정답 ②</p>
+      <p class="ans-answer">할출(割出): 배향 운전 시 잠금되지 않은 포인트를 열차 차륜의 플랜지가 밀어 열어버리는 현상. 분기기 잠금 장치(쇄정) 불량 시 발생. 대향 운전의 위험은 탈선.</p>
+    </div>
+  </section>
+
+  <nav class="unit-nav">
+    <a href="unit-04-07_FINAL_PUBLISH_v1.0.html">← 이전 UNIT 04-07</a>
+    <span class="nav-gap"></span>
+    <span style="font-size:13px; color:#94a3b8; padding:6px 12px;">PART 04 마지막 UNIT</span>
+  </nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>

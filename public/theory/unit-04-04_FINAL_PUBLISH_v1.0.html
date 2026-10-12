@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>04-04 레일의 이음매·단면·약화</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-final { color: #065f46; border-color: #059669; background: #ecfdf5; }
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+  .content-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; background: #fff; margin-bottom: 14px; }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13.5px; }
+  table th { background: #1e3a5f; color: #fff; padding: 8px 12px; text-align: left; font-size: 13px; }
+  table td { border: 1px solid #cbd5e1; padding: 8px 12px; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f8fafc; }
+  .vis-block { text-align: center; margin: 18px 0; }
+  .vis-block img { max-width: 100%; border: 1px solid #e2e8f0; border-radius: 6px; }
+  .vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
+  .memo-box { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 14px 18px; background: #f0f4f8; margin-bottom: 14px; }
+  .memo-title { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .memo-text { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.8; }
+  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
+  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+  .choice-list { list-style: none; padding: 0; }
+  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
+  .answer-section { margin-top: 40px; border-top: 2px solid #1e3a5f; padding-top: 20px; }
+  .answer-section .sec-title { margin-top: 0; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-answer { font-size: 13.5px; color: #1a1a1a; line-height: 1.7; }
+  .print-btn { position: fixed; top: 12px; right: 16px; z-index: 999; background: #1e3a5f; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    .page-wrap { padding: 10px; }
+    .qst-box, .content-box, .ans-box { break-inside: avoid; page-break-inside: avoid; }
+    .answer-section { break-before: page; page-break-before: always; }
+    .print-btn { display: none !important; }
+  }
+  .unit-nav { display:flex; justify-content:space-between; align-items:center; margin:32px 0 16px; padding:12px 0; border-top:2px solid #e5e7eb; }
+  .unit-nav a { color:#1e3a5f; text-decoration:none; font-weight:600; font-size:15px; padding:6px 12px; border-radius:6px; background:#f0f4f8; }
+  .unit-nav a:hover { background:#dbe4f0; }
+  .unit-nav .nav-gap { flex:1; }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+<div class="page-wrap">
+
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 04 · UNIT 04-04</div>
+    <div class="unit-title">레일의 이음매·단면·약화</div>
+    <div class="unit-sub">2정·3정이음매, 현접법·지접법 (SOURCE 69) / 레일 기능 4가지, 인·황 성분, 평저레일 (SOURCE 70)</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 04 궤도 재료·구조</span>
+      <span class="badge badge-grade">★★★ 중요</span>
+      <span class="badge badge-final">FINAL PUBLISH</span>
+    </div>
+  </div>
+
+  <!-- §1 이음매 (SOURCE 69) -->
+  <div class="sec-title">§1. 레일 이음매 — 2정·3정 / 현접·지접법 (SOURCE 69)</div>
+
+  <div class="content-box">
+    <p><strong>이음매(joint)</strong>: 레일과 레일이 연결되는 부위. 이음매부는 충격·소음 발생 및 궤도 틀림의 주원인이 되므로, 장대레일 도입으로 이음매를 최소화하는 방향으로 발전.</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>분류</th><th>종류</th><th>설명</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="2"><strong>이음매판 정수</strong></td>
+        <td><strong>2정이음매</strong></td>
+        <td>가볍고 시공 간단.</td>
+      </tr>
+      <tr>
+        <td><strong>3정이음매</strong></td>
+        <td>강도·안정성 우수. 표준 본선 적용.</td>
+      </tr>
+      <tr>
+        <td rowspan="2"><strong>침목 대비<br>이음매 위치</strong></td>
+        <td><strong>현접법(懸接法)</strong></td>
+        <td>이음매가 침목과 침목 사이에 위치. 이음매부 지지력 약함 — 충격 분산.</td>
+      </tr>
+      <tr>
+        <td><strong>지접법(支接法)</strong></td>
+        <td>이음매 바로 아래 침목이 위치(직접 지지). 지지력 큼 — 충격 직접 전달.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- VIS-07E 절연이음매 vs 레일본드 -->
+  <div class="vis-block">
+    <img
+      src="images/VIS-07E_절연이음매_vs_레일본드_FINAL.png"
+      onerror="this.onerror=null; this.src='images/VIS-07E_절연이음매_vs_레일본드_FINAL.jpg';"
+      alt="VIS-07E 절연이음매 vs 레일본드 비교"
+    >
+    <div class="vis-caption">VIS-07E 절연이음매 vs 레일본드 — 전기적 절연·연결 비교</div>
+  </div>
+
+  <!-- §2 레일 기능·성분·단면 (SOURCE 70) -->
+  <div class="sec-title">§2. 레일 기능 4가지 / 화학성분 / 평저레일 (SOURCE 70)</div>
+
+  <div class="content-box">
+    <p><strong>레일의 4가지 기능 (SOURCE 70)</strong></p>
+    <p>① <strong>주행표면 제공</strong>: 차륜이 구르는 면을 제공하여 안전한 주행 지지<br>
+    ② <strong>하중 전달</strong>: 차륜의 정적·동적 하중을 침목·도상에 전달<br>
+    ③ <strong>궤도 형상 유지</strong>: 정해진 궤간·선형·구배를 유지<br>
+    ④ <strong>전류 통로</strong>: 신호용 궤도회로 및 귀선전류의 통로 역할</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>화학성분</th><th>영향</th><th>비고</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>인(P)</strong></td>
+        <td>레일 강도를 취약하게 만듦 — 냉간취성(저온 파단) 유발. 함량 제한 필요.</td>
+        <td>유해 원소</td>
+      </tr>
+      <tr>
+        <td><strong>황(S)</strong></td>
+        <td>적열취성(고온 파단) 유발. 용접·가공 시 균열 발생 원인.</td>
+        <td>유해 원소</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="content-box">
+    <p><strong>평저레일(Flat Bottom Rail, 비네트형)</strong>: 두부(頭部, Head) + 복부(腹部, Web) + 저부(底部, Foot) 3부분으로 구성. 저부가 평평하여 침목 위에 직접 안착. 국내 및 세계 표준 단면. 이전의 쌍두레일·등철레일을 대체.</p>
+  </div>
+
+  <!-- 핵심암기 -->
+  <div class="sec-title">핵심암기</div>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 이음매·성분·단면 핵심</div>
+    <div class="memo-text">
+      현접법 = 이음매가 침목 사이 → 충격 분산<br>
+      지접법 = 이음매 아래에 침목 → 지지력 큼·충격 직접 전달<br>
+      레일 기능 4가지 = 주행표면·하중전달·궤도형상유지·전류통로<br>
+      인(P) = 냉간취성 / 황(S) = 적열취성 (둘 다 유해)<br>
+      평저레일 = 두부·복부·저부 — 세계 표준
+    </div>
+  </div>
+
+  <!-- 기출 문제 -->
+  <div class="sec-title">기출 문제</div>
+
+  <div class="qst-box">
+    <div class="qst-meta">기출 · id 37 · SOURCE 69 · 4지선다형</div>
+    <div class="qst-num">Q1.</div>
+    <div class="qst-q">레일이음매부의 단점으로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 열팽창 흡수 불가</li>
+      <li>② 이음매 충격으로 인한 궤도 틀림 발생</li>
+      <li>③ 레일 단면 단순화</li>
+      <li>④ 레일 교체 어려움</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">기출 · id 38 · SOURCE 70 · 4지선다형</div>
+    <div class="qst-num">Q2.</div>
+    <div class="qst-q">현재 표준형으로 가장 많이 사용되는 레일 단면 형태는?</div>
+    <ol class="choice-list">
+      <li>① 쌍두레일</li>
+      <li>② 평저레일</li>
+      <li>③ T자형 레일</li>
+      <li>④ 홈레일</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">연습 · SOURCE 69</div>
+    <div class="qst-num">Q3.</div>
+    <div class="qst-q">레일 이음매의 배치에서, 이음매부가 침목과 침목 사이에 위치하는 방식은?</div>
+    <ol class="choice-list">
+      <li>① 지접법(支接法)</li>
+      <li>② 현접법(懸接法)</li>
+      <li>③ 2정이음매</li>
+      <li>④ 3정이음매</li>
+    </ol>
+  </div>
+
+  <!-- 정답 및 해설 -->
+  <section class="answer-section">
+    <div class="sec-title">정답 및 해설</div>
+    <div class="ans-box">
+      <p class="ans-num">Q1 정답 ②</p>
+      <p class="ans-answer">레일이음매 단점: 충격·소음 발생, 이음매부 궤도 틀림, 유지보수 빈번. 장대레일 도입으로 이음매를 최소화하는 방향으로 발전.</p>
+    </div>
+    <div class="ans-box">
+      <p class="ans-num">Q2 정답 ②</p>
+      <p class="ans-answer">평저레일(Flat Bottom Rail): 두부·복부·저부 3부분 구성. 저부가 평평해 침목 위에 안착하기 유리. 국내·세계 대부분 국가 표준 단면.</p>
+    </div>
+    <div class="ans-box">
+      <p class="ans-num">Q3 정답 ②</p>
+      <p class="ans-answer">현접법(懸接法): 이음매가 침목과 침목 사이에 위치. 이음매부를 침목이 직접 지지하지 않으므로 충격이 분산됨. 지접법(支接法)은 이음매 바로 아래에 침목이 위치 — 지지력 크고 충격이 직접 전달됨.</p>
+    </div>
+  </section>
+
+  <nav class="unit-nav">
+    <a href="unit-04-03_HOLD_VERIFY_v1.0.html">← 이전 UNIT 04-03</a>
+    <span class="nav-gap"></span>
+    <a href="unit-04-05_HOLD_VERIFY_v1.0.html">다음 UNIT 04-05 →</a>
+  </nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
