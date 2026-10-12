@@ -332,7 +332,7 @@
 <header class="app-header">
   <h1>🖨 GATE5 통합 인쇄</h1>
   <span class="badge">PRINT ALL v1.1</span>
-  <div class="header-right">GATE5 PRINT LOCK v1 · A4 세로 · 링제본 22mm · 여백 기본값(Default)</div>
+  <div class="header-right">GATE5 PRINT LOCK v1 · A4 세로 · 좌18mm · 여백 기본값(Default)</div>
 </header>
 
 <!-- ── 로딩 오버레이 ── -->
@@ -441,9 +441,9 @@
 
       <table class="spec-table">
         <tr><th>항목</th><th>GATE5 PRINT LOCK v1 설정값</th></tr>
-        <tr><td>상단 / 하단 여백</td><td>14mm / 14mm</td></tr>
+        <tr><td>상단 / 하단 여백</td><td>12mm / 12mm</td></tr>
         <tr><td>우측 여백</td><td>12mm</td></tr>
-        <tr><td>좌측(링제본) 여백</td><td>22mm</td></tr>
+        <tr><td>좌측(링제본) 여백</td><td>18mm</td></tr>
         <tr><td>용지</td><td>A4 세로 (210×297mm)</td></tr>
       </table>
 
@@ -474,6 +474,10 @@ const UNIT_REGISTRY = [
   { id:'04-06', part:'04', partName:'PART 04 · 궤도 재료·구조', label:'04-06 레일 검사·관리',             file:'unit-04-06_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
   { id:'04-07', part:'04', partName:'PART 04 · 궤도 재료·구조', label:'04-07 침목·도상·장대레일',         file:'unit-04-07_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
   { id:'04-08', part:'04', partName:'PART 04 · 궤도 재료·구조', label:'04-08 분기기 구조',                file:'unit-04-08_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
+  // ── PART 05 : 선로설비·정거장 (3개) ──
+  { id:'05-01', part:'05', partName:'PART 05 · 선로설비·정거장', label:'05-01 선로의 종류 (측선 4종)',       file:'unit-05-01_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
+  { id:'05-02', part:'05', partName:'PART 05 · 선로설비·정거장', label:'05-02 정거장의 개념·종류·형식',      file:'unit-05-02_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
+  { id:'05-03', part:'05', partName:'PART 05 · 선로설비·정거장', label:'05-03 교행설비',                    file:'unit-05-03_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
   // ── PART 07 : 철도신호 (6개) ──
   { id:'07-01', part:'07', partName:'PART 07 · 철도신호', label:'07-01 신호기 분류·현시·색상', file:'unit-07-01_FINAL_PUBLISH_v1.2.html', version:'v1.2', done:true  },
   { id:'07-02', part:'07', partName:'PART 07 · 철도신호', label:'07-02 차내신호·위식신호기',   file:'unit-07-02_FINAL_PUBLISH_v1.2.html', version:'v1.2', done:true  },
@@ -636,9 +640,24 @@ function tagSections(bodyEl) {
     el.dataset.ptype = 'ui';
   });
 
-  // 7. 08-01 style: content-box, sec-title 등 미분류 본문 → content
-  bodyEl.querySelectorAll('.content-box, .sys-card').forEach(el => {
-    if (!el.closest('[data-ptype]') && !el.dataset.ptype) {
+  // 7. 미분류 본문 요소 → content
+  ['.content-box', '.sys-card', '.vis-block', '.memo-box', '.trap-box', '.crossref-box', 'table'].forEach(sel => {
+    bodyEl.querySelectorAll(sel).forEach(el => {
+      if (!el.closest('[data-ptype]') && !el.dataset.ptype) {
+        el.dataset.ptype = 'content';
+      }
+    });
+  });
+
+  // 8. sec-title 분류: "기출 문제" / "연습 문제" 제목 → quiz, 그 외 → content
+  bodyEl.querySelectorAll('.sec-title').forEach(el => {
+    if (el.closest('[data-ptype]') || el.dataset.ptype) return;
+    const txt = el.textContent || '';
+    if (txt.includes('기출') || txt.includes('연습')) {
+      el.dataset.ptype = 'quiz';
+    } else if (txt.includes('정답 및 해설')) {
+      el.dataset.ptype = 'answer';
+    } else {
       el.dataset.ptype = 'content';
     }
   });
