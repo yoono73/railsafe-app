@@ -65,7 +65,7 @@
   .ans-box .ans-trap { border: 1.5px solid #dc2626; border-radius: 5px; padding: 8px 12px; background: #fef2f2; font-size: 13px; color: #7f1d1d; margin-top: 8px; }
 
   .vis-wrap { margin: 14px 0; text-align: center; }
-  .vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .vis-wrap img { width: 100%; height: auto; border-radius: 6px; border: 1px solid #e2e8f0; }
   .vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
 
   .hold-notice { border: 2px solid #b45309; border-radius: 6px; padding: 12px 16px; background: #fffbeb; margin-bottom: 20px; font-size: 13px; color: #78350f; }
@@ -131,7 +131,7 @@
 
   <div class="vis-wrap">
     <img src="images/VIS-097_철도_캔트.png" alt="철도 캔트 원리 도해"
-         style="max-width:100%; height:auto; display:block; margin:0 auto;"
+         style="width:100%; height:auto; display:block;"
          onerror="this.onerror=null; this.style.display='none';">
     <div class="vis-caption">VIS-097 캔트(외측 레일 높임) 원리 도해 (SOURCE 19)</div>
   </div>
@@ -233,8 +233,8 @@
       </tr>
       <tr>
         <td><strong>SOURCE 수치</strong></td>
-        <td>일반 160 / 고속 180 mm <span class="verify-note">VERIFY</span></td>
-        <td>최대 30 mm <span class="verify-note">VERIFY</span></td>
+        <td>일반 160 / 고속 180 mm</td>
+        <td>최대 30 mm</td>
       </tr>
     </tbody>
   </table>
@@ -242,7 +242,7 @@
   <!-- 핵심암기 -->
   <div class="vis-wrap">
     <img src="images/VIS-127_캔트_슬랙_구조비교도_FINAL.png" alt="캔트·슬랙 구조 비교도"
-         style="max-width:100%; height:auto; display:block; margin:0 auto;"
+         style="width:100%; height:auto; display:block;"
          onerror="this.onerror=null; this.style.display='none';">
     <div class="vis-caption">VIS-127 캔트·슬랙 구조 비교도 (SOURCE 19)</div>
   </div>
@@ -254,9 +254,9 @@
     <div class="memo-text">
       캔트 = 외측(바깥쪽) 레일을 높이는 것 (높이 차)<br>
       슬랙 = 궤간(선로 폭)을 넓히는 것<br>
-      공식: C = G·V² / (127·R) &nbsp;&nbsp;G=궤간(m) <span class="verify-note">단위불일치HOLD</span><br>
-      일반선 최대캔트: 160mm <span class="verify-note">VERIFY</span> &nbsp; 고속선: 180mm <span class="verify-note">VERIFY</span><br>
-      슬랙 최대: 30mm <span class="verify-note">VERIFY</span><br>
+      공식: C = G·V² / (127·R) &nbsp;&nbsp;G=궤간(mm) [표준궤=1435mm]<br>
+      일반선 최대캔트: 160mm &nbsp; 고속선: 180mm<br>
+      슬랙 최대: 30mm<br>
       <span style="color:#dc2626;">캔트 ≠ 궤간 확대 &nbsp;·&nbsp; 슬랙 ≠ 레일 높임</span>
     </div>
   </div>
@@ -270,7 +270,7 @@
   </div>
   <div class="exam-item exam-key">
     <strong>핵심 ②</strong>
-    공식 C = G·V²/(127·R). G는 궤간(m), V는 속도(km/h), R은 반경(m). <span class="verify-note">G 단위 VERIFY — PDF 직독 전 계산형 FINAL 불가</span>
+    공식 C = G·V²/(127·R). G는 궤간(mm) [표준궤 1435mm], V는 속도(km/h), R은 반경(m), C는 캔트(mm).
   </div>
   <div class="exam-item exam-trap">
     <strong>함정 ①</strong>
@@ -282,7 +282,7 @@
   </div>
   <div class="exam-item exam-trap">
     <strong>함정 ③</strong>
-    일반선과 고속선 최대캔트 수치를 바꾸어 제시하는 경우 → 일반선 160 <span class="verify-note">VERIFY</span>, 고속선 180 <span class="verify-note">VERIFY</span>이 SOURCE 학습값
+    일반선과 고속선 최대캔트 수치를 바꾸어 제시하는 경우 → 일반선 160mm, 고속선 180mm (철도건설규칙 제19조)
   </div>
 
   <!-- 문제 -->
