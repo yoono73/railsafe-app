@@ -48,7 +48,7 @@ function hasValidSession(request: NextRequest): boolean {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const protectedPaths = ['/dashboard', '/cbt', '/story', '/theory', '/wronganswers', '/retrieval', '/start'];
+  const protectedPaths = ['/dashboard', '/cbt', '/story', '/theory', '/wronganswers', '/retrieval', '/start', '/theory-html'];
   const isProtected = protectedPaths.some((p) => pathname.startsWith(p));
   const loggedIn = hasValidSession(request);
 

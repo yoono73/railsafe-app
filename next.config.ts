@@ -1,12 +1,24 @@
 import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   typescript: {
-    // 빌드 중 TypeScript 오류 무시 (배포 우선)
     ignoreBuildErrors: true,
   },
   eslint: {
-    // 빌드 중 ESLint 오류 무시 (배포 우선)
     ignoreDuringBuilds: true,
+  },
+  async rewrites() {
+    return {
+      // App Router [subjectId] dynamic route보다 먼저 처리
+      // /theory/*.html → /theory-html/* (Route Handler가 public/theory/ 파일 서빙)
+      beforeFiles: [
+        {
+          source: '/theory/:file([^/]+\\.html)',
+          destination: '/theory-html/:file',
+        },
+      ],
+      afterFiles: [],
+      fallback: [],
+    };
   },
 };
 export default nextConfig;
