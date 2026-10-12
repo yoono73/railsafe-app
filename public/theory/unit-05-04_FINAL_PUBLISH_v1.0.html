@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>05-04 유효장·승강장 구조</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-final { color: #065f46; border-color: #059669; background: #ecfdf5; }
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+  .content-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; background: #fff; margin-bottom: 14px; }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13.5px; }
+  table th { background: #1e3a5f; color: #fff; padding: 8px 12px; text-align: left; font-size: 13px; }
+  table td { border: 1px solid #cbd5e1; padding: 8px 12px; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f8fafc; }
+  .memo-box { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 14px 18px; background: #f0f4f8; margin-bottom: 14px; }
+  .memo-title { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .memo-text { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.8; }
+  .crossref-box { border: 1.5px solid #0891b2; border-radius: 6px; padding: 12px 16px; background: #f0f9ff; margin-bottom: 14px; font-size: 13px; color: #0c4a6e; }
+  .crossref-box strong { color: #0369a1; }
+  .trap-box { border: 1.5px solid #dc2626; border-radius: 6px; padding: 14px 16px; background: #fef2f2; margin-bottom: 14px; }
+  .trap-title { font-size: 13px; font-weight: 800; color: #dc2626; margin-bottom: 8px; }
+  .trap-item { font-size: 13.5px; color: #1a1a1a; margin-bottom: 5px; line-height: 1.6; }
+  .trap-item .x { color: #dc2626; font-weight: 800; margin-right: 4px; }
+  .trap-item .o { color: #059669; font-weight: 800; margin-right: 4px; }
+  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
+  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+  .choice-list { list-style: none; padding: 0; }
+  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
+  .answer-section { margin-top: 40px; border-top: 2px solid #1e3a5f; padding-top: 20px; }
+  .answer-section .sec-title { margin-top: 0; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-answer { font-size: 13.5px; color: #1a1a1a; line-height: 1.7; }
+  .print-btn { position: fixed; top: 12px; right: 16px; z-index: 999; background: #1e3a5f; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  .unit-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 18px; border-top: 1px solid #e2e8f0; font-size: 13px; }
+  .unit-nav a { color: #1e3a5f; text-decoration: none; font-weight: 700; padding: 6px 12px; border-radius: 6px; background: #f0f4f8; }
+  .unit-nav a:hover { background: #dbe4f0; }
+  .nav-gap { flex: 1; }
+  .vis-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px; background: #f8fafc; margin-bottom: 14px; text-align: center; }
+  .vis-box img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  .vis-caption { font-size: 12px; color: #64748b; margin-top: 8px; }
+  .platform-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .platform-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px; background: #fff; }
+  .platform-card .pc-name { font-size: 14px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; text-align: center; }
+  .platform-card .pc-icon { font-size: 22px; text-align: center; margin-bottom: 8px; }
+  .platform-card p { font-size: 12.5px; color: #444; line-height: 1.6; margin-bottom: 4px; }
+  .platform-card p:last-child { margin-bottom: 0; }
+
+  @media (max-width: 680px) {
+    .platform-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    body { font-size: 13px; }
+    .unit-nav, .print-btn { display: none; }
+    .qst-box, .content-box, .ans-box, .platform-card { break-inside: avoid; page-break-inside: avoid; }
+    .answer-section { break-before: page; page-break-before: always; }
+  }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+<div class="page-wrap">
+
+  <header class="unit-header">
+    <div class="unit-num">GATE 5 · PART 05 · UNIT 05-04</div>
+    <div class="unit-title">유효장·승강장 구조</div>
+    <div class="unit-sub">유효장 개념 (SOURCE 35) + 승강장 3종 비교 — 상대식·섬식·두단식 (SOURCE 36)</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 05 · 선로설비·정거장</span>
+      <span class="badge badge-grade">★★★ 중요</span>
+      <span class="badge badge-final">FINAL PUBLISH v1.0</span>
+    </div>
+  </header>
+
+  <!-- §1 유효장 -->
+  <div class="sec-title">§1. 유효장 (SOURCE 35)</div>
+
+  <div class="content-box">
+    <p><strong>유효장(有效長, Effective Length)</strong>: 정거장에서 열차가 <strong>안전하게 정차할 수 있는 선로의 유효 길이</strong>를 말한다.</p>
+    <p>열차가 유효장 범위 내에서 완전히 정지해야 하며, 차체가 유효장을 초과하면 인접 선로를 지장하거나 신호·연동에 지장을 준다.</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>구분</th><th>내용</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>정의</strong></td>
+        <td>열차가 안전하게 정차할 수 있는 선로의 유효 길이</td>
+      </tr>
+      <tr>
+        <td><strong>산정 범위</strong></td>
+        <td>차막이(또는 출발신호기) ~ 반대쪽 차막이(또는 진입신호기) 사이 거리</td>
+      </tr>
+      <tr>
+        <td><strong>적용 목적</strong></td>
+        <td>열차 정차 시 인접 선로·건널목·신호기 지장 방지</td>
+      </tr>
+      <tr>
+        <td><strong>관련 설비</strong></td>
+        <td>차막이·신호기·연동장치</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 유효장 핵심 암기</div>
+    <div class="memo-text">
+      유효장 = 정거장에서 열차가 안전하게 정차할 수 있는 선로의 유효 길이<br>
+      초과 정차 → 인접 선로·신호 지장 → 운행 안전 위협
+    </div>
+  </div>
+
+  <!-- §2 승강장 구조 3종 -->
+  <div class="sec-title">§2. 승강장 구조 3종 비교 (SOURCE 36)</div>
+
+  <div class="crossref-box">
+    <strong>VIS-035</strong> — 정거장 형식 비교도 (상대식·섬식·두단식 위치 관계)
+  </div>
+
+  <div class="content-box">
+    <p>승강장(플랫폼) 구조는 선로와의 위치 관계에 따라 <strong>상대식·섬식·두단식</strong> 3종으로 분류한다.</p>
+  </div>
+
+  <!-- 카드형 3종 비교 -->
+  <div class="platform-grid">
+    <div class="platform-card">
+      <div class="pc-icon">🚉</div>
+      <div class="pc-name">상대식</div>
+      <p>상·하행 선로의 <strong>양쪽 바깥에</strong> 승강장을 각각 배치</p>
+      <p>동시착발 시 안전성 우수</p>
+      <p>장래 선로 증설·확장 용이</p>
+      <p>주로 <strong>단선 중간역</strong>에 사용</p>
+    </div>
+    <div class="platform-card">
+      <div class="pc-icon">🚇</div>
+      <div class="pc-name">섬식</div>
+      <p>승강장이 <strong>선로 사이 중앙</strong>에 1개 위치</p>
+      <p>환승·횡단 편리, 공간 효율 높음</p>
+      <p>승강장 1개로 양쪽 열차 모두 이용</p>
+      <p>주로 <strong>지하철·복선 역</strong>에 사용</p>
+    </div>
+    <div class="platform-card">
+      <div class="pc-icon">🛑</div>
+      <div class="pc-name">두단식</div>
+      <p>선로 끝(막힌 형태)에 승강장 배치</p>
+      <p>열차가 선로 끝에서 정차 → <strong>차막이 구조</strong></p>
+      <p>반드시 <strong>종착역 전용</strong></p>
+      <p>진출입이 한 방향뿐</p>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>형식</th><th>승강장 위치</th><th>특징·장점</th><th>주 사용처</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>상대식(相對式)</strong></td>
+        <td>선로 양측 바깥에 각각 1개</td>
+        <td>동시착발 안전, 확장 용이</td>
+        <td>단선 중간역</td>
+      </tr>
+      <tr>
+        <td><strong>섬식(島式)</strong></td>
+        <td>선로 사이 중앙에 1개</td>
+        <td>환승 편리, 공간 효율</td>
+        <td>지하철·복선 역</td>
+      </tr>
+      <tr>
+        <td><strong>두단식(頭端式)</strong></td>
+        <td>선로 끝(막힌 쪽)</td>
+        <td>차막이, 종착역 전용</td>
+        <td>종착역</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="crossref-box">
+    <strong>CROSS-REF</strong> — 유효장·정거장 일반구조 → <strong>05-02 §1</strong><br>
+    교행설비(대피선·신호장) → <strong>05-03 §2</strong>
+  </div>
+
+  <!-- §3 오답 함정 -->
+  <div class="sec-title">§3. 오답 선지 판별</div>
+
+  <div class="trap-box">
+    <div class="trap-title">오답 선지 판별</div>
+    <div class="trap-item"><span class="x">X</span>"섬식 승강장은 종착역에서 사용한다" → 오답. 종착역 전용은 <strong>두단식</strong>이다.</div>
+    <div class="trap-item"><span class="x">X</span>"두단식은 환승이 편리하다" → 오답. 환승 편리는 <strong>섬식</strong>의 특징이다.</div>
+    <div class="trap-item"><span class="x">X</span>"상대식은 선로 사이 중앙에 위치한다" → 오답. 중앙 배치는 <strong>섬식</strong>이다.</div>
+    <div class="trap-item"><span class="o">O</span>두단식 = 선로 끝 막힌 형태 = 차막이 구조 = 종착역 전용.</div>
+    <div class="trap-item"><span class="o">O</span>섬식 = 승강장 형태 분류 (차막이 종류에 포함시키면 오답).</div>
+    <div class="trap-item"><span class="o">O</span>상대식 = 양측 바깥 각각 배치 = 확장 용이 = 단선 중간역.</div>
+  </div>
+
+  <!-- 핵심암기 -->
+  <div class="sec-title">핵심암기</div>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 승강장 3종 핵심</div>
+    <div class="memo-text">
+      상대식 = 양측 바깥 각각 / 확장 용이 / 단선 중간역<br>
+      섬식 = 선로 사이 중앙 / 환승 편리 / 지하철·복선<br>
+      두단식 = 선로 끝 막힘 / 차막이 / 종착역 전용
+    </div>
+  </div>
+
+  <!-- 기출 문제 -->
+  <div class="sec-title">기출 문제</div>
+
+  <div class="qst-box">
+    <div class="qst-meta">연습 · SOURCE 36 · 4지선다형</div>
+    <div class="qst-num">Q1</div>
+    <div class="qst-q">승강장 형식 중 선로 사이 중앙에 승강장을 배치하여 환승이 편리하고 공간 효율이 높은 형식은?</div>
+    <ul class="choice-list">
+      <li>① 상대식</li>
+      <li>② 섬식</li>
+      <li>③ 두단식</li>
+      <li>④ 측선식</li>
+    </ul>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">연습 · SOURCE 36 · 4지선다형</div>
+    <div class="qst-num">Q2</div>
+    <div class="qst-q">다음 중 종착역에서만 사용하며, 선로 끝에 차막이 구조로 배치되는 승강장 형식은?</div>
+    <ul class="choice-list">
+      <li>① 상대식</li>
+      <li>② 섬식</li>
+      <li>③ 두단식</li>
+      <li>④ 외선식</li>
+    </ul>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">연습 · SOURCE 35 · 단답형</div>
+    <div class="qst-num">Q3</div>
+    <div class="qst-q">정거장에서 열차가 안전하게 정차할 수 있는 선로의 유효 길이를 무엇이라 하는가?</div>
+  </div>
+
+  <section class="answer-section">
+    <div class="sec-title">정답 및 해설</div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q1 정답 ②</p>
+      <p class="ans-answer">섬식 승강장은 선로 사이 중앙에 승강장 1개를 배치하여, 상·하행 양쪽 열차를 모두 이용할 수 있고 환승이 편리하며 공간 효율이 높다. 주로 지하철·복선 역에서 사용된다. ① 상대식은 선로 양측 바깥에 각각 배치. ③ 두단식은 선로 끝 막힌 형태의 종착역 전용. ④ 측선식은 승강장 형식 분류에 포함되지 않음.</p>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q2 정답 ③</p>
+      <p class="ans-answer">두단식(頭端式) 승강장은 선로 끝에 차막이 구조로 배치되며, 열차가 반대 방향으로 출발할 수 없고 종착역에서만 사용한다. 진출입이 한 방향뿐이며 차막이가 필수 구성이다. ① 상대식은 선로 양측 바깥 배치. ② 섬식은 선로 사이 중앙 배치. ④ 외선식은 해당 분류에 없음.</p>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q3 정답</p>
+      <p class="ans-answer"><strong>유효장(有效長)</strong> — 정거장에서 열차가 안전하게 정차할 수 있는 선로의 유효 길이. 차막이 또는 신호기 사이의 거리로 산정하며, 열차가 유효장을 초과하면 인접 선로나 신호에 지장을 준다.</p>
+    </div>
+  </section>
+
+  <nav class="unit-nav">
+    <a href="unit-05-03_FINAL_PUBLISH_v1.0.html">← 이전 UNIT 05-03</a>
+    <span class="nav-gap"></span>
+    <a href="unit-05-05_FINAL_PUBLISH_v1.0.html">다음 UNIT 05-05 →</a>
+  </nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
