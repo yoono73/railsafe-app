@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>05-02 정거장의 개념·종류·형식</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-final { color: #065f46; border-color: #059669; background: #ecfdf5; }
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+  .content-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; background: #fff; margin-bottom: 14px; }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13.5px; }
+  table th { background: #1e3a5f; color: #fff; padding: 8px 12px; text-align: left; font-size: 13px; }
+  table td { border: 1px solid #cbd5e1; padding: 8px 12px; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f8fafc; }
+  .vis-block { text-align: center; margin: 18px 0; }
+  .vis-block img { max-width: 100%; border: 1px solid #e2e8f0; border-radius: 6px; }
+  .vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
+  .memo-box { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 14px 18px; background: #f0f4f8; margin-bottom: 14px; }
+  .memo-title { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .memo-text { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.8; }
+  .crossref-box { border: 1.5px solid #0891b2; border-radius: 6px; padding: 12px 16px; background: #f0f9ff; margin-bottom: 14px; font-size: 13px; color: #0c4a6e; }
+  .crossref-box strong { color: #0369a1; }
+  .trap-box { border: 1.5px solid #dc2626; border-radius: 6px; padding: 14px 16px; background: #fef2f2; margin-bottom: 14px; }
+  .trap-title { font-size: 13px; font-weight: 800; color: #dc2626; margin-bottom: 8px; }
+  .trap-item { font-size: 13.5px; color: #1a1a1a; margin-bottom: 5px; line-height: 1.6; }
+  .trap-item .x { color: #dc2626; font-weight: 800; margin-right: 4px; }
+  .trap-item .o { color: #059669; font-weight: 800; margin-right: 4px; }
+  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
+  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+  .choice-list { list-style: none; padding: 0; }
+  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
+  .answer-section { margin-top: 40px; border-top: 2px solid #1e3a5f; padding-top: 20px; }
+  .answer-section .sec-title { margin-top: 0; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-answer { font-size: 13.5px; color: #1a1a1a; line-height: 1.7; }
+  .print-btn { position: fixed; top: 12px; right: 16px; z-index: 999; background: #1e3a5f; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    .page-wrap { padding: 10px; }
+    .qst-box, .content-box, .ans-box { break-inside: avoid; page-break-inside: avoid; }
+    .answer-section { break-before: page; page-break-before: always; }
+    .print-btn { display: none !important; }
+  }
+  .unit-nav { display:flex; justify-content:space-between; align-items:center; margin:32px 0 16px; padding:12px 0; border-top:2px solid #e5e7eb; }
+  .unit-nav a { color:#1e3a5f; text-decoration:none; font-weight:600; font-size:15px; padding:6px 12px; border-radius:6px; background:#f0f4f8; }
+  .unit-nav a:hover { background:#dbe4f0; }
+  .unit-nav .nav-gap { flex:1; }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+<div class="page-wrap">
+
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 05 · UNIT 05-02</div>
+    <div class="unit-title">정거장의 개념·종류·형식</div>
+    <div class="unit-sub">정거장 정의, 역·조차장·신호장 구분, 상대식·섬식 승강장 배치 형식 (SOURCE 18·32)</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 05 선로 설비·정거장</span>
+      <span class="badge badge-grade">★★★ 중요</span>
+      <span class="badge badge-final">FINAL PUBLISH</span>
+    </div>
+  </div>
+
+  <!-- §1 정거장 정의 -->
+  <div class="sec-title">§1. 정거장 정의 (SOURCE 18)</div>
+
+  <div class="content-box">
+    <p><strong>정거장(停車場, Station)</strong>: 여객의 승강(乘降), 화물의 적하(積荷), 또는 열차의 조성·대피·교행을 위하여 사용되는 장소. 본선 상에서 열차가 정차하여 운영 목적을 수행하는 구내(構內) 시설 전체를 포함한다.</p>
+    <p>「철도건설규칙」상 정거장은 <strong>역·조차장·신호장</strong>의 3종으로 분류된다.</p>
+  </div>
+
+  <!-- §2 정거장 3종 -->
+  <div class="sec-title">§2. 정거장 종류 — 역·조차장·신호장 (SOURCE 18)</div>
+
+  <!-- 핵심개념18 이미지 -->
+  <div class="vis-block">
+    <img
+      src="images/철도공학_핵심개념18_정거장의 종류.png"
+      onerror="this.onerror=null; this.style.display='none';"
+      alt="정거장의 종류 핵심개념18"
+    >
+    <div class="vis-caption">정거장의 종류 — 핵심개념 18 (SOURCE 18)</div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>종류</th><th>주요 기능</th><th>특징</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>역(驛)</strong></td>
+        <td>여객 승강, 화물 적하, 열차 조성·대피·교행</td>
+        <td>가장 일반적인 정거장. 여객역·화물역·여객화물역 등으로 세분.</td>
+      </tr>
+      <tr>
+        <td><strong>조차장(操車場)</strong></td>
+        <td>화물차량의 입환·분류·조성</td>
+        <td>여객 취급 없음. 차량을 용도별·행선지별로 분류·편성하는 전용 시설.</td>
+      </tr>
+      <tr>
+        <td><strong>신호장(信號場)</strong></td>
+        <td>열차의 대피·교행만을 목적으로 설치</td>
+        <td>여객·화물 취급 없음. 단선구간에서 열차 교행을 위한 최소 설비만 갖춤.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="trap-box">
+    <div class="trap-title">오답 선지 판별</div>
+    <div class="trap-item"><span class="x">X</span>"정거장 종류 = 역·신호소·정류장" → 오답. 신호소·정류장은 정거장 분류가 아님.</div>
+    <div class="trap-item"><span class="x">X</span>"정거장 종류 = 역·조차장·신호소" → 오답. <strong>신호장</strong>이 맞고, 신호소는 별개의 개념.</div>
+    <div class="trap-item"><span class="o">O</span>정거장 = 역 + 조차장 + 신호장 (3종)</div>
+  </div>
+
+  <!-- §3 정거장 형식 -->
+  <div class="sec-title">§3. 정거장 승강장 형식 (SOURCE 32)</div>
+
+  <!-- VIS-035 상대식·섬식 비교 -->
+  <div class="vis-block">
+    <img
+      src="images/VIS-035_정거장형식비교.png"
+      onerror="this.onerror=null; this.src='images/VIS-035_정거장형식비교.jpg';"
+      alt="VIS-035 상대식·섬식 승강장 배치 비교"
+    >
+    <div class="vis-caption">VIS-035 상대식·섬식 승강장 배치 비교 (SOURCE 32)</div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>형식</th><th>특징</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>상대식(相對式)</strong></td>
+        <td>본선 양쪽에 승강장이 마주 보는 형태. 2개 승강장. 상·하행 분리 탑승.</td>
+      </tr>
+      <tr>
+        <td><strong>섬식(島式)</strong></td>
+        <td>본선 사이에 승강장이 섬 형태로 위치. 하나의 승강장에서 상·하행 모두 탑승 가능.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="trap-box">
+    <div class="trap-title">오답 선지 판별</div>
+    <div class="trap-item"><span class="x">X</span>"상대식 = 본선 사이 섬 형태" → 오답. 본선 사이 섬 형태는 <strong>섬식</strong>.</div>
+    <div class="trap-item"><span class="o">O</span>상대식 = 양쪽에 마주 보는 2개 승강장 / 섬식 = 본선 사이 1개 섬 승강장</div>
+  </div>
+
+  <!-- 보조개념: 선로 배치 기준 (참고) -->
+  <div class="crossref-box">
+    <strong>보조개념 — 선로 배치 기준 (참고)</strong><br>
+    <strong>종단형(終端形)</strong>: 선로가 역에서 막히는 구조. 끝단에 차막이 설치. 종착역·차고지에 적용.<br>
+    <strong>통과형(通過形)</strong>: 선로가 역을 통과하는 구조. 중간역 대부분이 해당.<br>
+    ※ SOURCE 32 PRIMARY는 상대식·섬식(승강장 배치 기준)임.
+  </div>
+
+  <!-- §4 정거장 관련 CROSS-REF -->
+  <div class="sec-title">§4. 관련 개념 연결</div>
+
+  <div class="crossref-box">
+    <strong>CROSS-REF</strong> — 정거장 주요설비(유효장·승강장·대합실 등) 상세 →
+    <strong>05-03 정거장 주요설비</strong><br>
+    유효장·차막이 측정 기준 (제21조 제2항) → <strong>02-05 §2</strong><br>
+    승강장 형식·측선 세부 → <strong>05-04 승강장과 측선</strong><br>
+    신호기 가시거리 → <strong>PART 07 철도신호</strong>
+  </div>
+
+  <!-- 핵심암기 -->
+  <div class="sec-title">핵심암기</div>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 정거장 핵심</div>
+    <div class="memo-text">
+      정거장 3종 = <strong>역</strong>(여객·화물·조성) + <strong>조차장</strong>(차량 분류·조성) + <strong>신호장</strong>(대피·교행만)<br>
+      신호소·정류장 = 정거장 아님 ✗<br>
+      <br>
+      승강장 배치: 상대식(양쪽 2개) ↔ 섬식(가운데 1개)<br>
+      상대식 = 相對 = 마주 보다 = 양쪽 각 1개<br>
+      섬식 = 島式 = 섬처럼 가운데
+    </div>
+  </div>
+
+  <!-- 기출 문제 -->
+  <div class="sec-title">기출 문제</div>
+
+  <div class="qst-box">
+    <div class="qst-meta">기출 · id 1 · SOURCE 18 · 4지선다형</div>
+    <div class="qst-num">Q1.</div>
+    <div class="qst-q">여객의 승강, 화물의 적하, 또는 열차의 조성·대피·교행을 위하여 사용되는 장소는?</div>
+    <ol class="choice-list">
+      <li>① 본선</li>
+      <li>② 측선</li>
+      <li>③ 정거장</li>
+      <li>④ 신호소</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">기출 · id 2 · SOURCE 18 · 4지선다형</div>
+    <div class="qst-num">Q2.</div>
+    <div class="qst-q">정거장의 종류로 옳은 것은?</div>
+    <ol class="choice-list">
+      <li>① 역·신호소·정류장</li>
+      <li>② 역·조차장·신호소</li>
+      <li>③ 역·조차장·신호장</li>
+      <li>④ 역·정류장·신호장</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">기출 · id 71 · SOURCE 32 · 4지선다형</div>
+    <div class="qst-num">Q3.</div>
+    <div class="qst-q">본선 양쪽에 승강장이 마주 보는 형태로 배치된 정거장 형식은?</div>
+    <ol class="choice-list">
+      <li>① 섬식 정거장</li>
+      <li>② 상대식 정거장</li>
+      <li>③ 종단형 정거장</li>
+      <li>④ 통과형 정거장</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">연습 · SOURCE 18</div>
+    <div class="qst-num">Q4.</div>
+    <div class="qst-q">다음 중 정거장의 종류에 해당하지 않는 것은?</div>
+    <ol class="choice-list">
+      <li>① 역</li>
+      <li>② 조차장</li>
+      <li>③ 신호장</li>
+      <li>④ 신호소</li>
+    </ol>
+  </div>
+
+  <!-- 정답 및 해설 -->
+  <section class="answer-section">
+    <div class="sec-title">정답 및 해설</div>
+    <div class="ans-box">
+      <p class="ans-num">Q1 정답 ③</p>
+      <p class="ans-answer">정거장: 여객의 승강, 화물의 적하, 또는 열차의 조성·대피·교행을 위해 사용되는 장소. 본선은 열차 운전 상용 선로, 측선은 본선 이외의 선로, 신호소는 별개의 시설이다.</p>
+    </div>
+    <div class="ans-box">
+      <p class="ans-num">Q2 정답 ③</p>
+      <p class="ans-answer">정거장 3종: <strong>역·조차장·신호장</strong>. 신호소는 정거장 분류에 포함되지 않으며, 정류장도 마찬가지다. ①②④는 신호소·정류장을 혼용하거나 신호장과 혼동한 오답이다.</p>
+    </div>
+    <div class="ans-box">
+      <p class="ans-num">Q3 정답 ②</p>
+      <p class="ans-answer">상대식 정거장: 본선 양쪽에 승강장이 마주 보는 형태. 2개의 승강장에서 상·하행을 각각 담당한다. 섬식은 본선 사이에 승강장이 1개 위치하는 형태.</p>
+    </div>
+    <div class="ans-box">
+      <p class="ans-num">Q4 정답 ④</p>
+      <p class="ans-answer">신호소는 정거장의 종류가 아니다. 정거장 3종은 역·조차장·신호장이다. 신호소는 신호 취급만을 위한 시설로, 정거장과는 구분된다.</p>
+    </div>
+  </section>
+
+  <nav class="unit-nav">
+    <a href="unit-05-01_FINAL_PUBLISH_v1.0.html">← 이전 UNIT 05-01</a>
+    <span class="nav-gap"></span>
+    <a href="unit-05-03_FINAL_PUBLISH_v1.0.html">다음 UNIT 05-03 →</a>
+  </nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
