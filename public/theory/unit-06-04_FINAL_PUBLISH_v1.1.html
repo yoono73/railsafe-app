@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>06-04 선로보수의 방법·종류·검사</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-final { color: #065f46; border-color: #059669; background: #ecfdf5; }
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+  .content-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; background: #fff; margin-bottom: 14px; }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13.5px; }
+  table th { background: #1e3a5f; color: #fff; padding: 8px 12px; text-align: left; font-size: 13px; }
+  table td { border: 1px solid #cbd5e1; padding: 8px 12px; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f8fafc; }
+  .memo-box { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 14px 18px; background: #f0f4f8; margin-bottom: 14px; }
+  .memo-title { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .memo-text { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.8; }
+  .crossref-box { border: 1.5px solid #0891b2; border-radius: 6px; padding: 12px 16px; background: #f0f9ff; margin-bottom: 14px; font-size: 13px; color: #0c4a6e; }
+  .crossref-box strong { color: #0369a1; }
+  .trap-box { border: 1.5px solid #dc2626; border-radius: 6px; padding: 14px 16px; background: #fef2f2; margin-bottom: 14px; }
+  .trap-title { font-size: 13px; font-weight: 800; color: #dc2626; margin-bottom: 8px; }
+  .trap-item { font-size: 13.5px; color: #1a1a1a; margin-bottom: 5px; line-height: 1.6; }
+  .trap-item .x { color: #dc2626; font-weight: 800; margin-right: 4px; }
+  .trap-item .o { color: #059669; font-weight: 800; margin-right: 4px; }
+  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
+  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+  .choice-list { list-style: none; padding: 0; }
+  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
+  .answer-section { margin-top: 40px; border-top: 2px solid #1e3a5f; padding-top: 20px; }
+  .answer-section .sec-title { margin-top: 0; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-answer { font-size: 13.5px; color: #1a1a1a; line-height: 1.7; }
+  .print-btn { position: fixed; top: 12px; right: 16px; z-index: 999; background: #1e3a5f; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  .unit-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 18px; border-top: 1px solid #e2e8f0; font-size: 13px; }
+  .unit-nav a { color: #1e3a5f; text-decoration: none; font-weight: 700; padding: 6px 12px; border-radius: 6px; background: #f0f4f8; }
+  .unit-nav a:hover { background: #dbe4f0; }
+  .nav-gap { flex: 1; }
+
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    body { font-size: 13px; }
+    .unit-nav, .print-btn { display: none; }
+    .qst-box, .content-box, .ans-box { break-inside: avoid; page-break-inside: avoid; }
+    .answer-section { break-before: page; page-break-before: always; }
+  }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+<div class="page-wrap">
+
+  <header class="unit-header">
+    <div class="unit-num">GATE 6 · PART 06 · UNIT 06-04</div>
+    <div class="unit-title">선로보수의 방법·종류·검사</div>
+    <div class="unit-sub">선로순회검사 주기 (SOURCE 37) + 유간검사·기계화 효과 (SOURCE 38)</div>
+    <div class="badge-row">
+      <span class="badge badge-part">PART 06 · 선로보수</span>
+      <span class="badge badge-grade">★★★ 중요</span>
+      <span class="badge badge-final">FINAL PUBLISH v1.0</span>
+    </div>
+  </header>
+
+  <!-- §1 선로순회검사 주기 -->
+  <div class="sec-title">§1. 선로순회검사 주기 — 담당자별 표 (SOURCE 37)</div>
+
+  <div class="content-box">
+    <p><strong>선로순회검사</strong>: 선로관리 담당자가 정해진 주기에 따라 선로를 직접 순회하며 이상 유무를 확인하는 검사.</p>
+    <p>담당자 직급별로 순회 주기가 다르며, 시험에서 <strong>보선장 주기를 주 2회로 교체</strong>하는 함정 선지가 자주 출제된다.</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>담당자</th><th>순회 주기</th><th>비고</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>선로관리원</strong></td>
+        <td><strong>매일 1회 이상</strong></td>
+        <td>현장 일상 순회, 가장 자주 실시</td>
+      </tr>
+      <tr>
+        <td><strong>보선장</strong></td>
+        <td><strong>주 1회 이상</strong></td>
+        <td>함정: 주 2회 아님 — 반드시 주 1회</td>
+      </tr>
+      <tr>
+        <td><strong>분소장</strong></td>
+        <td><strong>월 1회 이상</strong></td>
+        <td>분소 단위 관리·점검</td>
+      </tr>
+      <tr>
+        <td><strong>소장</strong></td>
+        <td><strong>필요시</strong></td>
+        <td>특이사항 발생 시 등 필요에 따라 실시</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- §2 선로검사 종류 -->
+  <div class="sec-title">§2. 선로검사 종류 — 도보검사·기계식검사</div>
+
+  <div class="content-box">
+    <p><strong>도보검사(徒步檢査)</strong>: 선로관리원이 직접 도보로 순회하며 육안 및 간단한 계측기로 선로 상태를 점검하는 방법.</p>
+    <p><strong>기계식 검사(궤도검측차 등)</strong>: 궤도검측차(Track Recording Car)를 이용해 주행하면서 자동으로 궤도틀림(줄틀림·고저틀림·수평틀림·궤간틀림·비틀림)을 측정·기록하는 방법.</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>구분</th><th>방법</th><th>특징</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>도보검사</strong></td>
+        <td>육안·간이계측기</td>
+        <td>상시 순회, 일상적 이상 발견에 적합</td>
+      </tr>
+      <tr>
+        <td><strong>기계식 검사</strong></td>
+        <td>궤도검측차 주행</td>
+        <td>5종 틀림 자동 측정·기록, 객관적 데이터 확보</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- §3 유간검사 -->
+  <div class="sec-title">§3. 유간검사(遊間檢査) 시기·목적 (SOURCE 38)</div>
+
+  <div class="content-box">
+    <p><strong>유간(遊間, Rail Gap)</strong>: 레일 이음매 부분의 틈새. 레일의 열팽창·수축을 흡수하기 위해 설계된 간격.</p>
+    <p><strong>유간검사 시기</strong>: <strong>여름과 겨울 이전</strong>에 연 2회 실시.</p>
+    <p>목적: 계절별 온도 변화에 따라 레일이 장출(長出)하거나 과도하게 수축하기 전에 유간을 점검·조정하여 사고를 예방한다.</p>
+  </div>
+
+  <div class="vis-wrap">
+    <img
+      src="images/VIS-133 선로순회검사·유간검사 핵심정리.png"
+      alt="선로순회검사 주기와 유간검사 시기 정리"
+      loading="lazy">
+    <p class="vis-cap">
+      선로순회검사·유간검사 핵심정리
+    </p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">유간검사 함정 — 시기 혼동 주의</div>
+    <div class="trap-item"><span class="x">X</span>"유간검사는 온도변화가 가장 큰 시기에 시행한다" → 오답. 유간검사는 변화가 커지기 <strong>이전(전)</strong>에 실시한다.</div>
+    <div class="trap-item"><span class="x">X</span>"유간검사는 연 1회 실시한다" → 오답. 여름·겨울 이전에 <strong>연 2회</strong> 실시한다.</div>
+    <div class="trap-item"><span class="o">O</span>유간검사 = 여름 이전 + 겨울 이전 = 연 2회.</div>
+  </div>
+
+  <!-- §4 보수 방법 분류 -->
+  <div class="sec-title">§4. 보수 방법 분류 — 정기·임시·특별보수</div>
+
+  <div class="content-box">
+    <p><strong>정기보수(定期補修)</strong>: 계획된 일정에 따라 정기적으로 실시하는 보수. 선로 전체 구간을 순차적으로 보수.</p>
+    <p><strong>임시보수(臨時補修)</strong>: 검사 결과 결함이 발견되었을 때 즉시 실시하는 보수. 긴급 처치 성격.</p>
+    <p><strong>특별보수(特別補修)</strong>: 태풍·홍수·지진 등 재해 발생 후 또는 대규모 선로 개량 시 실시하는 보수.</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>구분</th><th>실시 시기</th><th>특징</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>정기보수</strong></td>
+        <td>계획된 주기에 따라</td>
+        <td>전체 구간 순차 보수, 예방적 성격</td>
+      </tr>
+      <tr>
+        <td><strong>임시보수</strong></td>
+        <td>결함 발견 즉시</td>
+        <td>긴급 처치, 결함 부위 한정</td>
+      </tr>
+      <tr>
+        <td><strong>특별보수</strong></td>
+        <td>재해 후·대규모 개량 시</td>
+        <td>재해 복구, 선형 개량</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 기계화 효과 -->
+  <div class="sec-title">기계화 보선 3대 효과 (SOURCE 38)</div>
+
+  <div class="content-box">
+    <p>선로보수의 기계화(MTT 등 활용)로 얻는 주요 효과:</p>
+    <p><strong>① 작업능률 향상</strong>: 단위 시간당 보수 가능 구간 확대.</p>
+    <p><strong>② 균질 작업</strong>: 사람의 숙련도 차이 없이 일정한 품질로 보수.</p>
+    <p><strong>③ 열차상간 시간활용도 향상</strong>: 열차와 열차 사이 짧은 간격(상간)에도 기계로 신속히 작업 가능.</p>
+  </div>
+
+  <!-- 핵심암기 -->
+  <div class="sec-title">핵심암기</div>
+
+  <div class="memo-box">
+    <div class="memo-title">📌 선로순회검사 주기 핵심</div>
+    <div class="memo-text">
+      선로관리원 → 매일 1회 이상<br>
+      보선장 → 주 1회 이상 (주 2회 X)<br>
+      분소장 → 월 1회 이상<br>
+      소장 → 필요시<br>
+      <br>
+      유간검사 → 여름 이전 + 겨울 이전 = 연 2회<br>
+      기계화 효과 → 능률향상 / 균질작업 / 열차상간 시간활용도 향상
+    </div>
+  </div>
+
+  <!-- 오답 함정 -->
+  <div class="sec-title">오답 선지 판별</div>
+
+  <div class="trap-box">
+    <div class="trap-title">오답 선지 판별 (함정 유형)</div>
+    <div class="trap-item"><span class="x">X</span>"보선장은 주 2회 이상 선로를 순회해야 한다" → 오답. 보선장은 <strong>주 1회 이상</strong>이다.</div>
+    <div class="trap-item"><span class="x">X</span>"선로관리원은 주 1회 이상 순회한다" → 오답. 선로관리원은 <strong>매일(일 1회 이상)</strong> 순회한다.</div>
+    <div class="trap-item"><span class="x">X</span>"유간검사는 온도가 가장 높은 시기에 실시한다" → 오답. 높아지기 <strong>이전</strong>에 실시.</div>
+    <div class="trap-item"><span class="o">O</span>보선장 = 주 1회 이상 / 선로관리원 = 매일 1회 이상.</div>
+    <div class="trap-item"><span class="o">O</span>유간검사 = 여름·겨울 이전 = 연 2회.</div>
+  </div>
+
+  <!-- 기출 -->
+  <div class="sec-title">기출 문제</div>
+
+  <div class="qst-box">
+    <div class="qst-meta">기출 · DB id47 · R1 원문 · 4지선다형</div>
+    <div class="qst-num">Q1</div>
+    <div class="qst-q">철도 선로순회검사에서 선로반원이 담당하는 기본 순회 주기는?</div>
+    <ul class="choice-list">
+      <li>① 매일 1회</li>
+      <li>② 주 2회</li>
+      <li>③ 월 1회</li>
+      <li>④ 분기 1회</li>
+    </ul>
+  </div>
+
+  <section class="answer-section">
+    <div class="sec-title">정답 및 해설</div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q1 정답 ①</p>
+      <p class="ans-answer">선로반원(선로관리원)의 기본 순회 주기는 <strong>매일 1회</strong>이다. 선로장(보선장)은 주 1회, 분소장은 월 1회, 소장은 분기 1회 순회 기준이 적용된다.</p>
+    </div>
+  </section>
+
+  <nav class="unit-nav">
+    <a href="unit-06-03_FINAL_PUBLISH_v1.1.html">← 이전 UNIT 06-03</a>
+    <span class="nav-gap"></span>
+    <a href="unit-06-05_FINAL_PUBLISH_v1.1.html">다음 UNIT 06-05 →</a>
+  </nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
