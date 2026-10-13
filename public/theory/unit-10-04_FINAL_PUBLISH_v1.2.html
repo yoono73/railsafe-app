@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10-04 가선방식 3계열 v1.2</title>
+<!--
+  UNIT : 10-04
+  제목 : 가선방식 3계열 — 직접가선·카테너리·강체가선
+  VERSION : v1.2
+  STATUS : FINAL PUBLISH
+
+  변경이력:
+  v1.0 → v1.1
+  - 부속설비(개념83-B) 전부 10-05로 분리
+  - ATD(개념98) 전부 10-06으로 분리
+  - 직접가선: SOURCE 미확인 → HOLD 표시
+  - 가고(System Height): SOURCE 미확인 → HOLD 표시
+  - §0 선행용어: "이선현상 = Arc/Dewirement" 표현 삭제 (10-09에서 다룸)
+  - §6 임의 기출예상 Q1~Q3 삭제 (DB 미확인)
+  - V-Y-12 삭제 (가선방식과 직접 관련성 낮음), V-Y-13만 유지
+  - NAV: 이전 UNIT을 10-02→10-03으로 수정
+  v1.1 → v1.2: NAV PREV 10-03 활성화, NAV NEXT 10-05 활성화
+
+  PRIMARY SOURCE (확정):
+  - 4.html 개념83-A (p10-72) — 조가선 방식 3종 [카테너리 계열]
+  - 4.html 개념97 (p12-86) — 강체가선 vs 카테너리가선 ⚠️
+
+  HOLD (SOURCE 미확인):
+  - 직접가선 상세 설명 — 4.html 미수록 → 10-04 내 확인 보강 후 추가
+  - 가고(System Height) — 4.html 미수록 → SOURCE 확보 후 추가
+
+  SPLIT:
+  - 개념83-B (부속설비) → 10-05
+  - 개념98 (ATD/WTD) → 10-06
+
+  VIS:
+  - VIS-103_강체가선_커티너리가선.png (PRIMARY) — images/ 폴더 실파일 확인 필요
+
+  VIDEO :
+  - V-Y-13 (RELATED): 강체 전차선로 세척시스템 (vid: kM1BLVUb7rU)
+
+  개념수 : 2 (개념83-A·97)
+  문제 수 : 0 (DB 미확인 — engineering-exam-data.ts 검색 결과 없음)
+  @page : PASS — GATE5_PRINT_LOCK_v1 (12/12/12/18mm)
+-->
+<link rel="stylesheet" href="css/GATE5_PRINT_LOCK_v1.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* ===== 헤더 ===== */
+  .unit-header { border-bottom: 2px solid #0f4c81; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #0f4c81; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-lock  { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+  .badge-hold  { color: #92400e; border-color: #d97706; background: #fffbeb; }
+
+  /* ===== 섹션 제목 ===== */
+  .sec-title { font-size: 16px; font-weight: 800; color: #0f4c81; border-left: 4px solid #0f4c81; padding-left: 10px; margin: 32px 0 14px; }
+
+  /* ===== 선행 용어 ===== */
+  .term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
+  .term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+  .term-name { font-size: 13px; font-weight: 800; color: #0f4c81; margin-bottom: 4px; }
+  .term-desc { font-size: 13px; color: #333; line-height: 1.6; }
+
+  /* ===== 개념 카드 ===== */
+  .concept-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .concept-head {
+    padding: 12px 16px;
+    background: #0f4c81;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .concept-num {
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255,255,255,.18);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+  .concept-name { font-size: 15px; font-weight: 800; }
+  .concept-star { font-size: 12px; margin-left: auto; opacity: .9; white-space: nowrap; }
+  .concept-body { padding: 16px 18px; font-size: 13.5px; line-height: 1.8; }
+
+  /* ===== TIP / TRAP ===== */
+  .tip-box {
+    background: #f0fdfa;
+    border: 1px solid #99f6e4;
+    border-radius: 5px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: #134e4a;
+    margin-top: 12px;
+  }
+  .trap-box {
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    border-radius: 5px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: #7c2d12;
+    margin-top: 10px;
+  }
+  .trap-box strong { color: #9a3412; }
+
+  /* ===== HOLD 박스 ===== */
+  .hold-box {
+    background: #fffbeb;
+    border: 1.5px dashed #d97706;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #92400e;
+    margin: 14px 0;
+  }
+  .hold-box strong { color: #92400e; }
+
+  /* ===== 분리 안내 박스 ===== */
+  .split-box {
+    background: #f0f4f8;
+    border: 1.5px solid #94a3b8;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #334155;
+    margin: 14px 0;
+    text-align: center;
+  }
+  .split-box strong { color: #0f4c81; }
+
+  /* ===== 표 ===== */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #0f4c81; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+  td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  tr.hl td { background: #eff6ff; }
+  tr.hold-row td { background: #fffbeb; color: #92400e; font-style: italic; }
+  td strong { color: #0f4c81; }
+
+  /* ===== VIS 이미지 ===== */
+  .vis-wrap { text-align: center; margin: 16px 0; }
+  .vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+
+  /* ===== 시험 포인트 박스 ===== */
+  .exam-box { border: 1.5px solid #0f4c81; border-radius: 7px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; }
+  .exam-box-title { font-weight: 800; color: #0f4c81; font-size: 13.5px; margin-bottom: 8px; }
+  .exam-box ul { padding-left: 16px; }
+  .exam-box li { margin-bottom: 4px; }
+
+  /* ===== 함정 표 ===== */
+  .trap-tbl th { background: #7c2d12; }
+  .trap-tbl td { font-size: 12.5px; }
+
+  /* ===== 인쇄 버튼 ===== */
+  .print-btn {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 7px 16px;
+    background: #0f4c81;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .print-btn:hover { background: #0a3660; }
+
+  /* ===== NAV ===== */
+  .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; margin-bottom: 12px; font-size: 12.5px; }
+  .nav-btn { display: inline-block; padding: 5px 12px; border: 1.5px solid #0f4c81; border-radius: 4px; color: #0f4c81; text-decoration: none; font-weight: 700; font-size: 12px; }
+  .nav-btn:hover { background: #f0f4f8; }
+  .nav-btn.disabled { opacity: .35; cursor: default; pointer-events: none; }
+  .nav-center { font-size: 11px; color: #64748b; text-align: center; }
+
+  /* ===== 영상 카드 ===== */
+  .yt-card { border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.07); margin: 12px 0 4px; }
+  .yt-thumb { position: relative; cursor: pointer; background: #000; }
+  .yt-thumb img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; opacity: .88; }
+  .yt-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .yt-play-btn { width: 52px; height: 52px; background: rgba(220,38,38,.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,.4); }
+  .yt-info { padding: 7px 12px; display: flex; align-items: center; gap: 8px; background: #f9fafb; }
+  .yt-badge { background: #6b7280; color: #fff; font-size: 11px; padding: 2px 7px; border-radius: 3px; font-weight: 600; white-space: nowrap; }
+  .yt-name { font-size: 13px; color: #111; font-weight: 500; line-height: 1.3; }
+
+  @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+  @media print {
+    .page-wrap { padding: 10px; }
+    .sec-title { break-after: avoid; page-break-after: avoid; }
+    .concept-card, .exam-box { break-inside: avoid; page-break-inside: avoid; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .print-btn { display: none !important; }
+    .nav-bar { display: none !important; }
+    .yt-card { display: none !important; }
+    img { max-width: 100%; height: auto; page-break-inside: avoid; }
+  }
+</style>
+<script>
+function playYT(el) {
+  var vid = el.dataset.vid;
+  el.innerHTML = '<iframe width="100%" style="aspect-ratio:16/9;border:0;" src="https://www.youtube.com/embed/' + vid + '?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+}
+</script>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- NAV (상단) -->
+  <nav class="nav-bar">
+    <a href="unit-10-03_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 10-03 전차선 구비조건·편위</a>
+    <span class="nav-center">GATE5 PART 10 · 전차선로·가선·집전</span>
+    <a href="unit-10-05_FINAL_PUBLISH_v1.0.html" class="nav-btn">10-05 전차선로 부속설비 →</a>
+  </nav>
+
+  <!-- 인쇄 버튼 -->
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+
+  <!-- 헤더 -->
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 10 · UNIT 10-04</div>
+    <div class="unit-title">가선방식 3계열 — 직접가선·카테너리·강체가선</div>
+    <div class="unit-sub">조가선 방식 3종 · 강체가선 vs 카테너리가선 비교</div>
+    <div class="badge-row">
+      <span class="badge badge-grade">★★★ A등급</span>
+      <span class="badge badge-lock">FINAL PUBLISH v1.2</span>
+      <span class="badge badge-hold">직접가선·가고 SOURCE HOLD</span>
+    </div>
+  </div>
+
+  <!-- §0 선행 용어 -->
+  <div class="sec-title">§0 선행 용어</div>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">조가선 / 가선 (Catenary)</div>
+      <div class="term-desc">전차선을 지지하는 상부 전선. 드로퍼를 통해 전차선을 매달아 수평 유지.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">전차선 (Contact Wire)</div>
+      <div class="term-desc">팬터그래프가 직접 슬라이딩 접촉하는 하부 전선. 트롤리선이라고도 함.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">드로퍼 (Dropper)</div>
+      <div class="term-desc">조가선에서 전차선을 매달아 수평으로 유지시키는 수직 연결선.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">팬터그래프 (Pantograph)</div>
+      <div class="term-desc">차량 지붕에서 전차선과 슬라이딩 접촉하여 전력을 집전하는 장치.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">강체가선 (Rigid Catenary)</div>
+      <div class="term-desc">알루미늄 도체 바(Bar)에 전차선을 내장·고정하는 방식. 탄성 없음.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">카테너리가선 (Catenary System)</div>
+      <div class="term-desc">조가선+드로퍼+전차선으로 구성된 탄성 가선 방식. 지상·고속선 표준.</div>
+    </div>
+  </div>
+
+  <!-- §1 가선방식 3계열 -->
+  <div class="sec-title">§1 가선방식 3계열 개요</div>
+
+  <div class="hold-box">
+    ⚠️ <strong>HOLD: 직접가선 상세 설명</strong><br>
+    확정 목차에서 "직접가선·카테너리·강체가선" 3계열이나, <strong>직접가선(Direct Suspension)</strong> 상세 내용은
+    현재 4.html(PRIMARY SOURCE)에 수록되지 않았음. SOURCE 확보 후 이 위치에 추가 예정.
+  </div>
+
+  <!-- 카테너리 계열 -->
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념83-A</span>
+      <span class="concept-name">카테너리 방식 3종 비교</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>방식</th><th>적용 구간</th><th>특징</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hold-row">
+              <td><strong>직접가선</strong></td>
+              <td>— [SOURCE HOLD]</td>
+              <td>4.html 미수록 — 추가 SOURCE 확보 필요</td>
+            </tr>
+            <tr>
+              <td><strong>심플 카테너리</strong></td>
+              <td>국내 지상 전철 구간</td>
+              <td>구조 단순, 시공 용이 — 기본형</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>헤비 심플 카테너리</strong></td>
+              <td>고속선 또는 터널 인근</td>
+              <td>조가선 단면적 확대 — 고속 대응</td>
+            </tr>
+            <tr>
+              <td><strong>강체 조가식</strong></td>
+              <td>지하 구간</td>
+              <td>알루미늄 바 고정 — 협소 공간 적합</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trap-box">
+        ⚠️ <strong>암기 공식 [SOURCE: 4.html 개념83]</strong><br>
+        심플 카테너리 = <strong>지상 전철</strong> &nbsp;/&nbsp;
+        강체 조가식 = <strong>지하</strong> &nbsp;/&nbsp;
+        헤비 심플 = <strong>고속선·터널</strong>
+      </div>
+
+      <div class="tip-box">
+        💡 <strong>이론 배경</strong><br>
+        조가선(catenary) 방식은 전차선을 지지하는 방법에 따라 분류됩니다.
+        심플 카테너리는 가장 기본적인 방식으로 국내 지상 전철 구간에 사용하며,
+        강체 조가식은 알루미늄 바 구조로 지하 구간의 협소한 공간에 적합합니다.
+        헤비 심플은 고속 운행에 대응하기 위해 조가선 단면적을 확대한 방식입니다.
+      </div>
+
+      <div class="hold-box" style="margin-top:14px;">
+        ⚠️ <strong>HOLD: 가고(System Height)</strong><br>
+        조가선 지지점과 전차선 사이의 수직 높이차. 확정 설계에 포함 예정이나
+        현재 4.html에 수록되지 않아 SOURCE 확보 후 추가.
+      </div>
+    </div>
+  </div>
+
+  <!-- §2 부속설비 — 분리 안내 -->
+  <div class="sec-title">§2 전차선로 부속설비 (→ 10-05로 분리)</div>
+
+  <div class="split-box">
+    📋 부속설비(에어조인트·구분장치·정류포스트) 내용은<br>
+    <strong>UNIT 10-05 전차선로 부속설비</strong>에서 별도로 다룹니다.<br>
+    SOURCE: 4.html 개념83-B
+  </div>
+
+  <!-- §3 강체가선 vs 카테너리가선 -->
+  <div class="sec-title">§3 강체가선 vs 카테너리가선 비교 ⚠️</div>
+
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념97</span>
+      <span class="concept-name">강체가선 vs 카테너리가선 ⚠️ 최빈출 함정</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>구분</th><th>강체가선 (Rigid Catenary)</th><th>카테너리가선 (Catenary)</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>구조</strong></td>
+              <td>알루미늄 도체 바(Bar)에 전차선 내장·고정</td>
+              <td>조가선+드로퍼+전차선 탄성 구성</td>
+            </tr>
+            <tr>
+              <td><strong>탄성</strong></td>
+              <td>없음 — 팬터그래프 충격 큼</td>
+              <td>있음 — 팬터그래프 충격 완충</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>설비 높이</strong></td>
+              <td>낮음 → 터널 내 협소 공간 적합</td>
+              <td>높음 → 지상 개방 구간 적합</td>
+            </tr>
+            <tr>
+              <td><strong>적용 구간</strong></td>
+              <td><strong>터널 (지하) 구간</strong></td>
+              <td><strong>지상 전철·고속선</strong></td>
+            </tr>
+            <tr class="hl">
+              <td><strong>유지보수</strong></td>
+              <td>단순 (드로퍼 없음)</td>
+              <td>드로퍼 점검 필요</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trap-box">
+        ⚠️ <strong>핵심 함정</strong><br>
+        강체가선 = <strong>터널용</strong> · 지상 고속선에 강체가선 사용 ❌<br>
+        카테너리가선이 탄성 있어 팬터그래프 충격 작음
+      </div>
+
+      <!-- VIS-103 -->
+      <div class="vis-wrap">
+        <img src="images/VIS-103_강체가선_커티너리가선.png"
+             alt="강체가선 vs 카테너리가선 비교"
+             loading="lazy">
+        <div class="vis-cap">▲ VIS-103 — 강체가선(터널용, 알루미늄 바 고정) vs 카테너리가선(지상용, 조가선+드로퍼+전차선 탄성 구성) 단면 비교</div>
+      </div>
+
+      <div class="tip-box">
+        💡 <strong>이론 배경 [SOURCE: 4.html 개념97]</strong><br>
+        카테너리가선은 조가선이 전차선을 드로퍼로 매달아 탄성을 확보합니다.
+        강체가선은 이 탄성이 없어 팬터그래프에 충격이 크지만, 설비 높이가 낮아 터널에 적합합니다.
+      </div>
+
+      <!-- V-Y-13 강체 전차선로 세척시스템 -->
+      <div class="yt-card">
+        <div class="yt-thumb" data-vid="kM1BLVUb7rU" onclick="playYT(this)">
+          <img src="https://img.youtube.com/vi/kM1BLVUb7rU/hqdefault.jpg" alt="강체 전차선로 세척시스템" loading="lazy">
+          <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div>
+        </div>
+        <div class="yt-info">
+          <span class="yt-badge">KRRI 참고영상</span>
+          <span class="yt-name">강체 전차선로 세척시스템 (V-Y-13) — 강체가선 구조 시각 확인</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §4 ATD — 분리 안내 -->
+  <div class="sec-title">§4 자동장력조정장치 ATD (→ 10-06으로 분리)</div>
+
+  <div class="split-box">
+    📋 자동장력조정장치(ATD/WTD) 내용은<br>
+    <strong>UNIT 10-06 자동장력조정장치(ATD)</strong>에서 별도로 다룹니다.<br>
+    SOURCE: 4.html 개념98 — KEEP·VERIFY 대상 (세부 수치·동작 표현 검증 필요)
+  </div>
+
+  <!-- §5 시험 포인트 -->
+  <div class="sec-title">§5 시험 포인트 · 함정 종합</div>
+
+  <div class="exam-box">
+    <div class="exam-box-title">🎯 카테너리 방식 핵심 암기</div>
+    <ul>
+      <li>심플 카테너리 → <strong>지상 전철</strong> (기본형)</li>
+      <li>헤비 심플 카테너리 → <strong>고속선·터널 인근</strong></li>
+      <li>강체 조가식 → <strong>지하 구간</strong> (협소 공간)</li>
+      <li>직접가선 → ⚠️ SOURCE 미확인 — 10-04 추후 보강</li>
+    </ul>
+  </div>
+
+  <div class="exam-box">
+    <div class="exam-box-title">🎯 강체가선 vs 카테너리가선</div>
+    <ul>
+      <li>강체가선 = <strong>터널(지하)</strong> / 카테너리가선 = <strong>지상·고속선</strong></li>
+      <li>강체가선: 탄성 없음, 높이 낮음 → 터널 적합</li>
+      <li>카테너리가선: 탄성 있음, 팬터그래프 충격 완충</li>
+    </ul>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="trap-tbl">
+      <thead>
+        <tr><th>혼동 포인트</th><th>정답</th><th>오답 함정</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>지하 구간 가선방식</td>
+          <td><strong>강체 조가식</strong></td>
+          <td>"심플 카테너리"로 답하는 오답</td>
+        </tr>
+        <tr class="hl">
+          <td>터널용 가선</td>
+          <td><strong>강체가선 (Rigid Catenary)</strong></td>
+          <td>"카테너리가선이 터널 적합" 오답</td>
+        </tr>
+        <tr>
+          <td>고속선 조가선 방식</td>
+          <td><strong>헤비 심플 카테너리</strong></td>
+          <td>"심플 카테너리가 고속선용" 오답</td>
+        </tr>
+        <tr class="hl">
+          <td>강체가선 탄성</td>
+          <td><strong>탄성 없음</strong></td>
+          <td>"알루미늄이라 탄성 있음" 오답</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- §6 DB 문제 -->
+  <div class="sec-title">§6 기출 DB 문제</div>
+
+  <div class="hold-box">
+    ⚠️ <strong>DB 미확인</strong><br>
+    engineering-exam-data.ts에서 가선방식(카테너리·강체가선·심플) 관련 문항 검색 결과: <strong>0건</strong><br>
+    DB 원문 확인된 문항 없음 → 문제 섹션 비움. 원문 확인 후 추가 예정.
+  </div>
+
+  <!-- NAV (하단) -->
+  <nav class="nav-bar" style="margin-top:32px;">
+    <a href="unit-10-03_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 10-03 전차선 구비조건·편위</a>
+    <span class="nav-center">GATE5 PART 10 · 전차선로·가선·집전</span>
+    <a href="unit-10-05_FINAL_PUBLISH_v1.0.html" class="nav-btn">10-05 전차선로 부속설비 →</a>
+  </nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>

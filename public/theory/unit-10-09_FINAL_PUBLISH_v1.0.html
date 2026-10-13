@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10-09 이선현상 원인·대책 v1.0</title>
+<!--
+  UNIT : 10-09
+  제목 : 이선현상 원인·대책
+  VERSION : v1.0
+  STATUS : FINAL PUBLISH
+  SOURCE : 4.html 개념80-A
+  VIS : P10_11_팬터그래프_집전_이선현상.png (10-08과 공용)
+  DB : 0건
+-->
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+.page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+.unit-header { border-bottom: 2px solid #0f4c81; padding-bottom: 14px; margin-bottom: 28px; }
+.unit-num { font-size: 12px; color: #0f4c81; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+.unit-sub { font-size: 13px; color: #555; }
+.badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+.badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+.badge-lock { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+.badge-hold { color: #92400e; border-color: #d97706; background: #fffbeb; }
+.badge-noq { color: #92400e; border-color: #92400e; background: #fffbeb; }
+.sec-title { font-size: 16px; font-weight: 800; color: #0f4c81; border-left: 4px solid #0f4c81; padding-left: 10px; margin: 32px 0 14px; }
+.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
+.term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+.term-name { font-size: 13px; font-weight: 800; color: #0f4c81; margin-bottom: 4px; }
+.term-desc { font-size: 13px; color: #333; line-height: 1.6; }
+.concept-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; background: #fff; overflow: hidden; }
+.concept-head { padding: 12px 16px; background: #0f4c81; color: #fff; display: flex; align-items: center; gap: 10px; }
+.concept-num { font-size: 11px; font-weight: 700; background: rgba(255,255,255,.18); border-radius: 3px; padding: 2px 8px; white-space: nowrap; }
+.concept-name { font-size: 15px; font-weight: 800; }
+.concept-star { font-size: 12px; margin-left: auto; opacity: .9; white-space: nowrap; }
+.concept-body { padding: 16px 18px; font-size: 13.5px; line-height: 1.8; }
+.tip-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #134e4a; margin-top: 12px; }
+.trap-box { background: #fff7ed; border: 1px solid #fdba74; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #7c2d12; margin-top: 10px; }
+.trap-box strong { color: #9a3412; }
+.hold-box { background: #fffbeb; border: 1.5px dashed #d97706; border-radius: 6px; padding: 12px 16px; font-size: 13px; color: #92400e; margin: 14px 0; }
+.hold-box strong { color: #92400e; }
+.split-box { background: #f0f4f8; border: 1.5px solid #94a3b8; border-radius: 6px; padding: 12px 16px; font-size: 13px; color: #334155; margin: 14px 0; text-align: center; }
+.split-box strong { color: #0f4c81; }
+.tbl-wrap { overflow-x: auto; margin: 12px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #0f4c81; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+tr:nth-child(even) td { background: #f8fafc; }
+tr.hl td { background: #eff6ff; }
+td strong { color: #0f4c81; }
+.vis-wrap { text-align: center; margin: 16px 0; }
+.vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+.vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+.exam-box { border: 1.5px solid #0f4c81; border-radius: 7px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; }
+.exam-box-title { font-weight: 800; color: #0f4c81; font-size: 13.5px; margin-bottom: 8px; }
+.exam-box ul { padding-left: 16px; }
+.exam-box li { margin-bottom: 4px; }
+.trap-tbl th { background: #7c2d12; }
+.trap-tbl td { font-size: 12.5px; }
+.print-btn { display: inline-block; margin-bottom: 16px; padding: 7px 16px; background: #0f4c81; color: #fff; border: none; border-radius: 5px; font-size: 13px; cursor: pointer; font-weight: 700; }
+.print-btn:hover { background: #0a3660; }
+.nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; margin-bottom: 12px; font-size: 12.5px; }
+.nav-btn { display: inline-block; padding: 5px 12px; border: 1.5px solid #0f4c81; border-radius: 4px; color: #0f4c81; text-decoration: none; font-weight: 700; font-size: 12px; }
+.nav-btn:hover { background: #f0f4f8; }
+.nav-btn.disabled { opacity: .35; cursor: default; pointer-events: none; }
+.nav-center { font-size: 11px; color: #64748b; text-align: center; }
+@page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+@media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; page-break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="nav-bar">
+    <a href="unit-10-08_HOLD_VERIFY_v1.0.html" class="nav-btn">← 10-08 팬터그래프 구조·종류</a>
+    <span class="nav-center">GATE5 PART 10 · 전차선로·가선·집전</span>
+    <span class="nav-btn disabled">11-01 준비중 →</span>
+  </nav>
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 10 · UNIT 10-09</div>
+    <div class="unit-title">이선현상 원인·대책</div>
+    <div class="unit-sub">팬터그래프 이선현상 정의 · 방지 대책 3가지</div>
+    <div class="badge-row">
+      <span class="badge badge-grade">★★★ A등급</span>
+      <span class="badge badge-lock">FINAL PUBLISH v1.0</span>
+      <span class="badge badge-noq">기출 DB 없음</span>
+    </div>
+  </div>
+
+  <div class="sec-title">§0 선행 용어</div>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">이선현상 (Arc at Pantograph)</div>
+      <div class="term-desc">팬터그래프가 전차선에서 순간적으로 이탈하는 전기적 현상. 아크(arc) 발생, 전력공급 중단, 전차선 손상 초래.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">드레일먼트 / Dewirement</div>
+      <div class="term-desc">전차선에서 팬터그래프가 구조적으로 이탈하는 물리적 사고. 이선현상(전기적 이탈)과 구별.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">드로퍼 간격 (Dropper Spacing)</div>
+      <div class="term-desc">조가선과 전차선을 연결하는 드로퍼 사이의 거리. 간격이 부적절하면 전차선 파동 불규칙 → 이선 유발.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">복합가선 (Compound Catenary)</div>
+      <div class="term-desc">보조 조가선을 추가한 가선 방식. 전차선 파동 억제 → 이선현상 저감 효과.</div>
+    </div>
+  </div>
+
+  <div class="sec-title">§1 이선현상 정의 (개념80-A)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념80-A</span>
+      <span class="concept-name">이선현상 — 정의 및 방지 대책</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <p style="font-size:13px;color:#334155;margin-bottom:14px;">
+        <strong>이선현상:</strong> 팬터그래프가 전차선에서 이탈하는 현상<br>
+        → <strong>호(arc) 발생</strong> + <strong>전력공급 중단</strong> + <strong>전차선 손상</strong>
+      </p>
+
+      <div class="trap-box">
+        ⚠️ <strong>혼동 금지 — 이선현상 ≠ Dewirement</strong><br>
+        이선현상 = 팬터그래프·전차선 간 <strong>전기적·순간적 접촉 이탈</strong> (Arc 발생)<br>
+        Dewirement = 팬터그래프가 전차선에서 <strong>구조적으로 벗어나는 물리적 사고</strong>
+      </div>
+
+      <div class="sec-title" style="margin-top:20px;">§2 방지 대책 (개념80-A)</div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>순서</th><th>대책</th><th>원리</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td>①</td>
+              <td><strong>드로퍼 간격 조정</strong></td>
+              <td>전차선 파동 최소화 → 팬터그래프 안정 접촉 유지</td>
+            </tr>
+            <tr>
+              <td>②</td>
+              <td><strong>장력장치 개선</strong></td>
+              <td>전차선 장력 일정 유지 → 이완·파동 방지</td>
+            </tr>
+            <tr class="hl">
+              <td>③</td>
+              <td><strong>복합가선 적용</strong></td>
+              <td>보조 조가선 추가 → 전차선 파동 억제</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tip-box">
+        💡 <strong>암기법 [SOURCE: 4.html 개념80-A]</strong><br>
+        이선현상 방지 3대책: <strong>드·장·복</strong> = 드로퍼 간격 / 장력장치 / 복합가선
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title">§3 시험 포인트</div>
+  <div class="exam-box">
+    <div class="exam-box-title">🎯 이선현상 핵심 암기</div>
+    <ul>
+      <li>이선현상 = 팬터그래프가 전차선에서 <strong>이탈</strong> → <strong>아크(arc) 발생</strong></li>
+      <li>방지 대책 3종: <strong>드로퍼 간격 조정 / 장력장치 개선 / 복합가선 적용</strong></li>
+      <li>이선현상 ≠ Dewirement (전기적 이탈 vs 구조적 이탈)</li>
+    </ul>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="trap-tbl">
+      <thead>
+        <tr><th>함정 선택지</th><th>정오</th><th>근거</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"이선현상 = Dewirement"</td>
+          <td>❌ 오답</td>
+          <td>이선현상 = 전기적 순간 이탈 / Dewirement = 구조적 이탈</td>
+        </tr>
+        <tr>
+          <td>"이선현상 대책: ATD 설치"</td>
+          <td>△ 주의</td>
+          <td>ATD는 장력 유지 → 간접 효과이나, SOURCE 명기 대책은 드로퍼·장력·복합가선</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-title">§4 VIS</div>
+  <div class="vis-wrap">
+    <img src="images/P10_11_팬터그래프_집전_이선현상.png"
+         alt="팬터그래프 집전·이선현상"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div style="display:none;padding:20px;border:1px dashed #cbd5e1;border-radius:6px;color:#94a3b8;font-size:13px;text-align:center;">
+      ※ P10_11 이미지 준비 중
+    </div>
+    <div class="vis-cap">▲ P10_11 — 팬터그래프 집전 및 이선현상 개요 (10-08과 공용)</div>
+  </div>
+
+  <div class="sec-title">§5 기출 DB 문항</div>
+  <div class="hold-box">
+    ⚠️ <strong>DB 문항 없음</strong><br>
+    engineering-exam-data.ts 검색 결과: 이선현상 관련 PART10 전용 문항 0건.
+  </div>
+
+  <nav class="nav-bar" style="margin-top:32px;">
+    <a href="unit-10-08_HOLD_VERIFY_v1.0.html" class="nav-btn">← 10-08 팬터그래프 구조·종류</a>
+    <span class="nav-center">GATE5 PART 10 · 전차선로·가선·집전</span>
+    <span class="nav-btn disabled">11-01 준비중 →</span>
+  </nav>
+</div>
+</body>
+</html>
