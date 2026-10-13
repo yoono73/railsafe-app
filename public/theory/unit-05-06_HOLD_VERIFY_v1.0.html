@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>05-06 선로보안설비</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-hold { color: #b45309; border-color: #d97706; background: #fffbeb; }
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+  .content-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; background: #fff; margin-bottom: 14px; }
+  .content-box p { margin-bottom: 8px; }
+  .content-box p:last-child { margin-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13.5px; }
+  table th { background: #1e3a5f; color: #fff; padding: 8px 12px; text-align: left; font-size: 13px; }
+  table td { border: 1px solid #cbd5e1; padding: 8px 12px; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f8fafc; }
+  .memo-box { border: 1.5px solid #1e3a5f; border-radius: 6px; padding: 14px 18px; background: #f0f4f8; margin-bottom: 14px; }
+  .memo-title { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .memo-text { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.8; }
+  .hold-box { border: 1.5px solid #d97706; border-radius: 6px; padding: 14px 18px; background: #fffbeb; margin-bottom: 14px; }
+  .hold-title { font-size: 13px; font-weight: 800; color: #b45309; margin-bottom: 8px; }
+  .hold-text { font-size: 13.5px; color: #78350f; line-height: 1.7; }
+  .trap-box { border: 1.5px solid #dc2626; border-radius: 6px; padding: 14px 16px; background: #fef2f2; margin-bottom: 14px; }
+  .trap-title { font-size: 13px; font-weight: 800; color: #dc2626; margin-bottom: 8px; }
+  .trap-item { font-size: 13.5px; color: #1a1a1a; margin-bottom: 5px; line-height: 1.6; }
+  .trap-item .x { color: #dc2626; font-weight: 800; margin-right: 4px; }
+  .trap-item .o { color: #059669; font-weight: 800; margin-right: 4px; }
+  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
+  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+  .choice-list { list-style: none; padding: 0; }
+  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
+  .answer-section { margin-top: 40px; border-top: 2px solid #1e3a5f; padding-top: 20px; }
+  .answer-section .sec-title { margin-top: 0; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-answer { font-size: 13.5px; color: #1a1a1a; line-height: 1.7; }
+  .print-btn { position: fixed; top: 12px; right: 16px; z-index: 999; background: #1e3a5f; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  .unit-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 18px; border-top: 1px solid #e2e8f0; font-size: 13px; }
+  .unit-nav a { color: #1e3a5f; text-decoration: none; font-weight: 700; padding: 6px 12px; border-radius: 6px; background: #f0f4f8; }
+  .unit-nav a:hover { background: #dbe4f0; }
+  .nav-gap { flex: 1; }
+
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+    body { font-size: 13px; }
+    .unit-nav, .print-btn { display: none; }
+    .qst-box, .content-box, .ans-box { break-inside: avoid; page-break-inside: avoid; }
+    .answer-section { break-before: page; page-break-before: always; }
+  }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF</button>
+<div class="page-wrap">
+
+<!-- HEADER -->
+<div class="unit-header">
+  <div class="unit-num">GATE 5 · PART 05 · UNIT 05-06</div>
+  <div class="unit-title">선로보안설비</div>
+  <div class="unit-sub">SOURCE 07 | 철도공학</div>
+  <div class="badge-row">
+    <span class="badge badge-part">PART 05</span>
+    <span class="badge badge-grade">★★★</span>
+    <span class="badge badge-hold">HOLD VERIFY v1.0</span>
+  </div>
+</div>
+
+<!-- HOLD 공지 -->
+<div class="hold-box">
+  <div class="hold-title">⚠ HOLD VERIFY</div>
+  <div class="hold-text">
+    SOURCE 07(낙석방지시설)만 확정 — 낙석방지 3종 + 가드레일 비해당 기재<br>
+    방설시설·방음벽·동물침입방지시설 등: SOURCE 근거 미확인 → VERIFY 상태<br>
+    원문 SOURCE 추가 확인 후 항목 보강 또는 제거 후 FINAL 전환
+  </div>
+</div>
+
+<!-- §1 선로보안설비 개요 -->
+<div class="sec-title">§1 선로보안설비 정의·범위</div>
+<div class="content-box">
+  <p><strong>선로보안설비</strong>란 선로 주변의 위험 요소(낙석, 침입, 기상 등)로부터 열차 운행과 선로를 보호하기 위해 설치하는 시설의 총칭이다.</p>
+  <p>주요 대상: 낙석방지시설 · 방호울타리 · 방설설비(VERIFY) · 방음설비(VERIFY) · 동물침입방지시설(VERIFY)</p>
+</div>
+
+<!-- §2 낙석방지시설 (SOURCE 07 확정) -->
+<div class="sec-title">§2 낙석방지시설 ⭐ SOURCE 07 확정</div>
+<div class="content-box">
+  <p><strong>낙석방지시설</strong>은 절토·암반 구간에서 돌이 선로로 떨어지는 것을 막는 시설이다.</p>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>구분</th>
+      <th>해당 시설 (3종)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>낙석방지시설 ○</strong></td>
+      <td>① 낙석방지 울타리<br>② 낙석방지망<br>③ 낙석방지 옹벽</td>
+    </tr>
+    <tr>
+      <td><strong>낙석방지시설 ✕</strong></td>
+      <td>가드레일(탈선방지레일) — 탈선 방지 목적, 낙석과 무관</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="trap-box">
+  <div class="trap-title">⚠ 함정 주의</div>
+  <div class="trap-item"><span class="x">✗</span> <strong>가드레일(탈선방지레일)</strong>은 낙석방지시설이 아님</div>
+  <div class="trap-item"><span class="o">✓</span> 가드레일 = 분기기·곡선부 탈선 방지용 궤도 내부 레일</div>
+  <div class="trap-item"><span class="x">✗</span> "낙석방지망이 낙석방지시설에 해당하지 않는다" → 오답</div>
+  <div class="trap-item"><span class="o">✓</span> 낙석방지 울타리, 낙석방지망, 낙석방지 옹벽 3종이 모두 해당</div>
+</div>
+
+<!-- §3 기타 선로보안설비 (VERIFY) -->
+<div class="sec-title">§3 기타 선로보안설비 [VERIFY — SOURCE 미확인]</div>
+<div class="hold-box">
+  <div class="hold-title">VERIFY — 아래 항목 SOURCE 근거 미확인</div>
+  <div class="hold-text">
+    아래 시설은 일반 철도공학 지식 기준이며, SOURCE 원문 확인 전 수치·기준 기재 금지<br><br>
+    <strong>① 방설시설 (VERIFY)</strong><br>
+    강설 지역 선로 보호 목적. 방설벽·방설망 등 — 상세 기준 SOURCE 미확인<br><br>
+    <strong>② 방음벽 (VERIFY)</strong><br>
+    도시구간 소음 저감 목적 — 설치기준 SOURCE 미확인<br><br>
+    <strong>③ 동물침입방지시설 (VERIFY)</strong><br>
+    야생동물 선로 진입 방지 울타리 등 — 기준 SOURCE 미확인
+  </div>
+</div>
+
+<!-- §4 안전레일 vs 호륜레일 (05-05와 연계) -->
+<div class="sec-title">§4 선로 보안 관련 레일 — 참조 (05-05 연계)</div>
+<div class="memo-box">
+  <div class="memo-title">📌 안전레일·호륜레일 — 05-05에서 상세 학습</div>
+  <div class="memo-text">
+    안전레일: 고가부 탈선 시 낙하 방지 (본선과 최대 180mm)<br>
+    호륜레일: 건널목 차륜 유도 (직선 본선과 65mm)<br>
+    → 상세 내용은 05-05 건널목의 종류와 보안설비 참조
+  </div>
+</div>
+
+<!-- 문제 영역 -->
+<div class="sec-title">§5 확인 문제</div>
+<div class="qst-box">
+  <div class="qst-meta">SOURCE 07 | 비해당 구분 | ★★★</div>
+  <div class="qst-num">문제 1</div>
+  <div class="qst-q">다음 중 낙석방지시설에 해당하지 않는 것은?</div>
+  <ul class="choice-list">
+    <li>① 낙석방지 울타리</li>
+    <li>② 낙석방지망</li>
+    <li>③ 낙석방지 옹벽</li>
+    <li>④ 가드레일(탈선방지레일)</li>
+  </ul>
+</div>
+
+<div class="qst-box">
+  <div class="qst-meta">SOURCE 07 | 비해당 구분 | ★★★</div>
+  <div class="qst-num">문제 2</div>
+  <div class="qst-q">가드레일(탈선방지레일)의 주된 설치 목적은?</div>
+  <ul class="choice-list">
+    <li>① 암반 구간 낙석으로부터 선로 보호</li>
+    <li>② 분기기·곡선부에서 열차 탈선 방지</li>
+    <li>③ 건널목 구간 차륜 올바른 방향 유도</li>
+    <li>④ 강설 지역 선로 적설 방지</li>
+  </ul>
+</div>
+
+<!-- 정답·해설 -->
+<div class="answer-section">
+  <div class="sec-title">정답 및 해설</div>
+
+  <div class="ans-box">
+    <div class="ans-num">문제 1 정답: ④ 가드레일(탈선방지레일)</div>
+    <div class="ans-answer">
+      낙석방지시설은 절토·암반 구간에서 낙석으로부터 선로를 보호하는 시설이다.<br>
+      해당: ① 낙석방지 울타리 ② 낙석방지망 ③ 낙석방지 옹벽<br>
+      가드레일(탈선방지레일)은 분기기·곡선부의 탈선 방지 목적으로 궤도 내부에 설치하는 레일이며, 낙석방지와 무관하다.
+    </div>
+  </div>
+
+  <div class="ans-box">
+    <div class="ans-num">문제 2 정답: ② 분기기·곡선부에서 열차 탈선 방지</div>
+    <div class="ans-answer">
+      가드레일(탈선방지레일)은 분기기나 곡선부에서 열차 탈선을 방지하기 위해 궤도 내부에 설치한다.<br>
+      낙석 방지 목적이 아니므로 낙석방지시설로 분류되지 않는다.
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="unit-nav">
+  <a href="unit-05-05_FINAL_PUBLISH_v1.0.html">← 이전 UNIT 05-05</a>
+  <span class="nav-gap"></span>
+  <a href="unit-06-01_HOLD_VERIFY_v1.0.html">다음 UNIT 06-01 →</a>
+</nav>
+
+</div>
+</body>
+</html>
