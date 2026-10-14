@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GATE5 · 12-02 견인정수·견인력</title>
+<title>GATE5 · 12-02 곡선저항과 구배저항 영향인자</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #f8fafc; color: #1e293b; font-size: 14px; line-height: 1.6; }
@@ -11,7 +11,6 @@ body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; backgroun
 .nav-bar { display: flex; align-items: center; justify-content: space-between; background: #1e3a5f; border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; gap: 8px; }
 .nav-btn { color: #93c5fd; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 4px 8px; border-radius: 4px; transition: background .15s; }
 .nav-btn:hover { background: rgba(147,197,253,.15); }
-.nav-btn.disabled { color: #475569; cursor: default; }
 .nav-center { color: #cbd5e1; font-size: 12px; text-align: center; flex: 1; }
 .print-btn { display: block; margin: 0 auto 20px; padding: 8px 20px; background: #0f172a; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
 .unit-header { background: linear-gradient(135deg,#1e3a5f,#0f172a); color: #fff; border-radius: 10px; padding: 24px 20px 20px; margin-bottom: 24px; }
@@ -23,10 +22,6 @@ body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; backgroun
 .badge-grade { background: #fef3c7; color: #92400e; }
 .badge-final { background: #d1fae5; color: #065f46; }
 .sec-title { font-size: 15px; font-weight: 700; color: #1e3a5f; border-left: 4px solid #2563eb; padding-left: 10px; margin: 24px 0 12px; }
-.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; margin-bottom: 16px; }
-.term-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; }
-.term-name { font-size: 13px; font-weight: 700; color: #1e3a5f; margin-bottom: 4px; }
-.term-desc { font-size: 12px; color: #475569; line-height: 1.5; }
 .concept-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 16px; overflow: hidden; }
 .concept-head { display: flex; align-items: center; gap: 8px; background: #f1f5f9; padding: 10px 14px; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; }
 .concept-num { font-size: 11px; color: #64748b; font-weight: 700; }
@@ -39,19 +34,12 @@ th { background: #1e3a5f; color: #fff; padding: 8px 10px; text-align: left; }
 td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; }
 tr.hl td { background: #eff6ff; }
 .tip-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px 12px; margin-top: 12px; font-size: 13px; color: #1e40af; }
-.warn-box { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 6px; padding: 10px 12px; margin-top: 12px; font-size: 13px; color: #9a3412; }
+.trap-box { background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; padding: 10px 12px; margin-top: 12px; font-size: 13px; color: #991b1b; }
 .formula-box { background: #fefce8; border: 2px solid #fde047; border-radius: 8px; padding: 14px 16px; margin: 12px 0; text-align: center; }
 .formula-main { font-size: 20px; font-weight: 800; color: #1e293b; margin-bottom: 6px; }
 .formula-desc { font-size: 12px; color: #475569; }
-.exam-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; }
-.exam-box-title { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
-.exam-box ul { padding-left: 16px; }
-.exam-box li { font-size: 13px; color: #334155; margin-bottom: 4px; }
-.trap-tbl th { background: #7f1d1d; }
-.trap-tbl td:nth-child(2) { color: #dc2626; font-weight: 700; }
-.trap-tbl td:nth-child(3) { color: #334155; font-size: 12px; }
 .qst-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 14px; overflow: hidden; }
-.qst-head { background: #f1f5f9; padding: 8px 14px; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #e2e8f0; }
+.qst-head { background: #f1f5f9; padding: 8px 14px; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; }
 .qst-num { background: #1e3a5f; color: #fff; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
 .qst-src { font-size: 11px; color: #64748b; }
 .qst-body { padding: 12px 16px; }
@@ -61,210 +49,165 @@ tr.hl td { background: #eff6ff; }
 .qst-ans { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 12px; font-size: 13px; color: #166534; }
 .vis-wrap { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 16px; text-align: center; }
 .vis-cap { font-size: 11px; color: #64748b; margin-top: 8px; }
-@media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; } .concept-card, .exam-box { break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; } }
+@page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+@media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; } .concept-card, .qst-card { break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; } }
 </style>
 </head>
 <body>
 <div class="page-wrap">
   <nav class="nav-bar">
-    <a href="unit-12-01_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 12-01 열차저항 4종</a>
+    <a href="unit-12-01_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 12-01 주행저항 3종</a>
     <span class="nav-center">GATE5 PART 12 · 열차저항·제동</span>
-    <a href="unit-12-03_FINAL_PUBLISH_v1.0.html" class="nav-btn">12-03 주행저항·가속도 →</a>
+    <a href="unit-12-03_FINAL_PUBLISH_v1.0.html" class="nav-btn">12-03 견인정수 →</a>
   </nav>
   <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
 
   <div class="unit-header">
     <div class="unit-num">GATE5 · PART 12 · UNIT 12-02</div>
-    <div class="unit-title">견인정수·견인력</div>
-    <div class="unit-sub">견인정수 정의 · 견인력 vs 점착력 · 선로조건과 견인 가능 중량</div>
+    <div class="unit-title">곡선저항과 구배저항 영향인자</div>
+    <div class="unit-sub">곡선반경 · 차량하중 · 고정축거 — 영향인자·계산공식</div>
     <div class="badge-row">
       <span class="badge badge-grade">★★★ A등급</span>
-      <span class="badge badge-final">FINAL PUBLISH v1.0</span>
+      <span class="badge badge-final">SOURCE: 4.html 개념49·68</span>
     </div>
   </div>
 
-  <!-- §0 선행 용어 -->
-  <div class="sec-title">§0 선행 용어</div>
-  <div class="term-grid">
-    <div class="term-card">
-      <div class="term-name">견인정수 (Tractive Number)</div>
-      <div class="term-desc">기관차 1량이 주어진 선로 조건(제한기울기·견인력·점착력)에서 견인 가능한 피견인 차량의 중량(또는 차량 수)의 기준값.</div>
-    </div>
-    <div class="term-card">
-      <div class="term-name">견인력 (Tractive Effort)</div>
-      <div class="term-desc">기관차가 실제로 낼 수 있는 힘. 피견인 차량을 끌어당기는 구동력.</div>
-    </div>
-    <div class="term-card">
-      <div class="term-name">점착력 (Adhesion Force)</div>
-      <div class="term-desc">차륜과 레일 사이의 마찰력. 견인력이 점착력을 초과하면 공전(空轉)이 발생한다.</div>
-    </div>
-    <div class="term-card">
-      <div class="term-name">제한기울기 (Ruling Gradient)</div>
-      <div class="term-desc">노선에서 가장 급한 구배. 견인정수 산출 시 기준이 되는 기울기.</div>
-    </div>
-  </div>
-
-  <!-- §1 견인정수 개념 -->
-  <div class="sec-title">§1 견인정수 개념 (SOURCE: 4.html 개념51)</div>
+  <!-- §1 곡선저항 영향인자 -->
+  <div class="sec-title">§1 곡선저항 영향인자 3가지 (SOURCE: 4.html 개념68)</div>
   <div class="concept-card">
     <div class="concept-head">
-      <span class="concept-num">4.html 개념51</span>
-      <span class="concept-name">견인정수 — 견인 가능 차량의 기준값</span>
+      <span class="concept-num">4.html 개념68 (p9-56)</span>
+      <span class="concept-name">곡선저항 영향인자 ⚠️</span>
       <span class="concept-star">★★★</span>
     </div>
     <div class="concept-body">
       <div class="tbl-wrap">
         <table>
-          <thead>
-            <tr><th>항목</th><th>내용</th></tr>
-          </thead>
+          <thead><tr><th>인자</th><th>관계</th><th>이유</th></tr></thead>
           <tbody>
-            <tr class="hl">
-              <td><strong>정의</strong></td>
-              <td>기관차 1량이 주어진 선로 조건(제한기울기·견인력·점착력)에서 견인 가능한 피견인 차량의 중량(또는 차량 수)의 기준값</td>
-            </tr>
-            <tr>
-              <td><strong>산출 기준</strong></td>
-              <td>제한기울기(가장 급한 구배)를 기준으로 산출</td>
-            </tr>
-            <tr class="hl">
-              <td><strong>포함 대상</strong></td>
-              <td>피견인 차량의 중량(또는 차량 수) — 기관차 자체 중량은 포함하지 않음</td>
-            </tr>
-            <tr>
-              <td><strong>견인력</strong></td>
-              <td>기관차가 실제로 낼 수 있는 힘</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="warn-box">
-        ⚠️ <strong>함정: 견인정수 = 피견인 차량의 기준값 (기관차 중량 포함 ❌)</strong><br>
-        기관차 자체 중량은 견인정수 산출에 포함하지 않는다.
-      </div>
-    </div>
-  </div>
-
-  <!-- VIS 이미지 -->
-  <div class="vis-wrap">
-    <img src="images/VIS-096_철도차량_견인정수.png" alt="철도차량 견인정수" style="max-width:100%;border-radius:6px;"
-         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-    <div style="display:none;padding:20px;background:#f1f5f9;border-radius:6px;color:#64748b;font-size:12px;">
-      [VIS-096] 철도차량 견인정수 이미지
-    </div>
-    <div class="vis-cap">VIS-096 · 철도차량 견인정수</div>
-  </div>
-
-  <!-- §2 견인력 vs 점착력 관계 -->
-  <div class="sec-title">§2 견인력 vs 점착력 관계</div>
-  <div class="concept-card">
-    <div class="concept-head">
-      <span class="concept-num">4.html 개념51 · 이론 배경</span>
-      <span class="concept-name">견인력과 점착력의 관계</span>
-      <span class="concept-star">★★★</span>
-    </div>
-    <div class="concept-body">
-      <div class="tbl-wrap">
-        <table>
-          <thead>
-            <tr><th>조건</th><th>관계</th><th>결과</th></tr>
-          </thead>
-          <tbody>
-            <tr class="hl">
-              <td><strong>점착 한계</strong></td>
-              <td>견인력 ≤ 점착력</td>
-              <td>정상 견인 (공전 없음)</td>
-            </tr>
-            <tr>
-              <td><strong>점착 초과</strong></td>
-              <td>견인력 &gt; 점착력</td>
-              <td>공전(空轉) 발생</td>
-            </tr>
-            <tr class="hl">
-              <td><strong>가속 조건</strong></td>
-              <td>견인력 &gt; 주행저항</td>
-              <td>열차 가속</td>
-            </tr>
+            <tr class="hl"><td><strong>① 곡선반경</strong></td><td>반경이 <strong>작을수록</strong> 저항 <strong>커짐</strong></td><td>R=700/r — 반비례</td></tr>
+            <tr><td><strong>② 차량 하중</strong></td><td>하중이 <strong>클수록</strong> 저항 <strong>커짐</strong></td><td>무거울수록 마찰력 증가</td></tr>
+            <tr class="hl"><td><strong>③ 고정축거</strong></td><td>고정축거가 <strong>클수록</strong> 저항 <strong>커짐</strong></td><td>긴 차축이 곡선부에서 레일과 더 많이 마찰</td></tr>
           </tbody>
         </table>
       </div>
       <div class="tip-box">
-        📌 견인력은 점착력을 초과할 수 없다. 점착력은 견인력의 상한선 역할을 한다.<br>
-        견인력이 주행저항보다 크면 열차가 가속된다.
+        ✅ 3가지 암기: <strong>반경·하중·고정축거</strong> — 모두 클수록 저항 증가<br>
+        단, 곡선반경은 작을수록 저항 증가 (반비례 주의!)
+      </div>
+      <div class="trap-box">
+        ⚠️ 함정: "고정축거가 클수록 곡선저항이 감소한다" → ❌<br>
+        정답: 고정축거가 클수록 저항 <strong>증가</strong> (긴 차축이 곡선부에서 더 많이 마찰)
       </div>
     </div>
   </div>
 
-  <!-- §3 시험 포인트 · 함정 -->
-  <div class="sec-title">§3 시험 포인트 · 함정</div>
-  <div class="exam-box">
-    <div class="exam-box-title">🎯 핵심 암기 포인트</div>
-    <ul>
-      <li>견인정수: 기관차 1량이 <strong>선로 조건(제한기울기·견인력·점착력)</strong>을 기준으로 견인 가능한 피견인 차량 중량(또는 차량수)의 기준값</li>
-      <li>견인정수 산출 기준: <strong>제한기울기(가장 급한 구배)</strong></li>
-      <li><strong>기관차 자체 중량은 견인정수에 포함하지 않음</strong></li>
-      <li>견인력: 기관차가 실제로 낼 수 있는 힘</li>
-      <li>견인력 ≤ 점착력 → 정상 견인 / 견인력 &gt; 점착력 → 공전 발생</li>
-      <li>견인력 &gt; 주행저항 → 열차 가속</li>
-    </ul>
+  <!-- §2 곡선저항 공식 계산 -->
+  <div class="sec-title">§2 곡선저항 계산 공식 (SOURCE: 4.html 개념49)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념49 · engineering id:56</span>
+      <span class="concept-name">R = 700/r 계산 훈련</span>
+    </div>
+    <div class="concept-body">
+      <div class="formula-box">
+        <div class="formula-main">R = 700/r (kg/t)</div>
+        <div class="formula-desc">R: 곡선저항(kg/t) · r: 곡선반경(m)</div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>곡선반경</th><th>곡선저항 계산</th><th>결과</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td>r = 700m</td><td>700/700</td><td><strong>1 kg/t</strong></td></tr>
+            <tr><td>r = 350m</td><td>700/350</td><td><strong>2 kg/t</strong></td></tr>
+            <tr class="hl"><td>r = 140m</td><td>700/140</td><td><strong>5 kg/t</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
-  <div class="tbl-wrap">
-    <table class="trap-tbl">
-      <thead>
-        <tr><th>함정 선택지</th><th>정오</th><th>근거</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>"견인정수에 기관차 중량이 포함된다"</td>
-          <td>❌ 오답</td>
-          <td>견인정수는 피견인 차량의 기준값. 기관차 중량 포함 ❌</td>
-        </tr>
-        <tr>
-          <td>"견인정수는 평균 기울기를 기준으로 산출한다"</td>
-          <td>❌ 오답</td>
-          <td>제한기울기(가장 급한 구배)를 기준으로 산출</td>
-        </tr>
-        <tr>
-          <td>"견인력이 점착력보다 크면 정상 견인된다"</td>
-          <td>❌ 오답</td>
-          <td>견인력 &gt; 점착력이면 공전(空轉) 발생</td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- §3 구배저항 공식 -->
+  <div class="sec-title">§3 구배저항 계산 공식 (SOURCE: 4.html 개념49)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념49 · engineering id:61</span>
+      <span class="concept-name">구배저항 R = W × i</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="formula-box">
+        <div class="formula-main">R = W × i (kg)</div>
+        <div class="formula-desc">W: 열차 총중량(t) · i: 구배기울기(‰)</div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>항목</th><th>내용</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td><strong>상구배</strong></td><td>저항으로 작용 → 열차 속도 감소</td></tr>
+            <tr><td><strong>하구배</strong></td><td>가속력으로 작용 → 제동 필요</td></tr>
+            <tr class="hl"><td><strong>계산 예시</strong></td><td>총중량 600t, 구배 15‰ → R = 600×15 = 9,000 kg</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIS -->
+  <div class="vis-wrap">
+    <img src="images/VIS-094_철도차량_열차저항_체계.png" alt="열차저항 체계표" style="max-width:100%;height:auto;" onerror="this.style.display='none'">
+    <p class="vis-cap">곡선저항 영향인자 — 곡선반경·차량하중·고정축거</p>
   </div>
 
   <!-- §4 기출문제 -->
-  <div class="sec-title">📝 기출문제 (1문항)</div>
-  <p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
+  <div class="sec-title">§4 기출문제</div>
 
   <div class="qst-card">
     <div class="qst-head">
       <span class="qst-num">Q1</span>
-      <span class="qst-src">engineering id:63 · SOURCE: 4.html 개념51 · 견인정수</span>
+      <span class="qst-src">engineering id:56 · SOURCE: 4.html 개념49·68 · 곡선저항 계산</span>
     </div>
     <div class="qst-body">
-      <div class="qst-q">주어진 선로조건에서 기관차 1량이 견인할 수 있는 차량 중량(또는 차량 수)의 기준값은?</div>
+      <div class="qst-q">곡선반경 350m인 구간에서의 곡선저항은? (단, 곡선저항 공식: R=700/r kg/t)</div>
       <ol class="qst-choices">
-        <li>① 견인력</li>
-        <li>② 견인정수</li>
-        <li>③ 점착력</li>
-        <li>④ 출발저항</li>
+        <li>1 kg/t</li>
+        <li>2 kg/t</li>
+        <li>3 kg/t</li>
+        <li>4 kg/t</li>
       </ol>
       <div class="qst-ans">
-        <strong>정답: ② 견인정수</strong><br>
-        견인정수: 기관차가 선로 조건(제한기울기·견인력·점착력)을 기준으로 견인 가능한 피견인 차량 중량(또는 차량수)의 기준값.
+        ✅ 정답: ② 2 kg/t<br>
+        계산: R = 700/350 = 2 kg/t. 반경이 작을수록 저항 증가. 직선 구간은 곡선저항 = 0.
       </div>
     </div>
   </div>
 
-  <!-- 하단 NAV -->
-  <nav class="nav-bar" style="margin-top:40px;">
-    <a href="unit-12-01_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 12-01 열차저항 4종</a>
-    <span class="nav-center">GATE5 PART 12 · 열차저항·제동</span>
-    <a href="unit-12-03_FINAL_PUBLISH_v1.0.html" class="nav-btn">12-03 주행저항·가속도 →</a>
-  </nav>
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q2</span>
+      <span class="qst-src">engineering id:61 · SOURCE: 4.html 개념49 · 구배저항 계산</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">총중량 600t 열차가 15‰ 구배를 오를 때 구배저항은?</div>
+      <ol class="qst-choices">
+        <li>6,000 kg</li>
+        <li>7,500 kg</li>
+        <li>9,000 kg</li>
+        <li>10,000 kg</li>
+      </ol>
+      <div class="qst-ans">
+        ✅ 정답: ③ 9,000 kg<br>
+        계산: R = W × i = 600 × 15 = 9,000 kg. (W: 열차중량 ton, i: 기울기 ‰)
+      </div>
+    </div>
+  </div>
 
+  <!-- Bottom NAV -->
+  <nav class="nav-bar" style="margin-top:40px;">
+    <a href="unit-12-01_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 12-01 주행저항 3종</a>
+    <span class="nav-center">GATE5 PART 12 · UNIT 12-02</span>
+    <a href="unit-12-03_FINAL_PUBLISH_v1.0.html" class="nav-btn">12-03 견인정수 →</a>
+  </nav>
 </div>
 </body>
 </html>
