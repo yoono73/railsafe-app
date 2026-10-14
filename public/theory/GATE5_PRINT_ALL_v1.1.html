@@ -465,19 +465,39 @@
    done: true = FINAL PUBLISH 완성 UNIT
 ───────────────────────────────────────────── */
 const UNIT_REGISTRY = [
+  // ── PART 01 : 철도일반 (6개) ──
+  { id:'01-01', part:'01', partName:'PART 01 · 철도일반', label:'01-01 철도 특성·역할',        file:'unit-01-01_FINAL_PUBLISH_v1.3.html', version:'v1.3', done:true },
+  { id:'01-02', part:'01', partName:'PART 01 · 철도일반', label:'01-02 철도 법제·분류',        file:'unit-01-02_FINAL_PUBLISH_v1.3.html', version:'v1.3', done:true },
+  { id:'01-03', part:'01', partName:'PART 01 · 철도일반', label:'01-03 철도 역사',             file:'unit-01-03_FINAL_PUBLISH_v1.3.html', version:'v1.3', done:true },
+  { id:'01-04', part:'01', partName:'PART 01 · 철도일반', label:'01-04 철도 계획·수요예측',    file:'unit-01-04_FINAL_PUBLISH_v1.2.html', version:'v1.2', done:true },
+  { id:'01-05', part:'01', partName:'PART 01 · 철도일반', label:'01-05 교통투자·경제성',       file:'unit-01-05_FINAL_PUBLISH_v1.3.html', version:'v1.3', done:true },
+  { id:'01-06', part:'01', partName:'PART 01 · 철도일반', label:'01-06 RAMS·안전관리',         file:'unit-01-06_FINAL_PUBLISH_v1.3.html', version:'v1.3', done:true },
+  // ── PART 02 : 선로계획·설계 (5개) ──
+  { id:'02-01', part:'02', partName:'PART 02 · 선로계획·설계', label:'02-01 선로 계획·기준',        file:'unit-02-01_FINAL_PUBLISH_v1.2.html', version:'v1.2', done:true },
+  { id:'02-02', part:'02', partName:'PART 02 · 선로계획·설계', label:'02-02 건축한계·차량한계',     file:'unit-02-02_FINAL_PUBLISH_v1.2.html', version:'v1.2', done:true },
+  { id:'02-03', part:'02', partName:'PART 02 · 선로계획·설계', label:'02-03 선로용량·포화도',       file:'unit-02-03_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true },
+  { id:'02-04', part:'02', partName:'PART 02 · 선로계획·설계', label:'02-04 복선화',                file:'unit-02-04_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true },
+  { id:'02-05', part:'02', partName:'PART 02 · 선로계획·설계', label:'02-05 정거장·선로설비 개요',  file:'unit-02-05_FINAL_PUBLISH_v1.2.html', version:'v1.2', done:true },
+  // ── PART 03 : 선로기하구조 (3개) ──
+  { id:'03-01', part:'03', partName:'PART 03 · 선로기하구조', label:'03-01 곡선·완화곡선',         file:'unit-03-01_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true },
+  { id:'03-02', part:'03', partName:'PART 03 · 선로기하구조', label:'03-02 캔트·슬랙',             file:'unit-03-02_FINAL_PUBLISH_v1.2.html', version:'v1.2', done:true },
+  { id:'03-03', part:'03', partName:'PART 03 · 선로기하구조', label:'03-03 구배·하중·선로저항',    file:'unit-03-03_FINAL_PUBLISH_v1.2.html', version:'v1.2', done:true },
   // ── PART 04 : 궤도 재료·구조 (8개) ──
   { id:'04-01', part:'04', partName:'PART 04 · 궤도 재료·구조', label:'04-01 궤도 구성요소',              file:'unit-04-01_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
   { id:'04-02', part:'04', partName:'PART 04 · 궤도 재료·구조', label:'04-02 레일의 종류와 용접',         file:'unit-04-02_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
-  { id:'04-03', part:'04', partName:'PART 04 · 궤도 재료·구조', label:'04-03 HOLD',                       file:'unit-04-03_HOLD_VERIFY_v1.0.html',   version:'v1.0', done:false },
+  { id:'04-03', part:'04', partName:'PART 04 · 궤도 재료·구조', label:'04-03 장대레일과 온도응력',         file:'unit-04-03_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true  },
   { id:'04-04', part:'04', partName:'PART 04 · 궤도 재료·구조', label:'04-04 레일의 이음매·단면·약화',    file:'unit-04-04_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
-  { id:'04-05', part:'04', partName:'PART 04 · 궤도 재료·구조', label:'04-05 HOLD',                       file:'unit-04-05_HOLD_VERIFY_v1.0.html',   version:'v1.0', done:false },
+  { id:'04-05', part:'04', partName:'PART 04 · 궤도 재료·구조', label:'04-05 레일 부속 수치',              file:'unit-04-05_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true  },
   { id:'04-06', part:'04', partName:'PART 04 · 궤도 재료·구조', label:'04-06 레일 검사·관리',             file:'unit-04-06_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
   { id:'04-07', part:'04', partName:'PART 04 · 궤도 재료·구조', label:'04-07 침목·도상·장대레일',         file:'unit-04-07_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
   { id:'04-08', part:'04', partName:'PART 04 · 궤도 재료·구조', label:'04-08 분기기 구조',                file:'unit-04-08_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
-  // ── PART 05 : 선로설비·정거장 (3개) ──
+  // ── PART 05 : 선로설비·정거장 (6개) ──
   { id:'05-01', part:'05', partName:'PART 05 · 선로설비·정거장', label:'05-01 선로의 종류 (측선 4종)',       file:'unit-05-01_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
   { id:'05-02', part:'05', partName:'PART 05 · 선로설비·정거장', label:'05-02 정거장의 개념·종류·형식',      file:'unit-05-02_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
   { id:'05-03', part:'05', partName:'PART 05 · 선로설비·정거장', label:'05-03 교행설비',                    file:'unit-05-03_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
+  { id:'05-04', part:'05', partName:'PART 05 · 선로설비·정거장', label:'05-04 유효장·승강장 구조',           file:'unit-05-04_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
+  { id:'05-05', part:'05', partName:'PART 05 · 선로설비·정거장', label:'05-05 건널목의 종류와 보안설비',      file:'unit-05-05_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true  },
+  { id:'05-06', part:'05', partName:'PART 05 · 선로설비·정거장', label:'05-06 선로보안설비',                  file:'unit-05-06_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true  },
   // ── PART 07 : 철도신호 (6개) ──
   { id:'07-01', part:'07', partName:'PART 07 · 철도신호', label:'07-01 신호기 분류·현시·색상', file:'unit-07-01_FINAL_PUBLISH_v1.2.html', version:'v1.2', done:true  },
   { id:'07-02', part:'07', partName:'PART 07 · 철도신호', label:'07-02 차내신호·위식신호기',   file:'unit-07-02_FINAL_PUBLISH_v1.2.html', version:'v1.2', done:true  },
@@ -498,12 +518,16 @@ const UNIT_REGISTRY = [
   { id:'08-06', part:'08', partName:'PART 08 · 열차제어 시스템', label:'08-06 열차통신·LTE-R', file:'unit-08-06_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true  },
   { id:'08-07', part:'08', partName:'PART 08 · 열차제어 시스템', label:'08-07 TTC와 CTC — 제어범위와 구성', file:'unit-08-07_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true },
   { id:'09-01', part:'09', partName:'PART 09 · 전기철도·전력공급', label:'09-01 전력방식·급전계통', file:'unit-09-01_FINAL_PUBLISH_v1.0.html', version:'v1.0', done:true },
-  // PART 10 전차선로·가선·집전 (published 7개, HOLD_VERIFY 2개 제외)
-  { id:'10-01', part:'10', partName:'PART 10 · 전차선로·가선·집전', label:'10-01 전차선로 전체구조·구성요소', file:'unit-10-01_FINAL_PUBLISH_v1.3.html', version:'v1.3', done:true },
-  { id:'10-02', part:'10', partName:'PART 10 · 전차선로·가선·집전', label:'10-02 전차선로 절연·이격거리', file:'unit-10-02_FINAL_PUBLISH_v1.2.html', version:'v1.2', done:true },
-  { id:'10-05', part:'10', partName:'PART 10 · 전차선로·가선·집전', label:'10-05 전차선로 부속설비', file:'unit-10-05_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true },
-  { id:'10-07', part:'10', partName:'PART 10 · 전차선로·가선·집전', label:'10-07 집전장치의 종류', file:'unit-10-07_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true },
-  { id:'10-09', part:'10', partName:'PART 10 · 전차선로·가선·집전', label:'10-09 이선현상 원인·대책', file:'unit-10-09_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true },
+  // ── PART 10 : 전차선로·가선·집전 (9개: published 5개, HOLD 4개) ──
+  { id:'10-01', part:'10', partName:'PART 10 · 전차선로·가선·집전', label:'10-01 전차선로 전체구조·구성요소', file:'unit-10-01_FINAL_PUBLISH_v1.3.html', version:'v1.3', done:true  },
+  { id:'10-02', part:'10', partName:'PART 10 · 전차선로·가선·집전', label:'10-02 전차선로 절연·이격거리',   file:'unit-10-02_FINAL_PUBLISH_v1.2.html', version:'v1.2', done:true  },
+  { id:'10-03', part:'10', partName:'PART 10 · 전차선로·가선·집전', label:'10-03 전차선 구비조건·편위 [HOLD]', file:'unit-10-03_HOLD_VERIFY_v1.1.html',   version:'v1.1', done:false },
+  { id:'10-04', part:'10', partName:'PART 10 · 전차선로·가선·집전', label:'10-04 가선방식 3계열 [HOLD]',      file:'unit-10-04_HOLD_VERIFY_v1.3.html',   version:'v1.3', done:false },
+  { id:'10-05', part:'10', partName:'PART 10 · 전차선로·가선·집전', label:'10-05 전차선로 부속설비',          file:'unit-10-05_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true  },
+  { id:'10-06', part:'10', partName:'PART 10 · 전차선로·가선·집전', label:'10-06 자동장력조정장치(ATD) [HOLD]', file:'unit-10-06_HOLD_VERIFY_v1.1.html',  version:'v1.1', done:false },
+  { id:'10-07', part:'10', partName:'PART 10 · 전차선로·가선·집전', label:'10-07 집전장치의 종류',            file:'unit-10-07_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true  },
+  { id:'10-08', part:'10', partName:'PART 10 · 전차선로·가선·집전', label:'10-08 팬터그래프 구조·종류·집전압력 [HOLD]', file:'unit-10-08_HOLD_VERIFY_v1.0.html', version:'v1.0', done:false },
+  { id:'10-09', part:'10', partName:'PART 10 · 전차선로·가선·집전', label:'10-09 이선현상 원인·대책',          file:'unit-10-09_FINAL_PUBLISH_v1.1.html', version:'v1.1', done:true  },
   // 향후 추가: { id:'01-01', part:'01', partName:'PART 01', label:'01-01 제목', file:'', version:'', done:false },
 ];
 
