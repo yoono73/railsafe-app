@@ -31,7 +31,7 @@ export default function SidebarNav() {
   const pathname = usePathname();
 
   // 현재 경로에 맞는 섹션 자동 열림
-  const getInitialSection = (): 'theory' | 'story' | 'cbt' | 'kibchul' | null => {
+  const getInitialSection = (): 'theory' | 'story' | 'cbt' | 'kibchul' | 'gate5' | null => {
     if (pathname.startsWith('/theory')) return 'theory';
     if (pathname.startsWith('/quiz')) return 'theory';
     if (pathname.includes('/concept')) return 'theory';
@@ -41,7 +41,7 @@ export default function SidebarNav() {
     return null;
   };
 
-  const [openSection, setOpenSection] = useState<'theory' | 'story' | 'cbt' | 'kibchul' | null>(getInitialSection);
+  const [openSection, setOpenSection] = useState<'theory' | 'story' | 'cbt' | 'kibchul' | 'gate5' | null>(getInitialSection);
   const [appVersion, setAppVersion] = useState<string>('');
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export default function SidebarNav() {
     });
   }, []);
 
-  const toggle = (section: 'theory' | 'story' | 'cbt' | 'kibchul') => {
+  const toggle = (section: 'theory' | 'story' | 'cbt' | 'kibchul' | 'gate5') => {
     setOpenSection(prev => prev === section ? null : section);
   };
 
@@ -299,6 +299,46 @@ export default function SidebarNav() {
                   </div>
                 )}
               </div>
+            ))}
+          </div>
+        )}
+
+        {/* GATE5 공학이론 단원 */}
+        <button
+          onClick={() => toggle('gate5')}
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors w-full text-left ${
+            openSection === 'gate5' ? 'bg-blue-50 text-blue-800' : 'text-gray-600 hover:bg-gray-100'
+          }`}
+        >
+          <span className="text-base">🏗️</span>
+          <span className="flex-1">GATE5 공학이론</span>
+          <span className="text-xs text-gray-400">{openSection === 'gate5' ? '▲' : '▼'}</span>
+        </button>
+
+        {openSection === 'gate5' && (
+          <div className="ml-4 flex flex-col gap-0.5">
+            <p className="px-3 py-1 text-[10px] text-gray-400 font-semibold uppercase tracking-wider">PART 13 · 철도차량</p>
+            {[
+              { id: '13-01', name: '차량 기본구조', file: 'unit-13-01_FINAL_PUBLISH_v1.0.html' },
+              { id: '13-02', name: '대차·차축·차륜', file: 'unit-13-02_FINAL_PUBLISH_v1.0.html' },
+              { id: '13-03', name: '사행동의 원인·대책', file: 'unit-13-03_FINAL_PUBLISH_v1.0.html' },
+              { id: '13-04', name: '진동·소음·진동형태', file: 'unit-13-04_FINAL_PUBLISH_v1.0.html' },
+              { id: '13-05', name: '횡압력', file: 'unit-13-05_FINAL_PUBLISH_v1.0.html' },
+              { id: '13-06', name: '연결기의 종류', file: 'unit-13-06_FINAL_PUBLISH_v1.0.html' },
+              { id: '13-07', name: '출입문의 구조·방식', file: 'unit-13-07_FINAL_PUBLISH_v1.0.html' },
+            ].map(unit => (
+              <a
+                key={unit.id}
+                href={`/theory/${unit.file}`}
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs transition-colors ${
+                  pathname.includes(unit.file)
+                    ? 'bg-blue-100 text-blue-800 font-semibold'
+                    : 'text-gray-500 hover:bg-gray-50 hover:text-blue-700'
+                }`}
+              >
+                <span className="text-[10px] text-gray-400 font-mono w-8 shrink-0">{unit.id}</span>
+                <span className="truncate">{unit.name}</span>
+              </a>
             ))}
           </div>
         )}
