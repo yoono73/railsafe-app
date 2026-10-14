@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>13-01 차체의 구조·프레임</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; max-width: 860px; margin: 0 auto; padding: 20px 16px; }
+.nav-bar { display: flex; align-items: center; justify-content: space-between; background: #1e3a5f; border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; gap: 8px; }
+.nav-btn { color: #93c5fd; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 4px 8px; border-radius: 4px; transition: background .15s; }
+.nav-btn:hover { background: rgba(147,197,253,.15); }
+.nav-center { color: #fff; font-size: 13px; font-weight: 700; }
+.print-btn { display: inline-block; margin-bottom: 16px; padding: 7px 16px; background: #0f4c81; color: #fff; border: none; border-radius: 5px; font-size: 13px; cursor: pointer; font-weight: 700; }
+.unit-header { border-bottom: 2px solid #0f4c81; padding-bottom: 14px; margin-bottom: 28px; }
+.unit-num { font-size: 12px; color: #0f4c81; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+.unit-sub { font-size: 13px; color: #555; }
+.badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+.badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+.badge-final { color: #065f46; border-color: #059669; background: #ecfdf5; }
+.badge-q { color: #1e3a5f; border-color: #1e3a5f; background: #eff6ff; }
+.sec-title { font-size: 14px; font-weight: 800; color: #0f4c81; border-left: 4px solid #0f4c81; padding-left: 10px; margin: 24px 0 12px; }
+.concept-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; background: #fff; overflow: hidden; }
+.concept-head { padding: 12px 16px; background: #0f4c81; color: #fff; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.concept-num { font-size: 11px; font-weight: 700; background: rgba(255,255,255,.18); border-radius: 3px; padding: 2px 8px; white-space: nowrap; }
+.concept-name { font-size: 14px; font-weight: 700; }
+.concept-body { padding: 14px 16px; }
+.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 10px; margin-bottom: 16px; }
+.term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+.term-name { font-size: 13px; font-weight: 700; color: #0f4c81; margin-bottom: 4px; }
+.term-desc { font-size: 12px; color: #334155; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { background: #0f4c81; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+tr:nth-child(even) td { background: #f8fafc; }
+.tip-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #134e4a; margin-top: 12px; }
+.trap-box { background: #fff7ed; border: 1px solid #fdba74; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #7c2d12; margin-top: 10px; }
+.q-box { border: 1.5px solid #1e40af; border-radius: 7px; padding: 14px 16px; margin-bottom: 14px; font-size: 13px; background: #f8faff; }
+.q-num { font-size: 11px; font-weight: 700; color: #1e40af; margin-bottom: 6px; }
+.q-stem { font-weight: 600; color: #1a1a1a; margin-bottom: 8px; }
+.q-choice { color: #334155; margin: 2px 0; }
+.q-choice.correct { color: #065f46; font-weight: 700; }
+.q-ans { background: #ecfdf5; border: 1px solid #6ee7b7; border-radius: 4px; padding: 6px 10px; font-size: 12px; color: #065f46; margin-top: 8px; }
+@media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
+@page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a class="nav-btn" href="unit-12-05_FINAL_PUBLISH_v1.0.html">← 12-05 와류제동</a>
+  <span class="nav-center">13-01 차체의 구조·프레임</span>
+  <a class="nav-btn" href="unit-13-02_FINAL_PUBLISH_v1.0.html">13-02 대차의 구조와 현가장치 →</a>
+</nav>
+
+<button class="print-btn" onclick="window.print()">인쇄 / PDF 저장</button>
+
+<header class="unit-header">
+  <div class="unit-num">UNIT 13-01</div>
+  <div class="unit-title">차체의 구조·프레임</div>
+  <div class="unit-sub">철도차량 차체를 구성하는 프레임 종류와 역할 구분</div>
+  <div class="badge-row">
+    <span class="badge badge-grade">★★ B등급</span>
+    <span class="badge badge-final">FINAL_PUBLISH v1.0</span>
+    <span class="badge badge-q">DB 문항 1개</span>
+  </div>
+</header>
+
+<div class="sec-title">핵심 개념 — 차체 프레임의 종류</div>
+
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">SOURCE 86</span>
+    <span class="concept-name">프레임(Frame) 종류와 역할</span>
+  </div>
+  <div class="concept-body">
+    <div class="term-grid">
+      <div class="term-card">
+        <div class="term-name">루프프레임 (Roof Frame)</div>
+        <div class="term-desc">차량의 <strong>상부(지붕 부분)</strong> 구조. 차량 천장을 형성한다.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">언더프레임 (Underframe)</div>
+        <div class="term-desc">차량 하중을 지지하여 대차로 전달하는 <strong>하부 바닥구조</strong>.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">사이드프레임 (Side Frame)</div>
+        <div class="term-desc">차량 <strong>측면</strong>을 지지하는 구조.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">보기프레임 (Bogie Frame)</div>
+        <div class="term-desc">차체 하중을 받아 <strong>바퀴에 전달</strong>하는 대차 골격.</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>프레임 명칭</th><th>위치</th><th>주요 역할</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>루프프레임 (Roof Frame)</td><td>상부 (지붕)</td><td>지붕 구조 형성</td></tr>
+        <tr><td>언더프레임 (Underframe)</td><td>하부 (바닥)</td><td>차량 하중 지지 → 대차 전달</td></tr>
+        <tr><td>사이드프레임 (Side Frame)</td><td>측면</td><td>차량 측면 지지</td></tr>
+        <tr><td>보기프레임 (Bogie Frame)</td><td>대차 골격</td><td>차체 하중 → 차축·바퀴 전달</td></tr>
+      </tbody>
+    </table>
+
+    <div class="trap-box">
+      <strong>함정 주의:</strong> 루프프레임(Roof Frame)은 <u>상부(지붕)</u> 구조이다. "하부 구조"라는 표현이 나오면 틀린 설명이다. 하부 바닥 구조는 <strong>언더프레임(Underframe)</strong>이다.
+    </div>
+
+    <div class="tip-box">
+      <strong>암기 포인트:</strong> Roof = 지붕(상부), Under = 아래(하부), Side = 측면, Bogie = 대차 골격
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">기출 문항</div>
+
+<div class="q-box">
+  <div class="q-num">문항 1 / 1</div>
+  <div class="q-stem">철도차량의 프레임(차체 골격)에 대한 설명으로 옳지 않은 것은?</div>
+  <div class="q-choice">① 언더프레임(Underframe)은 차량 하중을 지지하여 대차로 전달한다</div>
+  <div class="q-choice">② 사이드프레임(Side Frame)은 차량 측면을 지지하는 구조이다</div>
+  <div class="q-choice correct">③ 루프프레임(Roof Frame)은 차량의 하부 구조를 형성한다 ← 정답(틀린 설명)</div>
+  <div class="q-choice">④ 보기프레임(Bogie Frame)은 차체 하중을 받아 바퀴에 전달한다</div>
+  <div class="q-ans">
+    <strong>정답 ③</strong> — 루프프레임(Roof Frame)은 차량의 <strong>상부(지붕 부분)</strong> 구조이다. 하부 바닥구조는 언더프레임(Underframe)이다.
+  </div>
+</div>
+
+</body>
+</html>

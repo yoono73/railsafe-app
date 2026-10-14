@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>13-02 대차의 구조와 현가장치</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; max-width: 860px; margin: 0 auto; padding: 20px 16px; }
+.nav-bar { display: flex; align-items: center; justify-content: space-between; background: #1e3a5f; border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; gap: 8px; }
+.nav-btn { color: #93c5fd; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 4px 8px; border-radius: 4px; transition: background .15s; }
+.nav-btn:hover { background: rgba(147,197,253,.15); }
+.nav-center { color: #fff; font-size: 13px; font-weight: 700; }
+.print-btn { display: inline-block; margin-bottom: 16px; padding: 7px 16px; background: #0f4c81; color: #fff; border: none; border-radius: 5px; font-size: 13px; cursor: pointer; font-weight: 700; }
+.unit-header { border-bottom: 2px solid #0f4c81; padding-bottom: 14px; margin-bottom: 28px; }
+.unit-num { font-size: 12px; color: #0f4c81; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+.unit-sub { font-size: 13px; color: #555; }
+.badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+.badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+.badge-final { color: #065f46; border-color: #059669; background: #ecfdf5; }
+.badge-noq { color: #92400e; border-color: #92400e; background: #fffbeb; }
+.sec-title { font-size: 14px; font-weight: 800; color: #0f4c81; border-left: 4px solid #0f4c81; padding-left: 10px; margin: 24px 0 12px; }
+.concept-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; background: #fff; overflow: hidden; }
+.concept-head { padding: 12px 16px; background: #0f4c81; color: #fff; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.concept-num { font-size: 11px; font-weight: 700; background: rgba(255,255,255,.18); border-radius: 3px; padding: 2px 8px; white-space: nowrap; }
+.concept-name { font-size: 14px; font-weight: 700; }
+.concept-body { padding: 14px 16px; }
+.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 10px; margin-bottom: 16px; }
+.term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+.term-name { font-size: 13px; font-weight: 700; color: #0f4c81; margin-bottom: 4px; }
+.term-desc { font-size: 12px; color: #334155; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { background: #0f4c81; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+tr:nth-child(even) td { background: #f8fafc; }
+.tip-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #134e4a; margin-top: 12px; }
+.trap-box { background: #fff7ed; border: 1px solid #fdba74; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #7c2d12; margin-top: 10px; }
+.split-box { background: #f0f4f8; border: 1.5px solid #94a3b8; border-radius: 6px; padding: 12px 16px; font-size: 13px; color: #334155; margin: 14px 0; }
+.vis-wrap { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 16px; text-align: center; }
+.vis-wrap img { max-width: 100%; height: auto; border-radius: 4px; }
+.vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+.flow-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 12px 0; font-size: 13px; }
+.flow-item { background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: 5px; padding: 5px 12px; font-weight: 700; color: #1e3a5f; white-space: nowrap; }
+.flow-arrow { color: #0f4c81; font-size: 16px; font-weight: 700; }
+.flow-item.sus { background: #ecfdf5; border-color: #6ee7b7; color: #065f46; }
+@media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
+@page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a class="nav-btn" href="unit-13-01_FINAL_PUBLISH_v1.0.html">← 13-01 차체의 구조·프레임</a>
+  <span class="nav-center">13-02 대차의 구조와 현가장치</span>
+  <a class="nav-btn" href="unit-13-03_FINAL_PUBLISH_v1.0.html">13-03 사행동의 원인과 대책 →</a>
+</nav>
+
+<button class="print-btn" onclick="window.print()">인쇄 / PDF 저장</button>
+
+<header class="unit-header">
+  <div class="unit-num">UNIT 13-02</div>
+  <div class="unit-title">대차의 구조와 현가장치</div>
+  <div class="unit-sub">대차(Bogie) 기본 구성, 구동/부수 대차 구분, 1차·2차 현가장치의 위치와 역할</div>
+  <div class="badge-row">
+    <span class="badge badge-grade">★★★ A등급</span>
+    <span class="badge badge-final">FINAL_PUBLISH v1.0</span>
+    <span class="badge badge-noq">DB 문항 없음</span>
+  </div>
+</header>
+
+<div class="sec-title">1. 대차 기본구조 (SOURCE 94)</div>
+
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">SOURCE 94</span>
+    <span class="concept-name">대차(Bogie)의 구성 요소</span>
+  </div>
+  <div class="concept-body">
+    <div class="term-grid">
+      <div class="term-card">
+        <div class="term-name">차축 (Axle)</div>
+        <div class="term-desc">차륜과 연결된 회전축. 하중을 레일에 전달.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">차륜 (Wheel)</div>
+        <div class="term-desc">레일 위를 주행하는 바퀴. 답면 구배가 있다.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">차축상자 (Bearing Housing)</div>
+        <div class="term-desc">베어링을 수용, 차축을 대차프레임에 연결.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">대차 프레임 (Bogie Frame)</div>
+        <div class="term-desc">대차의 골격. 차체 하중을 차축에 전달.</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>구분</th><th>전동기</th><th>기능</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>구동대차 (Motor Bogie)</strong></td><td>탑재</td><td>추진력 발생 (동력 전달)</td></tr>
+        <tr><td><strong>부수대차 (Trailer Bogie)</strong></td><td>없음</td><td>하중 지지만 담당</td></tr>
+      </tbody>
+    </table>
+
+    <div class="split-box">
+      <strong>고정축거(Fixed Wheelbase):</strong> 대차 내 앞뒤 차축 간 거리. 사행동 특성에 영향을 준다.
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">2. 현가장치 — 위치와 역할 (SOURCE 104)</div>
+
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">SOURCE 104</span>
+    <span class="concept-name">1차현가 · 2차현가 비교</span>
+  </div>
+  <div class="concept-body">
+
+    <div class="flow-row">
+      <div class="flow-item">레일</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">차축</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item sus">1차현가</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">대차프레임</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item sus">2차현가</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">차체</div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>구분</th><th>위치</th><th>구성</th><th>역할</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1차현가<br>(Primary Suspension)</strong></td>
+          <td>차축 ↔ 대차프레임 사이<br>(대차 <u>내부</u>)</td>
+          <td>코일스프링, 판스프링, 축상스프링</td>
+          <td>궤도 불규칙 충격 흡수</td>
+        </tr>
+        <tr>
+          <td><strong>2차현가<br>(Secondary Suspension)</strong></td>
+          <td>대차프레임 ↔ 차체 사이<br>(대차~차체)</td>
+          <td>공기스프링, 코일스프링+댐퍼</td>
+          <td>승차감 개선, 차체 진동 저감</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="trap-box">
+      <strong>위치 혼동 주의:</strong> 1차현가는 <u>대차 내부</u>(차축~대차프레임), 2차현가는 <u>대차~차체 사이</u>. 순서를 뒤집으면 틀린다.
+    </div>
+
+    <div class="tip-box">
+      <strong>암기법:</strong> "1차 = 먼저 충격 잡기(궤도 충격)" → 대차 안에서 먼저 처리. "2차 = 나머지 진동 다듬기(승차감)" → 차체에 전달 직전에 처리.
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">시각 자료</div>
+
+<div class="vis-wrap">
+  <img src="images/VIS-101_1차2차현가_위치도.png" alt="1차·2차 현가장치 위치도">
+  <div class="vis-cap">VIS-101 | 1차·2차 현가장치 위치도 — 레일→차축→[1차현가]→대차프레임→[2차현가]→차체</div>
+</div>
+
+</body>
+</html>

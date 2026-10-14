@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GATE5 · 13-06 연결기의 종류</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; max-width: 860px; margin: 0 auto; padding: 20px 16px; }
+.nav-bar { display: flex; align-items: center; justify-content: space-between; background: #1e3a5f; border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; gap: 8px; }
+.nav-btn { color: #93c5fd; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 4px 8px; border-radius: 4px; transition: background .15s; }
+.nav-btn:hover { background: rgba(147,197,253,.15); }
+.nav-center { color: #fff; font-size: 13px; font-weight: 700; }
+.print-btn { display: inline-block; margin-bottom: 16px; padding: 7px 16px; background: #0f4c81; color: #fff; border: none; border-radius: 5px; font-size: 13px; cursor: pointer; font-weight: 700; }
+.unit-header { border-bottom: 2px solid #0f4c81; padding-bottom: 14px; margin-bottom: 28px; }
+.unit-num { font-size: 12px; color: #0f4c81; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+.unit-sub { font-size: 13px; color: #555; }
+.badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+.badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+.badge-final { color: #065f46; border-color: #059669; background: #ecfdf5; }
+.badge-noq { color: #92400e; border-color: #92400e; background: #fffbeb; }
+.badge-q { color: #1e3a5f; border-color: #1e3a5f; background: #eff6ff; }
+.sec-title { font-size: 14px; font-weight: 800; color: #0f4c81; border-left: 4px solid #0f4c81; padding-left: 10px; margin: 24px 0 12px; }
+.concept-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; background: #fff; overflow: hidden; }
+.concept-head { padding: 12px 16px; background: #0f4c81; color: #fff; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.concept-num { font-size: 11px; font-weight: 700; background: rgba(255,255,255,.18); border-radius: 3px; padding: 2px 8px; white-space: nowrap; }
+.concept-name { font-size: 14px; font-weight: 700; }
+.concept-body { padding: 14px 16px; }
+.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 10px; margin-bottom: 16px; }
+.term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+.term-name { font-size: 13px; font-weight: 700; color: #0f4c81; margin-bottom: 4px; }
+.term-desc { font-size: 12px; color: #334155; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { background: #0f4c81; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+tr:nth-child(even) td { background: #f8fafc; }
+tr.hl td { background: #eff6ff; }
+.tip-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #134e4a; margin-top: 12px; }
+.trap-box { background: #fff7ed; border: 1px solid #fdba74; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #7c2d12; margin-top: 10px; }
+.split-box { background: #f0f4f8; border: 1.5px solid #94a3b8; border-radius: 6px; padding: 12px 16px; font-size: 13px; color: #334155; margin: 14px 0; }
+.q-box { border: 1.5px solid #1e40af; border-radius: 7px; padding: 14px 16px; margin-bottom: 14px; font-size: 13px; background: #f8faff; }
+.q-num { font-size: 11px; font-weight: 700; color: #1e40af; margin-bottom: 6px; }
+.q-stem { font-weight: 600; color: #1a1a1a; margin-bottom: 8px; }
+.q-choice { color: #334155; margin: 2px 0; }
+.q-ans { background: #ecfdf5; border: 1px solid #6ee7b7; border-radius: 4px; padding: 6px 10px; font-size: 12px; color: #065f46; margin-top: 8px; }
+.vis-wrap { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 16px; text-align: center; }
+.vis-wrap img { max-width: 100%; height: auto; border-radius: 4px; }
+.vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+@media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
+@page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="unit-13-05_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 13-05 횡압력</a>
+  <span class="nav-center">GATE5 · PART 13</span>
+  <a href="unit-13-07_FINAL_PUBLISH_v1.0.html" class="nav-btn">13-07 출입문의 구조·방식 →</a>
+</nav>
+
+<button class="print-btn" onclick="window.print()">인쇄 / PDF 저장</button>
+
+<div class="unit-header">
+  <div class="unit-num">GATE5 · PART 13 · UNIT 13-06</div>
+  <div class="unit-title">연결기의 종류</div>
+  <div class="unit-sub">자동연결기 · 스크루연결기 · 밀착연결기</div>
+  <div class="badge-row">
+    <span class="badge badge-grade">★★ B등급</span>
+    <span class="badge badge-final">FINAL_PUBLISH v1.0</span>
+    <span class="badge badge-q">DB 문항 1개</span>
+  </div>
+</div>
+
+<div class="sec-title">핵심 개념</div>
+
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 01</span>
+    <span class="concept-name">철도차량 연결기(Coupler)의 종류</span>
+  </div>
+  <div class="concept-body">
+    <table>
+      <tr><th>종류</th><th>별칭</th><th>특징</th><th>적용</th></tr>
+      <tr>
+        <td><strong>자동연결기</strong></td>
+        <td>너클식</td>
+        <td>자동 연결·해방, 가장 보편적</td>
+        <td>국내 간선(무궁화·화물열차)</td>
+      </tr>
+      <tr>
+        <td><strong>스크루연결기</strong></td>
+        <td>후크식</td>
+        <td>수동식, 위험성 있음, 유럽 표준</td>
+        <td>유럽 철도</td>
+      </tr>
+      <tr>
+        <td><strong>밀착연결기</strong></td>
+        <td>시바타식·샤펜베르그식</td>
+        <td>공기·전기회로 동시 연결, 진동 감소, 기밀성 우수</td>
+        <td>전동차·고속철도</td>
+      </tr>
+    </table>
+    <div class="trap-box">⚠️ 볼트식 연결기는 철도차량 연결기 종류에 해당하지 않는다. 시험 함정 선지로 자주 출제.</div>
+    <div class="tip-box">💡 밀착연결기(시바타식·샤펜베르그식)는 공기·전기 배관을 동시에 연결하여 전동차·고속철도에 적용된다.</div>
+  </div>
+</div>
+
+<div class="sec-title">DB 기출문항</div>
+
+<div class="q-box">
+  <div class="q-num">Q1 · SOURCE87</div>
+  <div class="q-stem">철도차량의 연결기(Coupler) 종류에 해당하지 않는 것은?</div>
+  <div class="q-choice">① 자동연결기(너클식)</div>
+  <div class="q-choice">② 볼트식 연결기</div>
+  <div class="q-choice">③ 스크루 연결기(후크식)</div>
+  <div class="q-choice">④ 밀착연결기(시바타식·샤펜베르그식)</div>
+  <div class="q-ans">정답: ② | 해설: 철도차량 연결기 종류: 자동연결기(너클식)·스크루 연결기(후크식)·밀착연결기(시바타식·샤펜베르그식) 등. 볼트식 연결기는 철도차량 연결기 종류에 해당하지 않는다.</div>
+</div>
+
+</body>
+</html>

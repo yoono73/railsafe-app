@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>13-03 사행동의 원인과 대책</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; max-width: 860px; margin: 0 auto; padding: 20px 16px; }
+.nav-bar { display: flex; align-items: center; justify-content: space-between; background: #1e3a5f; border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; gap: 8px; }
+.nav-btn { color: #93c5fd; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 4px 8px; border-radius: 4px; transition: background .15s; }
+.nav-btn:hover { background: rgba(147,197,253,.15); }
+.nav-center { color: #fff; font-size: 13px; font-weight: 700; }
+.print-btn { display: inline-block; margin-bottom: 16px; padding: 7px 16px; background: #0f4c81; color: #fff; border: none; border-radius: 5px; font-size: 13px; cursor: pointer; font-weight: 700; }
+.unit-header { border-bottom: 2px solid #0f4c81; padding-bottom: 14px; margin-bottom: 28px; }
+.unit-num { font-size: 12px; color: #0f4c81; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+.unit-sub { font-size: 13px; color: #555; }
+.badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+.badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+.badge-final { color: #065f46; border-color: #059669; background: #ecfdf5; }
+.badge-q { color: #1e3a5f; border-color: #1e3a5f; background: #eff6ff; }
+.sec-title { font-size: 14px; font-weight: 800; color: #0f4c81; border-left: 4px solid #0f4c81; padding-left: 10px; margin: 24px 0 12px; }
+.concept-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; background: #fff; overflow: hidden; }
+.concept-head { padding: 12px 16px; background: #0f4c81; color: #fff; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.concept-num { font-size: 11px; font-weight: 700; background: rgba(255,255,255,.18); border-radius: 3px; padding: 2px 8px; white-space: nowrap; }
+.concept-name { font-size: 14px; font-weight: 700; }
+.concept-body { padding: 14px 16px; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { background: #0f4c81; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+tr:nth-child(even) td { background: #f8fafc; }
+.tip-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #134e4a; margin-top: 12px; }
+.trap-box { background: #fff7ed; border: 1px solid #fdba74; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #7c2d12; margin-top: 10px; }
+.q-box { border: 1.5px solid #1e40af; border-radius: 7px; padding: 14px 16px; margin-bottom: 14px; font-size: 13px; background: #f8faff; }
+.q-num { font-size: 11px; font-weight: 700; color: #1e40af; margin-bottom: 6px; }
+.q-stem { font-weight: 600; color: #1a1a1a; margin-bottom: 8px; }
+.q-choice { color: #334155; margin: 2px 0; }
+.q-choice.correct { color: #065f46; font-weight: 700; }
+.q-ans { background: #ecfdf5; border: 1px solid #6ee7b7; border-radius: 4px; padding: 6px 10px; font-size: 12px; color: #065f46; margin-top: 8px; }
+.vis-wrap { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 16px; text-align: center; }
+.vis-wrap img { max-width: 100%; height: auto; border-radius: 4px; }
+.vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+.prop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+.prop-card { border-radius: 6px; padding: 10px 14px; font-size: 13px; }
+.prop-up { background: #eff6ff; border: 1.5px solid #93c5fd; }
+.prop-down { background: #fdf2f8; border: 1.5px solid #f0abfc; }
+.prop-label { font-weight: 700; font-size: 12px; margin-bottom: 4px; }
+@media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
+@page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a class="nav-btn" href="unit-13-02_FINAL_PUBLISH_v1.0.html">← 13-02 대차의 구조와 현가장치</a>
+  <span class="nav-center">13-03 사행동의 원인과 대책</span>
+  <a class="nav-btn" href="unit-13-04_FINAL_PUBLISH_v1.0.html">13-04 차량의 진동·소음·진동형태 →</a>
+</nav>
+
+<button class="print-btn" onclick="window.print()">인쇄 / PDF 저장</button>
+
+<header class="unit-header">
+  <div class="unit-num">UNIT 13-03</div>
+  <div class="unit-title">사행동의 원인과 대책</div>
+  <div class="unit-sub">1차·2차 사행동의 발생 조건, 비례·반비례 관계, 방지 대책</div>
+  <div class="badge-row">
+    <span class="badge badge-grade">★★★ A등급</span>
+    <span class="badge badge-final">FINAL_PUBLISH v1.0</span>
+    <span class="badge badge-q">DB 문항 3개</span>
+  </div>
+</header>
+
+<div class="sec-title">핵심 개념 — 사행동 (SOURCE 89)</div>
+
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">SOURCE 89</span>
+    <span class="concept-name">1차 사행동 (차체 사행동 = 1축 사행동)</span>
+  </div>
+  <div class="concept-body">
+    <p style="font-size:13px; margin-bottom:10px;"><strong>발생 조건:</strong> 비교적 <u>낮은 속도</u>에서 발생. 속도 증가 시 <strong>감쇠</strong>되어 진동이 줄어든다.</p>
+
+    <div class="prop-grid">
+      <div class="prop-card prop-up">
+        <div class="prop-label">▲ 비례 (클수록 커짐)</div>
+        <div>• 궤간이 넓을수록<br>• 차륜 지름이 클수록</div>
+      </div>
+      <div class="prop-card prop-down">
+        <div class="prop-label">▼ 반비례 (클수록 작아짐)</div>
+        <div>• 차륜 답면 구배가 클수록</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">SOURCE 89</span>
+    <span class="concept-name">2차 사행동 (대차 사행동 = 2축 사행동)</span>
+  </div>
+  <div class="concept-body">
+    <p style="font-size:13px; margin-bottom:10px;"><strong>발생 조건:</strong> <u>임계속도 이상</u>에서 발생. 자려진동(self-excited vibration). 속도 초과 시 <strong>진폭 증폭</strong>, 감쇠되지 않는다.</p>
+
+    <div class="prop-grid">
+      <div class="prop-card prop-up">
+        <div class="prop-label">▲ 비례 (클수록 커짐)</div>
+        <div>• 1축 사행동에 비례<br>• 축거(고정축간 거리) 클수록</div>
+      </div>
+      <div class="prop-card prop-down">
+        <div class="prop-label">▼ 반비례 (클수록 작아짐)</div>
+        <div>• 궤간에 반비례<br>→ 궤간이 <u>좁을수록</u> 2차 사행동 <u>커짐</u></div>
+      </div>
+    </div>
+
+    <div class="trap-box">
+      <strong>함정:</strong> 2차 사행동은 궤간에 <u>반비례</u>한다. "궤간이 좁을수록 작아진다" → <strong>틀린 설명</strong>. 궤간이 좁을수록 <u>커진다</u>.
+    </div>
+  </div>
+</div>
+
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">SOURCE 89</span>
+    <span class="concept-name">사행동 방지 대책</span>
+  </div>
+  <div class="concept-body">
+    <table>
+      <thead>
+        <tr><th>방지 방법</th><th>효과</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>대차의 <strong>선회저항</strong> 크게</td><td>사행동 파장 증가 → 저감</td></tr>
+        <tr><td><strong>차륜 지름</strong> 크게</td><td>사행동 파장 증가 → 저감</td></tr>
+        <tr><td><strong>차륜 답면 기울기</strong> 작게</td><td>사행동 파장 증가 → 저감</td></tr>
+        <tr><td><strong>고정축간 거리</strong> 크게</td><td>사행동 파장 증가 → 저감</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box">
+      <strong>핵심:</strong> 사행동 <strong>파장을 크게</strong> → 대차 사행동 최소화. 선회저항↑, 차륜지름↑, 답면기울기↓, 고정축간거리↑
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">1차 vs 2차 사행동 비교표</div>
+
+<table>
+  <thead>
+    <tr><th>구분</th><th>1차 사행동 (1축)</th><th>2차 사행동 (대차)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>발생 속도</td><td>낮은 속도</td><td>임계속도 이상</td></tr>
+    <tr><td>속도 증가 시</td><td><strong>감쇠</strong> (진동 줄어듦)</td><td><strong>증폭</strong> (진동 커짐)</td></tr>
+    <tr><td>진동 성격</td><td>감쇠 진동</td><td>자려진동 (발산)</td></tr>
+    <tr><td>궤간과의 관계</td><td>넓을수록 커짐 (비례)</td><td>좁을수록 커짐 (반비례)</td></tr>
+    <tr><td>축거와의 관계</td><td>—</td><td>클수록 커짐 (비례)</td></tr>
+    <tr><td>답면 구배</td><td>클수록 작아짐 (반비례)</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<div class="sec-title">시각 자료</div>
+
+<div class="vis-wrap">
+  <img src="images/VIS-077_사행동1차2차비례관계도해.png" alt="사행동 1차·2차 비례관계 도해">
+  <div class="vis-cap">VIS-077 | 사행동 1차·2차 비례관계 도해</div>
+</div>
+
+<div class="sec-title">기출 문항</div>
+
+<div class="q-box">
+  <div class="q-num">문항 1 / 3</div>
+  <div class="q-stem">주행 속도를 높여도 감쇠되지 않는 사행동은?</div>
+  <div class="q-choice">① 1차 사행동</div>
+  <div class="q-choice correct">② 2차 사행동(대차사행동) ← 정답</div>
+  <div class="q-choice">③ 차량 전체 사행동</div>
+  <div class="q-choice">④ 축간 사행동</div>
+  <div class="q-ans">
+    <strong>정답 ②</strong> — 2차 사행동(대차사행동)은 임계속도 이상에서 발생하며 속도 증가 시 진동이 감쇠되지 않고 오히려 증폭된다. 1차 사행동은 낮은 속도에서 발생하고 속도 증가에 따라 감쇠된다.
+  </div>
+</div>
+
+<div class="q-box">
+  <div class="q-num">문항 2 / 3</div>
+  <div class="q-stem">열차의 사행동에 대한 설명으로 옳지 않은 것은?</div>
+  <div class="q-choice">① 1축 사행동은 궤간이 넓을수록 커지고, 차륜 답면의 구배가 클수록 작아진다</div>
+  <div class="q-choice">② 2축 사행동(대차사행동)은 1축 사행동에 비례한다</div>
+  <div class="q-choice correct">③ 2축 사행동(대차사행동)은 궤간이 좁을수록 작아지고, 축거가 길수록 작아진다 ← 정답(틀린 설명)</div>
+  <div class="q-choice">④ 1축 사행동은 속도가 높아지면 진동수가 높아지고 14m의 파장을 갖는다</div>
+  <div class="q-ans">
+    <strong>정답 ③</strong> — 2축 사행동은 궤간에 반비례하므로 궤간이 좁을수록 <u>커진다</u>. "좁을수록 작아진다"는 틀린 설명이다. 또한 축거가 길수록 작아지는 것(반비례)은 맞다.
+  </div>
+</div>
+
+<div class="q-box">
+  <div class="q-num">문항 3 / 3</div>
+  <div class="q-stem">대차 사행동을 줄이는 방법으로 옳은 것은?</div>
+  <div class="q-choice">① 차륜 지름을 작게 한다</div>
+  <div class="q-choice">② 차륜답면 기울기를 크게 한다</div>
+  <div class="q-choice">③ 고정축 간거리를 작게 한다</div>
+  <div class="q-choice correct">④ 대차의 선회저항을 크게 한다 ← 정답</div>
+  <div class="q-ans">
+    <strong>정답 ④</strong> — 사행동 파장을 크게 하면 대차 사행동을 최소화할 수 있다. 파장을 크게 하는 조건: 차륜 지름 크게, 차륜답면 기울기 작게, 고정축간 거리 크게, 대차의 선회저항 크게.
+  </div>
+</div>
+
+</body>
+</html>

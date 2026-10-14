@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>13-04 차량의 진동·소음·진동형태</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; max-width: 860px; margin: 0 auto; padding: 20px 16px; }
+.nav-bar { display: flex; align-items: center; justify-content: space-between; background: #1e3a5f; border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; gap: 8px; }
+.nav-btn { color: #93c5fd; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 4px 8px; border-radius: 4px; transition: background .15s; }
+.nav-btn:hover { background: rgba(147,197,253,.15); }
+.nav-center { color: #fff; font-size: 13px; font-weight: 700; }
+.print-btn { display: inline-block; margin-bottom: 16px; padding: 7px 16px; background: #0f4c81; color: #fff; border: none; border-radius: 5px; font-size: 13px; cursor: pointer; font-weight: 700; }
+.unit-header { border-bottom: 2px solid #0f4c81; padding-bottom: 14px; margin-bottom: 28px; }
+.unit-num { font-size: 12px; color: #0f4c81; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+.unit-sub { font-size: 13px; color: #555; }
+.badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+.badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+.badge-final { color: #065f46; border-color: #059669; background: #ecfdf5; }
+.badge-q { color: #1e3a5f; border-color: #1e3a5f; background: #eff6ff; }
+.sec-title { font-size: 14px; font-weight: 800; color: #0f4c81; border-left: 4px solid #0f4c81; padding-left: 10px; margin: 24px 0 12px; }
+.concept-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; background: #fff; overflow: hidden; }
+.concept-head { padding: 12px 16px; background: #0f4c81; color: #fff; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.concept-num { font-size: 11px; font-weight: 700; background: rgba(255,255,255,.18); border-radius: 3px; padding: 2px 8px; white-space: nowrap; }
+.concept-name { font-size: 14px; font-weight: 700; }
+.concept-body { padding: 14px 16px; }
+.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 10px; margin-bottom: 16px; }
+.term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+.term-name { font-size: 13px; font-weight: 700; color: #0f4c81; margin-bottom: 4px; }
+.term-desc { font-size: 12px; color: #334155; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { background: #0f4c81; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+tr:nth-child(even) td { background: #f8fafc; }
+.tip-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #134e4a; margin-top: 12px; }
+.trap-box { background: #fff7ed; border: 1px solid #fdba74; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #7c2d12; margin-top: 10px; }
+.q-box { border: 1.5px solid #1e40af; border-radius: 7px; padding: 14px 16px; margin-bottom: 14px; font-size: 13px; background: #f8faff; }
+.q-num { font-size: 11px; font-weight: 700; color: #1e40af; margin-bottom: 6px; }
+.q-stem { font-weight: 600; color: #1a1a1a; margin-bottom: 8px; }
+.q-choice { color: #334155; margin: 2px 0; }
+.q-choice.correct { color: #065f46; font-weight: 700; }
+.q-ans { background: #ecfdf5; border: 1px solid #6ee7b7; border-radius: 4px; padding: 6px 10px; font-size: 12px; color: #065f46; margin-top: 8px; }
+.vis-wrap { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 16px; text-align: center; }
+.vis-wrap img { max-width: 100%; height: auto; border-radius: 4px; }
+.vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+@media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
+@page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a class="nav-btn" href="unit-13-03_FINAL_PUBLISH_v1.0.html">← 13-03 사행동의 원인과 대책</a>
+  <span class="nav-center">13-04 차량의 진동·소음·진동형태</span>
+  <a class="nav-btn" href="unit-13-05_FINAL_PUBLISH_v1.0.html">13-05 횡압력 →</a>
+</nav>
+
+<button class="print-btn" onclick="window.print()">인쇄 / PDF 저장</button>
+
+<header class="unit-header">
+  <div class="unit-num">UNIT 13-04</div>
+  <div class="unit-title">차량의 진동·소음·진동형태</div>
+  <div class="unit-sub">진동·소음의 주요 원인, 저감 대책, 롤링·피칭·요잉 3가지 진동형태</div>
+  <div class="badge-row">
+    <span class="badge badge-grade">★★★ A등급</span>
+    <span class="badge badge-final">FINAL_PUBLISH v1.0</span>
+    <span class="badge badge-q">DB 문항 3개</span>
+  </div>
+</header>
+
+<div class="sec-title">1. 진동·소음의 원인 및 저감 대책 (SOURCE 90)</div>
+
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">SOURCE 90</span>
+    <span class="concept-name">진동·소음 원인 3가지</span>
+  </div>
+  <div class="concept-body">
+    <table>
+      <thead>
+        <tr><th>#</th><th>원인</th><th>설명</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>①</td><td><strong>차체 공진</strong></td><td>차체 고유진동수와 외력 진동수가 일치할 때 발생</td></tr>
+        <tr><td>②</td><td><strong>궤도 불량</strong></td><td>레일 이음매, 노면 불규칙 등 궤도 상태 불량</td></tr>
+        <tr><td>③</td><td><strong>차륜 편마모</strong></td><td>차륜이 균일하지 않게 마모되어 진동 유발</td></tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr><th>#</th><th>저감 대책</th><th>설명</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>①</td><td><strong>대차 현가장치 개선</strong></td><td>스프링·댐퍼 성능 향상으로 진동 흡수력 증대</td></tr>
+        <tr><td>②</td><td><strong>차체 구조 보강</strong></td><td>차체 강성 확보로 공진 억제</td></tr>
+        <tr><td>③</td><td><strong>차륜 가공 정밀도 향상</strong></td><td>차륜 균일 마모 유지로 편심 진동 방지</td></tr>
+      </tbody>
+    </table>
+
+    <div class="trap-box">
+      <strong>함정:</strong> "대차 상부 높이를 높인다" → 진동 저감 대책이 <u>아니다</u>. 오히려 무게중심이 높아져 안정성에 불리하다.
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">2. 차량 진동형태 3종 (SOURCE 93-B)</div>
+
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">SOURCE 93-B</span>
+    <span class="concept-name">롤링·피칭·요잉</span>
+  </div>
+  <div class="concept-body">
+    <div class="term-grid">
+      <div class="term-card">
+        <div class="term-name">롤링 (Rolling)</div>
+        <div class="term-desc"><strong>차체 좌우 흔들림</strong><br>X축(진행방향 축) 회전<br>→ 차체가 좌우로 기울어지는 진동</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">피칭 (Pitching)</div>
+        <div class="term-desc"><strong>차체 앞뒤 들썩임</strong><br>Y축(좌우 방향 축) 회전<br>→ 차체 앞뒤가 번갈아 오르내리는 진동</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">요잉 (Yawing)</div>
+        <div class="term-desc"><strong>차체 수평면에서 좌우 비틀림</strong><br>Z축(수직 방향 축) 회전<br>→ 차체가 수평면에서 좌우로 틀어지는 진동</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>진동형태</th><th>운동 방향</th><th>회전축</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>롤링 (Rolling)</strong></td><td>차체 좌우 흔들림</td><td>X축 (진행 방향)</td></tr>
+        <tr><td><strong>피칭 (Pitching)</strong></td><td>차체 앞뒤 들썩임</td><td>Y축 (좌우 방향)</td></tr>
+        <tr><td><strong>요잉 (Yawing)</strong></td><td>수평면 좌우 비틀림</td><td>Z축 (수직 방향)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="trap-box">
+      <strong>주의:</strong> 사행동 관련 내용은 이 단원에서 다루지 않는다. 사행동은 13-03 단원 참조.
+    </div>
+
+    <div class="tip-box">
+      <strong>암기법:</strong> 롤(Roll)=구르다(좌우), 피치(Pitch)=던지다(앞뒤), 요(Yaw)=비틀다(수평회전)
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">시각 자료</div>
+
+<div class="vis-wrap">
+  <img src="images/VIS-081_차량진동3종비교표.png" alt="차량진동 3종 비교표">
+  <div class="vis-cap">VIS-081 | 차량진동 3종(롤링·피칭·요잉) 비교표</div>
+</div>
+
+<div class="sec-title">기출 문항</div>
+
+<div class="q-box">
+  <div class="q-num">문항 1 / 3</div>
+  <div class="q-stem">철도차량의 진동 및 소음 원인에 해당하지 않는 것은?</div>
+  <div class="q-choice correct">① 절연이음매와 접착식 절연 ← 정답(해당 안 됨)</div>
+  <div class="q-choice">② 차체 공진</div>
+  <div class="q-choice">③ 궤도 불량</div>
+  <div class="q-choice">④ 차륜 편마모</div>
+  <div class="q-ans">
+    <strong>정답 ①</strong> — 철도차량 주요 소음·진동 요인: 궤도 불량, 차륜 편마모, 차체 공진 등. 절연이음매는 전기 회로 구분용으로 소음·진동의 주요 원인이 아니다.
+  </div>
+</div>
+
+<div class="q-box">
+  <div class="q-num">문항 2 / 3</div>
+  <div class="q-stem">철도차량의 진동 저감 대책으로 옳지 않은 것은?</div>
+  <div class="q-choice correct">① 대차 상부 높이를 높인다 ← 정답(틀린 설명)</div>
+  <div class="q-choice">② 대차 현가장치 개선</div>
+  <div class="q-choice">③ 차체 구조 보강</div>
+  <div class="q-choice">④ 차륜가공정밀도 향상</div>
+  <div class="q-ans">
+    <strong>정답 ①</strong> — 철도차량 진동 감소 대책: 현가장치 성능 개선, 차륜·차축 가공 정밀도 향상, 차체 강성 확보. 대차 상부 높이를 높이는 것은 진동 감소와 무관하며, 오히려 무게중심을 높여 안정성에 불리하다.
+  </div>
+</div>
+
+<div class="q-box">
+  <div class="q-num">문항 3 / 3</div>
+  <div class="q-stem">차량진동 종류가 아닌 것은?</div>
+  <div class="q-choice">① 롤링</div>
+  <div class="q-choice">② 피칭</div>
+  <div class="q-choice">③ 요잉</div>
+  <div class="q-choice correct">④ 곡률변화 ← 정답(진동 종류 아님)</div>
+  <div class="q-ans">
+    <strong>정답 ④</strong> — 대표적인 철도차량 진동 형태: 롤링(차체 좌우 흔들림), 피칭(차체 앞뒤 들썩임), 요잉(차체 수평면에서 좌우 비틀림). 곡률변화는 진동 종류가 아니다.
+  </div>
+</div>
+
+</body>
+</html>
