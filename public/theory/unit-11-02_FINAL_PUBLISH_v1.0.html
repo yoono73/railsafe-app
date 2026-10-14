@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>11-02 동력집중식과 동력분산식 FINAL_PUBLISH v1.0</title>
+<!--
+  UNIT : 11-02
+  제목 : 동력집중식과 동력분산식
+  VERSION : v1.0
+  STATUS : FINAL_PUBLISH
+  SOURCE : SOURCE48 (4.html 개념48 — 동력집중·분산 비교, 급구배·점착력)
+  VIS : VIS-065_동력집중분산식비교표.jpg / VIS-093_철도차량_동력집중식_동력분산식.png
+  DB : engineering id:11, 12 / rk_ch83_36, 37, 38, 39
+  NAV : ← 11-01 | 11-03 →
+-->
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+.page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+.unit-header { border-bottom: 2px solid #0f4c81; padding-bottom: 14px; margin-bottom: 28px; }
+.unit-num { font-size: 12px; color: #0f4c81; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+.unit-sub { font-size: 13px; color: #555; }
+.badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+.badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+.badge-final { color: #065f46; border-color: #059669; background: #ecfdf5; }
+.badge-q { color: #1e3a5f; border-color: #1e3a5f; background: #eff6ff; }
+.sec-title { font-size: 16px; font-weight: 800; color: #0f4c81; border-left: 4px solid #0f4c81; padding-left: 10px; margin: 32px 0 14px; }
+.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
+.term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+.term-name { font-size: 13px; font-weight: 800; color: #0f4c81; margin-bottom: 4px; }
+.term-desc { font-size: 13px; color: #333; line-height: 1.6; }
+.concept-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; background: #fff; overflow: hidden; }
+.concept-head { padding: 12px 16px; background: #0f4c81; color: #fff; display: flex; align-items: center; gap: 10px; }
+.concept-num { font-size: 11px; font-weight: 700; background: rgba(255,255,255,.18); border-radius: 3px; padding: 2px 8px; white-space: nowrap; }
+.concept-name { font-size: 15px; font-weight: 800; }
+.concept-star { font-size: 12px; margin-left: auto; opacity: .9; white-space: nowrap; }
+.concept-body { padding: 16px 18px; font-size: 13.5px; line-height: 1.8; }
+.tip-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #134e4a; margin-top: 12px; }
+.trap-box { background: #fff7ed; border: 1px solid #fdba74; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #7c2d12; margin-top: 10px; }
+.trap-box strong { color: #9a3412; }
+.tbl-wrap { overflow-x: auto; margin: 12px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #0f4c81; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+tr:nth-child(even) td { background: #f8fafc; }
+tr.hl td { background: #eff6ff; }
+td strong { color: #0f4c81; }
+.exam-box { border: 1.5px solid #0f4c81; border-radius: 7px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; }
+.exam-box-title { font-weight: 800; color: #0f4c81; font-size: 13.5px; margin-bottom: 8px; }
+.exam-box ul { padding-left: 16px; }
+.exam-box li { margin-bottom: 4px; }
+.q-box { border: 1.5px solid #1e40af; border-radius: 7px; padding: 14px 16px; margin-bottom: 14px; font-size: 13px; background: #f8faff; }
+.q-title { font-weight: 800; color: #1e40af; font-size: 13px; margin-bottom: 6px; }
+.q-body { margin-bottom: 6px; }
+.q-choices { padding-left: 16px; margin: 6px 0; }
+.q-choices li { margin-bottom: 2px; }
+.q-ans { font-weight: 700; color: #065f46; margin-top: 6px; font-size: 12.5px; }
+.q-exp { font-size: 12px; color: #374151; margin-top: 4px; border-top: 1px solid #dbeafe; padding-top: 6px; }
+.vis-wrap { text-align: center; margin: 16px 0; }
+.vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+.vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+.print-btn { display: inline-block; margin-bottom: 16px; padding: 7px 16px; background: #0f4c81; color: #fff; border: none; border-radius: 5px; font-size: 13px; cursor: pointer; font-weight: 700; }
+.print-btn:hover { background: #0a3660; }
+.nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; margin-bottom: 12px; font-size: 12.5px; }
+.nav-btn { display: inline-block; padding: 5px 12px; border: 1.5px solid #0f4c81; border-radius: 4px; color: #0f4c81; text-decoration: none; font-weight: 700; font-size: 12px; }
+.nav-btn:hover { background: #f0f4f8; }
+.nav-center { font-size: 11px; color: #64748b; text-align: center; }
+@page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+@media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box, .q-box { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; page-break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="nav-bar">
+    <a href="unit-11-01_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 11-01 철도차량의 구조와 종류</a>
+    <span class="nav-center">GATE5 PART 11 · 차량 총론·추진</span>
+    <a href="unit-11-03_FINAL_PUBLISH_v1.0.html" class="nav-btn">11-03 전동기의 원리와 종류 →</a>
+  </nav>
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 11 · UNIT 11-02</div>
+    <div class="unit-title">동력집중식과 동력분산식</div>
+    <div class="unit-sub">동력장치 위치 · 편성구조 · 급구배 성능 · 점착력 활용 · 유지보수</div>
+    <div class="badge-row">
+      <span class="badge badge-grade">★★★ A등급</span>
+      <span class="badge badge-final">FINAL_PUBLISH v1.0</span>
+      <span class="badge badge-q">기출 6건</span>
+    </div>
+  </div>
+
+  <div class="sec-title">§0 선행 용어</div>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">동력집중식</div>
+      <div class="term-desc">동력장치를 기관차(또는 동력차) 1~2량에 집중하고 나머지는 부수차. 기관차 견인 방식.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">동력분산식</div>
+      <div class="term-desc">동력장치를 여러 차량에 분산 배치. 각 차량(또는 다수 차량)에 견인전동기 장착. EMU 방식.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">점착력</div>
+      <div class="term-desc">차륜과 레일 사이의 마찰력. 구동력 전달의 한계치. 동력분산식은 구동축이 많아 점착력 분산 활용에 유리.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">부수차 (Trailer Car)</div>
+      <div class="term-desc">동력이 없는 차량. 동력집중식에서 기관차가 견인하는 객차·화차가 해당.</div>
+    </div>
+  </div>
+
+  <div class="sec-title">§1 핵심 비교표 (SOURCE48)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">SOURCE48 · 개념48 — 기출핵심</span>
+      <span class="concept-name">동력집중식 vs 동력분산식</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>비교 항목</th><th>동력집중식</th><th>동력분산식</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>동력장치 위치</strong></td>
+              <td>기관차(동력차) 집중</td>
+              <td>여러 차량에 분산</td>
+            </tr>
+            <tr>
+              <td><strong>편성 구조</strong></td>
+              <td>기관차 + 객차·화차</td>
+              <td>전동차(EMU) 자력 편성</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>국내 예시</strong></td>
+              <td>새마을호, KTX-1</td>
+              <td>KTX-산천, KTX-이음, 일반 전동차</td>
+            </tr>
+            <tr>
+              <td><strong>급구배 성능</strong></td>
+              <td>불리 (구동축 적음)</td>
+              <td><strong>유리</strong> (구동축 많아 점착력 분산 활용)</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>점착력 활용</strong></td>
+              <td>기관차 집중 → 상대적 불리</td>
+              <td><strong>우수</strong> (전체 차축 분산)</td>
+            </tr>
+            <tr>
+              <td><strong>가속 성능</strong></td>
+              <td>상대적으로 낮음</td>
+              <td><strong>우수</strong> (분산 동력, 출발 부드럽)</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>유지보수</strong></td>
+              <td>기관차 집중 → 간단, 용이</td>
+              <td>각 차량 분산 → 복잡, 장소 많음</td>
+            </tr>
+            <tr>
+              <td><strong>객화차 융통성</strong></td>
+              <td>객차·화차 교체 용이</td>
+              <td>편성 고정, 교체 어려움</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>소음 (객실)</strong></td>
+              <td>상대적으로 적음</td>
+              <td>각 차량 전동기 → 소음 가능성</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="trap-box">
+        <strong>⚠ 함정:</strong> "동력집중식이 급구배에 유리하다" → ❌ 틀림. <strong>동력분산식</strong>이 유리.<br>
+        <strong>⚠ 함정:</strong> "동력집중식의 단점 — 소음이 크다" → ❌ 틀림. 소음은 동력분산식의 단점.
+      </div>
+      <div class="tip-box">
+        ★ 핵심 대결: 급구배·가속 → 동력분산식 우세 / 유지보수·객화차 융통성 → 동력집중식 우세<br>
+        ★ 동력분산식 = EMU = 점착력 분산 활용 → 급구배·급곡선 운행에 유리
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title">§2 VIS</div>
+  <div class="vis-wrap">
+    <img src="images/VIS-065_동력집중분산식비교표.jpg"
+         alt="동력집중·분산식 비교표"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div style="display:none;padding:20px;border:1px dashed #cbd5e1;border-radius:6px;color:#94a3b8;font-size:13px;text-align:center;">
+      ※ VIS-065 이미지 준비 중
+    </div>
+    <div class="vis-cap">▲ VIS-065 — 동력집중식 vs 동력분산식 비교표</div>
+  </div>
+  <div class="vis-wrap" style="margin-top:16px;">
+    <img src="images/VIS-093_철도차량_동력집중식_동력분산식.png"
+         alt="동력집중식·동력분산식 차량 구성"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div style="display:none;padding:20px;border:1px dashed #cbd5e1;border-radius:6px;color:#94a3b8;font-size:13px;text-align:center;">
+      ※ VIS-093 이미지 준비 중
+    </div>
+    <div class="vis-cap">▲ VIS-093 — 철도차량 동력집중식·동력분산식 구성도</div>
+  </div>
+
+  <div class="sec-title">§3 시험 포인트</div>
+  <div class="exam-box">
+    <div class="exam-box-title">🎯 11-02 핵심 암기</div>
+    <ul>
+      <li>동력집중식 = 기관차 견인 = 새마을·KTX-1 / 동력분산식 = EMU = KTX-산천·이음</li>
+      <li>급구배에 유리한 것 = <strong>동력분산식</strong> (구동축 많아 점착력 분산 활용)</li>
+      <li>유지보수가 간단한 것 = <strong>동력집중식</strong> (기관차만 집중 관리)</li>
+      <li>가속 성능 우수 = <strong>동력분산식</strong></li>
+      <li>객화차 융통성(교체 용이) = <strong>동력집중식</strong></li>
+    </ul>
+  </div>
+
+  <div class="sec-title">§4 기출 DB 문항</div>
+
+  <div class="q-box">
+    <div class="q-title">📋 engineering id:11 · part:2 · grade:A+ · topic:동력집중식</div>
+    <div class="q-body">기관차 1~2량에 동력장치를 집중 배치하고, 나머지 객차·화차를 견인하는 방식은?</div>
+    <ol class="q-choices" type="1">
+      <li>동력분산식</li>
+      <li>동력집중식</li>
+      <li>EMU 방식</li>
+      <li>DMU 방식</li>
+    </ol>
+    <div class="q-ans">정답: ② 동력집중식</div>
+    <div class="q-exp">동력집중식: 기관차에 동력 집중 → 객차 교체 용이, 유지보수 단순. 단점: 급구배·급곡선 불리.</div>
+  </div>
+
+  <div class="q-box">
+    <div class="q-title">📋 engineering id:12 · part:2 · grade:A+ · topic:동력분산식</div>
+    <div class="q-body">동력분산식이 동력집중식보다 유리한 조건으로 옳은 것은?</div>
+    <ol class="q-choices" type="1">
+      <li>유지보수가 단순하다</li>
+      <li>객화차 편성 융통성이 크다</li>
+      <li>급구배·급곡선 통과에 유리하다</li>
+      <li>소음이 작다</li>
+    </ol>
+    <div class="q-ans">정답: ③ 급구배·급곡선 통과에 유리하다</div>
+    <div class="q-exp">동력분산식: 여러 차축에 동력 분산 → 점착력 분산·활용 유리 → 급구배·급곡선에 우수.</div>
+  </div>
+
+  <div class="q-box">
+    <div class="q-title">📋 rk_ch83_36 · topic:동력집중식 특징</div>
+    <div class="q-body">동력집중식 특징으로 틀린 것은?</div>
+    <ol class="q-choices" type="1">
+      <li>유지보수가 기관차에 집중되어 비교적 간단하다</li>
+      <li>객차·화차 교체가 용이하다</li>
+      <li>급구배 구간에서 동력분산식보다 유리하다</li>
+      <li>장거리·대량 수송에 적합하다</li>
+    </ol>
+    <div class="q-ans">정답: ③ 급구배 구간에서 동력분산식보다 유리하다</div>
+    <div class="q-exp">동력집중식은 구동축이 적어 급구배에서 동력분산식보다 불리하다.</div>
+  </div>
+
+  <div class="q-box">
+    <div class="q-title">📋 rk_ch83_37 · topic:동력집중식 장점</div>
+    <div class="q-body">동력집중식의 장점으로 옳지 않은 것은?</div>
+    <ol class="q-choices" type="1">
+      <li>구조가 단순하고 유지보수가 용이하다</li>
+      <li>장거리·대량 수송에 적합하다</li>
+      <li>상구배(오르막) 구간에서 유리하다</li>
+      <li>객화차 편성 융통성이 크다</li>
+    </ol>
+    <div class="q-ans">정답: ③ 상구배 구간에서 유리하다</div>
+    <div class="q-exp">동력집중식은 상구배에서 불리하다(유리한 것은 동력분산식).</div>
+  </div>
+
+  <div class="q-box">
+    <div class="q-title">📋 rk_ch83_38 · topic:동력집중식 차량</div>
+    <div class="q-body">동력집중식 차량으로 맞는 것은?</div>
+    <ol class="q-choices" type="1">
+      <li>KTX-산천</li>
+      <li>일반 전동차(EMU)</li>
+      <li>디젤기관차가 견인하는 무궁화열차</li>
+      <li>디젤동차가 견인하는 무궁화열차</li>
+    </ol>
+    <div class="q-ans">정답: ③ 디젤기관차가 견인하는 무궁화열차</div>
+    <div class="q-exp">동력집중식: 디젤·전기기관차가 객차를 견인. 동력분산식: EMU·디젤동차 등 각 차량에 동력 분산.</div>
+  </div>
+
+  <div class="q-box">
+    <div class="q-title">📋 rk_ch83_39 · topic:동력분산식 장점</div>
+    <div class="q-body">동력분산식의 장점으로 아닌 것은?</div>
+    <ol class="q-choices" type="1">
+      <li>가속 성능이 우수하다</li>
+      <li>에너지 효율이 높다</li>
+      <li>정차·출발이 부드러워 승차감이 좋다</li>
+      <li>각 차량에 장치가 없어 객실 소음이 작다</li>
+    </ol>
+    <div class="q-ans">정답: ④ 각 차량에 장치가 없어 객실 소음이 작다</div>
+    <div class="q-exp">동력분산식 단점: 각 차량에 전동기·전기장치 설치로 객실 소음 증가 가능. 소음이 작다는 설명은 틀림.</div>
+  </div>
+
+  <nav class="nav-bar" style="margin-top:32px;">
+    <a href="unit-11-01_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 11-01 철도차량의 구조와 종류</a>
+    <span class="nav-center">GATE5 PART 11 · 차량 총론·추진</span>
+    <a href="unit-11-03_FINAL_PUBLISH_v1.0.html" class="nav-btn">11-03 전동기의 원리와 종류 →</a>
+  </nav>
+</div>
+</body>
+</html>
