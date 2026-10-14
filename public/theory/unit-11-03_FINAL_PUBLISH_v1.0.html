@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GATE5 · 11-03 견인전동기 종류·원리·용량</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #f8fafc; color: #1e293b; font-size: 14px; line-height: 1.6; }
+.page-wrap { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
+.nav-bar { display: flex; align-items: center; justify-content: space-between; background: #1e3a5f; border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; gap: 8px; }
+.nav-btn { color: #93c5fd; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 4px 8px; border-radius: 4px; transition: background .15s; }
+.nav-btn:hover { background: rgba(147,197,253,.15); }
+.nav-btn.disabled { color: #475569; cursor: default; }
+.nav-center { color: #cbd5e1; font-size: 12px; text-align: center; flex: 1; }
+.print-btn { display: block; margin: 0 auto 20px; padding: 8px 20px; background: #0f172a; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.unit-header { background: linear-gradient(135deg,#1e3a5f,#0f172a); color: #fff; border-radius: 10px; padding: 24px 20px 20px; margin-bottom: 24px; }
+.unit-num { font-size: 12px; color: #93c5fd; font-weight: 700; letter-spacing: .05em; margin-bottom: 6px; }
+.unit-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.unit-sub { font-size: 13px; color: #cbd5e1; margin-bottom: 14px; }
+.badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+.badge-grade { background: #fef3c7; color: #92400e; }
+.badge-final { background: #d1fae5; color: #065f46; }
+.badge-hold { background: #fef9c3; color: #854d0e; }
+.sec-title { font-size: 15px; font-weight: 700; color: #1e3a5f; border-left: 4px solid #2563eb; padding-left: 10px; margin: 24px 0 12px; }
+.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.term-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; }
+.term-name { font-size: 13px; font-weight: 700; color: #1e3a5f; margin-bottom: 4px; }
+.term-desc { font-size: 12px; color: #475569; line-height: 1.5; }
+.concept-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 16px; overflow: hidden; }
+.concept-head { display: flex; align-items: center; gap: 8px; background: #f1f5f9; padding: 10px 14px; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; }
+.concept-num { font-size: 11px; color: #64748b; font-weight: 700; }
+.concept-name { font-size: 14px; font-weight: 700; color: #1e293b; flex: 1; }
+.concept-star { font-size: 13px; color: #f59e0b; }
+.concept-body { padding: 14px 16px; }
+.tbl-wrap { overflow-x: auto; margin: 10px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #1e3a5f; color: #fff; padding: 8px 10px; text-align: left; }
+td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; }
+tr.hl td { background: #eff6ff; }
+.tip-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px 12px; margin-top: 12px; font-size: 13px; color: #1e40af; }
+.exam-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; }
+.exam-box-title { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+.exam-box ul { padding-left: 16px; }
+.exam-box li { font-size: 13px; color: #334155; margin-bottom: 4px; }
+.trap-tbl th { background: #7f1d1d; }
+.trap-tbl td:nth-child(2) { color: #dc2626; font-weight: 700; }
+.trap-tbl td:nth-child(3) { color: #334155; font-size: 12px; }
+.qst-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 14px; overflow: hidden; }
+.qst-head { background: #f1f5f9; padding: 8px 14px; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #e2e8f0; }
+.qst-num { background: #1e3a5f; color: #fff; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+.qst-src { font-size: 11px; color: #64748b; }
+.qst-body { padding: 12px 16px; }
+.qst-q { font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
+.qst-choices { padding-left: 16px; margin-bottom: 10px; }
+.qst-choices li { font-size: 13px; color: #334155; margin-bottom: 3px; }
+.qst-ans { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 12px; font-size: 13px; color: #166534; }
+.split-box { background: #fff8f1; border: 1px solid #fed7aa; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #7c2d12; margin-bottom: 14px; }
+.vis-wrap { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 16px; text-align: center; }
+.vis-cap { font-size: 11px; color: #64748b; margin-top: 8px; }
+.hold-box { background: #fef9c3; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #78350f; margin-bottom: 16px; }
+.boundary-note { background: #fdf4ff; border: 1px solid #e9d5ff; border-radius: 6px; padding: 10px 12px; font-size: 12px; color: #7e22ce; margin: 10px 0; }
+@media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; } .concept-card, .exam-box { break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; } }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="nav-bar">
+    <a href="unit-11-02_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 11-02 동력집중·동력분산식</a>
+    <span class="nav-center">GATE5 PART 11 · 차량 총론·추진</span>
+    <a href="unit-11-04_FINAL_PUBLISH_v1.0.html" class="nav-btn">11-04 추진제어·VVVF →</a>
+  </nav>
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 11 · UNIT 11-03</div>
+    <div class="unit-title">견인전동기 종류·원리·용량</div>
+    <div class="unit-sub">견인전동기 역할 · 직류직권 vs 유도전동기 · LIM 구조 · 전동기 용량 결정요인</div>
+    <div class="badge-row">
+      <span class="badge badge-grade">★★★ A등급</span>
+      <span class="badge badge-final">FINAL PUBLISH v1.0</span>
+    </div>
+  </div>
+
+  <div class="boundary-note">
+    ⚠️ <strong>11-03/11-04 경계</strong>: 11-03 = 전동기 자체(역할·종류·원리·LIM 전동기적 구조) | 11-04 = 추진제어 시스템(VVVF·인버터·컨버터·주회로)
+  </div>
+
+  <!-- §0 선행 용어 -->
+  <div class="sec-title">§0 선행 용어</div>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">견인전동기 (Traction Motor)</div>
+      <div class="term-desc">전기에너지를 회전력(토크)으로 변환하여 차륜을 구동하는 철도차량의 핵심 구동 장치.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">직류직권전동기 (DC Series Motor)</div>
+      <div class="term-desc">계자권선과 전기자권선이 직렬로 연결된 직류전동기. 기동토크가 크고 속도 가변성이 우수한 구형 전동차 방식.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">3상 유도전동기 (Induction Motor)</div>
+      <div class="term-desc">회전자계(Rotating Magnetic Field)로 회전자를 유도하여 구동하는 교류전동기. 현대 전동차 표준.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">LIM (Linear Induction Motor)</div>
+      <div class="term-desc">선형유도전동기. 회전형 유도전동기를 직선 형태로 전개한 추진 장치. 기어 없이 직접 추진력 발생.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">이동자계 (Traveling Magnetic Field)</div>
+      <div class="term-desc">LIM 1차 코일에 교류 전류 인가 시 발생하는 직선 방향의 이동하는 자기장. 추진력의 원천.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">전동기 용량 (Motor Capacity)</div>
+      <div class="term-desc">최악의 운행 조건(최대 구배·최고 속도·최대 가속도)에서 필요한 견인력을 공급할 수 있는 출력 규격.</div>
+    </div>
+  </div>
+
+  <!-- §1 견인전동기 역할·적용 -->
+  <div class="sec-title">§1 견인전동기 역할 · 적용 범위 (SOURCE59)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념59</span>
+      <span class="concept-name">견인전동기 — 역할 및 적용</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>항목</th><th>내용</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td><strong>역할</strong></td><td>전기에너지 → 회전력(토크) 변환 → 차륜 구동</td></tr>
+            <tr><td><strong>제어 방식</strong></td><td>직류전동기: 저항·직병렬 제어 / 교류전동기: VVVF 인버터 제어</td></tr>
+            <tr class="hl"><td><strong>회생제동</strong></td><td>제동 시 전동기 → 발전기 전환 → 전력 회수(가선 반환)</td></tr>
+            <tr><td><strong>적용 범위</strong></td><td>전기기관차, 전동차(EMU), 디젤전기기관차(디젤→발전→전동기)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip-box">
+        ⚠️ 함정: "견인전동기는 전기기관차에만 사용" → <strong>틀림</strong><br>
+        디젤전기기관차도 디젤→발전→전동기 구동 방식으로 견인전동기 사용
+      </div>
+    </div>
+  </div>
+
+  <!-- §2 전동기 종류 비교 -->
+  <div class="sec-title">§2 전동기 종류 비교 — 직류직권 vs 유도전동기 (SOURCE13)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념13</span>
+      <span class="concept-name">직류직권전동기 속도제어 vs 교류 유도전동기</span>
+      <span class="concept-star">★★★ ⚠️</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>구분</th><th>직류직권전동기</th><th>3상 유도전동기</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl"><td><strong>전원</strong></td><td>직류(DC)</td><td>교류(AC) 3상</td></tr>
+            <tr><td><strong>속도제어</strong></td><td>① 저항 제어(직렬·병렬)<br>② 약계자 제어<br>③ 전압 제어</td><td>VVVF 인버터 제어<br>(전압·주파수 동시 가변)</td></tr>
+            <tr class="hl"><td><strong>시대</strong></td><td>구형 전동차</td><td>현대 전동차 표준</td></tr>
+            <tr><td><strong>특징</strong></td><td>기동토크 크고 속도 가변성 우수<br>브러시·정류자 마모 → 유지보수 필요</td><td>구조 간단, 유지보수 유리<br>VVVF로 광범위 속도제어</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip-box">
+        ⚠️ 핵심 함정: <strong>VVVF = 유도전동기 제어</strong> (직류직권전동기에는 해당 없음)<br>
+        직류직권전동기 제어: 저항·약계자·전압 제어 (3가지)
+      </div>
+    </div>
+  </div>
+
+  <!-- §3 LIM 선형유도전동기 -->
+  <div class="sec-title">§3 LIM 선형유도전동기 — 전동기적 구조와 원리 (SOURCE84-B)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념84</span>
+      <span class="concept-name">LIM (선형유도전동기) — 구조 및 작동 원리</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>항목</th><th>내용</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td><strong>개념</strong></td><td>회전형 유도전동기를 <strong>직선 형태</strong>로 전개한 추진 장치</td></tr>
+            <tr><td><strong>구성</strong></td><td>1차: 차량 하부 코일 / 2차: 레일 사이 반작용판(Al 또는 Cu)</td></tr>
+            <tr class="hl"><td><strong>원리</strong></td><td>1차 코일 교류 전류 → <strong>이동자계</strong> 형성 → 2차 반작용판 유도전류 → 상호작용 → 직선 추진력</td></tr>
+            <tr><td><strong>특징</strong></td><td>기어 없이 직접 추진 / 급구배·급곡선 가능 / 경량화 유리<br>회전자가 <strong>없음</strong> — 직선 운동 직접 발생</td></tr>
+            <tr class="hl"><td><strong>적용</strong></td><td>도시철도 (부산 4호선, 경량전철)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip-box">
+        ⚠️ 함정: "LIM은 회전형 전동기와 같이 전자석 회전자가 회전한다" → <strong>틀림</strong><br>
+        LIM은 직선 이동자계로 직접 추진 — 회전자 없음
+      </div>
+      <div class="boundary-note" style="margin-top:10px;">
+        📌 LIM 추진제어(VVVF·인버터 연계) → 11-04에서 다룸
+      </div>
+    </div>
+  </div>
+
+  <!-- §4 전동기 용량 결정요인 -->
+  <div class="sec-title">§4 전동기 용량 결정요인 5가지 (SOURCE53)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념53</span>
+      <span class="concept-name">전동기 용량 결정요인 — 오답 함정</span>
+      <span class="concept-star">★★★ ⚠️</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>구분</th><th>요인</th><th>설명</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td>①</td><td><strong>열차 중량</strong></td><td>무거울수록 큰 용량 필요</td></tr>
+            <tr><td>②</td><td><strong>선로 구배</strong></td><td>급구배일수록 견인력 증가 → 큰 용량</td></tr>
+            <tr class="hl"><td>③</td><td><strong>가속도</strong></td><td>높은 가속도 요구 → 큰 출력 필요</td></tr>
+            <tr><td>④</td><td><strong>운전 속도</strong></td><td>고속일수록 주행저항 증가</td></tr>
+            <tr class="hl"><td>⑤</td><td><strong>주행저항</strong></td><td>곡선·기울기·공기저항 합계</td></tr>
+            <tr><td style="color:#dc2626;">❌ 비해당</td><td style="color:#dc2626;"><strong>레일 재질(강종)</strong></td><td style="color:#dc2626;">마모·소음에는 영향 / 전동기 용량과 무관</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip-box">
+        🎯 암기법: <strong>중·구·가·속·저</strong> = 중량 / 구배 / 가속도 / 속도 / 주행저항 (5가지)<br>
+        시험 함정: "레일 재질은 전동기 용량 결정요인" → <strong>해당 없음</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- §5 시험 포인트 -->
+  <div class="sec-title">§5 시험 포인트 · 함정</div>
+  <div class="exam-box">
+    <div class="exam-box-title">🎯 핵심 암기 포인트</div>
+    <ul>
+      <li>견인전동기 = <strong>전기에너지 → 회전력</strong> 변환 장치</li>
+      <li>VVVF 제어 = <strong>유도전동기</strong> 제어 (직류직권전동기 아님)</li>
+      <li>직류직권전동기 제어: <strong>저항·약계자·전압</strong> 3종</li>
+      <li>LIM = 회전형 유도전동기를 <strong>직선 전개</strong>, 이동자계로 추진</li>
+      <li>전동기 용량 결정요인: <strong>중·구·가·속·저</strong> (레일 재질 제외)</li>
+    </ul>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="trap-tbl">
+      <thead>
+        <tr><th>함정 선택지</th><th>정오</th><th>근거</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"VVVF는 직류직권전동기 제어 방식"</td>
+          <td>❌ 오답</td>
+          <td>VVVF = 교류 유도전동기 제어</td>
+        </tr>
+        <tr>
+          <td>"LIM은 회전형 전동기와 같이 회전자가 회전"</td>
+          <td>❌ 오답</td>
+          <td>LIM = 직선 이동자계, 회전자 없음</td>
+        </tr>
+        <tr>
+          <td>"레일 재질은 전동기 용량 결정요인"</td>
+          <td>❌ 오답</td>
+          <td>용량 결정요인 = 중량·구배·가속도·속도·주행저항</td>
+        </tr>
+        <tr>
+          <td>"견인전동기는 전기기관차에만 사용"</td>
+          <td>❌ 오답</td>
+          <td>디젤전기기관차(디젤→발전→전동기)도 사용</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- §6 기출문제 -->
+  <div class="sec-title">📝 기출문제 (5문항)</div>
+  <p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q1</span>
+      <span class="qst-src">engineering id:15 · SOURCE: 4.html 개념13 · 직류전동기 제어</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">직류직권전동기의 속도 제어 방법이 아닌 것은?</div>
+      <ol class="qst-choices">
+        <li>① 저항 제어</li>
+        <li>② 약계자 제어</li>
+        <li>③ 전압 제어</li>
+        <li>④ VVVF 인버터 제어</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ④ VVVF 인버터 제어</strong><br>
+        VVVF(가변전압가변주파수) 인버터 제어는 교류 유도전동기의 제어 방식이다. 직류직권전동기의 속도 제어는 저항 제어, 약계자 제어, 전압 제어 3종이다.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q2</span>
+      <span class="qst-src">engineering id:16 · SOURCE: 4.html 개념13 · VVVF 유도전동기</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">현대 전동차에서 주로 사용하는 추진전동기와 제어 방식의 조합으로 옳은 것은?</div>
+      <ol class="qst-choices">
+        <li>① 직류직권전동기 — VVVF 인버터 제어</li>
+        <li>② 직류직권전동기 — 저항 제어</li>
+        <li>③ 3상 유도전동기 — VVVF 인버터 제어</li>
+        <li>④ 3상 유도전동기 — 저항 제어</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ③ 3상 유도전동기 — VVVF 인버터 제어</strong><br>
+        현대 전동차는 3상 유도전동기를 VVVF(가변전압가변주파수) 인버터로 제어하는 것이 표준이다.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q3</span>
+      <span class="qst-src">engineering id:28 · SOURCE: 4.html 개념53 · 전동기 용량</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">전동기 용량 결정에 영향을 미치지 않는 요인은?</div>
+      <ol class="qst-choices">
+        <li>① 열차 중량</li>
+        <li>② 선로 구배</li>
+        <li>③ 레일 재질(강종)</li>
+        <li>④ 운전 속도</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ③ 레일 재질(강종)</strong><br>
+        전동기 용량 결정요인: 열차 중량, 선로 구배, 가속도, 운전 속도, 주행저항 5가지. 레일 재질은 마모·소음에 영향을 주나 전동기 용량 결정과 직접 관계 없다.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q4</span>
+      <span class="qst-src">engineering id:100 · SOURCE: 4.html 개념59 · 견인전동기</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">전기기관차·전동차에서 전기에너지를 회전력으로 변환하여 차륜을 구동하는 장치는?</div>
+      <ol class="qst-choices">
+        <li>① 팬터그래프</li>
+        <li>② 견인전동기</li>
+        <li>③ 변압기</li>
+        <li>④ 인버터</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ② 견인전동기</strong><br>
+        견인전동기(Traction Motor)는 전기에너지를 회전력(토크)으로 변환하는 철도차량의 핵심 구동 장치다. 팬터그래프는 집전 장치, 변압기는 전압 변환, 인버터는 전력 변환 장치다.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q5</span>
+      <span class="qst-src">rk_ch83_15 · SOURCE: 4.html 개념84 · LIM 선형유도전동기</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">LIM(선형유도전동기)에 대한 설명으로 옳지 않은 것은?</div>
+      <ol class="qst-choices">
+        <li>① 회전형 유도전동기를 직선 형태로 전개한 추진 장치이다.</li>
+        <li>② 기어 없이 직접 추진력을 발생시킨다.</li>
+        <li>③ 1차 코일에 전류를 흘려 이동자계를 형성한다.</li>
+        <li>④ 회전형 전동기와 동일하게 회전자가 회전하여 추진력을 발생시킨다.</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ④ 회전자가 회전하여 추진력을 발생시킨다.</strong><br>
+        LIM은 직선 이동자계와 반작용판(2차) 사이의 상호작용으로 직선 추진력을 발생시킨다. 회전자가 없으므로 회전하지 않는다.
+      </div>
+    </div>
+  </div>
+
+  <!-- 하단 NAV -->
+  <nav class="nav-bar" style="margin-top:40px;">
+    <a href="unit-11-02_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 11-02 동력집중·동력분산식</a>
+    <span class="nav-center">GATE5 PART 11 · 차량 총론·추진</span>
+    <a href="unit-11-04_FINAL_PUBLISH_v1.0.html" class="nav-btn">11-04 추진제어·VVVF →</a>
+  </nav>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GATE5 · 11-05 점착력·공전·활주</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #f8fafc; color: #1e293b; font-size: 14px; line-height: 1.6; }
+.page-wrap { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
+.nav-bar { display: flex; align-items: center; justify-content: space-between; background: #1e3a5f; border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; gap: 8px; }
+.nav-btn { color: #93c5fd; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 4px 8px; border-radius: 4px; transition: background .15s; }
+.nav-btn:hover { background: rgba(147,197,253,.15); }
+.nav-btn.disabled { color: #475569; cursor: default; }
+.nav-center { color: #cbd5e1; font-size: 12px; text-align: center; flex: 1; }
+.print-btn { display: block; margin: 0 auto 20px; padding: 8px 20px; background: #0f172a; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.unit-header { background: linear-gradient(135deg,#1e3a5f,#0f172a); color: #fff; border-radius: 10px; padding: 24px 20px 20px; margin-bottom: 24px; }
+.unit-num { font-size: 12px; color: #93c5fd; font-weight: 700; letter-spacing: .05em; margin-bottom: 6px; }
+.unit-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.unit-sub { font-size: 13px; color: #cbd5e1; margin-bottom: 14px; }
+.badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+.badge-grade { background: #fef3c7; color: #92400e; }
+.badge-final { background: #d1fae5; color: #065f46; }
+.sec-title { font-size: 15px; font-weight: 700; color: #1e3a5f; border-left: 4px solid #2563eb; padding-left: 10px; margin: 24px 0 12px; }
+.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.term-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; }
+.term-name { font-size: 13px; font-weight: 700; color: #1e3a5f; margin-bottom: 4px; }
+.term-desc { font-size: 12px; color: #475569; line-height: 1.5; }
+.concept-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 16px; overflow: hidden; }
+.concept-head { display: flex; align-items: center; gap: 8px; background: #f1f5f9; padding: 10px 14px; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; }
+.concept-num { font-size: 11px; color: #64748b; font-weight: 700; }
+.concept-name { font-size: 14px; font-weight: 700; color: #1e293b; flex: 1; }
+.concept-star { font-size: 13px; color: #f59e0b; }
+.concept-body { padding: 14px 16px; }
+.tbl-wrap { overflow-x: auto; margin: 10px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #1e3a5f; color: #fff; padding: 8px 10px; text-align: left; }
+td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; }
+tr.hl td { background: #eff6ff; }
+.tip-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px 12px; margin-top: 12px; font-size: 13px; color: #1e40af; }
+.formula-box { background: #fefce8; border: 2px solid #fde047; border-radius: 8px; padding: 14px 16px; margin: 12px 0; text-align: center; }
+.formula-main { font-size: 20px; font-weight: 800; color: #1e293b; margin-bottom: 6px; }
+.formula-desc { font-size: 12px; color: #475569; }
+.exam-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; }
+.exam-box-title { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+.exam-box ul { padding-left: 16px; }
+.exam-box li { font-size: 13px; color: #334155; margin-bottom: 4px; }
+.trap-tbl th { background: #7f1d1d; }
+.trap-tbl td:nth-child(2) { color: #dc2626; font-weight: 700; }
+.trap-tbl td:nth-child(3) { color: #334155; font-size: 12px; }
+.qst-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 14px; overflow: hidden; }
+.qst-head { background: #f1f5f9; padding: 8px 14px; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #e2e8f0; }
+.qst-num { background: #1e3a5f; color: #fff; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+.qst-src { font-size: 11px; color: #64748b; }
+.qst-body { padding: 12px 16px; }
+.qst-q { font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
+.qst-choices { padding-left: 16px; margin-bottom: 10px; }
+.qst-choices li { font-size: 13px; color: #334155; margin-bottom: 3px; }
+.qst-ans { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 12px; font-size: 13px; color: #166534; }
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+.compare-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; }
+.compare-card.red-border { border-color: #fca5a5; background: #fff5f5; }
+.compare-card.blue-border { border-color: #93c5fd; background: #f0f9ff; }
+.compare-label { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+.compare-label.red { color: #dc2626; }
+.compare-label.blue { color: #1d4ed8; }
+.vis-wrap { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 16px; text-align: center; }
+.vis-cap { font-size: 11px; color: #64748b; margin-top: 8px; }
+@media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; } .concept-card, .exam-box { break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="nav-bar">
+    <a href="unit-11-04_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 11-04 추진제어·VVVF·주회로</a>
+    <span class="nav-center">GATE5 PART 11 · 차량 총론·추진</span>
+    <a href="unit-12-01_FINAL_PUBLISH_v1.0.html" class="nav-btn disabled">12-01 준비중 →</a>
+  </nav>
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 11 · UNIT 11-05</div>
+    <div class="unit-title">점착력·공전·활주</div>
+    <div class="unit-sub">점착력 공식 · 점착계수 범위 · 공전 vs 활주 · 방지 대책</div>
+    <div class="badge-row">
+      <span class="badge badge-grade">★★★ A등급</span>
+      <span class="badge badge-final">FINAL PUBLISH v1.0</span>
+    </div>
+  </div>
+
+  <!-- §0 선행 용어 -->
+  <div class="sec-title">§0 선행 용어</div>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">점착력 (Adhesion Force)</div>
+      <div class="term-desc">차륜과 레일 사이에 발생하는 마찰력. 견인력·제동력의 한계를 결정하는 핵심 물리량. F = μ × W</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">점착계수 μ (Adhesion Coefficient)</div>
+      <div class="term-desc">레일 면 상태에 따른 마찰 계수. 건조 레일 0.25~0.30, 습윤 레일 0.10~0.15. 전체 범위 0.10~0.30.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">공전 (Wheel Slip)</div>
+      <div class="term-desc">가속·구동 시 발생. 구동력 > 점착력 → 구동 바퀴가 레일 위에서 헛돌음.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">활주 (Wheel Slide)</div>
+      <div class="term-desc">제동 시 발생. 제동력 > 점착력 → 바퀴가 잠겨 레일 위에서 미끄러짐.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">공전·활주 방지장치</div>
+      <div class="term-desc">공전 검지 시 구동력 감소 / 활주 검지 시 제동력 감소하여 점착력 한계 내로 복귀시키는 제어 장치.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">살사(撒砂) 장치</div>
+      <div class="term-desc">레일에 모래를 뿌려 점착계수를 높이는 보조 장치. 습윤·동결 레일에서 활용.</div>
+    </div>
+  </div>
+
+  <!-- §1 점착력 공식 -->
+  <div class="sec-title">§1 점착력 공식 및 점착계수 (SOURCE11)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념11</span>
+      <span class="concept-name">점착력 정의와 계수 범위</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="formula-box">
+        <div class="formula-main">F = μ × W</div>
+        <div class="formula-desc">
+          F: 점착력(N) &nbsp;|&nbsp; μ: 점착계수 &nbsp;|&nbsp; W: 차륜하중(N, 윤하중)
+        </div>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>레일 상태</th><th>점착계수 μ 범위</th><th>특징</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td><strong>건조 레일</strong></td><td><strong>0.25 ~ 0.30</strong></td><td>정상 운행 조건</td></tr>
+            <tr><td><strong>습윤 레일</strong></td><td><strong>0.10 ~ 0.15</strong></td><td>비·이슬로 레일이 젖은 상태</td></tr>
+            <tr class="hl"><td><strong>전체 범위</strong></td><td><strong>0.10 ~ 0.30</strong></td><td>운행 조건 전 범위 합산</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip-box">
+        🎯 시험 함정: "점착계수 범위는 0.25~0.30이다" → <strong>전체 범위는 0.10~0.30</strong> (건조 범위만 아님)<br>
+        습윤 레일 0.10~0.15 / 건조 레일 0.25~0.30 구분 암기 필수
+      </div>
+    </div>
+  </div>
+
+  <!-- §2 공전 vs 활주 -->
+  <div class="sec-title">§2 공전 vs 활주 비교 (SOURCE11)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념11</span>
+      <span class="concept-name">공전·활주 발생 조건 및 방지</span>
+      <span class="concept-star">★★★ ⚠️</span>
+    </div>
+    <div class="concept-body">
+      <div class="compare-grid">
+        <div class="compare-card red-border">
+          <div class="compare-label red">🔴 공전 (Wheel Slip) — 구동 시</div>
+          <div style="font-size:12px;color:#475569;">
+            <strong>발생 조건:</strong> 구동력 &gt; 점착력<br>
+            <strong>현상:</strong> 구동 바퀴가 레일 위에서 헛돌음<br>
+            <strong>주로:</strong> 가속 출발 시<br>
+            <strong>방지:</strong> 구동력 감소 / 살사 장치
+          </div>
+        </div>
+        <div class="compare-card blue-border">
+          <div class="compare-label blue">🔵 활주 (Wheel Slide) — 제동 시</div>
+          <div style="font-size:12px;color:#475569;">
+            <strong>발생 조건:</strong> 제동력 &gt; 점착력<br>
+            <strong>현상:</strong> 바퀴 잠김 → 레일 위 미끄러짐<br>
+            <strong>주로:</strong> 긴급 제동 시<br>
+            <strong>방지:</strong> 제동력 감소 / 살사 장치
+          </div>
+        </div>
+      </div>
+
+      <div class="tbl-wrap" style="margin-top:12px;">
+        <table>
+          <thead><tr><th>구분</th><th>공전</th><th>활주</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td><strong>발생 시점</strong></td><td>가속·구동</td><td>제동</td></tr>
+            <tr><td><strong>조건</strong></td><td>구동력 &gt; 점착력</td><td>제동력 &gt; 점착력</td></tr>
+            <tr class="hl"><td><strong>바퀴 상태</strong></td><td>헛돌음(헛회전)</td><td>잠김(고착)</td></tr>
+            <tr><td><strong>방지 제어</strong></td><td>구동력 감소(공전 방지)</td><td>제동력 감소(활주 방지)</td></tr>
+            <tr class="hl"><td><strong>공통 보조</strong></td><td colspan="2" style="text-align:center;">살사(撒砂) 장치 — 레일에 모래 살포 → μ 증가</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip-box">
+        ⚠️ 공전·활주 모두 <strong>점착력 부족</strong>이 원인 / 대책은 방향이 반대 (구동력↓ vs 제동력↓)<br>
+        살사 장치는 공전·활주 양쪽에 공통으로 사용
+      </div>
+    </div>
+  </div>
+
+  <!-- §3 VIS -->
+  <div class="sec-title">§3 VIS</div>
+  <div class="vis-wrap">
+    <img src="images/VIS-082_점착력공식카드.jpg"
+         alt="점착력 공식카드 VIS-082"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div style="display:none;padding:20px;border:1px dashed #cbd5e1;border-radius:6px;color:#94a3b8;font-size:13px;text-align:center;">
+      ※ VIS-082 이미지 준비 중 (점착력 공식 카드)
+    </div>
+    <div class="vis-cap">▲ VIS-082 — 점착력 공식 카드 (F = μW)</div>
+  </div>
+
+  <!-- §4 시험 포인트 -->
+  <div class="sec-title">§4 시험 포인트 · 함정</div>
+  <div class="exam-box">
+    <div class="exam-box-title">🎯 핵심 암기 포인트</div>
+    <ul>
+      <li>점착력 공식: <strong>F = μW</strong> (μ: 점착계수, W: 윤하중)</li>
+      <li>점착계수 전체 범위: <strong>0.10~0.30</strong></li>
+      <li>건조 레일: <strong>0.25~0.30</strong> / 습윤 레일: <strong>0.10~0.15</strong></li>
+      <li>공전 = 구동력>점착력 → 헛돌음 (가속 시) / 활주 = 제동력>점착력 → 바퀴 잠김 (제동 시)</li>
+      <li>살사 장치 = 레일에 모래 뿌려 μ 증가 → 공전·활주 방지</li>
+    </ul>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="trap-tbl">
+      <thead>
+        <tr><th>함정 선택지</th><th>정오</th><th>근거</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"점착계수 범위는 0.25~0.30"</td>
+          <td>❌ 부분만 맞음</td>
+          <td>전체 범위 0.10~0.30 / 건조만 0.25~0.30</td>
+        </tr>
+        <tr>
+          <td>"공전은 제동 시 바퀴가 잠히는 현상"</td>
+          <td>❌ 오답</td>
+          <td>공전=가속 시 헛돌음 / 활주=제동 시 잠김</td>
+        </tr>
+        <tr>
+          <td>"습윤 레일의 점착계수는 건조 레일보다 크다"</td>
+          <td>❌ 오답</td>
+          <td>습윤(0.10~0.15) &lt; 건조(0.25~0.30)</td>
+        </tr>
+        <tr>
+          <td>"공전 방지 = 제동력 감소"</td>
+          <td>❌ 오답</td>
+          <td>공전 방지 = 구동력 감소 (제동력 감소는 활주 방지)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- §5 기출문제 -->
+  <div class="sec-title">📝 기출문제 (3문항)</div>
+  <p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q1</span>
+      <span class="qst-src">engineering id:18 · SOURCE: 4.html 개념11 · 점착계수</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">철도 차량의 점착계수(μ)에 관한 설명으로 옳지 않은 것은?</div>
+      <ol class="qst-choices">
+        <li>① 건조한 레일에서의 점착계수는 0.25~0.30이다.</li>
+        <li>② 습윤 레일에서 점착계수는 0.10~0.15로 감소한다.</li>
+        <li>③ 점착계수의 전체 범위는 0.10~0.30이다.</li>
+        <li>④ 습윤 레일의 점착계수가 건조 레일보다 크다.</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ④ 습윤 레일이 건조 레일보다 크다.</strong><br>
+        습윤 레일(0.10~0.15)은 건조 레일(0.25~0.30)보다 점착계수가 낮다. 레일이 젖으면 마찰력이 감소하여 공전·활주 위험이 증가한다.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q2</span>
+      <span class="qst-src">engineering id:18 · SOURCE: 4.html 개념11 · 공전·활주</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">철도차량에서 제동 시 바퀴가 잠겨 레일 위에서 미끄러지는 현상은?</div>
+      <ol class="qst-choices">
+        <li>① 공전(Wheel Slip)</li>
+        <li>② 활주(Wheel Slide)</li>
+        <li>③ 이선현상</li>
+        <li>④ 점착불량</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ② 활주(Wheel Slide)</strong><br>
+        활주는 제동 시 제동력이 점착력보다 커서 바퀴가 잠기는 현상이다. 공전(Wheel Slip)은 가속 시 구동력이 점착력을 초과하여 바퀴가 헛도는 현상으로, 혼동 주의.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q3</span>
+      <span class="qst-src">engineering id:18 · SOURCE: 4.html 개념11 · 점착력 공식</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">점착력(F)을 구하는 공식으로 옳은 것은? (μ: 점착계수, W: 윤하중)</div>
+      <ol class="qst-choices">
+        <li>① F = μ / W</li>
+        <li>② F = μ × W</li>
+        <li>③ F = W / μ</li>
+        <li>④ F = μ + W</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ② F = μ × W</strong><br>
+        점착력 = 점착계수 × 윤하중 (차륜하중). 윤하중이 클수록, 점착계수가 높을수록 점착력이 크므로 더 큰 견인력·제동력이 가능하다.
+      </div>
+    </div>
+  </div>
+
+  <!-- 하단 NAV -->
+  <nav class="nav-bar" style="margin-top:40px;">
+    <a href="unit-11-04_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 11-04 추진제어·VVVF·주회로</a>
+    <span class="nav-center">GATE5 PART 11 · 차량 총론·추진</span>
+    <a href="unit-12-01_FINAL_PUBLISH_v1.0.html" class="nav-btn disabled">12-01 준비중 →</a>
+  </nav>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GATE5 · 11-04 추진제어·VVVF·주회로</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #f8fafc; color: #1e293b; font-size: 14px; line-height: 1.6; }
+.page-wrap { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
+.nav-bar { display: flex; align-items: center; justify-content: space-between; background: #1e3a5f; border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; gap: 8px; }
+.nav-btn { color: #93c5fd; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 4px 8px; border-radius: 4px; transition: background .15s; }
+.nav-btn:hover { background: rgba(147,197,253,.15); }
+.nav-btn.disabled { color: #475569; cursor: default; }
+.nav-center { color: #cbd5e1; font-size: 12px; text-align: center; flex: 1; }
+.print-btn { display: block; margin: 0 auto 20px; padding: 8px 20px; background: #0f172a; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.unit-header { background: linear-gradient(135deg,#1e3a5f,#0f172a); color: #fff; border-radius: 10px; padding: 24px 20px 20px; margin-bottom: 24px; }
+.unit-num { font-size: 12px; color: #93c5fd; font-weight: 700; letter-spacing: .05em; margin-bottom: 6px; }
+.unit-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.unit-sub { font-size: 13px; color: #cbd5e1; margin-bottom: 14px; }
+.badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+.badge-grade { background: #fef3c7; color: #92400e; }
+.badge-final { background: #d1fae5; color: #065f46; }
+.sec-title { font-size: 15px; font-weight: 700; color: #1e3a5f; border-left: 4px solid #2563eb; padding-left: 10px; margin: 24px 0 12px; }
+.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.term-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; }
+.term-name { font-size: 13px; font-weight: 700; color: #1e3a5f; margin-bottom: 4px; }
+.term-desc { font-size: 12px; color: #475569; line-height: 1.5; }
+.concept-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 16px; overflow: hidden; }
+.concept-head { display: flex; align-items: center; gap: 8px; background: #f1f5f9; padding: 10px 14px; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; }
+.concept-num { font-size: 11px; color: #64748b; font-weight: 700; }
+.concept-name { font-size: 14px; font-weight: 700; color: #1e293b; flex: 1; }
+.concept-star { font-size: 13px; color: #f59e0b; }
+.concept-body { padding: 14px 16px; }
+.tbl-wrap { overflow-x: auto; margin: 10px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #1e3a5f; color: #fff; padding: 8px 10px; text-align: left; }
+td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; }
+tr.hl td { background: #eff6ff; }
+.tip-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px 12px; margin-top: 12px; font-size: 13px; color: #1e40af; }
+.exam-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; }
+.exam-box-title { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+.exam-box ul { padding-left: 16px; }
+.exam-box li { font-size: 13px; color: #334155; margin-bottom: 4px; }
+.trap-tbl th { background: #7f1d1d; }
+.trap-tbl td:nth-child(2) { color: #dc2626; font-weight: 700; }
+.trap-tbl td:nth-child(3) { color: #334155; font-size: 12px; }
+.qst-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 14px; overflow: hidden; }
+.qst-head { background: #f1f5f9; padding: 8px 14px; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #e2e8f0; }
+.qst-num { background: #1e3a5f; color: #fff; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+.qst-src { font-size: 11px; color: #64748b; }
+.qst-body { padding: 12px 16px; }
+.qst-q { font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
+.qst-choices { padding-left: 16px; margin-bottom: 10px; }
+.qst-choices li { font-size: 13px; color: #334155; margin-bottom: 3px; }
+.qst-ans { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 12px; font-size: 13px; color: #166534; }
+.boundary-note { background: #fdf4ff; border: 1px solid #e9d5ff; border-radius: 6px; padding: 10px 12px; font-size: 12px; color: #7e22ce; margin: 10px 0; }
+.flow-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; margin: 12px 0; font-size: 13px; }
+.flow-arrow { color: #2563eb; font-weight: 700; margin: 0 6px; }
+@media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; } .concept-card, .exam-box { break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="nav-bar">
+    <a href="unit-11-03_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 11-03 견인전동기 종류·원리·용량</a>
+    <span class="nav-center">GATE5 PART 11 · 차량 총론·추진</span>
+    <a href="unit-11-05_FINAL_PUBLISH_v1.0.html" class="nav-btn">11-05 점착·공전·활주 →</a>
+  </nav>
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 11 · UNIT 11-04</div>
+    <div class="unit-title">추진제어·VVVF·주회로</div>
+    <div class="unit-sub">VVVF 인버터 제어 · 컨버터·인버터 역할 · 주회로 구성 · LIM 추진제어</div>
+    <div class="badge-row">
+      <span class="badge badge-grade">★★★ A등급</span>
+      <span class="badge badge-final">FINAL PUBLISH v1.0</span>
+    </div>
+  </div>
+
+  <div class="boundary-note">
+    ⚠️ <strong>11-03/11-04 경계</strong>: 11-04 = 추진제어 시스템 (VVVF·인버터·컨버터·주회로·LIM 추진제어) | 전동기 자체 원리·종류(11-03) 중복 최소화
+  </div>
+
+  <!-- §0 선행 용어 -->
+  <div class="sec-title">§0 선행 용어</div>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">VVVF (Variable Voltage Variable Frequency)</div>
+      <div class="term-desc">가변전압가변주파수. 인버터로 전압과 주파수를 동시에 가변하여 유도전동기 회전속도를 제어하는 방식.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">컨버터 (Converter)</div>
+      <div class="term-desc">교류(AC) → 직류(DC) 변환 장치. 주회로에서 팬터그래프로부터 받은 교류 전력을 정류하여 직류 링크 전압 생성.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">인버터 (Inverter)</div>
+      <div class="term-desc">직류(DC) → 교류(AC) 변환 장치. VVVF 인버터는 전압·주파수를 가변하여 3상 교류로 출력 → 유도전동기 구동.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">주회로 (Main Circuit)</div>
+      <div class="term-desc">집전장치에서 전동기까지 전력이 흐르는 주 전력 경로. 팬터그래프→변압기→컨버터→인버터→전동기.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">회생제동 (Regenerative Braking)</div>
+      <div class="term-desc">제동 시 전동기를 발전기로 전환하여 운동에너지를 전기에너지로 회수. 발생 전력을 가선으로 반환.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">직류 링크 (DC Link)</div>
+      <div class="term-desc">컨버터와 인버터 사이의 직류 구간. 평활 콘덴서로 직류 전압 안정화.</div>
+    </div>
+  </div>
+
+  <!-- §1 VVVF 제어 원리 -->
+  <div class="sec-title">§1 VVVF 추진제어 원리 (SOURCE13·SOURCE59)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념13·59</span>
+      <span class="concept-name">VVVF 인버터 제어 — 원리 및 특징</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>항목</th><th>내용</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td><strong>VVVF 원리</strong></td><td>인버터가 전압(V)과 주파수(F)를 동시에 가변 → 3상 유도전동기 속도 무단 제어</td></tr>
+            <tr><td><strong>속도 증가 시</strong></td><td>전압↑ + 주파수↑ → 회전자계 빠르게 → 전동기 가속</td></tr>
+            <tr class="hl"><td><strong>속도 감소 시</strong></td><td>전압↓ + 주파수↓ → 회전자계 느리게 → 전동기 감속</td></tr>
+            <tr><td><strong>회생제동</strong></td><td>인버터 역동작 → 전동기 발전기 전환 → 직류 링크 → 컨버터 역방향 → 가선 반환</td></tr>
+            <tr class="hl"><td><strong>장점</strong></td><td>광범위 속도제어, 에너지 회생, 유지보수 용이 (구조 간단한 유도전동기 사용)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip-box">
+        🎯 핵심: <strong>V(전압)와 F(주파수)를 비례</strong>하여 제어 (V/F 비 일정 유지) → 자속 일정 → 효율적 제어
+      </div>
+    </div>
+  </div>
+
+  <!-- §2 주회로 구성 -->
+  <div class="sec-title">§2 주회로 구성 (SOURCE59·F-10)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념59 · F-10</span>
+      <span class="concept-name">전동차 주회로 — 전력 흐름</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="flow-box">
+        <strong>교류 전동차 주회로 흐름:</strong><br>
+        <span style="color:#2563eb">가선(AC)</span>
+        <span class="flow-arrow">→</span>
+        <span>팬터그래프(집전)</span>
+        <span class="flow-arrow">→</span>
+        <span>주변압기(전압 강하)</span>
+        <span class="flow-arrow">→</span>
+        <span>컨버터(AC→DC)</span>
+        <span class="flow-arrow">→</span>
+        <span>직류 링크 (평활 콘덴서)</span>
+        <span class="flow-arrow">→</span>
+        <span>인버터(DC→AC 3상, VVVF)</span>
+        <span class="flow-arrow">→</span>
+        <span style="color:#166534"><strong>유도전동기(구동)</strong></span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>구성 요소</th><th>역할</th><th>변환</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td><strong>팬터그래프</strong></td><td>가선에서 전력 집전</td><td>AC 25kV(고속선) 또는 AC 25kV/1.5kV</td></tr>
+            <tr><td><strong>주변압기</strong></td><td>전압 강하, 절연</td><td>고전압 AC → 저전압 AC</td></tr>
+            <tr class="hl"><td><strong>컨버터</strong></td><td>AC → DC 변환, 전력인수</td><td>AC → DC 직류 링크</td></tr>
+            <tr><td><strong>직류 링크</strong></td><td>전압 평활화</td><td>DC 전압 안정 유지</td></tr>
+            <tr class="hl"><td><strong>인버터(VVVF)</strong></td><td>DC → AC 변환, 전압·주파수 가변</td><td>DC → 3상 AC (가변)</td></tr>
+            <tr><td><strong>견인전동기</strong></td><td>전기→회전력</td><td>3상 AC 입력 → 토크 출력</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip-box">
+        ⚠️ 컨버터와 인버터 역할 혼동 주의:<br>
+        <strong>컨버터 = AC→DC</strong> (집전 측) | <strong>인버터 = DC→AC</strong> (전동기 측)<br>
+        회생제동 시 인버터가 역방향으로 동작하여 발전기에서 나온 AC를 DC로 → 컨버터가 DC→AC로 가선 반환
+      </div>
+    </div>
+  </div>
+
+  <!-- §3 LIM 추진제어 -->
+  <div class="sec-title">§3 LIM 추진제어 — VVVF 연계 (SOURCE84-B)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념84-B</span>
+      <span class="concept-name">LIM 추진제어 — VVVF 인버터 연계</span>
+      <span class="concept-star">★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>항목</th><th>내용</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td><strong>LIM 제어 방식</strong></td><td>VVVF 인버터로 1차 코일에 인가하는 전압·주파수 가변 → 이동자계 속도 조절 → 추진력 제어</td></tr>
+            <tr><td><strong>회전형 IM과 차이</strong></td><td>출력: 회전토크 대신 <strong>직선 추진력(N)</strong> / 기어 불필요</td></tr>
+            <tr class="hl"><td><strong>제어 원리</strong></td><td>주파수↑ → 이동자계 속도↑ → 추진력↑ (회전형과 동일 제어 원리)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="boundary-note">
+        📌 LIM 전동기적 원리(직선 전개, 이동자계, 반작용판) → 11-03에서 다룸
+      </div>
+    </div>
+  </div>
+
+  <!-- §4 시험 포인트 -->
+  <div class="sec-title">§4 시험 포인트 · 함정</div>
+  <div class="exam-box">
+    <div class="exam-box-title">🎯 핵심 암기 포인트</div>
+    <ul>
+      <li>VVVF = <strong>전압(V)과 주파수(F) 동시 가변</strong> → 유도전동기 속도 제어</li>
+      <li>컨버터 = <strong>AC→DC</strong> / 인버터 = <strong>DC→AC</strong> (혼동 금지)</li>
+      <li>주회로: 팬터그래프→변압기→<strong>컨버터→직류링크→인버터→전동기</strong></li>
+      <li>회생제동 = 전동기→발전기 전환 → 가선 반환</li>
+      <li>LIM도 VVVF 인버터로 추진력(직선) 제어</li>
+    </ul>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="trap-tbl">
+      <thead>
+        <tr><th>함정 선택지</th><th>정오</th><th>근거</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"인버터는 DC를 AC로 변환한다"</td>
+          <td>✅ 정답</td>
+          <td>인버터 = DC→AC (정의 자체가 맞음)</td>
+        </tr>
+        <tr>
+          <td>"컨버터는 DC를 AC로 변환한다"</td>
+          <td>❌ 오답</td>
+          <td>컨버터 = AC→DC (역방향 혼동)</td>
+        </tr>
+        <tr>
+          <td>"VVVF는 전압만 가변한다"</td>
+          <td>❌ 오답</td>
+          <td>전압·주파수 <strong>동시</strong> 가변</td>
+        </tr>
+        <tr>
+          <td>"LIM은 회전형과 달리 VVVF 제어 불가"</td>
+          <td>❌ 오답</td>
+          <td>LIM도 VVVF 인버터로 추진력 제어</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- §5 기출문제 -->
+  <div class="sec-title">📝 기출문제 (3문항)</div>
+  <p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q1</span>
+      <span class="qst-src">engineering id:16 · SOURCE: 4.html 개념13 · VVVF 제어</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">VVVF(가변전압가변주파수) 제어에 대한 설명으로 옳지 않은 것은?</div>
+      <ol class="qst-choices">
+        <li>① 전압과 주파수를 동시에 가변하여 유도전동기를 제어한다.</li>
+        <li>② 인버터를 사용하여 DC를 3상 AC로 변환한다.</li>
+        <li>③ 회생제동 시 전동기를 발전기로 전환하여 가선에 전력을 반환한다.</li>
+        <li>④ 직류직권전동기에 주로 적용되는 제어 방식이다.</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ④ 직류직권전동기에 주로 적용</strong><br>
+        VVVF는 3상 유도전동기의 제어 방식이다. 직류직권전동기 제어는 저항·약계자·전압 제어를 사용한다.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q2</span>
+      <span class="qst-src">engineering id:16 · SOURCE: 4.html 개념59 · 주회로</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">전동차 주회로에서 교류를 직류로 변환하는 장치는?</div>
+      <ol class="qst-choices">
+        <li>① 인버터(Inverter)</li>
+        <li>② 컨버터(Converter)</li>
+        <li>③ 변압기(Transformer)</li>
+        <li>④ 인터록(Interlock)</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ② 컨버터(Converter)</strong><br>
+        컨버터는 AC→DC 변환 장치다. 인버터는 DC→AC 변환(반대 방향)이므로 혼동 주의.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q3</span>
+      <span class="qst-src">rk_756 · SOURCE: 4.html 개념84-B · LIM 추진제어</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">LIM(선형유도전동기)의 추진력을 제어하는 방법으로 옳은 것은?</div>
+      <ol class="qst-choices">
+        <li>① 저항값을 변화시켜 전류를 조절한다.</li>
+        <li>② VVVF 인버터로 전압·주파수를 가변하여 이동자계 속도를 조절한다.</li>
+        <li>③ 기어비를 조절하여 추진력을 변화시킨다.</li>
+        <li>④ 약계자 제어로 속도를 가변한다.</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ② VVVF 인버터로 전압·주파수를 가변</strong><br>
+        LIM도 VVVF 인버터로 1차 코일의 전압·주파수를 조절하여 이동자계 속도를 제어한다. LIM은 기어가 없으므로 기어비 조절(③)은 불가하다.
+      </div>
+    </div>
+  </div>
+
+  <!-- 하단 NAV -->
+  <nav class="nav-bar" style="margin-top:40px;">
+    <a href="unit-11-03_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 11-03 견인전동기 종류·원리·용량</a>
+    <span class="nav-center">GATE5 PART 11 · 차량 총론·추진</span>
+    <a href="unit-11-05_FINAL_PUBLISH_v1.0.html" class="nav-btn">11-05 점착·공전·활주 →</a>
+  </nav>
+
+</div>
+</body>
+</html>
