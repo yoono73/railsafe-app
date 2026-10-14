@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GATE5 · 12-05 비상제동·제동거리</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #f8fafc; color: #1e293b; font-size: 14px; line-height: 1.6; }
+.page-wrap { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
+.nav-bar { display: flex; align-items: center; justify-content: space-between; background: #1e3a5f; border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; gap: 8px; }
+.nav-btn { color: #93c5fd; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 4px 8px; border-radius: 4px; transition: background .15s; }
+.nav-btn:hover { background: rgba(147,197,253,.15); }
+.nav-btn.disabled { color: #475569; cursor: default; }
+.nav-center { color: #cbd5e1; font-size: 12px; text-align: center; flex: 1; }
+.print-btn { display: block; margin: 0 auto 20px; padding: 8px 20px; background: #0f172a; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.unit-header { background: linear-gradient(135deg,#1e3a5f,#0f172a); color: #fff; border-radius: 10px; padding: 24px 20px 20px; margin-bottom: 24px; }
+.unit-num { font-size: 12px; color: #93c5fd; font-weight: 700; letter-spacing: .05em; margin-bottom: 6px; }
+.unit-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.unit-sub { font-size: 13px; color: #cbd5e1; margin-bottom: 14px; }
+.badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+.badge-grade { background: #fef3c7; color: #92400e; }
+.badge-final { background: #d1fae5; color: #065f46; }
+.sec-title { font-size: 15px; font-weight: 700; color: #1e3a5f; border-left: 4px solid #2563eb; padding-left: 10px; margin: 24px 0 12px; }
+.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.term-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; }
+.term-name { font-size: 13px; font-weight: 700; color: #1e3a5f; margin-bottom: 4px; }
+.term-desc { font-size: 12px; color: #475569; line-height: 1.5; }
+.concept-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 16px; overflow: hidden; }
+.concept-head { display: flex; align-items: center; gap: 8px; background: #f1f5f9; padding: 10px 14px; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; }
+.concept-num { font-size: 11px; color: #64748b; font-weight: 700; }
+.concept-name { font-size: 14px; font-weight: 700; color: #1e293b; flex: 1; }
+.concept-star { font-size: 13px; color: #f59e0b; }
+.concept-body { padding: 14px 16px; }
+.tbl-wrap { overflow-x: auto; margin: 10px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #1e3a5f; color: #fff; padding: 8px 10px; text-align: left; }
+td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; }
+tr.hl td { background: #eff6ff; }
+.tip-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px 12px; margin-top: 12px; font-size: 13px; color: #1e40af; }
+.warn-box { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 6px; padding: 10px 12px; margin-top: 12px; font-size: 13px; color: #9a3412; }
+.formula-box { background: #fefce8; border: 2px solid #fde047; border-radius: 8px; padding: 14px 16px; margin: 12px 0; text-align: center; }
+.formula-main { font-size: 20px; font-weight: 800; color: #1e293b; margin-bottom: 6px; }
+.formula-desc { font-size: 12px; color: #475569; }
+.exam-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; }
+.exam-box-title { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+.exam-box ul { padding-left: 16px; }
+.exam-box li { font-size: 13px; color: #334155; margin-bottom: 4px; }
+.trap-tbl th { background: #7f1d1d; }
+.trap-tbl td:nth-child(2) { color: #dc2626; font-weight: 700; }
+.trap-tbl td:nth-child(3) { color: #334155; font-size: 12px; }
+.qst-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 14px; overflow: hidden; }
+.qst-head { background: #f1f5f9; padding: 8px 14px; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #e2e8f0; }
+.qst-num { background: #1e3a5f; color: #fff; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+.qst-src { font-size: 11px; color: #64748b; }
+.qst-body { padding: 12px 16px; }
+.qst-q { font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
+.qst-choices { padding-left: 16px; margin-bottom: 10px; }
+.qst-choices li { font-size: 13px; color: #334155; margin-bottom: 3px; }
+.qst-ans { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 12px; font-size: 13px; color: #166534; }
+.vis-wrap { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 16px; text-align: center; }
+.vis-cap { font-size: 11px; color: #64748b; margin-top: 8px; }
+@media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; } .concept-card, .exam-box { break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; } }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="nav-bar">
+    <a href="unit-12-04_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 12-04 제동방식·공기제동</a>
+    <span class="nav-center">GATE5 PART 12 · 열차저항·제동</span>
+    <span class="nav-btn disabled">다음 PART 준비 중</span>
+  </nav>
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 12 · UNIT 12-05</div>
+    <div class="unit-title">비상제동·제동거리</div>
+    <div class="unit-sub">비상제동 자동 체결 조건 · 폐색구간 간격 = 제동거리+여유 · 기계적 vs 전기적 분류</div>
+    <div class="badge-row">
+      <span class="badge badge-grade">★★★ A등급</span>
+      <span class="badge badge-final">FINAL PUBLISH v1.0</span>
+    </div>
+  </div>
+
+  <!-- §0 선행 용어 -->
+  <div class="sec-title">§0 선행 용어</div>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">비상제동 (Emergency Brake)</div>
+      <div class="term-desc">위험 상황 발생 시 열차를 최단 거리에서 정지시키는 최대 제동. 공기제동 계통 고장 시 자동으로 체결됨(Fail-safe).</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">제동거리 (Braking Distance)</div>
+      <div class="term-desc">제동 시작 시점부터 열차가 완전히 정지할 때까지 이동하는 거리. 폐색구간 최소 간격 산정의 기준.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">폐색구간 (Block Section)</div>
+      <div class="term-desc">한 번에 하나의 열차만 점유할 수 있는 선로 구간. 최소 간격은 최대 제동거리 + 안전 여유거리로 결정.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">점착계수 (Adhesion Coefficient)</div>
+      <div class="term-desc">차륜과 레일 간 마찰력과 차량 중량의 비. 제동력과 견인력의 최대값을 결정하는 요소.</div>
+    </div>
+  </div>
+
+  <!-- §1 비상제동 특성 -->
+  <div class="sec-title">§1 비상제동 특성 (SOURCE: 4.html 개념50)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념50</span>
+      <span class="concept-name">공기제동 — 비상제동 자동 체결(Fail-safe)</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>항목</th><th>비상제동</th><th>상용제동</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>작동 목적</strong></td>
+              <td>위험 상황 최단 정지</td>
+              <td>정상 운행 중 감속·정차</td>
+            </tr>
+            <tr>
+              <td><strong>작동 방식</strong></td>
+              <td>공기압 해방 → 브레이크 자동 체결</td>
+              <td>제동관 압력 조정으로 제어</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>Fail-safe 원리</strong></td>
+              <td>고장(공기 누설) 시 자동 체결</td>
+              <td>해당 없음</td>
+            </tr>
+            <tr>
+              <td><strong>제동력</strong></td>
+              <td>최대 제동력 사용</td>
+              <td>필요에 따라 단계 조절</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>보완 역할</strong></td>
+              <td>비상·보완용</td>
+              <td>일상 운행 주력 제동</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip-box">
+        📌 공기제동 핵심: 압축공기로 브레이크 슈(Shoe) 가압 → 차륜 마찰 제동<br>
+        Fail-safe 원리: 공기 압력이 낮아지면(고장·누설) 스프링 힘으로 브레이크가 <strong>자동 체결</strong>됨
+      </div>
+    </div>
+  </div>
+
+  <!-- §2 제동거리와 폐색구간 -->
+  <div class="sec-title">§2 제동거리와 폐색구간 (SOURCE: 4.html 개념75)</div>
+
+  <div class="formula-box">
+    <div class="formula-main">폐색구간 최소 간격 = 최대 제동거리 + 안전 여유거리</div>
+    <div class="formula-desc">뒤 열차가 앞 열차에 추돌하지 않도록 충분한 거리를 확보하는 원칙</div>
+  </div>
+
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념75</span>
+      <span class="concept-name">폐색구간 최소 간격 산정 이론</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>항목</th><th>내용</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>폐색구간 최소 간격</strong></td>
+              <td>열차의 최대 제동거리 + 안전 여유거리</td>
+            </tr>
+            <tr>
+              <td><strong>이론 배경</strong></td>
+              <td>뒤 열차가 앞 열차에 추돌하지 않도록 충분한 거리를 확보</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>최대 제동거리 기준</strong></td>
+              <td>운행 최고속도에서 비상제동 시의 정지 거리</td>
+            </tr>
+            <tr>
+              <td><strong>안전 여유거리 의미</strong></td>
+              <td>반응 시간, 선로 조건, 기상 등 불확실 요소에 대한 추가 여유</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip-box">
+        🎯 시험 핵심: 폐색구간 간격의 기준은 <strong>최대 제동거리</strong> — 최소 제동거리나 평균 제동거리가 아님<br>
+        디젤기관차 시험 항목(4.html 개념85): ① 출력시험(견인력·속도) ② 연기시험(매연 농도) ③ 제동시험(제동거리) — 제동시험에서 제동거리가 핵심 측정값
+      </div>
+    </div>
+  </div>
+
+  <!-- §3 제동방식 분류 종합 -->
+  <div class="sec-title">§3 제동방식 분류 종합 (SOURCE: 4.html 개념50 · rk_ch83_33)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념50 · rk_ch83_33</span>
+      <span class="concept-name">기계적 제동 vs 전기적 제동 분류</span>
+      <span class="concept-star">★★★ ⚠️</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>분류</th><th>해당 제동 방식</th><th>작동 원리</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>기계적 제동</strong></td>
+              <td><strong>수용제동</strong> (공기제동·유압제동 포함)</td>
+              <td>공기나 유압·마찰력을 이용하여 바퀴를 직접 제동</td>
+            </tr>
+            <tr>
+              <td><strong>전기적 제동</strong></td>
+              <td>회생제동, 발전제동, 와전류제동</td>
+              <td>전동기를 발전기로 이용하여 제동력 발생</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tbl-wrap" style="margin-top:12px;">
+        <table>
+          <thead>
+            <tr><th>제동 방식</th><th>분류</th><th>특징</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>수용제동</strong></td>
+              <td>기계적 제동</td>
+              <td>공기·유압으로 브레이크 슈를 차륜에 직접 가압</td>
+            </tr>
+            <tr>
+              <td><strong>회생제동</strong></td>
+              <td>전기적 제동</td>
+              <td>전동기를 발전기로 전환, 발생 전력을 전차선으로 회수</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>발전제동</strong></td>
+              <td>전기적 제동</td>
+              <td>전동기를 발전기로 전환, 발생 전력을 저항으로 열 소비</td>
+            </tr>
+            <tr>
+              <td><strong>와전류제동</strong></td>
+              <td>전기적 제동</td>
+              <td>레일·디스크에 와전류 발생시켜 제동력 획득</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="warn-box">
+        ⚠️ <strong>자연제동 = 정식 제동 방식이 아님</strong><br>
+        열차 정식 제동 방식: 공기제동·발전제동·회생제동·수용제동 등<br>
+        "자연제동"은 시험 함정 선택지 — 정식 분류에 존재하지 않음
+      </div>
+    </div>
+  </div>
+
+  <!-- §4 VIS 이미지 -->
+  <div class="sec-title">§4 철도차량 제동방식 비교 도해</div>
+  <div class="vis-wrap">
+    <img src="images/VIS-095_철도차량_제동_방식_비교.png" alt="철도차량 제동방식 비교" style="max-width:100%;border-radius:6px;"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div style="display:none;padding:20px;background:#f1f5f9;border-radius:6px;color:#64748b;font-size:12px;">
+      [VIS-095] 철도차량 제동방식 비교 이미지
+    </div>
+    <div class="vis-cap">VIS-095 · 철도차량 제동방식 비교</div>
+  </div>
+
+  <!-- §5 시험 포인트 · 함정 표 -->
+  <div class="sec-title">§5 시험 포인트 · 함정</div>
+  <div class="exam-box">
+    <div class="exam-box-title">🎯 핵심 암기 포인트</div>
+    <ul>
+      <li>공기제동: <strong>고장(공기 누설) 시 비상제동 자동 체결</strong> (Fail-safe)</li>
+      <li>폐색구간 최소 간격: <strong>최대 제동거리 + 안전 여유거리</strong></li>
+      <li>기계적 제동장치: <strong>수용제동</strong> (공기·유압·마찰 이용)</li>
+      <li>전기적 제동장치: <strong>회생제동, 발전제동, 와전류제동</strong></li>
+      <li><strong>자연제동</strong>은 정식 제동 방식이 아님 — 함정 선택지</li>
+      <li>디젤기관차 시험 3항목: 출력시험·연기시험·<strong>제동시험(제동거리)</strong></li>
+    </ul>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="trap-tbl">
+      <thead>
+        <tr><th>함정 선택지</th><th>정오</th><th>근거</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"와전류제동은 기계적 제동장치이다"</td>
+          <td>❌ 오답</td>
+          <td>와전류제동은 전기적 제동장치 (레일·디스크에 와전류 유도)</td>
+        </tr>
+        <tr>
+          <td>"자연제동은 열차 제동방식 중 하나이다"</td>
+          <td>❌ 오답</td>
+          <td>자연제동은 정식 제동 방식이 아님</td>
+        </tr>
+        <tr>
+          <td>"공기제동은 공기 압력이 낮아지면 제동이 해제된다"</td>
+          <td>❌ 오답</td>
+          <td>압력 저하(고장) 시 <strong>자동 체결</strong> — Fail-safe 원리</td>
+        </tr>
+        <tr>
+          <td>"폐색구간 간격은 평균 제동거리를 기준으로 한다"</td>
+          <td>❌ 오답</td>
+          <td>기준은 <strong>최대</strong> 제동거리 + 안전 여유거리</td>
+        </tr>
+        <tr>
+          <td>"회생제동은 기계적 제동장치이다"</td>
+          <td>❌ 오답</td>
+          <td>회생제동은 전동기를 발전기로 이용하는 <strong>전기적</strong> 제동</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- §6 기출문제 -->
+  <div class="sec-title">📝 기출문제 (2문항)</div>
+  <p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q1</span>
+      <span class="qst-src">rk_ch83_33 · SOURCE: 4.html 개념50 · 기계적 제동장치</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">기계적 제동장치로 맞는 것은?</div>
+      <ol class="qst-choices">
+        <li>① 와전류제동</li>
+        <li>② 수용제동</li>
+        <li>③ 전자제동</li>
+        <li>④ 회생제동</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ② 수용제동</strong><br>
+        기계적 제동장치: 공기나 유압·마찰력을 이용하여 바퀴를 직접 제동하는 방식. "수용제동"이 이에 해당. 회생·발전·와전류제동 등은 전동기를 발전기로 이용하는 전기제동장치이다.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q2</span>
+      <span class="qst-src">rk_ch83_34 · SOURCE: 4.html 개념50 · 열차 제동방식</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">열차 제동방식이 아닌 것은?</div>
+      <ol class="qst-choices">
+        <li>① 발전제동</li>
+        <li>② 자연제동</li>
+        <li>③ 수용제동</li>
+        <li>④ 회생제동</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ② 자연제동</strong><br>
+        열차 제동 방식: 공기제동·발전제동·회생제동·수용제동 등. "자연제동"은 정식 제동 방식이 아니다.
+      </div>
+    </div>
+  </div>
+
+  <!-- 하단 NAV -->
+  <nav class="nav-bar" style="margin-top:40px;">
+    <a href="unit-12-04_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 12-04 제동방식·공기제동</a>
+    <span class="nav-center">GATE5 PART 12 · 열차저항·제동</span>
+    <span class="nav-btn disabled">다음 PART 준비 중</span>
+  </nav>
+
+</div>
+</body>
+</html>
