@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10-05 전차선로 부속설비 FINAL PUBLISH v1.1</title>
+<!--
+  UNIT : 10-05
+  제목 : 전차선로 부속설비
+  VERSION : v1.1
+  STATUS : FINAL PUBLISH
+  SOURCE : 4.html 개념83-B
+  DB : 0건
+  VIS : 전차선로 부속설비 3종.png
+-->
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+.page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+.unit-header { border-bottom: 2px solid #0f4c81; padding-bottom: 14px; margin-bottom: 28px; }
+.unit-num { font-size: 12px; color: #0f4c81; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+.unit-sub { font-size: 13px; color: #555; }
+.badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+.badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+.badge-lock { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+.badge-hold { color: #92400e; border-color: #d97706; background: #fffbeb; }
+.badge-noq { color: #92400e; border-color: #92400e; background: #fffbeb; }
+.sec-title { font-size: 16px; font-weight: 800; color: #0f4c81; border-left: 4px solid #0f4c81; padding-left: 10px; margin: 32px 0 14px; }
+.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
+.term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+.term-name { font-size: 13px; font-weight: 800; color: #0f4c81; margin-bottom: 4px; }
+.term-desc { font-size: 13px; color: #333; line-height: 1.6; }
+.concept-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; background: #fff; overflow: hidden; }
+.concept-head { padding: 12px 16px; background: #0f4c81; color: #fff; display: flex; align-items: center; gap: 10px; }
+.concept-num { font-size: 11px; font-weight: 700; background: rgba(255,255,255,.18); border-radius: 3px; padding: 2px 8px; white-space: nowrap; }
+.concept-name { font-size: 15px; font-weight: 800; }
+.concept-star { font-size: 12px; margin-left: auto; opacity: .9; white-space: nowrap; }
+.concept-body { padding: 16px 18px; font-size: 13.5px; line-height: 1.8; }
+.tip-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #134e4a; margin-top: 12px; }
+.trap-box { background: #fff7ed; border: 1px solid #fdba74; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #7c2d12; margin-top: 10px; }
+.trap-box strong { color: #9a3412; }
+.hold-box { background: #fffbeb; border: 1.5px dashed #d97706; border-radius: 6px; padding: 12px 16px; font-size: 13px; color: #92400e; margin: 14px 0; }
+.hold-box strong { color: #92400e; }
+.split-box { background: #f0f4f8; border: 1.5px solid #94a3b8; border-radius: 6px; padding: 12px 16px; font-size: 13px; color: #334155; margin: 14px 0; text-align: center; }
+.split-box strong { color: #0f4c81; }
+.tbl-wrap { overflow-x: auto; margin: 12px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #0f4c81; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+tr:nth-child(even) td { background: #f8fafc; }
+tr.hl td { background: #eff6ff; }
+td strong { color: #0f4c81; }
+.vis-wrap { text-align: center; margin: 16px 0; }
+.vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+.vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+.exam-box { border: 1.5px solid #0f4c81; border-radius: 7px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; }
+.exam-box-title { font-weight: 800; color: #0f4c81; font-size: 13.5px; margin-bottom: 8px; }
+.exam-box ul { padding-left: 16px; }
+.exam-box li { margin-bottom: 4px; }
+.trap-tbl th { background: #7c2d12; }
+.trap-tbl td { font-size: 12.5px; }
+.print-btn { display: inline-block; margin-bottom: 16px; padding: 7px 16px; background: #0f4c81; color: #fff; border: none; border-radius: 5px; font-size: 13px; cursor: pointer; font-weight: 700; }
+.print-btn:hover { background: #0a3660; }
+.nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; margin-bottom: 12px; font-size: 12.5px; }
+.nav-btn { display: inline-block; padding: 5px 12px; border: 1.5px solid #0f4c81; border-radius: 4px; color: #0f4c81; text-decoration: none; font-weight: 700; font-size: 12px; }
+.nav-btn:hover { background: #f0f4f8; }
+.nav-btn.disabled { opacity: .35; cursor: default; pointer-events: none; }
+.nav-center { font-size: 11px; color: #64748b; text-align: center; }
+@page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+@media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; page-break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="nav-bar">
+    <a href="unit-10-04_HOLD_VERIFY_v1.3.html" class="nav-btn">← 10-04 가선방식 3계열</a>
+    <span class="nav-center">GATE5 PART 10 · 전차선로·가선·집전</span>
+    <a href="unit-10-06_HOLD_VERIFY_v1.1.html" class="nav-btn">10-06 자동장력조정장치 →</a>
+  </nav>
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 10 · UNIT 10-05</div>
+    <div class="unit-title">전차선로 부속설비</div>
+    <div class="unit-sub">에어조인트 · 정류포스트 · 구분장치</div>
+    <div class="badge-row">
+      <span class="badge badge-grade">★★★ A등급</span>
+      <span class="badge badge-lock">FINAL PUBLISH v1.1</span>
+      <span class="badge badge-noq">기출 DB 없음</span>
+    </div>
+  </div>
+
+  <div class="sec-title">§0 선행 용어</div>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">에어조인트 (Air Joint)</div>
+      <div class="term-desc">전차선의 온도 변화에 따른 신축을 흡수·조정하는 접속 장치. 열팽창·수축 대응.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">정류포스트 (Feeder Post)</div>
+      <div class="term-desc">급전 구간 말단에 설치하여 전압강하와 누설전류를 저감하는 설비.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">구분장치 (Sectioning Device)</div>
+      <div class="term-desc">전차선 구간을 전기적으로 분리하는 장치. 보수 작업 시 해당 구간만 단전 가능.</div>
+    </div>
+  </div>
+
+  <div class="sec-title">§1 전차선로 부속설비 3종 (개념83-B)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">4.html 개념83-B</span>
+      <span class="concept-name">부속설비 3종 — 에어조인트·정류포스트·구분장치</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>설비</th><th>주요 목적</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>① 에어조인트</strong></td>
+              <td>온도 변화에 따른 전차선 신축 조정</td>
+            </tr>
+            <tr>
+              <td><strong>② 정류포스트</strong></td>
+              <td>급전 구간 말단 전압강하 저감, 누설전류 저감</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>③ 구분장치</strong></td>
+              <td>전차선 구간 전기적 분리 → 보수 작업 가능</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trap-box">
+        ⚠️ <strong>각 설비 목적 혼동 주의</strong><br>
+        에어조인트 = <strong>신축 조정</strong> (온도 변화 대응)<br>
+        정류포스트 = <strong>전압강하·누설전류 저감</strong><br>
+        구분장치 = <strong>전기적 분리</strong> (보수·분리 목적)
+      </div>
+
+      <div class="tip-box">
+        💡 <strong>암기법 [SOURCE: 4.html 개념83-B]</strong><br>
+        <strong>에·정·구</strong> = 에어조인트(신축) / 정류포스트(전압·누설) / 구분장치(분리·보수)
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title">§2 시험 포인트</div>
+  <div class="exam-box">
+    <div class="exam-box-title">🎯 부속설비 3종 암기</div>
+    <ul>
+      <li>에어조인트: <strong>신축 조정</strong> (온도 변화 → 전차선 팽창·수축 흡수)</li>
+      <li>정류포스트: <strong>말단 전압강하 저감 + 누설전류 저감</strong></li>
+      <li>구분장치: <strong>전기적 분리</strong> → 구간별 독립 보수 가능</li>
+      <li>"에어조인트가 누설전류 저감" → ❌ 오답 (정류포스트의 역할)</li>
+    </ul>
+  </div>
+
+  <div class="sec-title">§3 VIS</div>
+  <div class="vis-wrap">
+    <img src="images/전차선로 부속설비 3종.png"
+         alt="전차선로 부속설비 3종"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div style="display:none;padding:20px;border:1px dashed #cbd5e1;border-radius:6px;color:#94a3b8;font-size:13px;text-align:center;">
+      ※ 이미지 준비 중 — 전차선로 부속설비 3종 개념도
+    </div>
+    <div class="vis-cap">▲ 전차선로 부속설비 3종 (에어조인트·정류포스트·구분장치)</div>
+  </div>
+
+  <div class="sec-title">§4 기출 DB 문항</div>
+  <div class="hold-box">
+    ⚠️ <strong>DB 문항 없음</strong><br>
+    engineering-exam-data.ts 검색 결과: 부속설비(에어조인트·정류포스트·구분장치) 관련 PART10 전용 문항 0건.
+  </div>
+
+  <nav class="nav-bar" style="margin-top:32px;">
+    <a href="unit-10-04_HOLD_VERIFY_v1.3.html" class="nav-btn">← 10-04 가선방식 3계열</a>
+    <span class="nav-center">GATE5 PART 10 · 전차선로·가선·집전</span>
+    <a href="unit-10-06_HOLD_VERIFY_v1.1.html" class="nav-btn">10-06 자동장력조정장치 →</a>
+  </nav>
+</div>
+</body>
+</html>
