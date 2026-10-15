@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GATE5 · 14-02 특수차량·부속설비</title>
+<!--
+  GATE5 UNIT 14-02 — 특수차량·부속설비
+  SOURCE Coverage:
+    84-A → CONCEPT 01 (공기조화·냉난방 / 냉동사이클) ※unit-08-04 §7-1 기수록 → 핵심요약+참조
+    88-B → CONCEPT 02 (피뢰기와 전기보호) ※DB 기반 수록 / 세부규격 임의보강 금지
+    94-A-1 → CONCEPT 03 (관절대차) ※신규 수록 (PART 13 0건 확인)
+    94-A-2 → CONCEPT 04 (바이모달 트램) ※SOURCE 원제 "바이모달 트럭" → 정정: 바이모달 트램
+    85   → CONCEPT 05 (디젤기관차 시험)
+  ※ 4.html 개념85 충돌: "매연시험 방식 4종(광투과·필터·하틀리지·적외선분석)"으로 기재됨
+     DB Q742 기준: 적외선분석식은 매연시험 방식이 아닌 것(오답함정)
+     → UNIT 14-02는 Q742 원문 기준(3종) 수록, 적외선분석식 = 오답 처리
+  GATE4 구 구조:
+    14-01(공기조화/84-A) 14-02(피뢰기/88-B) 14-03(관절대차/94-A-1)
+    14-05(바이모달/94-A-2) 14-06(디젤기관차/85)
+    → GATE5 UNIT 14-02로 통합 재편
+  PRINT STANDARD: GATE5_PRINT_LOCK_v1 / 12mm 12mm 12mm 18mm
+  제작: v1.0 (신규) / FINAL_PUBLISH
+-->
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #f8fafc; color: #1e293b; font-size: 14px; line-height: 1.6; }
+.page-wrap { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
+.nav-bar { display: flex; align-items: center; justify-content: space-between; background: #1e3a5f; border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; gap: 8px; }
+.nav-btn { color: #93c5fd; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 4px 8px; border-radius: 4px; transition: background .15s; }
+.nav-btn:hover { background: rgba(147,197,253,.15); }
+.nav-center { color: #cbd5e1; font-size: 12px; text-align: center; flex: 1; }
+.print-btn { display: block; margin: 0 auto 20px; padding: 8px 20px; background: #0f172a; color: #fff; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; }
+.unit-header { border-bottom: 2px solid #0f4c81; padding-bottom: 14px; margin-bottom: 28px; }
+.unit-num { font-size: 12px; color: #0f4c81; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+.unit-sub { font-size: 13px; color: #555; }
+.badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+.badge-grade { color: #7c3aed; border-color: #7c3aed; background: #faf5ff; }
+.badge-final { color: #065f46; border-color: #059669; background: #ecfdf5; }
+.badge-q { color: #1e3a5f; border-color: #1e3a5f; background: #eff6ff; }
+.badge-src { color: #92400e; border-color: #92400e; background: #fffbeb; }
+.sec-title { font-size: 14px; font-weight: 800; color: #0f4c81; border-left: 4px solid #0f4c81; padding-left: 10px; margin: 24px 0 12px; }
+.concept-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; background: #fff; overflow: hidden; }
+.concept-head { display: flex; align-items: center; gap: 8px; background: #f1f5f9; padding: 10px 14px; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; }
+.concept-num { font-size: 11px; color: #64748b; font-weight: 700; }
+.concept-name { font-size: 14px; font-weight: 700; color: #1e293b; flex: 1; }
+.concept-body { padding: 14px 16px; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { background: #0f4c81; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+tr:nth-child(even) td { background: #f8fafc; }
+tr.hl td { background: #eff6ff; font-weight: 600; }
+tr.trap td { background: #fff7ed; }
+.tip-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #134e4a; margin-top: 12px; }
+.trap-box { background: #fff7ed; border: 1px solid #fdba74; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #7c2d12; margin-top: 10px; }
+.ref-box { background: #f8f8ff; border: 1px solid #c7d2fe; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #3730a3; margin-top: 10px; }
+.src-note { background: #fffbeb; border: 1px solid #fbbf24; border-radius: 5px; padding: 9px 14px; font-size: 12px; color: #78350f; margin-top: 10px; }
+.vis-wrap { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin: 12px 0; text-align: center; }
+.vis-wrap img { max-width: 100%; height: auto; border-radius: 4px; }
+.vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+.q-box { border: 1.5px solid #1e40af; border-radius: 7px; padding: 14px 16px; margin-bottom: 14px; font-size: 13px; background: #f8faff; }
+.q-num { font-size: 11px; font-weight: 700; color: #1e40af; margin-bottom: 6px; }
+.q-stem { font-weight: 600; color: #1a1a1a; margin-bottom: 8px; }
+.q-choice { color: #334155; margin: 2px 0; }
+.q-ans { background: #ecfdf5; border: 1px solid #6ee7b7; border-radius: 4px; padding: 6px 10px; font-size: 12px; color: #065f46; margin-top: 8px; }
+.protect-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 14px 0; }
+.pg-card { border: 1.5px solid #e2e8f0; border-radius: 7px; padding: 12px 14px; background: #fff; }
+.pg-name { font-size: 13px; font-weight: 800; color: #0f4c81; margin-bottom: 6px; }
+.pg-desc { font-size: 12px; color: #475569; line-height: 1.5; }
+.test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0; }
+.tg-card { border: 2px solid #2563eb; border-radius: 8px; padding: 12px 10px; background: #eff6ff; text-align: center; }
+.tg-title { font-size: 13px; font-weight: 800; color: #1e40af; margin-bottom: 4px; }
+.tg-desc { font-size: 11.5px; color: #334155; line-height: 1.5; }
+.smoke-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0; }
+.sg-card { border: 1.5px solid #d1d5db; border-radius: 6px; padding: 10px; background: #fff; text-align: center; }
+.sg-name { font-size: 12px; font-weight: 800; color: #374151; }
+.sg-sub { font-size: 11px; color: #6b7280; margin-top: 2px; }
+.src-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 2px; background: #fef3c7; color: #92400e; border: 1px solid #fbbf24; margin-left: 6px; }
+@media (max-width: 600px) { .protect-grid { grid-template-columns: 1fr; } .test-grid { grid-template-columns: 1fr; } .smoke-grid { grid-template-columns: repeat(2, 1fr); } }
+@media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
+@page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<nav class="nav-bar">
+  <a href="unit-14-01_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 14-01 경량전철·AGT</a>
+  <span class="nav-center">GATE5 · PART 14</span>
+  <span class="nav-btn" style="color:#475569;cursor:default;">PART 14 마지막</span>
+</nav>
+
+<button class="print-btn" onclick="window.print()">인쇄 / PDF 저장</button>
+
+<div class="unit-header">
+  <div class="unit-num">GATE5 · PART 14 · UNIT 14-02</div>
+  <div class="unit-title">특수차량 · 부속설비</div>
+  <div class="unit-sub">공기조화·냉난방 / 피뢰기 / 관절대차 / 바이모달 트램 / 디젤기관차 시험</div>
+  <div class="badge-row">
+    <span class="badge badge-grade">★★★ A등급</span>
+    <span class="badge badge-final">FINAL_PUBLISH v1.0</span>
+    <span class="badge badge-q">DB 문항 6개</span>
+    <span class="badge badge-src">SOURCE 84-A · 88-B · 94-A-1 · 94-A-2 · 85</span>
+  </div>
+</div>
+
+<!-- ===== CONCEPT 01: 공기조화·냉난방 ===== -->
+<div class="sec-title">CONCEPT 01 — 공기조화·냉난방 시스템 <span class="src-badge">SOURCE 84-A</span></div>
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 01</span>
+    <span class="concept-name">공기조화·냉난방 시스템 — 냉동사이클 핵심 요약</span>
+  </div>
+  <div class="concept-body">
+    <table>
+      <tr class="hl">
+        <th>구분</th>
+        <th>내용</th>
+      </tr>
+      <tr class="hl">
+        <td><strong>냉동사이클 순서</strong></td>
+        <td><strong>압축 → 응축 → 팽창 → 증발</strong><br><small style="color:#2563eb;">암기: <strong>압응팽증</strong></small></td>
+      </tr>
+      <tr>
+        <td>압축 (Compression)</td>
+        <td>냉매를 고압·고온 기체로 압축</td>
+      </tr>
+      <tr>
+        <td>응축 (Condensation)</td>
+        <td>고압 기체 → 액체로 변환, 외부로 열 방출</td>
+      </tr>
+      <tr>
+        <td>팽창 (Expansion)</td>
+        <td>팽창밸브에서 압력 저하 → 저온·저압 액체</td>
+      </tr>
+      <tr>
+        <td>증발 (Evaporation)</td>
+        <td>저압 액체 → 기체로 증발, 주위에서 열 흡수 → 냉각</td>
+      </tr>
+    </table>
+
+    <div class="tip-box">
+      💡 <strong>시험 포인트:</strong> "압축→응축→팽창→증발" 순서만 확인. 응축과 팽창 순서 혼동 주의.
+    </div>
+
+    <div class="ref-box">
+      📖 <strong>상세 내용 참조:</strong> unit-08-04 §7-1 <em>냉동사이클·압응팽증</em> — 냉동사이클 인포그래픽 포함. 해당 UNIT에서 상세 이론(각 단계 물리량 변화, 기출 예시)을 학습할 것.
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONCEPT 02: 피뢰기와 전기보호 ===== -->
+<div class="sec-title">CONCEPT 02 — 피뢰기와 전기보호 <span class="src-badge">SOURCE 88-B</span></div>
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 02</span>
+    <span class="concept-name">피뢰기와 전기보호 — 장치별 역할 구분</span>
+  </div>
+  <div class="concept-body">
+    <p style="font-size:13px;color:#475569;margin-bottom:10px;">철도차량에는 교류모진·직류모진·낙뢰(서지전압) 각 상황에 대응하는 별도의 보호 장치가 장착된다.</p>
+
+    <div class="protect-grid">
+      <div class="pg-card">
+        <div class="pg-name">직류피뢰기</div>
+        <div class="pg-desc"><strong>교류모진</strong> 발생 시<br>회로를 보호하는 장치</div>
+      </div>
+      <div class="pg-card">
+        <div class="pg-name">주퓨즈 (Main Fuse)</div>
+        <div class="pg-desc"><strong>직류모진</strong> 발생 시<br>회로를 보호하는 장치</div>
+      </div>
+      <div class="pg-card">
+        <div class="pg-name">교류피뢰기</div>
+        <div class="pg-desc"><strong>낙뢰 등 급격한 서지전압</strong> 발생 시<br>회로를 보호하는 장치</div>
+      </div>
+      <div class="pg-card">
+        <div class="pg-name">ADCg</div>
+        <div class="pg-desc"><strong>교직류 구간 절환</strong> 시<br>집전장치 전환 담당</div>
+      </div>
+    </div>
+
+    <div class="trap-box">
+      ⚠️ <strong>함정 포인트:</strong><br>
+      "직류피뢰기 → 직류 과전압 보호" → <strong>오답</strong>. 직류피뢰기는 <strong>교류모진</strong> 시 보호.<br>
+      "주퓨즈 → 교류모진 보호" → <strong>오답</strong>. 주퓨즈는 <strong>직류모진</strong> 시 보호.<br>
+      명칭과 역할의 교차 혼동이 주요 출제 함정이다.
+    </div>
+
+    <div class="src-note">
+      📌 <strong>SOURCE 88-B 수록 범위:</strong> 장치별 역할 구분(DB 기반). 세부 규격(전압 수치·동작 전류 등)은 SOURCE 원문 미확인으로 수록 범위에서 제외.
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONCEPT 03: 관절대차 ===== -->
+<div class="sec-title">CONCEPT 03 — 관절대차 <span class="src-badge">SOURCE 94-A-1</span></div>
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 03</span>
+    <span class="concept-name">관절대차 (Articulated Bogie) — 구조·특성·함정</span>
+  </div>
+  <div class="concept-body">
+    <table>
+      <tr>
+        <th style="width:30%">항목</th>
+        <th>내용</th>
+      </tr>
+      <tr class="hl">
+        <td><strong>정의</strong></td>
+        <td>인접한 <strong>두 차량이 하나의 대차를 공유</strong>하는 차량 구조</td>
+      </tr>
+      <tr>
+        <td>곡선 통과</td>
+        <td>우수 — 차량 간 이행부가 유연하게 연결되어 곡선 추종 성능 향상</td>
+      </tr>
+      <tr>
+        <td>승차감</td>
+        <td>향상 — 차량 간 진동 전달이 완화됨</td>
+      </tr>
+      <tr>
+        <td>대차 수</td>
+        <td>중간 대차를 공유하므로 <strong>일반 대차보다 수가 줄어든다</strong></td>
+      </tr>
+      <tr class="trap">
+        <td><strong>중량</strong></td>
+        <td><strong>가볍지 않음</strong> — 구조가 복잡하고 중량이 늘어남 ← <strong>오답 함정</strong></td>
+      </tr>
+    </table>
+
+    <div class="vis-wrap">
+      <img src="images/관절대차.png"
+           alt="관절대차 구조 설명도"
+           loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div style="display:none;padding:20px;color:#94a3b8;font-size:13px;">[관절대차 이미지 — images/관절대차.png]</div>
+      <p class="vis-cap">관절대차 — 인접 두 차량이 하나의 대차를 공유하는 구조</p>
+    </div>
+
+    <div class="trap-box">
+      ⚠️ <strong>핵심 함정:</strong> "두 차량이 <em>각자 독립된</em> 대차를 가진다" → <strong>오답</strong>.<br>
+      관절대차는 인접 두 차량이 대차 <strong>하나를 공유</strong>한다는 것이 핵심 정의.<br>
+      ⚠️ "관절대차는 무게가 가볍다" → <strong>오답</strong>. 구조 복잡도 증가로 중량 증가.
+    </div>
+
+    <div class="tip-box">
+      💡 <strong>적용 사례:</strong> TGV·Talgo 등 고속열차, 저상 트램(LRV) 등에서 곡선 통과 성능이 중요한 차량에 채택. PART 13에 미수록, UNIT 14-02 신규 수록.
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONCEPT 04: 바이모달 트램 ===== -->
+<div class="sec-title">CONCEPT 04 — 바이모달 트램 <span class="src-badge">SOURCE 94-A-2</span></div>
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 04</span>
+    <span class="concept-name">바이모달 트램 (Bi-modal Tram) — 도로·궤도 겸용 차량</span>
+  </div>
+  <div class="concept-body">
+    <div class="src-note">
+      📌 <strong>표기 정정:</strong> GATE4 SOURCE 94-A-2 원제는 "바이모달 트럭(Bi-modal Truck)"으로 기재. 현행 정식 명칭은 <strong>바이모달 트램(Bi-modal Tram)</strong>으로 정정 수록. railway-king DB(Q864)도 "바이모달트램"으로 표기됨.
+    </div>
+
+    <table style="margin-top:12px;">
+      <tr>
+        <th style="width:30%">항목</th>
+        <th>내용</th>
+      </tr>
+      <tr class="hl">
+        <td><strong>주행 방식</strong></td>
+        <td><strong>고무바퀴</strong>로 일반 도로 주행 + 자기유도·광학 등으로 <strong>트램처럼 정밀 선로 추종</strong></td>
+      </tr>
+      <tr>
+        <td>특징</td>
+        <td>레일 없이도 정해진 경로를 정밀 추종 — 도로·궤도 겸용 혼합형 도시 교통수단</td>
+      </tr>
+      <tr>
+        <td>DB 구분</td>
+        <td>Q864: LIM·모노레일·AGT와 함께 경량전철 방식으로 분류 (구분 포인트)</td>
+      </tr>
+    </table>
+
+    <div class="trap-box">
+      ⚠️ <strong>경량전철 방식 혼동 주의 (DB Q864):</strong><br>
+      "선형 유도전동기로 급구배·급곡선에 유리한 방식" → <strong>LIM</strong> (바이모달 트램이 아님)<br>
+      바이모달 트램은 <strong>고무바퀴 도로 주행</strong> + 정밀 선로 추종이 핵심.
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONCEPT 05: 디젤기관차 시험 ===== -->
+<div class="sec-title">CONCEPT 05 — 디젤기관차 시험 <span class="src-badge">SOURCE 85</span></div>
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 05</span>
+    <span class="concept-name">디젤기관차 시험·점검 — 시험 종류와 매연 측정 방식</span>
+  </div>
+  <div class="concept-body">
+
+    <p style="font-size:13px;font-weight:700;margin-bottom:8px;">▶ 시험 3종 (출력·연기·제동)</p>
+    <div class="test-grid">
+      <div class="tg-card">
+        <div class="tg-title">출력시험</div>
+        <div class="tg-desc">엔진 출력·회전수 측정<br>성능 확인</div>
+      </div>
+      <div class="tg-card">
+        <div class="tg-title">연기(매연)시험</div>
+        <div class="tg-desc">매연농도 측정<br>배출기준 적합 여부 확인</div>
+      </div>
+      <div class="tg-card">
+        <div class="tg-title">제동시험</div>
+        <div class="tg-desc">제동장치 응답시간·<br>제동력 측정</div>
+      </div>
+    </div>
+
+    <p style="font-size:13px;font-weight:700;margin:14px 0 8px;">▶ 매연시험 방식 3종 (DB Q742 기준)</p>
+    <div class="smoke-grid">
+      <div class="sg-card">
+        <div class="sg-name">광투과식</div>
+        <div class="sg-sub">빛의 투과율로<br>매연 농도 측정</div>
+      </div>
+      <div class="sg-card">
+        <div class="sg-name">필터식</div>
+        <div class="sg-sub">필터에 포집된<br>매연 농도 측정</div>
+      </div>
+      <div class="sg-card">
+        <div class="sg-name">하틀리지식</div>
+        <div class="sg-sub">반사광 이용<br>매연 농도 측정</div>
+      </div>
+    </div>
+
+    <div class="trap-box">
+      ⚠️ <strong>오답 함정 3종:</strong><br>
+      ① <strong>적외선분석식</strong> — CO·HC·NOx 등 <em>배기가스 성분(화학적)</em> 측정용. 매연(연기) 농도 시험 방식이 <strong>아님</strong>.<br>
+      ② <strong>정속모드</strong> — 휘발유·LPG 자동차 종합검사용(40km/h 정속 주행). 디젤기관차에 적용 <strong>안 됨</strong>.<br>
+      ③ <strong>절연시험</strong> — 전차선 전압 인가·누설전류 측정. <em>전기기관차</em>용 시험. 디젤기관차에 전차선 없어 <strong>해당 없음</strong>.
+    </div>
+
+    <div class="src-note">
+      📌 <strong>4.html 개념85 충돌 메모:</strong> 4.html에 "매연 측정 방식 4가지(광투과·필터·하틀리지·적외선분석)"로 기재되어 있으나, DB Q742 원문은 적외선분석식을 오답(매연시험 방식 아님)으로 규정. UNIT 14-02는 Q742 원문 기준(3종) 적용.
+    </div>
+  </div>
+</div>
+
+<!-- ===== DB 문항 ===== -->
+<div class="sec-title">DB 문항 — 6문항</div>
+
+<div class="q-box">
+  <div class="q-num">Q1 · SOURCE 84-A · rk_ch83 (냉동사이클)</div>
+  <div class="q-stem">철도차량의 공기조화장치(냉방장치)의 냉동사이클 순서는?</div>
+  <div class="q-choice">① 압축 → 팽창 → 응축 → 증발</div>
+  <div class="q-choice">② 응축 → 압축 → 팽창 → 증발</div>
+  <div class="q-choice">③ <strong>압축 → 응축 → 팽창 → 증발</strong></div>
+  <div class="q-choice">④ 팽창 → 압축 → 응축 → 증발</div>
+  <div class="q-ans">정답: ③ | 암기: <strong>압응팽증</strong> — 응축과 팽창 순서 혼동이 주요 함정</div>
+</div>
+
+<div class="q-box">
+  <div class="q-num">Q2 · SOURCE 88-B · rk_ch83_09 (피뢰기)</div>
+  <div class="q-stem">교류모진이 발생할 때 작동하여 회로를 보호하는 장치는?</div>
+  <div class="q-choice">① ADCg</div>
+  <div class="q-choice">② 주퓨즈</div>
+  <div class="q-choice">③ <strong>직류피뢰기</strong></div>
+  <div class="q-choice">④ 교류피뢰기</div>
+  <div class="q-ans">정답: ③ | 직류피뢰기 → 교류모진 보호 / 주퓨즈 → 직류모진 보호 / 교류피뢰기 → 낙뢰·서지전압 보호 / ADCg → 교직류 절환</div>
+</div>
+
+<div class="q-box">
+  <div class="q-num">Q3 · SOURCE 94-A-1 · rk_ch83_35 (관절대차)</div>
+  <div class="q-stem">관절대차 특징으로 아닌 것은?</div>
+  <div class="q-choice">① 곡선 통과 성능이 우수하다</div>
+  <div class="q-choice">② 두 차량이 하나의 대차를 공유한다</div>
+  <div class="q-choice">③ <strong>무게가 가볍다</strong></div>
+  <div class="q-choice">④ 승차감이 향상된다</div>
+  <div class="q-ans">정답: ③ | 관절대차는 구조가 복잡하여 중량이 늘어남. "가볍다"는 오답.</div>
+</div>
+
+<div class="q-box">
+  <div class="q-num">Q4 · SOURCE 94-A-2 · rk_ch83_15 (바이모달 트램)</div>
+  <div class="q-stem">선형 유도전동기를 이용하여 레일과의 점착에 의존하지 않고 추진력을 얻으며, 급구배·급곡선에 유리한 방식의 차량은?</div>
+  <div class="q-choice">① <strong>LIM</strong></div>
+  <div class="q-choice">② 모노레일</div>
+  <div class="q-choice">③ 바이모달트램</div>
+  <div class="q-choice">④ AGT</div>
+  <div class="q-ans">정답: ① LIM | 바이모달 트램은 고무바퀴 도로 주행 방식 — LIM과 혼동 주의</div>
+</div>
+
+<div class="q-box">
+  <div class="q-num">Q5 · SOURCE 85 · rk_ch83_01/02 (디젤기관차 매연시험 방식)</div>
+  <div class="q-stem">디젤기관차의 매연(연기) 시험 방식이 아닌 것은?</div>
+  <div class="q-choice">① 광투과식</div>
+  <div class="q-choice">② 필터식</div>
+  <div class="q-choice">③ 하틀리지식</div>
+  <div class="q-choice">④ <strong>적외선분석식</strong></div>
+  <div class="q-ans">정답: ④ | 적외선분석식은 CO·HC·NOx 등 배기가스 성분(화학적 오염물질) 측정 장비로, 매연 농도 시험 방식이 아님</div>
+</div>
+
+<div class="q-box">
+  <div class="q-num">Q6 · SOURCE 85 · rk_ch83_07 (디젤기관차 시험종류)</div>
+  <div class="q-stem">디젤견인차(디젤기관차)의 시험·점검 방법으로 옳지 않은 것은?</div>
+  <div class="q-choice">① 출력시험: 엔진의 출력 및 회전수를 측정하여 성능을 확인한다</div>
+  <div class="q-choice">② 연기시험: 매연농도를 측정하여 배출기준 적합 여부를 확인한다</div>
+  <div class="q-choice">③ 제동시험: 제동장치의 응답시간과 제동력을 측정한다</div>
+  <div class="q-choice">④ <strong>절연시험: 전차선 전압을 인가하여 누설전류를 측정한다</strong></div>
+  <div class="q-ans">정답: ④ | 절연시험은 전기기관차용. 전차선 전원을 사용하지 않는 디젤기관차에는 해당 없음</div>
+</div>
+
+<!--
+  SOURCE Coverage 완료 체크:
+  84-A ✅ CONCEPT 01 + Q1
+  88-B ✅ CONCEPT 02 + Q2
+  94-A-1 ✅ CONCEPT 03 + Q3
+  94-A-2 ✅ CONCEPT 04 + Q4
+  85 ✅ CONCEPT 05 + Q5 + Q6
+  ※ rk_ch83_02 (정속모드) = Q749 실체 → CONCEPT 05 본문에 오답함정으로 반영 (별도 Q박스 불필요, 중복 선지 없음)
+  ※ Q792 식별: rk_ch83_07 → 절연시험 오답 = Q6으로 수록
+  ※ VIS: 관절대차.png 수록 (학습 이득 확인) / 피뢰기·바이모달·디젤기관차 전용 이미지 미제작 (본문 표·그리드로 충분)
+-->
+
+</div><!-- /page-wrap -->
+</body>
+</html>

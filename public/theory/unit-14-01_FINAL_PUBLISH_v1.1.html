@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GATE5 · 14-01 경량전철·AGT·고무차륜</title>
+<!--
+  GATE5 UNIT 14-01 — 경량전철·AGT·고무차륜
+  v1.0 → v1.1 수정이력 (2026-10-15):
+    1. SOURCE 84-B(LIM) 정정 (v1.0에서 88-A 오기)
+    2. LRT 비교표 임의 수치(수송인원·차량중량·건설비 50~70%) 삭제
+    3. 중량전철 국내 예시에서 KTX 삭제
+    4. CONCEPT 01 방식 분류표 AGT 행 "전기모터 또는 LIM" 일반화 삭제
+    5. CONCEPT 04 추진방식 "전기모터 또는 LIM" 일반화 삭제
+    6. CONCEPT 02 tip-box "시험 핵심 4종 세트" 표현 삭제 → 이해용 구조 표기
+    7. CONCEPT 03 trap-box "상전도흡인식=자기부상열차 부상방식" 설명 삭제
+       → "AGT 안내방식이 아님"까지만 유지
+    8. CONCEPT 05 모노레일 안정성 비교 행 삭제
+    9. 국내외 적용 사례 최소화 (CONCEPT 01·04 관련 행 삭제)
+   13. q-ans 즉시 노출 제거 (display:none)
+   14. 문항 뒤 정답·해설 SECTION 별도 배치
+  SOURCE Coverage:
+    91-B → CONCEPT 02~04 (고무차륜 AGT 주행장치·안내방식·시스템 특성)
+    84-B(LIM) → 참조 처리 (unit-08-04 §7-2 기수록)
+    84-A(냉난방) → unit-08-04 §7-1 기수록 → UNIT 14-02 이관
+  PRINT STANDARD: GATE5_PRINT_LOCK_v1 / 12mm 12mm 12mm 18mm
+-->
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #f8fafc; color: #1e293b; font-size: 14px; line-height: 1.6; }
+.page-wrap { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
+.nav-bar { display: flex; align-items: center; justify-content: space-between; background: #1e3a5f; border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; gap: 8px; }
+.nav-btn { color: #93c5fd; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 4px 8px; border-radius: 4px; transition: background .15s; }
+.nav-btn:hover { background: rgba(147,197,253,.15); }
+.nav-center { color: #cbd5e1; font-size: 12px; text-align: center; flex: 1; }
+.print-btn { display: block; margin: 0 auto 20px; padding: 8px 20px; background: #0f172a; color: #fff; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; }
+.unit-header { border-bottom: 2px solid #0f4c81; padding-bottom: 14px; margin-bottom: 28px; }
+.unit-num { font-size: 12px; color: #0f4c81; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+.unit-sub { font-size: 13px; color: #555; }
+.badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+.badge-grade { color: #7c3aed; border-color: #7c3aed; background: #faf5ff; }
+.badge-final { color: #065f46; border-color: #059669; background: #ecfdf5; }
+.badge-q { color: #1e3a5f; border-color: #1e3a5f; background: #eff6ff; }
+.badge-src { color: #92400e; border-color: #92400e; background: #fffbeb; }
+.sec-title { font-size: 14px; font-weight: 800; color: #0f4c81; border-left: 4px solid #0f4c81; padding-left: 10px; margin: 24px 0 12px; }
+.concept-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; background: #fff; overflow: hidden; }
+.concept-head { display: flex; align-items: center; gap: 8px; background: #f1f5f9; padding: 10px 14px; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; }
+.concept-num { font-size: 11px; color: #64748b; font-weight: 700; }
+.concept-name { font-size: 14px; font-weight: 700; color: #1e293b; flex: 1; }
+.concept-body { padding: 14px 16px; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { background: #0f4c81; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+tr:nth-child(even) td { background: #f8fafc; }
+tr.hl td { background: #eff6ff; font-weight: 600; }
+tr.trap td { background: #fff7ed; }
+.tip-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #134e4a; margin-top: 12px; }
+.trap-box { background: #fff7ed; border: 1px solid #fdba74; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #7c2d12; margin-top: 10px; }
+.ref-box { background: #f8f8ff; border: 1px solid #c7d2fe; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #3730a3; margin-top: 10px; }
+.vis-wrap { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 16px; text-align: center; }
+.vis-wrap img { max-width: 100%; height: auto; border-radius: 4px; }
+.vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+.q-box { border: 1.5px solid #1e40af; border-radius: 7px; padding: 14px 16px; margin-bottom: 14px; font-size: 13px; background: #f8faff; }
+.q-num { font-size: 11px; font-weight: 700; color: #1e40af; margin-bottom: 6px; }
+.q-stem { font-weight: 600; color: #1a1a1a; margin-bottom: 8px; }
+.q-choice { color: #334155; margin: 2px 0; }
+.q-ans { display: none; }
+.ans-section { border: 2px solid #0f4c81; border-radius: 8px; padding: 16px 18px; margin-top: 24px; background: #f0f9ff; }
+.ans-section-title { font-size: 14px; font-weight: 800; color: #0f4c81; margin-bottom: 14px; }
+.ans-item { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #bfdbfe; font-size: 13px; }
+.ans-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.ans-q { font-weight: 700; color: #1e40af; margin-bottom: 4px; }
+.ans-body { color: #1e293b; }
+.guide-method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0; }
+.gm-card { border: 2px solid #2563eb; border-radius: 8px; padding: 12px 10px; background: #eff6ff; text-align: center; }
+.gm-title { font-size: 13px; font-weight: 800; color: #1e40af; margin-bottom: 6px; }
+.gm-sub { font-size: 11.5px; color: #334155; line-height: 1.5; }
+.wheel-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 14px 0; }
+.wh-card { border: 1.5px solid #e2e8f0; border-radius: 7px; padding: 12px 14px; background: #fff; }
+.wh-num { font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 4px; }
+.wh-name { font-size: 14px; font-weight: 800; color: #0f4c81; margin-bottom: 4px; }
+.wh-desc { font-size: 12px; color: #475569; }
+.src-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 2px; background: #fef3c7; color: #92400e; border: 1px solid #fbbf24; margin-left: 6px; }
+@media (max-width: 600px) { .guide-method-grid { grid-template-columns: 1fr; } .wheel-grid { grid-template-columns: 1fr; } }
+@media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } .ans-section { break-inside: avoid; } }
+@page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<nav class="nav-bar">
+  <a href="unit-13-07_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 13-07 출입문</a>
+  <span class="nav-center">GATE5 · PART 14</span>
+  <a href="unit-14-02_FINAL_PUBLISH_v1.1.html" class="nav-btn">14-02 특수차량·부속설비 →</a>
+</nav>
+
+<button class="print-btn" onclick="window.print()">인쇄 / PDF 저장</button>
+
+<div class="unit-header">
+  <div class="unit-num">GATE5 · PART 14 · UNIT 14-01</div>
+  <div class="unit-title">경량전철 · AGT · 고무차륜</div>
+  <div class="unit-sub">자동안내교통시스템 · 고무차륜 주행장치 · 경량전철 방식 비교</div>
+  <div class="badge-row">
+    <span class="badge badge-grade">★★★ A등급</span>
+    <span class="badge badge-final">FINAL_PUBLISH v1.1</span>
+    <span class="badge badge-q">DB 문항 3개</span>
+    <span class="badge badge-src">SOURCE 91-B</span>
+  </div>
+</div>
+
+<!-- SOURCE COVERAGE (GATE4 기준 유지) -->
+<!-- GATE4 14-04: AGT 자동안내교통시스템 SOURCE 91-B -->
+<!-- GATE4 14-01: 냉난방 SOURCE 84-A → unit-08-04 §7-1 기수록 → UNIT 14-02 이관 -->
+<!-- GATE4 LIM: SOURCE 84-B → unit-08-04 §7-2 기수록 → 참조 처리 -->
+<!-- GATE4 14-02~14-06: UNIT 14-02에서 수록 -->
+
+<div class="sec-title">핵심 개념</div>
+
+<!-- CONCEPT 01: 경량전철 개요 -->
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 01</span>
+    <span class="concept-name">경량전철(LRT)이란 무엇인가</span>
+    <span class="src-badge">SOURCE 91-B</span>
+  </div>
+  <div class="concept-body">
+    <p style="font-size:13px; color:#334155; margin-bottom:12px;">
+      경량전철(Light Rail Transit, LRT)은 <strong>중량전철보다 수송능력·인프라 규모가 작은</strong> 도시 교통 시스템이다. 도심 중단거리 노선에 적용된다.
+    </p>
+    <table>
+      <tr>
+        <th>구분</th>
+        <th>중량전철 (Heavy Rail)</th>
+        <th>경량전철 (LRT)</th>
+      </tr>
+      <tr class="hl">
+        <td>주행방식</td>
+        <td>철제차륜·철제레일</td>
+        <td>고무차륜·LIM·모노레일·자기부상 등</td>
+      </tr>
+      <tr>
+        <td>건설비</td>
+        <td>높음</td>
+        <td>상대적으로 낮음</td>
+      </tr>
+    </table>
+
+    <p style="font-size:13px; color:#334155; margin: 10px 0 6px;"><strong>경량전철 방식 분류</strong> — "어떻게 다른가"의 관점</p>
+    <table>
+      <tr>
+        <th>방식</th>
+        <th>주행매체</th>
+        <th>특징 한 줄</th>
+      </tr>
+      <tr class="hl">
+        <td><strong>고무차륜 AGT</strong></td>
+        <td>고무차륜 + 안내궤조</td>
+        <td>무인운전, 저소음, 안내궤조 필수 → 이 UNIT 핵심</td>
+      </tr>
+      <tr>
+        <td>LIM 방식</td>
+        <td>철제차륜</td>
+        <td>선형유도전동기 추진, 급구배·급곡선 유리 → <em>unit-08-04 §7-2 참조</em></td>
+      </tr>
+      <tr>
+        <td>과좌식 모노레일</td>
+        <td>고무차륜 + 단궤 위</td>
+        <td>궤도 위에서 주행 → <em>unit-01-03 참조</em></td>
+      </tr>
+      <tr>
+        <td>현수식 모노레일</td>
+        <td>고무차륜 + 단궤 아래</td>
+        <td>차체가 궤도 아래에 매달림 → <em>unit-01-03 참조</em></td>
+      </tr>
+      <tr>
+        <td>자기부상(Maglev)</td>
+        <td>비접촉 (부상)</td>
+        <td>레일 비접촉, 마모 없음 → <em>unit-01-03 참조</em></td>
+      </tr>
+    </table>
+
+    <div class="ref-box">
+      📎 <strong>참조 처리</strong>: LIM 원리·추진력 발생 메커니즘은 <strong>unit-08-04 §7-2</strong>에 상세 수록됨. 모노레일·자기부상 개요는 <strong>unit-01-03</strong>에 기수록. 이 UNIT에서 중복 서술 금지.
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT 02: 고무차륜 주행장치 구조 -->
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 02</span>
+    <span class="concept-name">고무차륜 AGT 주행장치 — 4개 구성요소</span>
+    <span class="src-badge">SOURCE 91-B · V-Y-11</span>
+  </div>
+  <div class="concept-body">
+
+    <div class="vis-wrap">
+      <img src="images/V-Y-11_고무차륜경량전철주행장치.png"
+           alt="고무차륜 경량전철 주행장치 구조 인포그래픽"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+      <div style="display:none; padding:20px; color:#64748b; font-size:13px; background:#f1f5f9; border-radius:6px;">
+        [V-Y-11 고무차륜 경량전철 주행장치 구조도] — 이미지 로드 실패
+      </div>
+      <div class="vis-cap">▲ V-Y-11 고무차륜 경량전철 주행장치 구조 | PRIMARY VIS</div>
+    </div>
+
+    <p style="font-size:13px; color:#334155; margin-bottom:12px;">
+      고무차륜 AGT의 주행장치는 아래 4가지 부품으로 이루어진다 (이해용 구조).
+    </p>
+
+    <div class="wheel-grid">
+      <div class="wh-card">
+        <div class="wh-num">① Running Wheel</div>
+        <div class="wh-name">주행륜 (走行輪)</div>
+        <div class="wh-desc">
+          고무 타이어로 된 바퀴. 안내궤도(콘크리트 면) 위를 주행한다.<br>
+          소음 감소, 승차감 향상에 기여.
+        </div>
+      </div>
+      <div class="wh-card">
+        <div class="wh-num">② Guide Wheel</div>
+        <div class="wh-name">안내륜 (案內輪)</div>
+        <div class="wh-desc">
+          안내궤조(Guide Rail) 측면에 접촉하여 <strong>좌우 방향을 안내</strong>하는 소형 차륜.
+        </div>
+      </div>
+      <div class="wh-card">
+        <div class="wh-num">③ Guide Rail</div>
+        <div class="wh-name">안내궤조 (案內軌條)</div>
+        <div class="wh-desc">
+          궤도 측면에 설치된 <strong>안내레일</strong>. 안내륜이 접촉하여 방향을 잡는다.
+        </div>
+      </div>
+      <div class="wh-card">
+        <div class="wh-num">④ Steel Backup Wheel</div>
+        <div class="wh-name">철제 보조차륜 (鐵製 補助車輪)</div>
+        <div class="wh-desc">
+          소형 철제 차륜. <strong>고무 타이어 파손 시 비상 주행을 지지</strong>하여 탈선을 방지한다.
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      💡 <strong>구성 이해</strong>: 주행륜(고무, 주행) / 안내륜(방향 안내) / 안내궤조(안내륜 접촉면) / 철제보조차륜(비상 지지).
+    </div>
+    <div class="trap-box">
+      ⚠️ <strong>혼동 주의</strong>: 주행륜은 "고무 타이어"이고, 철제보조차륜은 "비상용 철제 차륜"이다. 역할을 바꾸어 출제하는 함정이 있다.
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT 03: AGT 안내방식 3종 -->
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 03</span>
+    <span class="concept-name">고무차륜 AGT 주행 안내방식 3종</span>
+    <span class="src-badge">SOURCE 91-B · DB Q1</span>
+  </div>
+  <div class="concept-body">
+    <p style="font-size:13px; color:#334155; margin-bottom:14px;">
+      고무차륜 AGT는 <strong>안내방식에 따라 3종</strong>으로 구분된다. "어떻게 좌우 방향을 잡는가"의 차이다.
+    </p>
+
+    <div class="guide-method-grid">
+      <div class="gm-card">
+        <div class="gm-title">① 가이드레일식</div>
+        <div class="gm-sub">
+          궤도 <strong>측면에 설치된 가이드레일</strong>에 안내륜이 접촉하여 방향 안내.
+        </div>
+      </div>
+      <div class="gm-card">
+        <div class="gm-title">② 중앙유도식</div>
+        <div class="gm-sub">
+          궤도 <strong>중앙에 안내궤조</strong>를 설치하여 차량 하부 중심에서 방향 제어.
+        </div>
+      </div>
+      <div class="gm-card">
+        <div class="gm-title">③ 측면유도식</div>
+        <div class="gm-sub">
+          궤도 <strong>측면 벽면</strong>에서 안내력을 받는 방식.
+        </div>
+      </div>
+    </div>
+
+    <div class="trap-box">
+      ⚠️ <strong>함정 선지</strong>: "상전도 흡인식"은 AGT의 안내방식이 아니다.
+    </div>
+    <div class="tip-box">
+      💡 <strong>암기</strong>: AGT 안내방식 = <strong>가·중·측</strong> (가이드레일식 / 중앙유도식 / 측면유도식). "상전도"가 나오면 무조건 오답.
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT 04: AGT 시스템 특성 -->
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 04</span>
+    <span class="concept-name">고무차륜 AGT 시스템 특성</span>
+    <span class="src-badge">SOURCE 91-B</span>
+  </div>
+  <div class="concept-body">
+    <table>
+      <tr><th>항목</th><th>내용</th></tr>
+      <tr>
+        <td><strong>정의</strong></td>
+        <td>AGT(Automated Guideway Transit): 안내궤도를 따라 자동 운전하는 고무차륜 경량전철</td>
+      </tr>
+      <tr class="hl">
+        <td><strong>주행방식</strong></td>
+        <td>고무차륜 주행 + 안내궤조로 측면 안내 → 레일 없이 콘크리트 궤도 위 주행</td>
+      </tr>
+      <tr>
+        <td><strong>운전방식</strong></td>
+        <td>무인자동운전(Driverless) — ATO/ATC 자동화</td>
+      </tr>
+      <tr>
+        <td><strong>장점</strong></td>
+        <td>저소음·저진동 (고무차륜), 급곡선 통과 가능, 무인운전으로 운영비 절감</td>
+      </tr>
+      <tr>
+        <td><strong>단점</strong></td>
+        <td>안내궤도 전용 인프라 필요, 호환성 낮음 (기존 철도망 접속 불가)</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- CONCEPT 05: 모노레일 시험 포인트 -->
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 05</span>
+    <span class="concept-name">모노레일 시험 함정 포인트 <small style="font-weight:400; font-size:12px;">(unit-01-03 상세 내용 참조)</small></span>
+  </div>
+  <div class="concept-body">
+    <p style="font-size:13px; color:#334155; margin-bottom:10px;">
+      모노레일 상세 원리·특징은 unit-01-03에 기수록됨. 시험 출제 핵심 함정만 정리한다.
+    </p>
+    <table>
+      <tr>
+        <th>구분</th>
+        <th>과좌식 모노레일 (跨座式)</th>
+        <th>현수식 모노레일 (懸垂式)</th>
+      </tr>
+      <tr class="hl">
+        <td><strong>주행 위치</strong></td>
+        <td>궤도 <strong>위</strong>에 걸터 앉아 주행 (跨 = 걸터앉을 과)</td>
+        <td>궤도 <strong>아래</strong>에 매달려 주행 (懸 = 매달 현)</td>
+      </tr>
+    </table>
+    <div class="trap-box">
+      ⚠️ <strong>올바른 표기는 과좌식(跨座式)</strong>: "걸터앉다(跨)"의 한자가 맞다. "건넌다(過)"가 아님. railway-king DB는 "과좌식"으로 수정 완료(v1.0).<br>
+      ⚠️ "모노레일은 건설이 간단하여 비용이 저렴하다" → <strong>오답</strong>. 전용 고가 구조물이 필요하여 건설비가 높다.
+    </div>
+  </div>
+</div>
+
+<!-- ===== DB 문항 ===== -->
+<div class="sec-title">SOURCE 기출 / 복원문항</div>
+
+<div class="q-box" id="q1">
+  <div class="q-num">Q1 · SOURCE 91-B · railway-king ch82 · ★★★ 최우선</div>
+  <div class="q-stem">고무차륜 AGT의 주행 안내방식이 아닌 것은?</div>
+  <div class="q-choice">① 가이드레일식</div>
+  <div class="q-choice">② 상전도 흡인식</div>
+  <div class="q-choice">③ 중앙 유도식</div>
+  <div class="q-choice">④ 측면 유도식</div>
+  <div class="q-ans">정답: ② | 해설: AGT 안내방식 3종 — 가이드레일식·중앙유도식·측면유도식. 상전도 흡인식은 AGT 안내방식이 아니다.</div>
+</div>
+
+<div class="q-box" id="q2">
+  <div class="q-num">Q2 · railway-king ch82 · ★★ 모노레일 구분</div>
+  <div class="q-stem">다음 중 차량이 레일 아래에 매달려 주행하는 방식의 모노레일은?</div>
+  <div class="q-choice">① 과좌식 모노레일</div>
+  <div class="q-choice">② 현수식 모노레일</div>
+  <div class="q-choice">③ 자기부상열차</div>
+  <div class="q-choice">④ 고가철도</div>
+  <div class="q-ans">정답: ② | 해설: 현수식(懸垂式)은 궤도 아래에 매달려 주행. 과좌식(跨座式)은 궤도 위에 걸터앉아 주행.</div>
+</div>
+
+<div class="q-box" id="q3">
+  <div class="q-num">Q3 · railway-king ch82 · ★★ 모노레일 특징</div>
+  <div class="q-stem">모노레일의 특징으로 옳지 않은 것은?</div>
+  <div class="q-choice">① 소음이 적다</div>
+  <div class="q-choice">② 곡선 반경이 작게 설치 가능하다</div>
+  <div class="q-choice">③ 건설이 간단하여 비용이 저렴하다</div>
+  <div class="q-choice">④ 토지 점유율이 낮다</div>
+  <div class="q-ans">정답: ③ | 해설: 모노레일은 전용 고가 구조물이 필요하여 건설비가 높다.</div>
+</div>
+
+<!-- LIM 참조 박스 -->
+<div class="q-box" id="q-lim" style="background:#f8f8ff; border-color:#a5b4fc;">
+  <div class="q-num">참조 — SOURCE 84-B(LIM) 시험포인트 · 상세: unit-08-04 §7-2</div>
+  <div class="q-stem">LIM(선형유도전동기) — 핵심 오답 함정</div>
+  <div class="q-choice">오답 함정: "LIM은 급구배·급곡선 운행에 <span style="color:#dc2626"><strong>불리</strong></span>하다"</div>
+  <div class="q-ans">정답 방향: LIM은 점착력에 의존하지 않아 급구배·급곡선에 <strong>유리</strong>하다. "불리하다"는 틀린 선지.</div>
+</div>
+
+<!-- ===== 정답·해설 SECTION ===== -->
+<div class="ans-section">
+  <div class="ans-section-title">📋 정답 및 해설</div>
+
+  <div class="ans-item">
+    <div class="ans-q">Q1 — 고무차륜 AGT 안내방식이 아닌 것</div>
+    <div class="ans-body">
+      <strong>정답: ②</strong><br>
+      AGT 안내방식 3종: 가이드레일식 / 중앙유도식 / 측면유도식.<br>
+      "상전도 흡인식"은 AGT의 안내방식이 아니다.
+    </div>
+  </div>
+
+  <div class="ans-item">
+    <div class="ans-q">Q2 — 레일 아래 매달려 주행하는 모노레일</div>
+    <div class="ans-body">
+      <strong>정답: ②</strong><br>
+      현수식 모노레일(懸垂式): 차량이 궤도 아래에 매달려 주행.<br>
+      과좌식(跨座式): 궤도 위에 걸터앉아 주행. "가좌식"은 오기 — 정자는 과좌식(跨座式).
+    </div>
+  </div>
+
+  <div class="ans-item">
+    <div class="ans-q">Q3 — 모노레일 특징으로 옳지 않은 것</div>
+    <div class="ans-body">
+      <strong>정답: ③</strong><br>
+      모노레일은 전용 고가 구조물이 필요하여 건설비가 높다.<br>
+      ①②④는 모노레일의 실제 장점.
+    </div>
+  </div>
+
+  <div class="ans-item">
+    <div class="ans-q">LIM 참조 — 핵심 오답 함정</div>
+    <div class="ans-body">
+      LIM은 점착력에 의존하지 않아 급구배·급곡선에 <strong>유리</strong>하다.<br>
+      "불리하다"는 틀린 선지. 상세 원리 → unit-08-04 §7-2 참조.
+    </div>
+  </div>
+</div>
+
+</div><!-- .page-wrap -->
+</body>
+</html>
