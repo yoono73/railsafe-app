@@ -284,9 +284,16 @@ function buildItem(q) {
 function selectChoice(li, q, ul, itemDiv) {
   ul.querySelectorAll('li').forEach(l => l.classList.remove('selected'));
   li.classList.add('selected');
+  if (parseInt(li.dataset.idx) !== q.a) {
+    markWrong(itemDiv.dataset.key);
+  }
 }
 
 function reveal(div, q, ul) {
+  const selectedLi = ul.querySelector('li.selected');
+  if (selectedLi && parseInt(selectedLi.dataset.idx) !== q.a) {
+    markWrong(div.dataset.key);
+  }
   ul.querySelectorAll('li').forEach((li,i) => {
     li.classList.remove('selected');
     if (i === q.a) li.classList.add('ans-correct');
