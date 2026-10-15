@@ -268,7 +268,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
       <label><input type="checkbox"> 비상조치 기본 흐름 ①방호→②관제보고→③승객보호→④복구 (교재·내규 기준) 외웠다</label>
       <label><input type="checkbox"> 지상방호 현행 법령 = 지장지점 외방 <b>200m 이상</b> (300·600m는 교재·내규 참고수치) 안다</label>
       <label><input type="checkbox"> 전차선 단선 시 → 무전압 확인 전까지 <b>활선 간주</b>, 절대 접근 금지 안다</label>
-      <label><input type="checkbox"> CBTC = 무선통신 + 이동폐색(Moving Block) / ATC와 구별 안다</label>
+      <label><input type="checkbox"> CBTC = 무선통신 기반 열차제어, 주로 이동폐색 방식 적용 / ATC와 구별 안다 (절대 이동폐색 전용이라고 단정 금지)</label>
       <label><input type="checkbox"> 열차 정의 → 2021.10.26. 철도차량운전규칙 제2조제5호 삭제됨 안다</label>
       <label><input type="checkbox"> 탈선계수 = 횡압(Q) / 윤중(P) (분자·분모 순서 안다)</label>
     </div>
@@ -414,7 +414,7 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 </div><div class="concept" id="C-08"><div class="concept-title"><span class="cnum">개념 08</span>지도표 vs 지도권 기입사항 ★★★</div>
 <div class="table-wrap"><table>
 <tr><th>항목</th><th>기입사항</th></tr>
-<tr class="hl"><td><b>지도표</b></td><td>구간 양끝 정거장명 + 발행일자 + 사용열차번호</td></tr>
+<tr class="hl"><td><b>지도표</b></td><td>구간 양끝 정거장명 + 발행일자 + 사용열차번호<br><span style="color:#b45309;font-size:.88em;">[원문 확인 필요 — 열차운전취급규정 원문 대조 후 확정]</span></td></tr>
 <tr class="hl"><td><b>지도권</b></td><td>사용구간 + 사용열차 + 발행일자 + 지도표 번호</td></tr>
 </table></div>
 <div class="trap">지도표에 기관사 이름 기입 ❌ → 포함되지 않음</div>
@@ -560,11 +560,16 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="step-box">
 <b>열차제어장치란?</b><br>
 기관사의 실수(신호 위반, 과속)를 자동으로 보완해 열차 충돌·탈선을 막는 안전 시스템.<br>
-<b>ATS → ATC → ATP</b> 순으로 기능이 강화되며, 상위 장치가 하위 장치의 기능을 포함.
+<b>ATS</b>(자동열차정지장치): 정지신호 위반 시 자동 제동 계열 시스템<br>
+<b>ATC</b>(자동열차제어장치): 열차 속도를 허용 속도 이하로 자동 제어<br>
+<b>ATP</b>(자동열차방호장치): 운행 권한·속도 감시 기반 열차방호 시스템<br>
+<b>CBTC</b>(통신기반열차제어시스템): 무선통신 기반 열차제어 시스템<br>
+※ 상하 절대계층 관계(ATP가 무조건 ATC 상위)로 단정하지 않음<br>
+※ CBTC가 반드시 이동폐색 전용이라고 단정하지 않음
 </div>
 <div class="table-wrap"><table>
 <tr><th>비교 항목</th><th>ATS<br><span style="font-weight:normal;font-size:0.85em">Automatic Train Stop<br>열차자동정지장치</span></th><th>ATC<br><span style="font-weight:normal;font-size:0.85em">Automatic Train Control<br>열차자동제어장치</span></th><th>ATP<br><span style="font-weight:normal;font-size:0.85em">Automatic Train Protection<br>열차자동방호장치</span></th></tr>
-<tr><td><b>핵심 기능</b></td><td>속도 위반 시 <b>자동 정지</b></td><td><b>속도 자동 제어</b><br>(감속·정지)</td><td>ATC 기능 전체 포함<br>+ 목표지점 자동 정지</td></tr>
+<tr><td><b>핵심 기능</b></td><td>속도 위반 시 <b>자동 정지</b></td><td><b>속도 자동 제어</b><br>(감속·정지)</td><td>운행 권한·속도 감시 기반 열차방호<br>(구현에 따라 기능 범위 다름)</td></tr>
 <tr><td><b>신호 위치</b></td><td class="hl"><b>지상신호기</b> 중심<br>(지상 발리스)</td><td class="hl"><b>차내신호기</b> 중심<br>(차량 내부 표시)</td><td><b>차내신호기</b><br>(연속 수신)</td></tr>
 <tr><td><b>속도 제어</b></td><td>❌ 정지 명령만</td><td>✅ 연속 속도 제어</td><td>✅ 연속 속도 제어</td></tr>
 <tr><td><b>연속 감시</b></td><td>❌ 특정 지점만<br>(점·지점 방식)</td><td>✅ 구간 전체<br>(연속 방식)</td><td>✅ 구간 전체<br>(연속 방식)</td></tr>
@@ -577,15 +582,16 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 <div class="table-wrap"><table>
 <tr><th>항목</th><th>내용</th></tr>
 <tr class="hl"><td><b>정의</b></td><td>무선통신으로 열차 위치를 정밀 파악하고 <b>이동권한(MA: Movement Authority)</b>을 실시간 갱신하는 열차제어 방식</td></tr>
-<tr><td><b>핵심 특징</b></td><td>① <b>이동폐색(Moving Block)</b> 구현 — 고정 폐색구간 불필요<br>② 지상신호기 불필요 (차내 신호만 운용)<br>③ 도시철도 고밀도 운행(60초 간격 이하)에 적합<br>④ 위치를 연속 수신하여 열차 간격 최소화</td></tr>
-<tr><td><b>ATC와 차이</b></td><td>ATC = 지점 기반 고정폐색 + 차내신호 / CBTC = 무선통신 연속 위치 파악 + 이동폐색</td></tr>
+<tr><td><b>핵심 특징</b></td><td>① <b>이동폐색(Moving Block)</b> 방식을 주로 적용<br>② 지상 고정신호기를 줄이거나 없애는 방향 (구현에 따라 다름)<br>③ 도시철도 고밀도 운행(60초 간격 이하)에 적합<br>④ 위치를 연속 수신하여 열차 간격 최소화</td></tr>
+<tr><td><b>ATC와 차이</b></td><td>ATC = 일반적으로 지점 기반 방식을 사용하나 구현에 따라 다름 / CBTC = 무선통신 기반으로 이동폐색 방식을 주로 적용</td></tr>
 <tr><td><b>적용 예</b></td><td>서울 9호선, 신분당선 등 신설 도시철도</td></tr>
 </table></div></div>
 <div class="tip">
-ATS = 지상신호 + 정지만 | ATC = 차내신호 + 속도 연속 제어 + 차내 표시 | ATP = ATC 전부 + 자동제동 목표정지 | CBTC = 무선통신 + 이동폐색(Moving Block)<br>
-<b>차내 속도 표시 → ATC가 핵심 포인트</b> (ATS는 표시 없음!)
+ATS = 지상신호 + 정지만 | ATC = 차내신호 + 속도 연속 제어 + 차내 표시 | ATP = 운행권한·속도 감시 기반 열차방호 | CBTC = 무선통신 기반 + 이동폐색 주로 적용<br>
+<b>차내 속도 표시 → ATC가 핵심 포인트</b> (ATS는 표시 없음!)<br>
+<span style="color:#555;font-size:.88em;">※ ATS→ATC→ATP의 절대적 상하 계층관계로 단정하지 않음 / CBTC가 반드시 이동폐색 전용은 아님</span>
 </div>
-<div class="trap">ATS도 차내에 속도를 표시한다 ❌ → 차내 표시는 ATC부터<br>ATP는 ATC와 완전히 다른 별개 장치다 ❌ → ATP는 ATC 기능을 포함하는 상위 장치<br>CBTC = ATC의 다른 이름 ❌ → CBTC는 이동폐색 기반의 별도 방식</div>
+<div class="trap">ATS도 차내에 속도를 표시한다 ❌ → 차내 표시는 ATC부터<br>ATP는 ATC와 완전히 다른 별개 장치다 ❌ → ATP는 운행권한·속도 감시 기반 열차방호 시스템 (기능 범위는 구현에 따라 다름)<br>CBTC = ATC의 다른 이름 ❌ → CBTC는 무선통신 기반의 별도 방식<br>CBTC는 반드시 이동폐색 전용이다 ❌ → 주로 이동폐색 방식을 적용하나 구현에 따라 다름</div>
 <div class="theory-note">
 <strong>왜 ATS만으로는 부족한가?</strong><br>
 ATS는 특정 지점을 지날 때만 속도를 검사합니다. 지점과 지점 사이 구간에서는 과속을 감지하지 못합니다. 반면 ATC는 선행 열차 위치에 따라 <strong>허용 속도를 실시간으로 계속 바꿔주고</strong>, 초과하면 즉시 자동 감속합니다. ATP는 여기에 더해 <strong>목표 정지 지점까지 자동으로 제동</strong>하여 열차 간 충돌을 원천 차단합니다.
@@ -595,9 +601,9 @@ ATS는 특정 지점을 지날 때만 속도를 검사합니다. 지점과 지�
 <div class="qe-a">정답: ATC (열차자동제어장치)</div>
 <div class="qe-wrong">오답함정: "ATS"로 혼동하는 오답 — ATS는 차내 표시 없음</div></div>
 <div class="quiz-ex"><div class="qe-title">📝 기출 예시 2</div>
-<div class="qe-q">Q. ATS, ATC, ATP를 기능 강화 순서대로 나열하고, 각각의 신호 위치를 쓰시오.</div>
-<div class="qe-a">정답: ATS(지상신호) → ATC(차내신호, 연속 제어) → ATP(차내신호, 자동제동 포함)</div>
-<div class="qe-wrong">오답함정: ATS를 차내신호 방식으로 쓰는 오답</div></div>
+<div class="qe-q">Q. ATS, ATC, ATP의 각 신호 위치(지상/차내)를 구분하시오.</div>
+<div class="qe-a">정답: ATS=지상신호 중심 / ATC=차내신호(허용속도 연속 표시) / ATP=차내신호(운행권한·속도 감시)</div>
+<div class="qe-wrong">오답함정: ATS를 차내신호 방식으로 쓰는 오답<br>※ ATS→ATC→ATP를 절대적 상하 계층(ATP가 ATC 전체 포함)으로 단정하는 것은 피할 것</div></div>
 </div></div></div><div class="part" id="part5"><div class="part-title" onclick="togglePart(this)"><span>PART 5. 도시철도운전규칙 ★★</span><span class="arr">▼</span></div><div class="part-body"><div class="concept" id="C-18"><div class="concept-title"><span class="cnum">개념 18</span>주요 정의 비교 — 공작물 vs 인공구조물</div>
 
 <div class="step-box">
@@ -789,7 +795,7 @@ ATS는 특정 지점을 지날 때만 속도를 검사합니다. 지점과 지�
 <div class="theory-note"><strong>이론 배경:</strong> 동력분산식은 각 차량에 동력이 분산되어 <strong>가속 성능이 우수</strong>합니다. ITX 계열은 동력분산식으로, 단거리 고빈도 운행에 적합합니다. <strong>KTX-산천은 동력집중식</strong>입니다 (앞뒤 동력차 2량). KTX-이음·KTX-청룡이 동력분산식입니다.</div>
 <br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. ITX-새마을의 동력 방식은?</div><div class="qe-a">정답: 동력분산식</div><div class="qe-wrong">오답함정: "동력집중식"이라는 오답</div></div>
 </div><div class="concept" id="C-25"><div class="concept-title"><span class="cnum">개념 25</span>관절대차 · 고정축거 ★★</div>
-
+<div class="tip" style="font-size:.9em;">→ 철도공학(4.html) PART 13·14 상세 이론 참조<br>핵심: 관절대차 = 인접한 두 차체가 하나의 대차를 공유 / 고정축거 짧을수록 곡선통과 유리</div>
 <div class="vis-wrap"><img src="images/VIS-092_관절대차고정축거설명도.png" alt="관절대차 vs 일반대차 + 고정축거 개념도 (VIS-092)"><div class="caption">관절대차 vs 일반대차 구조 비교 + 고정축거 개념 (VIS-092)</div></div>
 
 <div class="step-box" style="border-left:4px solid #2563eb;">
@@ -869,7 +875,7 @@ ATS는 특정 지점을 지날 때만 속도를 검사합니다. 지점과 지�
 <div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="HxAU3AiTpzk" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/HxAU3AiTpzk/hqdefault.jpg" alt="기관사가 운행 중 잠이 올 땐 어떻게 해결할까요?" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#6b7280;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI 참고영상</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">기관사가 운행 중 잠이 올 땐 어떻게 해결할까요?</span></div></div>
 <div class="krri-yt-card" style="margin:10px 0 4px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07);"><div class="yt-thumb" data-vid="-c9H1vfEnoo" onclick="playYT(this)" style="position:relative;cursor:pointer;background:#000;"><img src="https://img.youtube.com/vi/-c9H1vfEnoo/hqdefault.jpg" alt="폭설에도 멈추지 않는 기차!" loading="lazy" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;opacity:.88;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:52px;height:52px;background:rgba(220,38,38,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div></div><div style="padding:7px 12px;display:flex;align-items:center;gap:8px;background:#f9fafb;"><span style="background:#dc2626;color:#fff;font-size:11px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap;">KRRI 핵심영상</span><span style="font-size:13px;color:#111;font-weight:500;line-height:1.3;">폭설에도 멈추지 않는 기차!</span></div></div>
 </div><div class="concept" id="C-27"><div class="concept-title"><span class="cnum">개념 27</span>피뢰기 · 운행도표 ★★</div>
-
+<div class="tip" style="font-size:.9em;">→ 피뢰기 상세 이론: 철도공학(4.html) PART 13·14 참조<br>핵심: 피뢰기 = 이상전압(낙뢰·서지) → 접지로 방전 → 전기설비 보호</div>
 <div class="step-box" style="border-left:4px solid #f59e0b;">
 <b>⚡ 피뢰기(避雷器)란?</b><br>
 피뢰기 = 피(避: 피하다) + 뢰(雷: 번개) + 기(器: 기계)<br>
@@ -976,6 +982,7 @@ ATS는 특정 지점을 지날 때만 속도를 검사합니다. 지점과 지�
 
 <div class="concept" id="C-30">
 <div class="concept-title"><span class="cnum">개념 30</span>사행동(Hunting)</div>
+<div class="tip" style="font-size:.9em;">→ 사행동 상세 이론: 철도공학(4.html) PART 13·14 참조<br>핵심: 1차 사행동=감쇠(자연소멸), 2차 사행동=비감쇠(임계속도 이상, 위험)</div>
 <div class="concept-body">
 <div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span>
 <strong>1차 사행동</strong>: 저속에서 발생, <strong>감쇠</strong>됨 (자연 소멸)<br>
@@ -1014,6 +1021,7 @@ ATS는 특정 지점을 지날 때만 속도를 검사합니다. 지점과 지�
 
 <div class="concept" id="C-32">
 <div class="concept-title"><span class="cnum">개념 32</span>차량이론 보충 (냉동사이클·LIM·보호장치)</div>
+<div class="tip" style="font-size:.9em;">→ LIM(선형유도전동기) 상세 이론: 철도공학(4.html) PART 13·14 참조<br>핵심: LIM = 점착력 불필요, 급구배·급곡선 유리</div>
 <div class="concept-body">
 <div class="king-book-note"><span class="kb-label">📖 철도왕 교재</span>
 <strong>냉동사이클 4단계 (암기: 압응팽증)</strong><br>
@@ -1296,7 +1304,7 @@ var EDU3 = {
   'C-15': `입환전호, 오너라와 가거라, 매번 헷갈리죠. 확실하게 정리해 드리겠습니다. 오너라전호는 접근전호라고도 합니다. 열차를 이쪽으로 오게 하는 신호예요. 주간에는 녹색기를 좌우로 흔듭니다. 좌우! 가거라전호는 퇴거전호라고도 합니다. 열차를 저쪽으로 가게 하는 신호예요. 주간에는 녹색기를 위아래로 흔듭니다. 위아래! 오너라=좌우, 가거라=위아래! 반대로 외우면 100% 틀려요. 오너라 할 때 두 팔 벌려서 좌우로 흔드는 모습, 가거라 할 때 손 들어올렸다 내리는 모습을 상상하면 기억하기 쉬워요. 정지전호는 적색기, 야간은 적색등. 이건 쉽죠. 오너라=좌우, 가거라=위아래, 이것만 기억하세요!`,
   'C-04': `동시 진출입 기준, ★★★ 출제 포인트입니다. 두 열차가 동시에 역에서 진출입할 때 여유거리 기준이 중요해요. 다른 방향 진입, 일반열차는 200m 이상! 다른 방향 진입, 동차·전동차는 150m 이상! 동일 방향 진입은 100m 이상! 200·150·100 이 세 숫자를 기억하세요. 동차는 제동력이 좋아서 기준이 200m에서 150m로 줄어드는 겁니다. 시험 함정! 동차도 200m라고? 아닙니다! 동차·전동차는 150m. 동일 방향은 100m. 200, 150, 100 — 순서대로 기억하세요!`,
   'C-07': `각 폐색방식의 핵심 구분 포인트입니다. 시험에서 가장 많이 틀리는 부분을 짚어드릴게요. 자동폐색식은 궤도회로를 이용해서 열차 위치를 자동 감지합니다. 사람이 개입하지 않아도 자동으로 신호가 바뀌어요. 연동폐색식은 인접 역의 역무원이 협의해서 폐색을 취급합니다. 통화가 필요해요. 통표폐색식은 열차가 통표를 실제로 소지해야 구간에 진입할 수 있습니다. 단선에서 많이 사용해요. 차내신호폐색식은 차량 내부 장치로 신호를 수신해요. 고속철도에서 사용합니다. ※ 전령법은 시계운전 방법이며 대용폐색이 아닙니다. 혼동 주의! 자동폐색=궤도회로 자동, 연동폐색=역 간 협의, 통표=실물 소지, 차내=차량 내 수신. 각각의 핵심 키워드로 구분하세요!`,
-  'C-17': `열차제어장치 ATS, ATC, ATP, 세 가지 반드시 구분해야 합니다. ATS는 Automatic Train Stop, 열차 자동 정지 장치입니다. 지상에 설치된 장치가 속도를 감시하고, 위반하면 자동으로 브레이크를 걸어요. 기능이 단순합니다. 지상 장치 중심. ATC는 Automatic Train Control, 열차 자동 제어 장치입니다. 선행 열차와의 거리에 따라 허용 속도를 계속 바꿔줍니다. 차내 신호기로 기관사에게 알려주는 구조예요. ATP는 Automatic Train Protection, 열차 자동 방호 장치입니다. 유럽 기준의 종합 보호 장치예요. 속도, 위치, 진로를 모두 감시합니다. 시험 포인트! ATS 특징은? 지상 장치 중심, 정지 명령 중심. ATC 특징은? 차내 신호기, 속도 연속 제어. ATS, ATC, ATP 알파벳 하나 차이지만 완전히 다른 장치입니다!`,
+  'C-17': `열차제어장치 ATS, ATC, ATP, CBTC 네 가지 반드시 구분해야 합니다. ATS는 Automatic Train Stop, 열차 자동 정지 장치입니다. 지상에 설치된 장치가 속도를 감시하고, 위반하면 자동으로 브레이크를 걸어요. 기능이 단순합니다. 지상 장치 중심. ATC는 Automatic Train Control, 열차 자동 제어 장치입니다. 선행 열차와의 거리에 따라 허용 속도를 계속 바꿔줍니다. 차내 신호기로 기관사에게 알려주는 구조예요. ATP는 Automatic Train Protection, 열차 자동 방호 장치입니다. 운행 권한과 속도를 감시하는 열차방호 시스템이에요. CBTC는 무선통신 기반 열차제어 시스템으로 주로 이동폐색 방식을 적용합니다. 시험 포인트! ATS 특징은? 지상 장치 중심, 정지 명령 중심. ATC 특징은? 차내 신호기, 속도 연속 제어. 주의! ATS, ATC, ATP를 무조건 상하 계층으로 단정하거나 CBTC를 이동폐색 전용이라고 단정하면 안 됩니다. 구현에 따라 다를 수 있어요.`,
   'C-19': `도시철도 점검 주기, 핵심은 두 가지입니다. 선로와 전차선로는 매일 1회 이상 순회점검! 매일이에요, 매일! 왜냐고요? 선로에 이상이 생기면 탈선, 전차선이 끊기면 운행 불능이기 때문에 매일 직접 눈으로 확인해야 합니다. 반면 통신설비와 운전보안장치는 일정한 주기로 점검합니다. 매일은 아니에요. 시험 함정! 운전보안장치도 매일 점검? 아닙니다! 매일 점검은 선로와 전차선로만! 선로·전차선로 = 매일. 통신설비·운전보안장치 = 일정 주기. 이 두 가지 구분이 핵심입니다.`,
   'C-20': `비상제동거리, 도시철도에서 중요한 수치입니다. 비상제동거리는 열차가 비상 브레이크를 작동시킨 후 완전히 멈출 때까지 달리는 거리예요. 이 거리 안에 장애물이 없어야 합니다. 도시철도 비상제동거리 기준은 600미터 이내입니다. 600미터! 이 수치가 시험에 나와요. 비상제동거리는 속도와 관계가 있어요. 속도가 빠를수록 제동거리가 길어집니다. 속도의 제곱에 비례하죠. 비상제동거리와 관련된 설계 조건도 있어요. 열차와 열차 사이 최소 안전 간격이 비상제동거리보다 커야 합니다. 시험 포인트! 도시철도 비상제동거리 기준은? 600미터 이내! 비상제동거리가 길어지는 조건은? 속도가 빠를수록! 600미터, 이 숫자 꼭 기억하세요!`,
   'C-24': `동력집중식과 동력분산식, 이 두 가지가 시험에 꼭 나옵니다. 동력집중식은 기관차 또는 동력차가 열차를 끌고 가는 방식이에요. 힘이 한 곳에 집중됩니다. KTX-산천이 여기 해당합니다! 앞뒤에 동력차 2량이 붙어 있는 구조예요. KTX-1도 동력집중식이에요. 동력분산식은 각 차량마다 동력이 있어요. 힘이 분산됩니다. KTX-이음과 KTX-청룡이 동력분산식입니다. 장점은 가속성능이 좋고 한 차량이 고장나도 운행이 가능하다는 거예요. 시험 함정! KTX-산천이 동력분산식인가? 아닙니다! KTX-산천은 동력집중식입니다! 동력분산식은 KTX-이음·KTX-청룡! 집중=동력차 한 곳, 분산=각 차량에 동력. 이렇게 구분하세요!`,
