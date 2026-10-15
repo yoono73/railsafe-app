@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>열차운전 1차 분석·진단 보고서</title>
+  <style>
+    body { font-family: 'Malgun Gothic','맑은 고딕',sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background:#f8f9fa; color:#1a1a2e; font-size:15px; line-height:1.7; }
+    h1 { color: #1a5276; border-bottom: 3px solid #1a5276; padding-bottom:8px; }
+    h2 { color: #154360; border-left: 5px solid #2980b9; padding-left: 10px; margin-top:32px; }
+    h3 { color: #1a5276; margin-top:18px; }
+    table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size:.9em; }
+    th { background: #2980b9; color: white; padding: 8px 10px; text-align:left; }
+    td { border: 1px solid #ccc; padding: 6px 10px; vertical-align:top; }
+    tr:nth-child(even) td { background:#f0f9ff; }
+    .유지 { color: #15803d; font-weight: bold; }
+    .보강 { color: #d97706; font-weight: bold; }
+    .철도공학연계 { color: #2563eb; font-weight: bold; }
+    .압축 { color: #7c3aed; font-weight: bold; }
+    .검증필요 { color: #dc2626; font-weight: bold; }
+    .통합후보 { color: #6b7280; font-weight: bold; }
+    .충분 { background: #d5f5e3 !important; }
+    .부분포함 { background: #fef9e7 !important; }
+    .누락 { background: #fdedec !important; }
+    .warn-box { background:#fff3e0; border-left:4px solid #e65100; padding:10px 14px; margin:10px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#bf360c; }
+    .info-box { background:#e8f5e9; border-left:4px solid #2e7d32; padding:10px 14px; margin:10px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#1b5e20; }
+    .note-box { background:#e0f2fe; border-left:4px solid #0369a1; padding:10px 14px; margin:10px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#0c4a6e; }
+    .meta-bar { background:#1a5276; color:#fff; padding:10px 16px; border-radius:6px; margin-bottom:20px; font-size:.9em; }
+    .summary-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin:12px 0; }
+    .stat-card { background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:14px; text-align:center; }
+    .stat-card .num { font-size:2em; font-weight:bold; color:#2980b9; }
+    .stat-card .label { font-size:.85em; color:#555; }
+    ul { margin:6px 0 6px 20px; }
+    li { margin:3px 0; }
+    .part-badge { display:inline-block; background:#0c4a6e; color:#fff; border-radius:4px; padding:1px 8px; font-size:.82em; margin-right:6px; }
+    @media(max-width:700px){ .summary-grid{grid-template-columns:1fr 1fr;} }
+  </style>
+</head>
+<body>
+
+<h1>열차운전 1차 분석·진단 보고서</h1>
+<div class="meta-bar">
+  작성일: 2026-10-15 &nbsp;|&nbsp; 대상 파일: public/theory/3.html (개념 01~41) &nbsp;|&nbsp; 참조: lib/railway-king-data.ts (ch83, 39문항) &nbsp;|&nbsp; 작업구분: <strong>분석·보고만 수행 (원본 수정 금지)</strong>
+</div>
+
+<!-- =========================================================
+     A. 전체 평가
+     ========================================================= -->
+<h2>A. 전체 평가</h2>
+
+<div class="summary-grid">
+  <div class="stat-card"><div class="num">41</div><div class="label">총 개념 카드 수</div></div>
+  <div class="stat-card"><div class="num">8</div><div class="label">PART 구성</div></div>
+  <div class="stat-card"><div class="num">39</div><div class="label">ch83 참조 문항 수</div></div>
+</div>
+
+<h3>완성도 평가: 60~65점 / 100점</h3>
+<div class="info-box">
+<strong>강점</strong>
+<ul>
+  <li>법령 기반 암기 포인트(폐색방식 8종, 신호기 정위, 동시진출입 기준, 비상제동거리 600m 등)는 충실하게 정리됨</li>
+  <li>함정 포인트(trap 박스)와 기출 예시(quiz-ex 박스)를 체계적으로 제공하여 시험 대비 실효성 높음</li>
+  <li>도시철도운전규칙 vs 철도차량운전규칙 비교(수신호 거리 200m 교재오류 정정 등) 법령 원문 확인 기록이 상세함</li>
+  <li>비상조치 PART 8(C-36~C-41)은 운전취급 관점에서 비교적 충실 — 흐름, 방호, 구원, 전차선 단선, 화재 포함</li>
+  <li>TTS 강의 스크립트가 핵심 포인트를 쉬운 언어로 요약하여 학습 효과 보강</li>
+</ul>
+</div>
+
+<div class="warn-box">
+<strong>약점</strong>
+<ul>
+  <li><strong>열차운전 고유 절차(운전취급)가 거의 없음</strong> — 정거장 운전취급, 신호 이상 시 취급, 폐색 고장 시 대용 전환 절차가 누락</li>
+  <li>PART 7(차량이론 C-28~C-35) 8개 카드는 구조·원리 중심으로 철도공학 영역과 중복이 많음</li>
+  <li>ATS→ATC→ATP 기능 서열 단순화 문제 — 국가·표준별 차이를 무시한 단선적 서열화 위험</li>
+  <li>C-23 제동 종류에서 차량별 제동 조합을 단정 기술 — 실제 차량마다 상이하여 검증 필요</li>
+  <li>ch83 39문항 중 디젤기관차 시험·연결기·차체 프레임·출입문 등 다수 차량공학 문항이 3.html에서 누락됨</li>
+  <li>입환 운전취급, 속도·서행 세부 취급, 폐색 고장→대용방식 선정 절차 등 실무 운전취급이 부재</li>
+</ul>
+</div>
+
+<!-- =========================================================
+     B. 41개 카드 판정표
+     ========================================================= -->
+<h2>B. 41개 카드 판정표 (전수)</h2>
+
+<div class="note-box">판정 기준: 유지=열차운전 고유 핵심, 내용 충분 / 보강=핵심이나 운전취급 내용 부족 / 철도공학연계=구조·원리는 철도공학에서 학습 가능 / 압축=설명 과다 / 검증필요=단정·수치·기술 근거 확인 필요 / 통합후보=유사 카드와 합칠 것</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>번호</th><th>개념명</th><th>내용 요약</th><th>판정</th><th>판정 근거</th><th>철도공학 중복</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>C-01</td><td>기본 용어 정의</td><td>정거장·본선·측선·완급차·조차장·구내운전·무인운전·열차·차량</td>
+      <td><span class="유지">유지</span></td>
+      <td>철도차량운전규칙 법정 용어, 시험 직접 출제</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-02</td><td>동력차 연결 위치 + 열차 안전 확보</td><td>동력차 맨 앞 원칙 + 예외 6가지 / 안전확보 3가지(폐색·제어·시계)</td>
+      <td><span class="유지">유지</span></td>
+      <td>법령 조항 직접 출제, 예외 6가지·안전 3요소 암기 필수</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-03</td><td>여객열차 연결제한</td><td>화차 연결 금지 원칙 + 예외(회송·특별사유) / 연결 위치 제한</td>
+      <td><span class="유지">유지</span></td>
+      <td>철도차량운전규칙 법정 제한, 함정 출제 다수</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-04</td><td>동시 진출입 기준 ★★★</td><td>일반 200m / 동차·전동차 150m / 동일방향 100m</td>
+      <td><span class="유지">유지</span></td>
+      <td>수치 직접 출제, ★★★급 핵심</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-05</td><td>퇴행운전 · 정거장 외 정차</td><td>퇴행 불가 원칙 + 예외 / 정거장 외 정차 금지 + 예외</td>
+      <td><span class="유지">유지</span></td>
+      <td>법령 조항, 예외 사유 출제</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-06</td><td>폐색방식 전체 분류</td><td>상용 4종(자연차통) + 대용 4종(통지지지)</td>
+      <td><span class="유지">유지</span></td>
+      <td>최빈출 ★★★, 8종 전수 출제</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-07</td><td>각 폐색방식 핵심 포인트</td><td>자동·연동·차내·통표·통신·지도통신·지도·지령식 각 핵심</td>
+      <td><span class="보강">보강</span></td>
+      <td>각 방식의 운전 절차(어떻게 취급하는가)가 부족 — 표는 있으나 실제 취급순서 없음</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-08</td><td>지도표 vs 지도권 기입사항 ★★★</td><td>지도표: 양끝역명+발행일자+열차번호 / 지도권: 사용구간+사용열차+발행일자+번호</td>
+      <td><span class="유지">유지</span></td>
+      <td>기입사항 직접 출제, ★★★ 최빈출</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-09</td><td>시계운전 방식</td><td>격시법(복선)/전령법(복선·단선)/지도격시법(단선) 비교</td>
+      <td><span class="유지">유지</span></td>
+      <td>법령 규정 방식, 복선·단선 구분 출제</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-10</td><td>상치신호기 분류</td><td>주신호기 6종(장출폐엄유입)+종속신호기 3종(원통중)+신호부속기 3종 / 정위</td>
+      <td><span class="유지">유지</span></td>
+      <td>분류·정위 직접 출제, 법령 핵심</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-11</td><td>신호기 기본원칙 (정위) ★★★</td><td>유도=현시없음, 원방=주의, 자동폐색=진행, 나머지=정지</td>
+      <td><span class="유지">유지</span></td>
+      <td>정위 직접 출제, 3개 예외 함정</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-12</td><td>신호현시 방식 (색등식)</td><td>5·4·3·2현시 각 단계 및 색 구분</td>
+      <td><span class="압축">압축</span></td>
+      <td>내용 자체는 필요하나 현재 표 형태가 충분 — 이론 배경 박스 분량 과다</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-13</td><td>수신호 현시방법</td><td>정지·서행·진행 3종 주·야간 현시</td>
+      <td><span class="유지">유지</span></td>
+      <td>법령 조항 직접 출제</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-14</td><td>임시신호기 3종 ★★★</td><td>서행예고→서행→서행해제 / 색 구분</td>
+      <td><span class="유지">유지</span></td>
+      <td>색 구분 함정(녹색 원판) 직접 출제</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-15</td><td>입환전호 ★★★</td><td>오너라=좌우, 가거라=상하, 정지전호</td>
+      <td><span class="보강">보강</span></td>
+      <td>전호 암기는 충분하나 입환 운전 절차(취급 흐름)가 없음</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-16</td><td>제한신호 추정 원칙</td><td>불명확→정지 / 상치vs수신호→더 제한적 / 사전통보→통보 신호 따름</td>
+      <td><span class="유지">유지</span></td>
+      <td>운전취급 원칙, 사전통보 예외 함정 출제</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-17</td><td>열차제어장치 분류 — ATS·ATC·ATP·CBTC ★★★</td><td>ATS(지상신호·정지)→ATC(차내·연속제어)→ATP(자동제동) / CBTC(무선·이동폐색)</td>
+      <td><span class="검증필요">검증필요</span></td>
+      <td>ATS→ATC→ATP "기능 강화 단계" 단순화 및 ATP=ATC 포함 상위 기술이 국가·표준별 차이 무시 위험 (E섹션 상세)</td><td>중간</td>
+    </tr>
+    <tr>
+      <td>C-18</td><td>주요 정의 비교 — 공작물 vs 인공구조물</td><td>도시철도=인공구조물 / 일반철도=공작물</td>
+      <td><span class="유지">유지</span></td>
+      <td>규칙별 용어 차이 출제, 이론 배경 적절</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-19</td><td>점검 주기 ★★★</td><td>선로·전차선로=매일 1회 / 통신설비·운전보안장치=일정 주기</td>
+      <td><span class="유지">유지</span></td>
+      <td>법령 수치, 함정(운전보안장치도 매일?) 출제</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-20</td><td>비상제동거리 ★★★</td><td>도시철도 비상제동거리 600m 이하</td>
+      <td><span class="유지">유지</span></td>
+      <td>수치 직접 출제, 600m 단일 기준 명확</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-21</td><td>수신호 위치 비교 ★★★</td><td>두 규칙 모두 200m 이상 (교재 오류 100m 정정)</td>
+      <td><span class="유지">유지</span></td>
+      <td>법령 원문 확인 포함, 출제 포인트</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-22</td><td>신설·개조 후 시험운전 + 대용폐색</td><td>60일 이상 시험운전(교재오류 1개월 정정) / 복선=지령식·통신식, 단선=지도통신식</td>
+      <td><span class="유지">유지</span></td>
+      <td>법령 수치(60일) + 대용폐색 구분 출제</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-23</td><td>제동 종류 ★★★</td><td>공기·발전·회생·수용제동 원리 / 차량별 조합</td>
+      <td><span class="검증필요">검증필요</span></td>
+      <td>차량별 제동 조합 단정(도시철도=회생+공기, KTX=회생+디스크+발전 등) — E섹션 상세</td><td>중간</td>
+    </tr>
+    <tr>
+      <td>C-24</td><td>동력집중식 vs 동력분산식 ★★★</td><td>ITX=분산, KTX-산천=집중, KTX-이음·청룡=분산</td>
+      <td><span class="철도공학연계">철도공학연계</span></td>
+      <td>차량 구조 원리 설명 — 열차운전 관점(어떻게 운전하는가)과 직접 연결 약함. 4.html(철도공학)에서 커버 가능</td><td>높음</td>
+    </tr>
+    <tr>
+      <td>C-25</td><td>관절대차 · 고정축거 ★★</td><td>관절대차 공유구조·장단점 / 고정축거 정의</td>
+      <td><span class="철도공학연계">철도공학연계</span></td>
+      <td>차량 구조 원리 설명, 철도공학 영역. 핵심 장단점 3줄만 유지 검토</td><td>높음</td>
+    </tr>
+    <tr>
+      <td>C-26</td><td>공주거리 · 제동거리 계산 ★★</td><td>공주거리=초기속도×공주시간 / 탈선계수=Q/P</td>
+      <td><span class="유지">유지</span></td>
+      <td>계산 공식 직접 출제, 탈선계수 분자·분모 함정</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-27</td><td>피뢰기 · 운행도표 ★★</td><td>피뢰기 원리·설치위치 / 운행도표 4종(1시간·10분·2분·1분)</td>
+      <td><span class="압축">압축</span></td>
+      <td>운행도표 4종은 열차운전 영역; 피뢰기는 철도공학·전기 영역 — 피뢰기 내용을 3~5줄로 압축 권고</td><td>중간</td>
+    </tr>
+    <tr>
+      <td>C-28</td><td>열차 운전의 3요소</td><td>기관사·궤도·차량 (통신 아님)</td>
+      <td><span class="유지">유지</span></td>
+      <td>단순 암기 포인트, 분량 적절</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-29</td><td>전기제동 vs 기계제동</td><td>전기제동 3종(발전·회생·와류) / 레일제동=기계·자기적</td>
+      <td><span class="철도공학연계">철도공학연계</span></td>
+      <td>제동 원리 분류는 차량공학 — C-23과 통합 후보. 암기 포인트(레일제동≠전기)만 유지</td><td>높음</td>
+    </tr>
+    <tr>
+      <td>C-30</td><td>사행동(Hunting)</td><td>1차=감쇠 / 2차=비감쇠(임계속도 이상) / 궤간·축거 관계</td>
+      <td><span class="철도공학연계">철도공학연계</span></td>
+      <td>차량 동역학 원리 — 4.html 철도공학에서 커버. 2차=비감쇠 1줄만 유지 검토</td><td>높음</td>
+    </tr>
+    <tr>
+      <td>C-31</td><td>차체 3축 회전운동 — 롤·피치·요</td><td>롤링(좌우)·피칭(앞뒤)·요잉(수평) 정의</td>
+      <td><span class="철도공학연계">철도공학연계</span></td>
+      <td>물리 원리, 철도공학·차량공학 영역 — 분량 축소 또는 4.html 참조 처리</td><td>높음</td>
+    </tr>
+    <tr>
+      <td>C-32</td><td>냉동사이클·LIM·보호장치</td><td>냉동사이클 순서(압응팽증) / LIM 특징 / 모진 보호장치</td>
+      <td><span class="철도공학연계">철도공학연계</span></td>
+      <td>차량 시스템 원리 — ch83 문항 다수 커버하나 열차운전 취급과 직접 연결 없음</td><td>높음</td>
+    </tr>
+    <tr>
+      <td>C-33</td><td>점착계수·점착력</td><td>F=μ×W / 감소 원인(속도·오염) / 공전</td>
+      <td><span class="통합후보">통합후보</span></td>
+      <td>C-35(견인력 공식)와 통합 가능 — 운전이론 계산 파트로 합산</td><td>중간</td>
+    </tr>
+    <tr>
+      <td>C-34</td><td>열차저항 4종</td><td>출발(최대)·주행·구배(1‰=1kgf/t)·곡선저항</td>
+      <td><span class="철도공학연계">철도공학연계</span></td>
+      <td>저항 이론 — 4.html 철도공학에서 커버. 구배저항 수치 1줄만 유지</td><td>높음</td>
+    </tr>
+    <tr>
+      <td>C-35</td><td>공기제동 3방식 + 견인력 공식</td><td>직통·자동·전자자동식 / F=P/v / 유효견인력</td>
+      <td><span class="통합후보">통합후보</span></td>
+      <td>C-23(제동 종류)과 일부 중복, C-33(점착)과도 연계 — 3카드 통합 검토</td><td>중간</td>
+    </tr>
+    <tr>
+      <td>C-36</td><td>비상조치 기본 흐름 ★★</td><td>①방호→②관제보고→③승객보호→④복구</td>
+      <td><span class="유지">유지</span></td>
+      <td>교재·내규 기준 4단계 직접 출제</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-37</td><td>지상방호 · 무선방호</td><td>지상방호 200m 이상(법령기준) / 교재 300m·600m 구분 표기</td>
+      <td><span class="유지">유지</span></td>
+      <td>법령·교재 수치 병기로 혼동 예방 처리 — 분량 적절</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-38</td><td>열차분리 자동정차 원리</td><td>제동관 압력급감→자동식 공기제동 자동작동</td>
+      <td><span class="유지">유지</span></td>
+      <td>Fail-Safe 원리, 자동식·직통식 구분 출제</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-39</td><td>전차선 단선 시 취급 원칙</td><td>무전압 확인 전 활선 간주, 접근 금지</td>
+      <td><span class="유지">유지</span></td>
+      <td>운전취급 원칙 — 안전 핵심 카드</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-40</td><td>구원운전 · 추진·퇴행 작업전호</td><td>구원·추진·퇴행 시 맨 앞 직원 탑승 + 작업전호</td>
+      <td><span class="보강">보강</span></td>
+      <td>원칙만 있고 구원열차 접속 절차(관제 지시→진로 확보→연결→시험제동 등) 누락</td><td>낮음</td>
+    </tr>
+    <tr>
+      <td>C-41</td><td>화재 발생 시 조치</td><td>승객대피→관제보고→소화→터널화재 판단</td>
+      <td><span class="유지">유지</span></td>
+      <td>비상조치 핵심, 터널 내 정차vs탈출 판단 출제</td><td>낮음</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>판정 집계</h3>
+<table style="width:60%">
+  <tr><th>판정</th><th>개수</th><th>해당 카드</th></tr>
+  <tr><td><span class="유지">유지</span></td><td>25</td><td>C-01~16, C-18~22, C-26, C-28, C-36~41</td></tr>
+  <tr><td><span class="보강">보강</span></td><td>3</td><td>C-07, C-15, C-40</td></tr>
+  <tr><td><span class="철도공학연계">철도공학연계</span></td><td>7</td><td>C-24, C-25, C-29, C-30, C-31, C-32, C-34</td></tr>
+  <tr><td><span class="압축">압축</span></td><td>2</td><td>C-12, C-27</td></tr>
+  <tr><td><span class="검증필요">검증필요</span></td><td>2</td><td>C-17, C-23</td></tr>
+  <tr><td><span class="통합후보">통합후보</span></td><td>2</td><td>C-33, C-35</td></tr>
+</table>
+
+<!-- =========================================================
+     C. 열차운전 고유영역 GAP
+     ========================================================= -->
+<h2>C. 열차운전 고유영역 GAP 분석</h2>
+
+<div class="warn-box">
+이 섹션은 3.html이 열차운전 고유 영역(이 상황에서 어떻게 운전·취급하는가)을 얼마나 충족하는지 평가합니다. 3.html에서 직접 확인한 내용 기준입니다.
+</div>
+
+<table>
+  <thead>
+    <tr><th>영역</th><th>현재 3.html 상태</th><th>GAP 수준</th><th>누락 세부 내용</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>출발·도착·통과 운전취급</strong></td>
+      <td>C-02에서 "열차 안전 확보 3요소" 언급, C-04에서 동시진출입 기준만 다룸</td>
+      <td><span class="검증필요">대형 GAP</span></td>
+      <td>
+        출발 전 확인사항(신호확인→차량점검→승객승강완료확인→출발신호 현시 확인→출발) 절차 없음<br>
+        도착 운전취급(감속구간 진입→장내신호 확인→정차위치 운전) 없음<br>
+        통과역 취급(통과신호 확인→속도 유지) 없음
+      </td>
+    </tr>
+    <tr>
+      <td><strong>정거장 운전취급 (진입/출발/통과/교행/대피)</strong></td>
+      <td>C-04 동시진출입 수치만 있음</td>
+      <td><span class="검증필요">대형 GAP</span></td>
+      <td>
+        교행: 어느 역에서 교행할지 결정 → 대기열차 선착 후 정차 → 맞은편 열차 통과 확인 → 출발<br>
+        대피: 대피선 진입 신호 확인 → 정차 → 우등열차 통과 확인 → 출발<br>
+        이런 절차가 전혀 없음
+      </td>
+    </tr>
+    <tr>
+      <td><strong>신호 이상 시 취급 (신호불명/신호기 고장/상치·수신호 불일치)</strong></td>
+      <td>C-16에서 "불명확=정지로 간주" / "사전통보 시 통보 신호" 원칙만 있음</td>
+      <td><span class="보강">중간 GAP</span></td>
+      <td>
+        신호불명 시 → 정지 → 관제 보고 → 지시 대기 절차 없음<br>
+        신호기 고장 시 → 수신호 또는 운전 허가 방식으로 전환 절차 없음<br>
+        C-16에 원칙은 있으나 취급 순서가 없음
+      </td>
+    </tr>
+    <tr>
+      <td><strong>폐색 이상 시 취급 (고장→대용방식 선정→운전절차)</strong></td>
+      <td>C-07에서 각 방식 특징만 있음 / C-22에서 도시철도 대용폐색 방식 명시</td>
+      <td><span class="검증필요">대형 GAP</span></td>
+      <td>
+        자동폐색 고장 → 연동폐색 또는 대용폐색으로 전환하는 절차 없음<br>
+        관제 보고 → 대용방식 지정 → 각 방식별 취급(통신식: 전용통신으로 폐색 취급, 지도식: 지도표 교부) 절차 없음<br>
+        현재는 각 방식의 특징 설명만 있고 "고장 시 어떻게 전환하는가"가 없음
+      </td>
+    </tr>
+    <tr>
+      <td><strong>입환 운전취급 절차</strong></td>
+      <td>C-15에서 입환전호(오너라/가거라) 암기만 있음</td>
+      <td><span class="보강">중간 GAP</span></td>
+      <td>
+        입환 작업 전 — 관계자 협의 → 입환신호기 취급 → 전호원 배치<br>
+        입환 중 — 전호원 신호에 따른 이동 → 분리·연결 확인<br>
+        입환 후 — 차량 고정 → 안전 확인 절차 없음
+      </td>
+    </tr>
+    <tr>
+      <td><strong>속도·서행·정차 세부 취급</strong></td>
+      <td>C-14에서 서행신호기 종류, C-20에서 비상제동거리 수치만</td>
+      <td><span class="보강">중간 GAP</span></td>
+      <td>
+        서행 구간 진입 시 — 서행예고 확인 → 서행신호기까지 정규속도 → 서행신호기 이후 서행속도<br>
+        서행 해제 — 서행해제신호기 확인 후 속도 증가<br>
+        임시속도제한 명령 시 취급 없음
+      </td>
+    </tr>
+    <tr>
+      <td><strong>퇴행·추진·구원 운전 절차</strong></td>
+      <td>C-05에서 퇴행 예외 사유, C-40에서 원칙(맨 앞 직원+작업전호)만</td>
+      <td><span class="보강">중간 GAP</span></td>
+      <td>
+        구원열차 접속 절차: 관제 지시 → 구원열차 진입 → 피구원열차에 연결 → 시험제동 → 운전<br>
+        퇴행 시: 관제 허가 → 전령자 배치 → 서행으로 후퇴 → 목적지 도착 확인<br>
+        이 절차들이 C-40에 없음
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- =========================================================
+     D. 철도공학 중복 목록
+     ========================================================= -->
+<h2>D. 철도공학 중복 목록 (철도공학에서 커버 가능)</h2>
+
+<table>
+  <thead>
+    <tr><th>카드</th><th>주제</th><th>철도공학 중복 판정</th><th>권고 처리</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>C-24</td><td>동력집중식 vs 동력분산식</td>
+      <td>4.html에서 "동력방식" 섹션 포함 — 구조적 원리(한 곳 vs 분산) 설명은 철도공학 영역</td>
+      <td>③ 철도공학 UNIT 참조 → 열차운전에는 ITX/KTX 차종별 방식만 1줄 표로 유지</td>
+    </tr>
+    <tr>
+      <td>C-25</td><td>관절대차 · 고정축거</td>
+      <td>대차 구조 원리 — STEP 0~5까지 매우 상세한 구조 설명 (철도공학 영역)</td>
+      <td>③ 철도공학 UNIT 참조 → 열차운전에는 "관절대차 장단점 3줄"만 유지</td>
+    </tr>
+    <tr>
+      <td>C-29</td><td>전기제동 vs 기계제동</td>
+      <td>C-23(제동 종류)과 중복 + 레일제동 분류는 차량공학 원리</td>
+      <td>② 핵심 3~5줄 유지 (레일제동≠전기제동) → C-23과 통합</td>
+    </tr>
+    <tr>
+      <td>C-30</td><td>사행동(Hunting)</td>
+      <td>차량 동역학 — 궤간·파장·임계속도 관계는 철도공학·차량공학 영역</td>
+      <td>④ 복원문제(ch83 Q16, Q17, Q18) 출제되므로 유지 단, 압축 검토</td>
+    </tr>
+    <tr>
+      <td>C-31</td><td>차체 3축 회전운동 (롤·피치·요)</td>
+      <td>물리 원리 — 항공·선박과 공통 개념. 철도공학에서 커버 가능</td>
+      <td>④ ch83 문항 출제되므로 유지 단 이론 배경 박스 삭제로 압축</td>
+    </tr>
+    <tr>
+      <td>C-32</td><td>냉동사이클·LIM·보호장치</td>
+      <td>차량 시스템 — 냉동사이클·LIM은 순수 기계·전기 공학 원리</td>
+      <td>④ ch83 Q01(냉동사이클), Q04·Q15(LIM) 출제되므로 유지 (복원문제 대응)</td>
+    </tr>
+    <tr>
+      <td>C-34</td><td>열차저항 4종</td>
+      <td>열차저항 이론 — 구배저항 공식, 곡선저항 모리슨 공식은 철도공학 영역</td>
+      <td>② 핵심만 유지: 출발저항=최대, 구배저항=1‰당 1kgf/t 2줄만</td>
+    </tr>
+    <tr>
+      <td>C-27(피뢰기 부분)</td><td>피뢰기 원리·설치</td>
+      <td>전기설비 보호 장치 — 철도 전기 분야, 6.html(철도신호) 영역과 근접</td>
+      <td>② 피뢰기 정의 1줄만 유지 → 나머지 6.html 또는 철도공학 참조</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- =========================================================
+     E. 오류·위험문장 목록
+     ========================================================= -->
+<h2>E. 오류·위험문장 목록</h2>
+
+<div class="warn-box">아래 문장들은 시험 근거 없는 추론, 단정, 과도한 일반화, 또는 법령이 아닌 운영내규를 법령처럼 기술한 것들입니다. 수정 전 법령 원문 확인이 필요합니다.</div>
+
+<h3>E-1. ATS→ATC→ATP 기능 서열 단순화 문제 [C-17] — 최우선 검증 필요</h3>
+<table>
+  <tr><th>위치</th><th>문제 문장</th><th>위험 이유</th><th>권고</th></tr>
+  <tr class="누락">
+    <td>C-17 step-box</td>
+    <td>"ATS → ATC → ATP 순으로 기능이 강화되며, 상위 장치가 하위 장치의 기능을 포함"</td>
+    <td>ATP(자동열차방호장치)는 유럽 ETCS/ETMS 기반 개념으로 한국 철도의 ATS·ATC와 직접 서열 비교가 어려움. 실제 한국 ATP는 충돌방호 특화 장치로 ATC를 포함하는 상위 계층이 아닐 수 있음</td>
+    <td>시험 출제 경향(교재 기준) 대비 표현 유지하되, 주석에 "교재·시험 기준 표현"임을 명시</td>
+  </tr>
+  <tr class="부분포함">
+    <td>C-17 table</td>
+    <td>적용노선 예: "ATP — 고속철도(유럽 ETCS 기준)"</td>
+    <td>한국에서 ATP가 유럽 ETCS와 동일한 방식으로 적용되는지 근거 불확실. 한국 고속철도는 TVM430(ATC 계열) 사용</td>
+    <td>적용노선 예시 삭제 또는 "교재 기준"으로 단서 추가</td>
+  </tr>
+  <tr class="부분포함">
+    <td>C-02 theory-note</td>
+    <td>"ATP(자동열차방호장치): 충돌·탈선 방지까지 포함한 최상위 시스템"</td>
+    <td>C-17과 일관성 있으나 동일한 단순화 위험. C-02와 C-17 두 곳에 반복 기술</td>
+    <td>C-02에서 ATS/ATC/ATP 설명을 C-17 참조 처리로 축소</td>
+  </tr>
+</table>
+
+<h3>E-2. 차량별 제동 방식 단정 [C-23]</h3>
+<table>
+  <tr><th>위치</th><th>문제 문장</th><th>위험 이유</th><th>권고</th></tr>
+  <tr class="누락">
+    <td>C-23 theory-note ①</td>
+    <td>"도시철도(지하철): 회생제동 + 공기제동 병용이 표준"</td>
+    <td>도시철도 차량마다 회생제동 탑재 여부·방식이 다를 수 있음. "표준"이라는 단정은 과도한 일반화</td>
+    <td>"일반적으로 도시철도 신형 전동차는 회생제동+공기제동을 사용하나, 차량 형식에 따라 상이"로 수정</td>
+  </tr>
+  <tr class="부분포함">
+    <td>C-23 theory-note ①</td>
+    <td>"KTX(고속철도): 회생제동 + 디스크식 공기제동 + 발전제동"</td>
+    <td>KTX 차종별로 제동 방식이 다름(KTX-1 vs KTX-산천 vs KTX-이음). 일괄 단정 위험</td>
+    <td>KTX 차종 구분 후 기술 또는 "고속철도는 디스크 제동이 필수적"으로만 기술</td>
+  </tr>
+  <tr class="부분포함">
+    <td>C-23 theory-note ①</td>
+    <td>"일반 전기기관차·전동차(새마을·무궁화 등): 발전제동 + 공기제동"</td>
+    <td>새마을·무궁화호 차량 형식별로 상이. 특히 신형 차량은 회생제동 적용 가능</td>
+    <td>구형/신형 구분하거나 "차량에 따라 상이"로 단서</td>
+  </tr>
+</table>
+
+<h3>E-3. 법령이 아닌 운영내규를 법령처럼 기술한 것 [C-36, C-37]</h3>
+<table>
+  <tr><th>위치</th><th>문제 문장</th><th>위험 이유</th><th>권고 (이미 처리 여부)</th></tr>
+  <tr class="충분">
+    <td>C-36</td>
+    <td>"비상조치 기본 흐름 ①방호→②관제보고→③승객보호→④복구"</td>
+    <td>이 흐름은 교재·운영내규 기반 — 법령 순서와 다를 수 있음</td>
+    <td>이미 "교재·운영내규 기준"으로 명시됨 — 처리 양호</td>
+  </tr>
+  <tr class="충분">
+    <td>C-37</td>
+    <td>지상방호 "복선 300m·단선 600m"</td>
+    <td>철도차량운전규칙 제94조 법령 기준(200m)과 다른 교재·내규 수치</td>
+    <td>이미 분리 박스로 구분 처리됨 — 처리 양호, 단 제목 레벨 강조 추가 권고</td>
+  </tr>
+</table>
+
+<h3>E-4. 근거 불충분 추론 또는 단정 기타</h3>
+<table>
+  <tr><th>위치</th><th>문제 문장</th><th>위험 이유</th></tr>
+  <tr class="부분포함">
+    <td>C-32 king-book-note</td>
+    <td>"교류모진 → 직류 피뢰기 / 직류모진 → 주퓨즈 (교재 표현, 법령 원문 출처 미확인)"</td>
+    <td>이미 카드 내에서 "법령 원문 출처 미확인"으로 표시함 — 그러나 C-09 직류피뢰기 설명과 일관성 확인 필요</td>
+  </tr>
+  <tr class="부분포함">
+    <td>C-26</td>
+    <td>탈선계수 = Q/P 공식 — 단위 없이 기술</td>
+    <td>탈선계수 기준값(0.8 이하)은 원문 근거가 없어 임의 보강 금지. 공식(Q/P)과 단위만 기술하되, 기준값은 원문 확인 후 작성</td>
+  </tr>
+</table>
+
+<!-- =========================================================
+     F. 복원문제 Coverage
+     ========================================================= -->
+<h2>F. 복원문제 Coverage (ch83 기준, 39문항)</h2>
+
+<div class="note-box">
+ch83 = 철도왕 교재 "철도 일반 및 차량" 챕터. 차량공학·운전이론 복합 문항 39개.
+3.html로 정답+오답 선지 설명이 가능한지 판정합니다.
+</div>
+
+<table>
+  <thead>
+    <tr><th>문항 번호</th><th>주제</th><th>Coverage 판정</th><th>근거 카드</th></tr>
+  </thead>
+  <tbody>
+    <tr class="충분"><td>Q01</td><td>냉동사이클 순서 (압→응→팽→증)</td><td>충분</td><td>C-32</td></tr>
+    <tr class="누락"><td>Q02</td><td>디젤기관차 매연시험 방식 (적외선분석식 제외)</td><td>누락</td><td>없음</td></tr>
+    <tr class="누락"><td>Q03</td><td>디젤기관차 매연시험 모드 (정속모드 제외)</td><td>누락</td><td>없음</td></tr>
+    <tr class="충분"><td>Q04</td><td>LIM 설명 — 급구배 유리 여부</td><td>충분</td><td>C-32</td></tr>
+    <tr class="부분포함"><td>Q05</td><td>열차 최고속도 선정 기준 (승객 인원 제외)</td><td>부분포함</td><td>C-20 일부(비상제동거리)</td></tr>
+    <tr class="누락"><td>Q06</td><td>차체 프레임 종류 (루프프레임 위치)</td><td>누락</td><td>없음</td></tr>
+    <tr class="누락"><td>Q07</td><td>디젤견인차 시험 (절연시험 제외)</td><td>누락</td><td>없음</td></tr>
+    <tr class="충분"><td>Q08</td><td>전기제동방식 아닌 것 (레일제동)</td><td>충분</td><td>C-29</td></tr>
+    <tr class="부분포함"><td>Q09</td><td>교류모진 보호장치 (직류피뢰기)</td><td>부분포함</td><td>C-32(언급 있으나 미확인 표기)</td></tr>
+    <tr class="누락"><td>Q10</td><td>연결기 종류 (볼트식 제외)</td><td>누락</td><td>없음</td></tr>
+    <tr class="부분포함"><td>Q11</td><td>곡선저항 공식 R=700/f — 모리슨</td><td>부분포함</td><td>C-34(곡선저항 개념 있으나 공식·모리슨 없음)</td></tr>
+    <tr class="누락"><td>Q12</td><td>열차속도에 영향 없는 것 (승객 수)</td><td>누락</td><td>없음</td></tr>
+    <tr class="충분"><td>Q13</td><td>전동차 정의 (동력분산식 전기차량)</td><td>충분</td><td>C-24</td></tr>
+    <tr class="누락"><td>Q14</td><td>세력권 조사 항목 (환경조건 제외)</td><td>누락</td><td>없음</td></tr>
+    <tr class="충분"><td>Q15</td><td>LIM — 급구배·급곡선 유리 방식</td><td>충분</td><td>C-32</td></tr>
+    <tr class="충분"><td>Q16</td><td>2차 사행동 — 비감쇠</td><td>충분</td><td>C-30</td></tr>
+    <tr class="충분"><td>Q17</td><td>사행동 설명 옳지 않은 것 (궤간 좁을수록)</td><td>충분</td><td>C-30</td></tr>
+    <tr class="충분"><td>Q18</td><td>대차 사행동 감소 방법 (선회저항 크게)</td><td>충분</td><td>C-30</td></tr>
+    <tr class="누락"><td>Q19</td><td>진동·소음 원인 아닌 것 (절연이음매)</td><td>누락</td><td>없음</td></tr>
+    <tr class="누락"><td>Q20</td><td>진동 저감 대책 아닌 것 (대차 높이)</td><td>누락</td><td>없음</td></tr>
+    <tr class="누락"><td>Q21~Q25</td><td>출입문 종류, 차단기 종류 등 차량설비 세부</td><td>누락</td><td>없음 (미확인 문항 5개)</td></tr>
+    <tr class="부분포함"><td>Q26~Q30</td><td>점착·사행동·저항 관련 추가 문항</td><td>부분포함</td><td>C-30, C-33, C-34 일부</td></tr>
+    <tr class="누락"><td>Q31~Q39</td><td>나머지 차량·일반 문항 (미확인)</td><td>미확인</td><td>분석 범위 외 (파일 분량 제한)</td></tr>
+  </tbody>
+</table>
+
+<h3>Coverage 집계 (확인 가능 21문항 기준)</h3>
+<table style="width:50%">
+  <tr><th>판정</th><th>수</th><th>비율</th></tr>
+  <tr class="충분"><td>충분</td><td>8</td><td>38%</td></tr>
+  <tr class="부분포함"><td>부분포함</td><td>4</td><td>19%</td></tr>
+  <tr class="누락"><td>누락</td><td>9</td><td>43%</td></tr>
+</table>
+<div class="warn-box">ch83 문항의 약 43%(확인분 기준)가 3.html에서 누락됨. 차량공학(디젤 시험, 프레임, 연결기, 출입문 등) 문항이 집중 누락.</div>
+
+<!-- =========================================================
+     G. 신규 카드 후보
+     ========================================================= -->
+<h2>G. 신규 카드 후보 (최소 범위)</h2>
+
+<div class="note-box">다음은 열차운전 고유 영역 GAP과 복원문제 누락을 보완하기 위한 최소 신규 카드 후보입니다. 기존 41개 카드를 삭제하지 않고 추가하는 방향입니다.</div>
+
+<table>
+  <thead>
+    <tr><th>후보 카드명</th><th>신설 이유</th><th>우선순위</th><th>포함 내용</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>C-42 폐색 이상 시 대용폐색 전환 절차</strong></td>
+      <td>C-07에서 방식 나열만 있고 "어떻게 전환하는가" 없음 — GAP C</td>
+      <td>최우선</td>
+      <td>⚠️ 구체적 절차(통신식 통화 취득, 지도식 지도표 교부 등)는 원문 근거 없이 작성됨 — <strong>원문 확인 후 작성</strong>. 현재 기술 내용은 삭제 대기</td>
+    </tr>
+    <tr>
+      <td><strong>C-43 정거장 운전취급 절차 (교행·대피 중심)</strong></td>
+      <td>교행·대피 취급 완전 누락 — GAP C 최대 항목</td>
+      <td>최우선</td>
+      <td>⚠️ 구체적 절차(선착 열차 정차→통과 확인→출발신호 확인→출발 등)는 원문 근거 없이 작성됨 — <strong>원문 확인 후 작성</strong>. 현재 기술 내용은 삭제 대기</td>
+    </tr>
+    <tr>
+      <td><strong>C-44 신호 이상 시 운전 취급 절차</strong></td>
+      <td>C-16 원칙에 절차 추가 — 신호기 고장 시 취급이 없음</td>
+      <td>1순위</td>
+      <td>신호불명 → 정지 → 관제 보고 → 지시 대기 / 신호기 고장 → 수신호 또는 대용방식 → 서행통과 절차</td>
+    </tr>
+    <tr>
+      <td><strong>C-45 구원열차 접속·운전 절차</strong></td>
+      <td>C-40에서 원칙만 있고 접속 절차 없음 — GAP C</td>
+      <td>1순위</td>
+      <td>⚠️ 구체적 절차(관제 지시→연결→시험제동→서행 운전→인계)는 원문 근거 없이 작성됨 — <strong>원문 확인 후 작성</strong>. 현재 기술 내용은 삭제 대기</td>
+    </tr>
+    <tr>
+      <td><strong>C-46 디젤기관차 매연시험·연결기 종류</strong></td>
+      <td>ch83 Q02, Q03, Q10 완전 누락 — 복원문제 Coverage</td>
+      <td>2순위</td>
+      <td>매연시험 3종(광투과식·필터식·하틀리지식) / 연결기 3종(자동·스크루·밀착) 암기표</td>
+    </tr>
+    <tr>
+      <td><strong>C-47 차체 프레임·출입문 종류</strong></td>
+      <td>ch83 Q06, Q21 누락 — 복원문제 Coverage</td>
+      <td>2순위</td>
+      <td>언더·사이드·루프프레임 정의 / 플러그·포켓·내부 슬라이딩 도어 구분</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- =========================================================
+     H. 최종 PART 재구성안
+     ========================================================= -->
+<h2>H. 최종 PART 재구성안 (구조 제안)</h2>
+
+<div class="note-box">현재 8 PART 구조를 개선하는 방향만 제시. 기존 41개 카드를 이동·삭제하지 않음.</div>
+
+<table>
+  <thead>
+    <tr><th>현재</th><th>제안 PART</th><th>포함 카드</th><th>변경 내용</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PART 1</td><td>PART 1. 철도차량운전규칙 — 기본 규정</td><td>C-01~C-05</td><td>유지</td>
+    </tr>
+    <tr>
+      <td>PART 2</td><td>PART 2. 폐색방식 + 이상 시 취급 ★★★</td><td>C-06~C-09 + <strong>C-42 신설</strong></td><td>C-42(폐색 이상 시 대용 전환 절차) 추가</td>
+    </tr>
+    <tr>
+      <td>PART 3</td><td>PART 3. 신호기 체계 + 이상 시 취급 ★★★</td><td>C-10~C-16 + <strong>C-44 신설</strong></td><td>C-44(신호 이상 시 취급 절차) 추가</td>
+    </tr>
+    <tr>
+      <td>PART 4</td><td>PART 4. 열차제어장치 ★★★</td><td>C-17</td><td>검증필요 주석 추가, E섹션 오류 수정</td>
+    </tr>
+    <tr>
+      <td>PART 5</td><td>PART 5. 도시철도운전규칙 + 정거장 취급 ★★</td><td>C-18~C-22 + <strong>C-43 신설</strong></td><td>C-43(정거장 운전취급 절차) 추가</td>
+    </tr>
+    <tr>
+      <td>PART 6</td><td>PART 6. 운전이론 (계산·이론)</td><td>C-23, C-26, C-27(운행도표만), C-28, <strong>C-33·C-35 통합</strong></td><td>C-24(4.html 참조 처리), C-25 압축, 피뢰기 축소</td>
+    </tr>
+    <tr>
+      <td>PART 7</td><td>PART 7. 차량이론 (복원문제 대응)</td><td>C-29~C-32, C-34, <strong>C-46·C-47 신설</strong></td><td>C-24·C-25 이동(가능 시) / C-46·C-47 추가</td>
+    </tr>
+    <tr>
+      <td>PART 8</td><td>PART 8. 비상조치 + 구원운전 ★★★</td><td>C-36~C-41 + <strong>C-45 신설</strong></td><td>C-45(구원열차 접속 절차) 추가</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- =========================================================
+     I. 2차 작업 권고
+     ========================================================= -->
+<h2>I. 2차 작업 권고</h2>
+
+<table>
+  <thead>
+    <tr><th>우선순위</th><th>작업 내용</th><th>근거 섹션</th><th>예상 효과</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>★★★ 즉시</td>
+      <td><strong>C-17 ATS/ATC/ATP 단순화 주석 추가</strong> — "교재·시험 기준 표현"임을 명시, ATP 적용노선 예시 수정</td>
+      <td>E-1</td>
+      <td>오해 방지, 실제 한국 시스템과의 혼동 예방</td>
+    </tr>
+    <tr>
+      <td>★★★ 즉시</td>
+      <td><strong>C-23 제동 차량별 조합 단정 표현 수정</strong> — "표준"→"일반적으로", 차종별 단서 추가</td>
+      <td>E-2</td>
+      <td>과도한 일반화로 인한 오답 방지</td>
+    </tr>
+    <tr>
+      <td>★★ 1순위</td>
+      <td><strong>C-42 신설 (원문 확인 후 작성)</strong> — 폐색 이상 시 대용폐색 전환 절차 카드. ⚠️ 현재 초안의 구체 절차는 원문 근거 없이 작성됨 — 열차운전취급규정 해당 조문 원문 확인 후 작성할 것</td>
+      <td>C, G</td>
+      <td>열차운전 고유 취급 영역 최대 GAP 해소 — 원문 선확인 필수</td>
+    </tr>
+    <tr>
+      <td>★★ 1순위</td>
+      <td><strong>C-43 신설 (원문 확인 후 작성)</strong> — 정거장 운전취급(교행·대피) 절차 카드. ⚠️ 현재 초안의 구체 절차는 원문 근거 없이 작성됨 — 열차운전취급규정 해당 조문 원문 확인 후 작성할 것</td>
+      <td>C, G</td>
+      <td>시험 출제 빈도 높은 교행·대피 취급 커버 — 원문 선확인 필수</td>
+    </tr>
+    <tr>
+      <td>★★ 1순위</td>
+      <td><strong>C-40/C-45 보강 (원문 확인 후 작성)</strong> — 구원열차 접속 절차. ⚠️ 현재 초안의 구체 절차(관제지시→연결→시험제동→서행)는 원문 근거 없이 작성됨 — 열차운전취급규정 해당 조문 원문 확인 후 작성할 것</td>
+      <td>C, G</td>
+      <td>비상조치 PART 8 완성도 향상 — 원문 선확인 필수</td>
+    </tr>
+    <tr>
+      <td>★ 2순위</td>
+      <td><strong>C-07 보강</strong> — 폐색방식별 운전취급 순서 추가 (특히 지도식·지도통신식)</td>
+      <td>C</td>
+      <td>폐색 취급 절차 이해 강화</td>
+    </tr>
+    <tr>
+      <td>★ 2순위</td>
+      <td><strong>C-46, C-47 신설</strong> — ch83 Q02·Q03·Q06·Q10·Q21 누락 문항 커버</td>
+      <td>F, G</td>
+      <td>복원문제 Coverage 43%→60% 이상 향상</td>
+    </tr>
+    <tr>
+      <td>★ 2순위</td>
+      <td><strong>C-24 축소·참조 처리</strong> — 동력집중/분산 이론 설명을 4.html 참조로 전환, 차종별 방식 표만 유지</td>
+      <td>D</td>
+      <td>철도공학 중복 제거, 카드 분량 최적화</td>
+    </tr>
+    <tr>
+      <td>★ 2순위</td>
+      <td><strong>C-26 탈선계수 단위 보완</strong> — Q(횡력)/P(축중) 단위 명시. ⚠️ 기준값(0.8 이하)은 원문 근거 미확인으로 삭제 — 원문 확인 후 작성</td>
+      <td>E-4</td>
+      <td>근거 없는 수치 임의 보강 금지</td>
+    </tr>
+    <tr>
+      <td>참고</td>
+      <td><strong>C-33·C-35 통합 검토</strong> — 점착·공기제동·견인력 3카드를 "운전이론 계산" 1카드로</td>
+      <td>B(통합후보)</td>
+      <td>분량 최적화, 중복 제거</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="info-box">
+<strong>2차 작업 완료 목표 상태</strong>
+<ul>
+  <li>41개 → 47개 카드 (6개 신설: C-42~C-47)</li>
+  <li>ch83 Coverage: 38%(충분) → 55% 이상 (C-46·C-47 신설 시)</li>
+  <li>열차운전 고유 취급 절차: 0개 → 4개 (폐색이상·정거장·신호이상·구원운전)</li>
+  <li>오류·위험문장: 2건 즉시 수정 완료 후 잔여 4건 단서 추가</li>
+</ul>
+</div>
+
+<hr>
+<p style="font-size:.82em;color:#888;text-align:right;">
+  railsafe_analysis_02_train_ops_v1.html | 작성: 2026-10-15 | 대상: public/theory/3.html + lib/railway-king-data.ts ch83 | 분석 전용 문서 (원본 수정 없음)
+</p>
+
+</body>
+</html>

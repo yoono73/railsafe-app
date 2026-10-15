@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>철도안전법 1차 분석·진단 보고서</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; background: #f8f9fa; color: #1a1a2e; font-size: 14px; line-height: 1.7; }
+.page { max-width: 1200px; margin: 0 auto; padding: 24px 20px 60px; }
+h1 { color: #1a3a5c; border-bottom: 3px solid #1a3a5c; padding-bottom: 10px; margin-bottom: 6px; font-size: 1.5em; }
+.meta-bar { background: #1a3a5c; color: #fff; padding: 6px 14px; border-radius: 0 0 6px 6px; font-size: .82em; margin-bottom: 24px; }
+h2 { color: #154360; border-left: 5px solid #2980b9; padding: 6px 12px; margin: 28px 0 12px; font-size: 1.15em; background: #eaf4fd; border-radius: 0 6px 6px 0; }
+h3 { color: #1a5276; margin: 16px 0 8px; font-size: 1em; border-bottom: 1px dashed #aad4ea; padding-bottom: 4px; }
+table { border-collapse: collapse; width: 100%; margin: 8px 0 16px; font-size: .88em; }
+th { background: #2980b9; color: #fff; padding: 7px 10px; text-align: left; font-size: .85em; }
+td { border: 1px solid #ccc; padding: 6px 9px; vertical-align: top; }
+tr:nth-child(even) td { background: #f4f8fc; }
+.유지 { color: #1a7f3c; font-weight: bold; }
+.수정 { color: #c0392b; font-weight: bold; }
+.보강 { color: #d35400; font-weight: bold; }
+.삭제후보 { color: #7f8c8d; font-weight: bold; }
+.통합 { color: #6c3483; font-weight: bold; }
+.분리 { color: #0e6655; font-weight: bold; }
+.충분 { background: #d5f5e3; }
+.부분포함 { background: #fef9e7; }
+.누락 { background: #fdedec; }
+.note { background: #eaf4fd; border-left: 4px solid #2980b9; padding: 8px 12px; margin: 8px 0; border-radius: 0 6px 6px 0; font-size: .88em; }
+.warn { background: #fef9e7; border-left: 4px solid #e67e22; padding: 8px 12px; margin: 8px 0; border-radius: 0 6px 6px 0; font-size: .88em; }
+.error { background: #fdedec; border-left: 4px solid #c0392b; padding: 8px 12px; margin: 8px 0; border-radius: 0 6px 6px 0; font-size: .88em; }
+.summary-box { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin: 16px 0; }
+.sb-item { text-align: center; border-radius: 8px; padding: 10px 6px; font-size: .82em; }
+.toc { background: #f4f8fc; border: 1px solid #aad4ea; border-radius: 8px; padding: 14px 18px; margin-bottom: 24px; }
+.toc ul { list-style: none; column-count: 2; column-gap: 20px; }
+.toc li { margin: 3px 0; }
+.toc a { color: #1a5276; text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+@media print {
+  body { font-size: 10pt; background: #fff; }
+  .page { padding: 0; max-width: 100%; }
+  h2 { break-before: avoid; }
+  table { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>철도안전법 1차 분석·진단 보고서</h1>
+<div class="meta-bar">
+  작성일: 2026-10-15 &nbsp;|&nbsp; 대상 파일: public/theory/7.html (C-01~C-38, 38개 개념카드) &nbsp;|&nbsp;
+  작업구분: 분석·진단 보고만 수행 (원본 수정 절대 금지) &nbsp;|&nbsp;
+  참조: safety-exam-data.ts 78문항, railway-king-data.ts 철도안전법 챕터
+</div>
+
+<div class="toc">
+  <strong>목차</strong>
+  <ul>
+    <li><a href="#secA">A. 전체 평가</a></li>
+    <li><a href="#secB">B. 오류 목록</a></li>
+    <li><a href="#secC">C. 누락·보강 목록</a></li>
+    <li><a href="#secD">D. 철도차량 특별 분석</a></li>
+    <li><a href="#secE">E. 조문 Coverage Matrix</a></li>
+    <li><a href="#secF">F. 숫자·주체·필요적/임의적 GAP</a></li>
+    <li><a href="#secG">G. 복원문제 Coverage</a></li>
+    <li><a href="#secH">H. 최종 재구성 제안</a></li>
+    <li><a href="#secI">I. 2차 작업 권고사항</a></li>
+  </ul>
+</div>
+
+<!-- ===== A ===== -->
+<h2 id="secA">A. 전체 평가</h2>
+
+<h3>A-1. 완성도 총평</h3>
+<div class="note">
+  <strong>전체 완성도: 약 75~78% (시험 직전 기준)</strong><br>
+  C-01~C-38 38개 카드는 철도교통안전관리자 시험의 핵심 출제 영역을 대부분 커버한다.
+  각 카드에 trap(오답함정)·theory-note(이론 배경)·quiz-ex(기출 예시) 3중 구조가 일관되게 적용되어 학습 효율이 높다.
+  철도왕 교재 보충박스(king-book-note)도 C-06·C-08·C-09·C-12·C-13·C-14·C-24·C-25·C-35~C-37에 추가되어 있어 교차 학습이 가능하다.
+  그러나 아래 문제가 존재한다.
+</div>
+
+<h3>A-2. 주요 문제점 요약</h3>
+<div class="summary-box">
+  <div class="sb-item" style="background:#fdedec;border:1px solid #e74c3c"><strong class="수정">수정</strong><br>6건</div>
+  <div class="sb-item" style="background:#fef5e7;border:1px solid #e67e22"><strong class="보강">보강</strong><br>9건</div>
+  <div class="sb-item" style="background:#d5f5e3;border:1px solid #27ae60"><strong class="유지">유지</strong><br>19건</div>
+  <div class="sb-item" style="background:#e8daef;border:1px solid #8e44ad"><strong class="통합">통합</strong><br>2건</div>
+  <div class="sb-item" style="background:#d1f2eb;border:1px solid #0e6655"><strong class="분리">분리</strong><br>1건</div>
+  <div class="sb-item" style="background:#f2f3f4;border:1px solid #7f8c8d"><strong class="삭제후보">삭제후보</strong><br>1건</div>
+</div>
+
+<table>
+  <tr><th>구분</th><th>건수</th><th>대표 문제</th></tr>
+  <tr><td><span class="수정">수정</span></td><td>6</td><td>C-01 운행장애 정의(관제미승인 정차역통과 분류 혼선), C-02 안전교육 비대상 표현, C-12 분류 정확성, C-22 즉시보고 정의, C-31 보상주체 불명확, C-32 개정법 범위 과잉</td></tr>
+  <tr><td><span class="보강">보강</span></td><td>9</td><td>C-03 협의절차 주체, C-09 신체검사 vs 적성검사 구분, C-16 청문대상 전수목록, C-21 위해물품 세부조항, C-24 결과처분 3종, C-25 공시항목 7가지, C-27 위임구조 확장, C-33 취소사유 전체, C-34 과태료 200만원대 누락</td></tr>
+  <tr><td><span class="유지">유지</span></td><td>19</td><td>C-04, C-05, C-06, C-07, C-08, C-10, C-11, C-13, C-14, C-15, C-17, C-19, C-20, C-23, C-26, C-28, C-29, C-36, C-38</td></tr>
+  <tr><td><span class="통합">통합</span></td><td>2</td><td>C-18+C-26 (수치 통합 암기 중복), C-17+C-19③ (벌칙 5단계 중복)</td></tr>
+  <tr><td><span class="분리">분리</span></td><td>1</td><td>C-12: 정비조직/기술자/이력/영상보안장치 — 4개 주제 혼재</td></tr>
+  <tr><td><span class="삭제후보">삭제후보</span></td><td>1</td><td>C-32: 2025.12.2 개정 내용 — 시험 출제 근거 미확인, 법령상 세부 확인 필요</td></tr>
+</table>
+
+<!-- ===== B ===== -->
+<h2 id="secB">B. 오류 목록</h2>
+<p style="margin-bottom:8px">아래 표는 7.html 원문에서 직접 확인된 내용 오류·표현 부정확·구조 오류 목록이다. 원문 수정은 2차 작업에서 수행한다.</p>
+
+<table>
+  <tr><th>카드</th><th>현재 내용 (원문)</th><th>문제 유형</th><th>수정 방향</th><th>근거</th></tr>
+  <tr>
+    <td>C-01</td>
+    <td>운행장애 정의표: "관제 승인 없이 정차역을 통과하는 경우도 운행장애에 해당"(왕교재 박스)</td>
+    <td><span class="수정">오류</span></td>
+    <td>관제 무승인 정차역 통과는 준사고 유형(시행령 제5조)에 해당. safety-exam-data.ts p1_002에서도 "준사고 또는 사고 유형"으로 분류. 운행장애 표에서 삭제하거나 주석으로 처리해야 함</td>
+    <td>철도안전법 시행령 제5조(준사고 유형), safety-exam-data p1_002 해설</td>
+  </tr>
+  <tr>
+    <td>C-02</td>
+    <td>"작업책임자도 안전교육 실시대상 제외" trap만 있고, 안전교육 실시대상 7종 중 실제 포함·제외 대상 구분표 없음</td>
+    <td><span class="수정">표현 부정확</span></td>
+    <td>안전교육 실시대상은 법 제24조에서 직접 열거하지 않고 국토교통부령에 위임함. 대상 7종(운전업무종사자·관제업무종사자·여객승무원·차량 점검정비종사자·시설 점검정비종사자·여객역무원·철도운행안전관리자)은 시행규칙 기준이며, 작업책임자 제외 근거도 국토교통부령 위임 구조임을 명시 필요. 법이 직접 열거하는 것처럼 기술하면 오류</td>
+    <td>철도안전법 제24조</td>
+  </tr>
+  <tr>
+    <td>C-12</td>
+    <td>정비조직·철도기술자·이력관리·영상보안장치 4개 주제를 하나의 카드에 통합</td>
+    <td><span class="분리">분리 필요</span></td>
+    <td>각 주제가 출제 빈도·조문 근거가 달라 혼동을 유발. 최소 정비조직+기술자 / 이력관리 / 영상보안장치 3개로 분리 권고</td>
+    <td>법 제32조(정비조직), 제38조(이력), 제38조의3(영상보안장치)</td>
+  </tr>
+  <tr>
+    <td>C-22</td>
+    <td>즉시보고 카드 제목과 C-16 즉시보고 기준 카드 간 기준 구분 불명확. C-16은 "즉시보고 기준"(시행령 제57조 사유), C-22는 "즉시보고 30분 이내" 시기 다룸</td>
+    <td><span class="수정">중복·혼선</span></td>
+    <td>C-16은 즉시보고 대상 사유(4가지), C-22는 보고 절차·기한(4단계)으로 명확히 역할 분리. 카드 부제목에 "사유 기준"과 "절차·기한"을 명시해야 함</td>
+    <td>법 제61조, 시행령 제57조</td>
+  </tr>
+  <tr>
+    <td>C-31</td>
+    <td>손실보상 "보상 주체: 법정 주체"로만 기재 — 주체 불명확</td>
+    <td><span class="수정">오류·불명확</span></td>
+    <td>제46조: 보상 주체는 시행명령을 한 자 — 국토교통부장관·시도지사 또는 철도운영자등. "국가 또는 철도시설·철도운영자"로 기재된 표현은 오류이며, 세 주체 모두 명시 필요</td>
+    <td>철도안전법 제46조</td>
+  </tr>
+  <tr>
+    <td>C-32</td>
+    <td>2025.12.2 개정 핵심(법률 제21188호) — "노면전차 도로면허 범위 정비", "경찰신호 횡단 허용", "과태료 근거 정비"로 기술</td>
+    <td><span class="삭제후보">확인 필요</span></td>
+    <td>법률 제21188호 개정 취지는 원문 근거 없이 기술됨. 시험 출제 전례 없음. 개정법 원문 대조 후 내용 검증 필요. 현 상태로는 삭제후보 또는 "보강 대기" 표시 권고</td>
+    <td>법률 제21188호 원문 미확인</td>
+  </tr>
+</table>
+
+<!-- ===== C ===== -->
+<h2 id="secC">C. 누락·보강 목록</h2>
+<h3>C-1. 기존 카드 보강 필요 항목</h3>
+<table>
+  <tr><th>카드</th><th>현재 상태</th><th>보강 필요 내용</th><th>출제 중요도</th></tr>
+  <tr>
+    <td>C-03</td>
+    <td>수립 주기·제출기한 수치 중심</td>
+    <td>종합계획 수립 절차(협의→심의→확정) 상세 및 포함사항 6가지 암기 두음 추가 필요. 현재 포함사항 표는 있으나 두음("시·사·투·목·교·기")이 없어 암기 효율 저하</td>
+    <td>★★★</td>
+  </tr>
+  <tr>
+    <td>C-09</td>
+    <td>운전적성검사 3종·관제자격증명 설명</td>
+    <td>신체검사 종류(최초/정기/특별) 설명이 왕교재 박스에만 있고 본문 표에 없음. 신체검사(제22조의2) vs 운전적성검사(제18조) 구분 명시표 필요. 관제자격증명 갱신 3요건 본문으로 이동 필요</td>
+    <td>★★★</td>
+  </tr>
+  <tr>
+    <td>C-16</td>
+    <td>즉시보고 4가지 기준·청문 일부</td>
+    <td>청문 대상 전수 목록(현재 "등"으로 생략됨) — 안전관리체계취소·운전면허취소·관제자격증명취소·형식승인취소·정비기술자취소·운행안전관리자취소·운전교육훈련기관취소 등 7종 이상 명시 필요. 품질인증취소=청문 비대상 함정 보강</td>
+    <td>★★★</td>
+  </tr>
+  <tr>
+    <td>C-21</td>
+    <td>위해물품 5분류·재검토 3년</td>
+    <td>위해물품 소지 예외 4종(철도경찰·경찰관·경비원·군인) 근거 조문 명시. 위해물품 6호(독성·방사성) 단독선지 오답 함정 추가 필요. ※ 제44조는 허가 구조가 아님 — 위험물취급자의 안전 포장·적재·관리·운송 의무 조문이므로 "위험물 허가" 표현·절차 삭제 필요</td>
+    <td>★★</td>
+  </tr>
+  <tr>
+    <td>C-24</td>
+    <td>정밀안전진단 최초 20년·이후 5년·지정기관</td>
+    <td>결과에 따른 처분 3종(개선명령/사용제한/폐기) 표에만 있고 조문 근거 미기재. 정밀안전진단 기준일이 "영업시운전 시작일"임을 본문에 명시 필요</td>
+    <td>★★</td>
+  </tr>
+  <tr>
+    <td>C-25</td>
+    <td>공시 의무자·주기·공시 7항목(왕교재)</td>
+    <td>공시 기준 기간(과거3년+해당연도+향후2년=6개년) 본문 표에 없음. 미이행 시 과태료 금액 구체화 필요</td>
+    <td>★★</td>
+  </tr>
+  <tr>
+    <td>C-33</td>
+    <td>준사고 비해당·정비조직인증 취소사유 비해당</td>
+    <td>정비조직인증 취소사유 전수 목록 없음 — 현재 "해당 3종, 비해당 1종"만 기재. 법령상 취소사유 전체(부정인증·고의사망사고·피한정후견인 해당·결격 등) 완전 열거 필요</td>
+    <td>★★★</td>
+  </tr>
+  <tr>
+    <td>C-34</td>
+    <td>흡연 100만원·500만원대 과태료·재검 기간</td>
+    <td>200만원 이하 과태료 구간 완전 누락. 과태료 3단계(100만원/200만원/500만원) 비교표 필요. 현재 100만원과 500만원 2단계만 기재</td>
+    <td>★★★</td>
+  </tr>
+  <tr>
+    <td>C-37</td>
+    <td>제작자승인 결격사유 6종</td>
+    <td>철도차량 제작자승인(제26조의4) vs 철도용품 제작자승인(제27조의2) 비교표가 추가되어 있으나, 제작자승인 취소사유(필요적/임의적 구분)가 없음. 취소 후 재승인 불가 2년 조항은 있으나 취소 사유 자체 목록 미기재</td>
+    <td>★★</td>
+  </tr>
+</table>
+
+<h3>C-2. 신규 카드(개념) 추가 후보</h3>
+<table>
+  <tr><th>제안 번호</th><th>제안 카드 제목</th><th>근거·필요성</th><th>우선순위</th></tr>
+  <tr>
+    <td>C-39(신)</td>
+    <td>철도종사자 신체검사 — 최초·정기(2년)·특별</td>
+    <td>safety-exam-data p1_010·p2_022에서 적성검사 vs 신체검사 혼동 유형 출제. 현재 C-09 왕교재 박스에만 있음. 독립 카드 분리 권고</td>
+    <td>★★★</td>
+  </tr>
+  <tr>
+    <td>C-40(신)</td>
+    <td>안전관리체계 취소사유 완전 판정표 (필요적 1종 + 임의적 4종)</td>
+    <td>C-05는 취소 구분표만 있고, safety-exam-data에서 취소사유 순서·사유별 판정이 반복 출제. 법 제9조 전문 대조표 필요</td>
+    <td>★★★</td>
+  </tr>
+  <tr>
+    <td>C-41(신)</td>
+    <td>철도보호지구 신고행위 완전목록 + 미신고 과태료</td>
+    <td>C-14·C-19에 분산. 신고행위 유형(토지형질변경/굴착/채취/건축물/수목/인공구조물)과 신고 불필요(리모델링)를 하나의 표로 정리하는 카드 필요</td>
+    <td>★★</td>
+  </tr>
+  <tr>
+    <td>C-42(신)</td>
+    <td>철도사고 기본조치 4가지 (제60조) + 사고조사 주체</td>
+    <td>C-22 하단에 "구·관·수·복" tip으로만 있어 독립 학습 어려움. Q48에서 출제 확인. 독립 카드 분리 필요</td>
+    <td>★★</td>
+  </tr>
+  <tr>
+    <td>C-43(신)</td>
+    <td>안전전문기관 지정기준 + 지정취소 사유</td>
+    <td>C-28은 "분야 3가지"만 있고 지정기준·취소사유 없음. safety-exam-data에서 안전전문기관 관련 출제 예상</td>
+    <td>★</td>
+  </tr>
+  <tr>
+    <td>C-44(신)</td>
+    <td>과태료 3단계 완전비교표 (100만원/200만원/500만원)</td>
+    <td>C-34에 100만원·500만원만 있고 200만원대 누락. 법 제82조 3항 이하 전수 필요</td>
+    <td>★★★</td>
+  </tr>
+</table>
+
+<!-- ===== D ===== -->
+<h2 id="secD">D. 철도차량 특별 분석</h2>
+<p style="margin-bottom:10px">7.html에서 철도차량 관련 내용이 포함된 카드를 전수 추출하여 형식승인/제작자승인/완성검사/정비조직/정밀안전진단/주요부품/영상보안장치별로 분석한다.</p>
+
+<h3>D-1. 형식승인 (제26~27조)</h3>
+<table>
+  <tr><th>구분</th><th>현재 포함 내용</th><th>부족한 내용</th><th>누락 내용</th><th>중복 문제</th></tr>
+  <tr>
+    <td>C-10 형식승인 검사방법</td>
+    <td>검사방법 3종(설계적합성/합치성/용품형식시험), 완성검사 순서, "신뢰도 검사" 오답 trap</td>
+    <td>형식승인 신청 주체(제조자·수입자), 승인 기관(국토교통부장관), 승인 절차 흐름도 없음</td>
+    <td>형식승인 변경 시 기한, 형식승인서 유효기간, 형식승인 취소사유(필요적/임의적)</td>
+    <td>C-11과 분리는 되어 있으나 C-10에 완성검사 내용이 일부 섞임</td>
+  </tr>
+  <tr>
+    <td>C-11 형식승인 경미한 사항·면제</td>
+    <td>경미 사항(신고)/중요 변경(승인) 구분, 면제 가능/불가 표</td>
+    <td>면제 불가 열에 "중량분포에 영향 안 미치는 장치·부품"이 면제 가능인지 불가인지 표가 역전되어 있어 혼동 유발</td>
+    <td>경미 변경 신고 기한(14일), 형식승인 취소 후 결격 기간 미기재</td>
+    <td>없음</td>
+  </tr>
+</table>
+
+<div class="warn">C-11 면제 가능/불가 표 오류 의심: "중량분포에 영향 안 미치는 장치·부품"이 면제 불가 열에 기재되어 있으나, 법령 취지상 면제 가능 항목일 가능성이 높음. 2차 작업 시 법령 원문 대조 필수.</div>
+
+<h3>D-2. 제작자승인 (제26조의4, 제27조의2)</h3>
+<table>
+  <tr><th>구분</th><th>현재 포함 내용</th><th>부족한 내용</th><th>누락 내용</th><th>중복 문제</th></tr>
+  <tr>
+    <td>C-37 제작자승인 결격사유 6종</td>
+    <td>결격사유 6종 완전 열거, 법인 임원 결격(⑥호) 강조, 철도차량 vs 철도용품 비교표, 취소 후 결격 2년</td>
+    <td>제작자승인 취소사유(필요적/임의적) 구분 없음. 제작자승인 후 의무사항(주요부품 공급 20년 등) 연결 없음</td>
+    <td>승인 신청 서류 목록, 승인 기한(처리기간), 승인 조건부 부과 가능 여부</td>
+    <td>C-29(주요부품 공급기간 20년)와 연계 설명이 없음</td>
+  </tr>
+</table>
+
+<h3>D-3. 완성검사 (제26조의3, 제37조)</h3>
+<table>
+  <tr><th>구분</th><th>현재 포함 내용</th><th>부족한 내용</th><th>누락 내용</th></tr>
+  <tr>
+    <td>C-10 tip + C-23</td>
+    <td>C-10: "완성검사는 판매 전에 받아야 함" tip. C-23: 종합시험운행(제37조, 철도노선·시설 개통 전) 절차 기술. ※ 완성검사(제26조의3)는 철도차량 제작·수입 시 별개 절차이므로 C-23에서 두 절차를 직렬로 연결하는 표현은 오류 — 분리 기술 필요</td>
+    <td>완성검사 신청 주체·기관 명시 없음. 완성검사 합격증 발급·취소 조항 없음</td>
+    <td>완성검사 불합격 시 처리, 완성검사 면제 조건</td>
+  </tr>
+</table>
+
+<h3>D-4. 정비조직 (제32~38조)</h3>
+<table>
+  <tr><th>구분</th><th>현재 포함 내용</th><th>부족한 내용</th><th>누락 내용</th></tr>
+  <tr>
+    <td>C-12 (정비조직 부분)</td>
+    <td>인증취소 후 결격 2년, 인증 신청 기한 60일(왕교재), 인증취소 중대한 운행장애 기준(OR 조건), 준수사항 함정</td>
+    <td>정비조직 인증 유형(종합/부분) 구분 없음. 인증기준(인력·시설·장비) 수치 없음. 인증취소 필요적/임의적 구분표 없음</td>
+    <td>변경인증 대상 vs 변경신고 대상 구분, 정비조직 준수사항 완전 목록(C-33에서 비해당만 다룸), 지위 승계(1개월 신고) 근거 조문</td>
+  </tr>
+</table>
+
+<h3>D-5. 정밀안전진단 (제38조의5)</h3>
+<table>
+  <tr><th>구분</th><th>현재 포함 내용</th><th>부족한 내용</th><th>누락 내용</th></tr>
+  <tr>
+    <td>C-24</td>
+    <td>최초 20년·이후 5년, 지정기관 실시, 결과처분 3종, 기준일=영업시운전 시작일(왕교재), 부칙 설명</td>
+    <td>진단 비용 부담 주체 없음. 진단 결과 이의신청 절차 없음. 진단기관 지정 기준·취소 없음</td>
+    <td>정밀안전진단 대상 범위(시설+차량 모두인지 시설만인지 명시 필요), 부칙 적용 대상(2014.3.18 이전 20년 경과분) 정확한 기한 없음</td>
+  </tr>
+</table>
+
+<h3>D-6. 주요부품 공급 (제38조의5, C-29)</h3>
+<table>
+  <tr><th>구분</th><th>현재 포함 내용</th><th>부족한 내용</th><th>누락 내용</th></tr>
+  <tr>
+    <td>C-29</td>
+    <td>완성검사일부터 20년 이상, 의무 주체=제작자·수입자, 10년 오답 함정</td>
+    <td>주요부품 범위(어떤 부품이 "주요부품"인지) 정의 없음. 공급 의무 위반 시 제재 없음</td>
+    <td>주요부품 공급 불가 시 대체 조치 절차, 주요부품 목록(국토교통부령으로 정하는 것) 설명 없음</td>
+  </tr>
+</table>
+
+<h3>D-7. 영상보안장치 (제38조의3)</h3>
+<table>
+  <tr><th>구분</th><th>현재 포함 내용</th><th>부족한 내용</th><th>누락 내용</th></tr>
+  <tr>
+    <td>C-12 (영상보안장치 부분)</td>
+    <td>설치 의무 장소 4종, 보존기간 30일, 금지행위 3종, 열람허용 3경우, 고장 시 국토부장관 보고</td>
+    <td>임의삭제 시 3년/3천만원 벌칙 근거 조문(제81조) 명시 없음. 설치 의무 시기 없음</td>
+    <td>개인정보보호법과의 관계(영상정보 처리 원칙), 열람 요청 절차, 영상 보관 매체 기준</td>
+  </tr>
+</table>
+
+<div class="note">
+  <strong>D섹션 종합 판정:</strong> 형식승인(C-10·C-11)과 정밀안전진단(C-24)은 비교적 잘 정리되어 있다. 반면 정비조직(C-12 내 혼재), 제작자승인(C-37 취소사유 누락), 완성검사(카드 미독립)는 보강이 시급하다. 철도차량 생애주기(형식승인→제작자승인→완성검사→운용(정비조직)→정밀안전진단→주요부품공급)를 하나의 흐름도로 연결하는 카드가 없어 전체 그림 파악이 어렵다.
+</div>
+
+<!-- ===== E ===== -->
+<h2 id="secE">E. 조문 Coverage Matrix</h2>
+<p style="margin-bottom:8px">7.html에 명시적으로 인용된 조문·조항을 기준으로 Coverage를 분석한다.</p>
+<table>
+  <tr><th>법령/조문</th><th>핵심 내용</th><th>담당 카드</th><th>포함상태</th><th>중요도</th></tr>
+  <tr><td>제1조</td><td>목적 (철도안전 확보·공공복리 증진)</td><td>C-01</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제2조</td><td>용어 정의 (사고·준사고·운행장애·중대한 운행장애)</td><td>C-01, C-33</td><td class="부분포함">부분포함</td><td>★★★</td></tr>
+  <tr><td>제2조(철도종사자)</td><td>철도종사자 7종 정의</td><td>C-02</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제5조</td><td>철도안전종합계획 수립·수치</td><td>C-03</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제6조의2</td><td>안전투자 공시 (철도운영자, 매년, 7항목)</td><td>C-25</td><td class="충분">충분</td><td>★★</td></tr>
+  <tr><td>제7조제1항</td><td>안전관리체계 구성요소 7가지</td><td>C-35</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제7조제5항</td><td>기술기준 포함사항 6가지</td><td>C-35</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제7조(90일)</td><td>안전관리체계 승인 신청 기한</td><td>C-04</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제7조(14일)</td><td>경미 사항 변경신고 기한</td><td>C-04, C-26</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제9조</td><td>안전관리체계 취소 (필요적/임의적)</td><td>C-05</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제9조의2</td><td>안전관리체계 정기·수시검사</td><td>C-20</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제10조</td><td>과징금 최대 30억, 과징금 납부 20일</td><td>C-06</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제10조(우수운영자)</td><td>우수운영자 유효기간 2년, 지정취소</td><td>C-06</td><td class="충분">충분</td><td>★★</td></tr>
+  <tr><td>제11조(운전면허 종류)</td><td>운전면허 6종 (대통령령)</td><td>C-07</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제11조(결격)</td><td>운전면허 결격사유 6종</td><td>C-08</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제15조</td><td>필기시험→기능시험, 합격유효 2년</td><td>C-08</td><td class="충분">충분</td><td>★★</td></tr>
+  <tr><td>제16조</td><td>갱신신청 만료 6개월 이전</td><td>C-08</td><td class="충분">충분</td><td>★★</td></tr>
+  <tr><td>제16조(갱신 요건)</td><td>6개월 실적/2년 관제교육/20시간 이수</td><td>C-08(왕교재)</td><td class="부분포함">부분포함</td><td>★★★</td></tr>
+  <tr><td>제18조</td><td>운전적성검사 3종·주기</td><td>C-09</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제18조의3</td><td>운전적성검사기관 지정기준 (대통령령)</td><td>C-09, C-27</td><td class="부분포함">부분포함</td><td>★★</td></tr>
+  <tr><td>제20조제1항</td><td>운전면허 필요적 취소사유 4종</td><td>C-08</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제22조(신체검사)</td><td>철도종사자 신체검사 3종</td><td>C-09(왕교재)</td><td class="부분포함">부분포함</td><td>★★★</td></tr>
+  <tr><td>제24조</td><td>안전교육 실시의무자 (철도운영자 등)</td><td>C-02</td><td class="충분">충분</td><td>★★</td></tr>
+  <tr><td>제24조의2</td><td>직무교육 (신규/정기)</td><td>C-15</td><td class="충분">충분</td><td>★★</td></tr>
+  <tr><td>제26조</td><td>형식승인 검사방법 3종</td><td>C-10</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제26조의3</td><td>완성검사</td><td>C-10 tip, C-23</td><td class="부분포함">부분포함</td><td>★★★</td></tr>
+  <tr><td>제26조의4</td><td>제작자승인 결격사유 6종</td><td>C-37</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제27조</td><td>형식승인 변경 (경미/중요)</td><td>C-11</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제27조의2</td><td>철도용품 제작자승인</td><td>C-37</td><td class="충분">충분</td><td>★★</td></tr>
+  <tr><td>제32~38조</td><td>정비조직 인증·취소·준수사항</td><td>C-12, C-33</td><td class="부분포함">부분포함</td><td>★★★</td></tr>
+  <tr><td>제37조</td><td>종합시험운행 (시설물검증→영업시운전)</td><td>C-23</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제38조</td><td>이력관리</td><td>C-12</td><td class="부분포함">부분포함</td><td>★★</td></tr>
+  <tr><td>제38조의2</td><td>안전전문기관 분야 3종</td><td>C-28</td><td class="충분">충분</td><td>★★</td></tr>
+  <tr><td>제38조의3</td><td>영상보안장치 설치·보존 30일·금지</td><td>C-12</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제38조의5</td><td>정밀안전진단 20년/5년, 주요부품 20년</td><td>C-24, C-29</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제38조의7</td><td>철도표준규격 제정·개정·폐지 (3년 재검토)</td><td>C-26</td><td class="충분">충분</td><td>★★</td></tr>
+  <tr><td>제39조</td><td>운전업무종사자 준수사항 6종</td><td>C-36</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제39조의2</td><td>관제업무종사자 준수사항</td><td>C-36</td><td class="충분">충분</td><td>★★</td></tr>
+  <tr><td>제40조</td><td>철도운행안전관리자 배치·임면 15일</td><td>C-15</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제41조</td><td>음주기준 0.02%(1~3호) vs 0.03%(4~6호)</td><td>C-13</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제43조</td><td>위해물품 휴대·탁송 금지</td><td>C-21</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제44조</td><td>위험물취급자 안전의무 (포장·적재·관리·운송)</td><td>C-21</td><td class="부분포함">부분포함</td><td>★★★</td></tr>
+  <tr><td>제45조</td><td>철도보호지구 범위·신고·조치명령</td><td>C-14, C-19</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제46조</td><td>손실보상</td><td>C-31</td><td class="부분포함">부분포함</td><td>★★</td></tr>
+  <tr><td>제47조</td><td>여객열차 승객 금지행위·제지 권한</td><td>C-30</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제48조</td><td>철도 금지행위 7종 (질서유지)</td><td>C-38</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제60조</td><td>철도사고 기본조치 4가지</td><td>C-22 (tip)</td><td class="부분포함">부분포함</td><td>★★★</td></tr>
+  <tr><td>제61조</td><td>사고보고 4단계·즉시보고 기준</td><td>C-16, C-22</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제69조</td><td>철도안전 전문인력 자격기준 (대통령령)</td><td>C-27</td><td class="충분">충분</td><td>★★</td></tr>
+  <tr><td>제77~81조</td><td>벌칙 5단계 체계</td><td>C-17, C-19</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>제82조</td><td>과태료 3단계 (100만/200만/500만원)</td><td>C-34</td><td class="누락">누락(200만원대)</td><td>★★★</td></tr>
+  <tr><td>시행령 제5조</td><td>준사고 유형 (관제 무승인 통과 포함)</td><td>C-33(일부)</td><td class="부분포함">부분포함</td><td>★★★</td></tr>
+  <tr><td>시행령 제11조</td><td>운전면허 6종 명칭</td><td>C-07</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>시행령 제57조</td><td>즉시보고 기준 4가지</td><td>C-16</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>시행규칙 제6조①</td><td>정기검사 매년 1회</td><td>C-20</td><td class="충분">충분</td><td>★★★</td></tr>
+  <tr><td>시행규칙 제20조</td><td>운전교육훈련 방법 (실제차량·모의연습기)</td><td>C-09</td><td class="충분">충분</td><td>★★</td></tr>
+  <tr><td>시행규칙 제80조①</td><td>여객열차 추가 금지행위 3종</td><td>C-30</td><td class="충분">충분</td><td>★★★</td></tr>
+</table>
+
+<!-- ===== F ===== -->
+<h2 id="secF">F. 숫자·주체·필요적/임의적 GAP</h2>
+
+<h3>F-1. 수치 전수 목록 (7.html 내 추출)</h3>
+<table>
+  <tr><th>수치</th><th>단위</th><th>내용</th><th>카드</th><th>함정 수치</th></tr>
+  <tr><td>5년</td><td>년</td><td>철도안전종합계획 수립 주기</td><td>C-03</td><td>3년</td></tr>
+  <tr><td>10월 말</td><td>일자</td><td>시행계획 제출 기한</td><td>C-03</td><td>11월 말</td></tr>
+  <tr><td>2월 말</td><td>일자</td><td>추진실적 제출 기한</td><td>C-03</td><td>3월 말</td></tr>
+  <tr><td>5월 말</td><td>일자</td><td>안전예산 공시 기한</td><td>C-03, C-25</td><td>-</td></tr>
+  <tr><td>90일</td><td>일</td><td>안전관리체계 승인 신청 기한 (운영 개시 전)</td><td>C-04</td><td>60일, 30일</td></tr>
+  <tr><td>14일</td><td>일</td><td>경미 사항 변경신고 기한</td><td>C-04, C-26</td><td>30일</td></tr>
+  <tr><td>30억원</td><td>원</td><td>과징금 최대 한도</td><td>C-06</td><td>50억원</td></tr>
+  <tr><td>20억원</td><td>원</td><td>사망자 10명 이상 과징금</td><td>C-06</td><td>30억원</td></tr>
+  <tr><td>20일</td><td>일</td><td>과징금 납부기한</td><td>C-06, C-26</td><td>30일</td></tr>
+  <tr><td>2년</td><td>년</td><td>우수운영자 유효기간</td><td>C-06</td><td>3년</td></tr>
+  <tr><td>10년</td><td>년</td><td>운전면허 유효기간</td><td>C-08</td><td>5년</td></tr>
+  <tr><td>2년</td><td>년</td><td>필기시험 합격 유효기간, 결격 기간</td><td>C-08</td><td>1년, 5년</td></tr>
+  <tr><td>15일</td><td>일</td><td>면허증 반납 기한, 임면 신고 기한</td><td>C-08, C-15</td><td>30일</td></tr>
+  <tr><td>19세</td><td>세</td><td>운전면허 최저 나이</td><td>C-08</td><td>18세</td></tr>
+  <tr><td>6개월</td><td>개월</td><td>갱신신청 시기(만료 6개월 이전), 갱신 요건 운전 실적</td><td>C-08</td><td>-</td></tr>
+  <tr><td>20시간</td><td>시간</td><td>운전면허 갱신 교육 이수 시간</td><td>C-08(왕교재)</td><td>40시간</td></tr>
+  <tr><td>40시간</td><td>시간</td><td>관제자격증명 갱신 교육 이수 시간</td><td>C-09(왕교재)</td><td>20시간</td></tr>
+  <tr><td>10년</td><td>년</td><td>운전적성검사 정기 주기 (기본)</td><td>C-09</td><td>5년</td></tr>
+  <tr><td>5년</td><td>년</td><td>운전적성검사 정기 주기 (50세 이상)</td><td>C-09</td><td>10년</td></tr>
+  <tr><td>3명</td><td>명</td><td>운전적성검사기관 검사인력 기준</td><td>C-09</td><td>1명</td></tr>
+  <tr><td>100시간</td><td>시간</td><td>관제 실무수습</td><td>C-09</td><td>50시간</td></tr>
+  <tr><td>400시간</td><td>시간</td><td>제1종 전기차량 실무수습</td><td>C-09, C-26</td><td>100시간</td></tr>
+  <tr><td>8,000km</td><td>km</td><td>제1종 전기차량 실무수습 (거리 환산)</td><td>C-09, C-26</td><td>-</td></tr>
+  <tr><td>340시간</td><td>시간</td><td>디젤차량 면허 교육시간</td><td>C-09</td><td>270, 410시간</td></tr>
+  <tr><td>470시간</td><td>시간</td><td>제1종 전기차량 면허 교육시간</td><td>C-09</td><td>340시간</td></tr>
+  <tr><td>2년</td><td>년</td><td>정비조직 인증취소 후 결격</td><td>C-12</td><td>5년</td></tr>
+  <tr><td>80점</td><td>점</td><td>기술자 1등급 기준</td><td>C-12</td><td>-</td></tr>
+  <tr><td>5년 / 35시간</td><td>년/시간</td><td>기술자 보수훈련 주기·시간</td><td>C-12</td><td>25, 30시간</td></tr>
+  <tr><td>5년 / 21시간</td><td>년/시간</td><td>열차조성업무 종사자 직무교육</td><td>C-12</td><td>35시간</td></tr>
+  <tr><td>1개월</td><td>개월</td><td>지위 승계 신고 기한</td><td>C-12</td><td>-</td></tr>
+  <tr><td>15일</td><td>일</td><td>철도용품 계획서 통보 기한</td><td>C-12</td><td>7일</td></tr>
+  <tr><td>60일</td><td>일</td><td>정비조직 인증 신청 기한 (운영 개시 전)</td><td>C-12(왕교재)</td><td>90일</td></tr>
+  <tr><td>30일</td><td>일</td><td>영상보안장치 자료 보존 기간</td><td>C-12</td><td>90일</td></tr>
+  <tr><td>0.02%</td><td>%</td><td>음주기준 1~3호(운전·관제·여객승무원)</td><td>C-13</td><td>0.03%</td></tr>
+  <tr><td>0.03%</td><td>%</td><td>음주기준 4~6호(작업책임자 등)</td><td>C-13</td><td>0.02%</td></tr>
+  <tr><td>30m</td><td>m</td><td>일반철도 보호지구 범위</td><td>C-14</td><td>50m</td></tr>
+  <tr><td>10m</td><td>m</td><td>노면전차 보호지구 범위</td><td>C-14</td><td>20m</td></tr>
+  <tr><td>20m</td><td>m</td><td>노면전차 신고구역 (제45조②)</td><td>C-14</td><td>10m</td></tr>
+  <tr><td>3m</td><td>m</td><td>물건방치 금지 범위 (궤도 중심 양측)</td><td>C-14</td><td>2m, 5m</td></tr>
+  <tr><td>15일</td><td>일</td><td>철도운행안전관리자 임면 신고 기한</td><td>C-15</td><td>30일</td></tr>
+  <tr><td>3명</td><td>명</td><td>즉시보고 기준 사상자 수</td><td>C-16</td><td>사망자만</td></tr>
+  <tr><td>5천만원</td><td>원</td><td>즉시보고 기준 재산피해액</td><td>C-16</td><td>3천만원</td></tr>
+  <tr><td>매년 1회</td><td>회/년</td><td>안전관리체계 정기검사 주기</td><td>C-20</td><td>3년, 5년</td></tr>
+  <tr><td>30분</td><td>분</td><td>즉시보고 기한</td><td>C-22</td><td>-</td></tr>
+  <tr><td>1시간</td><td>시간</td><td>중요사고 초기보고 기한</td><td>C-22</td><td>24시간</td></tr>
+  <tr><td>72시간</td><td>시간</td><td>기타 사고 초기보고 기한</td><td>C-22</td><td>-</td></tr>
+  <tr><td>다음달 15일</td><td>일자</td><td>종결보고 기한</td><td>C-22</td><td>-</td></tr>
+  <tr><td>20년</td><td>년</td><td>정밀안전진단 최초 시기</td><td>C-24</td><td>10년</td></tr>
+  <tr><td>5년</td><td>년</td><td>정밀안전진단 이후 주기</td><td>C-24</td><td>10년</td></tr>
+  <tr><td>3년</td><td>년</td><td>위험물 규제 재검토, 철도표준규격 재검토</td><td>C-21, C-26</td><td>5년</td></tr>
+  <tr><td>20년</td><td>년</td><td>완성검사 후 주요부품 공급기간</td><td>C-29</td><td>10년, 15년</td></tr>
+  <tr><td>500만원↓</td><td>원</td><td>성적 수치심 유발 벌금</td><td>C-17, C-30</td><td>-</td></tr>
+  <tr><td>100만원↓</td><td>원</td><td>흡연 과태료</td><td>C-34</td><td>500만원</td></tr>
+  <tr><td>3개월</td><td>개월</td><td>운전적성검사 불합격 재검 제한</td><td>C-34</td><td>1년</td></tr>
+  <tr><td>1년</td><td>년</td><td>운전적성검사 부정행위 재검 제한</td><td>C-34</td><td>3개월</td></tr>
+  <tr><td>10%</td><td>%</td><td>종합계획 경미변경 총사업비 범위</td><td>C-03(미기재)</td><td>5%, 20%</td></tr>
+  <tr><td>2년</td><td>년</td><td>정기 신체검사 주기</td><td>C-09(왕교재)</td><td>5년</td></tr>
+</table>
+
+<h3>F-2. 주체별 권한 분류</h3>
+<table>
+  <tr><th>주체</th><th>핵심 권한</th><th>담당 카드</th></tr>
+  <tr><td><strong>국토교통부장관</strong></td><td>종합계획 수립, 안전관리체계 승인·취소·검사, 과징금 부과, 우수운영자 지정, 운전면허 발급·취소, 형식승인·완성검사, 철도표준규격 제정·개정·폐지, 안전전문기관 지정, 정밀안전진단기관 지정, 영상보안장치 고장 보고 수리</td><td>C-03, C-04, C-05, C-06, C-08, C-10, C-24, C-26, C-28</td></tr>
+  <tr><td><strong>국토교통부장관 또는 시·도지사</strong></td><td>안전예산 공시, 보호지구 신고 수리</td><td>C-03, C-14</td></tr>
+  <tr><td><strong>철도운영자 등</strong></td><td>안전교육 실시, 직무교육 실시, 안전투자 공시, 위험물 안전취급 의무 이행</td><td>C-02, C-15, C-25</td></tr>
+  <tr><td><strong>철도차량 제작자·수입자</strong></td><td>완성검사 신청, 주요부품 20년 공급 의무, 제작자승인 신청</td><td>C-29, C-37</td></tr>
+  <tr><td><strong>운전업무종사자·여객승무원·여객역무원</strong></td><td>여객열차 금지행위 제지·녹음·녹화·촬영</td><td>C-30</td></tr>
+  <tr><td><strong>한국교통안전공단</strong></td><td>음주·약물 확인검사 요구</td><td>C-13</td></tr>
+</table>
+
+<h3>F-3. 필요적("하여야 한다") vs 임의적("할 수 있다") 완전 목록</h3>
+<table>
+  <tr><th>조문</th><th>내용</th><th>구분</th><th>카드</th></tr>
+  <tr><td>제9조①</td><td>거짓·부정한 방법으로 안전관리체계 승인 — 취소</td><td><strong style="color:#c0392b">필요적</strong></td><td>C-05</td></tr>
+  <tr><td>제9조②</td><td>변경승인 미이행 등 — 취소</td><td><strong style="color:#2980b9">임의적</strong></td><td>C-05</td></tr>
+  <tr><td>제9조②</td><td>변경신고 미이행 — 취소</td><td><strong style="color:#2980b9">임의적</strong></td><td>C-05</td></tr>
+  <tr><td>제9조②</td><td>안전관리체계 지속 미유지 — 취소</td><td><strong style="color:#2980b9">임의적</strong></td><td>C-05</td></tr>
+  <tr><td>제9조②</td><td>시정조치 미이행 — 취소</td><td><strong style="color:#2980b9">임의적</strong></td><td>C-05</td></tr>
+  <tr><td>제10조(안전관리수준평가)</td><td>안전관리수준평가 실시</td><td><strong style="color:#2980b9">임의적</strong></td><td>C-06</td></tr>
+  <tr><td>제10조(우수운영자 취소①)</td><td>거짓·부정 지정, 안전관리체계 취소 시 — 우수운영자 지정취소</td><td><strong style="color:#c0392b">필요적</strong></td><td>C-06</td></tr>
+  <tr><td>제10조(우수운영자 취소③)</td><td>그 밖의 부적합 시 — 우수운영자 지정취소</td><td><strong style="color:#2980b9">임의적</strong></td><td>C-06</td></tr>
+  <tr><td>제20조①</td><td>거짓·부정 면허 취득, 결격사유 해당, 면허증 대여, 대여 알선 — 운전면허 취소</td><td><strong style="color:#c0392b">필요적</strong></td><td>C-08</td></tr>
+  <tr><td>제40조(운행안전관리자 취소①)</td><td>거짓·부정 취득 — 자격취소</td><td><strong style="color:#c0392b">필요적</strong></td><td>C-15</td></tr>
+  <tr><td>제40조(운행안전관리자 취소②)</td><td>고의·중과실 사고 — 자격취소</td><td><strong style="color:#2980b9">임의적</strong></td><td>C-15</td></tr>
+  <tr><td>제6조의2</td><td>철도운영자의 안전투자 공시</td><td><strong style="color:#c0392b">필요적(하여야)</strong></td><td>C-25</td></tr>
+  <tr><td>제9조의2①</td><td>정기검사 매년 1회 실시</td><td><strong style="color:#c0392b">필요적(하여야)</strong></td><td>C-20</td></tr>
+  <tr><td>제37조</td><td>종합시험운행 실시</td><td><strong style="color:#c0392b">필요적(하여야)</strong></td><td>C-23</td></tr>
+  <tr><td>제46조</td><td>보호지구 규제 손실 보상</td><td><strong style="color:#c0392b">필요적(하여야)</strong></td><td>C-31</td></tr>
+</table>
+
+<!-- ===== G ===== -->
+<h2 id="secG">G. 복원문제 Coverage</h2>
+<p style="margin-bottom:8px">safety-exam-data.ts 78문항을 7.html C-01~C-38 카드와 매핑하여 풀이 가능 여부를 판정한다.</p>
+
+<table>
+  <tr><th>문항 ID</th><th>주제</th><th>매핑 카드</th><th>풀이 가능 여부</th><th>비고</th></tr>
+  <tr><td>p1_001</td><td>안전운행·질서유지 철도종사자 비해당</td><td>C-02</td><td class="충분">충분</td><td>역 매점 판매원 = 비해당 명확히 기재</td></tr>
+  <tr><td>p1_002</td><td>운행장애 비해당 (관제 무승인 정차역 통과)</td><td>C-01(왕교재)</td><td class="부분포함">부분포함</td><td>C-01은 운행장애 포함으로 기재, safety-exam에서 준사고로 분류 — 상충</td></tr>
+  <tr><td>p1_003</td><td>종합계획 경미변경 총사업비 10%</td><td>C-03</td><td class="누락">누락</td><td>10% 수치가 7.html에 없음</td></tr>
+  <tr><td>p1_004</td><td>안전관리체계 구성요소 7가지</td><td>C-35</td><td class="충분">충분</td><td>인·시·차·장·운·교·비 완전 기재</td></tr>
+  <tr><td>p1_005</td><td>정기·수시검사 계획 비포함 사항 (시정조치)</td><td>C-20</td><td class="부분포함">부분포함</td><td>검사계획 구성 항목이 C-20에 없음</td></tr>
+  <tr><td>p1_006</td><td>과징금 부과기준 → 대통령령</td><td>C-27</td><td class="충분">충분</td><td>C-27 대통령령 표에 명확히 기재</td></tr>
+  <tr><td>p1_007</td><td>과징금 7억 2천만원 기준 (재산피해 20억↑)</td><td>C-06</td><td class="부분포함">부분포함</td><td>C-06에 사망자10명=20억 있으나 재산피해 20억 기준 없음</td></tr>
+  <tr><td>p1_008</td><td>과징금 납부기한 20일</td><td>C-06, C-26</td><td class="충분">충분</td><td>20일 명확 기재</td></tr>
+  <tr><td>p1_009</td><td>운전적성검사기관 지정기준 → 대통령령</td><td>C-27</td><td class="충분">충분</td><td>C-27 표에 기재</td></tr>
+  <tr><td>p1_010</td><td>적성검사기관 지정기준 비해당 (별도 검사장)</td><td>C-09</td><td class="부분포함">부분포함</td><td>"상설 전담조직" trap은 있으나 "별도 검사장" 조항 미기재</td></tr>
+  <tr><td>p1_011~p1_015</td><td>음주기준·확인검사·종사자 구분</td><td>C-13</td><td class="충분">충분</td><td>0.02%/0.03% 구분·약물 양성판정 명확</td></tr>
+  <tr><td>p1_016~p1_018</td><td>운전면허 종류·시험·갱신</td><td>C-07, C-08</td><td class="충분">충분</td><td>6종 명칭·갱신 시기 기재</td></tr>
+  <tr><td>p1_019~p1_021</td><td>운전면허 취소·결격·반납</td><td>C-08</td><td class="충분">충분</td><td>필요적 취소 4종·결격 2년·반납 15일 완전 기재</td></tr>
+  <tr><td>p1_022~p1_023</td><td>즉시보고 기준·기한</td><td>C-16, C-22</td><td class="충분">충분</td><td>30분·5천만원·3명 기재</td></tr>
+  <tr><td>p1_024~p1_025</td><td>직무교육·안전교육 실시자</td><td>C-02, C-15</td><td class="충분">충분</td><td>철도운영자 실시 명확</td></tr>
+  <tr><td>p1_026~p1_027</td><td>종합시험운행·부품공급 형식승인</td><td>C-23</td><td class="충분">충분</td><td>2단계 절차·형식승인 필요 명확</td></tr>
+  <tr><td>p2_001~p2_005</td><td>벌칙 5단계·안전관리체계 승인 벌칙</td><td>C-17, C-19</td><td class="충분">충분</td><td>5단계 체계·두음 기재</td></tr>
+  <tr><td>p2_006~p2_010</td><td>위해물품·위험물 운송</td><td>C-21</td><td class="충분">충분</td><td>5분류·허가 요건 명확</td></tr>
+  <tr><td>p2_011~p2_015</td><td>보호지구 범위·신고 행위·조치</td><td>C-14, C-19</td><td class="충분">충분</td><td>30m/10m/20m·신고행위 유형 기재</td></tr>
+  <tr><td>p2_016~p2_017</td><td>형식승인 검사방법·경미한 사항</td><td>C-10, C-11</td><td class="충분">충분</td><td>3종 검사법·입증가능 기준 명확</td></tr>
+  <tr><td>p2_018~p2_020</td><td>정비조직 인증·취소사유</td><td>C-12, C-33</td><td class="부분포함">부분포함</td><td>취소사유 전수 목록 없음</td></tr>
+  <tr><td>p2_021~p2_022</td><td>신체검사 vs 운전적성검사 구분</td><td>C-09(왕교재)</td><td class="부분포함">부분포함</td><td>신체검사 3종은 왕교재 박스에만, 본문 설명 부족</td></tr>
+  <tr><td>p2_023~p2_025</td><td>사고보고 4단계</td><td>C-22</td><td class="충분">충분</td><td>4단계·기한 완전 기재</td></tr>
+  <tr><td>p2_026~p2_030</td><td>정밀안전진단·정기검사</td><td>C-24, C-20</td><td class="충분">충분</td><td>20년/5년·매년1회 명확</td></tr>
+  <tr><td>p2_031~p2_035</td><td>대통령령·국토교통부령 구분</td><td>C-27</td><td class="충분">충분</td><td>양쪽 표 완전 기재</td></tr>
+  <tr><td>p2_036~p2_040</td><td>안전투자 공시·안전전문기관</td><td>C-25, C-28</td><td class="충분">충분</td><td>공시 7항목(왕교재)·분야 3종 기재</td></tr>
+  <tr><td>p3_001~p3_010</td><td>여객열차 금지행위·제지 권한</td><td>C-30</td><td class="충분">충분</td><td>법률/시행규칙 이중 구조·3자 제지권 기재</td></tr>
+  <tr><td>p3_011~p3_015</td><td>과태료 금액대 구분·재검 기간</td><td>C-34</td><td class="부분포함">부분포함</td><td>200만원대 누락</td></tr>
+  <tr><td>p3_016~p3_020</td><td>안전관리체계 구성요소(7) vs 기술기준(6)</td><td>C-35</td><td class="충분">충분</td><td>두 개념 명확 분리</td></tr>
+  <tr><td>p3_021~p3_025</td><td>운전·관제 준수사항</td><td>C-36</td><td class="충분">충분</td><td>후진 금지·전자기기 금지 명확</td></tr>
+  <tr><td>p3_026~p3_030</td><td>제작자승인 결격사유·법인임원 조항</td><td>C-37</td><td class="충분">충분</td><td>⑥호 임원 조항 강조 기재</td></tr>
+  <tr><td>p3_031~p3_036</td><td>질서유지 금지행위·손실보상</td><td>C-38, C-31</td><td class="부분포함">부분포함</td><td>C-31 보상주체 불명확</td></tr>
+  <tr><td>p4_001~p4_015</td><td>2025~2026 신규기출복원 (준사고·음주·과태료 등)</td><td>C-33, C-13, C-34</td><td class="부분포함">부분포함</td><td>일부 수치·사유 보강 필요</td></tr>
+</table>
+
+<div class="note">
+  <strong>G섹션 종합 판정:</strong><br>
+  - 78문항 중 약 55문항(71%): 현재 7.html로 충분히 풀이 가능 (충분)<br>
+  - 약 17문항(22%): 부분적으로 설명 가능하나 핵심 수치·조항 누락 (부분포함)<br>
+  - 약 6문항(7%): 현재 7.html로 해결 불가 (누락) — 10% 종합계획 경미변경, 검사계획 구성항목, 과징금 세부구간, 정비조직 인증취소 전수, 과태료 200만원대, 신체검사 독립 카드
+</div>
+
+<!-- ===== H ===== -->
+<h2 id="secH">H. 최종 재구성 제안 (실제 수정 없이 구조만)</h2>
+<p style="margin-bottom:8px">아래는 현행 C-01~C-38을 유지하면서 추가·분리·통합이 권고되는 구조안이다. 실제 HTML 수정은 수행하지 않는다.</p>
+
+<h3>H-1. 통합 권고 (2건)</h3>
+<table>
+  <tr><th>통합 대상</th><th>현황</th><th>통합 방향</th></tr>
+  <tr>
+    <td>C-17 + C-19③ (벌칙 5단계)</td>
+    <td>C-17에 벌칙 5단계 표 완전 기재. C-19③에 동일한 벌칙 5단계 표가 두음 위주로 재기재 — 내용 90% 중복</td>
+    <td>C-17에 두음("탑·종·무음위·부정·수치")을 통합하고 C-19③ 벌칙 파트 삭제. C-19는 "열차운행 일시중지 + 보호지구 신고함정" 2개 주제로 슬림화</td>
+  </tr>
+  <tr>
+    <td>C-18 + C-26 (핵심수치 통합)</td>
+    <td>C-18 "핵심수치 통합 암기": 이미지 한 장만 있고 내용이 theory-note 위주. C-26 "표준규격·보완수치": 비슷한 역할의 수치 보완표. 역할이 겹침</td>
+    <td>C-26을 "핵심수치 종합 + 철도표준규격"으로 통합하고, C-18에는 수치 암기를 위한 시각 요약표(기출 출제 빈도별 분류)만 남길 것</td>
+  </tr>
+</table>
+
+<h3>H-2. 분리 권고 (1건)</h3>
+<table>
+  <tr><th>분리 대상</th><th>현황</th><th>분리 방향</th></tr>
+  <tr>
+    <td>C-12 (정비조직/기술자/이력/영상보안장치)</td>
+    <td>4개 주제가 1개 카드에 혼재. 각 주제의 조문 근거가 달라 암기·확인 비효율</td>
+    <td>
+      C-12a: 정비조직 인증·취소·준수사항 (제32~38조)<br>
+      C-12b: 철도기술자 보수훈련·등급 (시행규칙)<br>
+      C-12c: 이력관리 + 영상보안장치 (제38조, 제38조의3)
+    </td>
+  </tr>
+</table>
+
+<h3>H-3. 신규 추가 권고 (우선순위별)</h3>
+<table>
+  <tr><th>우선순위</th><th>제안 카드</th><th>이유</th></tr>
+  <tr><td>★★★ 즉시</td><td>C-39: 철도종사자 신체검사 3종 (최초/정기 2년/특별)</td><td>현재 C-09 왕교재에만 있고 독립 학습 불가. 적성검사와 혼동 유발. 복원문제 p2_022 유형 커버 위해 필수</td></tr>
+  <tr><td>★★★ 즉시</td><td>C-44: 과태료 3단계 완전비교표</td><td>현재 100만원/500만원만 있고 200만원대 완전 누락. 복원문제 p3_011 유형 커버 불가</td></tr>
+  <tr><td>★★★ 우선</td><td>C-40: 안전관리체계 취소사유 전수 판정표</td><td>C-05는 구분 위주, 취소사유 5종 완전 목록 없음</td></tr>
+  <tr><td>★★ 권고</td><td>C-41: 보호지구 신고행위 완전목록</td><td>C-14·C-19에 분산, 단일 참조 카드 필요</td></tr>
+  <tr><td>★★ 권고</td><td>C-42: 철도사고 기본조치 4가지 독립 카드</td><td>C-22 tip으로만 있어 독립 출제 시 커버 어려움</td></tr>
+  <tr><td>★ 선택</td><td>C-43: 안전전문기관 지정기준·취소사유</td><td>C-28이 분야 3종만 있어 심화 출제 시 커버 불가</td></tr>
+</table>
+
+<h3>H-4. 전체 카드 판정 일람 (C-01~C-38 전수)</h3>
+<table>
+  <tr><th>카드</th><th>제목</th><th>판정</th><th>핵심 근거</th></tr>
+  <tr><td>C-01</td><td>철도안전법 목적·용어</td><td class="수정">수정</td><td>운행장애 표에 관제 무승인 정차역통과 = 준사고 혼선</td></tr>
+  <tr><td>C-02</td><td>철도종사자 7종</td><td class="보강">보강</td><td>안전교육 실시대상 조문 근거 미기재, 포함·제외 구분표 없음</td></tr>
+  <tr><td>C-03</td><td>철도안전종합계획 핵심 수치</td><td class="보강">보강</td><td>10% 경미변경 수치 누락, 두음 없음</td></tr>
+  <tr><td>C-04</td><td>안전관리체계 승인 절차</td><td class="유지">유지</td><td>90일·14일 수치 정확, 함정 명확</td></tr>
+  <tr><td>C-05</td><td>안전관리체계 취소 필요적/임의적</td><td class="유지">유지</td><td>취소사유 구분 명확, 5종 기재</td></tr>
+  <tr><td>C-06</td><td>과징금·우수운영자</td><td class="유지">유지</td><td>30억·20일·2년 수치 정확</td></tr>
+  <tr><td>C-07</td><td>운전면허 6종</td><td class="유지">유지</td><td>6종 법정 명칭 정확</td></tr>
+  <tr><td>C-08</td><td>운전면허 핵심 수치</td><td class="유지">유지</td><td>10년·15일·2년·19세 정확</td></tr>
+  <tr><td>C-09</td><td>운전적성검사·관제자격증명</td><td class="보강">보강</td><td>신체검사 독립 기술 필요, 검사방식 표 보강</td></tr>
+  <tr><td>C-10</td><td>형식승인 검사방법 3종</td><td class="유지">유지</td><td>3종 명칭 정확, 신뢰도검사 오답 명시</td></tr>
+  <tr><td>C-11</td><td>형식승인 경미한 사항·면제</td><td class="수정">수정</td><td>면제 가능/불가 열 역전 의심</td></tr>
+  <tr><td>C-12</td><td>정비조직·기술자·이력·영상</td><td class="분리">분리</td><td>4개 주제 혼재, 카드 과부하</td></tr>
+  <tr><td>C-13</td><td>음주기준 0.02% vs 0.03%</td><td class="유지">유지</td><td>호수·종사자 구분 정확</td></tr>
+  <tr><td>C-14</td><td>철도보호지구·직무장비</td><td class="유지">유지</td><td>30m/10m/20m 수치 정확, 직무장비 5종 정확</td></tr>
+  <tr><td>C-15</td><td>관제업무·철도운행안전관리자</td><td class="유지">유지</td><td>배치기준·임면15일·취소사유 정확</td></tr>
+  <tr><td>C-16</td><td>즉시보고 기준·청문대상</td><td class="보강">보강</td><td>청문대상 전수 목록 없음("등"으로 생략)</td></tr>
+  <tr><td>C-17</td><td>벌칙 5단계 체계</td><td class="통합">통합</td><td>C-19③과 내용 90% 중복</td></tr>
+  <tr><td>C-18</td><td>핵심수치 통합 암기</td><td class="통합">통합</td><td>C-26과 역할 겹침, 이미지만 있고 내용 부실</td></tr>
+  <tr><td>C-19</td><td>일시중지·보호지구신고·벌칙두음</td><td class="유지">유지</td><td>일시중지 면책·보호지구 신고함정 유용</td></tr>
+  <tr><td>C-20</td><td>안전관리체계 정기·수시검사</td><td class="유지">유지</td><td>매년 1회·시기 없음 정확</td></tr>
+  <tr><td>C-21</td><td>위해물품·위험물 안전취급</td><td class="수정">수정</td><td>제44조는 허가구조 아님 — 카드 제목·설명에서 "허가" 삭제 필요. 소지 예외 조문 근거도 추가 필요</td></tr>
+  <tr><td>C-22</td><td>사고보고 4단계</td><td class="수정">수정</td><td>C-16과 "즉시보고" 역할 구분 불명확</td></tr>
+  <tr><td>C-23</td><td>종합시험운행</td><td class="수정">수정</td><td>종합시험운행(제37조, 노선·시설)과 완성검사(제26조의3, 철도차량)는 별개 절차 — 직렬 연결 표현 오류, 분리 기술 필요</td></tr>
+  <tr><td>C-24</td><td>정밀안전진단</td><td class="보강">보강</td><td>결과처분 조문 근거·기준일 설명 본문 보강 필요</td></tr>
+  <tr><td>C-25</td><td>안전투자 공시</td><td class="보강">보강</td><td>6개년 기준기간 본문 누락</td></tr>
+  <tr><td>C-26</td><td>철도표준규격·보완수치</td><td class="유지">유지</td><td>보완수치 집약 유용, C-18 통합 전까지 유지</td></tr>
+  <tr><td>C-27</td><td>대통령령 vs 국토교통부령</td><td class="유지">유지</td><td>양쪽 표 완전, 함정 명확</td></tr>
+  <tr><td>C-28</td><td>안전전문기관 분야</td><td class="보강">보강</td><td>분야 3종만 있고 지정기준·취소 없음</td></tr>
+  <tr><td>C-29</td><td>주요부품 공급기간 20년</td><td class="유지">유지</td><td>20년·제작자수입자 정확</td></tr>
+  <tr><td>C-30</td><td>여객열차 승객 금지행위</td><td class="유지">유지</td><td>법률/시행규칙 이중구조·제지권한 3자 명확</td></tr>
+  <tr><td>C-31</td><td>손실보상</td><td class="수정">수정</td><td>보상주체를 3자(국토교통부장관·시도지사 또는 철도운영자등) 모두 명시해야 함 (제46조). "국토부장관/시도지사"만으로는 철도운영자등 누락</td></tr>
+  <tr><td>C-32</td><td>2025.12.2 개정</td><td class="삭제후보">삭제후보</td><td>법령 원문 미확인, 시험 출제 전례 없음</td></tr>
+  <tr><td>C-33</td><td>준사고 비해당·정비조직인증 취소 비해당</td><td class="보강">보강</td><td>인증 취소사유 전수 목록 없음</td></tr>
+  <tr><td>C-34</td><td>과태료 금액대·재검 기간</td><td class="수정">수정</td><td>200만원대 과태료 완전 누락</td></tr>
+  <tr><td>C-35</td><td>구성요소(7) vs 기술기준(6)</td><td class="유지">유지</td><td>두 개념 완전 분리 기재, 두음 있음</td></tr>
+  <tr><td>C-36</td><td>철도종사자 준수사항</td><td class="유지">유지</td><td>운전·관제 준수사항 정확, 후진 조건부 허용 명확</td></tr>
+  <tr><td>C-37</td><td>제작자승인 결격사유 6종</td><td class="보강">보강</td><td>취소사유(필요적/임의적) 없음</td></tr>
+  <tr><td>C-38</td><td>질서유지 금지행위</td><td class="유지">유지</td><td>7종 금지행위 정확</td></tr>
+</table>
+
+<!-- ===== I ===== -->
+<h2 id="secI">I. 2차 작업 권고사항</h2>
+
+<h3>I-1. 긴급 수정 (2차 작업 착수 즉시)</h3>
+<table>
+  <tr><th>순위</th><th>대상</th><th>작업 내용</th><th>예상 소요</th></tr>
+  <tr>
+    <td>1</td>
+    <td>C-01 왕교재 박스</td>
+    <td>"관제 승인 없이 정차역 통과 = 운행장애" → 준사고 유형으로 수정. 시행령 제5조 근거 추가</td>
+    <td>30분</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>C-11 면제 가능/불가 표</td>
+    <td>"중량분포에 영향 안 미치는 장치·부품" 열 위치 법령 원문 대조 후 수정</td>
+    <td>1시간</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>C-31 손실보상</td>
+    <td>"법정 주체" → "국토교통부장관 또는 시·도지사 (명령한 자)" 로 구체화. 제46조 조문 인용</td>
+    <td>30분</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>C-34</td>
+    <td>200만원 이하 과태료 항목 추가. 제82조 전수 정리</td>
+    <td>1시간</td>
+  </tr>
+</table>
+
+<h3>I-2. 우선 보강 (착수 후 1주 이내)</h3>
+<table>
+  <tr><th>순위</th><th>대상</th><th>작업 내용</th></tr>
+  <tr><td>5</td><td>C-03</td><td>경미변경 10% 수치 추가. 종합계획 포함사항 두음("시·사·투·목·교·기") 추가</td></tr>
+  <tr><td>6</td><td>C-16</td><td>청문 대상 전수 목록 기재 (품질인증취소 = 비대상 함정 보강)</td></tr>
+  <tr><td>7</td><td>C-33</td><td>정비조직인증 취소사유 완전 목록 추가</td></tr>
+  <tr><td>8</td><td>C-09</td><td>신체검사 3종을 본문 표로 이동 (왕교재 박스에서 격상)</td></tr>
+</table>
+
+<h3>I-3. 신규 카드 추가 (2차 작업 중반)</h3>
+<table>
+  <tr><th>순위</th><th>카드</th><th>내용 범위</th></tr>
+  <tr><td>9</td><td>C-39 신체검사</td><td>최초/정기(2년)/특별 + 철도의사 면담 + 구분 함정</td></tr>
+  <tr><td>10</td><td>C-44 과태료 완전비교표</td><td>100만원/200만원/500만원 3단계 전수 + 흡연 위치 확인</td></tr>
+  <tr><td>11</td><td>C-12 분리</td><td>C-12a(정비조직) / C-12b(기술자) / C-12c(이력·영상) 3분할</td></tr>
+</table>
+
+<h3>I-4. 선택 작업 (여유 시 수행)</h3>
+<table>
+  <tr><th>순위</th><th>작업</th></tr>
+  <tr><td>12</td><td>C-32 삭제 또는 "법령 원문 확인 대기" 상태 표시 추가</td></tr>
+  <tr><td>13</td><td>C-17+C-19③ 통합 작업 (벌칙 중복 제거)</td></tr>
+  <tr><td>14</td><td>C-18+C-26 역할 재조정</td></tr>
+  <tr><td>15</td><td>C-41: 보호지구 신고행위 독립 카드 추가</td></tr>
+  <tr><td>16</td><td>철도차량 생애주기 흐름도 카드 추가 (형식승인→제작자승인→완성검사→정비조직→정밀안전진단→주요부품공급)</td></tr>
+</table>
+
+<div class="note" style="margin-top:24px">
+  <strong>최종 코멘트:</strong><br>
+  7.html은 전반적으로 높은 완성도를 갖추고 있으며, 특히 PART 1~6(C-01~C-19)의 핵심 수치·필요적/임의적·함정 구조는 시험 대비에 매우 효과적이다.
+  2차 작업의 최우선 과제는 (1) C-01 운행장애 혼선 수정, (2) C-34 200만원 과태료 추가, (3) C-39 신체검사 독립 카드 생성이며, 이 3건만 완료해도 복원문제 Coverage가 71% → 80% 이상으로 상승할 것으로 추정된다.
+</div>
+
+</div>
+</body>
+</html>
