@@ -340,6 +340,29 @@ export default function SidebarNav() {
                 <span className="truncate">{unit.name}</span>
               </a>
             ))}
+
+            {/* PART 14 */}
+            <div className="mt-4 mb-1 px-3 text-[11px] font-bold text-gray-400">
+              PART 14 · 특수차량
+            </div>
+
+            {[
+              { id: '14-01', name: '경량전철·고무차륜', file: 'unit-14-01_FINAL_PUBLISH_v1.1.html' },
+              { id: '14-02', name: '특수차량·부속설비', file: 'unit-14-02_FINAL_PUBLISH_v1.1.html' },
+            ].map(unit => (
+              <a
+                key={unit.id}
+                href={`/theory/${unit.file}`}
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs transition-colors ${
+                  pathname.includes(unit.file)
+                    ? 'bg-blue-100 text-blue-800 font-semibold'
+                    : 'text-gray-500 hover:bg-gray-50 hover:text-blue-700'
+                }`}
+              >
+                <span className="text-[10px] text-gray-400 font-mono w-8 shrink-0">{unit.id}</span>
+                <span className="truncate">{unit.name}</span>
+              </a>
+            ))}
           </div>
         )}
 

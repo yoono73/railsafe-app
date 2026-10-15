@@ -94,37 +94,34 @@
 
   <div class="content-box">
     <p><strong>건널목(踏切, Level Crossing)</strong>: 도로와 철도가 평면으로 교차하는 지점으로, 보안설비 수준에 따라 <strong>1종·2종·3종</strong>으로 분류한다.</p>
-    <p>종류별로 차단기·경보기·감시원(간수) 유무가 다르며, 시험에서 종별 구성 요소를 혼동하는 함정 선지가 자주 출제된다.</p>
+    <p>종류별로 차단기·경보기·건널목 교통안전표지 설치 여부가 다르며, 시험에서 종별 구성 요소를 혼동하는 함정 선지가 자주 출제된다.</p>
   </div>
 
   <table>
     <thead>
-      <tr><th>종별</th><th>차단기</th><th>경보기</th><th>감시원(간수)</th><th>작동 방식</th><th>특징</th></tr>
+      <tr><th>종별</th><th>차단기</th><th>경보기</th><th>건널목 교통안전표지</th><th>특징</th></tr>
     </thead>
     <tbody>
       <tr>
         <td><strong>1종</strong></td>
         <td>O (있음)</td>
         <td>O (있음)</td>
-        <td><strong>상주</strong></td>
-        <td>주야간 작동</td>
-        <td>가장 높은 보안등급, 감시원 24시간 상주</td>
+        <td>O (있음)</td>
+        <td>차단기 + 경보기 + 건널목 교통안전표지 (3종 설비 모두)</td>
       </tr>
       <tr>
         <td><strong>2종</strong></td>
+        <td>없음</td>
         <td>O (있음)</td>
         <td>O (있음)</td>
-        <td>없음 (무인)</td>
-        <td>자동 작동</td>
-        <td>차단기+경보기 자동, 무인 운영</td>
+        <td>경보기 + 건널목 교통안전표지 (차단기 없음)</td>
       </tr>
       <tr>
         <td><strong>3종</strong></td>
         <td>없음</td>
+        <td>없음</td>
         <td>O (있음)</td>
-        <td>없음 (무인)</td>
-        <td>경보만</td>
-        <td>경보기만 설치, 무인 운영</td>
+        <td>건널목 교통안전표지만 설치 (차단기·경보기 없음)</td>
       </tr>
     </tbody>
   </table>
@@ -178,16 +175,21 @@
     </tbody>
   </table>
 
+  <div class="vis-box">
+    <img src="images/호륜레일·안전레일.png" alt="호륜레일·안전레일 간격 비교 (65mm vs 180mm)">
+    <div class="vis-caption">호륜레일(건널목 구간, 직선 65mm) vs 안전레일(고가부 구간, 최대 180mm)</div>
+  </div>
+
   <!-- 함정박스 -->
   <div class="sec-title">오답 선지 판별</div>
 
   <div class="trap-box">
     <div class="trap-title">오답 선지 판별 (함정 유형)</div>
-    <div class="trap-item"><span class="x">X</span>"2종 건널목에는 감시원이 상주한다" → 오답. 감시원 상주는 <strong>1종만</strong>이다. 2종은 무인 자동 작동.</div>
-    <div class="trap-item"><span class="x">X</span>"3종 건널목에는 차단기와 경보기가 모두 설치된다" → 오답. 3종은 <strong>경보기만</strong> 설치. 차단기 없음.</div>
-    <div class="trap-item"><span class="x">X</span>"2종과 3종의 차이는 감시원 유무이다" → 오답. 2·3종 모두 무인. 차이는 <strong>차단기 유무</strong>이다.</div>
+    <div class="trap-item"><span class="x">X</span>"2종 건널목에는 차단기가 설치된다" → 오답. 2종은 <strong>차단기 없음</strong>. 경보기 + 건널목 교통안전표지만 설치.</div>
+    <div class="trap-item"><span class="x">X</span>"3종 건널목에는 경보기가 설치된다" → 오답. 3종은 <strong>건널목 교통안전표지만</strong> 설치. 경보기·차단기 없음.</div>
+    <div class="trap-item"><span class="x">X</span>"2종과 3종의 차이는 감시원 유무이다" → 오답. 차이는 <strong>경보기 유무</strong>이다. (2종: 경보기 있음 / 3종: 없음)</div>
     <div class="trap-item"><span class="x">X</span>"호륜레일의 본선 간격은 180mm이다" → 오답. 180mm는 <strong>안전레일</strong>이다. 호륜레일은 <strong>65mm</strong>.</div>
-    <div class="trap-item"><span class="o">O</span>1종 = 차단기 + 경보기 + 감시원 상주 / 2종 = 차단기 + 경보기 (무인) / 3종 = 경보기만 (무인).</div>
+    <div class="trap-item"><span class="o">O</span>1종 = 차 + 경 + 표 / 2종 = 경 + 표 (차단기 없음) / 3종 = 표만 (차단기·경보기 없음).</div>
     <div class="trap-item"><span class="o">O</span>호륜레일 = 건널목 구간 차륜 유도 = 직선 본선과 65mm.</div>
     <div class="trap-item"><span class="o">O</span>안전레일 = 고가부 탈선 피해 최소화 = 본선과 최대 180mm.</div>
   </div>
@@ -198,9 +200,9 @@
   <div class="memo-box">
     <div class="memo-title">📌 건널목 3종 핵심 암기</div>
     <div class="memo-text">
-      1종 = 차단기 + 경보기 + 감시원 상주 (주야간 작동)<br>
-      2종 = 차단기 + 경보기 / 무인 자동<br>
-      3종 = 경보기만 / 무인<br>
+      1종 = 차(단기) + 경(보기) + 표(지) → 차 + 경 + 표<br>
+      2종 = 경(보기) + 표(지) → 경 + 표 (차단기 없음)<br>
+      3종 = 표(지)만 → 표 (차단기·경보기 없음)<br>
       <br>
       호륜레일 → 건널목·차륜유도 → 직선 65mm<br>
       안전레일 → 고가·탈선피해최소화 → 최대 180mm
@@ -213,7 +215,7 @@
   <div class="qst-box">
     <div class="qst-meta">연습 · SOURCE 30 · 4지선다형</div>
     <div class="qst-num">Q1</div>
-    <div class="qst-q">철도 건널목의 종류 중 차단기와 경보기를 모두 갖추고 감시원이 24시간 상주하는 것은?</div>
+    <div class="qst-q">철도 건널목의 종류 중 차단기, 경보기, 건널목 교통안전표지를 모두 설치하는 것은?</div>
     <ul class="choice-list">
       <li>① 1종 건널목</li>
       <li>② 2종 건널목</li>
@@ -227,10 +229,10 @@
     <div class="qst-num">Q2</div>
     <div class="qst-q">다음 중 건널목 종류와 설비 구성이 올바르게 연결된 것은?</div>
     <ul class="choice-list">
-      <li>① 1종 — 경보기만 설치, 무인</li>
-      <li>② 2종 — 차단기·경보기 설치, 감시원 상주</li>
-      <li>③ 3종 — 경보기만 설치, 무인</li>
-      <li>④ 2종 — 경보기만 설치, 자동 작동</li>
+      <li>① 1종 — 건널목 교통안전표지만 설치</li>
+      <li>② 2종 — 차단기 + 경보기 + 건널목 교통안전표지 설치</li>
+      <li>③ 3종 — 건널목 교통안전표지만 설치</li>
+      <li>④ 2종 — 경보기 + 건널목 교통안전표지 설치 (차단기 없음)</li>
     </ul>
   </div>
 
@@ -245,12 +247,12 @@
 
     <div class="ans-box">
       <p class="ans-num">Q1 정답 ①</p>
-      <p class="ans-answer">1종 건널목은 차단기·경보기를 모두 갖추고 감시원(간수)이 24시간 상주하여 주야간 직접 조작·감시한다. 가장 높은 보안등급의 건널목이다. ② 2종은 차단기·경보기 자동 작동, 무인. ③ 3종은 경보기만 설치, 무인. ④ 자동건널목은 별도 종류 구분이 아님.</p>
+      <p class="ans-answer">1종 건널목은 차단기 + 경보기 + 건널목 교통안전표지를 모두 설치한다(차·경·표). 2종은 경보기 + 건널목 교통안전표지(차단기 없음), 3종은 건널목 교통안전표지만 설치. ④ 자동건널목은 별도 종류 구분이 아님.</p>
     </div>
 
     <div class="ans-box">
-      <p class="ans-num">Q2 정답 ③</p>
-      <p class="ans-answer">3종 건널목은 경보기만 설치하고 감시원 없이 무인으로 운영한다. ① 1종은 차단기+경보기+감시원 상주이므로 오답. ② 2종은 차단기+경보기 자동이며 감시원 없음. ④ 2종은 차단기+경보기 모두 있음.</p>
+      <p class="ans-num">Q2 정답 ④</p>
+      <p class="ans-answer">정답 ④. 2종 건널목은 경보기 + 건널목 교통안전표지 설치(차단기 없음). ① 1종은 건널목 교통안전표지만이 아니라 차단기+경보기+표지 3종 모두 설치. ② 2종은 차단기가 없으므로 오답. ③ 3종은 건널목 교통안전표지만 설치(경보기 없음). ④가 정답.</p>
     </div>
 
     <div class="ans-box">
