@@ -594,7 +594,7 @@ ATS = 지상신호 + 정지만 | ATC = 차내신호 + 속도 연속 제어 + 차
 <div class="trap">ATS도 차내에 속도를 표시한다 ❌ → 차내 표시는 ATC부터<br>ATP는 ATC와 완전히 다른 별개 장치다 ❌ → ATP는 운행권한·속도 감시 기반 열차방호 시스템 (기능 범위는 구현에 따라 다름)<br>CBTC = ATC의 다른 이름 ❌ → CBTC는 무선통신 기반의 별도 방식<br>CBTC는 반드시 이동폐색 전용이다 ❌ → 주로 이동폐색 방식을 적용하나 구현에 따라 다름</div>
 <div class="theory-note">
 <strong>왜 ATS만으로는 부족한가?</strong><br>
-ATS는 특정 지점을 지날 때만 속도를 검사합니다. 지점과 지점 사이 구간에서는 과속을 감지하지 못합니다. 반면 ATC는 선행 열차 위치에 따라 <strong>허용 속도를 실시간으로 계속 바꿔주고</strong>, 초과하면 즉시 자동 감속합니다. ATP는 여기에 더해 <strong>목표 정지 지점까지 자동으로 제동</strong>하여 열차 간 충돌을 원천 차단합니다.
+ATS는 특정 지점을 지날 때만 속도를 검사합니다. 지점과 지점 사이 구간에서는 과속을 감지하지 못합니다. 반면 ATC는 선행 열차 위치에 따라 <strong>허용 속도를 실시간으로 계속 바꿔주고</strong>, 초과하면 즉시 자동 감속합니다. ATP는 <strong>운행권한(MA)과 허용속도를 지속적으로 감시</strong>하고, 제한을 초과하거나 위험 상태가 발생하면 제동을 개입하여 열차의 안전 운행을 방호합니다. 구체적인 제동 방식과 기능 범위는 시스템 구현에 따라 다를 수 있습니다.
 </div>
 <br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div>
 <div class="qe-q">Q. 차량 내부에 허용속도를 실시간으로 표시하는 열차제어장치는?</div>
@@ -967,11 +967,11 @@ ATS는 특정 지점을 지날 때만 속도를 검사합니다. 지점과 지�
 
 <div class="table-wrap"><table>
 <tr><th>항목</th><th>개념</th><th>장점</th><th>단점</th></tr>
-<tr class="hl"><td><b>관절대차</b><br>(Jacobs Bogie)</td><td>인접한 두 차량이 연결부 대차 <b>1개를 공유</b></td><td>✅ 곡선통과 우수<br>✅ 승차감 향상<br>✅ 연결부 흔들림 감소</td><td>❌ 구조 복잡<br>❌ 중량 증가<br>❌ 차량 단독 분리 어려움</td></tr>
+<tr class="hl"><td><b>관절대차</b><br>(Jacobs Bogie)</td><td>인접한 두 차량이 연결부 대차 <b>1개를 공유</b></td><td>✅ 곡선통과 우수<br>✅ 승차감 향상<br>✅ 연결부 흔들림 감소</td><td>❌ 구조 복잡<br>❌ 차량 단독 분리·편성 변경 어려움</td></tr>
 <tr><td><b>고정축거</b><br>(Fixed Wheelbase)</td><td>대차 안 앞차축~뒷차축 중심 사이 거리</td><td>짧을수록 → ✅ 곡선통과 원활</td><td>너무 짧으면 직선 주행 안정성 감소</td></tr>
 </table></div>
 <div class="trap">관절대차 단점 = 곡선통과 불량 ❌ → 곡선통과는 오히려 <b>우수</b></div>
-<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 관절대차의 단점 2가지는?</div><div class="qe-a">정답: ① 구조 복잡 ② 중량 증가</div><div class="qe-wrong">오답함정: "관절대차는 곡선통과 불량하다" — 실제로는 우수 / "고정축거를 길게 하면 곡선통과가 좋다" — 반대</div></div>
+<br><div class="quiz-ex"><div class="qe-title">📝 기출 예시</div><div class="qe-q">Q. 관절대차의 대표적인 단점은?</div><div class="qe-a">정답: 차량 단독 분리·편성 변경이 어려움 (구조 복잡)</div><div class="qe-wrong">오답함정: "관절대차는 곡선통과 불량하다" — 실제로는 우수 / "고정축거를 길게 하면 곡선통과가 좋다" — 반대 / "관절대차는 중량이 증가한다" — 단정할 수 없음, 시험 정답으로 부적합</div></div>
 </div>
 
 <div class="concept" id="C-29">
