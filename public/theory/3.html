@@ -4,7 +4,7 @@
 <title>열차운전 핵심정리</title>
 <style>
 * { box-sizing:border-box; margin:0; padding:0; }
-body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#f8f9fa; color:#1a1a2e; font-size:15px; line-height:1.7; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#fff; color:#1a1a2e; font-size:15px; line-height:1.7; }
 .site-header { background:linear-gradient(135deg,#0c4a6e,#0369a1); color:#fff; padding:5px 16px 4px; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.3); }
 .site-header h1 { font-size:1.05em; }
 .site-header .meta { font-size:.75em; opacity:.8; margin-top:1px; }
@@ -34,16 +34,16 @@ body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#f8f9f
 table { width:100%; border-collapse:collapse; margin:8px 0; font-size:.9em; }
 th { background:#0c4a6e; color:#fff; padding:7px 10px; text-align:left; font-size:.88em; }
 td { padding:6px 10px; border-bottom:1px solid #e0f2fe; vertical-align:top; }
-tr:nth-child(even) td { background:#f0f9ff; }
-tr.hl td { background:#fff3e0; font-weight:bold; }
-.trap { background:#fff3e0; border-left:4px solid #e65100; padding:8px 12px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#bf360c; }
-.tip { background:#e8f5e9; border-left:4px solid #2e7d32; padding:8px 12px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#1b5e20; }
-.step-box { background:#e0f2fe; border:1px solid #7dd3fc; padding:8px 14px; border-radius:6px; margin:8px 0; font-size:.9em; }
-.vis-wrap { margin:12px 0; background:#f0f9ff; border:1px solid #7dd3fc; border-radius:8px; padding:10px; text-align:center; }
+tr:nth-child(even) td { background:#fff; }
+tr.hl td { background:#fff; font-weight:bold; }
+.trap { background:#fff; border-left:4px solid #e65100; padding:8px 12px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#bf360c; }
+.tip { background:#fff; border-left:4px solid #2e7d32; padding:8px 12px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#1b5e20; }
+.step-box { background:#fff; border:1px solid #7dd3fc; padding:8px 14px; border-radius:6px; margin:8px 0; font-size:.9em; }
+.vis-wrap { margin:12px 0; background:#fff; border:1px solid #7dd3fc; border-radius:8px; padding:10px; text-align:center; }
 .vis-wrap img { max-width:100%; height:auto; border-radius:4px; }
 .vis-wrap .caption { font-size:.8em; color:#666; margin-top:6px; }
 
-.checklist{background:#f0f9ff;border:1px solid #7dd3fc;border-radius:8px;padding:14px 18px;margin:20px 0;}
+.checklist{background:#fff;border:1px solid #7dd3fc;border-radius:8px;padding:14px 18px;margin:20px 0;}
 .checklist h3{color:#0c4a6e;margin-bottom:8px;font-size:.95em;}
 .checklist label{display:block;margin:4px 0;font-size:.9em;cursor:pointer;}
 
@@ -202,27 +202,27 @@ tr.hl td { background:#fff3e0; font-weight:bold; }
 /* ===== 일반 화면 스타일 (print 블록 밖) ===== */
 
 /* 이론 해설 박스 */
-.theory-note { background:#f0f7ff; border-left:4px solid #2563eb; padding:10px 14px; margin:8px 0 20px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#1e3a5f; }
+.theory-note { background:#fff; border-left:4px solid #2563eb; padding:10px 14px; margin:8px 0 20px 0; border-radius:0 6px 6px 0; font-size:.9em; color:#1e3a5f; }
 .theory-note strong { color:#1d4ed8; }
 
 /* 기출 예시 박스 */
-.quiz-ex { background:#f0fdf4; border-left:4px solid #16a34a; padding:10px 14px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.88em; color:#14532d; }
+.quiz-ex { background:#fff; border-left:4px solid #16a34a; padding:10px 14px; margin:8px 0; border-radius:0 6px 6px 0; font-size:.88em; color:#14532d; }
 .quiz-ex .qe-title { font-weight:bold; color:#15803d; margin-bottom:4px; }
 
 /* 철도왕 교재 보충/차이 박스 */
-.king-book-note { background:#fff8e1; border-left:4px solid #f57c00; padding:10px 14px; margin:10px 0; border-radius:0 6px 6px 0; font-size:.88em; color:#4e342e; }
+.king-book-note { background:#fff; border-left:4px solid #f57c00; padding:10px 14px; margin:10px 0; border-radius:0 6px 6px 0; font-size:.88em; color:#4e342e; }
 .king-book-note .kb-label { display:inline-block; background:#f57c00; color:#fff; border-radius:4px; padding:1px 8px; font-size:.82em; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
 .king-book-note strong { color:#bf360c; }
 .king-book-note ul { margin:4px 0 4px 16px; }
 .king-book-note li { margin:2px 0; }
 .quiz-ex .qe-q { margin:4px 0 2px; }
 .quiz-ex .qe-a { font-weight:bold; color:#166534; }
-.quiz-ex .qe-wrong { display:block; background:#fee2e2; border-left:3px solid #dc2626; color:#b91c1c; padding:5px 10px; margin:6px 0; border-radius:4px; font-size:0.88em; }
+.quiz-ex .qe-wrong { display:block; background:#fff; border-left:3px solid #dc2626; color:#b91c1c; padding:5px 10px; margin:6px 0; border-radius:4px; font-size:0.88em; }
 
 /* 비교 하이라이트 박스 */
 .compare-box { display:grid; gap:6px; margin:8px 0; }
 .compare-box.col2 { grid-template-columns: 1fr 1fr; }
-.cbox-item { background:#f8f8f8; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px; font-size:.88em; }
+.cbox-item { background:#fff; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px; font-size:.88em; }
 .cbox-item .cbox-head { font-weight:bold; color:#4c1d95; margin-bottom:4px; font-size:.92em; }
 @media(max-width:600px){ .compare-box.col2{ grid-template-columns:1fr; } }
 
