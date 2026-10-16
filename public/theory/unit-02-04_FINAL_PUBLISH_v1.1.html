@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>02-04 복선화 [FINAL PUBLISH v1.1]</title>
+<title>02-04 고속선 설계기준·경부고속선 제원 [FINAL PUBLISH v1.1]</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
@@ -17,7 +17,8 @@
   .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
   .badge-part { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
   .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
-  .badge-final { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+  .badge-hold { color: #b45309; border-color: #b45309; background: #fffbeb; }
+  .badge-final { color: #059669; border-color: #059669; background: #f0fdf4; }
 
   .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
   .sec-sub { font-size: 14px; font-weight: 700; color: #1a1a1a; margin: 20px 0 8px; padding: 4px 10px; background: #f5f7fa; border-left: 3px solid #64748b; }
@@ -45,14 +46,25 @@
   .term-label { font-size: 12px; font-weight: 800; color: #0369a1; margin-bottom: 4px; }
   .term-text { font-size: 13.5px; color: #1a1a1a; }
 
-  .crossref-box { border: 1.5px solid #059669; border-radius: 6px; padding: 12px 16px; background: #f0fdf4; margin-bottom: 14px; }
-  .crossref-title { font-size: 12px; font-weight: 800; color: #059669; margin-bottom: 6px; }
-  .crossref-text { font-size: 13px; color: #1a1a1a; }
-
   .exam-item { padding: 10px 14px; border-radius: 5px; margin-bottom: 8px; font-size: 13.5px; border: 1.5px solid; }
   .exam-key { border-color: #1e3a5f; background: #f0f4f8; }
   .exam-trap { border-color: #dc2626; background: #fef2f2; }
   .exam-item strong { display: block; margin-bottom: 3px; }
+
+  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
+  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
+  .choice-list { list-style: none; padding: 0; }
+  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
+  .choice-list li:hover { background: #f8fafc; }
+
+  .answer-section { margin-top: 40px; border-top: 2px solid #1e3a5f; padding-top: 20px; }
+  .answer-section .sec-title { margin-top: 0; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-answer { font-size: 13.5px; color: #1a1a1a; line-height: 1.7; margin-bottom: 6px; }
+  .ans-box .ans-trap { border: 1.5px solid #dc2626; border-radius: 5px; padding: 8px 12px; background: #fef2f2; font-size: 13px; color: #7f1d1d; margin-top: 8px; }
 
   .vis-wrap { margin: 14px 0; text-align: center; }
   .vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
@@ -60,22 +72,23 @@
 
   .print-btn {
     position: fixed; top: 12px; right: 16px; z-index: 999;
-    background: #065f46; color: #fff; border: none;
+    background: #1e3a5f; color: #fff; border: none;
     padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px;
   }
-  .print-btn:hover { background: #047857; }
+  .print-btn:hover { background: #163050; }
   @media print {
     @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
     .page-wrap { padding: 10px; }
-    .content-box { break-inside: avoid; page-break-inside: avoid; }
+    .qst-box, .content-box, .ans-box { break-inside: avoid; page-break-inside: avoid; }
     img, .vis-wrap img { max-width: 100%; height: auto; }
     table { width: 100%; max-width: 100%; }
+    .answer-section { break-before: page; page-break-before: always; }
     .print-btn { display: none !important; }
   }
 
   .unit-nav { display:flex; justify-content:space-between; align-items:center; margin:32px 0 16px; padding:12px 0; border-top:2px solid #e5e7eb; }
-  .unit-nav a { color:#065f46; text-decoration:none; font-weight:600; font-size:15px; padding:6px 12px; border-radius:6px; background:#ecfdf5; }
-  .unit-nav a:hover { background:#d1fae5; }
+  .unit-nav a { color:#b45309; text-decoration:none; font-weight:600; font-size:15px; padding:6px 12px; border-radius:6px; background:#fffbeb; }
+  .unit-nav a:hover { background:#fef3c7; }
   .unit-nav .nav-gap { flex:1; }
 </style>
 </head>
@@ -86,126 +99,134 @@
   <!-- 헤더 -->
   <div class="unit-header">
     <div class="unit-num">GATE5 · PART 02 · UNIT 02-04</div>
-    <div class="unit-title">복선화</div>
-    <div class="unit-sub">단선→복선 전환, 교행제약 감소, 운전취급 단순화, 선로용량 증대 효과</div>
+    <div class="unit-title">고속선 설계기준·경부고속선 제원</div>
+    <div class="unit-sub">고속선 설계속도·곡선반경·캔트·구배 기준, 고속철도 법적 정의</div>
     <div class="badge-row">
       <span class="badge badge-part">PART 02 선로계획·설계</span>
       <span class="badge badge-grade">★★☆ 중요</span>
-      <span class="badge badge-final">FINAL PUBLISH</span>
+      <span class="badge badge-final">FINAL PUBLISH v1.1</span>
     </div>
-  </div>
-
-  <!-- CROSS-REF -->
-  <div class="crossref-box">
-    <div class="crossref-title">CROSS-REF → UNIT 02-03</div>
-    <div class="crossref-text">복선화는 선로용량 증대 방법 중 하나. 단선 약 80회/일 → 복선 약 240회/일(3배). 선로이용률·포화도 계산식은 UNIT 02-03 참조.</div>
   </div>
 
   <!-- §1 용어정의 -->
   <div class="sec-title">§1. 핵심 용어정의</div>
 
   <div class="term-box">
-    <div class="term-label">용어정의 | 복선화(複線化)</div>
-    <div class="term-text">한 가닥 선로를 상·하행 열차가 공용하는 단선 선로를 상·하행 방향을 분리한 두 가닥의 선로(복선)로 확장하는 것. 교행 대기 없이 상·하행 열차가 동시에 달릴 수 있어 용량이 크게 늘어난다.</div>
+    <div class="term-label">용어정의 | 설계속도(Design Speed)</div>
+    <div class="term-text">선로(노선)를 설계할 때 기준으로 정한 최고 속도. 선로의 곡선반경·캔트 등 모든 설계 요소가 이 속도에 맞춰 결정된다. 실제 열차의 영업 최고속도와는 다를 수 있다.</div>
   </div>
   <div class="term-box">
-    <div class="term-label">용어정의 | 교행(交行)</div>
-    <div class="term-text">단선 선로에서 상행 열차와 하행 열차가 서로 반대 방향으로 지나쳐야 할 때, 한쪽이 대피선에서 기다리는 것. 복선화로 교행 대기가 불필요해진다.</div>
+    <div class="term-label">용어정의 | 곡선반경(曲線半徑, Curve Radius)</div>
+    <div class="term-text">선로가 휘어진 구간에서 그 곡선이 그리는 원의 반지름. 반지름이 클수록 곡선이 완만하고, 작을수록 급하다. 고속 운행할수록 더 완만한(큰) 곡선반경이 필요하다.</div>
+  </div>
+  <div class="term-box">
+    <div class="term-label">용어정의 | 완화곡선(緩和曲線)</div>
+    <div class="term-text">직선 구간과 곡선 구간 사이에 삽입하는 점이(漸移) 구간. 속도와 원심력이 갑자기 변하지 않도록 서서히 바꿔주어 탈선 위험을 줄이고 승차감을 높인다.</div>
+  </div>
+  <div class="term-box">
+    <div class="term-label">용어정의 | 구배(勾配, ‰)</div>
+    <div class="term-text">선로의 기울기를 나타내는 단위. 수평거리 1,000m당 높이 변화(m)를 수치로 표시한다. 예: 25‰ = 1,000m를 가면 25m 오르내림.</div>
   </div>
 
-  <!-- §2 복선화 효과 -->
-  <div class="sec-title">§2. 복선화 효과 (SOURCE 56)</div>
+  <!-- §2 고속선 설계기준 -->
+  <div class="sec-title">§2. 고속선 설계기준 (SOURCE 62)</div>
 
-  <div class="vis-wrap">
-    <img src="images/VIS-123_단선_복선_구조비교도_FINAL.png" alt="복선화 개념도 — 단선→복선 구조 비교"
-         onerror="this.src='images/VIS-106_복선화.png'; this.onerror=null;">
-    <div class="vis-caption">VIS-123 단선·복선 구조 비교도 (SOURCE 56)</div>
+  <div class="vis-wrap" style="margin:16px 0;">
+    <img src="images/VIS-129_고속선_설계기준_조건별비교도_FINAL.png" alt="고속선 설계기준 조건별 비교도"
+         style="max-width:100%; height:auto; display:block; margin:0 auto;"
+         onerror="this.onerror=null; this.style.display='none';">
+    <div class="vis-caption">VIS-129 고속선 설계기준 조건별 비교도 (SOURCE 62)</div>
   </div>
 
   <table>
-    <tr><th>구분</th><th>단선</th><th>복선</th></tr>
-    <tr><td><strong>상·하행 분리</strong></td><td>한 가닥 공용 (교행 필요)</td><td>상행·하행 독립 운행</td></tr>
-    <tr><td><strong>교행 제약</strong></td><td>있음 (대피선 대기)</td><td>없음</td></tr>
-    <tr><td><strong>선로용량</strong></td><td>약 80회/일</td><td>약 240회/일</td></tr>
-    <tr><td><strong>운전취급</strong></td><td>복잡 (교행 조정 필요)</td><td>단순화</td></tr>
+    <tr><th>항목</th><th>고속선 기준</th><th>비고</th></tr>
+    <tr><td><strong>설계속도</strong></td><td>300km/h 이상 (구간 예: <strong>350km/h</strong>)</td><td>고속선 기준 — 구간별 지정</td></tr>
+    <tr><td><strong>최소곡선반경</strong></td><td>V=350km/h 기준: 자갈도상 <strong>6,100m</strong> / 콘크리트도상 <strong>5,000m</strong></td><td>도상 조건에 따라 다름</td></tr>
+    <tr><td><strong>완화곡선 길이</strong></td><td>설계속도·곡선반경·캔트(부족캔트) 변화량에 따라 산정</td><td>단일 고정 수치 없음</td></tr>
+    <tr><td><strong>최대캔트</strong></td><td>자갈도상 <strong>160mm</strong> / 콘크리트도상 <strong>180mm</strong></td><td>도상 조건별 구분</td></tr>
   </table>
 
-  <div class="content-box">
-    <p><strong>복선화의 주요 효과:</strong></p>
-    <p>① <strong>교행 제약 감소</strong> — 상·하행이 서로 방해받지 않고 독립 운행</p>
-    <p>② <strong>운전취급 단순화</strong> — 교행 대기·조정 불필요</p>
-    <p>③ <strong>수송력(선로용량) 증가</strong> — 단선 대비 약 3배 (80회 → 240회/일)</p>
-    <p>④ <strong>정시성 향상</strong> — 교행 지연 요인 제거</p>
-  </div>
-
-  <!-- §3 주의사항 -->
-  <div class="sec-title">§3. 주의사항 — 단순화 금지</div>
+  <div class="sec-sub">최대 구배 비교</div>
+  <table>
+    <tr><th>선종</th><th>최대 허용 구배</th></tr>
+    <tr><td><strong>일반선</strong></td><td><strong>25‰</strong></td></tr>
+    <tr><td><strong>고속선</strong> (200 &lt; V ≤ 350 km/h)</td><td><strong>35‰</strong> [R1 — engineering id:59]</td></tr>
+  </table>
 
   <div class="trap-box">
-    <div class="trap-title">일반화 금지 사항</div>
-    <div class="trap-item"><span class="x">X</span>"복선화 시 용량은 항상 정확히 3배이다" → 단순 일반화 주의. SOURCE 기준 단선 약 80, 복선 약 240으로 <strong>약 3배</strong>이나, 실제는 선형·신호·운행 조건에 따라 달라질 수 있음.</div>
-    <div class="trap-item"><span class="o">O</span>SOURCE 56: 단선 약 80회/일, 복선 약 240회/일 → 3배 효과 (SOURCE 기준 암기)</div>
+    <div class="trap-title">오답 선지 판별</div>
+    <div class="trap-item"><span class="x">X</span>"고속선 곡선반경 = 3,000m 또는 고정 7,000m" → 오답. V=350km/h 기준 자갈도상 <strong>6,100m</strong> / 콘크리트도상 <strong>5,000m</strong>. 도상 조건에 따라 다르며 단일 수치가 없다.</div>
+    <div class="trap-item"><span class="x">X</span>"고속선이 구배 기준 더 엄격(작다)" → 오답. 고속선(동력분산식)은 구배 성능 우수하여 <strong>35‰ 허용</strong>. 일반선 25‰보다 크다.</div>
+    <div class="trap-item"><span class="o">O</span>비교 암기: 곡선반경 고속&gt;일반, 구배허용 고속&gt;일반. 캔트는 <strong>도상 조건</strong>에 따라 다름 (자갈 160mm / 콘크리트 180mm)</div>
   </div>
 
-  <!-- §4 단선 vs 복선 비교 -->
-  <div class="sec-title">§4. 선로 형식 비교</div>
+  <!-- §3 고속철도 법적 정의 -->
+  <div class="sec-title">§3. 고속철도 법적 정의 (현행 법령 기준)</div>
 
-  <table>
-    <tr><th>항목</th><th>단선</th><th>복선</th><th>비고</th></tr>
-    <tr><td>선로 수</td><td>1개</td><td>2개 (상·하 각 1)</td><td>—</td></tr>
-    <tr><td>교행 필요 여부</td><td>필요</td><td>불필요</td><td>복선 우위</td></tr>
-    <tr><td>선로용량</td><td>약 80회/일</td><td>약 240회/일</td><td>SOURCE 56 기준</td></tr>
-    <tr><td>운전취급 복잡도</td><td>복잡</td><td>단순</td><td>복선 우위</td></tr>
-    <tr><td>건설비</td><td>낮음</td><td>높음</td><td>단선 우위</td></tr>
-  </table>
+  <div class="content-box">
+    <p><strong>고속철도</strong> (철도건설법): 주요 구간 열차 운행속도 <strong>200km/h 이상</strong> + <strong>국토교통부장관 지정·고시</strong></p>
+    <p><strong>일반철도</strong> (철도건설법): 고속철도 외의 철도</p>
+    <p style="font-size:12px;color:#64748b;margin-top:6px;">※ SOURCE와 현행 법령 기준 별도 구분. 설계속도 300km/h(SOURCE 62)와 법적 정의 200km/h는 다른 기준임에 유의.</p>
+  </div>
 
-  <!-- §5 핵심암기 -->
-  <div class="sec-title">§5. 핵심암기</div>
+  <!-- §4 핵심암기 -->
+  <div class="sec-title">§4. 핵심암기</div>
 
   <div class="memo-box">
-    <div class="memo-title">암기 공식</div>
+    <div class="memo-title">고속선 설계기준 암기 (SOURCE 62)</div>
     <div class="memo-text">
-      복선화 = 한 가닥 공용 단선 → 상·하행 분리 복선으로 전환<br>
-      효과: 교행제약감소 · 운전취급단순화 · 수송력증가(≈3배)<br>
-      단선 80회/일 → 복선 240회/일 (SOURCE 56 기준)<br>
-      "항상 정확히 3배" 단순 일반화 금지
+      설계속도: 300km/h 이상 (구간 예: 350km/h)<br>
+      최소곡선반경: V=350km/h 기준 → 자갈도상 6,100m / 콘크리트도상 5,000m (도상 조건에 따라 상이)<br>
+      완화곡선 길이: 설계속도·곡선반경·캔트(부족캔트) 변화량에 따라 산정 (단일 고정값 없음)<br>
+      최대캔트: 자갈도상 160mm / 콘크리트도상 180mm<br>
+      <br>
+      구배: 일반선 25‰ / 고속선 35‰ [R1]<br>
+      <br>
+      고속철도 법적 정의: 200km/h 이상 + 국토교통부장관 지정·고시
     </div>
   </div>
 
-  <!-- §6 시험포인트 -->
-  <div class="sec-title">§6. 시험포인트</div>
+  <!-- §5 시험포인트 -->
+  <div class="sec-title">§5. 시험포인트</div>
 
   <div class="exam-item exam-key">
-    <strong>핵심 ①</strong>
-    복선화 효과 3가지: 교행 제약 감소, 운전취급 단순화, 선로용량 증가.
-  </div>
-  <div class="exam-item exam-key">
-    <strong>핵심 ②</strong>
-    단선 약 80회/일 → 복선 약 240회/일 (약 3배). SOURCE 56 기준.
+    <strong>핵심 ① [R1]</strong>
+    고속선(200 &lt; V ≤ 350 km/h) 최대 허용 기울기 = 35‰. 일반선 25‰보다 크다.
   </div>
   <div class="exam-item exam-trap">
     <strong>함정 ①</strong>
-    복선화 시 선로용량이 반드시 3배라고 단정하는 선지 → "약 3배" 수준의 표현이 정확.
+    "고속선 곡선반경 = 7,000m (고정값)" → 오답. 도상 조건에 따라 상이: V=350km/h 기준 자갈도상 6,100m / 콘크리트도상 5,000m. 단일 수치로 암기하면 틀린다.
+  </div>
+  <div class="exam-item exam-trap">
+    <strong>함정 ②</strong>
+    "고속철도 법적 정의 = 설계속도 300km/h 이상" → 오답. 법적 정의는 운행속도 200km/h 이상 + 국토교통부장관 지정·고시. 설계속도 300km/h는 SOURCE 62 기준.
   </div>
 
-  <!-- 시각자료 -->
-  <!-- 복선화 개념도 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-106_복선화.png"
-         alt="복선화 개념도"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-106 복선화 개념도 (SOURCE 02)</div>
+  <!-- §6 문제 연결 -->
+  <div class="sec-title">§6. 문제 연결</div>
+
+  <div class="qst-box">
+    <div class="qst-meta">4지선다형 · [R1] engineering id:59 · 2024.12 공개복원</div>
+    <div class="qst-num">Q1.</div>
+    <div class="qst-q">설계속도 200km/h 초과 350km/h 이하 고속철도 본선의 최대 허용 기울기는?</div>
+    <ol class="choice-list">
+      <li>① 25‰</li>
+      <li>② 30‰</li>
+      <li>③ 35‰</li>
+      <li>④ 40‰</li>
+    </ol>
   </div>
 
-  <!-- 단선·복선 구조 비교도 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-123_단선_복선_구조비교도_FINAL.png"
-         alt="단선·복선 구조 비교도"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-123 단선·복선 구조비교도 FINAL (SOURCE 02)</div>
-  </div>
+  <!-- 정답 및 해설 -->
+  <section class="answer-section">
+    <h2 class="sec-title">정답 및 해설</h2>
+
+    <div class="ans-box">
+      <p class="ans-num">Q1 정답 ③</p>
+      <p class="ans-answer">③ <strong>35‰</strong>가 정답이다. 설계속도 200km/h 초과~350km/h 이하 고속철도 본선의 최대 허용 기울기는 35‰이다. 일반선(25‰)보다 높은 이유는 고속철도가 동력분산식으로 구배 성능이 우수하기 때문이다.</p>
+      <p class="ans-trap">주의: 일반선 25‰ 와 고속선 35‰ 혼동 주의. 고속선 구배 허용값이 더 크다.</p>
+    </div>
+  </section>
 
   <nav class="unit-nav">
     <a href="unit-02-03_FINAL_PUBLISH_v1.1.html">&larr; 이전 UNIT 02-03</a>

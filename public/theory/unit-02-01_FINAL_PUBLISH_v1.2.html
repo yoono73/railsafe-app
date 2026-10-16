@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>02-01 선로 계획·기준 [FINAL PUBLISH v1.2]</title>
+<title>02-01 선로용량·포화도·복선화 [FINAL PUBLISH v1.2]</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
@@ -46,6 +46,10 @@
   .term-label { font-size: 12px; font-weight: 800; color: #0369a1; margin-bottom: 4px; }
   .term-text { font-size: 13.5px; color: #1a1a1a; }
 
+  .crossref-box { border: 1.5px solid #059669; border-radius: 6px; padding: 12px 16px; background: #f0fdf4; margin-bottom: 14px; }
+  .crossref-title { font-size: 12px; font-weight: 800; color: #059669; margin-bottom: 6px; }
+  .crossref-text { font-size: 13px; color: #1a1a1a; }
+
   .exam-item { padding: 10px 14px; border-radius: 5px; margin-bottom: 8px; font-size: 13.5px; border: 1.5px solid; }
   .exam-key { border-color: #1e3a5f; background: #f0f4f8; }
   .exam-trap { border-color: #dc2626; background: #fef2f2; }
@@ -69,7 +73,6 @@
   .vis-wrap { margin: 14px 0; text-align: center; }
   .vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
   .vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
-  .vis-placeholder { border: 2px dashed #b45309; border-radius: 6px; padding: 24px; background: #fffbeb; text-align: center; color: #b45309; font-size: 13px; font-weight: 700; margin-bottom: 14px; }
 
   .print-btn {
     position: fixed; top: 12px; right: 16px; z-index: 999;
@@ -100,11 +103,11 @@
   <!-- 헤더 -->
   <div class="unit-header">
     <div class="unit-num">GATE5 · PART 02 · UNIT 02-01</div>
-    <div class="unit-title">선로 계획·기준</div>
-    <div class="unit-sub">설계속도·곡선반경·완화곡선·캔트·구배 기준 및 최고속도 선정기준 4가지</div>
+    <div class="unit-title">선로용량·포화도·복선화</div>
+    <div class="unit-sub">선로용량 단위·수치(단선 80·복선 240), 포화도 계산식, 복선화 효과 3가지</div>
     <div class="badge-row">
       <span class="badge badge-part">PART 02 선로계획·설계</span>
-      <span class="badge badge-grade">★★☆ 중요</span>
+      <span class="badge badge-grade">★★★ 핵심</span>
       <span class="badge badge-final">FINAL PUBLISH v1.2</span>
     </div>
   </div>
@@ -113,293 +116,200 @@
   <div class="sec-title">§1. 핵심 용어정의</div>
 
   <div class="term-box">
-    <div class="term-label">용어정의 | 설계속도(Design Speed)</div>
-    <div class="term-text">선로(노선)를 설계할 때 기준으로 정한 최고 속도. 선로의 곡선반경·캔트 등 모든 설계 요소가 이 속도에 맞춰 결정된다. 실제 열차의 영업 최고속도와는 다를 수 있다.</div>
+    <div class="term-label">용어정의 | 선로용량(Line Capacity)</div>
+    <div class="term-text">특정 선구(선로 구간)에서 하루 동안 안전하게 운행할 수 있는 최대 열차 횟수. 단위는 <strong>열차·회/일</strong>.</div>
   </div>
   <div class="term-box">
-    <div class="term-label">용어정의 | 곡선반경(曲線半徑, Curve Radius)</div>
-    <div class="term-text">선로가 휘어진 구간에서 그 곡선이 그리는 원의 반지름. 반지름이 클수록 곡선이 완만하고, 작을수록 급하다. 고속 운행할수록 더 완만한(큰) 곡선반경이 필요하다.</div>
+    <div class="term-label">용어정의 | 운전시격(運轉時隔, Headway)</div>
+    <div class="term-text">앞 열차가 어느 지점을 지나간 후, 뒤 열차가 같은 지점에 도달하기까지의 시간 간격. 시격이 짧을수록 더 많은 열차를 운행할 수 있다.</div>
   </div>
   <div class="term-box">
-    <div class="term-label">용어정의 | 완화곡선(緩和曲線)</div>
-    <div class="term-text">직선 구간과 곡선 구간 사이에 삽입하는 점이(漸移) 구간. 속도와 원심력이 갑자기 변하지 않도록 서서히 바꿔주어 탈선 위험을 줄이고 승차감을 높인다.</div>
+    <div class="term-label">용어정의 | 폐색(閉塞, Block)</div>
+    <div class="term-text">선로를 일정 구간으로 나누어, 한 구간에는 하나의 열차만 진입하도록 제한하는 방식. 열차 간 추돌을 막기 위한 기본 안전 원칙이다. (상세 내용은 PART 09 신호제어에서 다룸)</div>
   </div>
   <div class="term-box">
-    <div class="term-label">용어정의 | 구배(勾配, ‰)</div>
-    <div class="term-text">선로의 기울기를 나타내는 단위. 수평거리 1,000m당 높이 변화(m)를 수치로 표시한다. 예: 25‰ = 1,000m를 가면 25m 오르내림.</div>
+    <div class="term-label">용어정의 | 복선화(複線化)</div>
+    <div class="term-text">한 가닥 선로를 상·하행 열차가 공용하는 단선 선로를 상·하행 방향을 분리한 두 가닥의 선로(복선)로 확장하는 것. 교행 대기 없이 상·하행 열차가 동시에 달릴 수 있어 용량이 크게 늘어난다.</div>
   </div>
   <div class="term-box">
-    <div class="term-label">용어정의 | 표정속도(表定速度, Commercial Speed)</div>
-    <div class="term-text">열차가 역에서 정차하는 시간을 포함한 전체 여정 시간으로 나눈 평균 이동 속도. 최고속도보다 항상 낮다.</div>
+    <div class="term-label">용어정의 | 교행(交行)</div>
+    <div class="term-text">단선 선로에서 상행 열차와 하행 열차가 서로 반대 방향으로 지나쳐야 할 때, 한쪽이 대피선에서 기다리는 것. 복선화로 교행 대기가 불필요해진다.</div>
   </div>
 
-  <!-- §2 고속선 설계기준 -->
-  <div class="sec-title">§2. 고속선 설계기준 (SOURCE 62)</div>
-
-  <div class="vis-wrap">
-    <img src="images/VIS-129_고속선_설계기준_조건별비교도_FINAL.png" alt="고속선 설계기준 조건별 비교도"
-         style="max-width:100%; height:auto; display:block; margin:0 auto;"
-         onerror="this.onerror=null; this.style.display='none';">
-    <div class="vis-caption">VIS-129 고속선 설계기준 조건별 비교도 (SOURCE 62)</div>
-  </div>
+  <!-- §2 선로용량 수치 -->
+  <div class="sec-title">§2. 선로용량 기본 수치 (SOURCE 15)</div>
 
   <table>
-    <tr><th>항목</th><th>고속선 기준</th><th>비고</th></tr>
-    <tr><td><strong>설계속도</strong></td><td>300km/h 이상 (구간 예: <strong>350km/h</strong>)</td><td>고속선 기준 — 구간별 지정</td></tr>
-    <tr><td><strong>최소곡선반경</strong></td><td>V=350km/h 기준: 자갈도상 <strong>6,100m</strong> / 콘크리트도상 <strong>5,000m</strong></td><td>도상 조건에 따라 다름</td></tr>
-    <tr><td><strong>완화곡선 길이</strong></td><td>설계속도·곡선반경·캔트(부족캔트) 변화량에 따라 산정</td><td>단일 고정 수치 없음</td></tr>
-    <tr><td><strong>최대캔트</strong></td><td>자갈도상 <strong>160mm</strong> / 콘크리트도상 <strong>180mm</strong></td><td>도상 조건별 구분</td></tr>
-  </table>
-
-  <div class="sec-sub">최대 구배 비교</div>
-  <table>
-    <tr><th>선종</th><th>최대 허용 구배</th></tr>
-    <tr><td><strong>일반선</strong></td><td><strong>25‰</strong></td></tr>
-    <tr><td><strong>고속선</strong> (200 &lt; V ≤ 350 km/h)</td><td><strong>35‰</strong> [R1 — engineering id:59]</td></tr>
+    <tr><th>항목</th><th>내용</th></tr>
+    <tr><td><strong>선로용량 정의</strong></td><td>1일 운행 가능 최대 열차 횟수</td></tr>
+    <tr><td><strong>단위</strong></td><td><strong>열차·회/일</strong></td></tr>
+    <tr><td><strong>단선 선로용량</strong></td><td>약 <strong>80회/일</strong></td></tr>
+    <tr><td><strong>복선 선로용량</strong></td><td>약 <strong>240회/일</strong> (단선 대비 <strong>3배</strong>)</td></tr>
+    <tr><td><strong>선로이용률 표준</strong></td><td><strong>60%</strong></td></tr>
   </table>
 
   <div class="trap-box">
-    <div class="trap-title">오답 선지 판별</div>
-    <div class="trap-item"><span class="x">X</span>"고속선 곡선반경 = 3,000m 또는 고정 7,000m" → 오답. V=350km/h 기준 자갈도상 <strong>6,100m</strong> / 콘크리트도상 <strong>5,000m</strong>. 도상 조건에 따라 다르며 단일 수치가 없다.</div>
-    <div class="trap-item"><span class="x">X</span>"고속선이 구배 기준 더 엄격(작다)" → 오답. 고속선(동력분산식)은 구배 성능 우수하여 <strong>35‰ 허용</strong>. 일반선 25‰보다 크다.</div>
-    <div class="trap-item"><span class="o">O</span>비교 암기: 곡선반경 고속&gt;일반, 구배허용 고속&gt;일반. 캔트는 <strong>도상 조건</strong>에 따라 다름 (자갈 160mm / 콘크리트 180mm)</div>
+    <div class="trap-title">단위 함정</div>
+    <div class="trap-item"><span class="x">X</span>"선로용량 단위 = km/h" → 오답. km/h는 속도 단위.</div>
+    <div class="trap-item"><span class="x">X</span>"선로용량 단위 = ton/km" → 오답. ton/km는 수송량(화물) 단위.</div>
+    <div class="trap-item"><span class="x">X</span>"선로용량 단위 = km/일" → 오답. 거리 단위이지 열차 운행 횟수 단위가 아님.</div>
+    <div class="trap-item"><span class="o">O</span>선로용량 단위 = <strong>열차·회/일</strong></div>
   </div>
 
-  <!-- §3 고속철도 법적 정의 -->
-  <div class="sec-title">§3. 고속철도 법적 정의 (현행 법령 기준)</div>
+  <!-- §3 포화도·이용률 계산식 -->
+  <div class="sec-title">§3. 선로이용률·포화도 계산식 (SOURCE 15+56)</div>
+
+  <div class="vis-wrap" style="margin:16px 0;">
+    <img src="images/VIS-028_선로4종비교.png" alt="선로용량 관련 도표"
+         style="width:100%; height:auto; display:block;"
+         onerror="this.src='images/VIS-028_선로4종비교.jpg'; this.onerror=null;">
+    <div class="vis-caption">VIS-028 선로용량 관련 도표 (SOURCE 15)</div>
+  </div>
 
   <div class="content-box">
-    <p><strong>고속철도</strong> (철도건설법): 주요 구간 열차 운행속도 <strong>200km/h 이상</strong> + <strong>국토교통부장관 지정·고시</strong></p>
-    <p><strong>일반철도</strong> (철도건설법): 고속철도 외의 철도</p>
-    <p style="font-size:12px;color:#64748b;margin-top:6px;">※ SOURCE와 현행 법령 기준 별도 구분. 설계속도 300km/h(SOURCE 62)와 법적 정의 200km/h는 다른 기준임에 유의.</p>
+    <p><strong>선로이용률(%)</strong> = (실제 운행 열차 수 ÷ 선로용량) × 100</p>
+    <p><strong>포화도(%)</strong> = (실제 운행 열차 수 ÷ 선로용량) × 100</p>
+    <p style="font-size:12px;color:#64748b;margin-top:6px;">※ SOURCE 우선 원칙 적용: SOURCE 56은 "포화도", SOURCE 15는 "이용률"로 각각 표현. 교재에서는 동일 개념으로 통합 서술.</p>
   </div>
 
-  <!-- §4 최고속도 선정기준 -->
-  <div class="sec-title">§4. 최고속도 선정기준 4가지 (SOURCE 86-A)</div>
+  <table>
+    <tr><th>포화도 수준</th><th>의미 및 조치</th></tr>
+    <tr><td>75~80% 이상</td><td>용량 증대 검토 권장</td></tr>
+    <tr><td>100% 이상</td><td>선로 과포화 → 지연·병목 발생, 용량 증설 필요</td></tr>
+  </table>
+
+  <!-- §4 선로용량 증대 방법 -->
+  <div class="sec-title">§4. 선로용량 증대 방법 (SOURCE 56)</div>
+
+  <div class="content-box">
+    <p>선로용량을 늘리는 주요 방법:</p>
+    <p>① <strong>폐색 구간 단축</strong> — 더 짧은 구간으로 나눠 열차 밀도 증가</p>
+    <p>② <strong>운전 시격 단축</strong> — 열차 간격 좁혀 단위시간 운행 횟수 증가</p>
+    <p>③ <strong>복선화</strong> — 단선 대비 약 3배 용량 증대</p>
+    <p>④ <strong>신호 개량</strong> — 신호처리 속도 향상으로 열차 간격 단축</p>
+  </div>
+
+  <!-- §5 운전시격과 선로용량 관계 -->
+  <div class="sec-title">§5. 운전시격 ↔ 선로용량 관계</div>
+
+  <div class="content-box">
+    <p>운전시격 ↓ (짧아짐) → 단위시간 운행 열차 수 ↑ → 선로용량 ↑</p>
+    <p>운전시격 ↑ (길어짐) → 단위시간 운행 열차 수 ↓ → 선로용량 ↓</p>
+  </div>
+
+  <!-- §6 복선화 효과 -->
+  <div class="sec-title">§6. 복선화 효과 (SOURCE 56)</div>
+
+  <div class="vis-wrap" style="margin:16px 0;">
+    <img src="images/VIS-106_복선화.png" alt="복선화 개념도"
+         style="width:100%; height:auto; display:block;"
+         onerror="this.onerror=null; this.style.display='none'">
+    <div class="vis-caption">VIS-106 복선화 개념도 (SOURCE 56)</div>
+  </div>
 
   <table>
-    <tr><th>번호</th><th>기준</th><th>설명</th></tr>
-    <tr><td>①</td><td><strong>선로 선형</strong></td><td>곡선반경·캔트·종단구배 조건</td></tr>
-    <tr><td>②</td><td><strong>차량 추진력·제동성능</strong></td><td>견인력·제동거리 한계</td></tr>
-    <tr><td>③</td><td><strong>신호설비·방호시스템 한계</strong></td><td>차상제어장치(ATC 등) 처리 속도</td></tr>
-    <tr><td>④</td><td><strong>운전자 시야·정지거리</strong></td><td>전방 시야 확보 및 비상 정지 가능 거리</td></tr>
+    <tr><th>구분</th><th>단선</th><th>복선</th></tr>
+    <tr><td><strong>상·하행 분리</strong></td><td>한 가닥 공용 (교행 필요)</td><td>상행·하행 독립 운행</td></tr>
+    <tr><td><strong>교행 제약</strong></td><td>있음 (대피선 대기)</td><td>없음</td></tr>
+    <tr><td><strong>선로용량</strong></td><td>약 80회/일</td><td>약 240회/일</td></tr>
+    <tr><td><strong>운전취급</strong></td><td>복잡 (교행 조정 필요)</td><td>단순화</td></tr>
   </table>
+
+  <div class="content-box">
+    <p><strong>복선화의 주요 효과:</strong></p>
+    <p>① <strong>교행 제약 감소</strong> — 상·하행이 서로 방해받지 않고 독립 운행</p>
+    <p>② <strong>운전취급 단순화</strong> — 교행 대기·조정 불필요</p>
+    <p>③ <strong>수송력(선로용량) 증가</strong> — 단선 대비 약 3배 (80회 → 240회/일)</p>
+    <p>④ <strong>정시성 향상</strong> — 교행 지연 요인 제거</p>
+  </div>
 
   <div class="trap-box">
-    <div class="trap-title">오답 선지 판별</div>
-    <div class="trap-item"><span class="x">X</span>"최고속도 = 차량 성능으로만 결정" → 오답. 선로·신호·운전자 시야 등 <strong>복합 기준</strong>으로 결정.</div>
+    <div class="trap-title">일반화 금지 사항</div>
+    <div class="trap-item"><span class="x">X</span>"복선화 시 용량은 항상 정확히 3배이다" → 단순 일반화 주의. SOURCE 기준 단선 약 80, 복선 약 240으로 <strong>약 3배</strong>이나, 실제는 선형·신호·운행 조건에 따라 달라질 수 있음.</div>
+    <div class="trap-item"><span class="o">O</span>SOURCE 56: 단선 약 80회/일, 복선 약 240회/일 → 3배 효과 (SOURCE 기준 암기)</div>
   </div>
 
-  <!-- §5 속도 개념 구분 -->
-  <div class="sec-title">§5. 속도 개념 구분</div>
-
+  <div class="sec-sub">선로 형식 비교</div>
   <table>
-    <tr><th>용어</th><th>정의</th><th>관계</th></tr>
-    <tr><td><strong>설계속도</strong></td><td>선로 설계 시 기준으로 설정한 최대 속도</td><td>선로 선형 기준</td></tr>
-    <tr><td><strong>최고속도 (영업최고속도)</strong></td><td>실제 영업 운행에서의 최고 허용 속도</td><td>≤ 설계속도</td></tr>
-    <tr><td><strong>표정속도</strong></td><td>정차 시간 포함 전체 여정의 평균 속도</td><td>&lt; 최고속도</td></tr>
+    <tr><th>항목</th><th>단선</th><th>복선</th><th>비고</th></tr>
+    <tr><td>선로 수</td><td>1개</td><td>2개 (상·하 각 1)</td><td>—</td></tr>
+    <tr><td>교행 필요 여부</td><td>필요</td><td>불필요</td><td>복선 우위</td></tr>
+    <tr><td>선로용량</td><td>약 80회/일</td><td>약 240회/일</td><td>SOURCE 56 기준</td></tr>
+    <tr><td>운전취급 복잡도</td><td>복잡</td><td>단순</td><td>복선 우위</td></tr>
+    <tr><td>건설비</td><td>낮음</td><td>높음</td><td>단선 우위</td></tr>
   </table>
 
-  <div class="memo-box">
-    <div class="memo-title">속도 크기 순서</div>
-    <div class="memo-text">설계속도 ≥ 최고속도(영업최고속도) &gt; 표정속도</div>
-  </div>
-
-  <!-- §6 핵심암기 -->
-  <div class="sec-title">§6. 핵심암기</div>
+  <!-- §7 핵심암기 -->
+  <div class="sec-title">§7. 핵심암기</div>
 
   <div class="memo-box">
-    <div class="memo-title">고속선 설계기준 암기 (SOURCE 62)</div>
+    <div class="memo-title">암기 공식</div>
     <div class="memo-text">
-      설계속도: 300km/h 이상 (구간 예: 350km/h)<br>
-      최소곡선반경: V=350km/h 기준 → 자갈도상 6,100m / 콘크리트도상 5,000m (도상 조건에 따라 상이)<br>
-      완화곡선 길이: 설계속도·곡선반경·캔트(부족캔트) 변화량에 따라 산정 (단일 고정값 없음)<br>
-      최대캔트: 자갈도상 160mm / 콘크리트도상 180mm<br>
+      선로용량: 1일 최대 운행 열차 수 (단위: <strong>열차·회/일</strong>)<br>
+      단선 ≈ 80회/일 / 복선 ≈ 240회/일 (3배)<br>
+      선로이용률 = 선로포화도 = 실운행/선로용량 × 100 (%)<br>
+      이용률 표준 60% → 75~80% 이상이면 용량 증대 검토<br>
+      용량 증대: 폐색단축 · 시격단축 · 복선화 · 신호개량<br>
+      운전시격 짧을수록 선로용량 증가<br>
       <br>
-      구배: 일반선 25‰ / 고속선 35‰ [R1]<br>
-      <br>
-      최고속도 선정기준 4가지: ①선로선형 ②차량추진력·제동 ③신호설비 ④운전자시야<br>
-      속도계층: 설계속도 ≥ 최고속도 &gt; 표정속도
+      복선화 = 한 가닥 공용 단선 → 상·하행 분리 복선으로 전환<br>
+      효과: 교행제약감소 · 운전취급단순화 · 수송력증가(≈3배)<br>
+      "항상 정확히 3배" 단순 일반화 금지
     </div>
   </div>
 
-  <!-- §7 시험포인트 -->
-  <div class="sec-title">§7. 시험포인트</div>
+  <!-- §8 시험포인트 -->
+  <div class="sec-title">§8. 시험포인트</div>
 
-  <div class="exam-item exam-key">
-    <strong>핵심 ① [R1]</strong>
-    고속선(200 &lt; V ≤ 350 km/h) 최대 허용 기울기 = 35‰. 일반선 25‰보다 크다.
-  </div>
   <div class="exam-item exam-trap">
     <strong>함정 ①</strong>
-    "고속선 곡선반경 = 7,000m (고정값)" → 오답. 도상 조건에 따라 상이: V=350km/h 기준 자갈도상 6,100m / 콘크리트도상 5,000m. 단일 수치로 암기하면 틀린다.
+    선로용량 단위 = km/h 또는 ton/km → 오답. 반드시 <strong>열차·회/일</strong>.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ①</strong>
+    운전시격이 짧을수록 선로용량은 증가한다.
   </div>
   <div class="exam-item exam-key">
     <strong>핵심 ②</strong>
-    최고속도는 차량 성능만으로 결정되지 않는다 → 선로·신호·운전자 시야 등 복합 기준.
+    선로이용률(%) = 포화도(%) = (실운행/선로용량) × 100 — 두 용어는 동일 계산식.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ③</strong>
+    복선화 효과 3가지: 교행 제약 감소, 운전취급 단순화, 선로용량 증가.
+  </div>
+  <div class="exam-item exam-key">
+    <strong>핵심 ④</strong>
+    단선 약 80회/일 → 복선 약 240회/일 (약 3배). SOURCE 56 기준.
   </div>
   <div class="exam-item exam-trap">
     <strong>함정 ②</strong>
-    설계속도 ≠ 영업최고속도. 설계속도가 더 높거나 같다. 표정속도는 정차시간 포함 평균이므로 가장 낮다.
+    복선화 시 선로용량이 반드시 3배라고 단정하는 선지 → "약 3배" 수준의 표현이 정확.
   </div>
 
-  <!-- 시각자료 -->
-  <!-- 선로 4종 비교 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-028_선로4종비교.jpg"
-         alt="선로 4종 비교"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-028 선로 4종 비교</div>
-  </div>
-
-  <!-- 궤도 단면 구조 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-030_궤도단면구조.jpg"
-         alt="궤도 단면 구조"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-030 궤도 단면 구조</div>
-  </div>
-
-  <!-- 레일 종류·단면 비교 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-031_레일종류단면비교.png"
-         alt="레일 종류·단면 비교"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-031 레일 종류·단면 비교</div>
-  </div>
-
-  <!-- 장대레일 부동구간 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-036_장대레일부동구간.png"
-         alt="장대레일 부동구간"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-036 장대레일 부동구간</div>
-  </div>
-
-  <!-- 복진현상 도해 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-037_복진현상도해.png"
-         alt="복진현상 도해"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-037 복진현상 도해</div>
-  </div>
-
-  <!-- 침목 비교 카드 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-041_침목비교카드.png"
-         alt="침목 비교 카드"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-041 침목 비교 카드</div>
-  </div>
-
-  <!-- 철도 선로 용어 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/railway-track-terms.png"
-         alt="철도 선로 용어"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">철도 선로 용어 총정리</div>
-  </div>
-
-  <!-- 철도 선로 용어 관계도 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/철도_선로_용어_관계도.png"
-         alt="철도 선로 용어 관계도"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">철도 선로 용어 관계도</div>
-  </div>
-
-  <!-- 구배체계 수치 비교 도해 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-074_구배체계수치비교도해.png"
-         alt="구배체계 수치 비교 도해"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-074 구배체계 수치 비교 도해 (SOURCE 02)</div>
-  </div>
-
-  <!-- 완화곡선 클로소이드 도해 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-076_완화곡선클로소이드도해.png"
-         alt="완화곡선 클로소이드 도해"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-076 완화곡선 클로소이드 도해 (SOURCE 02)</div>
-  </div>
-
-  <!-- 철도 캔트(Cant) -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-097_철도_캔트.png"
-         alt="철도 캔트(Cant)"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-097 철도 캔트(Cant) (SOURCE 02)</div>
-  </div>
-
-  <!-- 철도 제한구배·최대구배 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-098_철도_제한구배_최대구배.png"
-         alt="철도 제한구배·최대구배"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-098 철도 제한구배·최대구배 (SOURCE 02)</div>
-  </div>
-
-  <!-- 완화곡선·종곡선 비교도 FINAL -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-126_완화곡선_종곡선_비교도_FINAL.png"
-         alt="완화곡선·종곡선 비교도"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-126 완화곡선·종곡선 비교도 FINAL (SOURCE 02)</div>
-  </div>
-
-  <!-- 캔트·슬랙 구조 비교도 FINAL -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-127_캔트_슬랙_구조비교도_FINAL.png"
-         alt="캔트·슬랙 구조 비교도"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-127 캔트·슬랙 구조비교도 FINAL (SOURCE 02)</div>
-  </div>
-
-  <!-- 열차하중·횡방향력·곡선저항 관계도 FINAL -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-128_열차하중_횡방향력_곡선저항_관계도_FINAL.png"
-         alt="열차하중·횡방향력·곡선저항 관계도"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-128 열차하중·횡방향력·곡선저항 관계도 FINAL (SOURCE 02)</div>
-  </div>
-
-  <!-- 고속선 설계기준 조건별 비교도 FINAL -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-129_고속선_설계기준_조건별비교도_FINAL.png"
-         alt="고속선 설계기준 조건별 비교도"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-129 고속선 설계기준 조건별비교도 FINAL (SOURCE 02)</div>
-  </div>
-
-  <!-- §8 문제 연결 -->
-  <div class="sec-title">§8. 문제 연결</div>
+  <!-- §9 문제 연결 -->
+  <div class="sec-title">§9. 문제 연결</div>
 
   <div class="qst-box">
-    <div class="qst-meta">4지선다형 · [R1] engineering id:59 · 2024.12 공개복원</div>
+    <div class="qst-meta">4지선다형 · [Q] engineering id:7</div>
     <div class="qst-num">Q1.</div>
-    <div class="qst-q">설계속도 200km/h 초과 350km/h 이하 고속철도 본선의 최대 허용 기울기는?</div>
+    <div class="qst-q">열차 다이어 계획 시 산정하는 선로용량의 단위로 옳은 것은?</div>
     <ol class="choice-list">
-      <li>① 25‰</li>
-      <li>② 30‰</li>
-      <li>③ 35‰</li>
-      <li>④ 40‰</li>
+      <li>① km/h</li>
+      <li>② 열차·회/일</li>
+      <li>③ ton/km</li>
+      <li>④ km/일</li>
+    </ol>
+  </div>
+
+  <div class="qst-box">
+    <div class="qst-meta">4지선다형 · [Q] engineering id:83</div>
+    <div class="qst-num">Q2.</div>
+    <div class="qst-q">선로용량과 관련하여 운전시격이 짧을수록 선로용량은?</div>
+    <ol class="choice-list">
+      <li>① 감소한다</li>
+      <li>② 증가한다</li>
+      <li>③ 변화 없다</li>
+      <li>④ 기울기에 따라 다르다</li>
     </ol>
   </div>
 
@@ -408,9 +318,14 @@
     <h2 class="sec-title">정답 및 해설</h2>
 
     <div class="ans-box">
-      <p class="ans-num">Q1 정답 ③</p>
-      <p class="ans-answer">③ <strong>35‰</strong>가 정답이다. 설계속도 200km/h 초과~350km/h 이하 고속철도 본선의 최대 허용 기울기는 35‰이다. 일반선(25‰)보다 높은 이유는 고속철도가 동력분산식으로 구배 성능이 우수하기 때문이다.</p>
-      <p class="ans-trap">주의: 일반선 25‰ 와 고속선 35‰ 혼동 주의. 고속선 구배 허용값이 더 크다.</p>
+      <p class="ans-num">Q1 정답 ②</p>
+      <p class="ans-answer">② <strong>열차·회/일</strong>이 정답이다. 선로용량 = 일정 구간에서 하루 동안 운행 가능한 최대 열차 횟수로, 단위는 열차·회/일이다. km/h는 속도, ton/km는 수송량(화물), km/일은 거리 단위이다.</p>
+      <p class="ans-trap">TRAP: km/h(속도)·ton/km(화물수송량)·km/일(거리)은 모두 오답 선지. 선로용량은 횟수 개념.</p>
+    </div>
+
+    <div class="ans-box">
+      <p class="ans-num">Q2 정답 ②</p>
+      <p class="ans-answer">② <strong>증가한다</strong>가 정답이다. 운전시격이 짧아지면 열차 간격이 좁아져 단위시간당 더 많은 열차를 운행할 수 있으므로 선로용량이 증가한다.</p>
     </div>
   </section>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>02-05 정거장·선로설비 개요 [FINAL PUBLISH v1.2]</title>
+<title>02-05 최고속도·설계속도 [FINAL PUBLISH v1.2]</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #fff; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
@@ -46,32 +46,10 @@
   .term-label { font-size: 12px; font-weight: 800; color: #0369a1; margin-bottom: 4px; }
   .term-text { font-size: 13.5px; color: #1a1a1a; }
 
-  .info-box { border: 1.5px solid #64748b; border-radius: 6px; padding: 14px 18px; background: #f8fafc; margin-bottom: 14px; font-size: 13.5px; color: #334155; }
-
   .exam-item { padding: 10px 14px; border-radius: 5px; margin-bottom: 8px; font-size: 13.5px; border: 1.5px solid; }
   .exam-key { border-color: #1e3a5f; background: #f0f4f8; }
   .exam-trap { border-color: #dc2626; background: #fef2f2; }
   .exam-item strong { display: block; margin-bottom: 3px; }
-
-  .qst-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; background: #fff; }
-  .qst-meta { font-size: 11px; color: #64748b; margin-bottom: 6px; }
-  .qst-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
-  .qst-q { font-size: 14px; color: #1a1a1a; line-height: 1.7; margin-bottom: 12px; }
-  .choice-list { list-style: none; padding: 0; }
-  .choice-list li { padding: 6px 10px; border-radius: 4px; font-size: 13.5px; margin-bottom: 5px; border: 1px solid #e2e8f0; line-height: 1.6; background: #fff; }
-  .choice-list li:hover { background: #f8fafc; }
-
-  .answer-section { margin-top: 40px; border-top: 2px solid #1e3a5f; padding-top: 20px; }
-  .answer-section .sec-title { margin-top: 0; }
-  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
-  .ans-box .ans-num { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
-  .ans-box .ans-answer { font-size: 13.5px; color: #1a1a1a; line-height: 1.7; margin-bottom: 6px; }
-  .ans-box .ans-trap { border: 1.5px solid #dc2626; border-radius: 5px; padding: 8px 12px; background: #fef2f2; font-size: 13px; color: #7f1d1d; margin-top: 8px; }
-
-  .vis-wrap { margin: 14px 0; text-align: center; }
-  .vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
-  .vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
-  .vis-placeholder { border: 2px dashed #b45309; border-radius: 6px; padding: 24px; background: #fffbeb; text-align: center; color: #b45309; font-size: 13px; font-weight: 700; margin-bottom: 14px; }
 
   .print-btn {
     position: fixed; top: 12px; right: 16px; z-index: 999;
@@ -82,10 +60,8 @@
   @media print {
     @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
     .page-wrap { padding: 10px; }
-    .qst-box, .content-box, .ans-box { break-inside: avoid; page-break-inside: avoid; }
-    img, .vis-wrap img { max-width: 100%; height: auto; }
+    .content-box { break-inside: avoid; page-break-inside: avoid; }
     table { width: 100%; max-width: 100%; }
-    .answer-section { break-before: page; page-break-before: always; }
     .print-btn { display: none !important; }
   }
 
@@ -102,8 +78,8 @@
   <!-- 헤더 -->
   <div class="unit-header">
     <div class="unit-num">GATE5 · PART 02 · UNIT 02-05</div>
-    <div class="unit-title">정거장·선로설비 개요</div>
-    <div class="unit-sub">유효장·차막이, 안전측선 vs 피난측선, 낙석방지시설</div>
+    <div class="unit-title">최고속도·설계속도</div>
+    <div class="unit-sub">최고속도 선정기준 4가지, 설계속도·최고속도·표정속도 개념 구분</div>
     <div class="badge-row">
       <span class="badge badge-part">PART 02 선로계획·설계</span>
       <span class="badge badge-grade">★★☆ 중요</span>
@@ -115,238 +91,72 @@
   <div class="sec-title">§1. 핵심 용어정의</div>
 
   <div class="term-box">
-    <div class="term-label">용어정의 | 유효장(有效長)</div>
-    <div class="term-text">열차가 안전하게 정차·대피할 수 있는 선로의 실제 가용 길이. 「철도의 건설기준에 관한 규정」 제21조 제2항에 따라 차량접촉한계표·출발신호기·차막이 연결기받이 전면을 기준으로 측정한다.</div>
+    <div class="term-label">용어정의 | 설계속도(Design Speed)</div>
+    <div class="term-text">선로(노선)를 설계할 때 기준으로 정한 최고 속도. 선로의 곡선반경·캔트 등 모든 설계 요소가 이 속도에 맞춰 결정된다. 실제 열차의 영업 최고속도와는 다를 수 있다.</div>
   </div>
   <div class="term-box">
-    <div class="term-label">용어정의 | 내방(內方)</div>
-    <div class="term-text">신호기를 기준으로 열차가 진행하는 방향의 안쪽, 즉 역 구내 쪽을 가리키는 방향 표현.</div>
+    <div class="term-label">용어정의 | 최고속도(영업최고속도)</div>
+    <div class="term-text">실제 영업 운행에서 허용되는 최대 속도. 설계속도 이하로 결정되며, 선로 선형·차량 성능·신호설비·운전자 시야 등 복합 기준으로 선정한다.</div>
   </div>
   <div class="term-box">
-    <div class="term-label">용어정의 | 차막이(車擋, Buffer Stop)</div>
-    <div class="term-text">선로의 끝단에 설치하는 안전 구조물. 열차가 선로 끝을 넘어 이탈하지 않도록 막는다. 유효장의 끝점이기도 하다.</div>
-  </div>
-  <div class="term-box">
-    <div class="term-label">용어정의 | 역행(逆行)</div>
-    <div class="term-text">열차가 경사진 선로(구배)에서 제동 실패 등으로 인해 원래 진행 방향의 반대로 미끄러져 내려가는 현상.</div>
+    <div class="term-label">용어정의 | 표정속도(表定速度, Commercial Speed)</div>
+    <div class="term-text">열차가 역에서 정차하는 시간을 포함한 전체 여정 시간으로 나눈 평균 이동 속도. 최고속도보다 항상 낮다.</div>
   </div>
 
-  <!-- §2 차막이·유효장 -->
-  <div class="sec-title">§2. 차막이·유효장 (SOURCE 35·36)</div>
-
-  <div class="vis-wrap">
-    <img src="images/VIS-124_유효장_측정기준_제21조제2항_FINAL.png" alt="유효장 측정기준 제21조제2항 도해"
-         onerror="this.onerror=null; this.style.display='none';">
-    <div class="vis-caption">VIS-124 유효장 측정기준 — 제21조제2항 ①~③ (SOURCE 35·36)</div>
-  </div>
+  <!-- §2 최고속도 선정기준 -->
+  <div class="sec-title">§2. 최고속도 선정기준 4가지 (SOURCE 86-A)</div>
 
   <table>
-    <tr><th colspan="2">본선 유효장 (제21조 제2항)</th></tr>
-    <tr><td>① 양단에 차량접촉한계표가 있는 경우</td><td>양 차량접촉한계표 사이의 거리</td></tr>
-    <tr><td>② 한쪽 끝에 출발신호기가 있는 경우</td><td>차량접촉한계표 ~ 출발신호기 위치</td></tr>
-    <tr><td>③ 한쪽 끝에 차막이가 있는 경우</td><td>차량접촉한계표 또는 출발신호기 ~ 차막이 연결기받이 전면</td></tr>
-    <tr><th colspan="2">측선 유효장 (제21조 제2항)</th></tr>
-    <tr><td>① 양단 분기기</td><td>전·후 차량접촉한계표 사이의 거리</td></tr>
-    <tr><td>② 끝단에 차막이가 있는 경우</td><td>차량접촉한계표 ~ 차막이 연결기받이 전면</td></tr>
-  </table>
-  <div class="content-box">
-    <p><strong>차막이(Buffer Stop)</strong>: 선로 끝단에 설치하는 안전 구조물로 열차가 선로를 이탈하지 않도록 막는다. 유효장 끝점 기준은 차막이 자체가 아니라 <strong>연결기받이 전면</strong>이다.</p>
-    <p><strong>두단식 승강장</strong>: 종착역·차고지 전용 — 차막이 구조 (SOURCE 36)</p>
-  </div>
-
-  <div class="trap-box">
-    <div class="trap-title">오답 선지 판별</div>
-    <div class="trap-item"><span class="x">X</span>"유효장 = 역 구내 전체 선로 길이" → 오답. 차량접촉한계표·출발신호기·차막이 연결기받이 전면을 기준으로 산정한다.</div>
-    <div class="trap-item"><span class="x">X</span>"유효장 = 출발신호기 내방~차막이(또는 입환신호기)" → 오답. 입환신호기는 유효장 종점 기준이 아니다. 제21조 제2항 기준(①~③)으로 판단한다.</div>
-    <div class="trap-item"><span class="x">X</span>"대피선은 유효장 적용 대상이 아니다" → 오답. 측선도 유효장 적용 대상.</div>
-  </div>
-
-  <!-- §3 정거장 형식 -->
-  <div class="sec-title">§3. 정거장 형식 (SOURCE 32)</div>
-
-  <div class="vis-wrap">
-    <img src="images/VIS-035_정거장형식비교.png" alt="정거장 형식 비교도"
-         onerror="this.src='images/VIS-035_정거장형식비교.jpg'; this.onerror=null;">
-    <div class="vis-caption">VIS-035 정거장 형식 비교 (SOURCE 32)</div>
-  </div>
-
-  <div class="vis-wrap">
-    <img src="images/철도공학_핵심개념18_정거장의 종류.png" alt="정거장의 종류"
-         onerror="this.style.display='none'">
-    <div class="vis-caption">정거장의 종류 — 핵심개념 18</div>
-  </div>
-
-  <!-- 분기기·전철기 참고영상 -->
-  <div class="video-ref-box" style="margin:24px 0; padding:20px; border:2px solid #e0a800; border-radius:8px; background:#fffdf0;">
-    <div class="video-ref-title" style="font-weight:700; font-size:1.05em; color:#7a5c00; margin-bottom:12px;">📹 참고영상 | 분기기·전철기·선로전환기 작동 원리</div>
-    <div class="video-wrap" style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:6px; margin-bottom:12px;">
-      <iframe style="position:absolute; top:0; left:0; width:100%; height:100%;"
-        src="https://www.youtube.com/embed/eW5JF-AA-uY"
-        title="분기기·전철기·선로전환기 작동 원리"
-        frameborder="0" allowfullscreen></iframe>
-    </div>
-    <div class="video-desc" style="font-size:0.93em; color:#555; margin-bottom:10px;">차륜이 분기기를 통과하면서 진행 선로를 바꾸는 구조와 선로전환 원리를 시각적으로 확인한다.</div>
-    <ul style="margin:0 0 10px 0; padding-left:20px; font-size:0.92em; color:#333;">
-      <li>분기기 = 열차를 한 선로에서 다른 선로로 유도하는 궤도설비</li>
-      <li>포인트부 전환에 따라 진행 진로가 달라짐</li>
-      <li>선로전환기 = 분기기의 가동 부분을 전환시키는 장치</li>
-    </ul>
-    <div class="video-note" style="font-size:0.85em; color:#888;">※ 보조 학습 콘텐츠 — 영상 자막은 시험 정답 근거로 사용하지 않음<br>※ 분기기 제작·구조 상세는 PART 04-08 학습 시 PRIMARY 위치 재조정 예정</div>
-  </div>
-
-  <!-- §4 신호기 가시거리 → PART 07 이관 -->
-  <div class="sec-title">§4. 신호기 가시거리</div>
-
-  <div class="info-box">
-    신호기별 가시거리 세부 기준(600m/200m/400m/100m 등)은 PART 07 철도신호에서 상세 학습한다.
-  </div>
-
-  <!-- §5 안전측선 vs 피난측선 -->
-  <div class="sec-title">§5. 안전측선 vs 피난측선 (SOURCE 31)</div>
-
-  <div class="vis-wrap">
-    <img src="images/VIS-125_안전측선_피난측선_비교도_FINAL.png" alt="안전측선 vs 피난측선 비교도"
-         onerror="this.onerror=null; this.style.display='none';">
-    <div class="vis-caption">VIS-125 안전측선·피난측선 비교도 (SOURCE 31)</div>
-  </div>
-
-  <table>
-    <tr><th>시설</th><th>목적</th><th>설치 기준</th><th>암기</th></tr>
-    <tr><td><strong>안전측선</strong></td><td>정거장에서 동시진입하는 열차 간 <strong>충돌 방지</strong></td><td>단선구간 또는 2개 이상의 열차·차량이 동시에 출발·진입하는 정거장 구내에 설치 (제21조 제3항)</td><td>안충(安衝)</td></tr>
-    <tr><td><strong>피난측선</strong></td><td>급구배에서 <strong>역행(逆行)하는 차량의 충돌 방지</strong></td><td>급구배 구간 종단에 설치</td><td>피역(避逆)</td></tr>
-    <tr><td><strong>차막이</strong></td><td>선로 끝단 안전장치 — 열차 이탈 방지</td><td>선로 끝단</td><td>끝단 고정</td></tr>
+    <tr><th>번호</th><th>기준</th><th>설명</th></tr>
+    <tr><td>①</td><td><strong>선로 선형</strong></td><td>곡선반경·캔트·종단구배 조건</td></tr>
+    <tr><td>②</td><td><strong>차량 추진력·제동성능</strong></td><td>견인력·제동거리 한계</td></tr>
+    <tr><td>③</td><td><strong>신호설비·방호시스템 한계</strong></td><td>차상제어장치(ATC 등) 처리 속도</td></tr>
+    <tr><td>④</td><td><strong>운전자 시야·정지거리</strong></td><td>전방 시야 확보 및 비상 정지 가능 거리</td></tr>
   </table>
 
   <div class="trap-box">
     <div class="trap-title">오답 선지 판별</div>
-    <div class="trap-item"><span class="x">X</span>"안전측선 = 역행 차량을 막는 시설" → 오답. 역행 방호는 <strong>피난측선</strong>.</div>
-    <div class="trap-item"><span class="x">X</span>"피난측선 = 동시진입 충돌 방지" → 오답. 동시진입 충돌 방지는 <strong>안전측선</strong>.</div>
-    <div class="trap-item"><span class="o">O</span>안전측선=동시진입충돌방지 / 피난측선=역행차량충돌방지 / 차막이=선로끝단</div>
+    <div class="trap-item"><span class="x">X</span>"최고속도 = 차량 성능으로만 결정" → 오답. 선로·신호·운전자 시야 등 <strong>복합 기준</strong>으로 결정.</div>
   </div>
 
-  <!-- §6 낙석방지시설 -->
-  <div class="sec-title">§6. 낙석방지시설 (engineering id:9)</div>
+  <!-- §3 속도 개념 구분 -->
+  <div class="sec-title">§3. 속도 개념 구분</div>
 
   <table>
-    <tr><th>시설</th><th>낙석방지시설 해당 여부</th></tr>
-    <tr><td>낙석방지 울타리</td><td>해당 (O)</td></tr>
-    <tr><td>낙석방지망</td><td>해당 (O)</td></tr>
-    <tr><td>낙석방지 옹벽</td><td>해당 (O)</td></tr>
-    <tr><td>가드레일(탈선방지레일)</td><td><strong>해당하지 않음 (X)</strong> — 탈선 방지 목적</td></tr>
+    <tr><th>용어</th><th>정의</th><th>관계</th></tr>
+    <tr><td><strong>설계속도</strong></td><td>선로 설계 시 기준으로 설정한 최대 속도</td><td>선로 선형 기준</td></tr>
+    <tr><td><strong>최고속도 (영업최고속도)</strong></td><td>실제 영업 운행에서의 최고 허용 속도</td><td>≤ 설계속도</td></tr>
+    <tr><td><strong>표정속도</strong></td><td>정차 시간 포함 전체 여정의 평균 속도</td><td>&lt; 최고속도</td></tr>
   </table>
 
-  <div class="trap-box">
-    <div class="trap-title">오답 선지 판별</div>
-    <div class="trap-item"><span class="x">X</span>"가드레일 = 낙석방지시설" → 오답. 가드레일(탈선방지레일)은 <strong>탈선 방지</strong> 목적이며 낙석방지시설이 아님.</div>
+  <div class="memo-box">
+    <div class="memo-title">속도 크기 순서</div>
+    <div class="memo-text">설계속도 ≥ 최고속도(영업최고속도) &gt; 표정속도</div>
   </div>
 
-  <!-- §7 핵심암기 -->
-  <div class="sec-title">§7. 핵심암기</div>
+  <!-- §4 핵심암기 -->
+  <div class="sec-title">§4. 핵심암기</div>
 
   <div class="memo-box">
     <div class="memo-title">암기 공식</div>
     <div class="memo-text">
-      차막이: 선로 끝단 안전장치 (유효장 끝점 = 연결기받이 전면)<br>
-      유효장 기준 (제21조 제2항):<br>
-      &nbsp;&nbsp;본선: ①양단 차량접촉한계표 사이 ②차량접촉한계표~출발신호기 ③~차막이 연결기받이 전면<br>
-      &nbsp;&nbsp;측선: ①양단 분기기=차량접촉한계표 사이 ②끝단 차막이=차량접촉한계표~연결기받이 전면<br>
-      &nbsp;&nbsp;→ 측선도 유효장 적용 / 전체 선로 길이 ≠ 유효장<br>
-      안전측선 설치: 단선구간 또는 2개 이상 열차·차량 동시 출발·진입 정거장 구내<br>
-      <br>
-      신호기 가시거리 상세: PART 07 철도신호 학습<br>
-      <br>
-      낙석방지: 울타리·망·옹벽 O / 가드레일 X<br>
-      안전측선=동시진입충돌방지 / 피난측선=역행차량충돌방지
+      최고속도 선정기준 4가지: ①선로선형 ②차량추진력·제동 ③신호설비 ④운전자시야<br>
+      속도계층: 설계속도 ≥ 최고속도 &gt; 표정속도<br>
+      표정속도 = 정차시간 포함 평균속도 (항상 최저)
     </div>
   </div>
 
-  <!-- §8 시험포인트 -->
-  <div class="sec-title">§8. 시험포인트</div>
+  <!-- §5 시험포인트 -->
+  <div class="sec-title">§5. 시험포인트</div>
 
   <div class="exam-item exam-key">
     <strong>핵심 ①</strong>
-    가드레일(탈선방지레일)은 낙석방지시설이 아니다. — engineering id:9 Q형 출제.
-  </div>
-  <div class="exam-item exam-key">
-    <strong>핵심 ②</strong>
-    안전측선=충돌방지(동시진입) / 피난측선=역행방호. 두 개념 구별 필수.
+    최고속도는 차량 성능만으로 결정되지 않는다 → 선로·신호·운전자 시야 등 복합 기준.
   </div>
   <div class="exam-item exam-trap">
     <strong>함정 ①</strong>
-    "유효장 = 역 구내 전체 선로 길이" → 오답. 차량접촉한계표·출발신호기·차막이 연결기받이 전면 기준으로 산정. "입환신호기가 유효장 종점" → 오답. 입환신호기는 유효장 종점 기준이 아님.
+    설계속도 ≠ 영업최고속도. 설계속도가 더 높거나 같다. 표정속도는 정차시간 포함 평균이므로 가장 낮다.
   </div>
-
-  <!-- 시각자료 -->
-  <!-- 분기기 구성 구조도 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-032_분기기구성구조도.jpg"
-         alt="분기기 구성 구조도"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-032 분기기 구성 구조도</div>
-  </div>
-
-  <!-- 정거장 형식 비교 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-035_정거장형식비교.jpg"
-         alt="정거장 형식 비교"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-035 정거장 형식 비교</div>
-  </div>
-
-  <!-- 유효장 측정기준 (제21조제2항) -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-124_유효장_측정기준_제21조제2항_FINAL.png"
-         alt="유효장 측정기준 (제21조제2항)"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-124 유효장 측정기준 제21조제2항 FINAL (SOURCE 02)</div>
-  </div>
-
-  <!-- 정거장 유효장 측정범위 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-124_정거장_유효장_측정범위_FINAL.png"
-         alt="정거장 유효장 측정범위"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-124 정거장 유효장 측정범위 FINAL (SOURCE 02)</div>
-  </div>
-
-  <!-- 안전측선·피난측선 비교도 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/VIS-125_안전측선_피난측선_비교도_FINAL.png"
-         alt="안전측선·피난측선 비교도"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">VIS-125 안전측선·피난측선 비교도 FINAL (SOURCE 02)</div>
-  </div>
-
-  <!-- §9 문제 연결 -->
-  <div class="sec-title">§9. 문제 연결</div>
-
-  <div class="qst-box">
-    <div class="qst-meta">4지선다형 · [Q] engineering id:9</div>
-    <div class="qst-num">Q1.</div>
-    <div class="qst-q">낙석이 선로로 유입되는 것을 막기 위해 설치하는 시설의 종류로 옳지 않은 것은?</div>
-    <ol class="choice-list">
-      <li>① 낙석방지 울타리</li>
-      <li>② 낙석방지망</li>
-      <li>③ 낙석방지 옹벽</li>
-      <li>④ 가드레일(탈선방지레일)</li>
-    </ol>
-  </div>
-
-  <!-- 정답 및 해설 -->
-  <section class="answer-section">
-    <h2 class="sec-title">정답 및 해설</h2>
-
-    <div class="ans-box">
-      <p class="ans-num">Q1 정답 ④</p>
-      <p class="ans-answer">④ <strong>가드레일(탈선방지레일)</strong>이 정답이다. 가드레일은 탈선 방지를 목적으로 설치하는 시설로, 낙석이 선로로 유입되는 것을 막는 낙석방지시설이 아니다. ①②③(낙석방지 울타리·망·옹벽)은 모두 낙석방지시설에 해당한다.</p>
-      <p class="ans-trap">주의: 가드레일 = 탈선방지용이지 낙석방지용이 아님. 자주 출제되는 오답 선지.</p>
-    </div>
-  </section>
 
   <nav class="unit-nav">
     <a href="unit-02-04_FINAL_PUBLISH_v1.1.html">&larr; 이전 UNIT 02-04</a>
