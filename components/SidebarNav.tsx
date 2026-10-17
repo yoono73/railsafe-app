@@ -161,6 +161,17 @@ export default function SidebarNav() {
                       <span className="text-[10px]">└</span>
                       <span>👑 철도왕 문제(기출·신유형)</span>
                     </Link>
+                    <Link
+                      href="/kibchul/wrong?sid=1"
+                      className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+                        pathname === '/kibchul/wrong'
+                          ? 'bg-red-100 text-red-800 font-semibold'
+                          : 'text-gray-400 hover:bg-gray-50 hover:text-red-700'
+                      }`}
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>📕 오답 재풀기</span>
+                    </Link>
                   </div>
                 )}
                 {/* 교통안전법(id=2) 아래 링크들 */}
@@ -187,6 +198,13 @@ export default function SidebarNav() {
                     >
                       <span className="text-[10px]">└</span>
                       <span>👑 철도왕 문제(기출·신유형)</span>
+                    </Link>
+                    <Link
+                      href="/kibchul/wrong?sid=2"
+                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors text-gray-400 hover:bg-gray-50 hover:text-red-700"
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>📕 오답 재풀기</span>
                     </Link>
                   </div>
                 )}
@@ -215,6 +233,13 @@ export default function SidebarNav() {
                       <span className="text-[10px]">└</span>
                       <span>👑 철도왕 문제(기출·신유형)</span>
                     </Link>
+                    <Link
+                      href="/kibchul/wrong?sid=3"
+                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors text-gray-400 hover:bg-gray-50 hover:text-red-700"
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>📕 오답 재풀기</span>
+                    </Link>
                   </div>
                 )}
                 {/* 철도공학(id=4) 아래 링크들 */}
@@ -241,6 +266,13 @@ export default function SidebarNav() {
                     >
                       <span className="text-[10px]">└</span>
                       <span>👑 철도왕 문제(기출·신유형)</span>
+                    </Link>
+                    <Link
+                      href="/kibchul/wrong?sid=4"
+                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors text-gray-400 hover:bg-gray-50 hover:text-red-700"
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>📕 오답 재풀기</span>
                     </Link>
                   </div>
                 )}
@@ -269,6 +301,13 @@ export default function SidebarNav() {
                       <span className="text-[10px]">└</span>
                       <span>👑 철도왕 문제(기출·신유형)</span>
                     </Link>
+                    <Link
+                      href="/kibchul/wrong?sid=5"
+                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors text-gray-400 hover:bg-gray-50 hover:text-red-700"
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>📕 오답 재풀기</span>
+                    </Link>
                   </div>
                 )}
                 {/* 철도안전법(id=7) 아래 링크들 */}
@@ -295,6 +334,13 @@ export default function SidebarNav() {
                     >
                       <span className="text-[10px]">└</span>
                       <span>👑 철도왕 문제(기출·신유형)</span>
+                    </Link>
+                    <Link
+                      href="/kibchul/wrong?sid=7"
+                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors text-gray-400 hover:bg-gray-50 hover:text-red-700"
+                    >
+                      <span className="text-[10px]">└</span>
+                      <span>📕 오답 재풀기</span>
                     </Link>
                   </div>
                 )}

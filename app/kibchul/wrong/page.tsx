@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { loadWrongAttempts, removeAttempt } from '@/lib/kibchul-attempts';
 import { TRAFFIC_EXAM } from '@/lib/traffic-exam-data';
@@ -13,13 +14,8 @@ import { allRailwayKingQuestions } from '@/lib/railway-king-data';
 
 // ─── 과목 정보 ───────────────────────────────────────────────────
 const SUBJECT_LABELS: Record<number, string> = {
-  99:  '철도안전법 기출',
-  100: '철도산업기본법 기출',
-  200: '교통안전법 기출',
+  300: '철도왕 철도공학',
   307: '철도왕 철도안전법',
-  400: '철도공학 기출',
-  401: '철도신호 기출',
-  402: '철도운행관리 기출',
   201: '교통안전관리론 개념',
   202: '교통안전법 개념',
   203: '열차운전 개념',
@@ -27,6 +23,16 @@ const SUBJECT_LABELS: Record<number, string> = {
   205: '철도산업기본법 개념',
   206: '철도신호 개념',
   207: '철도안전법 개념',
+};
+
+// sid(핵심정리 과목 id) → 해당하는 concept subject_ids + rk subject_ids
+const SID_TO_SUBJECTS: Record<number, { conceptIds: number[]; rkIds: number[] }> = {
+  1: { conceptIds: [201], rkIds: [] },
+  2: { conceptIds: [202], rkIds: [] },
+  3: { conceptIds: [203], rkIds: [] },
+  4: { conceptIds: [204], rkIds: [300] },
+  5: { conceptIds: [205], rkIds: [] },
+  7: { conceptIds: [207], rkIds: [307] },
 };
 
 // ─── 내부 타입 ────────────────────────────────────────────────────
@@ -150,6 +156,10 @@ async function fetchConceptQuestions(records: { qid: string; selected: number; a
 
 // ─── 메인 컴포넌트 ──────────────────────────────────────────────
 export default function WrongPage() {
+  const searchParams = useSearchParams();
+  const sid = Number(searchParams.get('sid') ?? '0') || null;
+  const sidInfo = sid ? SID_TO_SUBJECTS[sid] ?? null : null;
+
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState<WrongItem[]>([]);
@@ -172,10 +182,24 @@ export default function WrongPage() {
     const localItems: WrongItem[] = [];
 
     for (const a of attempts) {
-      if (a.kibchul_qid.startsWith('concept_')) {
-        conceptRecords.push({ qid: a.kibchul_qid, selected: a.selected, answer: a.answer, session_id: a.session_id, subject_id: a.subject_id });
+      const qid = a.kibchul_qid;
+      // 핵심개념(concept_) + 철도왕(rk_)만 — 일반 기출 CBT 제외
+      const isConcept = qid.startsWith('concept_');
+      const isRk = qid.startsWith('rk_');
+      if (!isConcept && !isRk) continue;
+
+      // sid 필터: 해당 과목 subject_id 범위만
+      if (sidInfo) {
+        const allowed = isConcept
+          ? sidInfo.conceptIds.includes(a.subject_id)
+          : sidInfo.rkIds.includes(a.subject_id);
+        if (!allowed) continue;
+      }
+
+      if (isConcept) {
+        conceptRecords.push({ qid, selected: a.selected, answer: a.answer, session_id: a.session_id, subject_id: a.subject_id });
       } else {
-        const item = lookupLocal(a.kibchul_qid, a.selected, a.answer, a.session_id, a.subject_id);
+        const item = lookupLocal(qid, a.selected, a.answer, a.session_id, a.subject_id);
         if (item) localItems.push(item);
       }
     }
@@ -183,7 +207,7 @@ export default function WrongPage() {
     const conceptItems = await fetchConceptQuestions(conceptRecords);
     setItems([...localItems, ...conceptItems]);
     setLoading(false);
-  }, []);
+  }, [sidInfo]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -304,10 +328,17 @@ export default function WrongPage() {
   return (
     <div style={{ maxWidth: 720, margin: '0 auto', padding: '16px', background: '#f8f9fa', minHeight: '100vh' }}>
       {/* 헤더 */}
-      <div style={{ background: 'linear-gradient(135deg,#7c3aed,#6d28d9)', color: '#fff', borderRadius: 12, padding: '20px 24px', marginBottom: 20 }}>
-        <div style={{ fontSize: '1.2em', fontWeight: 'bold', marginBottom: 4 }}>❌ 오답 노트</div>
-        <div style={{ fontSize: '.85em', opacity: .85 }}>틀린 문제를 다시 풀어 완벽하게 마스터하세요</div>
-        <div style={{ fontSize: '.8em', opacity: .7, marginTop: 4 }}>총 {items.length}문항 오답 저장됨</div>
+      <div style={{ background: 'linear-gradient(135deg,#dc2626,#b91c1c)', color: '#fff', borderRadius: 12, padding: '20px 24px', marginBottom: 20 }}>
+        <div style={{ fontSize: '1.2em', fontWeight: 'bold', marginBottom: 4 }}>
+          📕 오답 재풀기
+          {sid && sidInfo && (
+            <span style={{ fontSize: '.75em', fontWeight: 'normal', marginLeft: 10, opacity: .9 }}>
+              {sid === 1 ? '교통안전관리론' : sid === 2 ? '교통안전법' : sid === 3 ? '열차운전' : sid === 4 ? '철도공학' : sid === 5 ? '철도산업기본법' : '철도안전법'}
+            </span>
+          )}
+        </div>
+        <div style={{ fontSize: '.85em', opacity: .85 }}>핵심개념 + 철도왕 틀린 문제를 다시 풀어 마스터하세요</div>
+        <div style={{ fontSize: '.8em', opacity: .7, marginTop: 4 }}>총 {items.length}문항 오답</div>
       </div>
 
       {/* 과목 필터 탭 */}
