@@ -7,7 +7,6 @@ import { saveAttempt, removeAttempt } from '@/lib/kibchul-attempts';
 // ─── 상수 ──────────────────────────────────────────────────────
 const CONCEPT_SUBJECT_ID = 205;
 const SAVE_KEY = 'concept_industry_progress';
-const LS_WRONG = 'kibchul_wrong';
 
 // ─── 타입 ──────────────────────────────────────────────────────
 interface ConceptChoice {
@@ -69,32 +68,15 @@ function clearProgress() {
 }
 
 function saveWrongEntry(q: ConceptQuestion, selectedIdx: number) {
-  try {
-    const existing: { questionId: string }[] = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
-    const key = `concept_${q.id}`;
-    if (existing.some(e => e.questionId === key)) return;
-    const entry = {
-      subjectId: CONCEPT_SUBJECT_ID,
-      sessionId: q.exam_area,
-      questionId: key,
-      question: q.question_text,
-      choices: q.choices.map(c => c.text),
-      answer: q.answer_idx,
-      selected: selectedIdx,
-      explanation: q.core_explanation,
-      caution: q.trap_point,
-      savedAt: new Date().toISOString(),
-    };
-    localStorage.setItem(LS_WRONG, JSON.stringify([...existing, entry]));
-    saveAttempt({
-      subject_id: CONCEPT_SUBJECT_ID,
-      session_id: q.exam_area,
-      kibchul_qid: key,
-      is_correct: false,
-      selected: selectedIdx,
-      answer: q.answer_idx,
-    }).catch(() => {});
-  } catch {}
+  const key = `concept_${q.id}`;
+  saveAttempt({
+    subject_id: CONCEPT_SUBJECT_ID,
+    session_id: q.exam_area,
+    kibchul_qid: key,
+    is_correct: false,
+    selected: selectedIdx,
+    answer: q.answer_idx,
+  }).catch(() => {});
 }
 
 // ─── Supabase fetch ─────────────────────────────────────────────

@@ -2,35 +2,17 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { SIGNAL_EXAM, SignalQuestion, SIGNAL_PART_NAMES, SignalPart, SignalGrade } from '@/lib/signal-exam-data';
-import { saveAttempt, removeAttempt, loadWrongAttempts } from '@/lib/kibchul-attempts';
+import { saveAttempt, removeAttempt } from '@/lib/kibchul-attempts';
 
 // ─── 상수 ──────────────────────────────────────────────────────
 const GRADE_COLOR: Record<string, string> = {
   S: '#7c3aed', 'A+': '#dc2626', A: '#2563eb',
 };
-const SIGNAL_SUBJECT_ID = 201;
+const SIGNAL_SUBJECT_ID = 401;
 const SAVE_KEY = 'signal_exam_progress';
-const LS_WRONG = 'kibchul_wrong';
 
 function saveWrongEntry(q: SignalQuestion, selected: number) {
-  try {
-    const existing = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
-    if (existing.some((e: { questionId: string }) => e.questionId === q.id)) return;
-    const entry = {
-      subjectId: SIGNAL_SUBJECT_ID,
-      sessionId: SIGNAL_PART_NAMES[q.part],
-      questionId: q.id,
-      question: q.question,
-      choices: q.choices,
-      answer: q.answer,
-      selected,
-      explanation: q.explanation ?? '',
-      caution: q.caution ?? '',
-      savedAt: new Date().toISOString(),
-    };
-    localStorage.setItem(LS_WRONG, JSON.stringify([...existing, entry]));
-    saveAttempt({ subject_id: SIGNAL_SUBJECT_ID, session_id: entry.sessionId, kibchul_qid: q.id, is_correct: false, selected, answer: q.answer }).catch(() => {});
-  } catch {}
+  saveAttempt({ subject_id: SIGNAL_SUBJECT_ID, session_id: SIGNAL_PART_NAMES[q.part], kibchul_qid: q.id, is_correct: false, selected, answer: q.answer }).catch(() => {});
 }
 
 type Mode = 'home' | 'quiz' | 'result';
@@ -79,23 +61,6 @@ export default function SignalCBTPage() {
   useEffect(() => {
     const p = loadProgress();
     if (p && p.questionIds.length > 0 && p.current < p.questionIds.length) setSavedProgress(p);
-    (async () => {
-      const { data } = await loadWrongAttempts(SIGNAL_SUBJECT_ID);
-      if (!data.length) return;
-      const qMap = new Map(SIGNAL_EXAM.map(q => [q.id, q]));
-      const fromServer = data.flatMap(r => {
-        const q = qMap.get(r.kibchul_qid);
-        if (!q) return [];
-        return [{ subjectId: SIGNAL_SUBJECT_ID, sessionId: r.session_id ?? '', questionId: r.kibchul_qid,
-          question: q.question, choices: [...q.choices], answer: r.answer ?? q.answer,
-          selected: r.selected ?? 0, explanation: q.explanation ?? '', caution: q.caution ?? '',
-          savedAt: new Date().toISOString() }];
-      });
-      if (!fromServer.length) return;
-      const existing: { subjectId: number }[] = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
-      const others = existing.filter(e => e.subjectId !== SIGNAL_SUBJECT_ID);
-      localStorage.setItem(LS_WRONG, JSON.stringify([...others, ...fromServer]));
-    })();
   }, []);
 
   // 퀴즈 진행 중 자동저장

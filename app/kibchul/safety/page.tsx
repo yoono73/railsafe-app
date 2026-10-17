@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { SAFETY_EXAM, SafetyQuestion } from '@/lib/safety-exam-data';
-import { saveAttempt, removeAttempt, loadWrongAttempts } from '@/lib/kibchul-attempts';
+import { saveAttempt, removeAttempt } from '@/lib/kibchul-attempts';
 
 // ─── 상수 ──────────────────────────────────────────────────────
 const GRADE_COLOR: Record<string, string> = {
@@ -15,29 +15,11 @@ const PART_LABEL: Record<number, string> = {
   4: 'PART 4 · 2025~2026 최신기출',
 };
 const SAVE_KEY = 'safety_exam_progress';
-const LS_WRONG = 'kibchul_wrong';
 const SAFETY_SUBJECT_ID = 99;
 
 function saveWrongEntry(q: SafetyQuestion, selected: number) {
-  try {
-    const existing = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
-    const alreadyExists = existing.some((e: { questionId: string }) => e.questionId === q.id);
-    if (alreadyExists) return;
-    const entry = {
-      subjectId: SAFETY_SUBJECT_ID,
-      sessionId: PART_LABEL[q.part] ?? `PART ${q.part}`,
-      questionId: q.id,
-      question: q.question,
-      choices: q.choices,
-      answer: q.answer,
-      selected,
-      explanation: q.explanation ?? '',
-      caution: q.caution ?? '',
-      savedAt: new Date().toISOString(),
-    };
-    localStorage.setItem(LS_WRONG, JSON.stringify([...existing, entry]));
-    saveAttempt({ subject_id: SAFETY_SUBJECT_ID, session_id: entry.sessionId, kibchul_qid: q.id, is_correct: false, selected, answer: q.answer }).catch(() => {});
-  } catch {}
+  const sessionId = PART_LABEL[q.part] ?? `PART ${q.part}`;
+  saveAttempt({ subject_id: SAFETY_SUBJECT_ID, session_id: sessionId, kibchul_qid: q.id, is_correct: false, selected, answer: q.answer }).catch(() => {});
 }
 
 type Mode = 'home' | 'quiz' | 'result';
@@ -97,29 +79,12 @@ export default function SafetyExamPage() {
 
   const [savedProgress, setSavedProgress] = useState<SavedProgress | null>(null);
 
-  // 마운트 시 저장된 진행상태 확인 + Supabase 오답 동기화
+  // 마운트 시 저장된 진행상태 확인
   useEffect(() => {
     const p = loadProgress();
     if (p && p.questionIds.length > 0 && p.current < p.questionIds.length) {
       setSavedProgress(p);
     }
-    (async () => {
-      const { data } = await loadWrongAttempts(SAFETY_SUBJECT_ID);
-      if (!data.length) return;
-      const qMap = new Map(SAFETY_EXAM.map(q => [q.id, q]));
-      const fromServer = data.flatMap(r => {
-        const q = qMap.get(r.kibchul_qid);
-        if (!q) return [];
-        return [{ subjectId: SAFETY_SUBJECT_ID, sessionId: r.session_id ?? '', questionId: r.kibchul_qid,
-          question: q.question, choices: [...q.choices], answer: r.answer ?? q.answer,
-          selected: r.selected ?? 0, explanation: q.explanation ?? '', caution: q.caution ?? '',
-          savedAt: new Date().toISOString() }];
-      });
-      if (!fromServer.length) return;
-      const existing: { subjectId: number }[] = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
-      const others = existing.filter(e => e.subjectId !== SAFETY_SUBJECT_ID);
-      localStorage.setItem(LS_WRONG, JSON.stringify([...others, ...fromServer]));
-    })();
   }, []);
 
   // 퀴즈 진행 중 자동저장 (브라우저 뒤로가기 대응)

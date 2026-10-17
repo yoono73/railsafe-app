@@ -2,36 +2,18 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { INDUSTRY_EXAM, IndustryQuestion, INDUSTRY_PART_LABEL, Part } from '@/lib/industry-exam-data';
-import { saveAttempt, removeAttempt, loadWrongAttempts } from '@/lib/kibchul-attempts';
+import { saveAttempt, removeAttempt } from '@/lib/kibchul-attempts';
 
 // ─── 상수 ──────────────────────────────────────────────────────
 const GRADE_COLOR: Record<string, string> = {
   S: '#7c3aed', 'A+': '#d97706', A: '#2563eb',
 };
 const SAVE_KEY = 'industry_exam_progress';
-const LS_WRONG = 'kibchul_wrong';
 const INDUSTRY_SUBJECT_ID = 100;
 
 function saveWrongEntry(q: IndustryQuestion, selected: number) {
-  try {
-    const existing = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
-    const alreadyExists = existing.some((e: { questionId: string }) => e.questionId === q.id);
-    if (alreadyExists) return;
-    const entry = {
-      subjectId: INDUSTRY_SUBJECT_ID,
-      sessionId: INDUSTRY_PART_LABEL[q.part as Part] ?? `PART ${q.part}`,
-      questionId: q.id,
-      question: q.question,
-      choices: q.choices,
-      answer: q.answer,
-      selected,
-      explanation: q.explanation ?? '',
-      caution: q.caution ?? '',
-      savedAt: new Date().toISOString(),
-    };
-    localStorage.setItem(LS_WRONG, JSON.stringify([...existing, entry]));
-    saveAttempt({ subject_id: INDUSTRY_SUBJECT_ID, session_id: entry.sessionId, kibchul_qid: q.id, is_correct: false, selected, answer: q.answer }).catch(() => {});
-  } catch {}
+  const sessionId = INDUSTRY_PART_LABEL[q.part as Part] ?? `PART ${q.part}`;
+  saveAttempt({ subject_id: INDUSTRY_SUBJECT_ID, session_id: sessionId, kibchul_qid: q.id, is_correct: false, selected, answer: q.answer }).catch(() => {});
 }
 
 type Mode = 'home' | 'quiz' | 'result';
@@ -90,29 +72,12 @@ export default function IndustryExamPage() {
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [savedProgress, setSavedProgress] = useState<SavedProgress | null>(null);
 
-  // 마운트 시 저장된 진행상태 확인 + Supabase 오답 동기화
+  // 마운트 시 저장된 진행상태 확인
   useEffect(() => {
     const p = loadProgress();
     if (p && p.questionIds.length > 0 && p.current < p.questionIds.length) {
       setSavedProgress(p);
     }
-    (async () => {
-      const { data } = await loadWrongAttempts(INDUSTRY_SUBJECT_ID);
-      if (!data.length) return;
-      const qMap = new Map(INDUSTRY_EXAM.map(q => [q.id, q]));
-      const fromServer = data.flatMap(r => {
-        const q = qMap.get(r.kibchul_qid);
-        if (!q) return [];
-        return [{ subjectId: INDUSTRY_SUBJECT_ID, sessionId: r.session_id ?? '', questionId: r.kibchul_qid,
-          question: q.question, choices: [...q.choices], answer: r.answer ?? q.answer,
-          selected: r.selected ?? 0, explanation: q.explanation ?? '', caution: q.caution ?? '',
-          savedAt: new Date().toISOString() }];
-      });
-      if (!fromServer.length) return;
-      const existing: { subjectId: number }[] = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
-      const others = existing.filter(e => e.subjectId !== INDUSTRY_SUBJECT_ID);
-      localStorage.setItem(LS_WRONG, JSON.stringify([...others, ...fromServer]));
-    })();
   }, []);
 
   // 퀴즈 진행 중 자동저장 (브라우저 뒤로가기 대응)

@@ -2,10 +2,9 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { managementQuestions, MgmtQuestion } from '@/lib/management-exam-data';
-import { saveAttempt, removeAttempt, loadWrongAttempts, saveCBTProgress, loadCBTProgress, clearCBTProgress } from '@/lib/kibchul-attempts';
+import { saveAttempt, removeAttempt, saveCBTProgress, loadCBTProgress, clearCBTProgress } from '@/lib/kibchul-attempts';
 
-const MGMT_SUBJECT_ID = 200;
-const LS_WRONG = 'kibchul_wrong';
+const MGMT_SUBJECT_ID = 402;
 const SAVE_KEY = 'kibchul_mgmt_progress';
 
 const PART_NAMES: Record<number, string> = {
@@ -25,32 +24,15 @@ const GRADE_COLOR: Record<string, string> = {
 };
 
 function saveWrongEntry(q: MgmtQuestion, selected: number) {
-  try {
-    const existing = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
-    const key = `mgmt_${q.id}`;
-    if (existing.some((e: { questionId: string }) => e.questionId === key)) return;
-    const entry = {
-      subjectId: MGMT_SUBJECT_ID,
-      sessionId: PART_NAMES[q.part],
-      questionId: key,
-      question: q.question,
-      choices: Array.from(q.choices),
-      answer: q.answer,
-      selected,
-      explanation: q.explanation ?? '',
-      caution: '',
-      savedAt: new Date().toISOString(),
-    };
-    localStorage.setItem(LS_WRONG, JSON.stringify([...existing, entry]));
-    saveAttempt({
-      subject_id: MGMT_SUBJECT_ID,
-      session_id: PART_NAMES[q.part],
-      kibchul_qid: key,
-      is_correct: false,
-      selected,
-      answer: q.answer,
-    }).catch(() => {});
-  } catch {}
+  const key = `mgmt_${q.id}`;
+  saveAttempt({
+    subject_id: MGMT_SUBJECT_ID,
+    session_id: PART_NAMES[q.part],
+    kibchul_qid: key,
+    is_correct: false,
+    selected,
+    answer: q.answer,
+  }).catch(() => {});
 }
 
 type Mode = 'home' | 'quiz' | 'result';
@@ -132,21 +114,7 @@ export default function ManagementCBTPage() {
         try { localStorage.setItem(SAVE_KEY, JSON.stringify(synced)); } catch {}
         setHasSaved(true);
       }
-      const { data } = await loadWrongAttempts(MGMT_SUBJECT_ID);
-      if (!data.length) return;
-      const qMap = new Map(managementQuestions.map(q => [String(q.id), q]));
-      const fromServer = data.flatMap(r => {
-        const q = qMap.get(r.kibchul_qid);
-        if (!q) return [];
-        return [{ subjectId: MGMT_SUBJECT_ID, sessionId: r.session_id ?? '', questionId: r.kibchul_qid,
-          question: q.question, choices: [...q.choices], answer: r.answer ?? q.answer,
-          selected: r.selected ?? 0, explanation: q.explanation ?? '',
-          savedAt: new Date().toISOString() }];
-      });
-      if (!fromServer.length) return;
-      const existing: { subjectId: number }[] = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
-      const others = existing.filter(e => e.subjectId !== MGMT_SUBJECT_ID);
-      localStorage.setItem(LS_WRONG, JSON.stringify([...others, ...fromServer]));
+      // LS_WRONG 동기화 코드 제거됨 (DB 전용)
     })();
   }, []);
 

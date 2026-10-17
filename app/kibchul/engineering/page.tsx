@@ -2,10 +2,9 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { engineeringQuestions, PART_NAMES, EnggQuestion, EnggPart, EnggGrade, SAVE_KEY } from '@/lib/engineering-exam-data';
-import { saveAttempt, removeAttempt, loadWrongAttempts } from '@/lib/kibchul-attempts';
+import { saveAttempt, removeAttempt } from '@/lib/kibchul-attempts';
 
 const ENGG_SUBJECT_ID = 400;
-const LS_WRONG = 'kibchul_wrong';
 
 const GRADE_COLOR: Record<string, string> = {
   'A+': '#d97706', 'A': '#2563eb', 'B': '#6b7280',
@@ -16,32 +15,15 @@ const PART_COLOR: Record<number, string> = {
 };
 
 function saveWrongEntry(q: EnggQuestion, selected: number) {
-  try {
-    const existing = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
-    const key = `engg_${q.id}`;
-    if (existing.some((e: { questionId: string }) => e.questionId === key)) return;
-    const entry = {
-      subjectId: ENGG_SUBJECT_ID,
-      sessionId: PART_NAMES[q.part],
-      questionId: key,
-      question: q.question,
-      choices: Array.from(q.choices),
-      answer: q.answer,
-      selected,
-      explanation: q.explanation ?? '',
-      caution: q.trap ?? '',
-      savedAt: new Date().toISOString(),
-    };
-    localStorage.setItem(LS_WRONG, JSON.stringify([...existing, entry]));
-    saveAttempt({
-      subject_id: ENGG_SUBJECT_ID,
-      session_id: PART_NAMES[q.part],
-      kibchul_qid: key,
-      is_correct: false,
-      selected,
-      answer: q.answer,
-    }).catch(() => {});
-  } catch {}
+  const key = `engg_${q.id}`;
+  saveAttempt({
+    subject_id: ENGG_SUBJECT_ID,
+    session_id: PART_NAMES[q.part],
+    kibchul_qid: key,
+    is_correct: false,
+    selected,
+    answer: q.answer,
+  }).catch(() => {});
 }
 
 type Mode = 'home' | 'quiz' | 'result';
@@ -91,27 +73,10 @@ export default function EngineeringCBTPage() {
   const [hasSaved, setHasSaved] = useState(false);
   const [choiceOrder, setChoiceOrder] = useState<number[]>([0,1,2,3]);
 
-  // 이어풀기 감지 + Supabase 오답 동기화
+  // 이어풀기 감지
   useEffect(() => {
     const saved = loadProgress();
     if (saved) setHasSaved(true);
-    (async () => {
-      const { data } = await loadWrongAttempts(ENGG_SUBJECT_ID);
-      if (!data.length) return;
-      const qMap = new Map(engineeringQuestions.map(q => [String(q.id), q]));
-      const fromServer = data.flatMap(r => {
-        const q = qMap.get(r.kibchul_qid);
-        if (!q) return [];
-        return [{ subjectId: ENGG_SUBJECT_ID, sessionId: r.session_id ?? '', questionId: r.kibchul_qid,
-          question: q.question, choices: [...q.choices], answer: r.answer ?? q.answer,
-          selected: r.selected ?? 0, explanation: q.explanation ?? '',
-          savedAt: new Date().toISOString() }];
-      });
-      if (!fromServer.length) return;
-      const existing: { subjectId: number }[] = JSON.parse(localStorage.getItem(LS_WRONG) || '[]');
-      const others = existing.filter(e => e.subjectId !== ENGG_SUBJECT_ID);
-      localStorage.setItem(LS_WRONG, JSON.stringify([...others, ...fromServer]));
-    })();
   }, []);
 
   const getFiltered = useCallback(() => {

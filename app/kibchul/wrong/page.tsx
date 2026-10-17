@@ -1,262 +1,379 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { KIBCHUL_SUBJECTS } from '@/lib/kibchul-data';
-import { migrateLocalToServer } from '@/lib/kibchul-attempts';
+import { useState, useEffect, useCallback } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import { loadWrongAttempts, removeAttempt } from '@/lib/kibchul-attempts';
+import { TRAFFIC_EXAM } from '@/lib/traffic-exam-data';
+import { SAFETY_EXAM } from '@/lib/safety-exam-data';
+import { INDUSTRY_EXAM } from '@/lib/industry-exam-data';
+import { SIGNAL_EXAM } from '@/lib/signal-exam-data';
+import { engineeringQuestions } from '@/lib/engineering-exam-data';
+import { managementQuestions } from '@/lib/management-exam-data';
+import { allRailwayKingQuestions } from '@/lib/railway-king-data';
 
-const LS_WRONG = 'kibchul_wrong';
+// ─── 과목 정보 ───────────────────────────────────────────────────
+const SUBJECT_LABELS: Record<number, string> = {
+  99:  '철도안전법 기출',
+  100: '철도산업기본법 기출',
+  200: '교통안전법 기출',
+  307: '철도왕 철도안전법',
+  400: '철도공학 기출',
+  401: '철도신호 기출',
+  402: '철도운행관리 기출',
+  201: '교통안전관리론 개념',
+  202: '교통안전법 개념',
+  203: '열차운전 개념',
+  204: '철도공학 개념',
+  205: '철도산업기본법 개념',
+  206: '철도신호 개념',
+  207: '철도안전법 개념',
+};
 
-interface WrongEntry {
-  subjectId: number;
-  sessionId: string;
-  questionId: string;
+// ─── 내부 타입 ────────────────────────────────────────────────────
+interface WrongItem {
+  qid: string;
+  subject_id: number;
+  session_id: string;
   question: string;
   choices: string[];
-  answer: number;
+  answer: number;   // 1-indexed for most, 0-indexed for RK
   selected: number;
   explanation: string;
-  caution?: string;
-  savedAt: string;
+  isRk: boolean;
 }
 
-const SAFETY_SUBJECT = { id: 99, name: '철도안전법 기출', icon: '🚦' };
-const INDUSTRY_SUBJECT = { id: 100, name: '철도산업발전기본법 기출', icon: '🚄' };
+// ─── 로컬 데이터 맵 빌드 ─────────────────────────────────────────
+const trafficMap = new Map(TRAFFIC_EXAM.map(q => [q.id, q]));
+const safetyMap = new Map(SAFETY_EXAM.map(q => [q.id, q]));
+const industryMap = new Map(INDUSTRY_EXAM.map(q => [q.id, q]));
+const signalMap = new Map(SIGNAL_EXAM.map(q => [q.id, q]));
+const enggMap = new Map(engineeringQuestions.map(q => [`engg_${q.id}`, q]));
+const mgmtMap = new Map(managementQuestions.map(q => [`mgmt_${q.id}`, q]));
+const rkMap = new Map(allRailwayKingQuestions.map(q => [q.id, q]));
 
-function loadWrong(): WrongEntry[] {
-  try { return JSON.parse(localStorage.getItem(LS_WRONG) || '[]'); } catch { return []; }
+function lookupLocal(qid: string, selected: number, answer: number, session_id: string, subject_id: number): WrongItem | null {
+  // RK 패턴 (rk_* 접두사)
+  if (qid.startsWith('rk_')) {
+    const q = rkMap.get(qid);
+    if (!q) return null;
+    return {
+      qid, subject_id, session_id,
+      question: q.question,
+      choices: [...q.choices],
+      answer: q.answer,    // 0-indexed
+      selected,
+      explanation: q.explanation,
+      isRk: true,
+    };
+  }
+  // 철도공학 (engg_*)
+  if (qid.startsWith('engg_')) {
+    const q = enggMap.get(qid);
+    if (!q) return null;
+    return {
+      qid, subject_id, session_id,
+      question: q.question,
+      choices: [...q.choices],
+      answer,
+      selected,
+      explanation: q.explanation ?? '',
+      isRk: false,
+    };
+  }
+  // 철도운행관리 (mgmt_*)
+  if (qid.startsWith('mgmt_')) {
+    const q = mgmtMap.get(qid);
+    if (!q) return null;
+    return {
+      qid, subject_id, session_id,
+      question: q.question,
+      choices: [...q.choices],
+      answer: q.answer,
+      selected,
+      explanation: q.explanation ?? '',
+      isRk: false,
+    };
+  }
+  // 교통안전법
+  const tq = trafficMap.get(qid);
+  if (tq) return { qid, subject_id, session_id, question: tq.question, choices: [...tq.choices], answer: tq.answer, selected, explanation: tq.explanation ?? '', isRk: false };
+  // 철도안전법 기출
+  const sq = safetyMap.get(qid);
+  if (sq) return { qid, subject_id, session_id, question: sq.question, choices: [...sq.choices], answer: sq.answer, selected, explanation: sq.explanation ?? '', isRk: false };
+  // 철도산업기본법 기출
+  const iq = industryMap.get(qid);
+  if (iq) return { qid, subject_id, session_id, question: iq.question, choices: [...iq.choices], answer: iq.answer, selected, explanation: iq.explanation ?? '', isRk: false };
+  // 철도신호 기출
+  const sigq = signalMap.get(qid);
+  if (sigq) return { qid, subject_id, session_id, question: sigq.question, choices: [...sigq.choices], answer: sigq.answer, selected, explanation: sigq.explanation ?? '', isRk: false };
+
+  return null;
 }
 
-export default function KibchulWrongPage() {
-  const router = useRouter();
-  const [wrongs, setWrongs] = useState<WrongEntry[]>([]);
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
-  const [filterSubject, setFilterSubject] = useState<number | null>(null);
-  const [migrateStatus, setMigrateStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
-  const [migrateError, setMigrateError] = useState<string>('');
+// ─── 개념문제: Supabase question_versions 조회 ───────────────────
+async function fetchConceptQuestions(records: { qid: string; selected: number; answer: number; session_id: string; subject_id: number }[]): Promise<WrongItem[]> {
+  if (!records.length) return [];
+  const supabase = createClient();
+  // qid is concept_UUID or concept_op_UUID; strip prefix to get actual UUID
+  const idPairs = records.map(r => {
+    const raw = r.qid.startsWith('concept_op_') ? r.qid.slice('concept_op_'.length)
+               : r.qid.startsWith('concept_') ? r.qid.slice('concept_'.length)
+               : r.qid;
+    return { ...r, rawId: raw };
+  });
+  const rawIds = idPairs.map(p => p.rawId);
+  const { data } = await supabase
+    .from('question_versions')
+    .select('id, question_text, choices, answer_idx, core_explanation')
+    .in('id', rawIds);
+  if (!data) return [];
+  const qMap = new Map(data.map((d: { id: string; question_text: string; choices: { text: string }[]; answer_idx: number; core_explanation: string }) => [d.id, d]));
+  return idPairs.flatMap(r => {
+    const q = qMap.get(r.rawId);
+    if (!q) return [];
+    const choices: string[] = Array.isArray(q.choices)
+      ? q.choices.map((c: { text: string } | string) => typeof c === 'string' ? c : c.text)
+      : [];
+    return [{
+      qid: r.qid,
+      subject_id: r.subject_id,
+      session_id: r.session_id,
+      question: q.question_text,
+      choices,
+      answer: q.answer_idx,
+      selected: r.selected,
+      explanation: q.core_explanation ?? '',
+      isRk: false,
+    }];
+  });
+}
 
-  useEffect(() => {
-    setWrongs(loadWrong());
-    setMounted(true);
+// ─── 메인 컴포넌트 ──────────────────────────────────────────────
+export default function WrongPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [items, setItems] = useState<WrongItem[]>([]);
+  const [filterSubject, setFilterSubject] = useState<number | 'ALL'>('ALL');
+  const [retryQid, setRetryQid] = useState<string | null>(null);
+  const [retrySelected, setRetrySelected] = useState<number | null>(null);
+  const [retryRevealed, setRetryRevealed] = useState(false);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { setIsLoggedIn(false); setLoading(false); return; }
+    setIsLoggedIn(true);
+
+    const { data: attempts } = await loadWrongAttempts();
+    if (!attempts.length) { setItems([]); setLoading(false); return; }
+
+    const conceptRecords: { qid: string; selected: number; answer: number; session_id: string; subject_id: number }[] = [];
+    const localItems: WrongItem[] = [];
+
+    for (const a of attempts) {
+      if (a.kibchul_qid.startsWith('concept_')) {
+        conceptRecords.push({ qid: a.kibchul_qid, selected: a.selected, answer: a.answer, session_id: a.session_id, subject_id: a.subject_id });
+      } else {
+        const item = lookupLocal(a.kibchul_qid, a.selected, a.answer, a.session_id, a.subject_id);
+        if (item) localItems.push(item);
+      }
+    }
+
+    const conceptItems = await fetchConceptQuestions(conceptRecords);
+    setItems([...localItems, ...conceptItems]);
+    setLoading(false);
   }, []);
 
-  function removeEntry(questionId: string) {
-    const updated = wrongs.filter(e => e.questionId !== questionId);
-    localStorage.setItem(LS_WRONG, JSON.stringify(updated));
-    setWrongs(updated);
-  }
+  useEffect(() => { load(); }, [load]);
 
-  function clearAll() {
-    if (confirm('오답노트를 모두 삭제할까요?')) {
-      localStorage.removeItem(LS_WRONG);
-      setWrongs([]);
+  const handleRetry = (qid: string) => {
+    setRetryQid(qid);
+    setRetrySelected(null);
+    setRetryRevealed(false);
+  };
+
+  const handleReveal = async () => {
+    if (retrySelected === null || !retryQid) return;
+    setRetryRevealed(true);
+    const item = items.find(i => i.qid === retryQid);
+    if (!item) return;
+    const correct = retrySelected === item.answer;
+    if (correct) {
+      await removeAttempt(retryQid);
+      setItems(prev => prev.filter(i => i.qid !== retryQid));
+      setRetryQid(null);
+      setRetrySelected(null);
+      setRetryRevealed(false);
     }
-  }
+  };
 
-  if (!mounted) {
-    return <div className="p-6 text-center text-gray-400">불러오는 중...</div>;
-  }
+  const subjects = ['ALL' as const, ...Array.from(new Set(items.map(i => i.subject_id))).sort((a, b) => a - b)];
+  const filtered = filterSubject === 'ALL' ? items : items.filter(i => i.subject_id === filterSubject);
+  const retryItem = retryQid ? items.find(i => i.qid === retryQid) ?? null : null;
 
-  const filtered = filterSubject
-    ? wrongs.filter(e => e.subjectId === filterSubject)
-    : wrongs;
-
-  // 과목별 개수
-  const allSubjects = [...KIBCHUL_SUBJECTS, SAFETY_SUBJECT, INDUSTRY_SUBJECT];
-  const countBySubject = allSubjects.map(s => ({
-    subject: s,
-    count: wrongs.filter(e => e.subjectId === s.id).length,
-  }));
-
-  return (
-    <div className="min-h-full bg-orange-50">
-      {/* 헤더 */}
-      <div className="px-4 py-3 flex items-center gap-2 text-sm border-b border-orange-100 bg-white">
-        <button onClick={() => router.back()} className="text-orange-400 hover:text-orange-600 transition">← 뒤로</button>
-        <span className="text-gray-300">|</span>
-        <span className="font-medium text-gray-700">📒 기출 오답노트</span>
-        <div className="ml-auto flex items-center gap-3">
-          {migrateStatus === 'idle' && (
-            <button
-              onClick={async () => {
-                setMigrateStatus('loading');
-                const result = await migrateLocalToServer();
-                if (result.error) {
-                  setMigrateError(result.error);
-                  setMigrateStatus('error');
-                } else {
-                  setMigrateStatus('done');
-                }
-              }}
-              className="text-xs text-blue-500 hover:text-blue-700 transition border border-blue-200 rounded-lg px-2 py-1"
-            >
-              ☁️ 서버로 올리기
-            </button>
-          )}
-          {migrateStatus === 'loading' && <span className="text-xs text-gray-400">업로드 중...</span>}
-          {migrateStatus === 'done' && <span className="text-xs text-green-600">✓ 서버 저장 완료</span>}
-          {migrateStatus === 'error' && (
-            <span className="text-xs text-red-400" title={migrateError}>
-              {migrateError === '로그인 필요' ? '⚠ 로그인 후 이용' : '⚠ SQL 미실행 또는 오류'}
-            </span>
-          )}
-          {wrongs.length > 0 && (
-            <button onClick={clearAll} className="text-xs text-gray-400 hover:text-red-500 transition">
-              전체 삭제
-            </button>
-          )}
-        </div>
+  // ─── 로그인 필요 ───────────────────────────────────────────────
+  if (isLoggedIn === false) {
+    return (
+      <div style={{ maxWidth: 600, margin: '0 auto', padding: '40px 16px', textAlign: 'center' }}>
+        <div style={{ fontSize: '3em', marginBottom: 16 }}>🔒</div>
+        <div style={{ fontSize: '1.2em', fontWeight: 'bold', marginBottom: 8, color: '#374151' }}>로그인이 필요합니다</div>
+        <div style={{ fontSize: '.9em', color: '#6b7280', marginBottom: 24 }}>오답 노트는 로그인 후 이용할 수 있습니다.<br/>오답 데이터가 서버에 자동 저장됩니다.</div>
+        <a href="/auth/login" style={{ display: 'inline-block', padding: '12px 28px', background: '#059669', color: '#fff', borderRadius: 8, fontWeight: 'bold', textDecoration: 'none', fontSize: '.95em' }}>
+          로그인하기
+        </a>
       </div>
+    );
+  }
 
-      <div className="max-w-2xl mx-auto px-4 py-6">
+  // ─── 로딩 ─────────────────────────────────────────────────────
+  if (loading) {
+    return (
+      <div style={{ maxWidth: 600, margin: '0 auto', padding: '40px 16px', textAlign: 'center' }}>
+        <div style={{ color: '#6b7280', fontSize: '.95em' }}>오답 불러오는 중...</div>
+      </div>
+    );
+  }
 
-        {/* 요약 카드 */}
-        <div className="bg-white rounded-2xl shadow-sm p-5 mb-5 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-2xl">📒</div>
-          <div>
-            <p className="text-sm text-gray-500">저장된 오답</p>
-            <p className="text-2xl font-black text-red-600">{wrongs.length}<span className="text-sm font-normal text-gray-500 ml-1">문제</span></p>
-          </div>
-          {wrongs.length > 0 && (
-            <button
-              onClick={() => {
-                // 오답이 1개 과목에만 있으면 해당 과목으로, 복수면 뒤로
-                const subjectIds = [...new Set(wrongs.map(e => e.subjectId))];
-                if (subjectIds.length === 1) {
-                  if (subjectIds[0] === 99) {
-                    router.push('/kibchul/safety');
-                  } else {
-                    router.push(`/kibchul/${subjectIds[0]}`);
-                  }
-                } else {
-                  router.back();
-                }
-              }}
-              className="ml-auto px-4 py-2 bg-orange-500 text-white rounded-xl text-sm font-semibold hover:bg-orange-600 transition"
-            >
-              오답 복습 →
-            </button>
-          )}
+  // ─── 재풀기 모드 ───────────────────────────────────────────────
+  if (retryItem) {
+    const { choices, answer, isRk } = retryItem;
+    const correctIdx = answer; // 0-indexed for RK, 1-indexed for others
+    return (
+      <div style={{ maxWidth: 640, margin: '0 auto', padding: '16px', background: '#f8f9fa', minHeight: '100vh' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+          <button onClick={() => { setRetryQid(null); setRetrySelected(null); setRetryRevealed(false); }}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6b7280', fontSize: '.85em' }}>
+            ← 목록으로
+          </button>
+          <span style={{ fontSize: '.8em', color: '#9ca3af' }}>{SUBJECT_LABELS[retryItem.subject_id] ?? `과목 ${retryItem.subject_id}`}</span>
         </div>
 
-        {wrongs.length === 0 ? (
-          <div className="bg-white rounded-2xl shadow-sm p-10 text-center">
-            <div className="text-5xl mb-4">🎯</div>
-            <p className="text-lg font-bold text-green-600 mb-2">오답이 없어요!</p>
-            <p className="text-sm text-gray-500">기출문제를 풀면 틀린 문제가 여기에 저장됩니다.</p>
-            <button onClick={() => router.push('/kibchul/1')} className="mt-6 px-6 py-3 bg-orange-600 text-white rounded-xl text-sm font-semibold hover:bg-orange-700 transition">
-              기출문제 풀러 가기
+        <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: '20px', marginBottom: 16 }}>
+          <div style={{ fontSize: '.8em', color: '#6b7280', marginBottom: 8 }}>{retryItem.session_id}</div>
+          <div style={{ fontSize: '1em', lineHeight: 1.7, fontWeight: 500 }}>{retryItem.question}</div>
+        </div>
+
+        {choices.map((c, i) => {
+          const idx = isRk ? i : i + 1;
+          let bg = '#fff', border = '#e5e7eb', color = '#1f2937', fontWeight: 'normal' | 'bold' = 'normal';
+          if (retryRevealed) {
+            if (idx === correctIdx) { bg = '#166534'; border = '#14532d'; color = '#fff'; fontWeight = 'bold'; }
+            else if (idx === retrySelected) { bg = '#7f1d1d'; border = '#991b1b'; color = '#fff'; fontWeight = 'bold'; }
+            else { bg = '#f3f4f6'; border = '#e5e7eb'; color = '#9ca3af'; }
+          } else if (retrySelected === idx) {
+            bg = '#ecfdf5'; border = '#059669'; color = '#065f46'; fontWeight = 'bold';
+          }
+          return (
+            <button key={idx} disabled={retryRevealed}
+              onClick={() => setRetrySelected(idx)}
+              style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 16px', marginBottom: 8,
+                background: bg, border: `2px solid ${border}`, borderRadius: 8,
+                cursor: retryRevealed ? 'default' : 'pointer', color, fontSize: '.92em', lineHeight: 1.5, fontWeight }}>
+              <span style={{ fontWeight: 'bold', marginRight: 6 }}>
+                {retryRevealed && idx === correctIdx ? '✅ ' : retryRevealed && idx === retrySelected ? '❌ ' : ''}{isRk ? `${i + 1}` : `${idx}`}.
+              </span>{c}
             </button>
+          );
+        })}
+
+        {retryRevealed && (
+          <div style={{ background: '#f0fdf4', border: '1px solid #86efac', borderRadius: 8, padding: '12px 14px', marginTop: 8, fontSize: '.88em', color: '#14532d' }}>
+            <strong>정답: {isRk ? correctIdx + 1 : correctIdx}번 — {choices[isRk ? correctIdx : correctIdx - 1]}</strong>
+            {retryItem.explanation && <div style={{ marginTop: 6 }}>{retryItem.explanation}</div>}
           </div>
-        ) : (
-          <>
-            {/* 과목 필터 */}
-            <div className="flex gap-2 overflow-x-auto pb-2 mb-4">
-              <button
-                onClick={() => setFilterSubject(null)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
-                  filterSubject === null ? 'bg-orange-600 text-white' : 'bg-white text-gray-600 hover:bg-orange-50'
-                }`}
-              >
-                전체 ({wrongs.length})
-              </button>
-              {countBySubject.filter(c => c.count > 0).map(({ subject, count }) => (
-                <button
-                  key={subject.id}
-                  onClick={() => setFilterSubject(subject.id)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
-                    filterSubject === subject.id ? 'bg-orange-600 text-white' : 'bg-white text-gray-600 hover:bg-orange-50'
-                  }`}
-                >
-                  {subject.icon} {subject.name} ({count})
-                </button>
-              ))}
-            </div>
+        )}
 
-            {/* 오답 목록 */}
-            <div className="flex flex-col gap-3">
-              {filtered
-                .sort((a, b) => b.savedAt.localeCompare(a.savedAt))
-                .map(entry => {
-                  const subjectInfo = allSubjects.find(s => s.id === entry.subjectId);
-                  const sessionLabel = (subjectInfo as { sessions?: { id: string; label: string }[] })?.sessions?.find(ss => ss.id === entry.sessionId)?.label ?? entry.sessionId;
-                  const isExpanded = expandedId === entry.questionId;
-
-                  return (
-                    <div key={entry.questionId} className="bg-white rounded-2xl shadow-sm overflow-hidden">
-                      <button
-                        onClick={() => setExpandedId(isExpanded ? null : entry.questionId)}
-                        className="w-full text-left p-4"
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full font-medium">
-                                {subjectInfo?.icon} {subjectInfo?.name}
-                              </span>
-                              <span className="text-xs text-gray-400">{sessionLabel}</span>
-                            </div>
-                            <p className="text-sm text-gray-800 font-medium leading-snug">{entry.question}</p>
-                          </div>
-                          <span className="text-gray-300 text-sm mt-0.5 shrink-0">{isExpanded ? '▲' : '▼'}</span>
-                        </div>
-                      </button>
-
-                      {isExpanded && (
-                        <div className="px-4 pb-4 border-t border-gray-100">
-                          <div className="mt-3 flex flex-col gap-1">
-                            {entry.choices.map((ch, idx) => (
-                              <div key={idx} className={`text-xs py-1.5 px-3 rounded-lg ${
-                                idx + 1 === entry.answer
-                                  ? 'bg-green-100 text-green-800 font-semibold'
-                                  : idx + 1 === entry.selected
-                                  ? 'bg-red-100 text-red-700'
-                                  : 'text-gray-500'
-                              }`}>
-                                {['①', '②', '③', '④'][idx]} {ch}
-                                {idx + 1 === entry.answer && ' ✓ 정답'}
-                                {idx + 1 === entry.selected && idx + 1 !== entry.answer && ' ✗ 내 선택'}
-                              </div>
-                            ))}
-                          </div>
-
-                          {entry.explanation && (
-                            <div className="mt-3 bg-amber-50 rounded-xl p-3">
-                              <p className="text-xs text-amber-700 leading-relaxed">💡 {entry.explanation}</p>
-                            </div>
-                          )}
-                          {entry.caution && (
-                            <div className="mt-2 bg-orange-50 rounded-xl p-3">
-                              <p className="text-xs text-orange-700 leading-relaxed">⚠️ {entry.caution}</p>
-                            </div>
-                          )}
-
-                          <div className="mt-3 flex gap-2">
-                            <button
-                              onClick={() => router.push(`/kibchul/${entry.subjectId}`)}
-                              className="flex-1 py-2 bg-orange-500 text-white rounded-xl text-xs font-semibold hover:bg-orange-600 transition"
-                            >
-                              해당 과목 풀기
-                            </button>
-                            <button
-                              onClick={() => removeEntry(entry.questionId)}
-                              className="px-3 py-2 bg-gray-100 text-gray-500 rounded-xl text-xs font-semibold hover:bg-gray-200 transition"
-                            >
-                              삭제
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-            </div>
-
-            <p className="text-xs text-center text-gray-400 mt-6">항목을 클릭하면 상세 해설을 볼 수 있어요</p>
-          </>
+        {!retryRevealed && (
+          <button onClick={handleReveal} disabled={retrySelected === null}
+            style={{ marginTop: 16, width: '100%', padding: '13px', background: retrySelected === null ? '#d1d5db' : '#059669', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: retrySelected === null ? 'default' : 'pointer', fontSize: '.95em' }}>
+            정답 확인
+          </button>
+        )}
+        {retryRevealed && retrySelected !== correctIdx && (
+          <button onClick={() => { setRetrySelected(null); setRetryRevealed(false); }}
+            style={{ marginTop: 8, width: '100%', padding: '13px', background: '#1d4ed8', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer', fontSize: '.95em' }}>
+            다시 풀기
+          </button>
         )}
       </div>
+    );
+  }
+
+  // ─── 목록 뷰 ──────────────────────────────────────────────────
+  return (
+    <div style={{ maxWidth: 720, margin: '0 auto', padding: '16px', background: '#f8f9fa', minHeight: '100vh' }}>
+      {/* 헤더 */}
+      <div style={{ background: 'linear-gradient(135deg,#7c3aed,#6d28d9)', color: '#fff', borderRadius: 12, padding: '20px 24px', marginBottom: 20 }}>
+        <div style={{ fontSize: '1.2em', fontWeight: 'bold', marginBottom: 4 }}>❌ 오답 노트</div>
+        <div style={{ fontSize: '.85em', opacity: .85 }}>틀린 문제를 다시 풀어 완벽하게 마스터하세요</div>
+        <div style={{ fontSize: '.8em', opacity: .7, marginTop: 4 }}>총 {items.length}문항 오답 저장됨</div>
+      </div>
+
+      {/* 과목 필터 탭 */}
+      {items.length > 0 && (
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
+          {subjects.map(s => {
+            const label = s === 'ALL' ? `전체 (${items.length})` : `${SUBJECT_LABELS[s] ?? `과목${s}`} (${items.filter(i => i.subject_id === s).length})`;
+            const active = filterSubject === s;
+            return (
+              <button key={s} onClick={() => setFilterSubject(s)}
+                style={{ padding: '6px 14px', borderRadius: 20, border: `2px solid ${active ? '#7c3aed' : '#d1d5db'}`,
+                  background: active ? '#7c3aed' : '#fff', color: active ? '#fff' : '#374151',
+                  fontWeight: active ? 'bold' : 'normal', cursor: 'pointer', fontSize: '.82em' }}>
+                {label}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* 오답 없음 */}
+      {items.length === 0 && (
+        <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 10, padding: '40px', textAlign: 'center' }}>
+          <div style={{ fontSize: '2.5em', marginBottom: 12 }}>🎉</div>
+          <div style={{ fontWeight: 'bold', fontSize: '1.05em', color: '#15803d', marginBottom: 6 }}>오답이 없습니다!</div>
+          <div style={{ fontSize: '.85em', color: '#6b7280' }}>모든 문제를 정확히 풀었거나 아직 시작하지 않았습니다.</div>
+        </div>
+      )}
+
+      {/* 오답 목록 */}
+      {filtered.map(item => {
+        const { qid, question, choices, answer, selected, isRk, subject_id, session_id } = item;
+        const selText = isRk ? choices[selected] : choices[selected - 1];
+        const ansText = isRk ? choices[answer] : choices[answer - 1];
+        return (
+          <div key={qid} style={{ background: '#fff', border: '1px solid #fca5a5', borderRadius: 10, padding: '14px 16px', marginBottom: 12 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
+              <div>
+                <div style={{ fontSize: '.75em', color: '#7c3aed', fontWeight: 'bold', marginBottom: 2 }}>
+                  {SUBJECT_LABELS[subject_id] ?? `과목${subject_id}`}
+                </div>
+                <div style={{ fontSize: '.72em', color: '#9ca3af' }}>{session_id}</div>
+              </div>
+              <button onClick={() => handleRetry(qid)}
+                style={{ padding: '6px 14px', background: '#7c3aed', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: '.82em', fontWeight: 'bold', flexShrink: 0, marginLeft: 8 }}>
+                다시 풀기
+              </button>
+            </div>
+            <div style={{ fontSize: '.9em', fontWeight: 500, marginBottom: 10, lineHeight: 1.6 }}>
+              {question.length > 80 ? question.slice(0, 80) + '…' : question}
+            </div>
+            <div style={{ fontSize: '.82em', color: '#ef4444', marginBottom: 2 }}>
+              내 답: {isRk ? selected + 1 : selected}번 — {selText ?? '-'}
+            </div>
+            <div style={{ fontSize: '.82em', color: '#15803d' }}>
+              정답: {isRk ? answer + 1 : answer}번 — {ansText ?? '-'}
+            </div>
+          </div>
+        );
+      })}
+
+      {filtered.length === 0 && items.length > 0 && (
+        <div style={{ textAlign: 'center', color: '#6b7280', padding: '20px', fontSize: '.9em' }}>
+          해당 과목의 오답이 없습니다.
+        </div>
+      )}
     </div>
   );
 }
