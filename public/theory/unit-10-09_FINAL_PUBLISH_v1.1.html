@@ -70,10 +70,50 @@ td strong { color: #0f4c81; }
 .nav-center { font-size: 11px; color: #64748b; text-align: center; }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
 @media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; page-break-inside: avoid; } }
+
+  /* 정답·해설 섹션 */
+  .answer-section { margin-top:40px; border-top:2px solid #0f4c81; padding-top:20px; }
+  .ans-box { border:1.5px solid #cbd5e1; border-radius:6px; padding:14px 18px; margin-bottom:14px; background:#f8fafc; }
+  .ans-box .ans-num { font-size:12px; font-weight:800; color:#1e3a5f; margin-bottom:8px; }
+  .ans-box .ans-body { font-size:13px; color:#1a1a1a; line-height:1.7; }
 </style>
 </head>
 <body>
 <div class="page-wrap">
+  <!-- 기출 DB 문항 -->
+  <div class="sec-title">§기출 DB 문항</div>
+
+  <div class="qst-card" style="margin-bottom:16px;">
+    <div class="qst-head">
+      <span class="qst-num">Q1</span>
+      <span class="qst-src">rk_ch82_11 · SOURCE: 철도왕 교재 ch82 / 4.html 개념80 · 이선현상 억제방안</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">전차선 이선현상 억제 방안 중 아닌 것은?</div>
+      <ol class="qst-choices">
+        <li>① 가선장력장치 개선</li>
+        <li>② 드로퍼 간격 조정</li>
+        <li>③ 가선금구류의 중량화</li>
+        <li>④ 복합가선 적용</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 정답 및 해설 -->
+  <div class="answer-section">
+    <div style="font-size:14px;font-weight:800;color:#0f4c81;margin-bottom:16px;">📋 정답 및 해설</div>
+    <div class="ans-box">
+      <div class="ans-num">Q1 — 이선현상 억제방안 아닌 것</div>
+      <div class="ans-body">
+        <strong>정답: ③ 가선금구류의 중량화</strong><br>
+        이선현상 억제 방안: 드로퍼 간격 조정 / 장력장치 개선 / 복합가선 적용<br>
+        <strong>가선금구류 중량화</strong> → 질량 증가로 동적응답이 저하되어 <strong>오히려 이선이 심해짐</strong>.<br>
+        <em>⚠️ 함정: "중량화"는 이선현상을 '줄이는' 대책처럼 보이지만 실제로는 악화시킴</em>
+      </div>
+    </div>
+  </div>
+
+
   <nav class="nav-bar">
     <a href="unit-10-08_FINAL_PUBLISH_v1.1.html" class="nav-btn">← 10-08 팬터그래프 구조·종류</a>
     <span class="nav-center">GATE5 PART 10 · 전차선로·가선·집전</span>
@@ -182,12 +222,6 @@ td strong { color: #0f4c81; }
       ※ P10_11 이미지 준비 중
     </div>
     <div class="vis-cap">▲ P10_11 — 팬터그래프 집전 및 이선현상 개요 (10-08과 공용)</div>
-  </div>
-
-  <div class="sec-title">§5 기출 DB 문항</div>
-  <div class="hold-box">
-    ⚠️ <strong>DB 문항 없음</strong><br>
-    engineering-exam-data.ts 검색 결과: 이선현상 관련 PART10 전용 문항 0건.
   </div>
 
   <nav class="nav-bar" style="margin-top:32px;">

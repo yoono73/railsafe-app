@@ -70,10 +70,50 @@ td strong { color: #0f4c81; }
 .nav-center { font-size: 11px; color: #64748b; text-align: center; }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
 @media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; page-break-inside: avoid; } }
+
+  /* 정답·해설 섹션 */
+  .answer-section { margin-top:40px; border-top:2px solid #0f4c81; padding-top:20px; }
+  .ans-box { border:1.5px solid #cbd5e1; border-radius:6px; padding:14px 18px; margin-bottom:14px; background:#f8fafc; }
+  .ans-box .ans-num { font-size:12px; font-weight:800; color:#1e3a5f; margin-bottom:8px; }
+  .ans-box .ans-body { font-size:13px; color:#1a1a1a; line-height:1.7; }
 </style>
 </head>
 <body>
 <div class="page-wrap">
+  <!-- 기출 DB 문항 -->
+  <div class="sec-title">§기출 DB 문항</div>
+
+  <div class="qst-card" style="margin-bottom:16px;">
+    <div class="qst-head">
+      <span class="qst-num">Q1</span>
+      <span class="qst-src">4.html 개념10 / rk_ch82_08 · SOURCE: 범한사 교재 PART2 · 집전장치 비해당</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">집전장치의 종류가 아닌 것은?</div>
+      <ol class="qst-choices">
+        <li>① 팬터그래프</li>
+        <li>② 트롤리 폴</li>
+        <li>③ 집전슈</li>
+        <li>④ 축전지</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 정답 및 해설 -->
+  <div class="answer-section">
+    <div style="font-size:14px;font-weight:800;color:#0f4c81;margin-bottom:16px;">📋 정답 및 해설</div>
+    <div class="ans-box">
+      <div class="ans-num">Q1 — 집전장치 비해당</div>
+      <div class="ans-body">
+        <strong>정답: ④ 축전지</strong><br>
+        집전장치 종류: 팬터그래프 / 트롤리 폴 / 뷰겔 / 집전슈<br>
+        <strong>축전지</strong>는 전력 <em>저장</em> 장치 — 전차선에서 전력을 받는 집전장치가 아님.<br>
+        <em>⚠️ 함정: "팬터그래프가 집전장치가 아니다" → 완전한 오답</em>
+      </div>
+    </div>
+  </div>
+
+
   <nav class="nav-bar">
     <a href="unit-10-06_HOLD_VERIFY_v1.0.html" class="nav-btn">← 10-06 자동장력조정장치</a>
     <span class="nav-center">GATE5 PART 10 · 전차선로·가선·집전</span>
@@ -201,12 +241,6 @@ td strong { color: #0f4c81; }
       ※ VIS-086 이미지 준비 중
     </div>
     <div class="vis-cap">▲ VIS-086 전차선 집전장치 비교 카드</div>
-  </div>
-
-  <div class="sec-title">§4 기출 DB 문항</div>
-  <div class="hold-box">
-    ⚠️ <strong>DB 문항 없음 (PART10 전용)</strong><br>
-    집전장치 관련 문항은 PART3/PART8에 이미 배정됨. 이 UNIT은 PART10 맥락에서 종류 암기 목적.
   </div>
 
   <nav class="nav-bar" style="margin-top:32px;">

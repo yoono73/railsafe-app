@@ -78,6 +78,12 @@
   .nav-center { font-size: 11px; color: #64748b; text-align: center; }
   @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
   @media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; page-break-inside: avoid; } }
+
+  /* 정답·해설 섹션 */
+  .answer-section { margin-top:40px; border-top:2px solid #0f4c81; padding-top:20px; }
+  .ans-box { border:1.5px solid #cbd5e1; border-radius:6px; padding:14px 18px; margin-bottom:14px; background:#f8fafc; }
+  .ans-box .ans-num { font-size:12px; font-weight:800; color:#1e3a5f; margin-bottom:8px; }
+  .ans-box .ans-body { font-size:13px; color:#1a1a1a; line-height:1.7; }
 </style>
 </head>
 <body>
@@ -218,11 +224,7 @@
         </table>
       </div>
 
-      <div class="hold-box">
-        ⚠️ <strong>VERIFY: 법령 조항 번호</strong><br>
-        250mm 편위 수치 SOURCE81-B 확인됨. 관련 법령(철도안전법 시행규칙 등) 조항 번호 원문 VERIFY 예정.
       </div>
-    </div>
   </div>
 
   <!-- §3 시험 포인트 -->
@@ -286,12 +288,65 @@
 
   <!-- §5 DB 문항 -->
   <div class="sec-title">§5 기출 DB 문항</div>
+  <!-- 기출 DB 문항 -->
+  <div class="sec-title">§기출 DB 문항</div>
 
-  <div class="hold-box">
-    ⚠️ <strong>DB 문항 없음</strong><br>
-    engineering-exam-data.ts 검색 결과: 전차선 구비조건·편위 관련 PART10 전용 문항 0건.<br>
-    DB 원문 확인된 문항 없음 → 문제 섹션 비움.
+  <div class="qst-card" style="margin-bottom:16px;">
+    <div class="qst-head">
+      <span class="qst-num">Q1</span>
+      <span class="qst-src">rk_ch82_12 · SOURCE: 철도왕 교재 ch82 · 전차선 구비조건</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">전차선의 구비 조건으로 옳지 않은 것은?</div>
+      <ol class="qst-choices">
+        <li>① 전기전도도가 높을 것</li>
+        <li>② 기계적 강도가 클 것</li>
+        <li>③ 유지보수가 용이할 것</li>
+        <li>④ 마모가 잘 일어날 것</li>
+      </ol>
+    </div>
   </div>
+
+  <div class="qst-card" style="margin-bottom:16px;">
+    <div class="qst-head">
+      <span class="qst-num">Q2</span>
+      <span class="qst-src">rk_ch82_14 · SOURCE: 철도왕 교재 ch82 · 전차선 편위</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">전차선 절연구간의 편위로 옳은 것은?</div>
+      <ol class="qst-choices">
+        <li>① 100mm</li>
+        <li>② 150mm</li>
+        <li>③ 200mm</li>
+        <li>④ 250mm</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 정답 및 해설 -->
+  <div class="answer-section">
+    <div style="font-size:14px;font-weight:800;color:#0f4c81;margin-bottom:16px;">📋 정답 및 해설</div>
+    <div class="ans-box">
+      <div class="ans-num">Q1 — 전차선 구비조건</div>
+      <div class="ans-body">
+        <strong>정답: ④ 마모가 잘 일어날 것</strong><br>
+        전차선 구비 조건: 높은 전도율, 기계적 강도, <strong>내마모성</strong>, 내열성 등이 필수.<br>
+        마모가 잘 일어나는 것은 단점 — 구비 조건에 해당하지 않는다.<br>
+        <em>⚠️ 함정: "유지보수가 용이할 것"은 정당한 구비조건임</em>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-num">Q2 — 전차선 편위</div>
+      <div class="ans-body">
+        <strong>정답: ④ 250mm</strong><br>
+        전차선의 편위: 궤도 중심선 기준 수평 이동 허용치 → <strong>250mm</strong>.<br>
+        집전장치 유효 폭, 궤도 진동 범위 등을 감안한 설계적 여유치.<br>
+        <em>⚠️ 함정: 절연 이격거리(300mm)와 혼동 주의 — 편위는 250mm</em>
+      </div>
+    </div>
+  </div>
+
+
 
   <!-- NAV (하단) -->
   <nav class="nav-bar" style="margin-top:32px;">
