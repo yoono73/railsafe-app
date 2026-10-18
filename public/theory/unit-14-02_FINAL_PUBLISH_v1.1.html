@@ -88,7 +88,13 @@ tr.trap td { background: #fff7ed; }
 .ans-q { font-weight: 700; color: #1e40af; margin-bottom: 4px; }
 .ans-body { color: #1e293b; }
 @media (max-width: 600px) { .protect-grid { grid-template-columns: 1fr; } .test-grid { grid-template-columns: 1fr; } .smoke-grid { grid-template-columns: repeat(2, 1fr); } }
-@media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } .ans-section { break-inside: avoid; } }
+
+  /* 정답 및 해설 섹션 */
+  .answer-section { margin-top: 40px; border-top: 2px solid #0f4c81; padding-top: 20px; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 12px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-body { font-size: 13px; color: #1a1a1a; line-height: 1.7; }
+  @media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } .ans-section { break-inside: avoid; } }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
 </style>
 </head>
@@ -353,66 +359,54 @@ tr.trap td { background: #fff7ed; }
 
 <!-- ===== DB 문항 ===== -->
 <div class="sec-title">DB 문항 — 6문항</div>
-
-<div class="q-box" id="q1">
-  <div class="q-num">Q1 · SOURCE 84-A · rk_ch83 (냉동사이클)</div>
-  <div class="q-stem">철도차량의 공기조화장치(냉방장치)의 냉동사이클 순서는?</div>
+<div class="q-box">
+<div class="q-num">Q1 · SOURCE 84-A · rk_ch83 (냉동사이클)</div>
+<div class="q-stem">철도차량의 공기조화장치(냉방장치)의 냉동사이클 순서는?</div>
   <div class="q-choice">① 압축 → 팽창 → 응축 → 증발</div>
   <div class="q-choice">② 응축 → 압축 → 팽창 → 증발</div>
   <div class="q-choice">③ 압축 → 응축 → 팽창 → 증발</div>
   <div class="q-choice">④ 팽창 → 압축 → 응축 → 증발</div>
-  <div class="q-ans">정답: ③ | 암기: 압응팽증 — 응축과 팽창 순서 혼동이 주요 함정</div>
-</div>
-
-<div class="q-box" id="q2">
-  <div class="q-num">Q2 · SOURCE 88-B · rk_ch83_09 (피뢰기)</div>
-  <div class="q-stem">교류모진이 발생할 때 작동하여 회로를 보호하는 장치는?</div>
+  </div>
+<div class="q-box">
+<div class="q-num">Q2 · SOURCE 88-B · rk_ch83_09 (피뢰기)</div>
+<div class="q-stem">교류모진이 발생할 때 작동하여 회로를 보호하는 장치는?</div>
   <div class="q-choice">① ADCg</div>
   <div class="q-choice">② 주퓨즈</div>
   <div class="q-choice">③ 직류피뢰기</div>
   <div class="q-choice">④ 교류피뢰기</div>
-  <div class="q-ans">정답: ③ | 직류피뢰기 → 교류모진 보호 / 주퓨즈 → 직류모진 보호 / 교류피뢰기 → 낙뢰·서지전압 보호 / ADCg → 교직류 절환 장치</div>
-</div>
-
-<div class="q-box" id="q3">
-  <div class="q-num">Q3 · SOURCE 94-A-1 · rk_ch83_35 (관절대차)</div>
-  <div class="q-stem">관절대차 특징으로 아닌 것은?</div>
+  </div>
+<div class="q-box">
+<div class="q-num">Q3 · SOURCE 94-A-1 · rk_ch83_35 (관절대차)</div>
+<div class="q-stem">관절대차 특징으로 아닌 것은?</div>
   <div class="q-choice">① 곡선 통과 성능이 우수하다</div>
   <div class="q-choice">② 두 차량이 하나의 대차를 공유한다</div>
   <div class="q-choice">③ 무게가 가볍다</div>
   <div class="q-choice">④ 승차감이 향상된다</div>
-  <div class="q-ans">정답: ③ | "무게가 가볍다"는 틀린 선지. 대차 공유로 구조가 복잡해지므로 "가볍다"고 단정할 수 없다.</div>
-</div>
-
-<div class="q-box" id="q4">
-  <div class="q-num">Q4 · SOURCE 94-A-2 · rk_ch83_15 (바이모달 트램)</div>
-  <div class="q-stem">선형 유도전동기를 이용하여 레일과의 점착에 의존하지 않고 추진력을 얻으며, 급구배·급곡선에 유리한 방식의 차량은?</div>
+  </div>
+<div class="q-box">
+<div class="q-num">Q4 · SOURCE 94-A-2 · rk_ch83_15 (바이모달 트램)</div>
+<div class="q-stem">선형 유도전동기를 이용하여 레일과의 점착에 의존하지 않고 추진력을 얻으며, 급구배·급곡선에 유리한 방식의 차량은?</div>
   <div class="q-choice">① LIM</div>
   <div class="q-choice">② 모노레일</div>
   <div class="q-choice">③ 바이모달트램</div>
   <div class="q-choice">④ AGT</div>
-  <div class="q-ans">정답: ① LIM | 바이모달 트램은 고무바퀴 도로 주행 방식 — LIM과 혼동 주의</div>
-</div>
-
-<div class="q-box" id="q5">
-  <div class="q-num">Q5 · SOURCE 85 · rk_ch83_01/02 (디젤기관차 매연시험 방식)</div>
-  <div class="q-stem">디젤기관차의 매연(연기) 시험 방식이 아닌 것은?</div>
+  </div>
+<div class="q-box">
+<div class="q-num">Q5 · SOURCE 85 · rk_ch83_01/02 (디젤기관차 매연시험 방식)</div>
+<div class="q-stem">디젤기관차의 매연(연기) 시험 방식이 아닌 것은?</div>
   <div class="q-choice">① 광투과식</div>
   <div class="q-choice">② 필터식</div>
   <div class="q-choice">③ 하틀리지식</div>
   <div class="q-choice">④ 적외선분석식</div>
-  <div class="q-ans">정답: ④ | 적외선분석식은 CO·HC·NOx 등 배기가스 성분(화학적 오염물질) 측정 장비로, 매연 농도 시험 방식이 아님</div>
-</div>
-
-<div class="q-box" id="q6">
-  <div class="q-num">Q6 · SOURCE 85 · rk_ch83_07 (디젤기관차 시험종류)</div>
-  <div class="q-stem">디젤견인차(디젤기관차)의 시험·점검 방법으로 옳지 않은 것은?</div>
+  </div>
+<div class="q-box">
+<div class="q-num">Q6 · SOURCE 85 · rk_ch83_07 (디젤기관차 시험종류)</div>
+<div class="q-stem">디젤견인차(디젤기관차)의 시험·점검 방법으로 옳지 않은 것은?</div>
   <div class="q-choice">① 출력시험: 엔진의 출력 및 회전수를 측정하여 성능을 확인한다</div>
   <div class="q-choice">② 연기시험: 매연농도를 측정하여 배출기준 적합 여부를 확인한다</div>
   <div class="q-choice">③ 제동시험: 제동장치의 응답시간과 제동력을 측정한다</div>
   <div class="q-choice">④ 절연시험: 전차선 전압을 인가하여 누설전류를 측정한다</div>
-  <div class="q-ans">정답: ④ | SOURCE 85의 디젤기관차 시험·점검 3종(출력·연기·제동)에 해당하지 않음</div>
-</div>
+  </div>
 
 <!-- ===== 정답·해설 SECTION ===== -->
 <div class="ans-section">
@@ -484,6 +478,16 @@ tr.trap td { background: #fff7ed; }
   ※ VIS: 관절대차.png 수록 / 피뢰기·바이모달·디젤기관차 전용 이미지 미제작
 -->
 
+
+<div class="answer-section">
+<div class="sec-title">정답 및 해설</div>
+<div class="ans-box"><div class="ans-num">Q1 · SOURCE 84-A · rk_ch83 (냉동사이클)</div><div class="ans-body">정답: ③ | 암기: 압응팽증 — 응축과 팽창 순서 혼동이 주요 함정</div></div>
+<div class="ans-box"><div class="ans-num">Q2 · SOURCE 88-B · rk_ch83_09 (피뢰기)</div><div class="ans-body">정답: ③ | 직류피뢰기 → 교류모진 보호 / 주퓨즈 → 직류모진 보호 / 교류피뢰기 → 낙뢰·서지전압 보호 / ADCg → 교직류 절환 장치</div></div>
+<div class="ans-box"><div class="ans-num">Q3 · SOURCE 94-A-1 · rk_ch83_35 (관절대차)</div><div class="ans-body">정답: ③ | "무게가 가볍다"는 틀린 선지. 대차 공유로 구조가 복잡해지므로 "가볍다"고 단정할 수 없다.</div></div>
+<div class="ans-box"><div class="ans-num">Q4 · SOURCE 94-A-2 · rk_ch83_15 (바이모달 트램)</div><div class="ans-body">정답: ① LIM | 바이모달 트램은 고무바퀴 도로 주행 방식 — LIM과 혼동 주의</div></div>
+<div class="ans-box"><div class="ans-num">Q5 · SOURCE 85 · rk_ch83_01/02 (디젤기관차 매연시험 방식)</div><div class="ans-body">정답: ④ | 적외선분석식은 CO·HC·NOx 등 배기가스 성분(화학적 오염물질) 측정 장비로, 매연 농도 시험 방식이 아님</div></div>
+<div class="ans-box"><div class="ans-num">Q6 · SOURCE 85 · rk_ch83_07 (디젤기관차 시험종류)</div><div class="ans-body">정답: ④ | SOURCE 85의 디젤기관차 시험·점검 3종(출력·연기·제동)에 해당하지 않음</div></div>
+</div>
 </div><!-- /page-wrap -->
 </body>
 </html>

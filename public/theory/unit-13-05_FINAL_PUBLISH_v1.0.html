@@ -49,7 +49,13 @@ tr.hl td { background: #eff6ff; }
 .vis-wrap { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 16px; text-align: center; }
 .vis-wrap img { max-width: 100%; height: auto; border-radius: 4px; }
 .vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
-@media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
+
+  /* 정답 및 해설 섹션 */
+  .answer-section { margin-top: 40px; border-top: 2px solid #0f4c81; padding-top: 20px; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 12px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-body { font-size: 13px; color: #1a1a1a; line-height: 1.7; }
+  @media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
 </style>
 </head>
@@ -121,37 +127,38 @@ tr.hl td { background: #eff6ff; }
 </div>
 
 <div class="sec-title">DB 기출문항</div>
-
 <div class="q-box">
-  <div class="q-num">Q1 · rk_ch83_31</div>
-  <div class="q-stem">횡압력 증대의 원인으로 옳지 않은 것은?</div>
+<div class="q-num">Q1 · rk_ch83_31</div>
+<div class="q-stem">횡압력 증대의 원인으로 옳지 않은 것은?</div>
   <div class="q-choice">① 곡선의 반경이 작을수록 횡압력이 증가한다</div>
   <div class="q-choice">② 차량의 속도가 빠를수록 횡압력이 증가한다</div>
   <div class="q-choice">③ 차량의 상차가 불균형할수록 횡압력이 증가한다</div>
   <div class="q-choice">④ 캔트가 충분히 설치될수록 횡압력이 증가한다</div>
-  <div class="q-ans">정답: ④ | 해설: 횡압력은 곡선 반경이 작고, 속도가 빠르며, 상차가 불균형할수록 증가한다. 반대로 캔트가 충분하면 원심력을 상쇄하여 횡압력이 감소한다.</div>
-</div>
-
+  </div>
 <div class="q-box">
-  <div class="q-num">Q2 · engineering-exam-data.ts id:124</div>
-  <div class="q-stem">차륜 플랜지가 레일 측면을 미는 수평방향 힘으로 탈선 및 레일 마모의 주요 원인은?</div>
+<div class="q-num">Q2 · engineering-exam-data.ts id:124</div>
+<div class="q-stem">차륜 플랜지가 레일 측면을 미는 수평방향 힘으로 탈선 및 레일 마모의 주요 원인은?</div>
   <div class="q-choice">① 수직하중</div>
   <div class="q-choice">② 축하중</div>
   <div class="q-choice">③ 횡압</div>
   <div class="q-choice">④ 견인력</div>
-  <div class="q-ans">정답: ③ | 해설: 횡압은 레일 측면에 가해지는 수평력. 곡선부 통과 시 플랜지 접촉으로 발생. 탈선·레일 마모 원인.</div>
-</div>
-
+  </div>
 <div class="q-box">
-  <div class="q-num">Q3 · engineering-exam-data.ts id:125</div>
-  <div class="q-stem">'횡압'과 연결한 출제포인트로 가장 적절한 것은?</div>
+<div class="q-num">Q3 · engineering-exam-data.ts id:125</div>
+<div class="q-stem">'횡압'과 연결한 출제포인트로 가장 적절한 것은?</div>
   <div class="q-choice">① 곡선부 탈선 및 레일 측면 마모의 주요 원인이다.</div>
   <div class="q-choice">② 속도 제곱에 비례하여 증가.</div>
   <div class="q-choice">③ 수직하중과 동일하다.</div>
   <div class="q-choice">④ 레일 단면의 높이와 직결된다.</div>
-  <div class="q-ans">정답: ① | 해설: 횡압 = 수평방향 힘. 탈선 위험도(탈선계수) = 횡압/수직하중. 곡선부에서 특히 중요.</div>
-</div>
+  </div>
 
+
+<div class="answer-section">
+<div class="sec-title">정답 및 해설</div>
+<div class="ans-box"><div class="ans-num">Q1 · rk_ch83_31</div><div class="ans-body">정답: ④ | 해설: 횡압력은 곡선 반경이 작고, 속도가 빠르며, 상차가 불균형할수록 증가한다. 반대로 캔트가 충분하면 원심력을 상쇄하여 횡압력이 감소한다.</div></div>
+<div class="ans-box"><div class="ans-num">Q2 · engineering-exam-data.ts id:124</div><div class="ans-body">정답: ③ | 해설: 횡압은 레일 측면에 가해지는 수평력. 곡선부 통과 시 플랜지 접촉으로 발생. 탈선·레일 마모 원인.</div></div>
+<div class="ans-box"><div class="ans-num">Q3 · engineering-exam-data.ts id:125</div><div class="ans-body">정답: ① | 해설: 횡압 = 수평방향 힘. 탈선 위험도(탈선계수) = 횡압/수직하중. 곡선부에서 특히 중요.</div></div>
+</div>
 </div>
 </body>
 </html>

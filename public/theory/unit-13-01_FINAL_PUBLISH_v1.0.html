@@ -44,7 +44,13 @@ tr:nth-child(even) td { background: #f8fafc; }
 .q-choice { color: #334155; margin: 2px 0; }
 .q-choice.correct { color: #065f46; font-weight: 700; }
 .q-ans { background: #ecfdf5; border: 1px solid #6ee7b7; border-radius: 4px; padding: 6px 10px; font-size: 12px; color: #065f46; margin-top: 8px; }
-@media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
+
+  /* 정답 및 해설 섹션 */
+  .answer-section { margin-top: 40px; border-top: 2px solid #0f4c81; padding-top: 20px; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 12px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-body { font-size: 13px; color: #1a1a1a; line-height: 1.7; }
+  @media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
 </style>
 </head>
@@ -126,19 +132,22 @@ tr:nth-child(even) td { background: #f8fafc; }
 </div>
 
 <div class="sec-title">기출 문항</div>
-
 <div class="q-box">
-  <div class="q-num">문항 1 / 1</div>
-  <div class="q-stem">철도차량의 프레임(차체 골격)에 대한 설명으로 옳지 않은 것은?</div>
+<div class="q-num">문항 1 / 1</div>
+<div class="q-stem">철도차량의 프레임(차체 골격)에 대한 설명으로 옳지 않은 것은?</div>
   <div class="q-choice">① 언더프레임(Underframe)은 차량 하중을 지지하여 대차로 전달한다</div>
   <div class="q-choice">② 사이드프레임(Side Frame)은 차량 측면을 지지하는 구조이다</div>
   <div class="q-choice">③ 루프프레임(Roof Frame)은 차량의 하부 구조를 형성한다</div>
   <div class="q-choice">④ 보기프레임(Bogie Frame)은 차체 하중을 받아 바퀴에 전달한다</div>
-  <div class="q-ans">
-    <strong>정답 ③</strong> — 루프프레임(Roof Frame)은 차량의 <strong>상부(지붕 부분)</strong> 구조이다. 하부 바닥구조는 언더프레임(Underframe)이다.
   </div>
-</div>
 
+
+<div class="answer-section">
+<div class="sec-title">정답 및 해설</div>
+<div class="ans-box"><div class="ans-num">문항 1 / 1</div><div class="ans-body">
+    <strong>정답 ③</strong> — 루프프레임(Roof Frame)은 차량의 <strong>상부(지붕 부분)</strong> 구조이다. 하부 바닥구조는 언더프레임(Underframe)이다.
+  </div></div>
+</div>
 </div>
 </body>
 </html>

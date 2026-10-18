@@ -57,7 +57,13 @@ tr.trap td { background: #fff7ed; }
 .wh-desc { font-size: 12px; color: #475569; }
 .src-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 2px; background: #fef3c7; color: #92400e; border: 1px solid #fbbf24; margin-left: 6px; }
 @media (max-width: 600px) { .guide-method-grid { grid-template-columns: 1fr; } .wheel-grid { grid-template-columns: 1fr; } }
-@media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
+
+  /* 정답 및 해설 섹션 */
+  .answer-section { margin-top: 40px; border-top: 2px solid #0f4c81; padding-top: 20px; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 12px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-body { font-size: 13px; color: #1a1a1a; line-height: 1.7; }
+  @media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
 </style>
 </head>
@@ -385,45 +391,43 @@ tr.trap td { background: #fff7ed; }
 </div>
 
 <div class="sec-title">SOURCE 기출 / 복원문항</div>
-
 <div class="q-box">
-  <div class="q-num">Q1 · SOURCE 91-B · railway-king ch82 · ★★★ 최우선</div>
-  <div class="q-stem">고무차륜 AGT의 주행 안내방식이 아닌 것은?</div>
+<div class="q-num">Q1 · SOURCE 91-B · railway-king ch82 · ★★★ 최우선</div>
+<div class="q-stem">고무차륜 AGT의 주행 안내방식이 아닌 것은?</div>
   <div class="q-choice">① 가이드레일식</div>
   <div class="q-choice">② 상전도 흡인식</div>
   <div class="q-choice">③ 중앙 유도식</div>
   <div class="q-choice">④ 측면 유도식</div>
-  <div class="q-ans">정답: ② | 해설: AGT 안내방식 3종 — 가이드레일식·중앙유도식·측면유도식. 상전도 흡인식은 자기부상열차의 부상 원리이며, AGT 안내방식이 아니다.</div>
-</div>
-
+  </div>
 <div class="q-box">
-  <div class="q-num">Q2 · railway-king ch82 · ★★ 모노레일 구분</div>
-  <div class="q-stem">다음 중 차량이 레일 아래에 매달려 주행하는 방식의 모노레일은?</div>
+<div class="q-num">Q2 · railway-king ch82 · ★★ 모노레일 구분</div>
+<div class="q-stem">다음 중 차량이 레일 아래에 매달려 주행하는 방식의 모노레일은?</div>
   <div class="q-choice">① 과좌식 모노레일</div>
   <div class="q-choice">② 현수식 모노레일</div>
   <div class="q-choice">③ 자기부상열차</div>
   <div class="q-choice">④ 고가철도</div>
-  <div class="q-ans">정답: ② | 해설: 현수식 모노레일(懸垂式)은 차량이 궤도 아래에 매달려 주행. 과좌식(跨座式)은 궤도 위에 걸터앉아 주행. "가좌식"은 오기 — 正字는 과좌식(跨座式)이다.</div>
-</div>
-
+  </div>
 <div class="q-box">
-  <div class="q-num">Q3 · railway-king ch82 · ★★ 모노레일 특징</div>
-  <div class="q-stem">모노레일의 특징으로 옳지 않은 것은?</div>
+<div class="q-num">Q3 · railway-king ch82 · ★★ 모노레일 특징</div>
+<div class="q-stem">모노레일의 특징으로 옳지 않은 것은?</div>
   <div class="q-choice">① 소음이 적다</div>
   <div class="q-choice">② 곡선 반경이 작게 설치 가능하다</div>
   <div class="q-choice">③ 건설이 간단하여 비용이 저렴하다</div>
   <div class="q-choice">④ 토지 점유율이 낮다</div>
-  <div class="q-ans">정답: ③ | 해설: 모노레일은 전용 고가 구조물이 필요하여 건설비가 높다. ①②④는 모노레일의 실제 장점이다.</div>
-</div>
+  </div>
 
 <!-- LIM 참조 -->
 <div class="q-box" style="background:#f8f8ff; border-color:#a5b4fc;">
   <div class="q-num">참조 — SOURCE 88-A(LIM) 시험포인트 · 상세: unit-08-04 §7-2</div>
   <div class="q-stem">LIM(선형유도전동기) — 핵심 오답 함정</div>
   <div class="q-choice">오답 함정: "LIM은 급구배·급곡선 운행에 <span style="color:#dc2626"><strong>불리</strong></span>하다"</div>
-  <div class="q-ans">정답 방향: LIM은 점착력에 의존하지 않아 급구배·급곡선에 <strong>유리</strong>하다. "불리하다"는 틀린 선지. 상세 원리 → unit-08-04 §7-2 참조.</div>
-</div>
+  </div>
 
+
+<div class="answer-section">
+<div class="sec-title">정답 및 해설</div>
+<div class="ans-box"><div class="ans-num">Q1 · SOURCE 91-B · railway-king ch82 · ★★★ 최우선</div><div class="ans-body">정답 방향: LIM은 점착력에 의존하지 않아 급구배·급곡선에 <strong>유리</strong>하다. "불리하다"는 틀린 선지. 상세 원리 → unit-08-04 §7-2 참조.</div></div>
+</div>
 </div><!-- .page-wrap -->
 </body>
 </html>

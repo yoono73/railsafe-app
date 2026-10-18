@@ -52,7 +52,13 @@ tr.hl td { background: #eff6ff; }
 .vis-wrap { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 16px; text-align: center; }
 .vis-wrap img { max-width: 100%; height: auto; border-radius: 4px; }
 .vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
-@media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
+
+  /* 정답 및 해설 섹션 */
+  .answer-section { margin-top: 40px; border-top: 2px solid #0f4c81; padding-top: 20px; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 12px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-body { font-size: 13px; color: #1a1a1a; line-height: 1.7; }
+  @media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
 </style>
 </head>
@@ -117,17 +123,20 @@ tr.hl td { background: #eff6ff; }
 </div>
 
 <div class="sec-title">SOURCE 기출예시</div>
-
 <div class="q-box">
-  <div class="q-num">Q1 · SOURCE87</div>
-  <div class="q-stem">철도차량의 연결기(Coupler) 종류에 해당하지 않는 것은?</div>
+<div class="q-num">Q1 · SOURCE87</div>
+<div class="q-stem">철도차량의 연결기(Coupler) 종류에 해당하지 않는 것은?</div>
   <div class="q-choice">① 자동연결기(너클식)</div>
   <div class="q-choice">② 볼트식 연결기</div>
   <div class="q-choice">③ 스크루 연결기(후크식)</div>
   <div class="q-choice">④ 밀착연결기(시바타식·샤펜베르그식)</div>
-  <div class="q-ans">정답: ② | 해설: 철도차량 연결기 종류: 자동연결기(너클식)·스크루 연결기(후크식)·밀착연결기(시바타식·샤펜베르그식) 등. 볼트식 연결기는 철도차량 연결기 종류에 해당하지 않는다.</div>
-</div>
+  </div>
 
+
+<div class="answer-section">
+<div class="sec-title">정답 및 해설</div>
+<div class="ans-box"><div class="ans-num">Q1 · SOURCE87</div><div class="ans-body">정답: ② | 해설: 철도차량 연결기 종류: 자동연결기(너클식)·스크루 연결기(후크식)·밀착연결기(시바타식·샤펜베르그식) 등. 볼트식 연결기는 철도차량 연결기 종류에 해당하지 않는다.</div></div>
+</div>
 </div>
 </body>
 </html>

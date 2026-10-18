@@ -69,7 +69,14 @@ td strong { color: #0f4c81; }
 .nav-btn:hover { background: #f0f4f8; }
 .nav-center { font-size: 11px; color: #64748b; text-align: center; }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
-@media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box, .q-box { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; page-break-inside: avoid; } }
+
+  /* 정답 및 해설 섹션 */
+  .answer-section { margin-top: 40px; border-top: 2px solid #0f4c81; padding-top: 20px; }
+  .ans-box { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; background: #f8fafc; }
+  .ans-box .ans-num { font-size: 12px; font-weight: 800; color: #1e3a5f; margin-bottom: 8px; }
+  .ans-box .ans-body { font-size: 13px; color: #1a1a1a; line-height: 1.7; }
+  .ans-box .ans-exp { font-size: 12.5px; color: #334155; margin-top: 6px; padding-top: 6px; border-top: 1px solid #e2e8f0; }
+  @media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box, .q-box { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; page-break-inside: avoid; } }
 </style>
 </head>
 <body>
@@ -209,90 +216,82 @@ td strong { color: #0f4c81; }
   </div>
 
   <div class="sec-title">§4 기출 DB 문항</div>
-
-  <div class="q-box">
-    <div class="q-title">📋 engineering id:11 · part:2 · grade:A+ · topic:동력집중식</div>
-    <div class="q-body">기관차 1~2량에 동력장치를 집중 배치하고, 나머지 객차·화차를 견인하는 방식은?</div>
+<div class="q-box">
+<div class="q-title">📋 engineering id:11 · part:2 · grade:A+ · topic:동력집중식</div>
+<div class="q-body">기관차 1~2량에 동력장치를 집중 배치하고, 나머지 객차·화차를 견인하는 방식은?</div>
     <ol class="q-choices" type="1">
       <li>동력분산식</li>
       <li>동력집중식</li>
       <li>EMU 방식</li>
       <li>DMU 방식</li>
     </ol>
-    <div class="q-ans">정답: ② 동력집중식</div>
-    <div class="q-exp">동력집중식: 기관차에 동력 집중 → 객차 교체 용이, 유지보수 단순. 단점: 급구배·급곡선 불리.</div>
-  </div>
-
-  <div class="q-box">
-    <div class="q-title">📋 engineering id:12 · part:2 · grade:A+ · topic:동력분산식</div>
-    <div class="q-body">동력분산식이 동력집중식보다 유리한 조건으로 옳은 것은?</div>
+    </div>
+<div class="q-box">
+<div class="q-title">📋 engineering id:12 · part:2 · grade:A+ · topic:동력분산식</div>
+<div class="q-body">동력분산식이 동력집중식보다 유리한 조건으로 옳은 것은?</div>
     <ol class="q-choices" type="1">
       <li>유지보수가 단순하다</li>
       <li>객화차 편성 융통성이 크다</li>
       <li>급구배·급곡선 통과에 유리하다</li>
       <li>소음이 작다</li>
     </ol>
-    <div class="q-ans">정답: ③ 급구배·급곡선 통과에 유리하다</div>
-    <div class="q-exp">동력분산식: 여러 차축에 동력 분산 → 점착력 분산·활용 유리 → 급구배·급곡선에 우수.</div>
-  </div>
-
-  <div class="q-box">
-    <div class="q-title">📋 rk_ch83_36 · topic:동력집중식 특징</div>
-    <div class="q-body">동력집중식 특징으로 틀린 것은?</div>
+    </div>
+<div class="q-box">
+<div class="q-title">📋 rk_ch83_36 · topic:동력집중식 특징</div>
+<div class="q-body">동력집중식 특징으로 틀린 것은?</div>
     <ol class="q-choices" type="1">
       <li>유지보수가 기관차에 집중되어 비교적 간단하다</li>
       <li>객차·화차 교체가 용이하다</li>
       <li>급구배 구간에서 동력분산식보다 유리하다</li>
       <li>장거리·대량 수송에 적합하다</li>
     </ol>
-    <div class="q-ans">정답: ③ 급구배 구간에서 동력분산식보다 유리하다</div>
-    <div class="q-exp">동력집중식은 구동축이 적어 급구배에서 동력분산식보다 불리하다.</div>
-  </div>
-
-  <div class="q-box">
-    <div class="q-title">📋 rk_ch83_37 · topic:동력집중식 장점</div>
-    <div class="q-body">동력집중식의 장점으로 옳지 않은 것은?</div>
+    </div>
+<div class="q-box">
+<div class="q-title">📋 rk_ch83_37 · topic:동력집중식 장점</div>
+<div class="q-body">동력집중식의 장점으로 옳지 않은 것은?</div>
     <ol class="q-choices" type="1">
       <li>구조가 단순하고 유지보수가 용이하다</li>
       <li>장거리·대량 수송에 적합하다</li>
       <li>상구배(오르막) 구간에서 유리하다</li>
       <li>객화차 편성 융통성이 크다</li>
     </ol>
-    <div class="q-ans">정답: ③ 상구배 구간에서 유리하다</div>
-    <div class="q-exp">동력집중식은 상구배에서 불리하다(유리한 것은 동력분산식).</div>
-  </div>
-
-  <div class="q-box">
-    <div class="q-title">📋 rk_ch83_38 · topic:동력집중식 차량</div>
-    <div class="q-body">동력집중식 차량으로 맞는 것은?</div>
+    </div>
+<div class="q-box">
+<div class="q-title">📋 rk_ch83_38 · topic:동력집중식 차량</div>
+<div class="q-body">동력집중식 차량으로 맞는 것은?</div>
     <ol class="q-choices" type="1">
       <li>KTX-산천</li>
       <li>일반 전동차(EMU)</li>
       <li>디젤기관차가 견인하는 무궁화열차</li>
       <li>디젤동차가 견인하는 무궁화열차</li>
     </ol>
-    <div class="q-ans">정답: ③ 디젤기관차가 견인하는 무궁화열차</div>
-    <div class="q-exp">동력집중식: 디젤·전기기관차가 객차를 견인. 동력분산식: EMU·디젤동차 등 각 차량에 동력 분산.</div>
-  </div>
-
-  <div class="q-box">
-    <div class="q-title">📋 rk_ch83_39 · topic:동력분산식 장점</div>
-    <div class="q-body">동력분산식의 장점으로 아닌 것은?</div>
+    </div>
+<div class="q-box">
+<div class="q-title">📋 rk_ch83_39 · topic:동력분산식 장점</div>
+<div class="q-body">동력분산식의 장점으로 아닌 것은?</div>
     <ol class="q-choices" type="1">
       <li>가속 성능이 우수하다</li>
       <li>에너지 효율이 높다</li>
       <li>정차·출발이 부드러워 승차감이 좋다</li>
       <li>각 차량에 장치가 없어 객실 소음이 작다</li>
     </ol>
-    <div class="q-ans">정답: ④ 각 차량에 장치가 없어 객실 소음이 작다</div>
-    <div class="q-exp">동력분산식 단점: 각 차량에 전동기·전기장치 설치로 객실 소음 증가 가능. 소음이 작다는 설명은 틀림.</div>
-  </div>
+    </div>
 
   <nav class="nav-bar" style="margin-top:32px;">
     <a href="unit-11-01_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 11-01 철도차량의 구조와 종류</a>
     <span class="nav-center">GATE5 PART 11 · 차량 총론·추진</span>
     <a href="unit-11-03_FINAL_PUBLISH_v1.0.html" class="nav-btn">11-03 전동기의 원리와 종류 →</a>
   </nav>
+
+<div class="answer-section">
+<div class="sec-title">정답 및 해설</div>
+<div class="ans-box"><div class="ans-num">📋 engineering id:11 · part:2 · grade:A+ · topic:동력집중식</div><div class="ans-body">정답: ② 동력집중식</div><div class="ans-exp">동력집중식: 기관차에 동력 집중 → 객차 교체 용이, 유지보수 단순. 단점: 급구배·급곡선 불리.</div></div>
+<div class="ans-box"><div class="ans-num">📋 engineering id:12 · part:2 · grade:A+ · topic:동력분산식</div><div class="ans-body">정답: ③ 급구배·급곡선 통과에 유리하다</div><div class="ans-exp">동력분산식: 여러 차축에 동력 분산 → 점착력 분산·활용 유리 → 급구배·급곡선에 우수.</div></div>
+<div class="ans-box"><div class="ans-num">📋 rk_ch83_36 · topic:동력집중식 특징</div><div class="ans-body">정답: ③ 급구배 구간에서 동력분산식보다 유리하다</div><div class="ans-exp">동력집중식은 구동축이 적어 급구배에서 동력분산식보다 불리하다.</div></div>
+<div class="ans-box"><div class="ans-num">📋 rk_ch83_37 · topic:동력집중식 장점</div><div class="ans-body">정답: ③ 상구배 구간에서 유리하다</div><div class="ans-exp">동력집중식은 상구배에서 불리하다(유리한 것은 동력분산식).</div></div>
+<div class="ans-box"><div class="ans-num">📋 rk_ch83_38 · topic:동력집중식 차량</div><div class="ans-body">정답: ③ 디젤기관차가 견인하는 무궁화열차</div><div class="ans-exp">동력집중식: 디젤·전기기관차가 객차를 견인. 동력분산식: EMU·디젤동차 등 각 차량에 동력 분산.</div></div>
+<div class="ans-box"><div class="ans-num">📋 rk_ch83_39 · topic:동력분산식 장점</div><div class="ans-body">정답: ④ 각 차량에 장치가 없어 객실 소음이 작다</div><div class="ans-exp">동력분산식 단점: 각 차량에 전동기·전기장치 설치로 객실 소음 증가 가능. 소음이 작다는 설명은 틀림.</div></div>
+</div>
 </div>
 </body>
 </html>
