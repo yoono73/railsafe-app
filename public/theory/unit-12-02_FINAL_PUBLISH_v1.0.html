@@ -9,7 +9,7 @@
 body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #f8fafc; color: #1e293b; font-size: 14px; line-height: 1.6; }
 .page-wrap { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
 .nav-bar { display: flex; align-items: center; justify-content: space-between; background: #1e3a5f; border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; gap: 8px; }
-.nav-btn { color: #0f4c81; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 4px 8px; border-radius: 4px; transition: background .15s; }
+.nav-btn { color: #e2e8f0; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 4px 8px; border-radius: 4px; transition: background .15s; }
 .nav-btn:hover { background: rgba(147,197,253,.15); }
 .nav-center { color: #cbd5e1; font-size: 12px; text-align: center; flex: 1; }
 .print-btn { display: block; margin: 0 auto 20px; padding: 8px 20px; background: #0f172a; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
@@ -51,6 +51,11 @@ tr.hl td { background: #eff6ff; }
 .vis-cap { font-size: 11px; color: #64748b; margin-top: 8px; }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
 @media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; } .concept-card, .qst-card { break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; } }
+
+  .answer-section { margin-top:40px; border-top:2px solid #0f4c81; padding-top:20px; }
+  .ans-box { border:1.5px solid #cbd5e1; border-radius:6px; padding:14px 18px; margin-bottom:14px; background:#f8fafc; }
+  .ans-box .ans-num { font-size:12px; font-weight:800; color:#1e3a5f; margin-bottom:8px; }
+  .ans-box .ans-body { font-size:13px; color:#1a1a1a; line-height:1.7; }
 </style>
 </head>
 <body>
@@ -176,10 +181,7 @@ tr.hl td { background: #eff6ff; }
         <li>3 kg/t</li>
         <li>4 kg/t</li>
       </ol>
-      <div class="qst-ans">
-        ✅ 정답: ② 2 kg/t<br>
-        계산: R = 700/350 = 2 kg/t. 반경이 작을수록 저항 증가. 직선 구간은 곡선저항 = 0.
-      </div>
+      
     </div>
   </div>
 
@@ -196,14 +198,27 @@ tr.hl td { background: #eff6ff; }
         <li>9,000 kg</li>
         <li>10,000 kg</li>
       </ol>
-      <div class="qst-ans">
-        ✅ 정답: ③ 9,000 kg<br>
-        계산: R = W × i = 600 × 15 = 9,000 kg. (W: 열차중량 ton, i: 기울기 ‰)
-      </div>
+      
     </div>
   </div>
 
-  <!-- Bottom NAV -->
+  
+  <!-- 정답 및 해설 -->
+  <div class="answer-section">
+    <div style="font-size:14px;font-weight:800;color:#0f4c81;margin-bottom:16px;">📋 정답 및 해설</div>
+    <div class="ans-box">
+      <div class="ans-num">Q1</div>
+      <div class="ans-body">✅ 정답: ② 2 kg/t<br>
+        계산: R = 700/350 = 2 kg/t. 반경이 작을수록 저항 증가. 직선 구간은 곡선저항 = 0.</div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-num">Q2</div>
+      <div class="ans-body">✅ 정답: ③ 9,000 kg<br>
+        계산: R = W × i = 600 × 15 = 9,000 kg. (W: 열차중량 ton, i: 기울기 ‰)</div>
+    </div>
+  </div>
+
+<!-- Bottom NAV -->
   <nav class="nav-bar" style="margin-top:40px;">
     <a href="unit-12-01_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 12-01 주행저항 3종</a>
     <span class="nav-center">GATE5 PART 12 · UNIT 12-02</span>
