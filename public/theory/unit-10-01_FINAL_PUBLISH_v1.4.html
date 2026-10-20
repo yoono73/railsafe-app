@@ -64,6 +64,17 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 .qst-ans { background:#f9f9f9; border-left:3px solid #78350f; padding:10px 14px; margin-top:8px; border-radius:0 4px 4px 0; font-size:.9em; color:#111; }
 .qst-ans strong { color:#78350f; }
 
+/* 문제 카드 (quiz-mc) — Part 7 호환 */
+.quiz-mc { background:#fff; border:1px solid #ccc; border-left:4px solid #555; padding:12px 14px; margin:12px 0; border-radius:0 4px 4px 0; font-size:.9em; }
+.quiz-mc .qm-src { font-size:.78em; color:#555; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
+.quiz-mc .qm-q { font-weight:bold; color:#111; margin-bottom:8px; line-height:1.6; }
+.quiz-mc .qm-choices { margin:0 0 0 4px; }
+.quiz-mc .qm-choice { padding:3px 0; color:#222; line-height:1.7; }
+
+/* 정답·해설 섹션 (answer-section) */
+.answer-section { margin-top:32px; border-top:2px solid #78350f; padding-top:16px; }
+
+
 /* VIS 래퍼 */
 .vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
 .vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; }
@@ -111,6 +122,8 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
   table { page-break-inside:avoid; }
   th { background:#e8e8e8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   .container { width:100% !important; max-width:none !important; margin:0 !important; padding:0 !important; }
+  .quiz-mc { break-inside:avoid; page-break-inside:avoid; }
+  .answer-section { break-before:page; page-break-before:always; }
   .answer-section { break-before:page; page-break-before:always; }
   @page { size:A4 portrait; margin:12mm 12mm 12mm 18mm; }
 }
@@ -288,65 +301,52 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
     SOURCE: F-01 전차선로 전체구조 개요 기준
   </div>
  §5 문제은행 
-<div class="section-title">📝 문제은행 (3문항)</div>
-<p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q1</span>
-<span class="qst-src">rk_ch82_15 · SOURCE: 철도왕 교재 ch82 · 교류식 전기철도 특징</span>
+
+<div class="section-title">📝 문제 (3문항)</div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 rk_ch82_15 · SOURCE: 철도왕 교재 ch82 · 교류식 전기철도 특징</div>
+  <div class="qm-q">교류식 전기철도의 특징 중 장점은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 차량 구조가 간단하다</div>
+    <div class="qm-choice">② 절연 이격 거리를 줄일 수 있다</div>
+    <div class="qm-choice">③ 높은 견인력을 가져 소형으로도 무거운 열차를 끌 수 있다</div>
+    <div class="qm-choice">④ 통신유도장해가 적다</div>
+  </div>
 </div>
-<div class="qst-body">
-<div class="qst-q">교류식 전기철도의 특징 중 장점은?</div>
-<ol class="qst-choices">
-<li>① 차량 구조가 간단하다</li>
-<li>② 절연 이격 거리를 줄일 수 있다</li>
-<li>③ 높은 견인력을 가져 소형으로도 무거운 열차를 끌 수 있다</li>
-<li>④ 통신유도장해가 적다</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ③</strong><br/>
-        교류식 전기철도: 고전압 송전으로 동일 전력을 더 작은 전류로 전달. 전력 손실이 적고 대출력 견인이 가능해 소형으로도 중량 열차를 운행할 수 있다. 절연 이격 거리는 더 넓어야 하고 통신 유도장해는 큰 편이다.
-      </div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 rk_ch82_16 · SOURCE: 철도왕 교재 ch82 · 교류 전차선로 접지시설</div>
+  <div class="qm-q">교류 전차선로의 접지시설 설치 기준에 대한 설명으로 옳지 않은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 위험 경고표지를 설치해야 하며 접지시설 설치 시 낙뢰 등으로부터 보호하기 위한 조치를 해야 한다</div>
+    <div class="qm-choice">② 모든 접지는 서로 연결되는 통합접지방식으로 설치해야 한다</div>
+    <div class="qm-choice">③ 일반인이 접근하기 어려운 지역: 연속 정격전위 100V 이하</div>
+    <div class="qm-choice">④ 일반인이 접근하기 쉬운 지역: 연속 정격전위 60V 이하</div>
+  </div>
 </div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 신규개념확인 · SOURCE: 4.html 개념82 · 전차선로 구성요소</div>
+  <div class="qm-q">전차선로(가공식 카테너리)의 3대 구성요소를 올바르게 나열한 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 전차선 — 조가선 — 드로퍼</div>
+    <div class="qm-choice">② 전차선 — 급전선 — 귀선</div>
+    <div class="qm-choice">③ 전차선 — 급전선 — 조가선</div>
+    <div class="qm-choice">④ 전차선 — 드로퍼 — 에어조인트</div>
+  </div>
 </div>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q2</span>
-<span class="qst-src">rk_ch82_16 · SOURCE: 철도왕 교재 ch82 · 교류 전차선로 접지시설</span>
+
+<div class="section answer-section">
+<div class="section-title">📋 정답 및 해설</div>
+<table>
+<thead><tr><th style="width:10%;">문항</th><th style="width:10%;">정답</th><th>핵심 해설</th></tr></thead>
+<tbody>
+<tr><td><strong>Q1</strong></td><td><strong>③</strong></td><td>교류식 전기철도: 고전압 송전으로 동일 전력을 더 작은 전류로 전달. 전력 손실이 적고 대출력 견인이 가능해 소형으로도 중량 열차를 운행할 수 있다. 절연 이격 거리는 더 넓어야 하고 통신 유도장해는 큰 편이다.</td></tr>
+<tr><td><strong>Q2</strong></td><td><strong>③</strong></td><td>일반인이 접근하기 어려운 지역: 연속 정격전위 150V 이하(100V 아님). 일반인이 접근하기 쉬운 지역: 연속 정격전위 60V 이하. 두 경우 모두 인체통과 기준 15mA 이하.</td></tr>
+<tr><td><strong>Q3</strong></td><td><strong>①</strong></td><td>카테너리 가선방식의 3대 구성요소: 전차선(Contact Wire) — 팬터그래프와 직접 접촉하는 동선, 조가선(Messenger Wire) — 전차선을 지지하는 상부 선, 드로퍼(Dropper) — 조가선에서 전차선을 일정 간격으로 매달아 수평을 유지하는 부재.</td></tr>
+</tbody>
+</table>
+<div class="trap">⚠️ 문제를 먼저 풀고 난 뒤 정답·해설을 확인한다. 문제 본문에는 정답 표시를 넣지 않는다.</div>
 </div>
-<div class="qst-body">
-<div class="qst-q">교류 전차선로의 접지시설 설치 기준에 대한 설명으로 옳지 않은 것은?</div>
-<ol class="qst-choices">
-<li>① 위험 경고표지를 설치해야 하며 접지시설 설치 시 낙뢰 등으로부터 보호하기 위한 조치를 해야 한다</li>
-<li>② 모든 접지는 서로 연결되는 통합접지방식으로 설치해야 한다</li>
-<li>③ 일반인이 접근하기 어려운 지역: 연속 정격전위 100V 이하</li>
-<li>④ 일반인이 접근하기 쉬운 지역: 연속 정격전위 60V 이하</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ③</strong><br/>
-        일반인이 접근하기 어려운 지역: 연속 정격전위 <strong>150V 이하</strong>(100V 아님). 일반인이 접근하기 쉬운 지역: 연속 정격전위 60V 이하. 두 경우 모두 인체통과 기준 15mA 이하.
-      </div>
-</div>
-</div>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q3</span>
-<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념82 · 전차선로 구성요소</span>
-</div>
-<div class="qst-body">
-<div class="qst-q">전차선로(가공식 카테너리)의 3대 구성요소를 올바르게 나열한 것은?</div>
-<ol class="qst-choices">
-<li>① 전차선 — 조가선 — 드로퍼</li>
-<li>② 전차선 — 급전선 — 귀선</li>
-<li>③ 전차선 — 급전선 — 조가선</li>
-<li>④ 전차선 — 드로퍼 — 에어조인트</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ①</strong><br/>
-        카테너리 가선방식의 3대 구성요소: <strong>전차선(Contact Wire)</strong> — 팬터그래프와 직접 접촉하는 동선, <strong>조가선(Messenger Wire)</strong> — 전차선을 지지하는 상부 선, <strong>드로퍼(Dropper)</strong> — 조가선에서 전차선을 일정 간격으로 매달아 수평을 유지하는 부재.
-      </div>
-</div>
-</div>
+
  하단 NAV 
 
 

@@ -64,6 +64,17 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 .qst-ans { background:#f9f9f9; border-left:3px solid #78350f; padding:10px 14px; margin-top:8px; border-radius:0 4px 4px 0; font-size:.9em; color:#111; }
 .qst-ans strong { color:#78350f; }
 
+/* 문제 카드 (quiz-mc) — Part 7 호환 */
+.quiz-mc { background:#fff; border:1px solid #ccc; border-left:4px solid #555; padding:12px 14px; margin:12px 0; border-radius:0 4px 4px 0; font-size:.9em; }
+.quiz-mc .qm-src { font-size:.78em; color:#555; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
+.quiz-mc .qm-q { font-weight:bold; color:#111; margin-bottom:8px; line-height:1.6; }
+.quiz-mc .qm-choices { margin:0 0 0 4px; }
+.quiz-mc .qm-choice { padding:3px 0; color:#222; line-height:1.7; }
+
+/* 정답·해설 섹션 (answer-section) */
+.answer-section { margin-top:32px; border-top:2px solid #78350f; padding-top:16px; }
+
+
 /* VIS 래퍼 */
 .vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
 .vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; }
@@ -111,6 +122,8 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
   table { page-break-inside:avoid; }
   th { background:#e8e8e8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   .container { width:100% !important; max-width:none !important; margin:0 !important; padding:0 !important; }
+  .quiz-mc { break-inside:avoid; page-break-inside:avoid; }
+  .answer-section { break-before:page; page-break-before:always; }
   .answer-section { break-before:page; page-break-before:always; }
   @page { size:A4 portrait; margin:12mm 12mm 12mm 18mm; }
 }
@@ -215,67 +228,52 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
     </div>
 <div class="vis-cap">▲ P10_11 — 팬터그래프 집전 및 이선현상 개요 (10-08과 공용)</div>
 </div>
-<div class="section-title">📝 문제은행 (3문항)</div>
-<p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q1</span>
-<span class="qst-src">rk_ch82_11 · SOURCE: 철도왕 교재 ch82 / 4.html 개념80 · 이선현상 억제방안</span>
+
+<div class="section-title">📝 문제 (3문항)</div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 rk_ch82_11 · SOURCE: 철도왕 교재 ch82 / 4.html 개념80 · 이선현상 억제방안</div>
+  <div class="qm-q">전차선 이선현상 억제 방안 중 아닌 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 가선장력장치 개선</div>
+    <div class="qm-choice">② 드로퍼 간격 조정</div>
+    <div class="qm-choice">③ 가선금구류의 중량화</div>
+    <div class="qm-choice">④ 복합가선 적용</div>
+  </div>
 </div>
-<div class="qst-body">
-<div class="qst-q">전차선 이선현상 억제 방안 중 아닌 것은?</div>
-<ol class="qst-choices">
-<li>① 가선장력장치 개선</li>
-<li>② 드로퍼 간격 조정</li>
-<li>③ 가선금구류의 중량화</li>
-<li>④ 복합가선 적용</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ③ 가선금구류의 중량화</strong><br/>
-        이선현상 억제 방안: 드로퍼 간격 조정 / 장력장치 개선 / 복합가선 적용<br/>
-<strong>가선금구류 중량화</strong> → 질량 증가로 동적응답이 저하되어 <strong>오히려 이선이 심해짐</strong>.<br/>
-        ⚠️ 함정: "중량화"는 이선현상을 '줄이는' 대책처럼 보이지만 실제로는 악화시킴
-      </div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 id:30 · SOURCE: 철도공학 기출/복원 · 차량 진동·소음 원인</div>
+  <div class="qm-q">철도차량의 진동·소음 발생 원인으로 거리가 먼 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 레일 이음매부 충격</div>
+    <div class="qm-choice">② 차륜 플랫</div>
+    <div class="qm-choice">③ 팬터그래프 이선(離線)</div>
+    <div class="qm-choice">④ 건축한계 확대</div>
+  </div>
 </div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 신규개념확인 · SOURCE: 4.html 개념80 · 이선현상 원인</div>
+  <div class="qm-q">팬터그래프 이선현상의 직접 원인으로 옳지 않은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 전차선 장력 부족으로 인한 처짐 과다</div>
+    <div class="qm-choice">② 고속 주행 시 공기력에 의한 진동</div>
+    <div class="qm-choice">③ 드로퍼 간격 불균일에 의한 전차선 파동</div>
+    <div class="qm-choice">④ 전차선 도전율 감소</div>
+  </div>
 </div>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q2</span>
-<span class="qst-src">id:30 · SOURCE: 철도공학 기출/복원 · 차량 진동·소음 원인</span>
+
+<div class="section answer-section">
+<div class="section-title">📋 정답 및 해설</div>
+<table>
+<thead><tr><th style="width:10%;">문항</th><th style="width:10%;">정답</th><th>핵심 해설</th></tr></thead>
+<tbody>
+<tr><td><strong>Q1</strong></td><td><strong>③</strong></td><td>이선현상 억제 방안: 드로퍼 간격 조정 / 장력장치 개선 / 복합가선 적용 가선금구류 중량화 → 질량 증가로 동적응답이 저하되어 오히려 이선이 심해짐. ⚠️ 함정: "중량화"는 이선현상을 '줄이는' 대책처럼 보이지만 실제로는 악화시킴</td></tr>
+<tr><td><strong>Q2</strong></td><td><strong>④</strong></td><td>진동·소음 원인: 레일 이음매, 차륜 플랫(平), 팬터그래프 이선(離線), 곡선 통과 시 횡력 등. 건축한계 확대는 공간 확보 목적이지 진동과 무관.</td></tr>
+<tr><td><strong>Q3</strong></td><td><strong>④</strong></td><td>이선현상 원인: 장력 부족(처짐 과다), 고속 주행 시 공기력, 드로퍼 불균일, 경간 과대 등. 도전율 감소는 전압강하나 과열의 원인이 되지만 이선현상과는 직접 무관하다.</td></tr>
+</tbody>
+</table>
+<div class="trap">⚠️ 문제를 먼저 풀고 난 뒤 정답·해설을 확인한다. 문제 본문에는 정답 표시를 넣지 않는다.</div>
 </div>
-<div class="qst-body">
-<div class="qst-q">철도차량의 진동·소음 발생 원인으로 거리가 먼 것은?</div>
-<ol class="qst-choices">
-<li>① 레일 이음매부 충격</li>
-<li>② 차륜 플랫</li>
-<li>③ 팬터그래프 이선(離線)</li>
-<li>④ 건축한계 확대</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ④ 건축한계 확대</strong><br/>
-        진동·소음 원인: 레일 이음매, 차륜 플랫(平), <strong>팬터그래프 이선(離線)</strong>, 곡선 통과 시 횡력 등. 건축한계 확대는 공간 확보 목적이지 진동과 무관.
-      </div>
-</div>
-</div>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q3</span>
-<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념80 · 이선현상 원인</span>
-</div>
-<div class="qst-body">
-<div class="qst-q">팬터그래프 이선현상의 직접 원인으로 옳지 않은 것은?</div>
-<ol class="qst-choices">
-<li>① 전차선 장력 부족으로 인한 처짐 과다</li>
-<li>② 고속 주행 시 공기력에 의한 진동</li>
-<li>③ 드로퍼 간격 불균일에 의한 전차선 파동</li>
-<li>④ 전차선 도전율 감소</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ④</strong><br/>
-        이선현상 원인: 장력 부족(처짐 과다), 고속 주행 시 공기력, 드로퍼 불균일, 경간 과대 등. <strong>도전율 감소</strong>는 전압강하나 과열의 원인이 되지만 이선현상과는 직접 무관하다.
-      </div>
-</div>
-</div>
+
 
 
 </div><!-- /container -->

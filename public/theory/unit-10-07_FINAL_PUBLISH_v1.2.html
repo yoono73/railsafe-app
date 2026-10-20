@@ -64,6 +64,17 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 .qst-ans { background:#f9f9f9; border-left:3px solid #78350f; padding:10px 14px; margin-top:8px; border-radius:0 4px 4px 0; font-size:.9em; color:#111; }
 .qst-ans strong { color:#78350f; }
 
+/* 문제 카드 (quiz-mc) — Part 7 호환 */
+.quiz-mc { background:#fff; border:1px solid #ccc; border-left:4px solid #555; padding:12px 14px; margin:12px 0; border-radius:0 4px 4px 0; font-size:.9em; }
+.quiz-mc .qm-src { font-size:.78em; color:#555; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
+.quiz-mc .qm-q { font-weight:bold; color:#111; margin-bottom:8px; line-height:1.6; }
+.quiz-mc .qm-choices { margin:0 0 0 4px; }
+.quiz-mc .qm-choice { padding:3px 0; color:#222; line-height:1.7; }
+
+/* 정답·해설 섹션 (answer-section) */
+.answer-section { margin-top:32px; border-top:2px solid #78350f; padding-top:16px; }
+
+
 /* VIS 래퍼 */
 .vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
 .vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; }
@@ -111,6 +122,8 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
   table { page-break-inside:avoid; }
   th { background:#e8e8e8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   .container { width:100% !important; max-width:none !important; margin:0 !important; padding:0 !important; }
+  .quiz-mc { break-inside:avoid; page-break-inside:avoid; }
+  .answer-section { break-before:page; page-break-before:always; }
   .answer-section { break-before:page; page-break-before:always; }
   @page { size:A4 portrait; margin:12mm 12mm 12mm 18mm; }
 }
@@ -234,65 +247,52 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
     </div>
 <div class="vis-cap">▲ VIS-086 전차선 집전장치 비교 카드</div>
 </div>
-<div class="section-title">📝 문제은행 (3문항)</div>
-<p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q1</span>
-<span class="qst-src">id:27 · SOURCE: 철도공학 기출/복원 · 집전장치 종류</span>
+
+<div class="section-title">📝 문제 (3문항)</div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 id:27 · SOURCE: 철도공학 기출/복원 · 집전장치 종류</div>
+  <div class="qm-q">전차선에서 전기를 집전하는 장치 중 고속철도에 주로 사용되는 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 트롤리 폴</div>
+    <div class="qm-choice">② 집전슈</div>
+    <div class="qm-choice">③ 팬터그래프</div>
+    <div class="qm-choice">④ 뷰겔</div>
+  </div>
 </div>
-<div class="qst-body">
-<div class="qst-q">전차선에서 전기를 집전하는 장치 중 고속철도에 주로 사용되는 것은?</div>
-<ol class="qst-choices">
-<li>① 트롤리 폴</li>
-<li>② 집전슈</li>
-<li>③ 팬터그래프</li>
-<li>④ 뷰겔</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ③ 팬터그래프</strong><br/>
-        팬터그래프: 고속철도(KTX 등)에서 가공전차선과 접촉해 전력을 집전하는 장치. 트롤리 폴은 저속 노면전차, 집전슈는 제3레일 방식.
-      </div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 id:94 · SOURCE: 철도공학 기출/복원 · 팬터그래프 집전장치</div>
+  <div class="qm-q">차량 지붕에서 전차선과 접촉하여 전력을 집전하는 대표적인 집전장치는?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 팬터그래프</div>
+    <div class="qm-choice">② 고속도차단기</div>
+    <div class="qm-choice">③ 유도전동기</div>
+    <div class="qm-choice">④ 주행저항</div>
+  </div>
 </div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 id:95 · SOURCE: 철도공학 기출/복원 · 팬터그래프 출제포인트</div>
+  <div class="qm-q">'팬터그래프'과 연결한 출제포인트로 가장 적절한 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 현대 전기철도의 대표 집전장치로 전차선과 접촉.</div>
+    <div class="qm-choice">② 곡선통과성과 주행안정성에 영향.</div>
+    <div class="qm-choice">③ 속도 상승 시 공기저항 비중이 커진다.</div>
+    <div class="qm-choice">④ 계자전류제어는 직류전동기 계열.</div>
+  </div>
 </div>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q2</span>
-<span class="qst-src">id:94 · SOURCE: 철도공학 기출/복원 · 팬터그래프 집전장치</span>
+
+<div class="section answer-section">
+<div class="section-title">📋 정답 및 해설</div>
+<table>
+<thead><tr><th style="width:10%;">문항</th><th style="width:10%;">정답</th><th>핵심 해설</th></tr></thead>
+<tbody>
+<tr><td><strong>Q1</strong></td><td><strong>③</strong></td><td>팬터그래프: 고속철도(KTX 등)에서 가공전차선과 접촉해 전력을 집전하는 장치. 트롤리 폴은 저속 노면전차, 집전슈는 제3레일 방식.</td></tr>
+<tr><td><strong>Q2</strong></td><td><strong>①</strong></td><td>팬터그래프: 현대 전기철도의 대표 집전장치. 전차선과 슬라이딩 접촉으로 전력 수집.</td></tr>
+<tr><td><strong>Q3</strong></td><td><strong>①</strong></td><td>집전장치 중 팬터그래프가 현대 전기철도에서 가장 보편적. 축전지는 집전장치 아님.</td></tr>
+</tbody>
+</table>
+<div class="trap">⚠️ 문제를 먼저 풀고 난 뒤 정답·해설을 확인한다. 문제 본문에는 정답 표시를 넣지 않는다.</div>
 </div>
-<div class="qst-body">
-<div class="qst-q">차량 지붕에서 전차선과 접촉하여 전력을 집전하는 대표적인 집전장치는?</div>
-<ol class="qst-choices">
-<li>① 팬터그래프</li>
-<li>② 고속도차단기</li>
-<li>③ 유도전동기</li>
-<li>④ 주행저항</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ① 팬터그래프</strong><br/>
-        팬터그래프: 현대 전기철도의 대표 집전장치. 전차선과 슬라이딩 접촉으로 전력 수집.
-      </div>
-</div>
-</div>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q3</span>
-<span class="qst-src">id:95 · SOURCE: 철도공학 기출/복원 · 팬터그래프 출제포인트</span>
-</div>
-<div class="qst-body">
-<div class="qst-q">'팬터그래프'과 연결한 출제포인트로 가장 적절한 것은?</div>
-<ol class="qst-choices">
-<li>① 현대 전기철도의 대표 집전장치로 전차선과 접촉.</li>
-<li>② 곡선통과성과 주행안정성에 영향.</li>
-<li>③ 속도 상승 시 공기저항 비중이 커진다.</li>
-<li>④ 계자전류제어는 직류전동기 계열.</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ①</strong><br/>
-        집전장치 중 팬터그래프가 현대 전기철도에서 가장 보편적. 축전지는 집전장치 아님.
-      </div>
-</div>
-</div>
+
 
 
 </div><!-- /container -->

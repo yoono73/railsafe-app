@@ -64,6 +64,17 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 .qst-ans { background:#f9f9f9; border-left:3px solid #78350f; padding:10px 14px; margin-top:8px; border-radius:0 4px 4px 0; font-size:.9em; color:#111; }
 .qst-ans strong { color:#78350f; }
 
+/* 문제 카드 (quiz-mc) — Part 7 호환 */
+.quiz-mc { background:#fff; border:1px solid #ccc; border-left:4px solid #555; padding:12px 14px; margin:12px 0; border-radius:0 4px 4px 0; font-size:.9em; }
+.quiz-mc .qm-src { font-size:.78em; color:#555; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
+.quiz-mc .qm-q { font-weight:bold; color:#111; margin-bottom:8px; line-height:1.6; }
+.quiz-mc .qm-choices { margin:0 0 0 4px; }
+.quiz-mc .qm-choice { padding:3px 0; color:#222; line-height:1.7; }
+
+/* 정답·해설 섹션 (answer-section) */
+.answer-section { margin-top:32px; border-top:2px solid #78350f; padding-top:16px; }
+
+
 /* VIS 래퍼 */
 .vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
 .vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; }
@@ -111,6 +122,8 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
   table { page-break-inside:avoid; }
   th { background:#e8e8e8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   .container { width:100% !important; max-width:none !important; margin:0 !important; padding:0 !important; }
+  .quiz-mc { break-inside:avoid; page-break-inside:avoid; }
+  .answer-section { break-before:page; page-break-before:always; }
   .answer-section { break-before:page; page-break-before:always; }
   @page { size:A4 portrait; margin:12mm 12mm 12mm 18mm; }
 }
@@ -427,65 +440,52 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
     </div>
 <div class="vis-cap">▲ 이격거리 300mm(접지물까지) vs 편위 250mm(선로 중심에서 가로 방향) 비교</div>
 </div>
-<div class="section-title">📝 문제은행 (3문항)</div>
-<p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q1</span>
-<span class="qst-src">rk_ch82_14 · SOURCE: 철도왕 교재 ch82 / 4.html 개념82 · 전차선 편위</span>
+
+<div class="section-title">📝 문제 (3문항)</div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 rk_ch82_14 · SOURCE: 철도왕 교재 ch82 / 4.html 개념82 · 전차선 편위</div>
+  <div class="qm-q">전차선 절연구간의 편위로 옳은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 100mm</div>
+    <div class="qm-choice">② 150mm</div>
+    <div class="qm-choice">③ 200mm</div>
+    <div class="qm-choice">④ 250mm</div>
+  </div>
 </div>
-<div class="qst-body">
-<div class="qst-q">전차선 절연구간의 편위로 옳은 것은?</div>
-<ol class="qst-choices">
-<li>① 100mm</li>
-<li>② 150mm</li>
-<li>③ 200mm</li>
-<li>④ 250mm</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ④ 250mm</strong><br/>
-        전차선의 편위: 궤도 중심선 기준 수평 이동 허용치. <strong>250mm</strong> 기준은 집전장치 유효 폭, 궤도 진동 범위 등을 감안한 설계적 여유치. 편위가 너무 크면 팬터그래프 이탈 위험.
-      </div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 신규개념확인 · SOURCE: 4.html 개념98 · 전차선 장력과 처짐 관계</div>
+  <div class="qm-q">전차선 장력(Tension)과 처짐(Sag)의 관계를 올바르게 설명한 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 장력이 높을수록 처짐이 커진다</div>
+    <div class="qm-choice">② 장력이 높을수록 처짐이 작아진다</div>
+    <div class="qm-choice">③ 장력과 처짐은 무관하다</div>
+    <div class="qm-choice">④ 경간이 길수록 처짐이 작아진다</div>
+  </div>
 </div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 신규개념확인 · SOURCE: 4.html 개념82 · 전차선 편위 함정</div>
+  <div class="qm-q">전차선 편위(Stagger)에 대한 설명으로 옳지 않은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 전차선을 지그재그로 배치하여 팬터그래프 편마모를 방지한다</div>
+    <div class="qm-choice">② 편위 최대값은 궤도 중심선으로부터 250mm이다</div>
+    <div class="qm-choice">③ 편위가 클수록 팬터그래프 집전 성능이 향상된다</div>
+    <div class="qm-choice">④ 곡선 구간에서는 편위 값이 달리 설정될 수 있다</div>
+  </div>
 </div>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q2</span>
-<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념98 · 전차선 장력과 처짐 관계</span>
+
+<div class="section answer-section">
+<div class="section-title">📋 정답 및 해설</div>
+<table>
+<thead><tr><th style="width:10%;">문항</th><th style="width:10%;">정답</th><th>핵심 해설</th></tr></thead>
+<tbody>
+<tr><td><strong>Q1</strong></td><td><strong>④</strong></td><td>전차선의 편위: 궤도 중심선 기준 수평 이동 허용치. 250mm 기준은 집전장치 유효 폭, 궤도 진동 범위 등을 감안한 설계적 여유치. 편위가 너무 크면 팬터그래프 이탈 위험.</td></tr>
+<tr><td><strong>Q2</strong></td><td><strong>②</strong></td><td>장력↑ → 처짐↓ (반비례 관계). 장력이 높을수록 전차선이 팽팽하게 유지되어 처짐이 감소한다. 반대로 경간(지지점 간 거리)이 길수록 처짐은 증가한다. ATD/WTD는 장력을 일정하게 유지하여 처짐을 제어한다.</td></tr>
+<tr><td><strong>Q3</strong></td><td><strong>③</strong></td><td>편위가 지나치게 크면 팬터그래프의 집전 범위를 벗어나 이선(離線) 위험이 증가한다. 편위는 팬터그래프 슈의 고른 마모를 위한 것이지 집전 성능을 향상시키기 위한 것이 아니다.</td></tr>
+</tbody>
+</table>
+<div class="trap">⚠️ 문제를 먼저 풀고 난 뒤 정답·해설을 확인한다. 문제 본문에는 정답 표시를 넣지 않는다.</div>
 </div>
-<div class="qst-body">
-<div class="qst-q">전차선 장력(Tension)과 처짐(Sag)의 관계를 올바르게 설명한 것은?</div>
-<ol class="qst-choices">
-<li>① 장력이 높을수록 처짐이 커진다</li>
-<li>② 장력이 높을수록 처짐이 작아진다</li>
-<li>③ 장력과 처짐은 무관하다</li>
-<li>④ 경간이 길수록 처짐이 작아진다</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ②</strong><br/>
-        장력↑ → 처짐↓ (반비례 관계). 장력이 높을수록 전차선이 팽팽하게 유지되어 처짐이 감소한다. 반대로 경간(지지점 간 거리)이 길수록 처짐은 증가한다. ATD/WTD는 장력을 일정하게 유지하여 처짐을 제어한다.
-      </div>
-</div>
-</div>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q3</span>
-<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념82 · 전차선 편위 함정</span>
-</div>
-<div class="qst-body">
-<div class="qst-q">전차선 편위(Stagger)에 대한 설명으로 옳지 않은 것은?</div>
-<ol class="qst-choices">
-<li>① 전차선을 지그재그로 배치하여 팬터그래프 편마모를 방지한다</li>
-<li>② 편위 최대값은 궤도 중심선으로부터 250mm이다</li>
-<li>③ 편위가 클수록 팬터그래프 집전 성능이 향상된다</li>
-<li>④ 곡선 구간에서는 편위 값이 달리 설정될 수 있다</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ③</strong><br/>
-        편위가 지나치게 크면 팬터그래프의 집전 범위를 벗어나 이선(離線) 위험이 증가한다. 편위는 <strong>팬터그래프 슈의 고른 마모</strong>를 위한 것이지 집전 성능을 향상시키기 위한 것이 아니다.
-      </div>
-</div>
-</div>
+
  NAV (하단) 
 
 

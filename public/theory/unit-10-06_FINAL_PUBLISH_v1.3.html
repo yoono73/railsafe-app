@@ -64,6 +64,17 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 .qst-ans { background:#f9f9f9; border-left:3px solid #78350f; padding:10px 14px; margin-top:8px; border-radius:0 4px 4px 0; font-size:.9em; color:#111; }
 .qst-ans strong { color:#78350f; }
 
+/* 문제 카드 (quiz-mc) — Part 7 호환 */
+.quiz-mc { background:#fff; border:1px solid #ccc; border-left:4px solid #555; padding:12px 14px; margin:12px 0; border-radius:0 4px 4px 0; font-size:.9em; }
+.quiz-mc .qm-src { font-size:.78em; color:#555; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
+.quiz-mc .qm-q { font-weight:bold; color:#111; margin-bottom:8px; line-height:1.6; }
+.quiz-mc .qm-choices { margin:0 0 0 4px; }
+.quiz-mc .qm-choice { padding:3px 0; color:#222; line-height:1.7; }
+
+/* 정답·해설 섹션 (answer-section) */
+.answer-section { margin-top:32px; border-top:2px solid #78350f; padding-top:16px; }
+
+
 /* VIS 래퍼 */
 .vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
 .vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; }
@@ -111,6 +122,8 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
   table { page-break-inside:avoid; }
   th { background:#e8e8e8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   .container { width:100% !important; max-width:none !important; margin:0 !important; padding:0 !important; }
+  .quiz-mc { break-inside:avoid; page-break-inside:avoid; }
+  .answer-section { break-before:page; page-break-before:always; }
   .answer-section { break-before:page; page-break-before:always; }
   @page { size:A4 portrait; margin:12mm 12mm 12mm 18mm; }
 }
@@ -197,67 +210,52 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
     </div>
 <div class="vis-cap">▲ ATD(스프링·기계식) / WTD(추 하중 방식) 자동장력조정장치</div>
 </div>
-<div class="section-title">📝 문제은행 (3문항)</div>
-<p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q1</span>
-<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념98 · ATD/WTD 구분</span>
+
+<div class="section-title">📝 문제 (3문항)</div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 신규개념확인 · SOURCE: 4.html 개념98 · ATD/WTD 구분</div>
+  <div class="qm-q">자동장력조정장치(ATD)와 추 하중형 장력조정장치(WTD)의 설명으로 옳은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① ATD는 추(weight)를 이용하여 장력을 조정한다</div>
+    <div class="qm-choice">② WTD는 스프링·기계식으로 장력을 조정한다</div>
+    <div class="qm-choice">③ ATD는 스프링·기계식, WTD는 추 하중 방식이다</div>
+    <div class="qm-choice">④ ATD와 WTD는 모두 전기식으로 장력을 제어한다</div>
+  </div>
 </div>
-<div class="qst-body">
-<div class="qst-q">자동장력조정장치(ATD)와 추 하중형 장력조정장치(WTD)의 설명으로 옳은 것은?</div>
-<ol class="qst-choices">
-<li>① ATD는 추(weight)를 이용하여 장력을 조정한다</li>
-<li>② WTD는 스프링·기계식으로 장력을 조정한다</li>
-<li>③ ATD는 스프링·기계식, WTD는 추 하중 방식이다</li>
-<li>④ ATD와 WTD는 모두 전기식으로 장력을 제어한다</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ③</strong><br/>
-        ATD(Automatic Tension Device): <strong>스프링·기계식</strong>으로 장력 자동 조정.<br/>
-        WTD(Weight Tension Device): <strong>추(하중) 방식</strong>으로 장력 유지.<br/>
-        두 장치 모두 온도 변화에 의한 전차선 신축 시 장력을 일정하게 유지하는 역할.
-      </div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 신규개념확인 · SOURCE: 4.html 개념98 · ATD/WTD 목적</div>
+  <div class="qm-q">자동장력조정장치(ATD/WTD)의 주요 목적으로 옳은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 전차선의 전압강하를 보상한다</div>
+    <div class="qm-choice">② 온도 변화에 관계없이 전차선 장력을 일정하게 유지한다</div>
+    <div class="qm-choice">③ 전차선의 절연 내력을 높인다</div>
+    <div class="qm-choice">④ 전차선 구간을 전기적으로 분리한다</div>
+  </div>
 </div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 신규개념확인 · SOURCE: 4.html 개념98 · 장력조정 효과</div>
+  <div class="qm-q">자동장력조정장치(ATD/WTD) 설치 효과로 옳지 않은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 이선율(離線率) 감소</div>
+    <div class="qm-choice">② 전차선 수명 연장</div>
+    <div class="qm-choice">③ 집전 성능 향상</div>
+    <div class="qm-choice">④ 전차선 전압 강하 저감</div>
+  </div>
 </div>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q2</span>
-<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념98 · ATD/WTD 목적</span>
+
+<div class="section answer-section">
+<div class="section-title">📋 정답 및 해설</div>
+<table>
+<thead><tr><th style="width:10%;">문항</th><th style="width:10%;">정답</th><th>핵심 해설</th></tr></thead>
+<tbody>
+<tr><td><strong>Q1</strong></td><td><strong>③</strong></td><td>ATD(Automatic Tension Device): 스프링·기계식으로 장력 자동 조정. WTD(Weight Tension Device): 추(하중) 방식으로 장력 유지. 두 장치 모두 온도 변화에 의한 전차선 신축 시 장력을 일정하게 유지하는 역할.</td></tr>
+<tr><td><strong>Q2</strong></td><td><strong>②</strong></td><td>ATD/WTD의 목적: 온도 변화(열팽창·수축)에 의한 전차선 신축 시 장력을 일정하게 유지. 장력 일정 → 처짐 일정 → 이선율 감소 → 집전 성능 유지. 전압강하 보상은 정류포스트, 절연 분리는 구분장치의 역할.</td></tr>
+<tr><td><strong>Q3</strong></td><td><strong>④</strong></td><td>장력조정장치 효과: 이선율 감소 / 집전 성능 유지 / 전차선 수명 연장. 전압강하 저감은 정류포스트의 역할이며 ATD/WTD와 무관하다.</td></tr>
+</tbody>
+</table>
+<div class="trap">⚠️ 문제를 먼저 풀고 난 뒤 정답·해설을 확인한다. 문제 본문에는 정답 표시를 넣지 않는다.</div>
 </div>
-<div class="qst-body">
-<div class="qst-q">자동장력조정장치(ATD/WTD)의 주요 목적으로 옳은 것은?</div>
-<ol class="qst-choices">
-<li>① 전차선의 전압강하를 보상한다</li>
-<li>② 온도 변화에 관계없이 전차선 장력을 일정하게 유지한다</li>
-<li>③ 전차선의 절연 내력을 높인다</li>
-<li>④ 전차선 구간을 전기적으로 분리한다</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ②</strong><br/>
-        ATD/WTD의 목적: 온도 변화(열팽창·수축)에 의한 전차선 신축 시 <strong>장력을 일정하게 유지</strong>. 장력 일정 → 처짐 일정 → 이선율 감소 → 집전 성능 유지. 전압강하 보상은 정류포스트, 절연 분리는 구분장치의 역할.
-      </div>
-</div>
-</div>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q3</span>
-<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념98 · 장력조정 효과</span>
-</div>
-<div class="qst-body">
-<div class="qst-q">자동장력조정장치(ATD/WTD) 설치 효과로 옳지 않은 것은?</div>
-<ol class="qst-choices">
-<li>① 이선율(離線率) 감소</li>
-<li>② 전차선 수명 연장</li>
-<li>③ 집전 성능 향상</li>
-<li>④ 전차선 전압 강하 저감</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ④</strong><br/>
-        장력조정장치 효과: 이선율 감소 / 집전 성능 유지 / 전차선 수명 연장. <strong>전압강하 저감은 정류포스트의 역할</strong>이며 ATD/WTD와 무관하다.
-      </div>
-</div>
-</div>
+
 
 
 </div><!-- /container -->

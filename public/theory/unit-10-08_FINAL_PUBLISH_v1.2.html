@@ -64,6 +64,17 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 .qst-ans { background:#f9f9f9; border-left:3px solid #78350f; padding:10px 14px; margin-top:8px; border-radius:0 4px 4px 0; font-size:.9em; color:#111; }
 .qst-ans strong { color:#78350f; }
 
+/* 문제 카드 (quiz-mc) — Part 7 호환 */
+.quiz-mc { background:#fff; border:1px solid #ccc; border-left:4px solid #555; padding:12px 14px; margin:12px 0; border-radius:0 4px 4px 0; font-size:.9em; }
+.quiz-mc .qm-src { font-size:.78em; color:#555; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
+.quiz-mc .qm-q { font-weight:bold; color:#111; margin-bottom:8px; line-height:1.6; }
+.quiz-mc .qm-choices { margin:0 0 0 4px; }
+.quiz-mc .qm-choice { padding:3px 0; color:#222; line-height:1.7; }
+
+/* 정답·해설 섹션 (answer-section) */
+.answer-section { margin-top:32px; border-top:2px solid #78350f; padding-top:16px; }
+
+
 /* VIS 래퍼 */
 .vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
 .vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; }
@@ -111,6 +122,8 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
   table { page-break-inside:avoid; }
   th { background:#e8e8e8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   .container { width:100% !important; max-width:none !important; margin:0 !important; padding:0 !important; }
+  .quiz-mc { break-inside:avoid; page-break-inside:avoid; }
+  .answer-section { break-before:page; page-break-before:always; }
   .answer-section { break-before:page; page-break-before:always; }
   @page { size:A4 portrait; margin:12mm 12mm 12mm 18mm; }
 }
@@ -210,66 +223,52 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
     </div>
 <div class="vis-cap">▲ P10_11 — 팬터그래프 집전 구조 및 이선현상 개요 (10-09와 공용)</div>
 </div>
-<div class="section-title">📝 문제은행 (3문항)</div>
-<p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q1</span>
-<span class="qst-src">rk_ch82_10 · SOURCE: 철도왕 교재 ch82 · 팬터그래프 설명</span>
+
+<div class="section-title">📝 문제 (3문항)</div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 rk_ch82_10 · SOURCE: 철도왕 교재 ch82 · 팬터그래프 설명</div>
+  <div class="qm-q">팬터그래프에 대한 설명으로 틀린 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 전차선으로부터 전류를 받아 차량에 공급하는 장치이다</div>
+    <div class="qm-choice">② 주행 중 전차선의 높이 변화에 따라 자동으로 상하 이동한다</div>
+    <div class="qm-choice">③ 접촉압력이 너무 낮으면 전차선과의 접촉이 불안정해진다</div>
+    <div class="qm-choice">④ 접촉압력이 높을수록 전차선의 마모가 줄어든다</div>
+  </div>
 </div>
-<div class="qst-body">
-<div class="qst-q">팬터그래프에 대한 설명으로 틀린 것은?</div>
-<ol class="qst-choices">
-<li>① 전차선으로부터 전류를 받아 차량에 공급하는 장치이다</li>
-<li>② 주행 중 전차선의 높이 변화에 따라 자동으로 상하 이동한다</li>
-<li>③ 접촉압력이 너무 낮으면 전차선과의 접촉이 불안정해진다</li>
-<li>④ 접촉압력이 높을수록 전차선의 마모가 줄어든다</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ④ 접촉압력이 높을수록 전차선의 마모가 줄어든다</strong><br/>
-        압력이 너무 높으면 전차선과 팬터그래프 슈 <strong>모두 마모가 증가</strong>한다.<br/>
-        ⚠️ 함정: 압력이 너무 낮으면 이선현상 발생, 너무 높으면 마모 증가
-      </div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 id:27 · SOURCE: 철도공학 기출/복원 · 집전장치 고속철도</div>
+  <div class="qm-q">전차선에서 전기를 집전하는 장치 중 고속철도에 주로 사용되는 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 트롤리 폴</div>
+    <div class="qm-choice">② 집전슈</div>
+    <div class="qm-choice">③ 팬터그래프</div>
+    <div class="qm-choice">④ 뷰겔</div>
+  </div>
 </div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 신규개념확인 · SOURCE: 4.html 개념10 / rk_ch82_10 · 팬터그래프 접촉압력</div>
+  <div class="qm-q">팬터그래프 집전압력에 대한 설명으로 옳은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 접촉압력이 낮으면 마모가 증가하고, 높으면 이선이 발생한다</div>
+    <div class="qm-choice">② 접촉압력이 높을수록 마모가 줄어든다</div>
+    <div class="qm-choice">③ 접촉압력이 낮으면 이선현상이 발생할 수 있다</div>
+    <div class="qm-choice">④ 접촉압력은 속도에 무관하게 일정하게 유지된다</div>
+  </div>
 </div>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q2</span>
-<span class="qst-src">id:27 · SOURCE: 철도공학 기출/복원 · 집전장치 고속철도</span>
+
+<div class="section answer-section">
+<div class="section-title">📋 정답 및 해설</div>
+<table>
+<thead><tr><th style="width:10%;">문항</th><th style="width:10%;">정답</th><th>핵심 해설</th></tr></thead>
+<tbody>
+<tr><td><strong>Q1</strong></td><td><strong>④</strong></td><td>압력이 너무 높으면 전차선과 팬터그래프 슈 모두 마모가 증가한다. ⚠️ 함정: 압력이 너무 낮으면 이선현상 발생, 너무 높으면 마모 증가</td></tr>
+<tr><td><strong>Q2</strong></td><td><strong>③</strong></td><td>팬터그래프: 고속철도(KTX 등)에서 가공전차선과 접촉해 전력을 집전. 트롤리 폴은 저속 노면전차, 집전슈는 제3레일 방식, 뷰겔은 구식 집전장치.</td></tr>
+<tr><td><strong>Q3</strong></td><td><strong>③</strong></td><td>접촉압력 과소 → 이선현상 발생 위험. 접촉압력 과대 → 전차선·팬터그래프 슈 마모 증가. 적정 압력 유지가 집전 성능의 핵심. 고속 주행 시 공기력 변화로 압력 조정 필요.</td></tr>
+</tbody>
+</table>
+<div class="trap">⚠️ 문제를 먼저 풀고 난 뒤 정답·해설을 확인한다. 문제 본문에는 정답 표시를 넣지 않는다.</div>
 </div>
-<div class="qst-body">
-<div class="qst-q">전차선에서 전기를 집전하는 장치 중 고속철도에 주로 사용되는 것은?</div>
-<ol class="qst-choices">
-<li>① 트롤리 폴</li>
-<li>② 집전슈</li>
-<li>③ 팬터그래프</li>
-<li>④ 뷰겔</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ③ 팬터그래프</strong><br/>
-        팬터그래프: 고속철도(KTX 등)에서 가공전차선과 접촉해 전력을 집전. 트롤리 폴은 저속 노면전차, 집전슈는 제3레일 방식, 뷰겔은 구식 집전장치.
-      </div>
-</div>
-</div>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q3</span>
-<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념10 / rk_ch82_10 · 팬터그래프 접촉압력</span>
-</div>
-<div class="qst-body">
-<div class="qst-q">팬터그래프 집전압력에 대한 설명으로 옳은 것은?</div>
-<ol class="qst-choices">
-<li>① 접촉압력이 낮으면 마모가 증가하고, 높으면 이선이 발생한다</li>
-<li>② 접촉압력이 높을수록 마모가 줄어든다</li>
-<li>③ 접촉압력이 낮으면 이선현상이 발생할 수 있다</li>
-<li>④ 접촉압력은 속도에 무관하게 일정하게 유지된다</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ③</strong><br/>
-        접촉압력 과소 → <strong>이선현상</strong> 발생 위험. 접촉압력 과대 → 전차선·팬터그래프 슈 <strong>마모 증가</strong>. 적정 압력 유지가 집전 성능의 핵심. 고속 주행 시 공기력 변화로 압력 조정 필요.
-      </div>
-</div>
-</div>
+
 
 
 </div><!-- /container -->

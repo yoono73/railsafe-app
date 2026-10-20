@@ -64,6 +64,17 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 .qst-ans { background:#f9f9f9; border-left:3px solid #78350f; padding:10px 14px; margin-top:8px; border-radius:0 4px 4px 0; font-size:.9em; color:#111; }
 .qst-ans strong { color:#78350f; }
 
+/* 문제 카드 (quiz-mc) — Part 7 호환 */
+.quiz-mc { background:#fff; border:1px solid #ccc; border-left:4px solid #555; padding:12px 14px; margin:12px 0; border-radius:0 4px 4px 0; font-size:.9em; }
+.quiz-mc .qm-src { font-size:.78em; color:#555; font-weight:bold; margin-bottom:6px; letter-spacing:.02em; }
+.quiz-mc .qm-q { font-weight:bold; color:#111; margin-bottom:8px; line-height:1.6; }
+.quiz-mc .qm-choices { margin:0 0 0 4px; }
+.quiz-mc .qm-choice { padding:3px 0; color:#222; line-height:1.7; }
+
+/* 정답·해설 섹션 (answer-section) */
+.answer-section { margin-top:32px; border-top:2px solid #78350f; padding-top:16px; }
+
+
 /* VIS 래퍼 */
 .vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
 .vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; }
@@ -111,6 +122,8 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
   table { page-break-inside:avoid; }
   th { background:#e8e8e8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   .container { width:100% !important; max-width:none !important; margin:0 !important; padding:0 !important; }
+  .quiz-mc { break-inside:avoid; page-break-inside:avoid; }
+  .answer-section { break-before:page; page-break-before:always; }
   .answer-section { break-before:page; page-break-before:always; }
   @page { size:A4 portrait; margin:12mm 12mm 12mm 18mm; }
 }
@@ -242,65 +255,52 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
 </table>
 </div>
  §4 기출문제 
-<div class="section-title">📝 문제은행 (3문항)</div>
-<p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q1</span>
-<span class="qst-src">rk_ch82_13 · SOURCE: GATE4 SOURCE-81-A / 4.html 개념81 · ch82 전기·신호</span>
+
+<div class="section-title">📝 문제 (3문항)</div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 rk_ch82_13 · SOURCE: GATE4 SOURCE-81-A / 4.html 개념81 · ch82 전기·신호</div>
+  <div class="qm-q">교류 25kV 전차선로의 가압 구간에서 급전선 및 전차선과 접지물 사이에 필요한 절연 이격거리로 옳은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 100mm 이상</div>
+    <div class="qm-choice">② 200mm 이상</div>
+    <div class="qm-choice">③ 300mm 이상</div>
+    <div class="qm-choice">④ 150mm 이상</div>
+  </div>
 </div>
-<div class="qst-body">
-<div class="qst-q">교류 25kV 전차선로의 가압 구간에서 급전선 및 전차선과 접지물 사이에 필요한 절연 이격거리로 옳은 것은?</div>
-<ol class="qst-choices">
-<li>① 100mm 이상</li>
-<li>② 200mm 이상</li>
-<li>③ 300mm 이상</li>
-<li>④ 150mm 이상</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ③ 300mm 이상</strong><br/>
-        25kV 교류 전철에서 전차선·급전선과 접지 구조물 간 최소 <strong>300mm 이상</strong>의 이격거리가 필요하다.
-      </div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 rk_ch82_12 · SOURCE: 철도왕 교재 ch82 · 전차선 구비조건</div>
+  <div class="qm-q">전차선의 구비 조건으로 옳지 않은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 전기전도도가 높을 것</div>
+    <div class="qm-choice">② 기계적 강도가 클 것</div>
+    <div class="qm-choice">③ 유지보수가 용이할 것</div>
+    <div class="qm-choice">④ 마모가 잘 일어날 것</div>
+  </div>
 </div>
+<div class="quiz-mc">
+  <div class="qm-src">📋 신규개념확인 · SOURCE: 4.html 개념82 · 전차선 구비조건 추가항목</div>
+  <div class="qm-q">전차선의 구비 조건으로 옳지 않은 것은?</div>
+  <div class="qm-choices">
+    <div class="qm-choice">① 인장강도가 클 것</div>
+    <div class="qm-choice">② 내열성이 우수할 것</div>
+    <div class="qm-choice">③ 도전율이 높을 것</div>
+    <div class="qm-choice">④ 비중이 클 것</div>
+  </div>
 </div>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q2</span>
-<span class="qst-src">rk_ch82_12 · SOURCE: 철도왕 교재 ch82 · 전차선 구비조건</span>
+
+<div class="section answer-section">
+<div class="section-title">📋 정답 및 해설</div>
+<table>
+<thead><tr><th style="width:10%;">문항</th><th style="width:10%;">정답</th><th>핵심 해설</th></tr></thead>
+<tbody>
+<tr><td><strong>Q1</strong></td><td><strong>③</strong></td><td>25kV 교류 전철에서 전차선·급전선과 접지 구조물 간 최소 300mm 이상의 이격거리가 필요하다.</td></tr>
+<tr><td><strong>Q2</strong></td><td><strong>④</strong></td><td>전차선 구비 조건: 높은 전도율, 기계적 강도, 내마모성, 내열성 등이 필수. 마모가 잘 일어나는 것은 오히려 단점이며 구비 조건에 해당하지 않는다.</td></tr>
+<tr><td><strong>Q3</strong></td><td><strong>④</strong></td><td>전차선은 가볍고 강해야 하므로 비중이 작을 것이 구비 조건. 비중이 크면 자중이 증가하여 처짐이 심해지고 집전 성능이 저하된다. 인장강도·내열성·도전율은 모두 필수 조건.</td></tr>
+</tbody>
+</table>
+<div class="trap">⚠️ 문제를 먼저 풀고 난 뒤 정답·해설을 확인한다. 문제 본문에는 정답 표시를 넣지 않는다.</div>
 </div>
-<div class="qst-body">
-<div class="qst-q">전차선의 구비 조건으로 옳지 않은 것은?</div>
-<ol class="qst-choices">
-<li>① 전기전도도가 높을 것</li>
-<li>② 기계적 강도가 클 것</li>
-<li>③ 유지보수가 용이할 것</li>
-<li>④ 마모가 잘 일어날 것</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ④</strong><br/>
-        전차선 구비 조건: 높은 전도율, 기계적 강도, <strong>내마모성</strong>, 내열성 등이 필수. 마모가 잘 일어나는 것은 오히려 단점이며 구비 조건에 해당하지 않는다.
-      </div>
-</div>
-</div>
-<div class="qst-card">
-<div class="qst-head">
-<span class="qst-num">Q3</span>
-<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념82 · 전차선 구비조건 추가항목</span>
-</div>
-<div class="qst-body">
-<div class="qst-q">전차선의 구비 조건으로 옳지 않은 것은?</div>
-<ol class="qst-choices">
-<li>① 인장강도가 클 것</li>
-<li>② 내열성이 우수할 것</li>
-<li>③ 도전율이 높을 것</li>
-<li>④ 비중이 클 것</li>
-</ol>
-<div class="qst-ans">
-<strong>정답: ④</strong><br/>
-        전차선은 가볍고 강해야 하므로 <strong>비중이 작을 것</strong>이 구비 조건. 비중이 크면 자중이 증가하여 처짐이 심해지고 집전 성능이 저하된다. 인장강도·내열성·도전율은 모두 필수 조건.
-      </div>
-</div>
-</div>
+
  하단 NAV 
 
 
