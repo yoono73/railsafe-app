@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10-02 전차선로 절연·이격거리 | 철도공학</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#fff; color:#111; font-size:15px; line-height:1.75; }
+
+/* 헤더 */
+.site-header { background:#fff; color:#111; padding:8px 16px 6px; border-bottom:3px solid #78350f; }
+.site-header h1 { font-size:1.05em; font-weight:bold; color:#78350f; }
+.site-header .meta { font-size:.78em; color:#555; margin-top:2px; }
+
+.container { max-width:960px; margin:0 auto; padding:20px 24px 60px; }
+
+/* 단원 헤더 */
+.unit-header { border:2px solid #78350f; border-radius:6px; padding:12px 16px; margin-bottom:22px; background:#fff; }
+.unit-header h2 { font-size:1.2em; font-weight:bold; color:#78350f; }
+.unit-header .nav-link { font-size:.82em; color:#555; margin-top:4px; }
+.unit-header .nav-link a { color:#78350f; text-decoration:none; font-weight:bold; }
+.unit-header .nav-link a:hover { text-decoration:underline; }
+
+/* 섹션 */
+.section { margin:0 0 26px 0; }
+.section-title { font-size:1.05em; font-weight:bold; color:#111; border-left:4px solid #78350f; padding:5px 0 5px 12px; margin-bottom:14px; background:#fff; }
+
+/* 개념 */
+.concept { margin:14px 0 6px; padding-bottom:14px; border-bottom:1px solid #ccc; }
+.concept:last-child { border-bottom:none; }
+.concept-title { font-size:1em; font-weight:bold; color:#78350f; margin-bottom:8px; padding:4px 0; }
+
+/* 테이블 */
+table { width:100%; border-collapse:collapse; margin:8px 0; font-size:.9em; }
+th { background:#e8e8e8; color:#111; padding:7px 10px; text-align:left; font-size:.88em; border:1.5px solid #999; font-weight:bold; }
+td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#fff; }
+
+/* 강조 박스 */
+.trap { background:#fff; border-left:4px solid #c0392b; padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#c0392b; font-weight:bold; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+.tip { background:#fff; border-left:4px solid #2e7d32; padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#2e7d32; font-weight:bold; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+.theory-note { background:#fff; border-left:4px solid #1565c0; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#111; border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0; }
+.theory-note strong { color:#1565c0; }
+
+/* 기출 예시 */
+.quiz-ex { background:#fff; border-left:4px solid #2e7d32; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.88em; color:#111; border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0; }
+.quiz-ex .qe-title { font-weight:bold; color:#2e7d32; margin-bottom:4px; }
+.quiz-ex .qe-q { margin:4px 0 2px; }
+.quiz-ex .qe-a { font-weight:bold; color:#1b5e20; }
+.quiz-ex .qe-wrong { display:block; background:#fff; border-left:3px solid #c0392b; color:#c0392b; padding:5px 10px; margin:6px 0; border-radius:0 4px 4px 0; font-size:.88em; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+
+/* 문제 카드 (qst-card) */
+.qst-card { border:1px solid #bbb; border-left:4px solid #78350f; border-radius:0 6px 6px 0; margin:16px 0; background:#fff; }
+.qst-head { display:flex; align-items:baseline; gap:8px; padding:8px 14px; border-bottom:1px solid #e0e0e0; }
+.qst-num { font-weight:bold; color:#78350f; font-size:.95em; }
+.qst-src { font-size:.78em; color:#555; }
+.qst-body { padding:14px 16px; }
+.qst-q { font-weight:bold; color:#111; margin-bottom:10px; line-height:1.65; }
+.qst-choices { padding-left:4px; margin-bottom:10px; list-style:none; }
+.qst-choices li { padding:3px 0; color:#222; line-height:1.7; }
+.qst-ans { background:#f9f9f9; border-left:3px solid #78350f; padding:10px 14px; margin-top:8px; border-radius:0 4px 4px 0; font-size:.9em; color:#111; }
+.qst-ans strong { color:#78350f; }
+
+/* VIS 래퍼 */
+.vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
+.vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; }
+.vis-cap { font-size:.8em; color:#555; margin-top:6px; }
+
+/* 기타 기존 Part10 클래스들 유지 */
+.term-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
+.term-card { border:1px solid #bbb; border-radius:6px; padding:12px 14px; background:#fff; }
+.term-name { font-weight:bold; color:#78350f; font-size:.92em; margin-bottom:4px; }
+.term-desc { font-size:.88em; color:#333; line-height:1.6; }
+.concept-card { border:1.5px solid #bbb; border-radius:6px; margin:12px 0; overflow:hidden; }
+.concept-head { background:#f5f5f5; border-bottom:1px solid #bbb; padding:8px 14px; }
+.concept-title-text { font-weight:bold; color:#78350f; font-size:.95em; }
+.concept-body { padding:12px 16px; font-size:.9em; line-height:1.75; }
+.exam-box { background:#fff; border:1px solid #bbb; border-left:4px solid #78350f; border-radius:0 6px 6px 0; padding:12px 16px; margin:12px 0; font-size:.9em; }
+.exam-box .exam-title { font-weight:bold; color:#78350f; margin-bottom:6px; }
+.highlight { background:#fff; border:1px solid #78350f; border-radius:4px; padding:3px 7px; font-weight:bold; color:#78350f; font-size:.9em; }
+.step-box { background:#fff; border:1px solid #bbb; border-radius:6px; padding:12px 16px; margin:10px 0; }
+.step-box .step-title { font-weight:bold; color:#78350f; margin-bottom:8px; font-size:.95em; }
+.formula-box { background:#fff; border:1.5px solid #78350f; border-radius:6px; padding:14px 18px; margin:12px 0; text-align:center; }
+.formula-box .formula { font-size:1.1em; font-weight:bold; color:#78350f; margin:6px 0; }
+.badge-row { display:flex; gap:8px; margin-top:6px; flex-wrap:wrap; }
+.badge { border-radius:4px; padding:2px 8px; font-size:.75em; font-weight:bold; }
+.badge-lock { background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7; }
+.badge-noq { background:#e3f2fd; color:#1565c0; border:1px solid #90caf9; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:12px 0; }
+.col-box { border:1.5px solid #78350f; border-radius:6px; padding:12px; background:#fff; }
+.col-head { font-weight:bold; color:#78350f; font-size:.95em; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid #ddd; }
+
+/* 인쇄 버튼 */
+.print-btn { position:fixed; top:16px; right:16px; z-index:9999; border:1px solid #999; border-radius:8px; background:#fff; color:#111; padding:9px 14px; font-weight:700; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.12); }
+.print-btn:hover { background:#f5f5f5; }
+
+/* 반응형 */
+@media(max-width:600px){
+  .term-grid, .two-col { grid-template-columns:1fr; }
+}
+
+/* 프린트 */
+@media print {
+  body { font-size:12pt; line-height:1.6; }
+  .site-header, .print-btn { display:none !important; }
+  .unit-header { border:1.5pt solid #000; page-break-after:avoid; }
+  .concept-card, .exam-box, .qst-card { page-break-inside:avoid; }
+  table { page-break-inside:avoid; }
+  th { background:#e8e8e8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .container { width:100% !important; max-width:none !important; margin:0 !important; padding:0 !important; }
+  .answer-section { break-before:page; page-break-before:always; }
+  @page { size:A4 portrait; margin:12mm 12mm 12mm 18mm; }
+}
+
+</style>
+</head>
+<body>
+<button class="print-btn" type="button" onclick="window.print()">🖨 인쇄 / PDF</button>
+<header class="site-header">
+  <h1>철도교통안전관리자 — 철도공학</h1>
+  <div class="meta">10-02 전차선로 절연·이격거리 | FINAL PUBLISH v1.3</div>
+</header>
+
+<div class="container">
+
+<div class="unit-header">
+  <h2>10-02 전차선로 절연·이격거리</h2>
+  <div class="nav-link"><a href="unit-10-01_FINAL_PUBLISH_v1.4.html">← 10-01 전차선로 전체구조·구성요소</a> · <strong>[10-02 전차선로 절연·이격거리]</strong> · <a href="unit-10-03_FINAL_PUBLISH_v1.2.html">10-03 전차선 구비조건·편위·장력·처짐 →</a></div>
+</div>
+
+
+ §0 선행 용어 
+<div class="section-title">§0 선행 용어</div>
+<div class="term-grid">
+<div class="term-card">
+<div class="term-name">이격거리 (Clearance Distance)</div>
+<div class="term-desc">전차선로에서 전기가 흐르는 도체와 접지된 구조물 사이에 확보해야 하는 최소 공간 거리.</div>
+</div>
+<div class="term-card">
+<div class="term-name">절연 이격거리 (Insulation Clearance)</div>
+<div class="term-desc">전기적 아크 방지, 기후 변화, 팬터그래프 진동 등을 고려하여 규정한 최소 이격 거리.</div>
+</div>
+<div class="term-card">
+<div class="term-name">가압 구간 (Energized Section)</div>
+<div class="term-desc">전차선·급전선에 실제 전압이 인가된 구간. 교류 25kV가 걸려 있어 안전 이격이 필수.</div>
+</div>
+<div class="term-card">
+<div class="term-name">접지물 (Grounded Structure)</div>
+<div class="term-desc">대지와 전기적으로 연결된 구조물(지지물·브래킷·터널 벽 등). 전위 0V.</div>
+</div>
+</div>
+ §1 절연 이격거리 기준 
+<div class="section-title">§1 절연 이격거리 — 300mm 이상</div>
+<div class="concept-card">
+<div class="concept-head">
+<span class="concept-num">GATE4 SOURCE-81-A / 4.html 개념81</span>
+<span class="concept-name">교류 25kV 절연 이격거리 기준</span>
+<span class="concept-star">★★★</span>
+</div>
+<div class="concept-body">
+<div class="num-box">
+<div class="num-main">300</div>
+<div class="num-unit">mm 이상</div>
+<div class="num-desc">교류 25kV 가압 구간 — 급전선·전차선과 접지물 사이 절연 이격거리</div>
+</div>
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>항목</th><th>기준</th></tr>
+</thead>
+<tbody>
+<tr class="hl">
+<td><strong>대상 구간</strong></td>
+<td>교류 25kV 가압 구간</td>
+</tr>
+<tr>
+<td><strong>대상 도체</strong></td>
+<td>급전선 및 전차선</td>
+</tr>
+<tr class="hl">
+<td><strong>대상 구조물</strong></td>
+<td>접지물 (지지물·브래킷·터널 벽 등)</td>
+</tr>
+<tr>
+<td><strong>최소 이격거리</strong></td>
+<td><strong>300mm 이상</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="trap-box">
+        ⚠️ <strong>함정 주의</strong> — 이격거리 수치 혼동<br/>
+        절연 이격거리 = <strong>300mm</strong> 이상<br/>
+        편위(전차선 횡방향 변위) = <strong>250mm</strong> (→ 10-03 HOLD 참조) — 혼동 주의
+      </div>
+</div>
+</div>
+ §2 VIS 
+<div class="section-title">§2 이격거리 개념도</div>
+<div class="vis-wrap">
+<img alt="전차선 절연 이격거리 300mm" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" src="images/전차선 절연 이격거리 300mm.png"/>
+<div style="display:none; padding:20px; border:1px dashed #cbd5e1; border-radius:6px; color:#94a3b8; font-size:13px; text-align:center;">
+      ※ 이미지 준비 중 — 전차선 절연 이격거리 300mm 개념도 (ChatGPT 위탁 제작 예정)
+    </div>
+<div class="vis-cap">▲ 전차선·급전선과 접지 구조물 사이 300mm 이상 이격거리</div>
+</div>
+ §3 시험 포인트 
+<div class="section-title">§3 시험 포인트 · 함정</div>
+<div class="exam-box">
+<div class="exam-box-title">🎯 핵심 암기 포인트</div>
+<ul>
+<li>교류 25kV 가압 구간 절연 이격거리 = <strong>300mm 이상</strong></li>
+<li>대상: <strong>급전선·전차선 ↔ 접지물</strong></li>
+<li>편위(전차선 횡방향 변위)와 혼동 금지 — 편위는 250mm</li>
+</ul>
+</div>
+<div class="tbl-wrap">
+<table class="trap-tbl">
+<thead>
+<tr><th>함정 선택지</th><th>정오</th><th>근거</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>"절연 이격거리 <strong>100mm</strong> 이상"</td>
+<td>❌ 오답</td>
+<td>정답 = <strong>300mm</strong> 이상</td>
+</tr>
+<tr>
+<td>"절연 이격거리 <strong>200mm</strong> 이상"</td>
+<td>❌ 오답</td>
+<td>정답 = <strong>300mm</strong> 이상</td>
+</tr>
+<tr>
+<td>"절연 이격거리 <strong>150mm</strong> 이상"</td>
+<td>❌ 오답</td>
+<td>정답 = <strong>300mm</strong> 이상 (150V와 혼동 주의)</td>
+</tr>
+</tbody>
+</table>
+</div>
+ §4 기출문제 
+<div class="section-title">📝 문제은행 (3문항)</div>
+<p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q1</span>
+<span class="qst-src">rk_ch82_13 · SOURCE: GATE4 SOURCE-81-A / 4.html 개념81 · ch82 전기·신호</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">교류 25kV 전차선로의 가압 구간에서 급전선 및 전차선과 접지물 사이에 필요한 절연 이격거리로 옳은 것은?</div>
+<ol class="qst-choices">
+<li>① 100mm 이상</li>
+<li>② 200mm 이상</li>
+<li>③ 300mm 이상</li>
+<li>④ 150mm 이상</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ③ 300mm 이상</strong><br/>
+        25kV 교류 전철에서 전차선·급전선과 접지 구조물 간 최소 <strong>300mm 이상</strong>의 이격거리가 필요하다.
+      </div>
+</div>
+</div>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q2</span>
+<span class="qst-src">rk_ch82_12 · SOURCE: 철도왕 교재 ch82 · 전차선 구비조건</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">전차선의 구비 조건으로 옳지 않은 것은?</div>
+<ol class="qst-choices">
+<li>① 전기전도도가 높을 것</li>
+<li>② 기계적 강도가 클 것</li>
+<li>③ 유지보수가 용이할 것</li>
+<li>④ 마모가 잘 일어날 것</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ④</strong><br/>
+        전차선 구비 조건: 높은 전도율, 기계적 강도, <strong>내마모성</strong>, 내열성 등이 필수. 마모가 잘 일어나는 것은 오히려 단점이며 구비 조건에 해당하지 않는다.
+      </div>
+</div>
+</div>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q3</span>
+<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념82 · 전차선 구비조건 추가항목</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">전차선의 구비 조건으로 옳지 않은 것은?</div>
+<ol class="qst-choices">
+<li>① 인장강도가 클 것</li>
+<li>② 내열성이 우수할 것</li>
+<li>③ 도전율이 높을 것</li>
+<li>④ 비중이 클 것</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ④</strong><br/>
+        전차선은 가볍고 강해야 하므로 <strong>비중이 작을 것</strong>이 구비 조건. 비중이 크면 자중이 증가하여 처짐이 심해지고 집전 성능이 저하된다. 인장강도·내열성·도전율은 모두 필수 조건.
+      </div>
+</div>
+</div>
+ 하단 NAV 
+
+
+</div><!-- /container -->
+</body>
+</html>

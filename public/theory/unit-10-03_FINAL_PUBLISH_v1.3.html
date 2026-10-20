@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10-03 전차선 구비조건·편위·장력·처짐 | 철도공학</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#fff; color:#111; font-size:15px; line-height:1.75; }
+
+/* 헤더 */
+.site-header { background:#fff; color:#111; padding:8px 16px 6px; border-bottom:3px solid #78350f; }
+.site-header h1 { font-size:1.05em; font-weight:bold; color:#78350f; }
+.site-header .meta { font-size:.78em; color:#555; margin-top:2px; }
+
+.container { max-width:960px; margin:0 auto; padding:20px 24px 60px; }
+
+/* 단원 헤더 */
+.unit-header { border:2px solid #78350f; border-radius:6px; padding:12px 16px; margin-bottom:22px; background:#fff; }
+.unit-header h2 { font-size:1.2em; font-weight:bold; color:#78350f; }
+.unit-header .nav-link { font-size:.82em; color:#555; margin-top:4px; }
+.unit-header .nav-link a { color:#78350f; text-decoration:none; font-weight:bold; }
+.unit-header .nav-link a:hover { text-decoration:underline; }
+
+/* 섹션 */
+.section { margin:0 0 26px 0; }
+.section-title { font-size:1.05em; font-weight:bold; color:#111; border-left:4px solid #78350f; padding:5px 0 5px 12px; margin-bottom:14px; background:#fff; }
+
+/* 개념 */
+.concept { margin:14px 0 6px; padding-bottom:14px; border-bottom:1px solid #ccc; }
+.concept:last-child { border-bottom:none; }
+.concept-title { font-size:1em; font-weight:bold; color:#78350f; margin-bottom:8px; padding:4px 0; }
+
+/* 테이블 */
+table { width:100%; border-collapse:collapse; margin:8px 0; font-size:.9em; }
+th { background:#e8e8e8; color:#111; padding:7px 10px; text-align:left; font-size:.88em; border:1.5px solid #999; font-weight:bold; }
+td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#fff; }
+
+/* 강조 박스 */
+.trap { background:#fff; border-left:4px solid #c0392b; padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#c0392b; font-weight:bold; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+.tip { background:#fff; border-left:4px solid #2e7d32; padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#2e7d32; font-weight:bold; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+.theory-note { background:#fff; border-left:4px solid #1565c0; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#111; border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0; }
+.theory-note strong { color:#1565c0; }
+
+/* 기출 예시 */
+.quiz-ex { background:#fff; border-left:4px solid #2e7d32; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.88em; color:#111; border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0; }
+.quiz-ex .qe-title { font-weight:bold; color:#2e7d32; margin-bottom:4px; }
+.quiz-ex .qe-q { margin:4px 0 2px; }
+.quiz-ex .qe-a { font-weight:bold; color:#1b5e20; }
+.quiz-ex .qe-wrong { display:block; background:#fff; border-left:3px solid #c0392b; color:#c0392b; padding:5px 10px; margin:6px 0; border-radius:0 4px 4px 0; font-size:.88em; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+
+/* 문제 카드 (qst-card) */
+.qst-card { border:1px solid #bbb; border-left:4px solid #78350f; border-radius:0 6px 6px 0; margin:16px 0; background:#fff; }
+.qst-head { display:flex; align-items:baseline; gap:8px; padding:8px 14px; border-bottom:1px solid #e0e0e0; }
+.qst-num { font-weight:bold; color:#78350f; font-size:.95em; }
+.qst-src { font-size:.78em; color:#555; }
+.qst-body { padding:14px 16px; }
+.qst-q { font-weight:bold; color:#111; margin-bottom:10px; line-height:1.65; }
+.qst-choices { padding-left:4px; margin-bottom:10px; list-style:none; }
+.qst-choices li { padding:3px 0; color:#222; line-height:1.7; }
+.qst-ans { background:#f9f9f9; border-left:3px solid #78350f; padding:10px 14px; margin-top:8px; border-radius:0 4px 4px 0; font-size:.9em; color:#111; }
+.qst-ans strong { color:#78350f; }
+
+/* VIS 래퍼 */
+.vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
+.vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; }
+.vis-cap { font-size:.8em; color:#555; margin-top:6px; }
+
+/* 기타 기존 Part10 클래스들 유지 */
+.term-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
+.term-card { border:1px solid #bbb; border-radius:6px; padding:12px 14px; background:#fff; }
+.term-name { font-weight:bold; color:#78350f; font-size:.92em; margin-bottom:4px; }
+.term-desc { font-size:.88em; color:#333; line-height:1.6; }
+.concept-card { border:1.5px solid #bbb; border-radius:6px; margin:12px 0; overflow:hidden; }
+.concept-head { background:#f5f5f5; border-bottom:1px solid #bbb; padding:8px 14px; }
+.concept-title-text { font-weight:bold; color:#78350f; font-size:.95em; }
+.concept-body { padding:12px 16px; font-size:.9em; line-height:1.75; }
+.exam-box { background:#fff; border:1px solid #bbb; border-left:4px solid #78350f; border-radius:0 6px 6px 0; padding:12px 16px; margin:12px 0; font-size:.9em; }
+.exam-box .exam-title { font-weight:bold; color:#78350f; margin-bottom:6px; }
+.highlight { background:#fff; border:1px solid #78350f; border-radius:4px; padding:3px 7px; font-weight:bold; color:#78350f; font-size:.9em; }
+.step-box { background:#fff; border:1px solid #bbb; border-radius:6px; padding:12px 16px; margin:10px 0; }
+.step-box .step-title { font-weight:bold; color:#78350f; margin-bottom:8px; font-size:.95em; }
+.formula-box { background:#fff; border:1.5px solid #78350f; border-radius:6px; padding:14px 18px; margin:12px 0; text-align:center; }
+.formula-box .formula { font-size:1.1em; font-weight:bold; color:#78350f; margin:6px 0; }
+.badge-row { display:flex; gap:8px; margin-top:6px; flex-wrap:wrap; }
+.badge { border-radius:4px; padding:2px 8px; font-size:.75em; font-weight:bold; }
+.badge-lock { background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7; }
+.badge-noq { background:#e3f2fd; color:#1565c0; border:1px solid #90caf9; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:12px 0; }
+.col-box { border:1.5px solid #78350f; border-radius:6px; padding:12px; background:#fff; }
+.col-head { font-weight:bold; color:#78350f; font-size:.95em; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid #ddd; }
+
+/* 인쇄 버튼 */
+.print-btn { position:fixed; top:16px; right:16px; z-index:9999; border:1px solid #999; border-radius:8px; background:#fff; color:#111; padding:9px 14px; font-weight:700; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.12); }
+.print-btn:hover { background:#f5f5f5; }
+
+/* 반응형 */
+@media(max-width:600px){
+  .term-grid, .two-col { grid-template-columns:1fr; }
+}
+
+/* 프린트 */
+@media print {
+  body { font-size:12pt; line-height:1.6; }
+  .site-header, .print-btn { display:none !important; }
+  .unit-header { border:1.5pt solid #000; page-break-after:avoid; }
+  .concept-card, .exam-box, .qst-card { page-break-inside:avoid; }
+  table { page-break-inside:avoid; }
+  th { background:#e8e8e8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .container { width:100% !important; max-width:none !important; margin:0 !important; padding:0 !important; }
+  .answer-section { break-before:page; page-break-before:always; }
+  @page { size:A4 portrait; margin:12mm 12mm 12mm 18mm; }
+}
+
+</style>
+</head>
+<body>
+<button class="print-btn" type="button" onclick="window.print()">🖨 인쇄 / PDF</button>
+<header class="site-header">
+  <h1>철도교통안전관리자 — 철도공학</h1>
+  <div class="meta">10-03 전차선 구비조건·편위·장력·처짐 | FINAL PUBLISH v1.3</div>
+</header>
+
+<div class="container">
+
+<div class="unit-header">
+  <h2>10-03 전차선 구비조건·편위·장력·처짐</h2>
+  <div class="nav-link"><a href="unit-10-02_FINAL_PUBLISH_v1.3.html">← 10-02 전차선로 절연·이격거리</a> · <strong>[10-03 전차선 구비조건·편위·장력·처짐]</strong> · <a href="unit-10-04_FINAL_PUBLISH_v1.4.html">10-04 가선방식 3계열 →</a></div>
+</div>
+
+
+ §0 선행 용어 
+<div class="section-title">§0 선행 용어</div>
+<div class="term-grid">
+<div class="term-card">
+<div class="term-name">전차선 (Contact Wire)</div>
+<div class="term-desc">팬터그래프가 직접 슬라이딩 접촉하는 하부 전선. 구비조건을 만족해야 안전·고효율 집전 가능.</div>
+</div>
+<div class="term-card">
+<div class="term-name">구비조건 (Requirements)</div>
+<div class="term-desc">전차선이 갖추어야 할 전기적·기계적 성질의 최소 요건. 전도도·강도·유지보수성·내마모성이 핵심.</div>
+</div>
+<div class="term-card">
+<div class="term-name">편위 (Stagger / Offset)</div>
+<div class="term-desc">전차선이 선로 중심선에서 가로 방향으로 치우친 거리. 팬터그래프 편마모 방지 목적으로 설정.</div>
+</div>
+<div class="term-card">
+<div class="term-name">절연구간 (Neutral Section)</div>
+<div class="term-desc">인접 급전구역 사이에서 전기적으로 분리된 구간. 팬터그래프가 통과할 때 이격·편위 기준 준수 필수.</div>
+</div>
+<div class="term-card">
+<div class="term-name">장력 (Tension)</div>
+<div class="term-desc">전차선에 가해지는 기계적 인장력. 장력이 낮으면 처짐 과대·이선현상 위험, ATD/WTD로 자동 유지.</div>
+</div>
+<div class="term-card">
+<div class="term-name">처짐 (Sag)</div>
+<div class="term-desc">인접 지지점 사이 중앙에서 전차선이 중력으로 아래로 처지는 거리. 장력이 높을수록, 경간이 짧을수록 감소.</div>
+</div>
+</div>
+ §1 전차선 구비조건 
+<div class="section-title">§1 전차선 구비조건 (개념80-B)</div>
+<div class="concept-card">
+<div class="concept-head">
+<span class="concept-num">4.html 개념80-B</span>
+<span class="concept-name">전차선 구비조건 4가지</span>
+<span class="concept-star">★★★</span>
+</div>
+<div class="concept-body">
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>순서</th><th>구비조건</th><th>의미</th></tr>
+</thead>
+<tbody>
+<tr class="hl">
+<td>①</td>
+<td><strong>전기전도도가 높을 것</strong></td>
+<td>전류 전달 손실 최소화 — 집전 효율 확보</td>
+</tr>
+<tr>
+<td>②</td>
+<td><strong>기계적 강도가 클 것</strong></td>
+<td>팬터그래프 충격·장력에 견딜 것</td>
+</tr>
+<tr class="hl">
+<td>③</td>
+<td><strong>유지보수가 용이할 것</strong></td>
+<td>점검·교체 작업이 쉬울 것</td>
+</tr>
+<tr>
+<td>④</td>
+<td><strong>내마모성이 좋을 것</strong></td>
+<td>팬터그래프와 반복 마찰에도 수명 유지</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="trap-box">
+        ⚠️ <strong>함정 — 가선금구류 중량화</strong><br/>
+        "가선금구류를 중량화할 것" → <strong>전차선 구비조건이 아님</strong><br/>
+        금구류 중량화는 전차선 요건 아니라 지지물 구조 문제
+      </div>
+<div class="tip-box">
+        💡 <strong>암기법 [SOURCE: 4.html 개념80-B]</strong><br/>
+<strong>전·기·유·내</strong> = 전기전도도 / 기계적 강도 / 유지보수 용이 / 내마모성
+      </div>
+</div>
+</div>
+ §2 전차선 편위 
+<div class="section-title">§2 전차선 편위 (개념81-B)</div>
+<div class="concept-card">
+<div class="concept-head">
+<span class="concept-num">4.html 개념81-B</span>
+<span class="concept-name">전차선 절연구간 편위 250mm</span>
+<span class="concept-star">★★★</span>
+</div>
+<div class="concept-body">
+<div style="border:3px solid #0f4c81;border-radius:10px;padding:20px 24px;text-align:center;margin:18px 0;background:#eff6ff;">
+<div style="font-size:48px;font-weight:900;color:#0f4c81;line-height:1;">250</div>
+<div style="font-size:20px;font-weight:700;color:#1e40af;">mm</div>
+<div style="font-size:14px;color:#334155;margin-top:8px;">전차선 절연구간 편위 (선로 중심에서 가로 방향)</div>
+</div>
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>항목</th><th>기준</th></tr>
+</thead>
+<tbody>
+<tr class="hl">
+<td><strong>편위 기준</strong></td>
+<td><strong>250mm</strong></td>
+</tr>
+<tr>
+<td><strong>목적</strong></td>
+<td>팬터그래프 편마모 방지</td>
+</tr>
+<tr class="hl">
+<td><strong>방법</strong></td>
+<td>전차선을 지그재그 방식으로 설치 — 팬터그래프 집전면 균등 마모 유도</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+ §3 전차선 장력 
+<div class="section-title">§3 전차선 장력 (Tension)</div>
+<div class="concept-card">
+<div class="concept-head">
+<span class="concept-num">4.html 개념98 연계</span>
+<span class="concept-name">전차선 장력 — 왜 일정하게 유지해야 하는가</span>
+<span class="concept-star">★★☆</span>
+</div>
+<div class="concept-body">
+<p style="margin-bottom:12px;">
+        전차선은 항상 일정한 <strong>인장력(장력, Tension)</strong>이 걸린 상태로 지지물 사이에 매달려 있다.
+        장력이 변화하면 전차선의 높이·처짐이 달라져 팬터그래프 집전에 영향을 미친다.
+      </p>
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>상태</th><th>결과</th><th>비고</th></tr>
+</thead>
+<tbody>
+<tr class="hl">
+<td><strong>장력 적정 유지</strong></td>
+<td>처짐 안정 → 팬터그래프 안정 접촉</td>
+<td>ATD/WTD 동작 (10-06 참조)</td>
+</tr>
+<tr>
+<td><strong>장력 감소</strong></td>
+<td>처짐 증가 → 팬터그래프 접촉 불안정 → 이선현상 위험</td>
+<td>여름(고온) 전차선 늘어남 → 장력 감소</td>
+</tr>
+<tr class="hl">
+<td><strong>장력 과대</strong></td>
+<td>처짐 감소(유리) → 단, 전차선·지지물 기계적 부담 증가</td>
+<td>겨울(저온) 전차선 수축 → 장력 증가</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tip-box">
+        💡 <strong>이론 배경 [SOURCE: 4.html 개념98]</strong><br/>
+        전차선은 온도에 따라 신축한다. 장력이 일정하지 않으면 팬터그래프가 전차선을 놓쳐
+        <strong>이선현상</strong>이 발생한다. ATD(자동장력조정장치)·WTD(추 방식 자동장력장치)는
+        이 신축량을 자동 흡수하여 항상 일정한 장력을 유지한다.
+        ※ ATD/WTD 장치 상세 → UNIT 10-06
+      </div>
+<div class="trap-box">
+        ⚠️ <strong>함정 주의 [SOURCE: 4.html 개념98]</strong><br/>
+        자동장력조정장치 = <strong>전차선 장력</strong> 조정 (전압 조정 장치가 아님)
+      </div>
+</div>
+</div>
+ §4 전차선 처짐 
+<div class="section-title">§4 전차선 처짐 (Sag)</div>
+<div class="concept-card">
+<div class="concept-head">
+<span class="concept-num">물리 원리 기반</span>
+<span class="concept-name">전차선 처짐 — 장력·경간과의 관계</span>
+<span class="concept-star">★★☆</span>
+</div>
+<div class="concept-body">
+<p style="margin-bottom:12px;">
+<strong>처짐(Sag)</strong>이란 인접 두 지지점 사이 중앙에서 전차선이 자중(自重)으로
+        아래로 내려앉는 거리다. 처짐이 크면 팬터그래프 집전면과 전차선의 높이 편차가 커져
+        안정적인 집전이 어려워진다.
+      </p>
+<div class="relation-box">
+<div class="rel-card up">
+<div class="rel-arrow" style="color:#1e40af;">↑장력</div>
+<div class="rel-label">처짐 ↓ 감소</div>
+<div class="rel-effect">전차선이 팽팽해져 처짐 줄어듦</div>
+</div>
+<div class="rel-card up">
+<div class="rel-arrow" style="color:#1e40af;">↑경간</div>
+<div class="rel-label">처짐 ↑ 증가</div>
+<div class="rel-effect">지지점 간격이 멀면 더 많이 처짐</div>
+</div>
+</div>
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>영향인자</th><th>증가 방향</th><th>처짐 변화</th></tr>
+</thead>
+<tbody>
+<tr class="hl">
+<td><strong>장력 (T)</strong></td>
+<td>장력 ↑</td>
+<td>처짐 ↓ 감소</td>
+</tr>
+<tr>
+<td><strong>경간 (L)</strong></td>
+<td>경간 ↑ (지지물 간격 증가)</td>
+<td>처짐 ↑ 증가</td>
+</tr>
+<tr class="hl">
+<td><strong>전차선 단위중량 (w)</strong></td>
+<td>중량 ↑</td>
+<td>처짐 ↑ 증가</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="info-box">
+        ℹ️ <strong>SOURCE 안내</strong><br/>
+        처짐 수치(mm 단위 실측값)는 4.html 미수록 상태. 처짐과 장력·경간의 비례·반비례
+        관계는 물리 원리 기반으로 기술하였으며, 시험에서 수치 문제는 출제 빈도 낮음.
+      </div>
+<div class="trap-box">
+        ⚠️ <strong>핵심 혼동 정리</strong><br/>
+        장력↑ → 처짐↓  /  경간↑ → 처짐↑<br/>
+        "장력을 높이면 처짐도 커진다" → <strong>❌ 오답</strong>
+</div>
+</div>
+</div>
+ §5 시험 포인트 
+<div class="section-title">§5 시험 포인트</div>
+<div class="exam-box">
+<div class="exam-box-title">🎯 수치 혼동 주의 — 300mm vs 250mm</div>
+<ul>
+<li>절연 <strong>이격거리</strong> = <strong>300mm</strong> 이상 (10-02 참조)</li>
+<li>전차선 <strong>편위</strong> = <strong>250mm</strong></li>
+<li>시험에서 "편위는 300mm이다" → ❌ 오답, 편위는 250mm</li>
+<li>시험에서 "이격거리는 250mm이다" → ❌ 오답, 이격거리는 300mm</li>
+</ul>
+</div>
+<div class="exam-box">
+<div class="exam-box-title">🎯 전차선 구비조건 함정</div>
+<ul>
+<li>구비조건 4종: <strong>전기전도도·기계적 강도·유지보수 용이·내마모성</strong></li>
+<li>"가선금구류 중량화" → <strong>구비조건 아님</strong> — 함정 선지로 자주 등장</li>
+</ul>
+</div>
+<div class="exam-box">
+<div class="exam-box-title">🎯 장력·처짐 관계</div>
+<ul>
+<li>장력 ↑ → 처짐 ↓ (팽팽할수록 처짐 감소)</li>
+<li>경간 ↑ → 처짐 ↑ (지지점 간격이 멀수록 처짐 증가)</li>
+<li>ATD/WTD = 전차선 <strong>장력</strong> 자동 조정 (전압 조정 아님)</li>
+</ul>
+</div>
+<div class="tbl-wrap">
+<table class="trap-tbl">
+<thead>
+<tr><th>함정 선택지</th><th>정오</th><th>근거</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>"전차선 편위 = 300mm"</td>
+<td>❌ 오답</td>
+<td>편위 = <strong>250mm</strong>, 300mm는 이격거리</td>
+</tr>
+<tr>
+<td>"가선금구류 중량화" 구비조건</td>
+<td>❌ 오답</td>
+<td>구비조건 4종에 포함되지 않음</td>
+</tr>
+<tr>
+<td>"내식성이 높을 것" 구비조건</td>
+<td>△ 주의</td>
+<td>SOURCE 미확인 — 내마모성과 혼동 금지</td>
+</tr>
+<tr>
+<td>"장력을 높이면 처짐도 커진다"</td>
+<td>❌ 오답</td>
+<td>장력↑ → 처짐↓ (반비례 관계)</td>
+</tr>
+<tr>
+<td>"ATD는 전차선 전압을 조정한다"</td>
+<td>❌ 오답</td>
+<td>ATD = 전차선 <strong>장력</strong> 조정 [개념98]</td>
+</tr>
+</tbody>
+</table>
+</div>
+ §6 VIS 
+<div class="section-title">§6 참고 이미지</div>
+<div class="vis-wrap">
+<img alt="전차선 절연 이격거리 300mm와 편위 250mm" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" src="images/전차선 절연 이격거리 300mm와 편위 250mm.png"/>
+<div style="display:none;padding:20px;border:1px dashed #cbd5e1;border-radius:6px;color:#94a3b8;font-size:13px;text-align:center;">
+      ※ 이미지 준비 중 — 이격거리 300mm vs 편위 250mm 비교 개념도
+    </div>
+<div class="vis-cap">▲ 이격거리 300mm(접지물까지) vs 편위 250mm(선로 중심에서 가로 방향) 비교</div>
+</div>
+<div class="section-title">📝 문제은행 (3문항)</div>
+<p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q1</span>
+<span class="qst-src">rk_ch82_14 · SOURCE: 철도왕 교재 ch82 / 4.html 개념82 · 전차선 편위</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">전차선 절연구간의 편위로 옳은 것은?</div>
+<ol class="qst-choices">
+<li>① 100mm</li>
+<li>② 150mm</li>
+<li>③ 200mm</li>
+<li>④ 250mm</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ④ 250mm</strong><br/>
+        전차선의 편위: 궤도 중심선 기준 수평 이동 허용치. <strong>250mm</strong> 기준은 집전장치 유효 폭, 궤도 진동 범위 등을 감안한 설계적 여유치. 편위가 너무 크면 팬터그래프 이탈 위험.
+      </div>
+</div>
+</div>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q2</span>
+<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념98 · 전차선 장력과 처짐 관계</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">전차선 장력(Tension)과 처짐(Sag)의 관계를 올바르게 설명한 것은?</div>
+<ol class="qst-choices">
+<li>① 장력이 높을수록 처짐이 커진다</li>
+<li>② 장력이 높을수록 처짐이 작아진다</li>
+<li>③ 장력과 처짐은 무관하다</li>
+<li>④ 경간이 길수록 처짐이 작아진다</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ②</strong><br/>
+        장력↑ → 처짐↓ (반비례 관계). 장력이 높을수록 전차선이 팽팽하게 유지되어 처짐이 감소한다. 반대로 경간(지지점 간 거리)이 길수록 처짐은 증가한다. ATD/WTD는 장력을 일정하게 유지하여 처짐을 제어한다.
+      </div>
+</div>
+</div>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q3</span>
+<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념82 · 전차선 편위 함정</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">전차선 편위(Stagger)에 대한 설명으로 옳지 않은 것은?</div>
+<ol class="qst-choices">
+<li>① 전차선을 지그재그로 배치하여 팬터그래프 편마모를 방지한다</li>
+<li>② 편위 최대값은 궤도 중심선으로부터 250mm이다</li>
+<li>③ 편위가 클수록 팬터그래프 집전 성능이 향상된다</li>
+<li>④ 곡선 구간에서는 편위 값이 달리 설정될 수 있다</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ③</strong><br/>
+        편위가 지나치게 크면 팬터그래프의 집전 범위를 벗어나 이선(離線) 위험이 증가한다. 편위는 <strong>팬터그래프 슈의 고른 마모</strong>를 위한 것이지 집전 성능을 향상시키기 위한 것이 아니다.
+      </div>
+</div>
+</div>
+ NAV (하단) 
+
+
+</div><!-- /container -->
+</body>
+</html>

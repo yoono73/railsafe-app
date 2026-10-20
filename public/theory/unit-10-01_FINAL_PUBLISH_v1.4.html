@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10-01 전차선로 전체구조·구성요소 | 철도공학</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#fff; color:#111; font-size:15px; line-height:1.75; }
+
+/* 헤더 */
+.site-header { background:#fff; color:#111; padding:8px 16px 6px; border-bottom:3px solid #78350f; }
+.site-header h1 { font-size:1.05em; font-weight:bold; color:#78350f; }
+.site-header .meta { font-size:.78em; color:#555; margin-top:2px; }
+
+.container { max-width:960px; margin:0 auto; padding:20px 24px 60px; }
+
+/* 단원 헤더 */
+.unit-header { border:2px solid #78350f; border-radius:6px; padding:12px 16px; margin-bottom:22px; background:#fff; }
+.unit-header h2 { font-size:1.2em; font-weight:bold; color:#78350f; }
+.unit-header .nav-link { font-size:.82em; color:#555; margin-top:4px; }
+.unit-header .nav-link a { color:#78350f; text-decoration:none; font-weight:bold; }
+.unit-header .nav-link a:hover { text-decoration:underline; }
+
+/* 섹션 */
+.section { margin:0 0 26px 0; }
+.section-title { font-size:1.05em; font-weight:bold; color:#111; border-left:4px solid #78350f; padding:5px 0 5px 12px; margin-bottom:14px; background:#fff; }
+
+/* 개념 */
+.concept { margin:14px 0 6px; padding-bottom:14px; border-bottom:1px solid #ccc; }
+.concept:last-child { border-bottom:none; }
+.concept-title { font-size:1em; font-weight:bold; color:#78350f; margin-bottom:8px; padding:4px 0; }
+
+/* 테이블 */
+table { width:100%; border-collapse:collapse; margin:8px 0; font-size:.9em; }
+th { background:#e8e8e8; color:#111; padding:7px 10px; text-align:left; font-size:.88em; border:1.5px solid #999; font-weight:bold; }
+td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#fff; }
+
+/* 강조 박스 */
+.trap { background:#fff; border-left:4px solid #c0392b; padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#c0392b; font-weight:bold; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+.tip { background:#fff; border-left:4px solid #2e7d32; padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#2e7d32; font-weight:bold; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+.theory-note { background:#fff; border-left:4px solid #1565c0; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#111; border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0; }
+.theory-note strong { color:#1565c0; }
+
+/* 기출 예시 */
+.quiz-ex { background:#fff; border-left:4px solid #2e7d32; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.88em; color:#111; border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0; }
+.quiz-ex .qe-title { font-weight:bold; color:#2e7d32; margin-bottom:4px; }
+.quiz-ex .qe-q { margin:4px 0 2px; }
+.quiz-ex .qe-a { font-weight:bold; color:#1b5e20; }
+.quiz-ex .qe-wrong { display:block; background:#fff; border-left:3px solid #c0392b; color:#c0392b; padding:5px 10px; margin:6px 0; border-radius:0 4px 4px 0; font-size:.88em; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+
+/* 문제 카드 (qst-card) */
+.qst-card { border:1px solid #bbb; border-left:4px solid #78350f; border-radius:0 6px 6px 0; margin:16px 0; background:#fff; }
+.qst-head { display:flex; align-items:baseline; gap:8px; padding:8px 14px; border-bottom:1px solid #e0e0e0; }
+.qst-num { font-weight:bold; color:#78350f; font-size:.95em; }
+.qst-src { font-size:.78em; color:#555; }
+.qst-body { padding:14px 16px; }
+.qst-q { font-weight:bold; color:#111; margin-bottom:10px; line-height:1.65; }
+.qst-choices { padding-left:4px; margin-bottom:10px; list-style:none; }
+.qst-choices li { padding:3px 0; color:#222; line-height:1.7; }
+.qst-ans { background:#f9f9f9; border-left:3px solid #78350f; padding:10px 14px; margin-top:8px; border-radius:0 4px 4px 0; font-size:.9em; color:#111; }
+.qst-ans strong { color:#78350f; }
+
+/* VIS 래퍼 */
+.vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
+.vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; }
+.vis-cap { font-size:.8em; color:#555; margin-top:6px; }
+
+/* 기타 기존 Part10 클래스들 유지 */
+.term-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
+.term-card { border:1px solid #bbb; border-radius:6px; padding:12px 14px; background:#fff; }
+.term-name { font-weight:bold; color:#78350f; font-size:.92em; margin-bottom:4px; }
+.term-desc { font-size:.88em; color:#333; line-height:1.6; }
+.concept-card { border:1.5px solid #bbb; border-radius:6px; margin:12px 0; overflow:hidden; }
+.concept-head { background:#f5f5f5; border-bottom:1px solid #bbb; padding:8px 14px; }
+.concept-title-text { font-weight:bold; color:#78350f; font-size:.95em; }
+.concept-body { padding:12px 16px; font-size:.9em; line-height:1.75; }
+.exam-box { background:#fff; border:1px solid #bbb; border-left:4px solid #78350f; border-radius:0 6px 6px 0; padding:12px 16px; margin:12px 0; font-size:.9em; }
+.exam-box .exam-title { font-weight:bold; color:#78350f; margin-bottom:6px; }
+.highlight { background:#fff; border:1px solid #78350f; border-radius:4px; padding:3px 7px; font-weight:bold; color:#78350f; font-size:.9em; }
+.step-box { background:#fff; border:1px solid #bbb; border-radius:6px; padding:12px 16px; margin:10px 0; }
+.step-box .step-title { font-weight:bold; color:#78350f; margin-bottom:8px; font-size:.95em; }
+.formula-box { background:#fff; border:1.5px solid #78350f; border-radius:6px; padding:14px 18px; margin:12px 0; text-align:center; }
+.formula-box .formula { font-size:1.1em; font-weight:bold; color:#78350f; margin:6px 0; }
+.badge-row { display:flex; gap:8px; margin-top:6px; flex-wrap:wrap; }
+.badge { border-radius:4px; padding:2px 8px; font-size:.75em; font-weight:bold; }
+.badge-lock { background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7; }
+.badge-noq { background:#e3f2fd; color:#1565c0; border:1px solid #90caf9; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:12px 0; }
+.col-box { border:1.5px solid #78350f; border-radius:6px; padding:12px; background:#fff; }
+.col-head { font-weight:bold; color:#78350f; font-size:.95em; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid #ddd; }
+
+/* 인쇄 버튼 */
+.print-btn { position:fixed; top:16px; right:16px; z-index:9999; border:1px solid #999; border-radius:8px; background:#fff; color:#111; padding:9px 14px; font-weight:700; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.12); }
+.print-btn:hover { background:#f5f5f5; }
+
+/* 반응형 */
+@media(max-width:600px){
+  .term-grid, .two-col { grid-template-columns:1fr; }
+}
+
+/* 프린트 */
+@media print {
+  body { font-size:12pt; line-height:1.6; }
+  .site-header, .print-btn { display:none !important; }
+  .unit-header { border:1.5pt solid #000; page-break-after:avoid; }
+  .concept-card, .exam-box, .qst-card { page-break-inside:avoid; }
+  table { page-break-inside:avoid; }
+  th { background:#e8e8e8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .container { width:100% !important; max-width:none !important; margin:0 !important; padding:0 !important; }
+  .answer-section { break-before:page; page-break-before:always; }
+  @page { size:A4 portrait; margin:12mm 12mm 12mm 18mm; }
+}
+
+</style>
+</head>
+<body>
+<button class="print-btn" type="button" onclick="window.print()">🖨 인쇄 / PDF</button>
+<header class="site-header">
+  <h1>철도교통안전관리자 — 철도공학</h1>
+  <div class="meta">10-01 전차선로 전체구조·구성요소 | FINAL PUBLISH v1.4</div>
+</header>
+
+<div class="container">
+
+<div class="unit-header">
+  <h2>10-01 전차선로 전체구조·구성요소</h2>
+  <div class="nav-link"><strong>[10-01 전차선로 전체구조·구성요소]</strong> · <a href="unit-10-02_FINAL_PUBLISH_v1.2.html">10-02 전차선로 절연·이격거리 →</a></div>
+</div>
+
+
+ §0 선행 용어 
+<div class="section-title">§0 선행 용어</div>
+<div class="term-grid">
+<div class="term-card">
+<div class="term-name">전차선로 (OCS, Overhead Contact System)</div>
+<div class="term-desc">전기철도에서 전력을 차량에 공급하기 위한 가공 전선로 전체. 전차선·조가선·지지물·금구류 등을 포함한다.</div>
+</div>
+<div class="term-card">
+<div class="term-name">팬터그래프 (Pantograph)</div>
+<div class="term-desc">전기동차 지붕에 설치되어 전차선에 접촉하며 전력을 집전하는 장치. 집전장치라고도 한다.</div>
+</div>
+<div class="term-card">
+<div class="term-name">가선 (架線, Overhead Wire)</div>
+<div class="term-desc">전차선로에서 공중에 가설된 전선의 총칭. 조가선과 전차선으로 구성된다.</div>
+</div>
+<div class="term-card">
+<div class="term-name">지지물 (Support Structure)</div>
+<div class="term-desc">전차선로를 지지하기 위해 선로 옆에 세우는 구조물. 전주(電柱)·강체구조물·터널 천장 등이 해당한다.</div>
+</div>
+</div>
+ §1 전차선로 전체 구조 
+<div class="section-title">§1 전차선로 전체 구조</div>
+<div class="concept-card">
+<div class="concept-head">
+<span class="concept-num">10-01</span>
+<span class="concept-name">전차선로 구성요소</span>
+<span class="concept-star">★★</span>
+</div>
+<div class="concept-body">
+<p style="margin-bottom:12px; font-size:13px; color:#334155;">전차선로의 핵심 구성요소 6종을 구분한다.</p>
+<div class="comp-grid">
+<div class="comp-card wire">
+<div class="comp-name">① 전차선</div>
+<div class="comp-en">Contact Wire</div>
+<div class="comp-desc">팬터그래프가 직접 접촉하여 전력을 공급받는 전선. 조가선에 매달려 수평을 유지한다.</div>
+</div>
+<div class="comp-card mwire">
+<div class="comp-name">② 조가선</div>
+<div class="comp-en">Messenger Wire (Catenary)</div>
+<div class="comp-desc">전차선을 일정 높이로 지지·유지하기 위해 위쪽에 설치하는 지지용 전선.</div>
+</div>
+<div class="comp-card dropper">
+<div class="comp-name">③ 드로퍼 / 행어</div>
+<div class="comp-en">Dropper / Hanger</div>
+<div class="comp-desc">조가선과 전차선을 일정 간격으로 연결하는 수직 지지선. 전차선의 수평 유지를 담당한다.</div>
+</div>
+<div class="comp-card bracket">
+<div class="comp-name">④ 브래킷</div>
+<div class="comp-en">Bracket</div>
+<div class="comp-desc">지지물에 설치되어 조가선을 측방으로 지지하는 구조물.</div>
+</div>
+<div class="comp-card hw">
+<div class="comp-name">⑤ 금구류</div>
+<div class="comp-en">Hardware Fittings</div>
+<div class="comp-desc">전선과 지지물을 연결·고정하는 각종 철물 부속품.</div>
+</div>
+<div class="comp-card span">
+<div class="comp-name">⑥ 경간</div>
+<div class="comp-en">Span</div>
+<div class="comp-desc">인접한 두 지지물 사이의 거리.</div>
+</div>
+</div>
+<div class="trap-box">
+<strong>⚠️ 구성요소 역할 혼동 주의:</strong><br/>
+        드로퍼 = <strong>조가선↔전차선 연결</strong> (수직 지지선) — 팬터그래프와 접촉하지 않음<br/>
+        브래킷 = <strong>조가선 측방 지지</strong> (지지물에서 조가선을 측방으로 고정)<br/>
+        경간 = <strong>인접 지지물 사이의 거리</strong>
+</div>
+</div>
+</div>
+ §2 구성요소 비교표 + VIS 
+<div class="section-title">§2 구성요소 비교표</div>
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr>
+<th>구성요소</th>
+<th>영문 명칭</th>
+<th>주요 역할</th>
+<th>위치 관계</th>
+</tr>
+</thead>
+<tbody>
+<tr class="hl">
+<td><strong>전차선</strong></td>
+<td>Contact Wire</td>
+<td>팬터그래프와 직접 접촉하여 전력 공급</td>
+<td>조가선 아래에 매달림</td>
+</tr>
+<tr>
+<td><strong>조가선</strong></td>
+<td>Messenger Wire</td>
+<td>전차선을 일정 높이로 지지</td>
+<td>전차선 위에 설치</td>
+</tr>
+<tr class="hl">
+<td><strong>드로퍼 / 행어</strong></td>
+<td>Dropper / Hanger</td>
+<td>조가선과 전차선을 수직으로 연결</td>
+<td>조가선↔전차선 사이</td>
+</tr>
+<tr>
+<td><strong>브래킷</strong></td>
+<td>Bracket</td>
+<td>지지물에서 조가선을 측방 지지</td>
+<td>지지물(전주) 선단</td>
+</tr>
+<tr class="hl">
+<td><strong>금구류</strong></td>
+<td>Hardware Fittings</td>
+<td>전선과 지지물 연결·고정 철물</td>
+<td>각 연결 접점</td>
+</tr>
+<tr>
+<td><strong>경간</strong></td>
+<td>Span</td>
+<td>인접한 두 지지물 사이의 거리</td>
+<td>지지물↔지지물 사이</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="vis-wrap">
+<img alt="전차선로의 선(線) 종류와 구성 — 조가선·드로퍼·전차선·브래킷·금구류 구조도" src="images/전차선로_전체구조.png"/>
+<div class="vis-cap">전차선로 구성요소 전체 구조도 — 선종류와 역할</div>
+<div class="vis-note">※ ATD·가고·이선현상 관련 상세는 후속 UNIT(10-06~10-09)에서 다룸</div>
+</div>
+ §3 경간 개념 
+<div class="section-title">§3 경간 (Span) 개념</div>
+<div class="span-box">
+<div class="span-box-title">경간 (Span) 정의</div>
+<p>경간이란 전차선로에서 인접한 두 지지물 사이의 거리를 말한다.</p>
+<div class="vis-wrap">
+  <img src="images/경간.png" alt="경간 개념도" class="vis-img" onerror="this.style.display='none'">
+  <div class="vis-cap">경간(Span) — 인접 지지물 간 거리</div>
+</div>
+</div>
+ §4 시험 포인트 
+<div class="section-title">§4 시험 포인트</div>
+<div class="exam-box">
+<div class="exam-box-title">★ 핵심 암기 포인트</div>
+<ul>
+<li><strong>전차선</strong> = 팬터그래프가 직접 접촉 → 전력 집전</li>
+<li><strong>조가선</strong> = 전차선을 위에서 지지하는 전선 (메신저 와이어)</li>
+<li><strong>드로퍼/행어</strong> = 조가선과 전차선을 연결하는 수직 지지선</li>
+<li><strong>브래킷</strong> = 지지물에서 조가선을 측방으로 지지하는 구조물</li>
+<li><strong>금구류</strong> = 전차선로 각 부분을 연결·고정하는 철물 부속품 전체</li>
+<li><strong>경간</strong> = 인접한 두 지지물 사이의 거리</li>
+</ul>
+</div>
+<div class="tip-box">
+    ★ 구성요소 관계 요약:<br/>
+    드로퍼가 조가선↔전차선 연결 / 브래킷이 지지물에서 조가선 지지 / 금구류가 각 접점 고정<br/>
+    SOURCE: F-01 전차선로 전체구조 개요 기준
+  </div>
+ §5 문제은행 
+<div class="section-title">📝 문제은행 (3문항)</div>
+<p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q1</span>
+<span class="qst-src">rk_ch82_15 · SOURCE: 철도왕 교재 ch82 · 교류식 전기철도 특징</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">교류식 전기철도의 특징 중 장점은?</div>
+<ol class="qst-choices">
+<li>① 차량 구조가 간단하다</li>
+<li>② 절연 이격 거리를 줄일 수 있다</li>
+<li>③ 높은 견인력을 가져 소형으로도 무거운 열차를 끌 수 있다</li>
+<li>④ 통신유도장해가 적다</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ③</strong><br/>
+        교류식 전기철도: 고전압 송전으로 동일 전력을 더 작은 전류로 전달. 전력 손실이 적고 대출력 견인이 가능해 소형으로도 중량 열차를 운행할 수 있다. 절연 이격 거리는 더 넓어야 하고 통신 유도장해는 큰 편이다.
+      </div>
+</div>
+</div>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q2</span>
+<span class="qst-src">rk_ch82_16 · SOURCE: 철도왕 교재 ch82 · 교류 전차선로 접지시설</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">교류 전차선로의 접지시설 설치 기준에 대한 설명으로 옳지 않은 것은?</div>
+<ol class="qst-choices">
+<li>① 위험 경고표지를 설치해야 하며 접지시설 설치 시 낙뢰 등으로부터 보호하기 위한 조치를 해야 한다</li>
+<li>② 모든 접지는 서로 연결되는 통합접지방식으로 설치해야 한다</li>
+<li>③ 일반인이 접근하기 어려운 지역: 연속 정격전위 100V 이하</li>
+<li>④ 일반인이 접근하기 쉬운 지역: 연속 정격전위 60V 이하</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ③</strong><br/>
+        일반인이 접근하기 어려운 지역: 연속 정격전위 <strong>150V 이하</strong>(100V 아님). 일반인이 접근하기 쉬운 지역: 연속 정격전위 60V 이하. 두 경우 모두 인체통과 기준 15mA 이하.
+      </div>
+</div>
+</div>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q3</span>
+<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념82 · 전차선로 구성요소</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">전차선로(가공식 카테너리)의 3대 구성요소를 올바르게 나열한 것은?</div>
+<ol class="qst-choices">
+<li>① 전차선 — 조가선 — 드로퍼</li>
+<li>② 전차선 — 급전선 — 귀선</li>
+<li>③ 전차선 — 급전선 — 조가선</li>
+<li>④ 전차선 — 드로퍼 — 에어조인트</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ①</strong><br/>
+        카테너리 가선방식의 3대 구성요소: <strong>전차선(Contact Wire)</strong> — 팬터그래프와 직접 접촉하는 동선, <strong>조가선(Messenger Wire)</strong> — 전차선을 지지하는 상부 선, <strong>드로퍼(Dropper)</strong> — 조가선에서 전차선을 일정 간격으로 매달아 수평을 유지하는 부재.
+      </div>
+</div>
+</div>
+ 하단 NAV 
+
+
+</div><!-- /container -->
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10-07 집전장치의 종류 | 철도공학</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#fff; color:#111; font-size:15px; line-height:1.75; }
+
+/* 헤더 */
+.site-header { background:#fff; color:#111; padding:8px 16px 6px; border-bottom:3px solid #78350f; }
+.site-header h1 { font-size:1.05em; font-weight:bold; color:#78350f; }
+.site-header .meta { font-size:.78em; color:#555; margin-top:2px; }
+
+.container { max-width:960px; margin:0 auto; padding:20px 24px 60px; }
+
+/* 단원 헤더 */
+.unit-header { border:2px solid #78350f; border-radius:6px; padding:12px 16px; margin-bottom:22px; background:#fff; }
+.unit-header h2 { font-size:1.2em; font-weight:bold; color:#78350f; }
+.unit-header .nav-link { font-size:.82em; color:#555; margin-top:4px; }
+.unit-header .nav-link a { color:#78350f; text-decoration:none; font-weight:bold; }
+.unit-header .nav-link a:hover { text-decoration:underline; }
+
+/* 섹션 */
+.section { margin:0 0 26px 0; }
+.section-title { font-size:1.05em; font-weight:bold; color:#111; border-left:4px solid #78350f; padding:5px 0 5px 12px; margin-bottom:14px; background:#fff; }
+
+/* 개념 */
+.concept { margin:14px 0 6px; padding-bottom:14px; border-bottom:1px solid #ccc; }
+.concept:last-child { border-bottom:none; }
+.concept-title { font-size:1em; font-weight:bold; color:#78350f; margin-bottom:8px; padding:4px 0; }
+
+/* 테이블 */
+table { width:100%; border-collapse:collapse; margin:8px 0; font-size:.9em; }
+th { background:#e8e8e8; color:#111; padding:7px 10px; text-align:left; font-size:.88em; border:1.5px solid #999; font-weight:bold; }
+td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#fff; }
+
+/* 강조 박스 */
+.trap { background:#fff; border-left:4px solid #c0392b; padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#c0392b; font-weight:bold; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+.tip { background:#fff; border-left:4px solid #2e7d32; padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#2e7d32; font-weight:bold; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+.theory-note { background:#fff; border-left:4px solid #1565c0; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#111; border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0; }
+.theory-note strong { color:#1565c0; }
+
+/* 기출 예시 */
+.quiz-ex { background:#fff; border-left:4px solid #2e7d32; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.88em; color:#111; border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0; }
+.quiz-ex .qe-title { font-weight:bold; color:#2e7d32; margin-bottom:4px; }
+.quiz-ex .qe-q { margin:4px 0 2px; }
+.quiz-ex .qe-a { font-weight:bold; color:#1b5e20; }
+.quiz-ex .qe-wrong { display:block; background:#fff; border-left:3px solid #c0392b; color:#c0392b; padding:5px 10px; margin:6px 0; border-radius:0 4px 4px 0; font-size:.88em; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+
+/* 문제 카드 (qst-card) */
+.qst-card { border:1px solid #bbb; border-left:4px solid #78350f; border-radius:0 6px 6px 0; margin:16px 0; background:#fff; }
+.qst-head { display:flex; align-items:baseline; gap:8px; padding:8px 14px; border-bottom:1px solid #e0e0e0; }
+.qst-num { font-weight:bold; color:#78350f; font-size:.95em; }
+.qst-src { font-size:.78em; color:#555; }
+.qst-body { padding:14px 16px; }
+.qst-q { font-weight:bold; color:#111; margin-bottom:10px; line-height:1.65; }
+.qst-choices { padding-left:4px; margin-bottom:10px; list-style:none; }
+.qst-choices li { padding:3px 0; color:#222; line-height:1.7; }
+.qst-ans { background:#f9f9f9; border-left:3px solid #78350f; padding:10px 14px; margin-top:8px; border-radius:0 4px 4px 0; font-size:.9em; color:#111; }
+.qst-ans strong { color:#78350f; }
+
+/* VIS 래퍼 */
+.vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
+.vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; }
+.vis-cap { font-size:.8em; color:#555; margin-top:6px; }
+
+/* 기타 기존 Part10 클래스들 유지 */
+.term-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
+.term-card { border:1px solid #bbb; border-radius:6px; padding:12px 14px; background:#fff; }
+.term-name { font-weight:bold; color:#78350f; font-size:.92em; margin-bottom:4px; }
+.term-desc { font-size:.88em; color:#333; line-height:1.6; }
+.concept-card { border:1.5px solid #bbb; border-radius:6px; margin:12px 0; overflow:hidden; }
+.concept-head { background:#f5f5f5; border-bottom:1px solid #bbb; padding:8px 14px; }
+.concept-title-text { font-weight:bold; color:#78350f; font-size:.95em; }
+.concept-body { padding:12px 16px; font-size:.9em; line-height:1.75; }
+.exam-box { background:#fff; border:1px solid #bbb; border-left:4px solid #78350f; border-radius:0 6px 6px 0; padding:12px 16px; margin:12px 0; font-size:.9em; }
+.exam-box .exam-title { font-weight:bold; color:#78350f; margin-bottom:6px; }
+.highlight { background:#fff; border:1px solid #78350f; border-radius:4px; padding:3px 7px; font-weight:bold; color:#78350f; font-size:.9em; }
+.step-box { background:#fff; border:1px solid #bbb; border-radius:6px; padding:12px 16px; margin:10px 0; }
+.step-box .step-title { font-weight:bold; color:#78350f; margin-bottom:8px; font-size:.95em; }
+.formula-box { background:#fff; border:1.5px solid #78350f; border-radius:6px; padding:14px 18px; margin:12px 0; text-align:center; }
+.formula-box .formula { font-size:1.1em; font-weight:bold; color:#78350f; margin:6px 0; }
+.badge-row { display:flex; gap:8px; margin-top:6px; flex-wrap:wrap; }
+.badge { border-radius:4px; padding:2px 8px; font-size:.75em; font-weight:bold; }
+.badge-lock { background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7; }
+.badge-noq { background:#e3f2fd; color:#1565c0; border:1px solid #90caf9; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:12px 0; }
+.col-box { border:1.5px solid #78350f; border-radius:6px; padding:12px; background:#fff; }
+.col-head { font-weight:bold; color:#78350f; font-size:.95em; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid #ddd; }
+
+/* 인쇄 버튼 */
+.print-btn { position:fixed; top:16px; right:16px; z-index:9999; border:1px solid #999; border-radius:8px; background:#fff; color:#111; padding:9px 14px; font-weight:700; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.12); }
+.print-btn:hover { background:#f5f5f5; }
+
+/* 반응형 */
+@media(max-width:600px){
+  .term-grid, .two-col { grid-template-columns:1fr; }
+}
+
+/* 프린트 */
+@media print {
+  body { font-size:12pt; line-height:1.6; }
+  .site-header, .print-btn { display:none !important; }
+  .unit-header { border:1.5pt solid #000; page-break-after:avoid; }
+  .concept-card, .exam-box, .qst-card { page-break-inside:avoid; }
+  table { page-break-inside:avoid; }
+  th { background:#e8e8e8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .container { width:100% !important; max-width:none !important; margin:0 !important; padding:0 !important; }
+  .answer-section { break-before:page; page-break-before:always; }
+  @page { size:A4 portrait; margin:12mm 12mm 12mm 18mm; }
+}
+
+</style>
+</head>
+<body>
+<button class="print-btn" type="button" onclick="window.print()">🖨 인쇄 / PDF</button>
+<header class="site-header">
+  <h1>철도교통안전관리자 — 철도공학</h1>
+  <div class="meta">10-07 집전장치의 종류 | FINAL PUBLISH v1.2</div>
+</header>
+
+<div class="container">
+
+<div class="unit-header">
+  <h2>10-07 집전장치의 종류</h2>
+  <div class="nav-link"><a href="unit-10-06_FINAL_PUBLISH_v1.3.html">← 10-06 자동장력조정장치(ATD)</a> · <strong>[10-07 집전장치의 종류]</strong> · <a href="unit-10-08_FINAL_PUBLISH_v1.1.html">10-08 팬터그래프 구조·종류·집전압력 →</a></div>
+</div>
+
+
+<div class="section-title">§0 선행 용어</div>
+<div class="term-grid">
+<div class="term-card">
+<div class="term-name">집전장치 (Current Collector)</div>
+<div class="term-desc">전차선(접촉선)에서 전력을 수집하여 차량에 공급하는 장치. 전차선과 직접 접촉한다.</div>
+</div>
+<div class="term-card">
+<div class="term-name">팬터그래프 (Pantograph)</div>
+<div class="term-desc">전기철도 차량 지붕에 장착된 집전장치. 가장 일반적인 집전방식.</div>
+</div>
+<div class="term-card">
+<div class="term-name">트롤리 폴 (Trolley Pole)</div>
+<div class="term-desc">전차에서 사용하는 막대 모양 집전장치.</div>
+</div>
+<div class="term-card">
+<div class="term-name">뷰겔 (Bügel)</div>
+<div class="term-desc">활 모양(활형) 집전장치.</div>
+</div>
+<div class="term-card">
+<div class="term-name">집전슈 (Collector Shoe)</div>
+<div class="term-desc">지하철 3레일 급전 방식에서 레일에 접촉하는 집전장치.</div>
+</div>
+<div class="term-card">
+<div class="term-name">축전지 (Battery)</div>
+<div class="term-desc">전력을 저장하는 장치. 집전장치가 아님 — 전차선에서 직접 전력을 수집하지 않음.</div>
+</div>
+</div>
+<div class="section-title">§1 집전장치의 종류 (개념10)</div>
+<div class="concept-card">
+<div class="concept-head">
+<span class="concept-num">4.html 개념10</span>
+<span class="concept-name">집전장치 O/X 구분</span>
+<span class="concept-star">★★★</span>
+</div>
+<div class="concept-body">
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>구분</th><th>장치명</th><th>특징</th></tr>
+</thead>
+<tbody>
+<tr class="hl">
+<td rowspan="4" style="background:#ecfdf5;color:#065f46;font-weight:800;text-align:center;">집전장치 O</td>
+<td><strong>팬터그래프</strong></td>
+<td>전기철도 주력 집전장치 — 가선에서 슬라이딩 접촉</td>
+</tr>
+<tr>
+<td><strong>트롤리 폴</strong></td>
+<td>전차용 — 막대형</td>
+</tr>
+<tr class="hl" style="background:#ecfdf5!important;">
+<td><strong>뷰겔</strong></td>
+<td>활형(弓型) 집전장치</td>
+</tr>
+<tr>
+<td><strong>집전슈</strong></td>
+<td>3레일 방식 — 레일에 접촉</td>
+</tr>
+<tr style="background:#fff7ed;">
+<td style="color:#9a3412;font-weight:800;text-align:center;">집전장치 X</td>
+<td><strong>축전지</strong></td>
+<td>전력 저장장치 — 전차선에서 직접 전력 수집하지 않음</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="trap-box">
+        ⚠️ <strong>핵심 함정 — 축전지 ≠ 집전장치</strong><br/>
+        축전지(Battery)는 전력을 <strong>저장</strong>하는 장치이지, 전차선에서 전력을 <strong>수집</strong>하는 집전장치가 아님.<br/>
+        시험 선지에 "축전지도 집전장치의 일종이다" → <strong>❌ 오답</strong>
+</div>
+<div class="tip-box">
+        💡 <strong>암기법 [SOURCE: 4.html 개념10]</strong><br/>
+        집전장치 4종: <strong>팬·트·뷰·슈</strong> = 팬터그래프 / 트롤리 폴 / 뷰겔 / 집전슈<br/>
+        집전장치 X: <strong>축전지</strong> (저장장치이지 집전장치 아님)
+      </div>
+</div>
+</div>
+<div class="section-title">§2 시험 포인트</div>
+<div class="exam-box">
+<div class="exam-box-title">🎯 집전장치 4종 + 비해당 암기</div>
+<ul>
+<li>집전장치 O: <strong>팬터그래프 / 트롤리 폴 / 뷰겔 / 집전슈</strong></li>
+<li>집전장치 X: <strong>축전지</strong> → 저장장치임</li>
+<li>집전장치 = 전차선(접촉선)에서 직접 전력을 받는 장치</li>
+</ul>
+</div>
+<div class="section-title">§3 VIS</div>
+<div class="vis-wrap">
+<img alt="집전장치 종류 비교" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" src="images/VIS-034_집전장치종류비교.png"/>
+<div style="display:none;padding:20px;border:1px dashed #cbd5e1;border-radius:6px;color:#94a3b8;font-size:13px;text-align:center;">
+      ※ VIS-034 이미지 준비 중
+    </div>
+<div class="vis-cap">▲ VIS-034 집전장치 종류 비교</div>
+</div>
+<div class="vis-wrap">
+<img alt="전차선 집전장치 비교 카드" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" src="images/VIS-086_전차선집전장치비교카드.png"/>
+<div style="display:none;padding:20px;border:1px dashed #cbd5e1;border-radius:6px;color:#94a3b8;font-size:13px;text-align:center;">
+      ※ VIS-086 이미지 준비 중
+    </div>
+<div class="vis-cap">▲ VIS-086 전차선 집전장치 비교 카드</div>
+</div>
+<div class="section-title">📝 문제은행 (3문항)</div>
+<p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q1</span>
+<span class="qst-src">id:27 · SOURCE: 철도공학 기출/복원 · 집전장치 종류</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">전차선에서 전기를 집전하는 장치 중 고속철도에 주로 사용되는 것은?</div>
+<ol class="qst-choices">
+<li>① 트롤리 폴</li>
+<li>② 집전슈</li>
+<li>③ 팬터그래프</li>
+<li>④ 뷰겔</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ③ 팬터그래프</strong><br/>
+        팬터그래프: 고속철도(KTX 등)에서 가공전차선과 접촉해 전력을 집전하는 장치. 트롤리 폴은 저속 노면전차, 집전슈는 제3레일 방식.
+      </div>
+</div>
+</div>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q2</span>
+<span class="qst-src">id:94 · SOURCE: 철도공학 기출/복원 · 팬터그래프 집전장치</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">차량 지붕에서 전차선과 접촉하여 전력을 집전하는 대표적인 집전장치는?</div>
+<ol class="qst-choices">
+<li>① 팬터그래프</li>
+<li>② 고속도차단기</li>
+<li>③ 유도전동기</li>
+<li>④ 주행저항</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ① 팬터그래프</strong><br/>
+        팬터그래프: 현대 전기철도의 대표 집전장치. 전차선과 슬라이딩 접촉으로 전력 수집.
+      </div>
+</div>
+</div>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q3</span>
+<span class="qst-src">id:95 · SOURCE: 철도공학 기출/복원 · 팬터그래프 출제포인트</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">'팬터그래프'과 연결한 출제포인트로 가장 적절한 것은?</div>
+<ol class="qst-choices">
+<li>① 현대 전기철도의 대표 집전장치로 전차선과 접촉.</li>
+<li>② 곡선통과성과 주행안정성에 영향.</li>
+<li>③ 속도 상승 시 공기저항 비중이 커진다.</li>
+<li>④ 계자전류제어는 직류전동기 계열.</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ①</strong><br/>
+        집전장치 중 팬터그래프가 현대 전기철도에서 가장 보편적. 축전지는 집전장치 아님.
+      </div>
+</div>
+</div>
+
+
+</div><!-- /container -->
+</body>
+</html>

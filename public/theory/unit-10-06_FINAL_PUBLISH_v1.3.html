@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10-06 자동장력조정장치(ATD) | 철도공학</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Malgun Gothic','맑은 고딕',sans-serif; background:#fff; color:#111; font-size:15px; line-height:1.75; }
+
+/* 헤더 */
+.site-header { background:#fff; color:#111; padding:8px 16px 6px; border-bottom:3px solid #78350f; }
+.site-header h1 { font-size:1.05em; font-weight:bold; color:#78350f; }
+.site-header .meta { font-size:.78em; color:#555; margin-top:2px; }
+
+.container { max-width:960px; margin:0 auto; padding:20px 24px 60px; }
+
+/* 단원 헤더 */
+.unit-header { border:2px solid #78350f; border-radius:6px; padding:12px 16px; margin-bottom:22px; background:#fff; }
+.unit-header h2 { font-size:1.2em; font-weight:bold; color:#78350f; }
+.unit-header .nav-link { font-size:.82em; color:#555; margin-top:4px; }
+.unit-header .nav-link a { color:#78350f; text-decoration:none; font-weight:bold; }
+.unit-header .nav-link a:hover { text-decoration:underline; }
+
+/* 섹션 */
+.section { margin:0 0 26px 0; }
+.section-title { font-size:1.05em; font-weight:bold; color:#111; border-left:4px solid #78350f; padding:5px 0 5px 12px; margin-bottom:14px; background:#fff; }
+
+/* 개념 */
+.concept { margin:14px 0 6px; padding-bottom:14px; border-bottom:1px solid #ccc; }
+.concept:last-child { border-bottom:none; }
+.concept-title { font-size:1em; font-weight:bold; color:#78350f; margin-bottom:8px; padding:4px 0; }
+
+/* 테이블 */
+table { width:100%; border-collapse:collapse; margin:8px 0; font-size:.9em; }
+th { background:#e8e8e8; color:#111; padding:7px 10px; text-align:left; font-size:.88em; border:1.5px solid #999; font-weight:bold; }
+td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#fff; }
+
+/* 강조 박스 */
+.trap { background:#fff; border-left:4px solid #c0392b; padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#c0392b; font-weight:bold; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+.tip { background:#fff; border-left:4px solid #2e7d32; padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#2e7d32; font-weight:bold; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+.theory-note { background:#fff; border-left:4px solid #1565c0; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.9em; color:#111; border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0; }
+.theory-note strong { color:#1565c0; }
+
+/* 기출 예시 */
+.quiz-ex { background:#fff; border-left:4px solid #2e7d32; padding:10px 14px; margin:8px 0; border-radius:0 4px 4px 0; font-size:.88em; color:#111; border-top:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; border-right:1px solid #e0e0e0; }
+.quiz-ex .qe-title { font-weight:bold; color:#2e7d32; margin-bottom:4px; }
+.quiz-ex .qe-q { margin:4px 0 2px; }
+.quiz-ex .qe-a { font-weight:bold; color:#1b5e20; }
+.quiz-ex .qe-wrong { display:block; background:#fff; border-left:3px solid #c0392b; color:#c0392b; padding:5px 10px; margin:6px 0; border-radius:0 4px 4px 0; font-size:.88em; border-top:1px solid #eee; border-bottom:1px solid #eee; border-right:1px solid #eee; }
+
+/* 문제 카드 (qst-card) */
+.qst-card { border:1px solid #bbb; border-left:4px solid #78350f; border-radius:0 6px 6px 0; margin:16px 0; background:#fff; }
+.qst-head { display:flex; align-items:baseline; gap:8px; padding:8px 14px; border-bottom:1px solid #e0e0e0; }
+.qst-num { font-weight:bold; color:#78350f; font-size:.95em; }
+.qst-src { font-size:.78em; color:#555; }
+.qst-body { padding:14px 16px; }
+.qst-q { font-weight:bold; color:#111; margin-bottom:10px; line-height:1.65; }
+.qst-choices { padding-left:4px; margin-bottom:10px; list-style:none; }
+.qst-choices li { padding:3px 0; color:#222; line-height:1.7; }
+.qst-ans { background:#f9f9f9; border-left:3px solid #78350f; padding:10px 14px; margin-top:8px; border-radius:0 4px 4px 0; font-size:.9em; color:#111; }
+.qst-ans strong { color:#78350f; }
+
+/* VIS 래퍼 */
+.vis-wrap { margin:12px 0; border:1px solid #bbb; border-radius:6px; padding:10px; text-align:center; background:#fff; }
+.vis-img { display:block; width:100%; height:auto; max-width:100%; margin:0 auto; }
+.vis-cap { font-size:.8em; color:#555; margin-top:6px; }
+
+/* 기타 기존 Part10 클래스들 유지 */
+.term-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
+.term-card { border:1px solid #bbb; border-radius:6px; padding:12px 14px; background:#fff; }
+.term-name { font-weight:bold; color:#78350f; font-size:.92em; margin-bottom:4px; }
+.term-desc { font-size:.88em; color:#333; line-height:1.6; }
+.concept-card { border:1.5px solid #bbb; border-radius:6px; margin:12px 0; overflow:hidden; }
+.concept-head { background:#f5f5f5; border-bottom:1px solid #bbb; padding:8px 14px; }
+.concept-title-text { font-weight:bold; color:#78350f; font-size:.95em; }
+.concept-body { padding:12px 16px; font-size:.9em; line-height:1.75; }
+.exam-box { background:#fff; border:1px solid #bbb; border-left:4px solid #78350f; border-radius:0 6px 6px 0; padding:12px 16px; margin:12px 0; font-size:.9em; }
+.exam-box .exam-title { font-weight:bold; color:#78350f; margin-bottom:6px; }
+.highlight { background:#fff; border:1px solid #78350f; border-radius:4px; padding:3px 7px; font-weight:bold; color:#78350f; font-size:.9em; }
+.step-box { background:#fff; border:1px solid #bbb; border-radius:6px; padding:12px 16px; margin:10px 0; }
+.step-box .step-title { font-weight:bold; color:#78350f; margin-bottom:8px; font-size:.95em; }
+.formula-box { background:#fff; border:1.5px solid #78350f; border-radius:6px; padding:14px 18px; margin:12px 0; text-align:center; }
+.formula-box .formula { font-size:1.1em; font-weight:bold; color:#78350f; margin:6px 0; }
+.badge-row { display:flex; gap:8px; margin-top:6px; flex-wrap:wrap; }
+.badge { border-radius:4px; padding:2px 8px; font-size:.75em; font-weight:bold; }
+.badge-lock { background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7; }
+.badge-noq { background:#e3f2fd; color:#1565c0; border:1px solid #90caf9; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:12px 0; }
+.col-box { border:1.5px solid #78350f; border-radius:6px; padding:12px; background:#fff; }
+.col-head { font-weight:bold; color:#78350f; font-size:.95em; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid #ddd; }
+
+/* 인쇄 버튼 */
+.print-btn { position:fixed; top:16px; right:16px; z-index:9999; border:1px solid #999; border-radius:8px; background:#fff; color:#111; padding:9px 14px; font-weight:700; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.12); }
+.print-btn:hover { background:#f5f5f5; }
+
+/* 반응형 */
+@media(max-width:600px){
+  .term-grid, .two-col { grid-template-columns:1fr; }
+}
+
+/* 프린트 */
+@media print {
+  body { font-size:12pt; line-height:1.6; }
+  .site-header, .print-btn { display:none !important; }
+  .unit-header { border:1.5pt solid #000; page-break-after:avoid; }
+  .concept-card, .exam-box, .qst-card { page-break-inside:avoid; }
+  table { page-break-inside:avoid; }
+  th { background:#e8e8e8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .container { width:100% !important; max-width:none !important; margin:0 !important; padding:0 !important; }
+  .answer-section { break-before:page; page-break-before:always; }
+  @page { size:A4 portrait; margin:12mm 12mm 12mm 18mm; }
+}
+
+</style>
+</head>
+<body>
+<button class="print-btn" type="button" onclick="window.print()">🖨 인쇄 / PDF</button>
+<header class="site-header">
+  <h1>철도교통안전관리자 — 철도공학</h1>
+  <div class="meta">10-06 자동장력조정장치(ATD) | FINAL PUBLISH v1.3</div>
+</header>
+
+<div class="container">
+
+<div class="unit-header">
+  <h2>10-06 자동장력조정장치(ATD)</h2>
+  <div class="nav-link"><a href="unit-10-05_FINAL_PUBLISH_v1.2.html">← 10-05 전차선로 부속설비</a> · <strong>[10-06 자동장력조정장치(ATD)]</strong> · <a href="unit-10-07_FINAL_PUBLISH_v1.1.html">10-07 집전장치의 종류 →</a></div>
+</div>
+
+
+<div class="section-title">§0 선행 용어</div>
+<div class="term-grid">
+<div class="term-card">
+<div class="term-name">ATD (Automatic Tension Device)</div>
+<div class="term-desc">스프링·기계식으로 전차선 장력을 자동 조정하는 장치. 온도 변화에 따른 전차선 신축을 보정.</div>
+</div>
+<div class="term-card">
+<div class="term-name">WTD (Weight Tension Device)</div>
+<div class="term-desc">추(무게추) 하중 방식으로 전차선 장력을 일정하게 유지하는 장치.</div>
+</div>
+</div>
+<div class="section-title">§1 자동장력조정장치 개요 (개념98)</div>
+<div class="concept-card">
+<div class="concept-head">
+<span class="concept-num">4.html 개념98</span>
+<span class="concept-name">ATD/WTD — 전차선 장력 자동 보정</span>
+<span class="concept-star">★★</span>
+</div>
+<div class="concept-body">
+<p style="font-size:13px;color:#334155;margin-bottom:14px;">
+<strong>목적:</strong> 온도 변화 → 전차선 신축(팽창·수축) 자동 보정 → 장력 일정 유지<br/>
+<strong>효과:</strong> 이선율 감소 / 집전성능 유지 / 전차선 수명 연장
+      </p>
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr><th>종류</th><th>방식</th><th>특징</th></tr>
+</thead>
+<tbody>
+<tr class="hl">
+<td><strong>ATD</strong></td>
+<td>스프링·기계식</td>
+<td>스프링 탄성력으로 장력 자동 보정</td>
+</tr>
+<tr>
+<td><strong>WTD</strong></td>
+<td>추(무게추) 하중 방식</td>
+<td>추의 중력으로 장력 일정 유지</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tip-box" style="margin-top:14px;">
+        ★ 동작 원리: 여름(고온) → 전차선 늘어남 → ATD/WTD가 장력 자동 보정<br/>
+        겨울(저온) → 전차선 수축 → 역방향 자동 보정 (4.html 개념98 확인)
+      </div>
+</div>
+</div>
+<div class="section-title">§2 시험 포인트</div>
+<div class="exam-box">
+<div class="exam-box-title">🎯 ATD/WTD 핵심 암기</div>
+<ul>
+<li>목적: <strong>온도 변화 → 전차선 신축 자동 보정 → 장력 일정 유지</strong></li>
+<li>효과: 이선율 감소 / 집전성능 유지 / 전차선 수명 연장</li>
+<li>ATD = 스프링·기계식 / WTD = 추 하중 방식</li>
+</ul>
+</div>
+<div class="section-title">§3 VIS</div>
+<div class="vis-wrap">
+<img alt="ATD/WTD 자동장력조정장치" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" src="images/ATD_WTD.png"/>
+<div style="display:none;padding:20px;border:1px dashed #cbd5e1;border-radius:6px;color:#94a3b8;font-size:13px;text-align:center;">
+      ※ 이미지 준비 중 — ATD/WTD 자동장력조정장치 개념도
+    </div>
+<div class="vis-cap">▲ ATD(스프링·기계식) / WTD(추 하중 방식) 자동장력조정장치</div>
+</div>
+<div class="section-title">📝 문제은행 (3문항)</div>
+<p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q1</span>
+<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념98 · ATD/WTD 구분</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">자동장력조정장치(ATD)와 추 하중형 장력조정장치(WTD)의 설명으로 옳은 것은?</div>
+<ol class="qst-choices">
+<li>① ATD는 추(weight)를 이용하여 장력을 조정한다</li>
+<li>② WTD는 스프링·기계식으로 장력을 조정한다</li>
+<li>③ ATD는 스프링·기계식, WTD는 추 하중 방식이다</li>
+<li>④ ATD와 WTD는 모두 전기식으로 장력을 제어한다</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ③</strong><br/>
+        ATD(Automatic Tension Device): <strong>스프링·기계식</strong>으로 장력 자동 조정.<br/>
+        WTD(Weight Tension Device): <strong>추(하중) 방식</strong>으로 장력 유지.<br/>
+        두 장치 모두 온도 변화에 의한 전차선 신축 시 장력을 일정하게 유지하는 역할.
+      </div>
+</div>
+</div>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q2</span>
+<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념98 · ATD/WTD 목적</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">자동장력조정장치(ATD/WTD)의 주요 목적으로 옳은 것은?</div>
+<ol class="qst-choices">
+<li>① 전차선의 전압강하를 보상한다</li>
+<li>② 온도 변화에 관계없이 전차선 장력을 일정하게 유지한다</li>
+<li>③ 전차선의 절연 내력을 높인다</li>
+<li>④ 전차선 구간을 전기적으로 분리한다</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ②</strong><br/>
+        ATD/WTD의 목적: 온도 변화(열팽창·수축)에 의한 전차선 신축 시 <strong>장력을 일정하게 유지</strong>. 장력 일정 → 처짐 일정 → 이선율 감소 → 집전 성능 유지. 전압강하 보상은 정류포스트, 절연 분리는 구분장치의 역할.
+      </div>
+</div>
+</div>
+<div class="qst-card">
+<div class="qst-head">
+<span class="qst-num">Q3</span>
+<span class="qst-src">신규개념확인 · SOURCE: 4.html 개념98 · 장력조정 효과</span>
+</div>
+<div class="qst-body">
+<div class="qst-q">자동장력조정장치(ATD/WTD) 설치 효과로 옳지 않은 것은?</div>
+<ol class="qst-choices">
+<li>① 이선율(離線率) 감소</li>
+<li>② 전차선 수명 연장</li>
+<li>③ 집전 성능 향상</li>
+<li>④ 전차선 전압 강하 저감</li>
+</ol>
+<div class="qst-ans">
+<strong>정답: ④</strong><br/>
+        장력조정장치 효과: 이선율 감소 / 집전 성능 유지 / 전차선 수명 연장. <strong>전압강하 저감은 정류포스트의 역할</strong>이며 ATD/WTD와 무관하다.
+      </div>
+</div>
+</div>
+
+
+</div><!-- /container -->
+</body>
+</html>
