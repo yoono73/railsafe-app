@@ -70,6 +70,16 @@ td strong { color: #0f4c81; }
 .nav-center { font-size: 11px; color: #64748b; text-align: center; }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
 @media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; page-break-inside: avoid; } }
+  .qst-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 16px; background: #fff; overflow: hidden; }
+  .qst-head { padding: 10px 14px; background: #f1f5f9; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #e2e8f0; }
+  .qst-num { font-weight: 800; color: #0f4c81; font-size: 13px; }
+  .qst-src { font-size: 11px; color: #64748b; }
+  .qst-body { padding: 14px 16px; }
+  .qst-q { font-size: 13.5px; color: #1a1a1a; font-weight: 600; margin-bottom: 10px; }
+  .qst-choices { list-style: none; margin-bottom: 12px; }
+  .qst-choices li { padding: 5px 0 5px 8px; border-left: 3px solid #e2e8f0; margin-bottom: 4px; color: #334155; font-size: 13px; }
+  .qst-ans { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 8px 12px; font-size: 12.5px; color: #134e4a; }
+  .qst-ans strong { color: #065f46; }
 </style>
 </head>
 <body>
@@ -77,7 +87,7 @@ td strong { color: #0f4c81; }
   <nav class="nav-bar">
     <a href="unit-10-04_FINAL_PUBLISH_v1.4.html" class="nav-btn">← 10-04 가선방식 3계열</a>
     <span class="nav-center">GATE5 PART 10 · 전차선로·가선·집전</span>
-    <a href="unit-10-06_HOLD_VERIFY_v1.1.html" class="nav-btn">10-06 자동장력조정장치 →</a>
+    <a href="unit-10-06_FINAL_PUBLISH_v1.2.html" class="nav-btn">10-06 자동장력조정장치 →</a>
   </nav>
   <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
   <div class="unit-header">
@@ -87,7 +97,7 @@ td strong { color: #0f4c81; }
     <div class="badge-row">
       <span class="badge badge-grade">★★★ A등급</span>
       <span class="badge badge-lock">FINAL PUBLISH v1.1</span>
-      <span class="badge badge-noq">기출 DB 없음</span>
+      <span class="badge badge-noq">문제은행 3문항</span>
     </div>
   </div>
 
@@ -173,16 +183,73 @@ td strong { color: #0f4c81; }
     <div class="vis-cap">▲ 전차선로 부속설비 3종 (에어조인트·정류포스트·구분장치)</div>
   </div>
 
-  <div class="sec-title">§4 기출 DB 문항</div>
-  <div class="hold-box">
-    ⚠️ <strong>DB 문항 없음</strong><br>
-    engineering-exam-data.ts 검색 결과: 부속설비(에어조인트·정류포스트·구분장치) 관련 PART10 전용 문항 0건.
+  <div class="sec-title">📝 문제은행 (3문항)</div>
+  <p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q1</span>
+      <span class="qst-src">rk_ch82_19 · SOURCE: 철도왕 교재 ch82 / 4.html 개념83-B · 에어조인트</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">온도 변화에 따른 전차선의 신축을 조정하기 위해 설치하는 장치는?</div>
+      <ol class="qst-choices">
+        <li>① 에어조인트</li>
+        <li>② 인섹션</li>
+        <li>③ 전차선 클램프</li>
+        <li>④ 전차선 브래킷</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ① 에어조인트</strong><br>
+        에어조인트: 온도 변화에 따른 전차선의 <strong>신축을 조정</strong>하는 접속 장치. 인섹션은 절연구간 설치용, 클램프와 브래킷은 전차선을 지지·고정하는 역할.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q2</span>
+      <span class="qst-src">rk_ch82_20 · SOURCE: 철도왕 교재 ch82 / 4.html 개념83-B · 정류포스트</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">급전 구간 말단에서 전차선 전압 강하와 누설 전류를 줄이기 위해 설치하는 것은?</div>
+      <ol class="qst-choices">
+        <li>① 변압기</li>
+        <li>② 정류포스트</li>
+        <li>③ 개폐기</li>
+        <li>④ 차단기</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ② 정류포스트</strong><br>
+        정류포스트: 급전구간 말단에 설치하여 <strong>전압강하 보상 + 누설전류 저감</strong>. 장거리 구간에서도 안정적인 전압 공급이 가능.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q3</span>
+      <span class="qst-src">rk_ch82_21 · SOURCE: 철도왕 교재 ch82 / 4.html 개념83-B · 구분장치</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">전차선 구간을 전기적으로 분리하여 보수 작업을 가능하게 하는 장치는?</div>
+      <ol class="qst-choices">
+        <li>① 전류조정기</li>
+        <li>② 절연접속기</li>
+        <li>③ 변압기</li>
+        <li>④ 구분장치</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ④ 구분장치</strong><br>
+        구분장치: 전차선로를 일정 구간별로 나누어, 특정 구간에서 정전·보수 작업 시 다른 구간의 열차 운행에 지장이 없도록 하는 설비. <strong>전기적 분리</strong>가 핵심 기능.
+      </div>
+    </div>
   </div>
 
   <nav class="nav-bar" style="margin-top:32px;">
     <a href="unit-10-04_FINAL_PUBLISH_v1.4.html" class="nav-btn">← 10-04 가선방식 3계열</a>
     <span class="nav-center">GATE5 PART 10 · 전차선로·가선·집전</span>
-    <a href="unit-10-06_HOLD_VERIFY_v1.1.html" class="nav-btn">10-06 자동장력조정장치 →</a>
+    <a href="unit-10-06_FINAL_PUBLISH_v1.2.html" class="nav-btn">10-06 자동장력조정장치 →</a>
   </nav>
 </div>
 </body>

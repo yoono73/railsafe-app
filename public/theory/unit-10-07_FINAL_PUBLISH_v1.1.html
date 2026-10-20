@@ -70,14 +70,24 @@ td strong { color: #0f4c81; }
 .nav-center { font-size: 11px; color: #64748b; text-align: center; }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
 @media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; page-break-inside: avoid; } }
+  .qst-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 16px; background: #fff; overflow: hidden; }
+  .qst-head { padding: 10px 14px; background: #f1f5f9; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #e2e8f0; }
+  .qst-num { font-weight: 800; color: #0f4c81; font-size: 13px; }
+  .qst-src { font-size: 11px; color: #64748b; }
+  .qst-body { padding: 14px 16px; }
+  .qst-q { font-size: 13.5px; color: #1a1a1a; font-weight: 600; margin-bottom: 10px; }
+  .qst-choices { list-style: none; margin-bottom: 12px; }
+  .qst-choices li { padding: 5px 0 5px 8px; border-left: 3px solid #e2e8f0; margin-bottom: 4px; color: #334155; font-size: 13px; }
+  .qst-ans { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 8px 12px; font-size: 12.5px; color: #134e4a; }
+  .qst-ans strong { color: #065f46; }
 </style>
 </head>
 <body>
 <div class="page-wrap">
   <nav class="nav-bar">
-    <a href="unit-10-06_HOLD_VERIFY_v1.1.html" class="nav-btn">← 10-06 자동장력조정장치</a>
+    <a href="unit-10-06_FINAL_PUBLISH_v1.2.html" class="nav-btn">← 10-06 자동장력조정장치</a>
     <span class="nav-center">GATE5 PART 10 · 전차선로·가선·집전</span>
-    <a href="unit-10-08_HOLD_VERIFY_v1.0.html" class="nav-btn">10-08 팬터그래프 구조·종류 →</a>
+    <a href="unit-10-08_FINAL_PUBLISH_v1.1.html" class="nav-btn">10-08 팬터그래프 구조·종류 →</a>
   </nav>
   <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
   <div class="unit-header">
@@ -87,7 +97,7 @@ td strong { color: #0f4c81; }
     <div class="badge-row">
       <span class="badge badge-grade">★★★ A등급</span>
       <span class="badge badge-lock">FINAL PUBLISH v1.1</span>
-      <span class="badge badge-noq">기출 DB 없음</span>
+      <span class="badge badge-noq">문제은행 3문항</span>
     </div>
   </div>
 
@@ -203,16 +213,73 @@ td strong { color: #0f4c81; }
     <div class="vis-cap">▲ VIS-086 전차선 집전장치 비교 카드</div>
   </div>
 
-  <div class="sec-title">§4 기출 DB 문항</div>
-  <div class="hold-box">
-    ⚠️ <strong>DB 문항 없음 (PART10 전용)</strong><br>
-    집전장치 관련 문항은 PART3/PART8에 이미 배정됨. 이 UNIT은 PART10 맥락에서 종류 암기 목적.
+  <div class="sec-title">📝 문제은행 (3문항)</div>
+  <p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q1</span>
+      <span class="qst-src">id:27 · SOURCE: 철도공학 기출/복원 · 집전장치 종류</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">전차선에서 전기를 집전하는 장치 중 고속철도에 주로 사용되는 것은?</div>
+      <ol class="qst-choices">
+        <li>① 트롤리 폴</li>
+        <li>② 집전슈</li>
+        <li>③ 팬터그래프</li>
+        <li>④ 뷰겔</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ③ 팬터그래프</strong><br>
+        팬터그래프: 고속철도(KTX 등)에서 가공전차선과 접촉해 전력을 집전하는 장치. 트롤리 폴은 저속 노면전차, 집전슈는 제3레일 방식.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q2</span>
+      <span class="qst-src">id:94 · SOURCE: 철도공학 기출/복원 · 팬터그래프 집전장치</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">차량 지붕에서 전차선과 접촉하여 전력을 집전하는 대표적인 집전장치는?</div>
+      <ol class="qst-choices">
+        <li>① 팬터그래프</li>
+        <li>② 고속도차단기</li>
+        <li>③ 유도전동기</li>
+        <li>④ 주행저항</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ① 팬터그래프</strong><br>
+        팬터그래프: 현대 전기철도의 대표 집전장치. 전차선과 슬라이딩 접촉으로 전력 수집.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q3</span>
+      <span class="qst-src">id:95 · SOURCE: 철도공학 기출/복원 · 팬터그래프 출제포인트</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">'팬터그래프'과 연결한 출제포인트로 가장 적절한 것은?</div>
+      <ol class="qst-choices">
+        <li>① 현대 전기철도의 대표 집전장치로 전차선과 접촉.</li>
+        <li>② 곡선통과성과 주행안정성에 영향.</li>
+        <li>③ 속도 상승 시 공기저항 비중이 커진다.</li>
+        <li>④ 계자전류제어는 직류전동기 계열.</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ①</strong><br>
+        집전장치 중 팬터그래프가 현대 전기철도에서 가장 보편적. 축전지는 집전장치 아님.
+      </div>
+    </div>
   </div>
 
   <nav class="nav-bar" style="margin-top:32px;">
-    <a href="unit-10-06_HOLD_VERIFY_v1.1.html" class="nav-btn">← 10-06 자동장력조정장치</a>
+    <a href="unit-10-06_FINAL_PUBLISH_v1.2.html" class="nav-btn">← 10-06 자동장력조정장치</a>
     <span class="nav-center">GATE5 PART 10 · 전차선로·가선·집전</span>
-    <a href="unit-10-08_HOLD_VERIFY_v1.0.html" class="nav-btn">10-08 팬터그래프 구조·종류 →</a>
+    <a href="unit-10-08_FINAL_PUBLISH_v1.1.html" class="nav-btn">10-08 팬터그래프 구조·종류 →</a>
   </nav>
 </div>
 </body>
