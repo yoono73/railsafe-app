@@ -617,7 +617,7 @@ function activateUnit(unitId, unit) {
       doc.head.appendChild(style);
     } catch(e) {}
   };
-  iframe.src = unit.file;
+  iframe.src = unit.file + '?v=' + Date.now();
 
   // 모바일: 목차 닫기
   closeMobileMenu();
