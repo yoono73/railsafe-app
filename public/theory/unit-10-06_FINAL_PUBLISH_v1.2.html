@@ -76,6 +76,16 @@ td strong { color: #0f4c81; }
 .nav-center { font-size: 11px; color: #64748b; text-align: center; }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
 @media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn { display: none !important; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; page-break-inside: avoid; } }
+  .qst-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 16px; background: #fff; overflow: hidden; }
+  .qst-head { padding: 10px 14px; background: #f1f5f9; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #e2e8f0; }
+  .qst-num { font-weight: 800; color: #0f4c81; font-size: 13px; }
+  .qst-src { font-size: 11px; color: #64748b; }
+  .qst-body { padding: 14px 16px; }
+  .qst-q { font-size: 13.5px; color: #1a1a1a; font-weight: 600; margin-bottom: 10px; }
+  .qst-choices { list-style: none; margin-bottom: 12px; }
+  .qst-choices li { padding: 5px 0 5px 8px; border-left: 3px solid #e2e8f0; margin-bottom: 4px; color: #334155; font-size: 13px; }
+  .qst-ans { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 8px 12px; font-size: 12.5px; color: #134e4a; }
+  .qst-ans strong { color: #065f46; }
 </style>
 </head>
 <body>
@@ -93,7 +103,7 @@ td strong { color: #0f4c81; }
     <div class="badge-row">
       <span class="badge badge-grade">★★ B등급</span>
       <span class="badge badge-final">FINAL_PUBLISH v1.2</span>
-      <span class="badge badge-noq">기출 DB 없음</span>
+      <span class="badge badge-noq">문제은행 3문항</span>
     </div>
   </div>
 
@@ -160,13 +170,79 @@ td strong { color: #0f4c81; }
   </div>
 
   <div class="sec-title">§3 VIS</div>
-  <div class="split-box">
-    ATD/WTD 전용 이미지 없음. 전차선 장력 개념은 개념98 텍스트로 완결.
+  <div class="vis-wrap">
+    <img src="images/ATD_WTD.png"
+         alt="ATD/WTD 자동장력조정장치"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div style="display:none;padding:20px;border:1px dashed #cbd5e1;border-radius:6px;color:#94a3b8;font-size:13px;text-align:center;">
+      ※ 이미지 준비 중 — ATD/WTD 자동장력조정장치 개념도
+    </div>
+    <div class="vis-cap">▲ ATD(스프링·기계식) / WTD(추 하중 방식) 자동장력조정장치</div>
   </div>
 
-  <div class="sec-title">§4 기출 DB 문항</div>
-  <div class="split-box">
-    engineering-exam-data.ts 검색 결과: ATD/WTD 관련 PART10 전용 기출 문항 0건.
+  <div class="sec-title">📝 문제은행 (3문항)</div>
+  <p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q1</span>
+      <span class="qst-src">신규개념확인 · SOURCE: 4.html 개념98 · ATD/WTD 구분</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">자동장력조정장치(ATD)와 추 하중형 장력조정장치(WTD)의 설명으로 옳은 것은?</div>
+      <ol class="qst-choices">
+        <li>① ATD는 추(weight)를 이용하여 장력을 조정한다</li>
+        <li>② WTD는 스프링·기계식으로 장력을 조정한다</li>
+        <li>③ ATD는 스프링·기계식, WTD는 추 하중 방식이다</li>
+        <li>④ ATD와 WTD는 모두 전기식으로 장력을 제어한다</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ③</strong><br>
+        ATD(Automatic Tension Device): <strong>스프링·기계식</strong>으로 장력 자동 조정.<br>
+        WTD(Weight Tension Device): <strong>추(하중) 방식</strong>으로 장력 유지.<br>
+        두 장치 모두 온도 변화에 의한 전차선 신축 시 장력을 일정하게 유지하는 역할.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q2</span>
+      <span class="qst-src">신규개념확인 · SOURCE: 4.html 개념98 · ATD/WTD 목적</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">자동장력조정장치(ATD/WTD)의 주요 목적으로 옳은 것은?</div>
+      <ol class="qst-choices">
+        <li>① 전차선의 전압강하를 보상한다</li>
+        <li>② 온도 변화에 관계없이 전차선 장력을 일정하게 유지한다</li>
+        <li>③ 전차선의 절연 내력을 높인다</li>
+        <li>④ 전차선 구간을 전기적으로 분리한다</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ②</strong><br>
+        ATD/WTD의 목적: 온도 변화(열팽창·수축)에 의한 전차선 신축 시 <strong>장력을 일정하게 유지</strong>. 장력 일정 → 처짐 일정 → 이선율 감소 → 집전 성능 유지. 전압강하 보상은 정류포스트, 절연 분리는 구분장치의 역할.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q3</span>
+      <span class="qst-src">신규개념확인 · SOURCE: 4.html 개념98 · 장력조정 효과</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">자동장력조정장치(ATD/WTD) 설치 효과로 옳지 않은 것은?</div>
+      <ol class="qst-choices">
+        <li>① 이선율(離線率) 감소</li>
+        <li>② 전차선 수명 연장</li>
+        <li>③ 집전 성능 향상</li>
+        <li>④ 전차선 전압 강하 저감</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ④</strong><br>
+        장력조정장치 효과: 이선율 감소 / 집전 성능 유지 / 전차선 수명 연장. <strong>전압강하 저감은 정류포스트의 역할</strong>이며 ATD/WTD와 무관하다.
+      </div>
+    </div>
   </div>
 
   <nav class="nav-bar" style="margin-top:32px;">

@@ -120,7 +120,7 @@
     <div class="badge-row">
       <span class="badge badge-grade">★★★ A등급</span>
       <span class="badge badge-lock">FINAL_PUBLISH v1.2</span>
-      <span class="badge badge-noq">기출 DB 없음</span>
+      <span class="badge badge-noq">문제은행 3문항</span>
     </div>
   </div>
 
@@ -448,13 +448,67 @@
     <div class="vis-cap">▲ 이격거리 300mm(접지물까지) vs 편위 250mm(선로 중심에서 가로 방향) 비교</div>
   </div>
 
-  <!-- §7 DB 문항 -->
-  <div class="sec-title">§7 기출 DB 문항</div>
+  <div class="sec-title">📝 문제은행 (3문항)</div>
+  <p style="font-size:12px;color:#475569;margin-bottom:12px;">※ 전체 문제·정답·해설이 펼쳐진 상태로 표시됩니다.</p>
 
-  <div class="noq-box">
-    ℹ️ <strong>DB 문항 없음</strong><br>
-    engineering-exam-data.ts 검색 결과: 전차선 구비조건·편위 관련 PART10 전용 문항 0건.<br>
-    DB 원문 확인된 문항 없음 → 문제 섹션 비움.
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q1</span>
+      <span class="qst-src">rk_ch82_14 · SOURCE: 철도왕 교재 ch82 / 4.html 개념82 · 전차선 편위</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">전차선 절연구간의 편위로 옳은 것은?</div>
+      <ol class="qst-choices">
+        <li>① 100mm</li>
+        <li>② 150mm</li>
+        <li>③ 200mm</li>
+        <li>④ 250mm</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ④ 250mm</strong><br>
+        전차선의 편위: 궤도 중심선 기준 수평 이동 허용치. <strong>250mm</strong> 기준은 집전장치 유효 폭, 궤도 진동 범위 등을 감안한 설계적 여유치. 편위가 너무 크면 팬터그래프 이탈 위험.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q2</span>
+      <span class="qst-src">신규개념확인 · SOURCE: 4.html 개념98 · 전차선 장력과 처짐 관계</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">전차선 장력(Tension)과 처짐(Sag)의 관계를 올바르게 설명한 것은?</div>
+      <ol class="qst-choices">
+        <li>① 장력이 높을수록 처짐이 커진다</li>
+        <li>② 장력이 높을수록 처짐이 작아진다</li>
+        <li>③ 장력과 처짐은 무관하다</li>
+        <li>④ 경간이 길수록 처짐이 작아진다</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ②</strong><br>
+        장력↑ → 처짐↓ (반비례 관계). 장력이 높을수록 전차선이 팽팽하게 유지되어 처짐이 감소한다. 반대로 경간(지지점 간 거리)이 길수록 처짐은 증가한다. ATD/WTD는 장력을 일정하게 유지하여 처짐을 제어한다.
+      </div>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head">
+      <span class="qst-num">Q3</span>
+      <span class="qst-src">신규개념확인 · SOURCE: 4.html 개념82 · 전차선 편위 함정</span>
+    </div>
+    <div class="qst-body">
+      <div class="qst-q">전차선 편위(Stagger)에 대한 설명으로 옳지 않은 것은?</div>
+      <ol class="qst-choices">
+        <li>① 전차선을 지그재그로 배치하여 팬터그래프 편마모를 방지한다</li>
+        <li>② 편위 최대값은 궤도 중심선으로부터 250mm이다</li>
+        <li>③ 편위가 클수록 팬터그래프 집전 성능이 향상된다</li>
+        <li>④ 곡선 구간에서는 편위 값이 달리 설정될 수 있다</li>
+      </ol>
+      <div class="qst-ans">
+        <strong>정답: ③</strong><br>
+        편위가 지나치게 크면 팬터그래프의 집전 범위를 벗어나 이선(離線) 위험이 증가한다. 편위는 <strong>팬터그래프 슈의 고른 마모</strong>를 위한 것이지 집전 성능을 향상시키기 위한 것이 아니다.
+      </div>
+    </div>
   </div>
 
   <!-- NAV (하단) -->
