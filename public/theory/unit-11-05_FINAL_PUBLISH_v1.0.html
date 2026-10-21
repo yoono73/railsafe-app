@@ -79,11 +79,26 @@ td strong { color: #0f4c81; }
 .vis-wrap { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 16px; text-align: center; }
 .vis-cap { font-size: 11px; color: #64748b; margin-top: 8px; }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
-@media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box, .q-box, .qst-card { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+@media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box, .q-box, .qst-card { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn, .nav-bar { display: none !important; } }
+  /* ===== 인쇄 버튼 ===== */
+  .print-btn {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 7px 16px;
+    background: #0f4c81;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .print-btn:hover { background: #0a3660; }
 </style>
 </head>
 <body>
 <div class="page-wrap">
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
 
   <div class="unit-header">
     <div class="unit-num">GATE5 · PART 11 · UNIT 11-05</div>

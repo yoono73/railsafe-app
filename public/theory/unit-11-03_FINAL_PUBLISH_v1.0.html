@@ -67,11 +67,26 @@ td strong { color: #0f4c81; }
 .trap-tbl th { background: #7f1d1d; }
 .trap-tbl td:nth-child(2) { color: #dc2626; font-weight: 700; }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
-@media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box, .q-box, .qst-card { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+@media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box, .q-box, .qst-card { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn, .nav-bar { display: none !important; } }
+  /* ===== 인쇄 버튼 ===== */
+  .print-btn {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 7px 16px;
+    background: #0f4c81;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .print-btn:hover { background: #0a3660; }
 </style>
 </head>
 <body>
 <div class="page-wrap">
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
 
   <div class="unit-header">
     <div class="unit-num">GATE5 · PART 11 · UNIT 11-03</div>

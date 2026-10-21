@@ -75,10 +75,25 @@ td strong { color: #0f4c81; }
   .ans-box .ans-body { font-size: 13px; color: #1a1a1a; line-height: 1.7; }
   .ans-box .ans-exp { font-size: 12.5px; color: #334155; margin-top: 6px; padding-top: 6px; border-top: 1px solid #e2e8f0; }
   @media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box, .q-box { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .nav-bar { display: none !important; } img { max-width: 100%; height: auto; page-break-inside: avoid; } }
+  /* ===== 인쇄 버튼 ===== */
+  .print-btn {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 7px 16px;
+    background: #0f4c81;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .print-btn:hover { background: #0a3660; }
 </style>
 </head>
 <body>
 <div class="page-wrap">
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
 
   <div class="unit-header">
     <div class="unit-num">GATE5 · PART 11 · UNIT 11-02</div>
