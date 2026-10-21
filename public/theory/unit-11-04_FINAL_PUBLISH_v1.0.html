@@ -71,18 +71,7 @@ td strong { color: #0f4c81; }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
 @media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box, .q-box, .qst-card { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .print-btn, .nav-bar { display: none !important; } }
   /* ===== 인쇄 버튼 ===== */
-  .print-btn {
-    display: inline-block;
-    margin-bottom: 16px;
-    padding: 7px 16px;
-    background: #0f4c81;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 13px;
-    cursor: pointer;
-    font-weight: 700;
-  }
+  .print-btn { position:fixed; top:12px; right:16px; z-index:999; background:#0f4c81; color:#fff; border:none; border-radius:5px; padding:6px 14px; font-size:.85em; font-weight:bold; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,.18); }
   .print-btn:hover { background: #0a3660; }
 </style>
 </head>

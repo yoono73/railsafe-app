@@ -75,18 +75,7 @@ td strong { color: #0f4c81; }
   .ans-box .ans-exp { font-size: 12.5px; color: #334155; margin-top: 6px; padding-top: 6px; border-top: 1px solid #e2e8f0; }
   @media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box, .q-box { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .nav-bar { display: none !important; } }
   /* ===== 인쇄 버튼 ===== */
-  .print-btn {
-    display: inline-block;
-    margin-bottom: 16px;
-    padding: 7px 16px;
-    background: #0f4c81;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 13px;
-    cursor: pointer;
-    font-weight: 700;
-  }
+  .print-btn { position:fixed; top:12px; right:16px; z-index:999; background:#0f4c81; color:#fff; border:none; border-radius:5px; padding:6px 14px; font-size:.85em; font-weight:bold; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,.18); }
   .print-btn:hover { background: #0a3660; }
 </style>
 </head>
