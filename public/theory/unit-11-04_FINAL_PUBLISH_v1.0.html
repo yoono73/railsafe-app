@@ -50,6 +50,10 @@ td strong { color: #0f4c81; }
 .q-choices li { margin-bottom: 2px; }
 .q-ans { font-weight: 700; color: #065f46; margin-top: 6px; font-size: 12.5px; }
 .q-exp { font-size: 12px; color: #374151; margin-top: 4px; border-top: 1px solid #dbeafe; padding-top: 6px; }
+.nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; margin-bottom: 12px; font-size: 12.5px; }
+.nav-btn { display: inline-block; padding: 5px 12px; border: 1.5px solid #0f4c81; border-radius: 4px; color: #0f4c81; text-decoration: none; font-weight: 700; font-size: 12px; }
+.nav-btn:hover { background: #f0f4f8; }
+.nav-center { font-size: 11px; color: #64748b; text-align: center; }
 .qst-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 14px; overflow: hidden; background: #fff; }
 .qst-head { background: #f1f5f9; padding: 8px 14px; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #e2e8f0; }
 .qst-num { background: #0f4c81; color: #fff; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 3px; }
@@ -66,13 +70,6 @@ td strong { color: #0f4c81; }
 .flow-arrow { color: #2563eb; font-weight: 700; margin: 0 6px; }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
 @media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box, .q-box, .qst-card { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
-details.ans-detail { margin-top: 6px; }
-details.ans-detail > summary { cursor: pointer; font-size: 12.5px; font-weight: 700; color: #065f46; padding: 6px 12px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; list-style: none; display: block; }
-details.ans-detail > summary::-webkit-details-marker { display: none; }
-details.ans-detail > summary::before { content: '▶ 정답·해설 보기'; }
-details.ans-detail[open] > summary::before { content: '▼ 정답·해설 닫기'; }
-details.ans-detail .qst-ans { margin-top: 6px; }
-@media print { details.ans-detail { display: block; } details.ans-detail > summary { display: none; } details.ans-detail .qst-ans { display: block !important; } }
 </style>
 </head>
 <body>
@@ -280,10 +277,10 @@ details.ans-detail .qst-ans { margin-top: 6px; }
         <li>③ 3상 유도전동기 — VVVF 인버터 제어</li>
         <li>④ 3상 유도전동기 — 저항 제어</li>
       </ol>
-      <details class="ans-detail"><summary></summary><div class="qst-ans">
+      <div class="qst-ans">
         <strong>정답: ③ 3상 유도전동기 — VVVF 인버터 제어</strong><br>
         현대 전동차는 3상 유도전동기를 VVVF(가변전압가변주파수) 인버터로 제어하는 것이 표준이다. 직류직권전동기는 저항·약계자·전압 제어를 사용하는 구형 방식이다.
-      </div></details>
+      </div>
     </div>
   </div>
 
@@ -300,10 +297,10 @@ details.ans-detail .qst-ans { margin-top: 6px; }
         <li>③ 변압기(Transformer)</li>
         <li>④ 인터록(Interlock)</li>
       </ol>
-      <details class="ans-detail"><summary></summary><div class="qst-ans">
+      <div class="qst-ans">
         <strong>정답: ② 컨버터(Converter)</strong><br>
         컨버터는 AC→DC 변환 장치다. 인버터는 DC→AC 변환(반대 방향)이므로 혼동 주의.
-      </div></details>
+      </div>
     </div>
   </div>
 
@@ -320,13 +317,20 @@ details.ans-detail .qst-ans { margin-top: 6px; }
         <li>③ 기어비를 조절하여 추진력을 변화시킨다.</li>
         <li>④ 약계자 제어로 속도를 가변한다.</li>
       </ol>
-      <details class="ans-detail"><summary></summary><div class="qst-ans">
+      <div class="qst-ans">
         <strong>정답: ② VVVF 인버터로 전압·주파수를 가변</strong><br>
         LIM도 VVVF 인버터로 1차 코일의 전압·주파수를 조절하여 이동자계 속도를 제어한다. LIM은 기어가 없으므로 기어비 조절(③)은 불가하다.
-      </div></details>
+      </div>
     </div>
   </div>
 
+
+  <!-- 하단 NAV -->
+  <nav class="nav-bar" style="margin-top:40px;">
+    <a href="unit-11-03_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 11-03 철도차량 전동기의 원리와 종류</a>
+    <span class="nav-center">GATE5 PART 11 · 차량 총론·추진</span>
+    <a href="unit-11-05_FINAL_PUBLISH_v1.0.html" class="nav-btn">11-05 점착·공전·활주 →</a>
+  </nav>
 
 </div>
 </body>

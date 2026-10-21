@@ -50,6 +50,10 @@ td strong { color: #0f4c81; }
 .q-choices li { margin-bottom: 2px; }
 .q-ans { font-weight: 700; color: #065f46; margin-top: 6px; font-size: 12.5px; }
 .q-exp { font-size: 12px; color: #374151; margin-top: 4px; border-top: 1px solid #dbeafe; padding-top: 6px; }
+.nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; margin-bottom: 12px; font-size: 12.5px; }
+.nav-btn { display: inline-block; padding: 5px 12px; border: 1.5px solid #0f4c81; border-radius: 4px; color: #0f4c81; text-decoration: none; font-weight: 700; font-size: 12px; }
+.nav-btn:hover { background: #f0f4f8; }
+.nav-center { font-size: 11px; color: #64748b; text-align: center; }
 .qst-card { border: 1.5px solid #cbd5e1; border-radius: 8px; margin-bottom: 14px; overflow: hidden; background: #fff; }
 .qst-head { background: #f1f5f9; padding: 8px 14px; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #e2e8f0; }
 .qst-num { background: #0f4c81; color: #fff; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 3px; }
@@ -76,13 +80,6 @@ td strong { color: #0f4c81; }
 .vis-cap { font-size: 11px; color: #64748b; margin-top: 8px; }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
 @media print { .page-wrap { padding: 10px; } .sec-title { break-after: avoid; page-break-after: avoid; } .concept-card, .exam-box, .q-box, .qst-card { break-inside: avoid; page-break-inside: avoid; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
-details.ans-detail { margin-top: 6px; }
-details.ans-detail > summary { cursor: pointer; font-size: 12.5px; font-weight: 700; color: #065f46; padding: 6px 12px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; list-style: none; display: block; }
-details.ans-detail > summary::-webkit-details-marker { display: none; }
-details.ans-detail > summary::before { content: '▶ 정답·해설 보기'; }
-details.ans-detail[open] > summary::before { content: '▼ 정답·해설 닫기'; }
-details.ans-detail .qst-ans { margin-top: 6px; }
-@media print { details.ans-detail { display: block; } details.ans-detail > summary { display: none; } details.ans-detail .qst-ans { display: block !important; } }
 </style>
 </head>
 <body>
@@ -283,10 +280,10 @@ details.ans-detail .qst-ans { margin-top: 6px; }
         <li>③ 점착계수의 전체 범위는 0.10~0.30이다.</li>
         <li>④ 습윤 레일의 점착계수가 건조 레일보다 크다.</li>
       </ol>
-      <details class="ans-detail"><summary></summary><div class="qst-ans">
+      <div class="qst-ans">
         <strong>정답: ④ 습윤 레일이 건조 레일보다 크다.</strong><br>
         습윤 레일(0.10~0.15)은 건조 레일(0.25~0.30)보다 점착계수가 낮다. 레일이 젖으면 마찰력이 감소하여 공전·활주 위험이 증가한다.
-      </div></details>
+      </div>
     </div>
   </div>
 
@@ -303,10 +300,10 @@ details.ans-detail .qst-ans { margin-top: 6px; }
         <li>③ 이선현상</li>
         <li>④ 점착불량</li>
       </ol>
-      <details class="ans-detail"><summary></summary><div class="qst-ans">
+      <div class="qst-ans">
         <strong>정답: ② 활주(Wheel Slide)</strong><br>
         활주는 제동 시 제동력이 점착력보다 커서 바퀴가 잠기는 현상이다. 공전(Wheel Slip)은 가속 시 구동력이 점착력을 초과하여 바퀴가 헛도는 현상으로, 혼동 주의.
-      </div></details>
+      </div>
     </div>
   </div>
 
@@ -323,13 +320,20 @@ details.ans-detail .qst-ans { margin-top: 6px; }
         <li>③ F = W / μ</li>
         <li>④ F = μ + W</li>
       </ol>
-      <details class="ans-detail"><summary></summary><div class="qst-ans">
+      <div class="qst-ans">
         <strong>정답: ② F = μ × W</strong><br>
         점착력 = 점착계수 × 윤하중 (차륜하중). 윤하중이 클수록, 점착계수가 높을수록 점착력이 크므로 더 큰 견인력·제동력이 가능하다.
-      </div></details>
+      </div>
     </div>
   </div>
 
+
+  <!-- 하단 NAV -->
+  <nav class="nav-bar" style="margin-top:40px;">
+    <a href="unit-11-04_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 11-04 추진제어·VVVF·주회로</a>
+    <span class="nav-center">GATE5 PART 11 · 차량 총론·추진</span>
+    <a href="unit-12-01_FINAL_PUBLISH_v1.0.html" class="nav-btn">12-01 열차저항 4종 →</a>
+  </nav>
 
 </div>
 </body>
