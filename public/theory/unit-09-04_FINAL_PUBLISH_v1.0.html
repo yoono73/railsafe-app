@@ -160,6 +160,20 @@
   .src-a { background: #ede9fe; border-radius: 4px; padding: 6px 10px; color: #3730a3; font-size: 12.5px; }
   .src-wrong { font-size: 12px; color: #7c2d12; margin-top: 5px; }
 
+  /* ===== 기출문제 카드 ===== */
+  .qst-card { border: 1.5px solid #e2e8f0; border-radius: 8px; margin-bottom: 16px; overflow: hidden; }
+  .qst-head { padding: 10px 14px; background: #334155; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+  .qst-body { padding: 14px 16px; font-size: 13.5px; }
+  .qst-q { font-weight: 600; color: #1a1a1a; margin-bottom: 10px; line-height: 1.7; }
+  .qst-choices { list-style: none; padding: 0; margin-bottom: 10px; }
+  .qst-choices li { padding: 4px 0; font-size: 13px; color: #333; }
+  /* .qst-choices li.ans — 정답 선노출 금지 원칙상 사용하지 않음 */
+
+  /* ===== 정답·해설 박스 ===== */
+  .ans-blk { border: 1.5px solid #1e3a5f; border-radius: 7px; padding: 12px 15px; margin-bottom: 12px; font-size: 13px; background: #f0f4ff; }
+  .ans-blk-title { font-weight: 800; color: #1e3a5f; margin-bottom: 6px; }
+  .ans-badge { display: inline-block; background: #1e3a5f; color: #fff; border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 700; margin-right: 6px; }
+
   /* ===== 인쇄 버튼 ===== */
   .print-btn {
     display: inline-block;
@@ -218,7 +232,7 @@
   <nav class="nav-bar">
     <a href="unit-09-03_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 09-03 교류 접지시설</a>
     <span class="nav-center">GATE5 PART 09 · 전기철도·전력공급</span>
-    <span class="nav-btn disabled">09-05 준비중 →</span>
+    <a href="unit-09-05_FINAL_PUBLISH_v1.0.html" class="nav-btn">09-05 절연구간 통과방법 →</a>
   </nav>
 
   <!-- 인쇄 버튼 -->
@@ -385,15 +399,6 @@
     </table>
   </div>
 
-  <!-- 귀선전류 흐름 -->
-  <div class="vis-wrap" style="margin:16px 0;">
-    <img src="images/귀선전류 흐름.png"
-         alt="귀선전류 흐름"
-         style="width:100%; height:auto; display:block;"
-         onerror="this.onerror=null; this.style.display='none'">
-    <div class="vis-caption">귀선전류 흐름 (SOURCE 09)</div>
-  </div>
-
   <!-- VIS-104 임피던스본드 원리 -->
   <div class="vis-wrap" style="margin:16px 0;">
     <img src="images/VIS-104_임피던스본드원리.png"
@@ -447,21 +452,75 @@
     임피던스본드 분리 대상 = <strong>궤도회로 신호전류</strong>
   </div>
 
-  <!-- §5 SOURCE 예시 -->
-  <div class="sec-title">§5 SOURCE 예시</div>
+  <!-- §5 기출문제 -->
+  <div class="sec-title">§5 기출문제</div>
 
-  <div class="src-box">
-    <div class="src-box-title">📝 SOURCE 예시 (4.html 개념96 quiz-ex)</div>
-    <div class="src-q">Q. 임피던스본드가 통과시키는 것은?</div>
-    <div class="src-a">정답: 귀선전류(견인전류)</div>
-    <div class="src-wrong">오답함정: "신호전류도 통과시킨다"는 오답</div>
+  <div class="qst-card">
+    <div class="qst-head"><span>Q1</span><span>귀선전류 정의</span></div>
+    <div class="qst-body">
+      <div class="qst-q">전기철도에서 전동차가 전력을 소비한 후 레일을 통해 변전소로 되돌아가는 전류를 무엇이라 하는가?</div>
+      <ul class="qst-choices">
+        <li>① 급전전류</li>
+        <li>② 귀선전류(견인전류)</li>
+        <li>③ 신호전류</li>
+        <li>④ 유도전류</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head"><span>Q2</span><span>임피던스본드 역할</span></div>
+    <div class="qst-body">
+      <div class="qst-q">임피던스본드가 귀선회로에서 담당하는 역할로 옳지 않은 것은?</div>
+      <ul class="qst-choices">
+        <li>① 귀선전류(견인전류)를 레일 간 원활히 통과시킨다</li>
+        <li>② 궤도회로 신호전류를 인접 구간으로 분류시킨다</li>
+        <li>③ 귀선전류와 신호전류를 합산하여 변전소로 보낸다</li>
+        <li>④ 인접 레일 구간 경계에서 귀선전류 경로를 확보한다</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qst-card">
+    <div class="qst-head"><span>Q3</span><span>귀선전류·신호전류 분리 (SOURCE 4.html 개념96)</span></div>
+    <div class="qst-body">
+      <div class="qst-q">임피던스본드에 대한 설명으로 옳은 것은?</div>
+      <ul class="qst-choices">
+        <li>① 신호전류와 귀선전류를 모두 차단한다</li>
+        <li>② 귀선전류(견인전류)는 통과시키고, 신호전류는 분리·차단한다</li>
+        <li>③ 신호전류만 통과시키고 귀선전류는 차단한다</li>
+        <li>④ 귀선전류를 차단하고 신호전류를 통과시킨다</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- §6 정답·해설 -->
+  <div class="sec-title">§6 정답·해설</div>
+
+  <div class="ans-blk">
+    <div class="ans-blk-title">Q1 정답 및 해설</div>
+    <p><span class="ans-badge">정답 ②</span> 귀선전류(견인전류)</p>
+    <p>전동차 팬터그래프 → 전차선 → 전동차 → <strong>레일(귀선전류)</strong> → 변전소 순환. 레일을 통해 돌아오는 전류가 귀선전류(= 견인전류)다.</p>
+  </div>
+
+  <div class="ans-blk">
+    <div class="ans-blk-title">Q2 정답 및 해설</div>
+    <p><span class="ans-badge">정답 ③</span> 귀선전류와 신호전류 합산 → 오답</p>
+    <p>임피던스본드는 <strong>귀선전류는 통과</strong>시키고 <strong>신호전류는 분리</strong>한다. 두 전류를 합산하지 않는다. "신호전류를 인접 구간으로 분류시킨다"는 설명도 오해하기 쉬운 표현이나, 핵심 기능은 귀선전류 통과 / 신호전류 분리이다.</p>
+  </div>
+
+  <div class="ans-blk">
+    <div class="ans-blk-title">Q3 정답 및 해설</div>
+    <p><span class="ans-badge">정답 ②</span> 귀선전류 통과 + 신호전류 분리</p>
+    <p>임피던스본드 핵심 기능: <strong>귀선전류(견인전류)를 통과</strong>시켜 변전소로 돌려보내고, <strong>궤도회로 신호전류는 분리·차단</strong>하여 신호 오동작을 방지한다.</p>
+    <p style="color:#7c2d12; font-size:12.5px;">⚠️ 오답함정: "신호전류도 통과시킨다"는 오답. 임피던스본드는 신호전류를 차단(분리)한다.</p>
   </div>
 
   <!-- 하단 NAV -->
   <nav class="nav-bar" style="margin-top: 40px;">
     <a href="unit-09-03_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 09-03 교류 접지시설</a>
     <span class="nav-center">GATE5 PART 09 · 전기철도·전력공급</span>
-    <span class="nav-btn disabled">09-05 준비중 →</span>
+    <a href="unit-09-05_FINAL_PUBLISH_v1.0.html" class="nav-btn">09-05 절연구간 통과방법 →</a>
   </nav>
 
 </div>

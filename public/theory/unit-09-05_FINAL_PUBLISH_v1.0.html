@@ -200,6 +200,11 @@
   .src-a { background: #ede9fe; border-radius: 4px; padding: 6px 10px; color: #3730a3; font-size: 12.5px; }
   .src-wrong { font-size: 12px; color: #7c2d12; margin-top: 5px; }
 
+  /* ===== 정답·해설 박스 ===== */
+  .ans-blk { border: 1.5px solid #1e3a5f; border-radius: 7px; padding: 12px 15px; margin-bottom: 12px; font-size: 13px; background: #f0f4ff; }
+  .ans-blk-title { font-weight: 800; color: #1e3a5f; margin-bottom: 6px; }
+  .ans-badge { display: inline-block; background: #1e3a5f; color: #fff; border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 700; margin-right: 6px; }
+
   /* ===== 인쇄 버튼 ===== */
   .print-btn {
     display: inline-block;
@@ -240,7 +245,7 @@
   <nav class="nav-bar">
     <a href="unit-09-04_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 09-04 귀선전류와 임피던스본드</a>
     <span class="nav-center">GATE5 PART 09 · 전기철도·전력공급</span>
-    <span class="nav-btn disabled">09-06 준비중 →</span>
+    <span class="nav-btn disabled">PART 09 종료</span>
   </nav>
 
   <!-- 인쇄 버튼 -->
@@ -471,8 +476,6 @@
         <li>③ 300mm 이상</li>
         <li>④ 150mm 이상</li>
       </ul>
-      <hr class="qst-divider">
-      <div class="qst-explain">교류 25kV 전차선로에서 전선(급전선) 및 전차선과 접지물 사이의 절연 이격거리는 300mm 이상이다.</div>
     </div>
   </div>
 
@@ -489,13 +492,28 @@
         <li>③ 200mm</li>
         <li>④ 250mm</li>
       </ul>
-      <hr class="qst-divider">
-      <div class="qst-explain">전차선 절연구간의 편위는 250mm이다.</div>
     </div>
   </div>
 
-  <!-- §6 SOURCE 예시 -->
-  <div class="sec-title">§6 SOURCE 예시</div>
+  <!-- §6 정답·해설 -->
+  <div class="sec-title">§6 정답·해설</div>
+
+  <div class="ans-blk">
+    <div class="ans-blk-title">Q1 정답 및 해설</div>
+    <p><span class="ans-badge">정답 ③</span> 300mm 이상</p>
+    <p>교류 25kV 전차선로에서 전선(급전선) 및 전차선과 접지물 사이의 절연 이격거리는 <strong>300mm 이상</strong>이다.</p>
+    <p style="color:#7c2d12; font-size:12.5px;">⚠️ 오답함정: 250mm는 절연구간 편위 기준 — 이격거리와 혼동 금지.</p>
+  </div>
+
+  <div class="ans-blk">
+    <div class="ans-blk-title">Q2 정답 및 해설</div>
+    <p><span class="ans-badge">정답 ④</span> 250mm</p>
+    <p>전차선 절연구간의 편위는 <strong>250mm</strong>이다. 팬터그래프가 절연구간 통과 시 허용되는 레일 중심 이탈 거리.</p>
+    <p style="color:#7c2d12; font-size:12.5px;">⚠️ 오답함정: 300mm는 이격거리 기준 — 편위 250mm와 혼동 주의.</p>
+  </div>
+
+  <!-- §7 SOURCE 예시 -->
+  <div class="sec-title">§7 SOURCE 예시</div>
 
   <div class="src-box">
     <div class="src-box-title">📝 SOURCE 예시 (4.html 개념81 quiz-ex)</div>
@@ -508,7 +526,7 @@
   <nav class="nav-bar" style="margin-top: 40px;">
     <a href="unit-09-04_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 09-04 귀선전류와 임피던스본드</a>
     <span class="nav-center">GATE5 PART 09 · 전기철도·전력공급</span>
-    <span class="nav-btn disabled">09-06 준비중 →</span>
+    <span class="nav-btn disabled">PART 09 종료</span>
   </nav>
 
 </div>
