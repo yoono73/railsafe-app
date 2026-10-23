@@ -140,6 +140,17 @@
   .trap-tbl th { background: #7c2d12; }
   .trap-tbl td { font-size: 12.5px; }
 
+  /* ===== 기출문제 카드 ===== */
+  .qst-card { border: 1.5px solid #e2e8f0; border-radius: 8px; margin-bottom: 16px; overflow: hidden; }
+  .qst-num { padding: 8px 14px; background: #334155; color: #fff; font-size: 12px; font-weight: 700; }
+  .qst-body { padding: 12px 16px 4px; font-size: 13.5px; font-weight: 600; color: #1a1a1a; line-height: 1.7; }
+  .qst-opts { margin: 8px 0 12px; padding-left: 28px; font-size: 13px; color: #333; line-height: 1.8; }
+
+  /* ===== 정답·해설 박스 ===== */
+  .ans-blk { border: 1.5px solid #1e3a5f; border-radius: 7px; padding: 12px 15px; margin-bottom: 12px; font-size: 13px; background: #f0f4ff; }
+  .ans-blk-title { font-weight: 800; color: #1e3a5f; margin-bottom: 6px; }
+  .ans-badge { display: inline-block; background: #1e3a5f; color: #fff; border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 700; margin-right: 6px; }
+
   /* ===== 인쇄 버튼 ===== */
   .print-btn {
     display: inline-block;
@@ -474,6 +485,72 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- §5 기출문제 -->
+  <div class="sec-title">§5 기출문제</div>
+
+  <!-- Q1 -->
+  <div class="qst-card">
+    <div class="qst-num">Q1</div>
+    <div class="qst-body">전압강하를 줄이고 급전거리를 늘리는 데 유리한 급전방식은?</div>
+    <ol class="qst-opts">
+      <li>직접급전방식</li>
+      <li>BT급전방식</li>
+      <li>AT급전방식</li>
+      <li>직류급전방식</li>
+    </ol>
+  </div>
+
+  <!-- Q2 -->
+  <div class="qst-card">
+    <div class="qst-num">Q2</div>
+    <div class="qst-body">교류 전기철도에서 귀선전류를 흡상(吸上)하여 통신유도장애를 줄이는 목적으로 사용되는 변압기는?</div>
+    <ol class="qst-opts">
+      <li>단권변압기(AT)</li>
+      <li>흡상변압기(BT)</li>
+      <li>변류기(CT)</li>
+      <li>계기용 변압기(PT)</li>
+    </ol>
+  </div>
+
+  <!-- Q3 -->
+  <div class="qst-card">
+    <div class="qst-num">Q3</div>
+    <div class="qst-body">AT급전방식에서 급전선(F선)과 전차선(T선)의 전압 구성으로 옳은 것은?</div>
+    <ol class="qst-opts">
+      <li>급전선 +25kV, 전차선 +25kV (합계 50kV)</li>
+      <li>급전선 +25kV, 전차선 −25kV (합계 50kV)</li>
+      <li>급전선 −25kV, 전차선 −25kV (합계 50kV)</li>
+      <li>급전선 +50kV, 전차선 0kV (합계 50kV)</li>
+    </ol>
+  </div>
+
+  <!-- §6 정답·해설 -->
+  <div class="sec-title">§6 정답 · 해설</div>
+
+  <!-- A1 -->
+  <div class="ans-blk">
+    <div class="ans-blk-title">Q1 정답</div>
+    <p><span class="ans-badge">③</span> AT급전방식</p>
+    <p>AT(단권변압기)급전은 일정 간격으로 단권변압기를 설치해 전차선-급전선 간 전압을 균등하게 유지하므로 <strong>전압강하가 적고 급전거리가 길어진다</strong>. 우리나라 고속선(KTX)에 표준으로 적용된다.</p>
+    <p>⚠️ 오답함정: "BT급전이 급전거리가 길다"는 반대. BT급전은 급전거리가 <strong>짧다</strong>.</p>
+  </div>
+
+  <!-- A2 -->
+  <div class="ans-blk">
+    <div class="ans-blk-title">Q2 정답</div>
+    <p><span class="ans-badge">②</span> 흡상변압기(BT)</p>
+    <p>BT(Booster Transformer, 흡상변압기)급전은 귀선전류를 레일에서 귀선선(BT선)으로 흡상해 통신유도장애를 줄인다. 단, 급전거리가 짧아지는 단점이 있다.</p>
+    <p>⚠️ 오답함정: AT(단권변압기)는 전압강하 감소 목적이며 통신유도장애 감소는 BT급전의 특징.</p>
+  </div>
+
+  <!-- A3 -->
+  <div class="ans-blk">
+    <div class="ans-blk-title">Q3 정답</div>
+    <p><span class="ans-badge">②</span> 급전선 +25kV, 전차선 −25kV (합계 50kV)</p>
+    <p>AT급전은 급전선(F선) +25kV와 전차선(T선) −25kV의 <strong>합계 50kV</strong>로 구성되며, 단권변압기(1:1 변압비)로 균등하게 유지한다.</p>
+    <p>⚠️ 오답함정: "둘 다 +25kV"는 오답. 극성이 반대여야 50kV 공급이 성립된다.</p>
   </div>
 
   <!-- 하단 NAV -->
