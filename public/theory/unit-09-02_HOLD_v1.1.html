@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>09-02 전기철도 급전계통 전체 흐름 v1.1</title>
+<!--
+  UNIT : 09-02
+  제목 : 전기철도 급전계통 전체 흐름
+  VERSION : v1.1
+  DATE : 2026-10-11
+  STATUS : HOLD
+
+  HOLD 사유 :
+  - SOURCE-61 (전차선 기초 / GATE3 P8) 독립 원문 파일 미확보
+    → GATE3_최종확정본.md 및 Migration_Analysis.md에 개요만 존재; 원문 복원 전 FINAL 전환 금지
+  - F-03 (급전계통도 전체 흐름) 내부 원문 없음
+    → 외부 공식근거 기반 신규 보강으로 처리 (아래 PRIMARY SOURCE 참조)
+
+  PRIMARY SOURCE :
+  - GATE4 SOURCE-61 (전차선 기초 / GATE3 P8 붙여넣기) — 원문 미확보
+  - F-03 (급전계통도 전체 흐름) — 외부 공식근거 기반 신규 보강
+    ├ KR E-02030 변전설비 구성 및 계획 (국가철도공단, Rev.10, 2025-03-28)
+    ├ KR E-02040 변전소의 간격 및 위치 (국가철도공단)
+    ├ 철도설계기준 시스템편 2013.12 — 귀선회로 구성 정의
+    └ 학술자료 — 수전전압·AT급전 흐름도
+
+  EXCLUDE :
+  - HSCB(고속도차단기)·GIS → 09-02에서 완전 제외. 별도 HOLD 재배치 예정
+  - VIS-101 (1차2차현가 위치도) → 09-02 사용 불가 (내용 불일치)
+  - 4.html 개념61 (HSCB) → SOURCE-61과 무관; 이 단원에 삽입 금지
+  - BT·AT급전 방식 비교 (4.html 개념95) → 09-03 소속; 이 단원에 삽입 금지
+
+  QUESTIONS : 0 (급전계통 전체 흐름 직접 기출 미확인)
+  VIS : 없음 (급전계통 흐름도 텍스트 대체)
+  VIDEO : 0
+
+  SOURCE 밖 항목 : 0
+  09-03 침범 : 0
+-->
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* ===== 헤더 ===== */
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-part  { color: #1e3a5f; border-color: #1e3a5f; background: #f0f4f8; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-lock  { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+  .badge-hold  { color: #991b1b; border-color: #991b1b; background: #fef2f2; }
+  .badge-noq   { color: #92400e; border-color: #92400e; background: #fffbeb; }
+
+  /* ===== 섹션 제목 ===== */
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+
+  /* ===== 선행 용어 ===== */
+  .term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
+  .term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+  .term-name { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 4px; }
+  .term-desc { font-size: 13px; color: #333; line-height: 1.6; }
+
+  /* ===== 개념 카드 ===== */
+  .concept-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .concept-head {
+    padding: 12px 16px;
+    background: #1e3a5f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .concept-num {
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255,255,255,.18);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+  .concept-name { font-size: 15px; font-weight: 800; }
+  .concept-star { font-size: 12px; margin-left: auto; opacity: .9; white-space: nowrap; }
+  .concept-body { padding: 16px 18px; font-size: 13.5px; line-height: 1.8; }
+
+  /* ===== TIP / TRAP ===== */
+  .tip-box {
+    background: #f0fdfa;
+    border: 1px solid #99f6e4;
+    border-radius: 5px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: #134e4a;
+    margin-top: 12px;
+  }
+  .trap-box {
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    border-radius: 5px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: #7c2d12;
+    margin-top: 10px;
+  }
+  .trap-box strong { color: #9a3412; }
+
+  /* ===== 표 ===== */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #1e3a5f; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+  td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  tr.hl td { background: #eff6ff; }
+  td strong { color: #1e3a5f; }
+
+  /* ===== 급전 흐름도 (텍스트 SVG 대체) ===== */
+  .flow-wrap {
+    background: #f8fafc;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 14px 0;
+    font-size: 13px;
+    overflow-x: auto;
+  }
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    margin-bottom: 6px;
+  }
+  .flow-node {
+    background: #1e3a5f;
+    color: #fff;
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 7px 12px;
+    border-radius: 5px;
+    white-space: nowrap;
+    text-align: center;
+    min-width: 90px;
+  }
+  .flow-node.alt { background: #0f766e; }
+  .flow-node.ret { background: #6b21a8; }
+  .flow-arr {
+    color: #1e3a5f;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 0 6px;
+    white-space: nowrap;
+  }
+  .flow-arr.ret { color: #6b21a8; }
+  .flow-label {
+    font-size: 11px;
+    color: #64748b;
+    text-align: center;
+    margin-top: 2px;
+  }
+  .flow-node-wrap { display: flex; flex-direction: column; align-items: center; }
+
+  /* ===== 시험 포인트 박스 ===== */
+  .exam-box { border: 1.5px solid #1e3a5f; border-radius: 7px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; }
+  .exam-box-title { font-weight: 800; color: #1e3a5f; font-size: 13.5px; margin-bottom: 8px; }
+  .exam-box ul { padding-left: 16px; }
+  .exam-box li { margin-bottom: 4px; }
+
+  /* ===== SOURCE 주석 배너 ===== */
+  .src-note {
+    background: #fafafa;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #94a3b8;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #475569;
+    margin-top: 10px;
+  }
+
+  /* ===== 인쇄 버튼 ===== */
+  .print-btn {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 7px 16px;
+    background: #7c2d12;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .print-btn:hover { background: #5c2707; }
+
+  /* ===== NAV ===== */
+  .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; margin-bottom: 12px; font-size: 12.5px; }
+  .nav-btn { display: inline-block; padding: 5px 12px; border: 1.5px solid #1e3a5f; border-radius: 4px; color: #1e3a5f; text-decoration: none; font-weight: 700; font-size: 12px; }
+  .nav-btn:hover { background: #f0f4f8; }
+  .nav-btn.disabled { opacity: .35; cursor: default; pointer-events: none; }
+  .nav-center { font-size: 11px; color: #64748b; text-align: center; }
+
+  /* ===== 함정 표 ===== */
+  .trap-tbl th { background: #7c2d12; }
+  .trap-tbl td { font-size: 12.5px; }
+
+  @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+  @media print {
+    .page-wrap { padding: 10px; }
+    .sec-title { break-after: avoid; page-break-after: avoid; }
+    .concept-card { break-inside: avoid; page-break-inside: avoid; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .print-btn { display: none !important; }
+    .nav-bar { display: none !important; }
+    img { max-width: 100%; height: auto; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- NAV -->
+  <nav class="nav-bar">
+    <a href="unit-09-01_FINAL_PUBLISH_v1.1.html" class="nav-btn">← 09-01 전력방식</a>
+    <span class="nav-center">GATE5 PART 09 · 전기철도·전력공급</span>
+    <a href="unit-09-03_HOLD_v1.1.html" class="nav-btn">09-03 BT·AT급전 →</a>
+  </nav>
+
+  <!-- HOLD 배너 -->
+  <div style="background:#fef2f2; border:1px solid #fca5a5; border-radius:6px; padding:12px 16px; margin-bottom:16px; font-size:13px; color:#991b1b;">
+    ⛔ <strong>HOLD</strong> — SOURCE-61 (전차선 기초 / GATE3 P8) 독립 원문 미확보.<br>
+    F-03 (급전계통도 전체 흐름)도 내부 원문 없음 → <strong>외부 공식근거(KR E-02030·E-02040·철도설계기준 2013) 기반 신규 보강</strong>으로 처리.<br>
+    SOURCE-61 원문 복원 전 <strong>FINAL PUBLISH 전환 금지</strong>.
+  </div>
+
+  <!-- 인쇄 버튼 -->
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+
+  <!-- 헤더 -->
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 09 · UNIT 09-02</div>
+    <div class="unit-title">전기철도 급전계통 전체 흐름</div>
+    <div class="unit-sub">전철변전소 → 급전선 → 전차선 → 집전 → 귀선 / 교류 25kV AT급전</div>
+    <div class="badge-row">
+      <span class="badge badge-grade">★★★ A등급</span>
+      <span class="badge badge-hold">⛔ HOLD v1.1</span>
+      <span class="badge badge-noq">기출 DB 없음</span>
+    </div>
+  </div>
+
+  <!-- §0 선행 용어 -->
+  <div class="sec-title">§0 선행 용어</div>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">전철변전소 (Traction Substation)</div>
+      <div class="term-desc">한전 송전선(154kV)을 수전하여 스코트변압기로 단상 교류 50kV로 변성, 급전선에 공급하는 시설.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">급전선 (Feeder)</div>
+      <div class="term-desc">변전소에서 AT(단권변압기)까지 전력을 공급하는 전선. AT급전에서 +25kV 전압을 공급.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">전차선 (Contact Wire, 架線)</div>
+      <div class="term-desc">열차 팬터그래프와 직접 접촉하여 전력을 전달하는 전선. AC 25kV.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">팬터그래프 (Pantograph)</div>
+      <div class="term-desc">차량 지붕에 장착되어 전차선과 접촉, 전력을 집전(集電)하는 집전장치.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">귀선전류 (Return Current)</div>
+      <div class="term-desc">열차가 전력 사용 후 발생하는 전류가 레일·귀선회로를 통해 변전소로 되돌아가는 전류.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">구분장치 (Section Insulator)</div>
+      <div class="term-desc">전차선로를 급전 구간별로 전기적으로 분리하는 절연장치. 보수·사고 시 구간 단전 가능.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">스코트변압기 (Scott Transformer)</div>
+      <div class="term-desc">3상 교류를 2개의 단상 교류(위상차 90°)로 변환하는 특수 변압기. 불평형 부하 경감에 활용.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">AT (Auto Transformer, 단권변압기)</div>
+      <div class="term-desc">급전선–전차선 간 전압을 균등 유지하기 위해 약 10km 간격으로 선로 변에 설치하는 변압기.</div>
+    </div>
+  </div>
+
+  <!-- §1 급전계통 전체 흐름 -->
+  <div class="sec-title">§1 급전계통 전체 흐름 (F-03 신규 — 외부 공식근거 기반)</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">SOURCE-61 + F-03 | 외부 공식근거 기반</span>
+      <span class="concept-name">교류 AT급전 계통 전체 흐름</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+
+      <p style="font-size:13px; color:#475569; margin-bottom:12px;">
+        [공급 방향 →] 전철변전소 → 급전선(AT) → 전차선 → 팬터그래프 → 열차<br>
+        [귀선 방향 ←] 열차 → 레일 → 임피던스본드 → 부급전선 → 변전소
+      </p>
+
+      <!-- 흐름도 -->
+      <div class="flow-wrap">
+        <div style="font-size:12px; font-weight:700; color:#1e3a5f; margin-bottom:12px;">▶ 공급 회로 (한전 수전 → 열차)</div>
+        <div class="flow-row">
+          <div class="flow-node-wrap">
+            <div class="flow-node">한전 송전선<br>154kV</div>
+            <div class="flow-label">3상 교류</div>
+          </div>
+          <div class="flow-arr">→</div>
+          <div class="flow-node-wrap">
+            <div class="flow-node">스코트변압기</div>
+            <div class="flow-label">3상→단상×2</div>
+          </div>
+          <div class="flow-arr">→</div>
+          <div class="flow-node-wrap">
+            <div class="flow-node alt">전철변전소<br>50kV 단상</div>
+            <div class="flow-label">KR E-02030</div>
+          </div>
+          <div class="flow-arr">→</div>
+          <div class="flow-node-wrap">
+            <div class="flow-node">급전선<br>+25kV</div>
+            <div class="flow-label">AT 경유</div>
+          </div>
+          <div class="flow-arr">→</div>
+          <div class="flow-node-wrap">
+            <div class="flow-node alt">전차선<br>AC 25kV</div>
+            <div class="flow-label">집전점</div>
+          </div>
+          <div class="flow-arr">→</div>
+          <div class="flow-node-wrap">
+            <div class="flow-node">팬터그래프<br>→ 열차</div>
+            <div class="flow-label">부하</div>
+          </div>
+        </div>
+
+        <div style="font-size:12px; font-weight:700; color:#6b21a8; margin: 16px 0 10px;">◀ 귀선 회로 (열차 → 변전소)</div>
+        <div class="flow-row">
+          <div class="flow-node-wrap">
+            <div class="flow-node ret">열차 차륜</div>
+            <div class="flow-label">접촉</div>
+          </div>
+          <div class="flow-arr ret">→</div>
+          <div class="flow-node-wrap">
+            <div class="flow-node ret">레일</div>
+            <div class="flow-label">귀선전류</div>
+          </div>
+          <div class="flow-arr ret">→</div>
+          <div class="flow-node-wrap">
+            <div class="flow-node ret">임피던스본드</div>
+            <div class="flow-label">신호분리</div>
+          </div>
+          <div class="flow-arr ret">→</div>
+          <div class="flow-node-wrap">
+            <div class="flow-node ret">부급전선</div>
+            <div class="flow-label">AT 중성점</div>
+          </div>
+          <div class="flow-arr ret">→</div>
+          <div class="flow-node-wrap">
+            <div class="flow-node ret">전철변전소</div>
+            <div class="flow-label">귀로 완료</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="src-note">
+        📎 <strong>외부 공식근거:</strong> KR E-02030 (변전설비 구성 및 계획, 국가철도공단 Rev.10, 2025-03-28) / KR E-02040 (변전소의 간격 및 위치) / 철도설계기준 시스템편 2013.12 (귀선회로) / 학술자료 (스코트변압기 수전 흐름)<br>
+        SOURCE-61 내부 원문 미확보 — HOLD 해제 시 원문 대조 필요
+      </div>
+
+      <div class="tip-box" style="margin-top:14px;">
+        💡 <strong>핵심 숫자</strong><br>
+        · 한전 수전: <strong>154kV 3상</strong> → 스코트변압기 → <strong>단상 50kV × 2회선</strong><br>
+        · 전차선 공칭전압: <strong>AC 25kV</strong> (AT급전: 급전선 +25kV + 전차선 25kV = 합계 50kV)<br>
+        · AT 설치 간격: 약 <strong>10km</strong> (급전구분소 기준)<br>
+        · 변전소 간격(AT급전): <strong>50~60km</strong> (KR E-02040 기반)
+      </div>
+    </div>
+  </div>
+
+  <!-- §2 변전소 구성·수전 -->
+  <div class="sec-title">§2 전철변전소 구성 — KR E-02030·E-02040 기반</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">외부 공식근거 — KR E-02030 / E-02040</span>
+      <span class="concept-name">전철변전소 구성 및 위치</span>
+      <span class="concept-star">★★☆</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>항목</th><th>내용</th><th>출처</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>수전 전압</strong></td>
+              <td>한전 154kV 3상 교류</td>
+              <td>KR E-02030</td>
+            </tr>
+            <tr>
+              <td><strong>변압기 형식</strong></td>
+              <td>스코트 결선 변압기 (Scott Transformer)<br>3상 → 단상 50kV × 2회선 출력</td>
+              <td>KR E-02030</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>출력 전압</strong></td>
+              <td>단상 교류 50kV (급전선 ±25kV × 2상)</td>
+              <td>KR E-02030</td>
+            </tr>
+            <tr>
+              <td><strong>변전소 간격 (AT급전)</strong></td>
+              <td>50~60km (학술자료·KR E-02040 기반)</td>
+              <td>KR E-02040</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>급전구분소(SSP) 간격</strong></td>
+              <td>변전소 간 약 10km마다 AT 설치</td>
+              <td>KR E-02040</td>
+            </tr>
+            <tr>
+              <td><strong>주요 설비</strong></td>
+              <td>수전설비, 스코트변압기, 급전반, 보호계전기, GIS/GCB</td>
+              <td>KR E-02030</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trap-box">
+        ⚠️ <strong>혼동 주의</strong> — 4.html 개념61은 HSCB(고속도차단기)이며 SOURCE-61(전차선 기초)과 <strong>완전히 다른 내용</strong>.<br>
+        이 단원에 HSCB·GIS 세부내용을 삽입하면 안 됨. HSCB·GIS는 별도 HOLD 단원으로 재배치 예정.
+      </div>
+    </div>
+  </div>
+
+  <!-- §3 귀선회로 -->
+  <div class="sec-title">§3 귀선회로 구성 — 철도설계기준 시스템편 2013</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">외부 공식근거 — 철도설계기준(시스템편) 2013.12</span>
+      <span class="concept-name">귀선회로 (Return Circuit) 구성</span>
+      <span class="concept-star">★★☆</span>
+    </div>
+    <div class="concept-body">
+      <p style="margin-bottom:10px; font-size:13px;">
+        철도설계기준(시스템편, 2013.12)에 따른 교류 전기철도 귀선회로의 구성 요소:
+      </p>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>구성 요소</th><th>역할</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>레일 (Running Rail)</strong></td>
+              <td>차륜 접촉 → 귀선전류의 주 통로. 차량 하중 지지도 겸함.</td>
+            </tr>
+            <tr>
+              <td><strong>비절연 보호선 (Non-Insulated Protective Wire)</strong></td>
+              <td>레일과 병행 설치. 지락 사고 시 보호 회로 구성.</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>매설 접지선 (Earth Wire)</strong></td>
+              <td>지중 매설. 귀선전류 분산 및 전위 안정화.</td>
+            </tr>
+            <tr>
+              <td><strong>AT 중성점 접속</strong></td>
+              <td>AT(단권변압기)의 중성점을 레일·귀선 계통과 접속하여 귀선전류 경로 형성.</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>공용접지 접속</strong></td>
+              <td>구조물·기기의 보호접지를 귀선 계통에 연결. 감전 방지.</td>
+            </tr>
+            <tr>
+              <td><strong>임피던스본드 (Impedance Bond)</strong></td>
+              <td>레일 절연 이음매 양측을 연결. 신호전류와 귀선전류를 분리.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tip-box">
+        💡 <strong>귀선전류 경로 요약</strong><br>
+        차륜 → 레일 → 임피던스본드 → 부급전선(AT 중성점) → 전철변전소<br>
+        <span style="font-size:12px; color:#065f46;">(AT급전 기준. 레일 단독이 아니라 부급전선이 귀선의 핵심 경로)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- §4 시험 포인트 -->
+  <div class="sec-title">§4 시험 포인트</div>
+
+  <div class="exam-box">
+    <div class="exam-box-title">🎯 급전계통 흐름 — 핵심 키워드</div>
+    <ul>
+      <li><strong>수전 전압 순서</strong>: 한전 <strong>154kV 3상</strong> → 스코트변압기 → <strong>단상 50kV</strong> → AT → 전차선 <strong>25kV</strong></li>
+      <li><strong>귀선전류 경로</strong>: 열차 차륜 → <strong>레일</strong> → 임피던스본드 → <strong>부급전선(AT 중성점)</strong> → 변전소</li>
+      <li><strong>구분장치</strong>: 전차선을 구간별로 전기적 <strong>분리</strong>. 보수 작업·사고 시 단전 구간 한정.</li>
+      <li><strong>AT 설치 간격</strong>: 약 <strong>10km</strong> (급전구분소). 변전소 간격: <strong>50~60km</strong>.</li>
+      <li><strong>스코트변압기</strong>: 3상→단상 변환. 전기철도 전력공급의 출발점.</li>
+    </ul>
+  </div>
+
+  <div class="exam-box">
+    <div class="exam-box-title">📋 출제 예상 유형 (기출 DB 미확인 — 참고용)</div>
+    <ul>
+      <li>교류전기철도의 급전계통 구성도를 순서대로 서술하시오. (서술형)</li>
+      <li>귀선전류 경로 구성 요소를 나열하시오.</li>
+      <li>전철변전소에서 스코트변압기를 사용하는 이유를 설명하시오.</li>
+      <li>구분장치(Section Insulator)의 역할을 쓰시오.</li>
+    </ul>
+    <p style="font-size:12px; color:#64748b; margin-top:8px;">※ 기출 DB 직접 확인 미완료. SOURCE-61 원문 복원 후 기출 문항 대조 필요.</p>
+  </div>
+
+  <div class="tbl-wrap" style="margin-top:8px;">
+    <table class="trap-tbl">
+      <thead>
+        <tr><th colspan="2">⚠️ 자주 틀리는 함정</th></tr>
+        <tr><th style="background:#9a3412;">함정</th><th style="background:#9a3412;">정답</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>변전소 수전 전압 = 22.9kV</td>
+          <td>전철변전소 수전 = <strong>154kV</strong> (한전 특고압). 22.9kV는 일반 배전전압.</td>
+        </tr>
+        <tr class="hl">
+          <td>전차선 전압 = 50kV</td>
+          <td>전차선 공칭 = <strong>25kV</strong>. 급전선+전차선 합계가 50kV (AT급전 기준).</td>
+        </tr>
+        <tr>
+          <td>귀선전류 → 레일만 통과</td>
+          <td>AT급전에서는 레일 + <strong>부급전선(AT 중성점)</strong>을 통해 변전소로 귀환.</td>
+        </tr>
+        <tr class="hl">
+          <td>구분장치 = 변압기</td>
+          <td>구분장치는 절연장치(Section Insulator). 변압기가 아님.</td>
+        </tr>
+        <tr>
+          <td>스코트변압기 = 승압기</td>
+          <td>스코트변압기는 <strong>3상→단상</strong> 변환 변압기. 전압 형식 변환이 주목적.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 기출 없음 안내 -->
+  <div style="background:#fefce8; border:1px solid #fde68a; border-radius:6px; padding:12px 16px; margin-top:28px; font-size:13px; color:#78350f;">
+    📚 <strong>기출문제 DB 없음</strong> — 이 단원(급전계통 전체 흐름)에 해당하는 기출문항이 현재 DB에서 확인되지 않습니다.<br>
+    SOURCE-61 원문 복원 및 F-03 기출 대조("교류전기철도 급전계통을 그리시오" 유형) 완료 후 문항 추가 예정.
+  </div>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
