@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>09-03 BT급전 vs AT급전 v1.1</title>
+<!--
+  UNIT : 09-03
+  제목 : BT급전 vs AT급전
+  VERSION : v1.1
+  STATUS : FINAL PUBLISH
+
+  PRIMARY SOURCE :
+  - GATE4 SOURCE-95 / 4.html 개념95 (BT급전·AT급전)
+
+  QUESTIONS :
+  - 0문항 (DB 문항 없음)
+
+  PRIMARY VIS :
+  - VIS-105_AT방식전력공급시스템.png
+
+  VIDEO : 0
+
+  09-01 중복 : 0 (전력방식 비교는 09-01 소속)
+  09-02 중복 : 0
+  09-04~09-06 침범 : 0
+  SOURCE 밖 항목 : 0
+-->
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* ===== 헤더 ===== */
+  .unit-header { border-bottom: 2px solid #1e3a5f; padding-bottom: 14px; margin-bottom: 28px; }
+  .unit-num { font-size: 12px; color: #1e3a5f; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .unit-title { font-size: 22px; font-weight: 800; color: #1a1a1a; margin: 4px 0 6px; }
+  .unit-sub { font-size: 13px; color: #555; }
+  .badge-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 3px; border: 1px solid; }
+  .badge-grade { color: #6b21a8; border-color: #6b21a8; background: #faf5ff; }
+  .badge-lock  { color: #065f46; border-color: #065f46; background: #ecfdf5; }
+  .badge-noq   { color: #92400e; border-color: #92400e; background: #fffbeb; }
+
+  /* ===== 섹션 제목 ===== */
+  .sec-title { font-size: 16px; font-weight: 800; color: #1e3a5f; border-left: 4px solid #1e3a5f; padding-left: 10px; margin: 32px 0 14px; }
+
+  /* ===== 선행 용어 ===== */
+  .term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-top: 10px; }
+  .term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
+  .term-name { font-size: 13px; font-weight: 800; color: #1e3a5f; margin-bottom: 4px; }
+  .term-desc { font-size: 13px; color: #333; line-height: 1.6; }
+
+  /* ===== 개념 카드 ===== */
+  .concept-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .concept-head {
+    padding: 12px 16px;
+    background: #1e3a5f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .concept-num {
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255,255,255,.18);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+  .concept-name { font-size: 15px; font-weight: 800; }
+  .concept-star { font-size: 12px; margin-left: auto; opacity: .9; white-space: nowrap; }
+  .concept-body { padding: 16px 18px; font-size: 13.5px; line-height: 1.8; }
+
+  /* ===== TIP / TRAP ===== */
+  .tip-box {
+    background: #f0fdfa;
+    border: 1px solid #99f6e4;
+    border-radius: 5px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: #134e4a;
+    margin-top: 12px;
+  }
+  .trap-box {
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    border-radius: 5px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: #7c2d12;
+    margin-top: 10px;
+  }
+  .trap-box strong { color: #9a3412; }
+
+  /* ===== 표 ===== */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #1e3a5f; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+  td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  tr.hl td { background: #eff6ff; }
+  td strong { color: #1e3a5f; }
+
+  /* ===== VIS 이미지 ===== */
+  .vis-wrap { text-align: center; margin: 16px 0; }
+  .vis-wrap img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+
+  /* ===== 비교 카드 ===== */
+  .cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+  .cmp-card { border-radius: 7px; padding: 14px 16px; font-size: 13px; line-height: 1.7; }
+  .cmp-bt { background: #eff6ff; border: 2px solid #3b82f6; }
+  .cmp-at { background: #f0fdf4; border: 2px solid #22c55e; }
+  .cmp-label { font-weight: 800; font-size: 14px; margin-bottom: 6px; }
+  .cmp-bt .cmp-label { color: #1e40af; }
+  .cmp-at .cmp-label { color: #166534; }
+  .cmp-en { font-size: 12px; color: #555; margin-bottom: 8px; }
+
+  /* ===== 시험 포인트 박스 ===== */
+  .exam-box { border: 1.5px solid #1e3a5f; border-radius: 7px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; }
+  .exam-box-title { font-weight: 800; color: #1e3a5f; font-size: 13.5px; margin-bottom: 8px; }
+  .exam-box ul { padding-left: 16px; }
+  .exam-box li { margin-bottom: 4px; }
+
+  /* ===== 함정 표 ===== */
+  .trap-tbl th { background: #7c2d12; }
+  .trap-tbl td { font-size: 12.5px; }
+
+  /* ===== 인쇄 버튼 ===== */
+  .print-btn {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 7px 16px;
+    background: #7c2d12;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .print-btn:hover { background: #5c2707; }
+
+  /* ===== NAV ===== */
+  .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; margin-bottom: 12px; font-size: 12.5px; }
+  .nav-btn { display: inline-block; padding: 5px 12px; border: 1.5px solid #1e3a5f; border-radius: 4px; color: #1e3a5f; text-decoration: none; font-weight: 700; font-size: 12px; }
+  .nav-btn:hover { background: #f0f4f8; }
+  .nav-btn.disabled { opacity: .35; cursor: default; pointer-events: none; }
+  .nav-center { font-size: 11px; color: #64748b; text-align: center; }
+
+  @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
+  @media print {
+    .page-wrap { padding: 10px; }
+    .sec-title { break-after: avoid; page-break-after: avoid; }
+    .concept-card { break-inside: avoid; page-break-inside: avoid; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .print-btn { display: none !important; }
+    .nav-bar { display: none !important; }
+    img { max-width: 100%; height: auto; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+
+  <!-- 인쇄 버튼 -->
+  <button class="print-btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+
+  <!-- 헤더 -->
+  <div class="unit-header">
+    <div class="unit-num">GATE5 · PART 09 · UNIT 09-03</div>
+    <div class="unit-title">BT급전 vs AT급전</div>
+    <div class="unit-sub">흡상변압기 급전 / 단권변압기 급전 / 통신유도장애 감소</div>
+    <div class="badge-row">
+      <span class="badge badge-grade">★★★ A등급</span>
+      <span class="badge badge-lock">FINAL PUBLISH v1.2</span>
+      <span class="badge badge-noq">기출 DB 없음</span>
+    </div>
+  </div>
+
+  <!-- §0 선행 용어 -->
+  <div class="sec-title">§0 선행 용어</div>
+  <div class="term-grid">
+    <div class="term-card">
+      <div class="term-name">BT (Booster Transformer, 흡상변압기)</div>
+      <div class="term-desc">귀선전류를 레일에서 귀선선(BT선)으로 끌어올려 통신유도장애를 줄이는 변압기.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">AT (Auto Transformer, 단권변압기)</div>
+      <div class="term-desc">변압기 1차측과 2차측이 공통 권선을 공유하는 변압기. 변압비 1:1로 급전선·전차선 전압을 균형 유지.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">급전선 (Feeder Wire)</div>
+      <div class="term-desc">AT급전에서 변전소에서 전차선과 반대 극성으로 설치되는 급전용 전선 (+25kV).</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">귀선전류 (Return Current)</div>
+      <div class="term-desc">전차선으로 공급된 후 열차가 사용한 전류가 레일 등 귀선회로를 통해 변전소로 되돌아오는 전류.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">통신유도장애</div>
+      <div class="term-desc">전철 전류가 인근 통신선에 전자유도를 일으켜 잡음·오작동을 유발하는 현상. BT급전이 감소 효과 있음.</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">급전거리 (Feeding Distance)</div>
+      <div class="term-desc">변전소에서 전압강하 없이 전력을 공급할 수 있는 최대 거리. AT급전이 더 길다.</div>
+    </div>
+  </div>
+
+  <!-- §1 BT급전 -->
+  <div class="sec-title">§1 BT급전 — 흡상변압기 급전</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">GATE4 SOURCE-95 / 4.html 개념95-A</span>
+      <span class="concept-name">BT급전 (흡상변압기 급전)</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>항목</th><th>내용</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>정식 명칭</strong></td>
+              <td>흡상변압기 급전 (Booster Transformer Feeding)</td>
+            </tr>
+            <tr>
+              <td><strong>원리</strong></td>
+              <td>귀선전류를 레일에서 귀선선(BT선)으로 <strong>흡상(끌어올림)</strong>하여 레일로 흐르는 전류를 억제</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>주요 효과</strong></td>
+              <td>통신유도장애 <strong>감소</strong></td>
+            </tr>
+            <tr>
+              <td><strong>급전거리</strong></td>
+              <td>AT급전보다 <strong>짧음</strong> (전압강하 크고 급전거리 제한)</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>적용 사례</strong></td>
+              <td>구형 전기철도 (AT급전 도입 이전)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tip-box">
+        💡 <strong>BT급전 핵심</strong> — 귀선전류를 레일→BT선으로 끌어올려 인근 통신선 유도 방지<br>
+        단점: 변전소 간격(급전거리)이 짧아 시설 증가
+      </div>
+
+      <div class="vis-wrap" style="margin-top:16px;">
+        <img src="images/BT_급전방식.png" alt="BT급전 방식 (흡상변압기 급전)" style="max-width:100%; height:auto; border-radius:6px; border:1px solid #e2e8f0;" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- §2 AT급전 -->
+  <div class="sec-title">§2 AT급전 — 단권변압기 급전</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">GATE4 SOURCE-95 / 4.html 개념95-B</span>
+      <span class="concept-name">AT급전 (단권변압기 급전)</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>항목</th><th>내용</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>정식 명칭</strong></td>
+              <td>단권변압기 급전 (Auto Transformer Feeding)</td>
+            </tr>
+            <tr>
+              <td><strong>원리</strong></td>
+              <td>급전선(+25kV)과 전차선(−25kV) = 합계 <strong>50kV</strong><br>
+              단권변압기(변압비 1:1)를 일정 간격으로 설치하여 전압 균등 유지</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>전압강하</strong></td>
+              <td><strong>적음</strong> (BT급전 대비)</td>
+            </tr>
+            <tr>
+              <td><strong>급전거리</strong></td>
+              <td>BT급전보다 <strong>길어짐</strong> (고속선에 적합)</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>적용 사례</strong></td>
+              <td><strong>KTX</strong> 표준 / 고속선 기준</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tip-box">
+        💡 <strong>AT급전 핵심</strong> — 단권변압기로 50kV 급전 → 전압강하 최소 → 장거리·고속선 표준<br>
+        ★ <strong>우리나라 KTX = AT급전</strong>
+      </div>
+
+      <div class="vis-wrap">
+        <img src="images/VIS-105_AT방식전력공급시스템.png" alt="AT방식 전력공급 시스템" loading="lazy">
+        <p class="vis-cap">VIS-105 — AT급전 전력공급 시스템 (변전소→급전선·전차선 50kV 구성)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- §3 BT vs AT 비교표 -->
+  <div class="sec-title">§3 BT급전 vs AT급전 비교</div>
+  <div class="concept-card">
+    <div class="concept-head">
+      <span class="concept-num">GATE4 SOURCE-95 / 4.html 개념95</span>
+      <span class="concept-name">두 방식 한눈에 비교</span>
+      <span class="concept-star">★★★</span>
+    </div>
+    <div class="concept-body">
+      <div class="cmp-grid">
+        <div class="cmp-card cmp-bt">
+          <div class="cmp-label">BT급전</div>
+          <div class="cmp-en">Booster Transformer Feeding</div>
+          <div>• 귀선전류를 레일→BT선으로 흡상<br>
+          • <strong>통신유도장애 감소</strong> 효과<br>
+          • 급전거리 <strong>짧음</strong><br>
+          • 구형 전기철도 적용</div>
+        </div>
+        <div class="cmp-card cmp-at">
+          <div class="cmp-label">AT급전</div>
+          <div class="cmp-en">Auto Transformer Feeding</div>
+          <div>• 급전선+전차선 = 합계 50kV<br>
+          • 전압강하 <strong>적음</strong><br>
+          • 급전거리 <strong>길어짐</strong><br>
+          • <strong>KTX 표준</strong></div>
+        </div>
+      </div>
+
+      <div class="tbl-wrap" style="margin-top:14px;">
+        <table>
+          <thead>
+            <tr><th>비교 항목</th><th>BT급전</th><th>AT급전</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td><strong>명칭</strong></td>
+              <td>흡상변압기 급전</td>
+              <td>단권변압기 급전</td>
+            </tr>
+            <tr>
+              <td><strong>변압기</strong></td>
+              <td>흡상변압기 (BT)</td>
+              <td>단권변압기 (AT)</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>급전전압</strong></td>
+              <td>25kV</td>
+              <td>급전선·전차선 합계 50kV</td>
+            </tr>
+            <tr>
+              <td><strong>통신유도장애</strong></td>
+              <td><strong>감소 효과</strong></td>
+              <td>별도 저감 장치 필요</td>
+            </tr>
+            <tr class="hl">
+              <td><strong>전압강하</strong></td>
+              <td>큼</td>
+              <td><strong>적음</strong></td>
+            </tr>
+            <tr>
+              <td><strong>급전거리</strong></td>
+              <td><strong>짧음</strong></td>
+              <td><strong>길어짐</strong></td>
+            </tr>
+            <tr class="hl">
+              <td><strong>적용</strong></td>
+              <td>구형 전기철도</td>
+              <td>고속선 / <strong>KTX 표준</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="trap-box">
+        ⚠️ <strong>핵심 함정</strong> — "BT급전이 급전거리가 길다" → <strong>틀림</strong><br>
+        급전거리 긴 것 = <strong>AT급전</strong> / 짧은 것 = BT급전<br>
+        ⚠️ "AT급전이 통신유도장애 감소에 우수" → 잘못된 연결. 통신유도장애 감소 = <strong>BT급전</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- 접지시설 설치 기준 카드 -->
+  <div class="vis-wrap" style="margin:16px 0;">
+    <img src="images/접지시설설치기준카드.png"
+         alt="접지시설 설치 기준 카드"
+         style="width:100%; height:auto; display:block;"
+         onerror="this.onerror=null; this.style.display='none'">
+    <div class="vis-caption">접지시설 설치 기준 카드 (SOURCE 09)</div>
+  </div>
+
+  <!-- VIS-079 급전방식 BT·AT·직접급전 비교 -->
+  <div class="vis-wrap" style="margin:16px 0;">
+    <img src="images/VIS-079_급전방식BT_AT_직접급전비교.png"
+         alt="급전방식 BT·AT·직접급전 비교"
+         style="width:100%; height:auto; display:block;"
+         onerror="this.onerror=null; this.style.display='none'">
+    <div class="vis-caption">VIS-079 급전방식 BT·AT·직접급전 비교 (SOURCE 09)</div>
+  </div>
+
+  <!-- 교류 전차선로 접지시설 기준 60V·150V -->
+  <div class="vis-wrap" style="margin:16px 0;">
+    <img src="images/교류 전차선로 접지시설 기준 60V·150V.png"
+         alt="교류 전차선로 접지시설 기준 60V·150V"
+         style="width:100%; height:auto; display:block;"
+         onerror="this.onerror=null; this.style.display='none'">
+    <div class="vis-caption">교류 전차선로 접지시설 기준 60V·150V (SOURCE 09)</div>
+  </div>
+
+  <!-- §4 시험 포인트·함정 -->
+  <div class="sec-title">§4 시험 포인트 · 함정</div>
+
+  <div class="exam-box">
+    <div class="exam-box-title">🎯 핵심 암기 포인트</div>
+    <ul>
+      <li>BT급전 = <strong>흡상변압기</strong> / AT급전 = <strong>단권변압기</strong></li>
+      <li>통신유도장애 감소 효과 = <strong>BT급전</strong></li>
+      <li>전압강하 적음 + 급전거리 길어짐 = <strong>AT급전</strong></li>
+      <li>KTX 적용 방식 = <strong>AT급전</strong></li>
+      <li>AT급전 급전선+전차선 합계 = <strong>50kV</strong></li>
+    </ul>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="trap-tbl">
+      <thead>
+        <tr><th>함정 유형</th><th>오답 선택지</th><th>정답 방향</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>AT/BT 특징 반전</td>
+          <td>"BT급전이 급전거리 길다"</td>
+          <td>급전거리 긴 것 = <strong>AT급전</strong></td>
+        </tr>
+        <tr>
+          <td>통신유도 주체 반전</td>
+          <td>"AT급전이 통신유도장애 감소"</td>
+          <td>통신유도장애 감소 = <strong>BT급전</strong></td>
+        </tr>
+        <tr>
+          <td>변압기 명칭 혼동</td>
+          <td>"AT급전 = 흡상변압기"</td>
+          <td>AT = 단권변압기 / BT = 흡상변압기</td>
+        </tr>
+        <tr>
+          <td>KTX 연결 혼동</td>
+          <td>"KTX = BT급전"</td>
+          <td>KTX = <strong>AT급전</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 하단 NAV -->
+  <nav class="nav-bar" style="margin-top: 40px;">
+    <a href="unit-09-02_FINAL_PUBLISH_v1.1.html" class="nav-btn">← 09-02 변전소 보호설비</a>
+    <span class="nav-center">GATE5 PART 09 · 전기철도·전력공급</span>
+    <a href="unit-09-04_FINAL_PUBLISH_v1.1.html" class="nav-btn">09-04 교류특성·전기안전 →</a>
+  </nav>
+
+</div>
+</body>
+</html>
