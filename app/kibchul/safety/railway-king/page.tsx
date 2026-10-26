@@ -19,8 +19,9 @@ import { createClient } from '@/lib/supabase/client';
 // 철도안전법 철도왕 전용 subject_id = 307
 const RK_SUBJECT = 307;
 
-// localStorage 키 (진행상황 저장용)
-const LS_PROGRESS = 'rkProgress_ch7';
+// localStorage 키 (비로그인 폴백용)
+const LS_WRONG    = 'rkWrong_ch7';    // { [qid]: 1 }
+const LS_PROGRESS = 'rkProgress_ch7'; // JSON
 
 type Mode = 'home' | 'quiz' | 'result';
 type SubMode = '기출변형' | '신유형' | '오답풀기';
@@ -56,7 +57,11 @@ async function storageLoadWrongIds(): Promise<Set<string>> {
     const { data } = await loadWrongAttempts(RK_SUBJECT);
     return new Set(data.map(d => d.kibchul_qid));
   }
-  return new Set();
+  // 비로그인: localStorage
+  try {
+    const raw = localStorage.getItem(LS_WRONG);
+    return raw ? new Set(Object.keys(JSON.parse(raw))) : new Set();
+  } catch { return new Set(); }
 }
 
 async function storageSaveWrong(q: RailwayKingQuestion, selected: number): Promise<void> {
@@ -70,6 +75,13 @@ async function storageSaveWrong(q: RailwayKingQuestion, selected: number): Promi
       selected,
       answer: q.answer,
     });
+  } else {
+    try {
+      const raw = localStorage.getItem(LS_WRONG);
+      const obj = raw ? JSON.parse(raw) : {};
+      obj[q.id] = 1;
+      localStorage.setItem(LS_WRONG, JSON.stringify(obj));
+    } catch {}
   }
 }
 
@@ -77,6 +89,13 @@ async function storageRemoveWrong(qid: string): Promise<void> {
   const user = await getUser();
   if (user) {
     await removeAttempt(qid);
+  } else {
+    try {
+      const raw = localStorage.getItem(LS_WRONG);
+      const obj = raw ? JSON.parse(raw) : {};
+      delete obj[qid];
+      localStorage.setItem(LS_WRONG, JSON.stringify(obj));
+    } catch {}
   }
 }
 
