@@ -147,6 +147,36 @@ async function storageLoadProgress(): Promise<{
   }
 }
 
+// 로그인 후 localStorage 오답을 Supabase로 마이그레이션
+async function migrateLocalWrongToSupabase(): Promise<number> {
+  try {
+    const raw = localStorage.getItem(LS_WRONG);
+    if (!raw) return 0;
+    const obj = JSON.parse(raw) as Record<string, number>;
+    const qids = Object.keys(obj);
+    if (qids.length === 0) return 0;
+
+    const qMap = new Map(ch7Questions.map(q => [q.id, q]));
+    let migrated = 0;
+    for (const qid of qids) {
+      const q = qMap.get(qid);
+      if (q) {
+        await saveAttempt({
+          subject_id: RK_SUBJECT,
+          session_id: q.chapter,
+          kibchul_qid: q.id,
+          is_correct: false,
+          selected: obj[qid] ?? 0,
+          answer: q.answer,
+        });
+        migrated++;
+      }
+    }
+    localStorage.removeItem(LS_WRONG);
+    return migrated;
+  } catch { return 0; }
+}
+
 async function storageClearProgress(): Promise<void> {
   const user = await getUser();
   if (user) {
@@ -174,12 +204,19 @@ function RailwayKingCh7Inner() {
   const [savedInfo, setSavedInfo] = useState<{ subMode: SubMode } | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [initDone, setInitDone] = useState(false);
+  const [migratedCount, setMigratedCount] = useState(0);
 
   // 초기 로드
   useEffect(() => {
     (async () => {
       const user = await getUser();
       setIsLoggedIn(!!user);
+
+      // 로그인 상태면 localStorage 오답을 Supabase로 마이그레이션
+      if (user) {
+        const count = await migrateLocalWrongToSupabase();
+        if (count > 0) setMigratedCount(count);
+      }
 
       const [wrongIds, saved] = await Promise.all([
         storageLoadWrongIds(),
@@ -321,6 +358,26 @@ function RailwayKingCh7Inner() {
             {isLoggedIn ? '☁️ 오답·진행상황 클라우드 저장' : '📱 비로그인: 이 기기에만 저장'}
           </div>
         </div>
+
+        {/* 마이그레이션 완료 알림 */}
+        {migratedCount > 0 && (
+          <div style={{ background:'#ecfdf5', border:'1px solid #6ee7b7', borderRadius:10, padding:'12px 16px', marginBottom:12, fontSize:'.85em', color:'#065f46' }}>
+            ✅ 이 기기에 저장된 오답 <strong>{migratedCount}문항</strong>을 클라우드로 이전했습니다. 이제 어느 기기에서나 이어풀기 가능합니다!
+          </div>
+        )}
+
+        {/* 비로그인 경고 배너 */}
+        {!isLoggedIn && (
+          <div style={{ background:'#fffbeb', border:'1px solid #f59e0b', borderRadius:10, padding:'12px 16px', marginBottom:12, display:'flex', justifyContent:'space-between', alignItems:'center', gap:10, flexWrap:'wrap' }}>
+            <div style={{ fontSize:'.85em', color:'#92400e' }}>
+              <strong>⚠️ 비로그인 상태</strong><br />
+              오답이 이 기기에만 저장됩니다. 다른 기기에서 이어풀기 하려면 로그인하세요.
+            </div>
+            <a href="/login" style={{ background:'#d97706', color:'#fff', borderRadius:8, padding:'7px 14px', fontWeight:'bold', fontSize:'.85em', textDecoration:'none', whiteSpace:'nowrap' }}>
+              🔐 로그인
+            </a>
+          </div>
+        )}
 
         {/* 이어풀기 */}
         {hasSaved && savedInfo && (
