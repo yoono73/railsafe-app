@@ -269,6 +269,33 @@ td { padding:6px 10px; border:1.5px solid #bbb; vertical-align:top; background:#
   호륜레일(가드레일)이 차륜이 틈새로 빠지지 않도록 유도. 고속철도의 <strong>가동크로싱부 선로전환기</strong>는 이 크로싱부를 가동식으로 만들어 틈새를 제거함(결선부 <strong>제거</strong>).
 </div>
 </div><!-- /concept -->
+
+<div class="concept">
+<div class="concept-title"><span class="cnum">C2</span>크로싱 번수(N) — 분기각도 표현</div>
+
+<div class="vis-wrap">
+  <img src="images/크로싱 번수.png" alt="크로싱 번수(N) — 분기각도와 번수의 관계 도해" loading="eager">
+  <p class="vis-cap">크로싱 번수(N) — 분기각도와 번수의 관계</p>
+</div>
+
+<table>
+  <thead><tr><th>항목</th><th>내용</th></tr></thead>
+  <tbody>
+    <tr><td><strong>정의</strong></td><td>크로싱각(분기각 α)의 역수적 표현. 분기기의 완급(분기 각도)을 나타내는 수치</td></tr>
+    <tr><td><strong>공식</strong></td><td>N = 1 / (2 × tan(α/2)) ≒ cot α</td></tr>
+    <tr><td><strong>번수 ↑ (큰 번수)</strong></td><td>분기각 α가 작다 → 완만한 분기 → <strong>고속 통과 가능</strong></td></tr>
+    <tr><td><strong>번수 ↓ (작은 번수)</strong></td><td>분기각 α가 크다 → 급한 분기 → <strong>저속 구간</strong></td></tr>
+    <tr><td><strong>예시</strong></td><td>#8 분기기: 저속 / #18·#26 분기기: 고속선 적용</td></tr>
+  </tbody>
+</table>
+
+<div class="trap">⚠️ 함정 주의: 번수가 <strong>클수록</strong> 분기각이 <strong>작아</strong> 고속 통과 가능 — 번수↑ = 빠름, 번수↓ = 느림</div>
+
+<div class="theory-note">
+  <strong>이론 배경: </strong>크로싱 번수 N은 분기기의 완급을 나타내며, N이 클수록 분기 레일이 완만하게 벌어져 열차가 고속으로 진입할 수 있습니다.
+  고속철도에는 #18 이상의 큰 번수 분기기를 사용합니다.
+</div>
+</div><!-- /concept -->
 </div><!-- /§1 -->
 
 
