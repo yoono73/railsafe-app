@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GATE5 · 13-07 출입문의 구조·방식</title>
+<title>GATE5 · 13-07 연결기의 종류</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #f8fafc; color: #1e293b; font-size: 14px; line-height: 1.6; }
@@ -40,6 +40,9 @@ tr:nth-child(even) td { background: #f8fafc; }
 tr.hl td { background: #eff6ff; }
 .tip-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #134e4a; margin-top: 12px; }
 .trap-box { background: #fff7ed; border: 1px solid #fdba74; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #7c2d12; margin-top: 10px; }
+.vis-box { text-align: center; margin: 16px 0; }
+.vis-box img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
+.vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
 .split-box { background: #f0f4f8; border: 1.5px solid #94a3b8; border-radius: 6px; padding: 12px 16px; font-size: 13px; color: #334155; margin: 14px 0; }
 .q-box { border: 1.5px solid #1e40af; border-radius: 7px; padding: 14px 16px; margin-bottom: 14px; font-size: 13px; background: #f8faff; }
 .q-num { font-size: 11px; font-weight: 700; color: #1e40af; margin-bottom: 6px; }
@@ -57,30 +60,27 @@ tr.hl td { background: #eff6ff; }
   .ans-box .ans-body { font-size: 13px; color: #1a1a1a; line-height: 1.7; }
   @media print { .nav-bar, .print-btn { display: none; } .concept-card { break-inside: avoid; } }
 @page { size: A4 portrait; margin: 12mm 12mm 12mm 18mm; }
-.vis-box { text-align: center; margin: 16px 0; }
-.vis-box img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
-.vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
 </style>
 </head>
 <body>
 <div class="page-wrap">
 
 <nav class="nav-bar">
-  <a href="unit-13-06_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 13-06 연결기의 종류</a>
+  <a href="unit-13-06_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 13-06 횡압력</a>
   <span class="nav-center">GATE5 · PART 13</span>
-  <span class="nav-btn" style="color:#64748b;cursor:default;">14-01 준비 중</span>
+  <a href="unit-13-08_FINAL_PUBLISH_v1.0.html" class="nav-btn">13-08 출입문의 구조·방식 →</a>
 </nav>
 
 <button class="print-btn" onclick="window.print()">인쇄 / PDF 저장</button>
 
 <div class="unit-header">
   <div class="unit-num">GATE5 · PART 13 · UNIT 13-07</div>
-  <div class="unit-title">출입문의 구조·방식</div>
-  <div class="unit-sub">플러그 슬라이딩 · 포켓 슬라이딩 · 돌출 슬라이딩 도어</div>
+  <div class="unit-title">연결기의 종류</div>
+  <div class="unit-sub">자동연결기 · 스크루연결기 · 밀착연결기</div>
   <div class="badge-row">
     <span class="badge badge-grade">★★ B등급</span>
     <span class="badge badge-final">FINAL_PUBLISH v1.0</span>
-    <span class="badge badge-q">DB 문항 2개</span>
+    <span class="badge badge-q">DB 문항 1개</span>
   </div>
 </div>
 
@@ -89,56 +89,53 @@ tr.hl td { background: #eff6ff; }
 <div class="concept-card">
   <div class="concept-head">
     <span class="concept-num">CONCEPT 01</span>
-    <span class="concept-name">철도차량 출입문(Door)의 종류</span>
+    <span class="concept-name">철도차량 연결기(Coupler)의 종류</span>
   </div>
   <div class="concept-body">
-    <div class="term-grid">
-      <div class="term-card">
-        <div class="term-name">플러그 슬라이딩 도어</div>
-        <div class="term-desc">Plug Sliding Door. 차체에 밀착 후 슬라이딩. 기밀성·방음·방진 우수.</div>
-      </div>
-      <div class="term-card">
-        <div class="term-name">포켓 슬라이딩 도어</div>
-        <div class="term-desc">Pocket Sliding Door. 차체 벽 내부로 미끄러짐. 승강장 공간 효율 우수.</div>
-      </div>
-      <div class="term-card">
-        <div class="term-name">돌출 슬라이딩 도어</div>
-        <div class="term-desc">Outswing Sliding Door. 외부로 돌출하며 개폐.</div>
-      </div>
+    <table>
+      <tr><th>종류</th><th>별칭</th><th>특징</th><th>적용</th></tr>
+      <tr>
+        <td><strong>자동연결기</strong></td>
+        <td>너클식</td>
+        <td>자동 연결·해방, 가장 보편적</td>
+        <td>국내 간선(무궁화·화물열차)</td>
+      </tr>
+      <tr>
+        <td><strong>스크루연결기</strong></td>
+        <td>후크식</td>
+        <td>수동식, 위험성 있음, 유럽 표준</td>
+        <td>유럽 철도</td>
+      </tr>
+      <tr>
+        <td><strong>밀착연결기</strong></td>
+        <td>시바타식·샤펜베르그식</td>
+        <td>공기·전기회로 동시 연결, 진동 감소, 기밀성 우수</td>
+        <td>전동차·고속철도</td>
+      </tr>
+    </table>
+    <div class="trap-box">⚠️ 볼트식 연결기는 철도차량 연결기 종류에 해당하지 않는다. 시험 함정 선지로 자주 출제.</div>
+    <div class="tip-box">💡 밀착연결기(시바타식·샤펜베르그식)는 공기·전기 배관을 동시에 연결하여 전동차·고속철도에 적용된다.</div>
+    <div class="vis-box">
+      <img src="images/철도차량 연결기(Coupler)의 종류.png" alt="철도차량 연결기 종류 (자동연결기·스크루연결기·밀착연결기)">
+      <div class="vis-caption">철도차량 연결기 종류 — 자동연결기(너클식) / 스크루연결기 / 밀착연결기(시바타식·샤펜베르그식)</div>
     </div>
-    <div class="trap-box">⚠️ 비해당: 내부 슬라이딩 도어 — 철도차량에 사용되지 않는 형식. 이중 슬라이딩 도어 — 자동차나 일반 상업시설에서 주로 사용되는 구조.</div>
-    <div class="tip-box">💡 철도차량은 기밀성·방음·방진·승하차 안전 확보를 위해 플러그식 또는 포켓식 출입문이 일반적이다. (SOURCE91-A 기준)</div>
   </div>
 </div>
 
-<div class="vis-box">
-  <img src="images/철도차량 출입문 종류.png" alt="철도차량 출입문 종류 (플러그·포켓·돌출 슬라이딩 도어)">
-  <div class="vis-caption">철도차량 출입문 종류 — 플러그 슬라이딩 도어 / 포켓 슬라이딩 도어 / 돌출 슬라이딩 도어</div>
-</div>
-
-<div class="sec-title">DB 기출문항</div>
+<div class="sec-title">SOURCE 기출예시</div>
 <div class="q-box">
-<div class="q-num">Q1 · SOURCE91-A (첫번째)</div>
-<div class="q-stem">열차에서 쓰이는 출입문의 종류가 아닌 것은?</div>
-  <div class="q-choice">① 플러그 슬라이딩 도어</div>
-  <div class="q-choice">② 포켓 슬라이딩 도어</div>
-  <div class="q-choice">③ 내부 슬라이딩 도어</div>
-  <div class="q-choice">④ 돌출 슬라이딩 도어</div>
-  </div>
-<div class="q-box">
-<div class="q-num">Q2 · SOURCE91-A (두번째)</div>
-<div class="q-stem">열차에서 쓰이는 출입문의 종류가 아닌 것은?</div>
-  <div class="q-choice">① 이중 슬라이딩 도어</div>
-  <div class="q-choice">② 외부 슬라이딩 도어</div>
-  <div class="q-choice">③ 포켓 슬라이딩 도어</div>
-  <div class="q-choice">④ 플러그 슬라이딩 도어</div>
+<div class="q-num">Q1 · SOURCE87</div>
+<div class="q-stem">철도차량의 연결기(Coupler) 종류에 해당하지 않는 것은?</div>
+  <div class="q-choice">① 자동연결기(너클식)</div>
+  <div class="q-choice">② 볼트식 연결기</div>
+  <div class="q-choice">③ 스크루 연결기(후크식)</div>
+  <div class="q-choice">④ 밀착연결기(시바타식·샤펜베르그식)</div>
   </div>
 
 
 <div class="answer-section">
 <div class="sec-title">정답 및 해설</div>
-<div class="ans-box"><div class="ans-num">Q1 · SOURCE91-A (첫번째)</div><div class="ans-body">정답: ③ | 해설: 철도차량 출입문: 플러그 슬라이딩 도어(차체에 밀착 후 슬라이딩), 포켓 슬라이딩 도어(벽 내부로 미끄러짐), 돌출 슬라이딩 도어(외부로 돌출하며 개폐). 내부 슬라이딩 도어는 사용되지 않는 형식이다.</div></div>
-<div class="ans-box"><div class="ans-num">Q2 · SOURCE91-A (두번째)</div><div class="ans-body">정답: ① | 해설: 이중 슬라이딩 도어는 자동차나 일반 상업시설에서 주로 사용되는 구조. 철도차량은 기밀성·방음·방진·승하차 안전 확보를 위해 플러그식 또는 포켓식 출입문이 일반적이다.</div></div>
+<div class="ans-box"><div class="ans-num">Q1 · SOURCE87</div><div class="ans-body">정답: ② | 해설: 철도차량 연결기 종류: 자동연결기(너클식)·스크루 연결기(후크식)·밀착연결기(시바타식·샤펜베르그식) 등. 볼트식 연결기는 철도차량 연결기 종류에 해당하지 않는다.</div></div>
 </div>
 </div>
 </body>

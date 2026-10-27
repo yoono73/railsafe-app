@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GATE5 · 13-06 연결기의 종류</title>
+<title>GATE5 · 13-06 횡압력</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #f8fafc; color: #1e293b; font-size: 14px; line-height: 1.6; }
@@ -40,9 +40,6 @@ tr:nth-child(even) td { background: #f8fafc; }
 tr.hl td { background: #eff6ff; }
 .tip-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #134e4a; margin-top: 12px; }
 .trap-box { background: #fff7ed; border: 1px solid #fdba74; border-radius: 5px; padding: 9px 14px; font-size: 13px; color: #7c2d12; margin-top: 10px; }
-.vis-box { text-align: center; margin: 16px 0; }
-.vis-box img { max-width: 100%; border-radius: 6px; border: 1px solid #e2e8f0; }
-.vis-caption { font-size: 12px; color: #64748b; margin-top: 6px; }
 .split-box { background: #f0f4f8; border: 1.5px solid #94a3b8; border-radius: 6px; padding: 12px 16px; font-size: 13px; color: #334155; margin: 14px 0; }
 .q-box { border: 1.5px solid #1e40af; border-radius: 7px; padding: 14px 16px; margin-bottom: 14px; font-size: 13px; background: #f8faff; }
 .q-num { font-size: 11px; font-weight: 700; color: #1e40af; margin-bottom: 6px; }
@@ -66,76 +63,101 @@ tr.hl td { background: #eff6ff; }
 <div class="page-wrap">
 
 <nav class="nav-bar">
-  <a href="unit-13-05_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 13-05 횡압력</a>
+  <a href="unit-13-05_FINAL_PUBLISH_v1.0.html" class="nav-btn">← 13-05 차량의 진동·소음·진동형태</a>
   <span class="nav-center">GATE5 · PART 13</span>
-  <a href="unit-13-07_FINAL_PUBLISH_v1.0.html" class="nav-btn">13-07 출입문의 구조·방식 →</a>
+  <a href="unit-13-07_FINAL_PUBLISH_v1.0.html" class="nav-btn">13-07 연결기의 종류 →</a>
 </nav>
 
 <button class="print-btn" onclick="window.print()">인쇄 / PDF 저장</button>
 
 <div class="unit-header">
   <div class="unit-num">GATE5 · PART 13 · UNIT 13-06</div>
-  <div class="unit-title">연결기의 종류</div>
-  <div class="unit-sub">자동연결기 · 스크루연결기 · 밀착연결기</div>
+  <div class="unit-title">횡압력</div>
+  <div class="unit-sub">횡압력 증대 원인 · 탈선계수</div>
   <div class="badge-row">
-    <span class="badge badge-grade">★★ B등급</span>
+    <span class="badge badge-grade">★★★ A등급</span>
     <span class="badge badge-final">FINAL_PUBLISH v1.0</span>
-    <span class="badge badge-q">DB 문항 1개</span>
+    <span class="badge badge-q">DB 문항 3개</span>
   </div>
 </div>
 
 <div class="sec-title">핵심 개념</div>
 
+
 <div class="concept-card">
   <div class="concept-head">
-    <span class="concept-num">CONCEPT 01</span>
-    <span class="concept-name">철도차량 연결기(Coupler)의 종류</span>
+    <span class="concept-num">CONCEPT 01 · 정의</span>
+    <span class="concept-name">횡압력(Lateral Force) 정의</span>
   </div>
   <div class="concept-body">
-    <table>
-      <tr><th>종류</th><th>별칭</th><th>특징</th><th>적용</th></tr>
-      <tr>
-        <td><strong>자동연결기</strong></td>
-        <td>너클식</td>
-        <td>자동 연결·해방, 가장 보편적</td>
-        <td>국내 간선(무궁화·화물열차)</td>
-      </tr>
-      <tr>
-        <td><strong>스크루연결기</strong></td>
-        <td>후크식</td>
-        <td>수동식, 위험성 있음, 유럽 표준</td>
-        <td>유럽 철도</td>
-      </tr>
-      <tr>
-        <td><strong>밀착연결기</strong></td>
-        <td>시바타식·샤펜베르그식</td>
-        <td>공기·전기회로 동시 연결, 진동 감소, 기밀성 우수</td>
-        <td>전동차·고속철도</td>
-      </tr>
-    </table>
-    <div class="trap-box">⚠️ 볼트식 연결기는 철도차량 연결기 종류에 해당하지 않는다. 시험 함정 선지로 자주 출제.</div>
-    <div class="tip-box">💡 밀착연결기(시바타식·샤펜베르그식)는 공기·전기 배관을 동시에 연결하여 전동차·고속철도에 적용된다.</div>
-    <div class="vis-box">
-      <img src="images/철도차량 연결기(Coupler)의 종류.png" alt="철도차량 연결기 종류 (자동연결기·스크루연결기·밀착연결기)">
-      <div class="vis-caption">철도차량 연결기 종류 — 자동연결기(너클식) / 스크루연결기 / 밀착연결기(시바타식·샤펜베르그식)</div>
+    <div class="term-grid">
+      <div class="term-card">
+        <div class="term-name">횡압력</div>
+        <div class="term-desc">차륜 플랜지가 레일 측면을 미는 수평방향 힘. 탈선 및 레일 마모의 주요 원인. (DB: rk_ch83_31·engineering-exam-data.ts id:124 기반)</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">탈선계수</div>
+        <div class="term-desc">탈선계수 = 횡압 / 수직하중. 탈선 위험도를 나타내는 지표. (DB: engineering-exam-data.ts id:125 기반)</div>
+      </div>
+    </div>
+    <div class="tip-box">💡 횡압은 곡선부 통과 시 플랜지와 레일 측면 접촉으로 발생하며, 탈선·레일 측면 마모의 핵심 원인이다.</div>
+    <div class="vis-wrap" style="margin-top:14px;text-align:center;">
+      <img src="images/횡압력.png"
+           alt="횡압력 개요 이미지"
+           style="width:100%;height:auto;border-radius:8px;display:inline-block;">
     </div>
   </div>
 </div>
 
-<div class="sec-title">SOURCE 기출예시</div>
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 02 · 원인</span>
+    <span class="concept-name">횡압력 증대 원인 3가지</span>
+  </div>
+  <div class="concept-body">
+    <table>
+      <tr><th>조건</th><th>영향</th></tr>
+      <tr><td>곡선의 반경이 <strong>작을수록</strong></td><td>원심력 증가 → 횡압력 증가</td></tr>
+      <tr><td>차량의 속도가 <strong>빠를수록</strong></td><td>원심력 증가 → 횡압력 증가</td></tr>
+      <tr><td>차량의 상차가 <strong>불균형할수록</strong></td><td>편하중 발생 → 횡압력 증가</td></tr>
+      <tr class="hl"><td>캔트가 <strong>충분히 설치될수록</strong></td><td>원심력 상쇄 → 횡압력 <strong>감소</strong></td></tr>
+    </table>
+    <div class="trap-box">⚠️ 함정: 캔트가 충분히 설치될수록 횡압력이 <strong>증가한다</strong>는 선지는 틀린 답. 캔트는 원심력을 상쇄하여 횡압력을 <strong>감소</strong>시킨다.</div>
+  </div>
+</div>
+
+<div class="sec-title">DB 기출문항</div>
 <div class="q-box">
-<div class="q-num">Q1 · SOURCE87</div>
-<div class="q-stem">철도차량의 연결기(Coupler) 종류에 해당하지 않는 것은?</div>
-  <div class="q-choice">① 자동연결기(너클식)</div>
-  <div class="q-choice">② 볼트식 연결기</div>
-  <div class="q-choice">③ 스크루 연결기(후크식)</div>
-  <div class="q-choice">④ 밀착연결기(시바타식·샤펜베르그식)</div>
+<div class="q-num">Q1 · rk_ch83_31</div>
+<div class="q-stem">횡압력 증대의 원인으로 옳지 않은 것은?</div>
+  <div class="q-choice">① 곡선의 반경이 작을수록 횡압력이 증가한다</div>
+  <div class="q-choice">② 차량의 속도가 빠를수록 횡압력이 증가한다</div>
+  <div class="q-choice">③ 차량의 상차가 불균형할수록 횡압력이 증가한다</div>
+  <div class="q-choice">④ 캔트가 충분히 설치될수록 횡압력이 증가한다</div>
+  </div>
+<div class="q-box">
+<div class="q-num">Q2 · engineering-exam-data.ts id:124</div>
+<div class="q-stem">차륜 플랜지가 레일 측면을 미는 수평방향 힘으로 탈선 및 레일 마모의 주요 원인은?</div>
+  <div class="q-choice">① 수직하중</div>
+  <div class="q-choice">② 축하중</div>
+  <div class="q-choice">③ 횡압</div>
+  <div class="q-choice">④ 견인력</div>
+  </div>
+<div class="q-box">
+<div class="q-num">Q3 · engineering-exam-data.ts id:125</div>
+<div class="q-stem">'횡압'과 연결한 출제포인트로 가장 적절한 것은?</div>
+  <div class="q-choice">① 곡선부 탈선 및 레일 측면 마모의 주요 원인이다.</div>
+  <div class="q-choice">② 속도 제곱에 비례하여 증가.</div>
+  <div class="q-choice">③ 수직하중과 동일하다.</div>
+  <div class="q-choice">④ 레일 단면의 높이와 직결된다.</div>
   </div>
 
 
 <div class="answer-section">
 <div class="sec-title">정답 및 해설</div>
-<div class="ans-box"><div class="ans-num">Q1 · SOURCE87</div><div class="ans-body">정답: ② | 해설: 철도차량 연결기 종류: 자동연결기(너클식)·스크루 연결기(후크식)·밀착연결기(시바타식·샤펜베르그식) 등. 볼트식 연결기는 철도차량 연결기 종류에 해당하지 않는다.</div></div>
+<div class="ans-box"><div class="ans-num">Q1 · rk_ch83_31</div><div class="ans-body">정답: ④ | 해설: 횡압력은 곡선 반경이 작고, 속도가 빠르며, 상차가 불균형할수록 증가한다. 반대로 캔트가 충분하면 원심력을 상쇄하여 횡압력이 감소한다.</div></div>
+<div class="ans-box"><div class="ans-num">Q2 · engineering-exam-data.ts id:124</div><div class="ans-body">정답: ③ | 해설: 횡압은 레일 측면에 가해지는 수평력. 곡선부 통과 시 플랜지 접촉으로 발생. 탈선·레일 마모 원인.</div></div>
+<div class="ans-box"><div class="ans-num">Q3 · engineering-exam-data.ts id:125</div><div class="ans-body">정답: ① | 해설: 횡압 = 수평방향 힘. 탈선 위험도(탈선계수) = 횡압/수직하중. 곡선부에서 특히 중요.</div></div>
 </div>
 </div>
 </body>

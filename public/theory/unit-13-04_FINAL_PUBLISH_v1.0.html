@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>13-04 차량의 진동·소음·진동형태</title>
+<title>13-04 사행동의 원인과 대책</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #f8fafc; color: #1e293b; font-size: 14px; line-height: 1.6; }
@@ -28,10 +28,6 @@ body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; backgroun
 .concept-num { font-size: 11px; color: #64748b; font-weight: 700; }
 .concept-name { font-size: 14px; font-weight: 700; color: #1e293b; flex: 1; }
 .concept-body { padding: 14px 16px; }
-.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 10px; margin-bottom: 16px; }
-.term-card { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 12px 14px; background: #fff; }
-.term-name { font-size: 13px; font-weight: 700; color: #0f4c81; margin-bottom: 4px; }
-.term-desc { font-size: 12px; color: #334155; }
 table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
 th { background: #0f4c81; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
 td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; color: #1a1a1a; vertical-align: top; }
@@ -47,6 +43,11 @@ tr:nth-child(even) td { background: #f8fafc; }
 .vis-wrap { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 16px; text-align: center; }
 .vis-wrap img { max-width: 100%; height: auto; border-radius: 4px; }
 .vis-cap { font-size: 12px; color: #64748b; margin-top: 6px; }
+.prop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+.prop-card { border-radius: 6px; padding: 10px 14px; font-size: 13px; }
+.prop-up { background: #eff6ff; border: 1.5px solid #93c5fd; }
+.prop-down { background: #fdf2f8; border: 1.5px solid #f0abfc; }
+.prop-label { font-weight: 700; font-size: 12px; margin-bottom: 4px; }
 
   /* 정답 및 해설 섹션 */
   .answer-section { margin-top: 40px; border-top: 2px solid #0f4c81; padding-top: 20px; }
@@ -61,17 +62,17 @@ tr:nth-child(even) td { background: #f8fafc; }
 <div class="page-wrap">
 
 <nav class="nav-bar">
-  <a class="nav-btn" href="unit-13-03_FINAL_PUBLISH_v1.0.html">← 13-03 사행동의 원인과 대책</a>
-  <span class="nav-center">13-04 차량의 진동·소음·진동형태</span>
-  <a class="nav-btn" href="unit-13-05_FINAL_PUBLISH_v1.0.html">13-05 횡압력 →</a>
+  <a class="nav-btn" href="unit-13-03_FINAL_PUBLISH_v1.0.html">← 13-03 대차의 구조와 현가장치</a>
+  <span class="nav-center">13-04 사행동의 원인과 대책</span>
+  <a class="nav-btn" href="unit-13-05_FINAL_PUBLISH_v1.0.html">13-05 차량의 진동·소음·진동형태 →</a>
 </nav>
 
 <button class="print-btn" onclick="window.print()">인쇄 / PDF 저장</button>
 
 <header class="unit-header">
   <div class="unit-num">UNIT 13-04</div>
-  <div class="unit-title">차량의 진동·소음·진동형태</div>
-  <div class="unit-sub">진동·소음의 주요 원인, 저감 대책, 롤링·피칭·요잉 3가지 진동형태</div>
+  <div class="unit-title">사행동의 원인과 대책</div>
+  <div class="unit-sub">1축·1차·2차 사행동의 개념, 임계속도, 영향요소, 방지대책</div>
   <div class="badge-row">
     <span class="badge badge-grade">★★★ A등급</span>
     <span class="badge badge-final">FINAL_PUBLISH v1.0</span>
@@ -79,130 +80,264 @@ tr:nth-child(even) td { background: #f8fafc; }
   </div>
 </header>
 
-<div class="sec-title">1. 진동·소음의 원인 및 저감 대책 (SOURCE 90)</div>
+<div class="sec-title">핵심 개념 — 사행동 (SOURCE 89)</div>
 
+<!-- CONCEPT 01: 정의 -->
 <div class="concept-card">
   <div class="concept-head">
-    <span class="concept-num">SOURCE 90</span>
-    <span class="concept-name">진동·소음 원인 3가지</span>
+    <span class="concept-num">CONCEPT 01</span>
+    <span class="concept-name">사행동이란? — 정의</span>
+    <span class="concept-num">SOURCE 89</span>
   </div>
   <div class="concept-body">
-    <table>
-      <thead>
-        <tr><th>#</th><th>원인</th><th>설명</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>①</td><td><strong>차체 공진</strong></td><td>차체 고유진동수와 외력 진동수가 일치할 때 발생</td></tr>
-        <tr><td>②</td><td><strong>궤도 불량</strong></td><td>레일 이음매, 노면 불규칙 등 궤도 상태 불량</td></tr>
-        <tr><td>③</td><td><strong>차륜 편마모</strong></td><td>차륜이 균일하지 않게 마모되어 진동 유발</td></tr>
-      </tbody>
-    </table>
-
-    <table>
-      <thead>
-        <tr><th>#</th><th>저감 대책</th><th>설명</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>①</td><td><strong>대차 현가장치 개선</strong></td><td>스프링·댐퍼 성능 향상으로 진동 흡수력 증대</td></tr>
-        <tr><td>②</td><td><strong>차체 구조 보강</strong></td><td>차체 강성 확보로 공진 억제</td></tr>
-        <tr><td>③</td><td><strong>차륜 가공 정밀도 향상</strong></td><td>차륜 균일 마모 유지로 편심 진동 방지</td></tr>
-      </tbody>
-    </table>
-
-    <div class="trap-box">
-      <strong>함정:</strong> "대차 상부 높이를 높인다" → 진동 저감 대책이 <u>아니다</u>. 오히려 무게중심이 높아져 안정성에 불리하다.
-    </div>
-  </div>
-</div>
-
-<div class="sec-title">2. 차량 진동형태 3종 (SOURCE 93-B)</div>
-
-<div class="concept-card">
-  <div class="concept-head">
-    <span class="concept-num">SOURCE 93-B</span>
-    <span class="concept-name">롤링·피칭·요잉</span>
-  </div>
-  <div class="concept-body">
-    <div class="term-grid">
-      <div class="term-card">
-        <div class="term-name">롤링 (Rolling)</div>
-        <div class="term-desc"><strong>차체 좌우 흔들림</strong><br>X축(진행방향 축) 회전<br>→ 차체가 좌우로 기울어지는 진동</div>
-      </div>
-      <div class="term-card">
-        <div class="term-name">피칭 (Pitching)</div>
-        <div class="term-desc"><strong>차체 앞뒤 들썩임</strong><br>Y축(좌우 방향 축) 회전<br>→ 차체 앞뒤가 번갈아 오르내리는 진동</div>
-      </div>
-      <div class="term-card">
-        <div class="term-name">요잉 (Yawing)</div>
-        <div class="term-desc"><strong>차체 수평면에서 좌우 비틀림</strong><br>Z축(수직 방향 축) 회전<br>→ 차체가 수평면에서 좌우로 틀어지는 진동</div>
-      </div>
-    </div>
-
-    <table>
-      <thead>
-        <tr><th>진동형태</th><th>운동 방향</th><th>회전축</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><strong>롤링 (Rolling)</strong></td><td>차체 좌우 흔들림</td><td>X축 (진행 방향)</td></tr>
-        <tr><td><strong>피칭 (Pitching)</strong></td><td>차체 앞뒤 들썩임</td><td>Y축 (좌우 방향)</td></tr>
-        <tr><td><strong>요잉 (Yawing)</strong></td><td>수평면 좌우 비틀림</td><td>Z축 (수직 방향)</td></tr>
-      </tbody>
-    </table>
-
-    <div class="trap-box">
-      <strong>주의:</strong> 사행동 관련 내용은 이 단원에서 다루지 않는다. 사행동은 13-03 단원 참조.
-    </div>
-
+    <p style="font-size:13px; margin-bottom:10px;">
+      <strong>사행동(Hunting)</strong>은 철도차량의 <strong>윤축·대차·차체가 선로 중심을 기준으로 좌우로 반복하여 흔들리며 주행하는 횡방향 진동</strong>이다.
+    </p>
+    <p style="font-size:13px; margin-bottom:8px;">
+      열차가 직선 선로를 주행해도 차륜의 형상(답면구배)으로 인해 좌우로 S자 궤적을 반복하며 발생한다.
+    </p>
     <div class="tip-box">
-      <strong>암기법:</strong> 롤(Roll)=구르다(좌우), 피치(Pitch)=던지다(앞뒤), 요(Yaw)=비틀다(수평회전)
+      <strong>영향:</strong> 횡압 증가, 레일·차륜 마모, 승차감 저하, 주행 안전성 저하
     </div>
   </div>
 </div>
 
-<div class="sec-title">시각 자료</div>
+<!-- CONCEPT 02: 발생원리 + VIS-130 -->
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 02</span>
+    <span class="concept-name">왜 사행동이 생기는가? — 발생 원리</span>
+  </div>
+  <div class="concept-body">
+    <p style="font-size:13px; margin-bottom:10px;">
+      윤축이 한쪽으로 치우치면 좌우 차륜의 레일 접촉 위치가 달라져 <strong>좌우 차륜의 유효 굴림반경 차이</strong>가 생긴다.<br>
+      차축으로 연결된 좌우 차륜은 같은 회전수로 돌기 때문에, 반경이 큰 쪽이 더 긴 거리를 진행하고 윤축은 반대 방향으로 이동한다.<br>
+      이 복원운동이 중심을 지나 반복되면서 사행동이 발생한다.
+    </p>
+    <ol style="font-size:13px; color:#334155; padding-left:18px; line-height:1.9;">
+      <li>중앙에서는 좌우 굴림반경이 같아 직진</li>
+      <li>한쪽으로 치우치면 굴림반경 차이 발생</li>
+      <li>큰 반경 쪽이 더 많이 전진 → 윤축이 반대쪽으로 복원</li>
+      <li>복원운동이 중심을 지나 반대편으로 이동 → 반복</li>
+    </ol>
+    <div class="vis-wrap" style="margin-top:14px;">
+      <img src="images/VIS-130_사행동_발생원리_FINAL.png" alt="사행동 발생원리 인포그래픽">
+      <div class="vis-cap">▲ VIS-130 — 사행동 발생원리 | PRIMARY VIS</div>
+    </div>
+  </div>
+</div>
 
-<div class="vis-wrap">
-  <img src="images/VIS-081_차량진동3종비교표.png" alt="차량진동 3종 비교표">
-  <div class="vis-cap">VIS-081 | 차량진동 3종(롤링·피칭·요잉) 비교표</div>
+<!-- CONCEPT 02-B: 답면구배 -->
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 02-B</span>
+    <span class="concept-name">답면구배 (Tread Conicity) — 자기조향·복원작용의 원천</span>
+  </div>
+  <div class="concept-body">
+    <p style="font-size:13px; margin-bottom:10px;">
+      차륜 답면은 완전한 평면이 아니라 <strong>플랜지 쪽에서 바깥쪽으로 갈수록 경사(구배)진 형태</strong>를 가진다.<br>
+      이 경사 덕분에 윤축이 한쪽으로 치우치면 좌우 차륜의 유효 굴림반경 차이가 생기고, 동일 회전수에서 이동거리 차이가 발생하여 <strong>자기조향·복원작용</strong>이 일어난다.
+    </p>
+    <ul style="font-size:13px; color:#334155; padding-left:18px; line-height:1.9; margin-bottom:12px;">
+      <li>플랜지 쪽: 유효 굴림반경 <strong>큼</strong></li>
+      <li>바깥쪽: 유효 굴림반경 <strong>작음</strong></li>
+      <li>윤축이 우측으로 치우치면 → 우측 차륜 반경 증가, 좌측 차륜 반경 감소 → 자동 복원</li>
+    </ul>
+    <div class="trap-box">
+      <strong>⚠ 주의:</strong> 답면구배가 <u>너무 크면</u> 복원력이 과도해져 오히려 사행동 안정성에 불리할 수 있다. "클수록 무조건 좋다"고 표현하지 않는다.
+    </div>
+    <div class="vis-wrap" style="margin-top:14px;">
+      <img src="images/답면구배.png" alt="차륜 답면구배 개념도" style="max-width:100%; height:auto; display:block; margin:0 auto;">
+      <div class="vis-cap">▲ 답면구배 — 차륜 형상과 자기조향 원리</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT 03: 1축 사행동 -->
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 03</span>
+    <span class="concept-name">1축 사행동 — 기하학적 사행운동</span>
+  </div>
+  <div class="concept-body">
+    <p style="font-size:13px; margin-bottom:10px;">
+      <strong>1축 사행동</strong>은 하나의 윤축이 레일 위에서 좌우로 사인파형(뱀 모양) 궤적을 그리는 <strong>기하학적 사행운동</strong>이다.
+    </p>
+    <p style="font-size:13px; margin-bottom:8px;"><strong>핵심 수식 (파장 L):</strong></p>
+    <p style="font-size:14px; font-weight:700; color:#0f4c81; background:#eff6ff; border-radius:6px; padding:8px 14px; margin-bottom:10px;">
+      L = 2π√(e·r / λ)
+    </p>
+    <table>
+      <thead><tr><th>기호</th><th>의미</th><th>파장에 미치는 영향</th></tr></thead>
+      <tbody>
+        <tr><td><strong>e</strong></td><td>좌우 차륜 간격의 1/2</td><td>클수록 파장 증가</td></tr>
+        <tr><td><strong>r</strong></td><td>차륜반경</td><td>클수록 파장 증가</td></tr>
+        <tr><td><strong>λ</strong></td><td>차륜 답면구배</td><td>클수록 파장 <u>감소</u></td></tr>
+      </tbody>
+    </table>
+    <div class="trap-box">
+      <strong>⚠ 주의:</strong> <strong>1축 사행동 ≠ 1차 사행동</strong> — 전혀 다른 개념이다.
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT 04: 1차·2차 사행동 + VIS-131 -->
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 04</span>
+    <span class="concept-name">1차 사행동과 2차 사행동</span>
+    <span class="concept-num">SOURCE 89</span>
+  </div>
+  <div class="concept-body">
+    <div class="prop-grid">
+      <div class="prop-card prop-up">
+        <div class="prop-label">1차 사행동 (차체 사행동)</div>
+        <div style="font-size:13px;">
+          • 비교적 낮은 속도 영역에서 발생<br>
+          • 속도 증가 시 <strong>감쇠</strong>되어 진동 줄어듦<br>
+          • 차체 중심의 횡진동
+        </div>
+      </div>
+      <div class="prop-card prop-down">
+        <div class="prop-label">2차 사행동 (대차 사행동)</div>
+        <div style="font-size:13px;">
+          • <strong>임계속도 이상</strong>에서 중요<br>
+          • 자려진동 — 감쇠되지 않고 <strong>증폭</strong> 가능<br>
+          • 대차의 횡·요 운동
+        </div>
+      </div>
+    </div>
+    <table style="margin-top:12px;">
+      <thead><tr><th>구분</th><th>1차 사행동</th><th>2차 사행동</th></tr></thead>
+      <tbody>
+        <tr><td>중심</td><td>차체</td><td>대차</td></tr>
+        <tr><td>속도 영역</td><td>비교적 저속</td><td>임계속도 이상</td></tr>
+        <tr><td>진동 거동</td><td>감쇠</td><td>지속·증폭 가능</td></tr>
+        <tr><td>궤간 관계</td><td>넓을수록 커짐 (비례)</td><td>좁을수록 커짐 (반비례)</td></tr>
+        <tr><td>축거 관계</td><td>—</td><td>클수록 작아짐 (반비례)</td></tr>
+      </tbody>
+    </table>
+    <div class="trap-box">
+      <strong>함정:</strong> "2차 사행동은 궤간이 좁을수록 작아진다" → <strong>틀린 설명.</strong> 궤간이 좁을수록 <u>커진다</u> (반비례).
+    </div>
+    <div class="vis-wrap" style="margin-top:14px;">
+      <img src="images/VIS-131_1축_1차_2차_사행동_임계속도_방지대책_FINAL.png" alt="1축 1차 2차 사행동과 임계속도 방지대책 인포그래픽">
+      <div class="vis-cap">▲ VIS-131 — 1축·1차·2차 사행동의 구분, 임계속도와 방지대책 | PRIMARY VIS</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT 05: 임계속도 -->
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 05</span>
+    <span class="concept-name">임계속도</span>
+  </div>
+  <div class="concept-body">
+    <p style="font-size:13px; margin-bottom:10px;">
+      <strong>임계속도</strong>는 사행동이 안정적으로 감쇠되는 영역과 불안정하게 지속·증폭되는 영역을 나누는 속도이다.
+    </p>
+    <table>
+      <thead><tr><th>영역</th><th>상태</th></tr></thead>
+      <tbody>
+        <tr><td>임계속도 <strong>이하</strong></td><td>진동이 점차 줄어드는 <strong>안정영역</strong></td></tr>
+        <tr><td>임계속도 <strong>이상</strong></td><td>진동이 감쇠되지 않고 <strong>불안정</strong>해질 수 있음</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box">
+      <strong>핵심:</strong> 2차 사행동(대차 사행동)은 임계속도와 직접 연결된다. 고속차량은 임계속도 확보가 필수.
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT 06: 방지 대책 -->
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 06</span>
+    <span class="concept-name">사행동 방지 대책</span>
+    <span class="concept-num">SOURCE 89</span>
+  </div>
+  <div class="concept-body">
+    <table>
+      <thead><tr><th>방지 방법</th><th>효과·작용</th></tr></thead>
+      <tbody>
+        <tr><td><strong>차륜 답면구배</strong> 적절히 작게</td><td>기하학적 파장 증가, 안정성 향상</td></tr>
+        <tr><td><strong>차륜 지름(반경)</strong> 크게</td><td>1축 사행동 파장 증가</td></tr>
+        <tr><td><strong>고정축간 거리</strong> 크게</td><td>2차 사행동 억제 (단, 곡선통과성과 절충 필요)</td></tr>
+        <tr><td><strong>대차 선회저항</strong> 적절히 크게</td><td>대차의 요잉·선회 억제 → 주행안정성 및 임계속도 확보</td></tr>
+        <tr><td><strong>요댐퍼·횡댐퍼</strong> 적용</td><td>진동 에너지 흡수</td></tr>
+        <tr><td><strong>현가장치</strong> 강성·감쇠 적정 설계</td><td>진동 억제</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box">
+      <strong>시험 암기:</strong> "차륜 크게 / 답면구배 작게 / 축거 크게 / 선회저항 크게"
+    </div>
+    <div class="trap-box">
+      <strong>⚠ 주의:</strong> 대차 선회저항 증가는 <u>대차 운동 억제 및 주행안정성 향상</u>이 핵심이다. "사행동 파장 증가"와 직접 연결되지 않는다.
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT 07: 시험 함정 -->
+<div class="concept-card">
+  <div class="concept-head">
+    <span class="concept-num">CONCEPT 07</span>
+    <span class="concept-name">시험 함정 총정리</span>
+  </div>
+  <div class="concept-body">
+    <table>
+      <thead><tr><th>함정 문장</th><th>판정</th><th>올바른 설명</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>1축 사행동 = 1차 사행동</td><td style="color:#b91c1c; font-weight:700;">✗ 오답</td><td>1축은 기하학적 운동, 1차는 차체 사행동 — 다른 개념</td></tr>
+        <tr><td>궤간이 좁을수록 2차 사행동이 작아진다</td><td style="color:#b91c1c; font-weight:700;">✗ 오답</td><td>2차 사행동은 궤간에 반비례 → 좁을수록 <u>커진다</u></td></tr>
+        <tr class="hl"><td>답면구배가 클수록 방지에 유리하다</td><td style="color:#b91c1c; font-weight:700;">✗ 오답</td><td>답면구배를 <u>작게</u> 해야 안정성 향상</td></tr>
+        <tr><td>대차 선회저항 증가 → 파장 직접 증가</td><td style="color:#b91c1c; font-weight:700;">✗ 오답</td><td>선회저항은 대차 운동 억제·주행안정성 향상이 목적</td></tr>
+        <tr class="hl"><td>임계속도 이상에서 2차 사행동이 불안정해진다</td><td style="color:#065f46; font-weight:700;">✓ 정답</td><td>자려진동으로 증폭 가능 — 고속차량의 핵심 위험</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box" style="margin-top:12px;">
+      <strong>한 줄 정리:</strong> 사행동=좌우반복 횡진동 / 1축=기하학적 / 1차=차체 / 2차=대차(임계속도↑위험) / 방지=답면↓ 차륜↑ 축거↑ 선회저항↑ 댐퍼
+    </div>
+  </div>
 </div>
 
 <div class="sec-title">기출 문항</div>
 <div class="q-box">
 <div class="q-num">문항 1 / 3</div>
-<div class="q-stem">철도차량의 진동 및 소음 원인에 해당하지 않는 것은?</div>
-  <div class="q-choice">① 절연이음매와 접착식 절연</div>
-  <div class="q-choice">② 차체 공진</div>
-  <div class="q-choice">③ 궤도 불량</div>
-  <div class="q-choice">④ 차륜 편마모</div>
+<div class="q-stem">주행 속도를 높여도 감쇠되지 않는 사행동은?</div>
+  <div class="q-choice">① 1차 사행동</div>
+  <div class="q-choice">② 2차 사행동(대차사행동)</div>
+  <div class="q-choice">③ 차량 전체 사행동</div>
+  <div class="q-choice">④ 축간 사행동</div>
   </div>
 <div class="q-box">
 <div class="q-num">문항 2 / 3</div>
-<div class="q-stem">철도차량의 진동 저감 대책으로 옳지 않은 것은?</div>
-  <div class="q-choice">① 대차 상부 높이를 높인다</div>
-  <div class="q-choice">② 대차 현가장치 개선</div>
-  <div class="q-choice">③ 차체 구조 보강</div>
-  <div class="q-choice">④ 차륜가공정밀도 향상</div>
+<div class="q-stem">열차의 사행동에 대한 설명으로 옳지 않은 것은?</div>
+  <div class="q-choice">① 1축 사행동은 궤간이 넓을수록 커지고, 차륜 답면의 구배가 클수록 작아진다</div>
+  <div class="q-choice">② 2차 사행동(대차사행동)은 1축 사행동에 비례한다</div>
+  <div class="q-choice">③ 2차 사행동(대차사행동)은 궤간이 좁을수록 작아지고, 축거가 길수록 작아진다</div>
+  <div class="q-choice">④ 1축 사행동은 속도가 높아지면 진동수가 높아지고 14m의 파장을 갖는다</div>
   </div>
 <div class="q-box">
 <div class="q-num">문항 3 / 3</div>
-<div class="q-stem">차량진동 종류가 아닌 것은?</div>
-  <div class="q-choice">① 롤링</div>
-  <div class="q-choice">② 피칭</div>
-  <div class="q-choice">③ 요잉</div>
-  <div class="q-choice">④ 곡률변화</div>
+<div class="q-stem">대차 사행동을 줄이는 방법으로 옳은 것은?</div>
+  <div class="q-choice">① 차륜 지름을 작게 한다</div>
+  <div class="q-choice">② 차륜답면 기울기를 크게 한다</div>
+  <div class="q-choice">③ 고정축 간거리를 작게 한다</div>
+  <div class="q-choice">④ 대차의 선회저항을 크게 한다</div>
   </div>
 
 
 <div class="answer-section">
 <div class="sec-title">정답 및 해설</div>
 <div class="ans-box"><div class="ans-num">문항 1 / 3</div><div class="ans-body">
-    <strong>정답 ①</strong> — 철도차량 주요 소음·진동 요인: 궤도 불량, 차륜 편마모, 차체 공진 등. 절연이음매는 전기 회로 구분용으로 소음·진동의 주요 원인이 아니다.
+    <strong>정답 ②</strong> — 2차 사행동(대차사행동)은 임계속도 이상에서 발생하며 속도 증가 시 진동이 감쇠되지 않고 오히려 증폭된다. 1차 사행동은 낮은 속도에서 발생하고 속도 증가에 따라 감쇠된다.
   </div></div>
 <div class="ans-box"><div class="ans-num">문항 2 / 3</div><div class="ans-body">
-    <strong>정답 ①</strong> — 철도차량 진동 감소 대책: 현가장치 성능 개선, 차륜·차축 가공 정밀도 향상, 차체 강성 확보. 대차 상부 높이를 높이는 것은 진동 감소와 무관하며, 오히려 무게중심을 높여 안정성에 불리하다.
+    <strong>정답 ③</strong> — 2차 사행동(대차사행동)은 궤간에 반비례하므로 궤간이 좁을수록 <u>커진다</u>. "좁을수록 작아진다"는 틀린 설명이다. 또한 축거가 길수록 작아지는 것(반비례)은 맞다.
   </div></div>
 <div class="ans-box"><div class="ans-num">문항 3 / 3</div><div class="ans-body">
-    <strong>정답 ④</strong> — 대표적인 철도차량 진동 형태(SOURCE 93-B): 롤링(차체 좌우 흔들림), 피칭(차체 앞뒤 들썩임), 요잉(차체 수평면에서 좌우 비틀림). ①②③은 모두 실제 차량 진동 형태에 해당한다.
+    <strong>정답 ④</strong> — 사행동 파장을 크게 하면 대차 사행동을 최소화할 수 있다. 파장을 크게 하는 조건: 차륜 지름 크게, 차륜답면 기울기 작게, 고정축간 거리 크게, 대차의 선회저항 크게.
   </div></div>
 </div>
 </div>
