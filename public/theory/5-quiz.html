@@ -198,14 +198,25 @@ function markWrong() {
   });
 }
 
+function renderAll() {
+  const kibchulBody = document.getElementById('p-kibchul');
+  const newBody = document.getElementById('p-new');
+  kibchulBody.innerHTML = '';
+  newBody.innerHTML = '';
+  QUESTIONS.forEach(q => {
+    if (wrongOnlyMode && !wrongSet.has(String(q.num))) return;
+    const el = buildItem(q);
+    if(q.t === 'kibchul') kibchulBody.appendChild(el);
+    else newBody.appendChild(el);
+  });
+  markWrong();
+}
+
 function toggleWrongMode() {
   wrongOnlyMode = !wrongOnlyMode;
   const btn = document.getElementById('btn-wrong-only');
   btn.textContent = wrongOnlyMode ? '전체 보기' : '틀린 문제만 보기';
-  document.querySelectorAll('.qbank-item').forEach(item => {
-    const num = item.id.replace('q','');
-    item.style.display = wrongOnlyMode ? (wrongSet.has(num) ? '' : 'none') : '';
-  });
+  renderAll();
 }
 
 function resetAllItems() {
@@ -213,30 +224,14 @@ function resetAllItems() {
   wrongSet.clear();
   saveWrong();
   updateWrongBar();
-  markWrong();
   wrongOnlyMode = false;
   document.getElementById('btn-wrong-only').textContent = '틀린 문제만 보기';
-  document.querySelectorAll('.qbank-item').forEach(item => {
-    item.style.display = '';
-    item.querySelectorAll('li').forEach(li => {
-      li.className = '';
-      li.style.cursor = 'pointer';
-    });
-    const expEl = item.querySelector('.qbank-explain');
-    if(expEl) { expEl.style.display = 'none'; expEl.textContent = ''; }
-  });
+  renderAll();
 }
 
 // Build DOM
-const kibchulBody = document.getElementById('p-kibchul');
-const newBody = document.getElementById('p-new');
-QUESTIONS.forEach(q => {
-  if(q.t === 'kibchul') kibchulBody.appendChild(buildItem(q));
-  else newBody.appendChild(buildItem(q));
-});
-
+renderAll();
 updateWrongBar();
-markWrong();
 </script>
 </body>
 </html>
