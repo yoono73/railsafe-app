@@ -169,6 +169,21 @@ export default function ConceptOperationPage() {
     setMode('quiz');
   }, [allQuestions, shuffleQ]);
 
+  const startWrongOnly = useCallback(() => {
+    const wrongIds = new Set(answers.filter(a => !a.correct).map(a => a.qid));
+    if (wrongIds.size === 0) return;
+    const pool = allQuestions.filter(q => wrongIds.has(q.id));
+    const finalPool = shuffleQ ? shuffle(pool) : pool;
+    setQuestions(finalPool);
+    setCurrent(0);
+    setSelected(null);
+    setRevealed(false);
+    setAnswers([]);
+    setSavedProgress(null);
+    clearProgress();
+    setMode('quiz');
+  }, [answers, allQuestions, shuffleQ]);
+
   const resumeQuiz = useCallback(() => {
     if (!savedProgress) return;
     const qMap = new Map(allQuestions.map(q => [q.id, q]));
@@ -355,14 +370,20 @@ export default function ConceptOperationPage() {
           }
         </div>
 
-        <div style={{ display: 'flex', gap: 10, marginTop: 20 }}>
+        <div style={{ display: 'flex', gap: 10, marginTop: 20, flexWrap: 'wrap' }}>
           <button onClick={() => { clearProgress(); setMode('home'); }}
-            style={{ flex: 1, padding: '12px', background: '#6b7280', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer' }}>
+            style={{ flex: 1, minWidth: 100, padding: '12px', background: '#6b7280', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer' }}>
             ← 홈으로
           </button>
+          {answers.filter(a => !a.correct).length > 0 && (
+            <button onClick={startWrongOnly}
+              style={{ flex: 1, minWidth: 100, padding: '12px', background: '#dc2626', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer' }}>
+              ❌ 틀린 문제만 ({answers.filter(a => !a.correct).length}개)
+            </button>
+          )}
           <button onClick={startQuiz}
-            style={{ flex: 1, padding: '12px', background: '#16a34a', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer' }}>
-            다시 풀기
+            style={{ flex: 1, minWidth: 100, padding: '12px', background: '#16a34a', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer' }}>
+            전체 다시 풀기
           </button>
         </div>
       </div>
