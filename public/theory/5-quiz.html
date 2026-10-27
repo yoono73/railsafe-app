@@ -164,13 +164,12 @@ function reveal(num, ans, exp) {
 
   items.forEach((li,i) => {
     if(i === ans) li.classList.add('ans-correct');
-    else if(i === userSel) li.classList.add('ans-wrong');
+    else li.classList.add('ans-wrong');
     li.style.cursor = 'default';
-    li.onclick = null;
   });
 
   expEl.style.display = 'block';
-  expEl.textContent = '해설: ' + exp;
+  expEl.textContent = '✅ 정답: ' + NUMS[ans] + ' | 해설: ' + exp;
 
   if(userSel === -1 || userSel !== ans) {
     wrongSet.add(String(num));
