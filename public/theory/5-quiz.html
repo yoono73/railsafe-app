@@ -133,16 +133,24 @@ function buildItem(q) {
     </div>
     <div class="qbank-q">${q.q}</div>
     <ul class="qbank-choices" id="choices${q.num}">
-      ${q.c.map((c,i)=>`<li data-num="${NUMS[i]}" data-idx="${i}" onclick="pick(${q.num},${i})">${c}</li>`).join('')}
+      ${q.c.map((c,i)=>`<li data-num="${NUMS[i]}" data-idx="${i}">${c}</li>`).join('')}
     </ul>
-    <button class="qbank-reveal" onclick="reveal(${q.num},${q.a},'${q.e.replace(/'/g,"\\'")}')">정답 확인</button>
+    <button class="qbank-reveal" data-qnum="${q.num}">정답 확인</button>
     <div class="qbank-explain" id="explain${q.num}"></div>
   `;
+  // 선택지 클릭: onclick 속성 대신 addEventListener (특수문자 문제 방지)
+  div.querySelectorAll('.qbank-choices li').forEach(li => {
+    li.addEventListener('click', () => pick(q.num, parseInt(li.dataset.idx)));
+  });
+  // 정답 확인 버튼: 해설 문자열을 직접 클로저로 전달 (큰따옴표 등 특수문자 안전)
+  div.querySelector('.qbank-reveal').addEventListener('click', () => reveal(q.num, q.a, q.e));
   return div;
 }
 
 function pick(num, idx) {
   const ul = document.getElementById('choices'+num);
+  // 이미 정답 확인된 경우 무시
+  if(ul.querySelector('.ans-correct')) return;
   ul.querySelectorAll('li').forEach(li => li.classList.remove('selected'));
   ul.querySelectorAll('li')[idx].classList.add('selected');
 }
@@ -217,12 +225,6 @@ function resetAllItems() {
     });
     const expEl = item.querySelector('.qbank-explain');
     if(expEl) { expEl.style.display = 'none'; expEl.textContent = ''; }
-  });
-  // Re-bind click events
-  document.querySelectorAll('.qbank-choices li').forEach(li => {
-    const num = li.closest('.qbank-item').id.replace('q','');
-    const idx = parseInt(li.dataset.idx);
-    li.onclick = () => pick(parseInt(num), idx);
   });
 }
 
